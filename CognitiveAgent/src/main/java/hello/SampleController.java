@@ -26,7 +26,7 @@ import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 @Controller
 @EnableAutoConfiguration
 public class SampleController {
-
+	
     @RequestMapping("/")
     @ResponseBody
     String home() {
