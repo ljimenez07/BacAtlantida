@@ -41,6 +41,7 @@
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/custom.css">
         <title>Agente Cognitivo</title>
     </head>
     <body>
@@ -60,7 +61,16 @@
 		<script type="text/javascript" src="js/handlebars.min-latest.js"></script>
 		<script id="layout" type="text/x-handlebars-template">
 		  <div class="panel panel-default">
-				<div class="panel-heading">{{title}}</div>
+				<div class="panel-heading">
+					<div class="row header">
+						<<logo>>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							{{title}}
+						</div>
+					</div>
+				</div>
 				<div class="panel-body">
 					{{{body}}}
 				</div>
@@ -80,45 +90,21 @@
 
 		<script>
 			$(function(){
-				var sourceInput   = $("#chatInput").html();
-				var templateInput = Handlebars.compile(sourceInput);
-				var contextInput = {};
-				var htmlinput    = templateInput(contextInput);
+				var sourceChat   = $("#chatInput").html();
+				var templateChat = Handlebars.compile(sourceChat);
+				var contextChat = {};
+				var htmlChat    = templateChat(contextChat);
 			
 				var source   = $("#layout").html();
 				var template = Handlebars.compile(source);
-				var context = {title: "Chat", body: '<ol id="conversation"  ></ol>', DebajoDelPanel:htmlinput};
+				var context = {title: "Chat", body: '<ol id="conversation"  ></ol>', DebajoDelPanel:htmlChat};
 				var html    = template(context);
 				
 				$(".app").html(html);
-			
-				var conversation = $("#conversation");
-				var campoDeEntrada = $("#campoDeEntrada");
-				var mensajeDeAgente = $('<li style="text-align:right;"><div class="avatar"><img src="img/favicon.ico" draggable="false"/></div><div class="msg"><p></p><time>20:17</time></div></li>');
-				var mensajeDeUsuario = $('<li><div class="avatar"><img src="img/favicon.ico" draggable="false"/></div><div class="msg"><p></p><time>20:17</time></div></li>');
-				$("#enviar").click(function(){
-				
-					var mensaje = mensajeDeUsuario.clone();
-					mensaje.find(".msg p").html(campoDeEntrada.val());
-					campoDeEntrada.val("");
-					conversation.prepend(mensaje);
-					
-					$.ajax({
-						type: "POST",
-						contentType: "application/text; charset=utf-8",
-						dataType   : "text",
-						url : "http://localhost:8080/convesacion/mensaje",
-						data : mensaje
-					})
-					.done(function( data ) 
-					{
-						var respuesta = mensajeDeAgente.clone();
-						respuesta.find(".msg p").html(data);
-						conversation.prepend(respuesta);
-					});
-					
-				});
 			});
 		</script>
+		
+		<script type="text/javascript" src="js/chat.js"></script>
+
     </body>
 </html>

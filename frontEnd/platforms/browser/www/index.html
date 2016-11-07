@@ -35,12 +35,14 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+        <!-- meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;" -->
+
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Hello World</title>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/custom.css">
+        <title>Agente Cognitivo</title>
     </head>
     <body>
 		<!-- Google Tag Manager (noscript) -->
@@ -49,13 +51,60 @@
 		<!-- End Google Tag Manager (noscript) -->
 
         <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
+			
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript" src="js/angular.min.js"></script>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/handlebars.min-latest.js"></script>
+		<script id="layout" type="text/x-handlebars-template">
+		  <div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="row header">
+						<<logo>>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							{{title}}
+						</div>
+					</div>
+				</div>
+				<div class="panel-body">
+					{{{body}}}
+				</div>
+			</div>
+			{{{DebajoDelPanel}}}
+		</script>
+		<script id="chatInput" type="text/x-handlebars-template">
+		 	<div class="row">
+				<div class="col-md-6">
+					<input type="text" id="campoDeEntrada" class="form-control" >
+				</div>
+				<div class="col-md-6">
+					<button id="enviar" class="btn btn-default">Enviar</button>
+				</div>
+			</div>
+		</script>
+
+		<script>
+			$(function(){
+				var sourceChat   = $("#chatInput").html();
+				var templateChat = Handlebars.compile(sourceChat);
+				var contextChat = {};
+				var htmlChat    = templateChat(contextChat);
+			
+				var source   = $("#layout").html();
+				var template = Handlebars.compile(source);
+				var context = {title: "Chat", body: '<ol id="conversation"  ></ol>', DebajoDelPanel:htmlChat};
+				var html    = template(context);
+				
+				$(".app").html(html);
+			});
+		</script>
+		
+		<script type="text/javascript" src="js/chat.js"></script>
+
     </body>
 </html>
