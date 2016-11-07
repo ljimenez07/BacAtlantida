@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.*;
 @EnableAutoConfiguration
 public class SampleController {
 
-    @RequestMapping("/")
-    @ResponseBody
-    String home() {
-        return "Hello World!";
-    }
+	@RequestMapping("/")
+	@ResponseBody String home() 
+	{
+		return "Hello World!";
+	}
     @RequestMapping(value = "/Ecommerce/GetCustomerAvailableAmount", method = RequestMethod.POST)
 	public @ResponseBody String obtenerRespuestaPost(@RequestBody String json) throws JSONException, JsonParseException, JsonMappingException, IOException
 	{
@@ -38,7 +38,15 @@ public class SampleController {
 		String respuestaJson = "{\"codigo\":\"abc\",\"descripcion\":\"bla bla\",\"detalleTecnico\":\"11\",\"tipo\":\"S1\",\"fecha\":\"0000-00-00\",\"tasaCambioItemUSD\":{\"moneda\":\"usd\",\"compra\":\"560.0\",\"venta\":\"530.0\"},\"tasaCambioEUR\":{\"moneda\":\"usd\",\"compra\":\"560.0\",\"venta\":\"530.0\"}}";
 		return respuestaJson;
 	}
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(SampleController.class, args);
-    }
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/convesacion/mensaje", method = RequestMethod.POST)
+	@ResponseBody String convesacion(@RequestBody String mensaje) 
+	{
+		//TODO aqui va lo de watson de liss y victor
+		return "Hello World!";
+	}
+	
+	public static void main(String[] args) throws Exception {
+		SpringApplication.run(SampleController.class, args);
+	}
 }
