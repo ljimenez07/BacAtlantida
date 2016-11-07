@@ -50,14 +50,25 @@
 		<!-- End Google Tag Manager (noscript) -->
 
         <div class="app">
-			<div class="panel panel-default">
-				<div class="panel-heading">Chat</div>
+			
+        </div>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript" src="js/angular.min.js"></script>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/handlebars.min-latest.js"></script>
+		<script id="layout" type="text/x-handlebars-template">
+		  <div class="panel panel-default">
+				<div class="panel-heading">{{title}}</div>
 				<div class="panel-body">
-					<ol id="conversation"  ></ol>
+					{{{body}}}
 				</div>
 			</div>
-
-			<div class="row">
+			{{{DebajoDelPanel}}}
+		</script>
+		<script id="chatInput" type="text/x-handlebars-template">
+		 	<div class="row">
 				<div class="col-md-6">
 					<input type="text" id="campoDeEntrada" class="form-control" >
 				</div>
@@ -65,15 +76,22 @@
 					<button id="enviar" class="btn btn-default">Enviar</button>
 				</div>
 			</div>
-        </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-		<script type="text/javascript" src="js/angular.min.js"></script>
-		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		</script>
 
 		<script>
 			$(function(){
+				var sourceInput   = $("#chatInput").html();
+				var templateInput = Handlebars.compile(sourceInput);
+				var contextInput = {};
+				var htmlinput    = templateInput(contextInput);
+			
+				var source   = $("#layout").html();
+				var template = Handlebars.compile(source);
+				var context = {title: "Chat", body: '<ol id="conversation"  ></ol>', DebajoDelPanel:htmlinput};
+				var html    = template(context);
+				
+				$(".app").html(html);
+			
 				var conversation = $("#conversation");
 				var campoDeEntrada = $("#campoDeEntrada");
 				var mensajeDeAgente = $('<li style="text-align:right;"><div class="avatar"><img src="img/favicon.ico" draggable="false"/></div><div class="msg"><p></p><time>20:17</time></div></li>');
