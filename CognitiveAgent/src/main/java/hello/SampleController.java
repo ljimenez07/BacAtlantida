@@ -14,7 +14,13 @@ public class SampleController {
     String home() {
         return "Hello World!";
     }
-
+    
+    @RequestMapping("/Ecommerce/")
+    public @ResponseBody String obtenerRespuestaPost(){
+    	
+    	return "";
+    }
+    
     public static void main(String[] args) throws Exception {
         SpringApplication.run(SampleController.class, args);
     }
