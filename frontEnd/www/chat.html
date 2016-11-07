@@ -35,7 +35,8 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+        <!-- meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;" -->
+
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
@@ -49,10 +50,16 @@
 		<!-- End Google Tag Manager (noscript) -->
 
         <div class="app">
+			<div class="panel panel-default">
+				<div class="panel-heading">Chat</div>
+				<div class="panel-body">
+					<ol id="conversation"  ></ol>
+				</div>
+			</div>
+
 			<div class="row">
-				<div class="col-md-12"><textarea id="conversation" class="form-control" rows="20" ></textarea></div>
 				<div class="col-md-6">
-					<input type="text" class="form-control input-xxl" >
+					<input type="text" id="campoDeEntrada" class="form-control" >
 				</div>
 				<div class="col-md-6">
 					<button id="enviar" class="btn btn-default">Enviar</button>
@@ -62,18 +69,34 @@
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript" src="js/angular.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
 		<script>
-			$(funtion(){
+			$(function(){
 				var conversation = $("#conversation");
+				var campoDeEntrada = $("#campoDeEntrada");
+				var mensajeDeAgente = $('<li style="text-align:right;"><div class="avatar"><img src="img/favicon.ico" draggable="false"/></div><div class="msg"><p></p><time>20:17</time></div></li>');
+				var mensajeDeUsuario = $('<li><div class="avatar"><img src="img/favicon.ico" draggable="false"/></div><div class="msg"><p></p><time>20:17</time></div></li>');
 				$("#enviar").click(function(){
 				
+					var mensaje = mensajeDeUsuario.clone();
+					mensaje.find(".msg p").html(campoDeEntrada.val());
+					campoDeEntrada.val("");
+					conversation.prepend(mensaje);
+					
 					$.ajax({
-						url: "http://localhost:8080/"
+						type: "POST",
+						contentType: "application/text; charset=utf-8",
+						dataType   : "text",
+						url : "http://localhost:8080/convesacion/mensaje",
+						data : mensaje
 					})
-					.done(function( data ) {
-						conversation.val(conversation.val() + data);
+					.done(function( data ) 
+					{
+						var respuesta = mensajeDeAgente.clone();
+						respuesta.find(".msg p").html(data);
+						conversation.prepend(respuesta);
 					});
 					
 				});

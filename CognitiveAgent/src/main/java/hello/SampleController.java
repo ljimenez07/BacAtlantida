@@ -9,13 +9,21 @@ import org.springframework.web.bind.annotation.*;
 @EnableAutoConfiguration
 public class SampleController {
 
-    @RequestMapping("/")
-    @ResponseBody
-    String home() {
-        return "Hello World!";
-    }
+	@RequestMapping("/")
+	@ResponseBody String home() 
+	{
+		return "Hello World!";
+	}
 
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(SampleController.class, args);
-    }
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/convesacion/mensaje", method = RequestMethod.POST)
+	@ResponseBody String convesacion(@RequestBody String mensaje) 
+	{
+		//TODO aqui va lo de watson de liss y victor
+		return "Hello World!";
+	}
+	
+	public static void main(String[] args) throws Exception {
+		SpringApplication.run(SampleController.class, args);
+	}
 }
