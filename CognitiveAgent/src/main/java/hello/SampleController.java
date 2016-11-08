@@ -68,19 +68,19 @@ public class SampleController {
 		if(intent.equals("saldo"))
 		{
 			//se llama al web service de saldo
-			
-			
+			String respuestaDelWebService = "{\"saldoColeccion\":{\"contable\":\"30344.62\", \"diferido\":\"0.0\",\"disponibleLps\":\"30344.62\",\"disponibleUsd\":\"0.0\",\"disponibleEur\":\"0.0\", \"retenido\":\"0.0\", \"saldoActualLps\":\"0.0\", \"saldoMoraLps\":\"0.0\", \"saldoMoraUsd\":\"0.0\", \"saldoAnteriorLps\":\"0.0\", \"saldoAnteriorUsd\":\"0.0\", \"saldoAlCorteLps\":\"0.0\", \"saldoAlCorteUsd\":\"0.0\"}}";
+			JSONObject objetoRespuestaDelWS = new JSONObject(respuestaDelWebService);
+	
+			System.out.println(objetoRespuestaDelWS.getJSONObject("saldoColeccion").get("contable"));
 			//falta concatenar el saldo
 			String texto = getText(response);
-			JSONObject objResponse = new JSONObject().put("Text",texto).put("MyContext", response.getContext().toString());
+			JSONObject objResponse = new JSONObject().put("Text",texto).put("MyContext", response.getContext().toString() + objetoRespuestaDelWS);
 			
 			respuestaJson = objResponse.toString();
 		}
 		if(intent.equals("tasa_cambio"))
 		{
 			String respuestaWS = "{\"codigo\":\"abc\",\"descripcion\":\"bla bla\",\"detalleTecnico\":\"11\",\"tipo\":\"S1\",\"fecha\":\"0000-00-00\",\"tasaCambioItemUSD\":{\"moneda\":\"usd\",\"compra\":\"560.0\",\"venta\":\"530.0\"},\"tasaCambioEUR\":{\"moneda\":\"usd\",\"compra\":\"560.0\",\"venta\":\"530.0\"}}";
-			
-			
 			
 			//concatenar tasa de cambio
 			JSONObject objResponse = new JSONObject().put("Text",getText(response)+"").put("MyContext", response.getContext().toString());
@@ -90,8 +90,7 @@ public class SampleController {
 		}
 		else
 			{
-			JSONObject objResponse = new JSONObject().put("Text",getText(response)+"").put("MyContext", response.getContext().toString());
-				
+				JSONObject objResponse = new JSONObject().put("Text",getText(response)+"").put("MyContext", response.getContext().toString());
 				respuestaJson = objResponse.toString();
 			}
 		return respuestaJson;
@@ -116,14 +115,16 @@ public class SampleController {
 	
 	public String getText(MessageResponse response)
 	{
-		String text = "";
-		List<String> msjs = response.getText();
-		for(int i = 0; i < msjs.size(); i++ )
-		{
-			text = text +" "+ msjs.get(i);
-		}
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("");
 		
-		return text;
+		List<String> mensajes = response.getText();
+		for (String mensaje : mensajes) 
+		{
+			stringBuilder.append(mensaje);
+		}
+
+		return stringBuilder.toString();
 	}
 	
     public static void main(String[] args) throws Exception {
