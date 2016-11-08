@@ -2,3 +2,20 @@
 {
 	background-color:red;
 }
+
+.title
+{
+	text-align:center;
+}
+
+.header-chat-icon {
+    width: 39px;
+    height: 28px;
+    background: url(../img/iconos-40x28.png) -39px 0;
+}
+
+.header-menu-icon {
+    width: 39px;
+    height: 28px;
+    background: url(../img/iconos-40x28.png) 0 0;
+}
