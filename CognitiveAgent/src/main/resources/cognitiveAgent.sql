@@ -50,10 +50,10 @@ CREATE TABLE IF NOT EXISTS `cognitiveagent`.`oferta` (
   `imagenComercioPath` VARCHAR(255) NULL DEFAULT NULL,
   `imagenPublicidadPath` VARCHAR(255) NULL DEFAULT NULL,
   `categoria` INT(11) NOT NULL,
-  PRIMARY KEY (`idOferta`, `categoriaoferta_idCategoriaOferta`),
-  INDEX `fk_oferta_categoriaoferta_idx` (`categoriaoferta_idCategoriaOferta` ASC),
+  PRIMARY KEY (`idOferta`, `categoria`),
+  INDEX `fk_oferta_categoriaoferta_idx` (`categoria` ASC),
   CONSTRAINT `fk_oferta_categoriaoferta`
-    FOREIGN KEY (`categoriaoferta_idCategoriaOferta`)
+    FOREIGN KEY (`categoria`)
     REFERENCES `cognitiveagent`.`categoriaoferta` (`idCategoriaOferta`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
