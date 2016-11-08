@@ -40,7 +40,7 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     		<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
-    		<script type="text/javascript" src="js/promociones.js"></script>
+    		<script type="text/javascript" src="plantillas/promociones.js"></script>
         <title>Promociones</title>
         <style type="text/css">
         .titulo {
@@ -57,19 +57,53 @@
 
         .tiempo-transcurrido {
           font-size: 7pt;
-          margin-top: 16px;
+          margin-top: 8px;
+        }
+
+        .contenedor-de-botones {
+          margin-bottom: 10px;
+        }
+
+        .boton-like.activo {
+          width: 25px;
+          height: 24px;
+          cursor: pointer;
+          background: url(../img/iconos-rojos-24x23.png) 25px 0;
+        }
+
+        .boton-dislike.activo {
+          width: 25px;
+          height: 24px;
+          cursor: pointer;
+          background: url(../img/iconos-rojos-24x23.png) 0 0;
+        }
+
+        .boton-like.inactivo {
+          width: 25px;
+          height: 24px;
+          cursor: pointer;
+          background: url(../img/iconos-25x24.png) 56px 0;
+        }
+
+        .boton-dislike.inactivo {
+          width: 25px;
+          height: 24px;
+          cursor: pointer;
+          background: url(../img/iconos-25x24.png) 87px 0;
         }
 
         .boton-compartir {
-          width: 38px;
-          height: 38px;
-          background: url(../img/spritesheet.png) 38px 0;
+          width: 25px;
+          height: 24px;
+          cursor: pointer;
+          background: url(../img/iconos-25x24.png) 0 0;
         }
 
         .boton-escuchar {
-          width: 38px;
-          height: 38px;
-          background: url(../img/spritesheet.png) 0 0;
+          width: 25px;
+          height: 24px;
+          cursor: pointer;
+          background: url(../img/iconos-25x24.png) 25px 0;
         }
         </style>
     </head>
@@ -115,16 +149,32 @@
 
         var context = {
           ofertas: [{
+            idDeLaOferta: "1",
             imagen: "../img/oferta-dummy.png",
-            tiempoTranscurrido: "Hace 5 horas"
+            tiempoTranscurrido: "Hace 5 horas",
+            esUnUsuarioConocido: true,
+            like: "inactivo",
+            dislike: "activo"
           },
           {
+            idDeLaOferta: "2",
             imagen: "../img/oferta-dummy.png",
-            tiempoTranscurrido: "Hace 5 horas"
+            tiempoTranscurrido: "Hace 8 horas",
+            esUnUsuarioConocido: true,
+            like: "activo",
+            dislike: "inactivo"
           }]
         };
         var templateData = Handlebars.templates.promociones(context);
         $("#contenedor-de-ofertas").html(templateData);
+
+        $(".boton-like, .boton-dislike").click(function() {
+          var activo = $(this).parent().parent().find(".activo");
+          if(activo.attr('class') != $(this).attr('class')) {
+            activo.addClass("inactivo").removeClass("activo");
+          }
+          $(this).toggleClass("activo").toggleClass("inactivo");
+        });
         </script>
     </body>
 </html>
