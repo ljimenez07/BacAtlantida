@@ -20,23 +20,17 @@
 			text-align: center;
 		}
 	</style>
-	<script>
-		function limpiarAgregarOfertaForm()
+<script>
+	$(document).ready(function(){
+	$.ajax({ url: "/cargarTablaDeOfertas",
+		context: document.body,
+		success : function(result)
 		{
-			document.getElementById("agregarOferta-form").reset();
+			$("#gestion-de-ofertas").html(result);
 		}
-		
-		$(document).ready(function() {
-			$("#mostrar-ingresar-oferta-submit").click(function() {
-				$.ajax({
-					url : "/insertarOferta.jsp",
-					success : function(result) {
-						$("#gestion-de-ofertas").html(result);
-					}
-				});
-			});
 		});
-	</script>
+	});
+</script>
 </head>
 <body>
 	<div class="container">
@@ -47,49 +41,7 @@
 				<li role="presentation"><a href="#">Consultas Realizadas</a></li>
 			</ul>
 		</div>
-		<div id="tabla-ofertas">
-				<div class="row">
-					<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>Título de Oferta</th>
-							<th>Comercio</th>
-							<th>Descripción</th>
-							<th>Categoría</th>
-							<th>Ciudad</th>
-							<th>Estado</th>
-							<th>Acciones</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${listaDeOfertas}" var="oferta" varStatus="status">
-							<tr>
-								<td>${oferta.tituloDeOferta}</td>
-								<td>${oferta.comercio}</td>
-								<td>${oferta.descripcion}</td>
-								<td>${oferta.categoria.nombre}</td>
-								<td>${oferta.ciudad}</td>
-								<td>${oferta.estado}</td>
-								<div>
-									<td>editar</td>
-									<td>eliminar</td>
-								</div>
-								
-							</tr>
-						</c:forEach>
-					</tbody>
-					</table>
-				</div>
-				<div class="row">
-					<div class="row" align="right">
-						<div class="col-md-10">
-							<div class="form-group">
-								<button id="mostrar-ingresar-oferta-submit" type="button" class="btn btn-default">Ingresar nueva oferta</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+		
 		<div id="gestion-de-ofertas">
 		</div>
 	</div>
