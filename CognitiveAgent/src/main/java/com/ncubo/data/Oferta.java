@@ -6,14 +6,14 @@ public class Oferta
 	private String tituloDeOferta;
 	private String comercio;
 	private String descripcion;
-	private String categoria;
+	private CategoriaOferta categoria;
 	private String ciudad;
 	private boolean estado;
 	private String restricciones;
 	private String vigenciaDesde;
 	private String vigenciahasta;
 	
-	public Oferta(int idOferta, String tituloDeOferta, String comercio, String descripcion, String categoria,
+	public Oferta(int idOferta, String tituloDeOferta, String comercio, String descripcion, CategoriaOferta categoria,
 			String ciudad, boolean estado, String restricciones, String vigenciaDesde, String vigenciahasta)
 	{
 		super();
@@ -69,12 +69,12 @@ public class Oferta
 		this.descripcion = descripcion;
 	}
 	
-	public String getCategoria()
+	public CategoriaOferta getCategoria()
 	{
 		return categoria;
 	}
 	
-	public void setCategoria(String categoria)
+	public void setCategoria(CategoriaOferta categoria)
 	{
 		this.categoria = categoria;
 	}

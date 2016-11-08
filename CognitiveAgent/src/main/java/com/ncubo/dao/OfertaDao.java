@@ -5,11 +5,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.ncubo.data.CategoriaOferta;
 import com.ncubo.data.Oferta;
 
 public class OfertaDao
 {
 	private final String NOMBRE_TABLA = "oferta";
+	private final String NOMBRE_TABLA_CATEGORIA_OFERTA = "categoriaoferta";
+	
 	public enum atributo
 	{
 		ID_OFERTA("idOferta"),
@@ -17,6 +20,10 @@ public class OfertaDao
 		COMERCIO("comercio"),
 		DESCRIPCION("descripcion"),
 		CATEGORIA("categoria"),
+		
+		ID_CATEGORIA("idCategoriaOferta"),
+		NOMBRE_CATEGORIA("nombre"),
+		
 		CIUDAD("ciudad"),
 		ESTADO("estado"),
 		RESTRICCIONES("restricciones"),
@@ -44,12 +51,14 @@ public class OfertaDao
 				+ atributo.COMERCIO + ", "
 				+ atributo.DESCRIPCION + ", "
 				+ atributo.CATEGORIA + ", "
+				+ atributo.NOMBRE_CATEGORIA + ", "
 				+ atributo.CIUDAD + ", "
 				+ atributo.ESTADO + ", "
 				+ atributo.RESTRICCIONES + ", "
 				+ atributo.VIGENCIA_DESDE + ", "
 				+ atributo.VIGENCIA_HASTA
-				+ " FROM " + NOMBRE_TABLA + ";";
+				+ " FROM " + NOMBRE_TABLA + ", " + NOMBRE_TABLA_CATEGORIA_OFERTA 
+				+ " WHERE " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA + ";";
 
 		Persistencia dao = new Persistencia();
 		Connection con = dao.openConBD();
@@ -62,7 +71,7 @@ public class OfertaDao
 					rs.getString(atributo.TITULO_DE_OFERTA.toString()),
 					rs.getString(atributo.COMERCIO.toString()),
 					rs.getString(atributo.DESCRIPCION.toString()),
-					rs.getString(atributo.CATEGORIA.toString()),
+					new CategoriaOferta(rs.getInt(atributo.CATEGORIA.toString()), rs.getString(atributo.NOMBRE_CATEGORIA.toString())),
 					rs.getString(atributo.CIUDAD.toString()),
 					rs.getBoolean(atributo.ESTADO.toString()),
 					rs.getString(atributo.RESTRICCIONES.toString()),
@@ -80,7 +89,7 @@ public class OfertaDao
 		String queryDatos = "'" + oferta.getTituloDeOferta()+ "'"
 							+",'" + oferta.getComercio() + "'"
 							+",'" + oferta.getDescripcion() + "'"
-							+",'" + oferta.getCategoria() + "'"
+							+",'" + oferta.getCategoria().getId() + "'"
 							+",'" + oferta.getCiudad() + "'"
 							+"," + (oferta.getEstado() ? 1 : 0)
 							+",'" + oferta.getRestricciones() + "'"

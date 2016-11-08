@@ -39,7 +39,7 @@ public class SampleController {
 	
 	@Autowired
 	private ServerCognitivo serverCognitivo;
-	private static int contadorDeContextos = 0;//TODO quitarlo de aquÃ­ y meterlo en la session
+	private static int contadorDeContextos = 0;//TODO quitarlo de aquí y meterlo en la session
 	private HashMap<String, JSONObject> contextoPorUsuario = new HashMap<String, JSONObject>(); 
 	
 	
@@ -85,8 +85,10 @@ public class SampleController {
 		if(intent.equals(Intencion.SALDO))
 		{
 			//se llama al web service de saldo
-			
-			
+			String respuestaDelWebService = "{\"saldoColeccion\":{\"contable\":\"30344.62\", \"diferido\":\"0.0\",\"disponibleLps\":\"30344.62\",\"disponibleUsd\":\"0.0\",\"disponibleEur\":\"0.0\", \"retenido\":\"0.0\", \"saldoActualLps\":\"0.0\", \"saldoMoraLps\":\"0.0\", \"saldoMoraUsd\":\"0.0\", \"saldoAnteriorLps\":\"0.0\", \"saldoAnteriorUsd\":\"0.0\", \"saldoAlCorteLps\":\"0.0\", \"saldoAlCorteUsd\":\"0.0\"}}";
+			JSONObject objetoRespuestaDelWS = new JSONObject(respuestaDelWebService);
+			Object saldo = objetoRespuestaDelWS.getJSONObject("saldoColeccion").get("contable");
+
 			//falta concatenar el saldo
 			String texto = getText(response)+ "  80000";
 			respuesta.addProperty("texto", texto);
@@ -106,7 +108,6 @@ public class SampleController {
 			String texto = getText(response);
 			respuesta.addProperty("texto", texto);
 		}
-		
 		return respuesta.toString();
 	}
 	
@@ -129,14 +130,16 @@ public class SampleController {
 	
 	public String getText(MessageResponse response)
 	{
-		String text = "";
-		List<String> msjs = response.getText();
-		for(int i = 0; i < msjs.size(); i++ )
-		{
-			text = text +" "+ msjs.get(i);
-		}
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("");
 		
-		return text;
+		List<String> mensajes = response.getText();
+		for (String mensaje : mensajes) 
+		{
+			stringBuilder.append(mensaje);
+		}
+
+		return stringBuilder.toString();
 	}
 	
     public static void main(String[] args) throws Exception {
