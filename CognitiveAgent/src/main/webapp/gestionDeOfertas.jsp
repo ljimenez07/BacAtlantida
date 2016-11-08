@@ -4,10 +4,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Gestión de Ofertas</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-	</script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<style>
 		body
 		{
@@ -67,7 +67,7 @@
 								<td>${oferta.tituloDeOferta}</td>
 								<td>${oferta.comercio}</td>
 								<td>${oferta.descripcion}</td>
-								<td>${oferta.categoria}</td>
+								<td>${oferta.categoria.nombre}</td>
 								<td>${oferta.ciudad}</td>
 								<td>${oferta.estado}</td>
 								<div>

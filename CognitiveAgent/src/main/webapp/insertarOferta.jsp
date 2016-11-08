@@ -1,3 +1,5 @@
+
+
 <form action="/insertarOferta" method="POST" id="agregarOferta-form">
 				<div id="agregarOferta">
 					<div class="row">
@@ -23,30 +25,20 @@
 							<div class="form-group">
 								<label for="categoria">Categoría</label>
 								<div class="btn-group">
-									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										Categoría<span class="caret"></span>
-									</button>
-									<ul class="dropdown-menu">
-										<li><a href="#">Action</a></li>
-										<li><a href="#">Another action</a></li>
-										<li><a href="#">Something else here</a></li>
-										<li role="separator" class="divider"></li>
-										<li><a href="#">Separated link</a></li>
-									</ul>
+									<select class="form-control" name="categoria-select">
+
+									</select>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-2">
 							<div class="form-group">
-								<label for="estado">Estado</label>
-								<div class="dropdown">
-									<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-									<span class="caret"></span>
-									</button>
-									<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-										<li value="1">Activa</li>
-										<li value="0">Inactiva</li>
-									</ul>
+								<label for="categoria">Estado</label>
+								<div class="btn-group">
+									<select class="form-control" name="estado-select">
+										<option value="1">Activa</option>
+										<option value="0">Inactiva</option>
+									</select>
 								</div>
 							</div>
 						</div>

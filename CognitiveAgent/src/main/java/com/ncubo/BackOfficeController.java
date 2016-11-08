@@ -1,7 +1,6 @@
 package com.ncubo;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ncubo.dao.OfertaDao;
+import com.ncubo.data.CategoriaOferta;
 import com.ncubo.data.Oferta;
 
 @Controller
@@ -30,9 +30,9 @@ public class BackOfficeController
 		Oferta oferta = new Oferta(0, request.getParameter("tituloOferta-input"), 
 				request.getParameter("nombreComercio-input"), 
 				request.getParameter("descripcion-textarea"), 
-				"prueba", 
+				new CategoriaOferta(1, ""), 
 				request.getParameter("ciudad-combobox"), 
-				true, 
+				(request.getParameter("estado-select").equals("1") ? true : false), 
 				request.getParameter("restricciones-textarea"), 
 				request.getParameter("vigenciaDesde-input"), 
 				request.getParameter("vigenciaHasta-input"));
