@@ -53,7 +53,7 @@ public class AgenteCognitivo
 		contextoPorUsuario.put(contexto, new JSONObject(response.getContext().toString()));
 		
 		String intent = getIntent(response);
-		if(intent.equals(Intencion.SALDO))
+		if(intent.equals(Intencion.SALDO.toString()))
 		{
 			//se llama al web service de saldo
 			String respuestaDelWebService = "{\"saldoColeccion\":{\"contable\":\"30344.62\", \"diferido\":\"0.0\",\"disponibleLps\":\"30344.62\",\"disponibleUsd\":\"0.0\",\"disponibleEur\":\"0.0\", \"retenido\":\"0.0\", \"saldoActualLps\":\"0.0\", \"saldoMoraLps\":\"0.0\", \"saldoMoraUsd\":\"0.0\", \"saldoAnteriorLps\":\"0.0\", \"saldoAnteriorUsd\":\"0.0\", \"saldoAlCorteLps\":\"0.0\", \"saldoAlCorteUsd\":\"0.0\"}}";
@@ -65,7 +65,7 @@ public class AgenteCognitivo
 			respuesta.put("texto", texto);
 
 		}
-		if(intent.equals(Intencion.TASA_DE_CAMBIO))
+		if(intent.equals(Intencion.TASA_DE_CAMBIO.toString()))
 		{
 			String respuestaWS = "{\"codigo\":\"abc\",\"descripcion\":\"bla bla\",\"detalleTecnico\":\"11\",\"tipo\":\"S1\",\"fecha\":\"0000-00-00\",\"tasaCambioItemUSD\":{\"moneda\":\"usd\",\"compra\":\"560.0\",\"venta\":\"530.0\"},\"tasaCambioEUR\":{\"moneda\":\"usd\",\"compra\":\"560.0\",\"venta\":\"530.0\"}}";
 			//se llama al web service de saldo

@@ -10,4 +10,9 @@ public enum Intencion
 	{
 		this.nombre = nombre;
 	}
+	
+	public String toString()
+	{
+		return nombre;
+	}
 }
