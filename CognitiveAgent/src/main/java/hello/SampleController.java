@@ -70,21 +70,23 @@ public class SampleController {
 			//se llama al web service de saldo
 			String respuestaDelWebService = "{\"saldoColeccion\":{\"contable\":\"30344.62\", \"diferido\":\"0.0\",\"disponibleLps\":\"30344.62\",\"disponibleUsd\":\"0.0\",\"disponibleEur\":\"0.0\", \"retenido\":\"0.0\", \"saldoActualLps\":\"0.0\", \"saldoMoraLps\":\"0.0\", \"saldoMoraUsd\":\"0.0\", \"saldoAnteriorLps\":\"0.0\", \"saldoAnteriorUsd\":\"0.0\", \"saldoAlCorteLps\":\"0.0\", \"saldoAlCorteUsd\":\"0.0\"}}";
 			JSONObject objetoRespuestaDelWS = new JSONObject(respuestaDelWebService);
-	
-			System.out.println(objetoRespuestaDelWS.getJSONObject("saldoColeccion").get("contable"));
+			Object saldo = objetoRespuestaDelWS.getJSONObject("saldoColeccion").get("contable");
+
 			//falta concatenar el saldo
 			String texto = getText(response);
-			JSONObject objResponse = new JSONObject().put("Text",texto).put("MyContext", response.getContext().toString() + objetoRespuestaDelWS);
+			texto += saldo;
+			System.out.println("sald"+ texto);
+			JSONObject objResponse = new JSONObject().put("Text",texto).put("MyContext", response.getContext().toString());
 			
 			respuestaJson = objResponse.toString();
 		}
 		if(intent.equals("tasa_cambio"))
 		{
 			String respuestaWS = "{\"codigo\":\"abc\",\"descripcion\":\"bla bla\",\"detalleTecnico\":\"11\",\"tipo\":\"S1\",\"fecha\":\"0000-00-00\",\"tasaCambioItemUSD\":{\"moneda\":\"usd\",\"compra\":\"560.0\",\"venta\":\"530.0\"},\"tasaCambioEUR\":{\"moneda\":\"usd\",\"compra\":\"560.0\",\"venta\":\"530.0\"}}";
-			
+			JSONObject jsonRespuesta = new JSONObject(respuestaWS);
+			Object tasaDeCambio = jsonRespuesta.get("tasaCambioItemUSD");
 			//concatenar tasa de cambio
-			JSONObject objResponse = new JSONObject().put("Text",getText(response)+"").put("MyContext", response.getContext().toString());
-			
+			JSONObject objResponse = new JSONObject().put("Text",getText(response)+ tasaDeCambio.toString()).put("MyContext", response.getContext().toString());
 			respuestaJson = objResponse.toString();
 			
 		}
