@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,11 +14,19 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.boot.*;
-import org.springframework.boot.autoconfigure.*;
-import org.springframework.stereotype.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.JsonObject;
 import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Intent;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageRequest;
@@ -25,76 +34,80 @@ import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 
 @Controller
 @EnableAutoConfiguration
+@EnableConfigurationProperties(ServerCognitivo.class)
 public class SampleController {
 	
-    @RequestMapping("/")
-    @ResponseBody
-    String home() {
-        return "Hello World!";
-    }
-    
-	@CrossOrigin(origins = "*")
-	@RequestMapping(value="/convesacion/mensaje", method = RequestMethod.POST)
-	@ResponseBody String convesacion(@RequestBody String mensaje) throws JSONException, JsonParseException, JsonMappingException, IOException 
+	@Autowired
+	private ServerCognitivo serverCognitivo;
+	private static int contadorDeContextos = 0;//TODO quitarlo de aquí y meterlo en la session
+	private HashMap<String, JSONObject> contextoPorUsuario = new HashMap<String, JSONObject>(); 
+	
+	
+	@RequestMapping("/")
+	@ResponseBody String home() 
 	{
-		String respuestaJson = "";
-		JSONObject obj;
-		obj = new JSONObject(mensaje);
-		String question = obj.getString("Question");
-		obj = new JSONObject(obj.get("MyContext").toString());
+		return "Hello World!";
+	}
+
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/", method = RequestMethod.POST)
+	@ResponseBody String convesacionSinContexto(@RequestBody String mensaje) throws JSONException, JsonParseException, JsonMappingException, IOException 
+	{
+		contadorDeContextos = contadorDeContextos ++;
+		String nuevoContador = ""+contadorDeContextos;
+		contextoPorUsuario.put(nuevoContador, new JSONObject());
+		return convesacion(mensaje , nuevoContador);
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/{contexto}", method = RequestMethod.POST)
+	@ResponseBody String convesacion(@RequestBody String mensaje, @PathVariable String contexto) throws JSONException, JsonParseException, JsonMappingException, IOException 
+	{
+		JsonObject respuesta = new JsonObject();
 		ObjectMapper mapper = new ObjectMapper();
-		Map<String, Object> myContext = mapper.readValue(obj.toString(), new TypeReference<Map<String, Object>>(){});
-		
-		System.out.println(question);
-		System.out.println(myContext);
-		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		//get current date time with Date()
 		Date date = new Date();
-		ConversationService service = new ConversationService(dateFormat.format(date));
-		service.setUsernameAndPassword("189548d8-2956-41a2-9f88-6c40e9a93c8e","XW6rPcUzIFQl");
 		
-		MessageResponse response = null;
+		Map<String, Object> myContext = mapper.readValue(contextoPorUsuario.get(contexto).toString(), new TypeReference<Map<String, Object>>(){});
+		ConversationService service = new ConversationService(dateFormat.format(date));
+		service.setUsernameAndPassword(serverCognitivo.getUser(),serverCognitivo.getPassword());
 		
 		MessageRequest newMessage = new MessageRequest.Builder()
-				.inputText(question)
+				.inputText(mensaje)
 				.context(myContext)
-				.build();
+				.build();		
+		MessageResponse response = service.message(serverCognitivo.getWorkspace(), newMessage).execute();
 		
-		response = service.message("892588f4-c009-458e-b196-02bb8945df17", newMessage).execute();
+		respuesta.addProperty("contexto", contexto);
+		contextoPorUsuario.put(contexto, new JSONObject(response.getContext().toString()));
 		
 		String intent = getIntent(response);
-		
-		if(intent.equals("saldo"))
+		if(intent.equals(Intencion.SALDO))
 		{
 			//se llama al web service de saldo
 			
 			
 			//falta concatenar el saldo
-			String texto = getText(response);
-			JSONObject objResponse = new JSONObject().put("Text",texto).put("MyContext", response.getContext().toString());
-			
-			respuestaJson = objResponse.toString();
+			String texto = getText(response)+ "  80000";
+			respuesta.addProperty("texto", texto);
+
 		}
-		if(intent.equals("tasa_cambio"))
+		if(intent.equals(Intencion.TASA_DE_CAMBIO))
 		{
 			String respuestaWS = "{\"codigo\":\"abc\",\"descripcion\":\"bla bla\",\"detalleTecnico\":\"11\",\"tipo\":\"S1\",\"fecha\":\"0000-00-00\",\"tasaCambioItemUSD\":{\"moneda\":\"usd\",\"compra\":\"560.0\",\"venta\":\"530.0\"},\"tasaCambioEUR\":{\"moneda\":\"usd\",\"compra\":\"560.0\",\"venta\":\"530.0\"}}";
+			//se llama al web service de saldo
 			
 			
-			
-			//concatenar tasa de cambio
-			JSONObject objResponse = new JSONObject().put("Text",getText(response)+"").put("MyContext", response.getContext().toString());
-			
-			respuestaJson = objResponse.toString();
-			
+			String texto = getText(response);
+			respuesta.addProperty("texto", texto);
 		}
 		else
-			{
-			JSONObject objResponse = new JSONObject().put("Text",getText(response)+"").put("MyContext", response.getContext().toString());
-				
-				respuestaJson = objResponse.toString();
-			}
-		return respuestaJson;
+		{
+			String texto = getText(response);
+			respuesta.addProperty("texto", texto);
+		}
+		
+		return respuesta.toString();
 	}
 	
 	public String getIntent(MessageResponse response)

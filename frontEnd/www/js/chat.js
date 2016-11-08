@@ -3,6 +3,7 @@ $(function(){
 	var campoDeEntrada = $("#campoDeEntrada");
 	var mensajeDeAgente = $('<li style="text-align:right;"><div class="avatar"><img src="img/favicon.ico" draggable="false"/></div><div class="msg"><p></p><time>20:17</time></div></li>');
 	var mensajeDeUsuario = $('<li><div class="avatar"><img src="img/favicon.ico" draggable="false"/></div><div class="msg"><p></p><time>20:17</time></div></li>');
+	var contexto = "";
 	$("#enviar").click(function(){
 	
 		var mensaje = mensajeDeUsuario.clone();
@@ -12,16 +13,17 @@ $(function(){
 		
 		$.ajax({
 			type: "POST",
-			contentType: "application/text; charset=utf-8",
-			dataType   : "text",
-			url : "http://localhost:8080/convesacion/mensaje",
+			dataType   : "json",
+			url : serverDomain+"conversacion/"+contexto,
 			data : mensaje
 		})
 		.done(function( data ) 
 		{
 			var respuesta = mensajeDeAgente.clone();
-			respuesta.find(".msg p").html(data);
+			respuesta.find(".msg p").html(data.texto);
 			conversation.prepend(respuesta);
+			
+			contexto = data.contexto;
 		});
 		
 	});
