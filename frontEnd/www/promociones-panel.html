@@ -35,14 +35,41 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-        <!-- meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;" -->
-
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="css/custom.css">
-        <title>Agente Cognitivo</title>
+        <title>Promociones</title>
+        <style type="text/css">
+        .titulo {
+          background-color: #E7E8E9;
+          box-shadow: 0 2px 5px #888888;
+          padding: 6px 0;
+          color: #7F8083;
+        }
+
+        .imagen-de-oferta {
+          width: 100%;
+          height: auto;
+        }
+
+        .tiempo-transcurrido {
+          font-size: 7pt;
+        }
+
+        .boton-compartir {
+          width: 38px;
+          height: 35px;
+          background: url(../img/spritesheet.png) 38px 0;
+        }
+
+        .boton-escuchar {
+          width: 38px;
+          height: 35px;
+          background: url(../img/spritesheet.png) 0 0;
+        }
+        </style>
     </head>
     <body>
 		<!-- Google Tag Manager (noscript) -->
@@ -50,61 +77,49 @@
 		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		<!-- End Google Tag Manager (noscript) -->
 
-        <div class="app">
-			
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-2">M</div>
+              <div class="col-xs-2">C</div>
+              <div class="col-xs-4 text-center">BANCO ATL&Aacute;NTIDA</div>
+              <div class="col-xs-4 text-right">INGRESAR</div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="row titulo">
+              <div class="col-xs-12 text-center">
+                <span><strong>INICIO</strong></span>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-xs-12">
+                <p><strong>¡Hola!</strong></p>
+                <p>Inicie sesi&oacute;n para que conozcas tus <strong>mejores beneficios</strong></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="row contenedor-de-oferta">
+                  <div class="col-xs-12">
+                    <img src="../img/oferta-dummy.png" class="imagen-de-oferta">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-8">
+                    <span class="tiempo-transcurrido">Hace 5 horas</span>
+                  </div>
+                  <div class="col-xs-2"><div class="boton-escuchar"></div></div>
+                  <div class="col-xs-2"><div class="boton-compartir"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
-		<script type="text/javascript" src="js/angular.min.js"></script>
-		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
-		<script id="layout" type="text/x-handlebars-template">
-		  <div class="panel panel-default">
-				<div class="panel-heading">
-					<div class="row header">
-						<<logo>>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							{{title}}
-						</div>
-					</div>
-				</div>
-				<div class="panel-body">
-					{{{body}}}
-				</div>
-			</div>
-			{{{DebajoDelPanel}}}
-		</script>
-		<script id="chatInput" type="text/x-handlebars-template">
-		 	<div class="row">
-				<div class="col-md-11">
-					<input type="text" id="campoDeEntrada" class="form-control" >
-				</div>
-				<div class="col-md-1">
-					<button id="enviar" class="btn btn-default">Enviar</button>
-				</div>
-			</div>
-		</script>
-
-		<script>
-			$(function(){
-				var sourceChat   = $("#chatInput").html();
-				var templateChat = Handlebars.compile(sourceChat);
-				var contextChat = {};
-				var htmlChat    = templateChat(contextChat);
-			
-				var source   = $("#layout").html();
-				var template = Handlebars.compile(source);
-				var context = {title: "Chat", body: '<ol id="conversation"  ></ol>', DebajoDelPanel:htmlChat};
-				var html    = template(context);
-				
-				$(".app").html(html);
-			});
-		</script>
-		
-		<script type="text/javascript" src="js/chat.js"></script>
-
+    		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    		<script type="text/javascript" src="js/bootstrap.min.js"></script>
     </body>
 </html>
