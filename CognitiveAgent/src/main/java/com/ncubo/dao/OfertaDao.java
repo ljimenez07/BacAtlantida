@@ -28,7 +28,11 @@ public class OfertaDao
 		ESTADO("estado"),
 		RESTRICCIONES("restricciones"),
 		VIGENCIA_DESDE("vigenciaDesde"),
-		VIGENCIA_HASTA("vigenciaHasta");
+		VIGENCIA_HASTA("vigenciaHasta"),
+		
+		IMAGEN_COMERCIO_PATH("imagenComercioPath"),
+		IMAGEN_PUBLICIDAD_PATH("imagenPublicidadPath"),
+		FECHA_HORA_REGISTRO("fechaHoraRegistro");
 		
 		private String nombre;
 		atributo(String nombre)
@@ -56,7 +60,10 @@ public class OfertaDao
 				+ atributo.ESTADO + ", "
 				+ atributo.RESTRICCIONES + ", "
 				+ atributo.VIGENCIA_DESDE + ", "
-				+ atributo.VIGENCIA_HASTA
+				+ atributo.VIGENCIA_HASTA + ", "
+				+ atributo.IMAGEN_COMERCIO_PATH + ", "
+				+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
+				+ atributo.FECHA_HORA_REGISTRO
 				+ " FROM " + NOMBRE_TABLA + ", " + NOMBRE_TABLA_CATEGORIA_OFERTA 
 				+ " WHERE " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA + ";";
 
@@ -76,7 +83,10 @@ public class OfertaDao
 					rs.getBoolean(atributo.ESTADO.toString()),
 					rs.getString(atributo.RESTRICCIONES.toString()),
 					rs.getString(atributo.VIGENCIA_DESDE.toString()),
-					rs.getString(atributo.VIGENCIA_HASTA.toString())
+					rs.getString(atributo.VIGENCIA_HASTA.toString()),
+					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
+					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
+					rs.getString(atributo.FECHA_HORA_REGISTRO.toString())
 					));
 		}
 		
@@ -87,14 +97,17 @@ public class OfertaDao
 	public void insertar(Oferta oferta) throws ClassNotFoundException, SQLException
 	{
 		String queryDatos = "'" + oferta.getTituloDeOferta()+ "'"
-							+",'" + oferta.getComercio() + "'"
-							+",'" + oferta.getDescripcion() + "'"
-							+",'" + oferta.getCategoria().getId() + "'"
-							+",'" + oferta.getCiudad() + "'"
-							+"," + (oferta.getEstado() ? 1 : 0)
-							+",'" + oferta.getRestricciones() + "'"
-							+",'" + oferta.getVigenciaDesde() + "'"
-							+",'" + oferta.getVigenciahasta() + "'";
+							+ ",'" + oferta.getComercio() + "'"
+							+ ",'" + oferta.getDescripcion() + "'"
+							+ ",'" + oferta.getCategoria().getId() + "'"
+							+ ",'" + oferta.getCiudad() + "'"
+							+ "," + (oferta.getEstado() ? 1 : 0)
+							+ ",'" + oferta.getRestricciones() + "'"
+							+ ",'" + oferta.getVigenciaDesde() + "'"
+							+ ",'" + oferta.getVigenciahasta() + "'"
+							+ ",'" + oferta.getImagenComercioPath() + "'"
+							+ ",'" + oferta.getImagenPublicidadPath() + "'"
+							+ ",'" + oferta.getFechaHoraRegistro() + "'";
 		String query = "INSERT INTO " + NOMBRE_TABLA
 					 + "(" + atributo.TITULO_DE_OFERTA + ","
 					 + atributo.COMERCIO + ","
@@ -104,7 +117,10 @@ public class OfertaDao
 					 + atributo.ESTADO + ","
 					 + atributo.RESTRICCIONES + ","
 					 + atributo.VIGENCIA_DESDE + ","
-					 + atributo.VIGENCIA_HASTA + ")"
+					 + atributo.VIGENCIA_HASTA + ","
+					 + atributo.IMAGEN_COMERCIO_PATH + ","
+					 + atributo.IMAGEN_PUBLICIDAD_PATH + ","
+					 + atributo.FECHA_HORA_REGISTRO + ")"
 					 + " VALUES (" + queryDatos + ");";
 
 		Persistencia dao = new Persistencia();

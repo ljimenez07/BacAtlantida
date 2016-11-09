@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `cognitiveagent`.`categoriaoferta` (
   `nombre` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`idCategoriaOferta`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -38,18 +38,19 @@ DEFAULT CHARACTER SET = latin1;
 DROP TABLE IF EXISTS `cognitiveagent`.`oferta` ;
 
 CREATE TABLE IF NOT EXISTS `cognitiveagent`.`oferta` (
-  `idOferta` INT(11) NOT NULL AUTO_INCREMENT,
-  `tituloDeOferta` VARCHAR(80) NULL DEFAULT NULL,
-  `comercio` VARCHAR(45) NULL DEFAULT NULL,
-  `descripcion` VARCHAR(80) NULL DEFAULT NULL,
-  `ciudad` VARCHAR(45) NULL DEFAULT NULL,
-  `estado` BIT(1) NULL DEFAULT NULL,
-  `restricciones` VARCHAR(255) NULL DEFAULT NULL,
-  `vigenciaDesde` DATE NULL DEFAULT NULL,
-  `vigenciaHasta` DATE NULL DEFAULT NULL,
-  `imagenComercioPath` VARCHAR(255) NULL DEFAULT NULL,
-  `imagenPublicidadPath` VARCHAR(255) NULL DEFAULT NULL,
-  `categoria` INT(11) NOT NULL,
+  `idOferta` int(11) NOT NULL AUTO_INCREMENT,
+  `tituloDeOferta` varchar(80) DEFAULT NULL,
+  `comercio` varchar(45) DEFAULT NULL,
+  `descripcion` varchar(80) DEFAULT NULL,
+  `categoria` int(11) NOT NULL,
+  `ciudad` varchar(45) DEFAULT NULL,
+  `estado` bit(1) DEFAULT NULL,
+  `restricciones` varchar(255) DEFAULT NULL,
+  `vigenciaDesde` date DEFAULT NULL,
+  `vigenciaHasta` date DEFAULT NULL,
+  `imagenComercioPath` varchar(255) DEFAULT NULL,
+  `imagenPublicidadPath` varchar(255) DEFAULT NULL,
+  `fechaHoraRegistro` datetime DEFAULT NULL,
   PRIMARY KEY (`idOferta`, `categoria`),
   INDEX `fk_oferta_categoriaoferta_idx` (`categoria` ASC),
   CONSTRAINT `fk_oferta_categoriaoferta`
@@ -58,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `cognitiveagent`.`oferta` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 

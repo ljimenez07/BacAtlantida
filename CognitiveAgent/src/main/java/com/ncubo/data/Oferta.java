@@ -12,11 +12,14 @@ public class Oferta
 	private String restricciones;
 	private String vigenciaDesde;
 	private String vigenciahasta;
-	
+	private String imagenComercioPath;
+	private String imagenPublicidadPath;
+	private String fechaHoraRegistro;
+
 	public Oferta(int idOferta, String tituloDeOferta, String comercio, String descripcion, CategoriaOferta categoria,
-			String ciudad, boolean estado, String restricciones, String vigenciaDesde, String vigenciahasta)
+			String ciudad, boolean estado, String restricciones, String vigenciaDesde, String vigenciahasta,
+			String imagenComercioPath, String imagenPublicidadPath, String fechaHoraRegistro)
 	{
-		super();
 		this.idOferta = idOferta;
 		this.tituloDeOferta = tituloDeOferta;
 		this.comercio = comercio;
@@ -27,6 +30,9 @@ public class Oferta
 		this.restricciones = restricciones;
 		this.vigenciaDesde = vigenciaDesde;
 		this.vigenciahasta = vigenciahasta;
+		this.imagenComercioPath = imagenComercioPath;
+		this.imagenPublicidadPath = imagenPublicidadPath;
+		this.fechaHoraRegistro = fechaHoraRegistro;
 	}
 
 	public int getIdOferta()
@@ -127,6 +133,36 @@ public class Oferta
 	public void setVigenciahasta(String vigenciahasta)
 	{
 		this.vigenciahasta = vigenciahasta;
+	}
+
+	public String getImagenComercioPath()
+	{
+		return imagenComercioPath;
+	}
+
+	public void setImagenComercioPath(String imagenComercioPath)
+	{
+		this.imagenComercioPath = imagenComercioPath;
+	}
+
+	public String getImagenPublicidadPath()
+	{
+		return imagenPublicidadPath;
+	}
+
+	public void setImagenPublicidadPath(String imagenPublicidadPath)
+	{
+		this.imagenPublicidadPath = imagenPublicidadPath;
+	}
+
+	public String getFechaHoraRegistro()
+	{
+		return fechaHoraRegistro;
+	}
+
+	public void setFechaHoraRegistro(String fechaHoraRegistro)
+	{
+		this.fechaHoraRegistro = fechaHoraRegistro;
 	}
 
 }
