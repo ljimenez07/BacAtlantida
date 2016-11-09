@@ -48,6 +48,11 @@ table {
 }
 /* Agente Cognitivo */
 
+.clickable:hover
+{
+	cursor:pointer;
+}
+
 .bck-red
 {
 	background-color:red;

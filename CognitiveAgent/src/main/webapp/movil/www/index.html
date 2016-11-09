@@ -70,17 +70,22 @@
 		
 		<script>
 			$(function(){
-				var contextDeChats = {title: "Chat", body: '<ol id="conversation"  ></ol>', DebajoDelPanel: Handlebars.templates.chats()};
-				var contextDeOfertas = {title: "Inicio", body: ofertas(), DebajoDelPanel: ""};
+				var pantallas = new Object();
+				pantallas["chats"] = {title: "Chat", body: '<ol id="conversation"  ></ol>', DebajoDelPanel: Handlebars.templates.chats()};
+				pantallas["inicio"] = {title: "Inicio", body: ofertas(), DebajoDelPanel: ""};
 				
-				var html    = Handlebars.templates.layout(contextDeOfertas);
-
+				var html = Handlebars.templates.layout(pantallas["inicio"]);
 				$(".app").html(html);
 				
-				$(".header-chat-icon").click(function(){
-					var html    = Handlebars.templates.layout(contextDeChats);
+				$(".clickable").click(function()
+				{
+					var html = Handlebars.templates.layout(pantallas[$(this).data("href")]);
 					$(".app").html(html);
 				});
+				
+
+				
+				
 			});
 		</script>
 
