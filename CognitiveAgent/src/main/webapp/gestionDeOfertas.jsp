@@ -22,7 +22,7 @@
 	</style>
 <script>
 	$(document).ready(function(){
-	$.ajax({ url: "/cargarTablaDeOfertas",
+	$.ajax({ url: "${pageContext.request.contextPath}/cargarTablaDeOfertas",
 		context: document.body,
 		success : function(result)
 		{

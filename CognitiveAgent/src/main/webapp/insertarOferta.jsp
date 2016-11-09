@@ -3,13 +3,13 @@
 
 	$(document).ready(function()
 	{
-		$("#logo-comercio-input").on("change", uploadFile);
+		$("#logo-comercio-input").on("change", subirArchivo);
 		
 		$("#limpiar-submit").click(function()
 		{
 			$.ajax(
 			{
-				url : "/cargarTablaDeOfertas",
+				url : "${pageContext.request.contextPath}/cargarTablaDeOfertas",
 				success : function(result)
 				{
 					$("#gestion-de-ofertas").html(result);
@@ -18,11 +18,11 @@
 		});
 	});
 	
-	function uploadFile() {
+	function subirArchivo() {
 		$.ajax({
-			url : "/uploadFile",
+			url : "${pageContext.request.contextPath}/subirArchivo",
 			type : "POST",
-			data : new FormData($("#upload-file-form")[0]),
+			data : new FormData($("#agregarOferta-form")[0]),
 			enctype : 'multipart/form-data',
 			processData : false,
 			contentType : false,
@@ -131,7 +131,8 @@
 				<div class="form-group">
 					<label for="publicidad-label">Imagen de publicidad</label> <label
 						class="btn btn-default btn-file">Seleccionar archivo
-						<input type="file" style="display: none;" name="imagen-publicidad-input">
+						<!-- <input id="upload-file-input" type="file" name="uploadfile" accept="*" /> -->
+						<input type="file" style="display: none;" id="imagen-publicidad-input">
 					</label>
 				</div>
 			</div>

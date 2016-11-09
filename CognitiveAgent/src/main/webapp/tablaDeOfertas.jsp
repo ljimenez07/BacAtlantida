@@ -11,7 +11,7 @@
 		{
 			$.ajax(
 			{
-				url : "/cargarInsertarOfertas",
+				url : "${pageContext.request.contextPath}/cargarInsertarOfertas",
 				success : function(result)
 				{
 					$("#gestion-de-ofertas").html(result);
