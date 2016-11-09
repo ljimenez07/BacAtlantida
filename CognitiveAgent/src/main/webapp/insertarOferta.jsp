@@ -3,7 +3,8 @@
 
 	$(document).ready(function()
 	{
-		$("#logo-comercio-input").on("change", subirArchivo);
+		$("#imagen-publicidad-input").on("change", subirImagenPublicidad);
+		$("#logo-comercio-input").on("change", subirImagenComercio);
 		
 		$("#limpiar-submit").click(function()
 		{
@@ -18,22 +19,42 @@
 		});
 	});
 	
-	function subirArchivo() {
-		$.ajax({
-			url : "${pageContext.request.contextPath}/subirArchivo",
-			type : "POST",
-			data : new FormData($("#agregarOferta-form")[0]),
-			enctype : 'multipart/form-data',
-			processData : false,
-			contentType : false,
-			cache : false,
-			success : function()
+	function subirImagenPublicidad()
+	{
+		$.ajax(
+		{
+			url: "/subirImagenPublicidad",
+			type: "POST",
+			data: new FormData($("#agregarOferta-form")[0]),
+			enctype: 'multipart/form-data',
+			processData: false,
+			contentType: false,
+			cache: false,
+			success: function ()
 			{
-			},
+			}
 		});
 	}
+		
+	function subirImagenComercio()
+	{
+		$.ajax(
+		{
+			url: "/subirImagenComercio",
+			type: "POST",
+			data: new FormData($("#agregarOferta-form")[0]),
+			enctype: 'multipart/form-data',
+			processData: false,
+			contentType: false,
+			cache: false,
+			success: function ()
+			{
+			}
+		});
+	}
+
 </script>
-<form action="/insertarOferta" method="post" enctype="multipart/form-data" id="agregarOferta-form">
+<form action="/insertarOferta" id="agregarOferta-form" method="POST">
 	<div id="agregarOferta">
 		<div class="row">
 			<div class="col-md-2">
@@ -122,18 +143,16 @@
 			<div class="col-md-2">
 				<div class="form-group">
 					<label for="logo-label">Logo del comercio</label>
-					<label class="btn btn-default btn-file">Seleccionar archivo
+					<input id="logo-comercio-input" type="file" name="logo-comercio-input" accept="*"/>
+					<!--  <label class="btn btn-default btn-file">Seleccionar archivo
 					<input type="file" style="display: none;" id="logo-comercio-input">
-					</label>
+					</label>-->
 				</div>
 			</div>
 			<div class="col-md-3">
 				<div class="form-group">
-					<label for="publicidad-label">Imagen de publicidad</label> <label
-						class="btn btn-default btn-file">Seleccionar archivo
-						<!-- <input id="upload-file-input" type="file" name="uploadfile" accept="*" /> -->
-						<input type="file" style="display: none;" id="imagen-publicidad-input">
-					</label>
+					<label for="publicidad-label">Imagen de publicidad</label> 
+					<input id="imagen-publicidad-input" type="file" name="imagen-publicidad-input" accept="*"/>
 				</div>
 			</div>
 		</div>
