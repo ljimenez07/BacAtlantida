@@ -52,7 +52,7 @@ $(function(){
 			$.ajax({
 				type: "POST",
 				dataType   : "json",
-				url : serverDomain+"conversacion/"+contexto,
+				url : serverDomain+"/conversacion/"+contexto,
 				data : textoAEnviar
 			})
 			.done(function( data ) 
