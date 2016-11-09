@@ -1,6 +1,8 @@
 package com.ncubo.conf;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,6 +14,10 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -22,6 +28,8 @@ import com.ibm.watson.developer_cloud.conversation.v1.model.Intent;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageRequest;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 
+import static com.jayway.restassured.RestAssured.given;
+
 @Component
 @ConfigurationProperties("servercognitivo")
 public class AgenteCognitivo 
@@ -31,7 +39,7 @@ public class AgenteCognitivo
 	private String workspace;
 	private HashMap<String, JSONObject> contextoPorUsuario = new HashMap<String, JSONObject>(); //TODO quitarlo de aquí y meterlo en la session
 	
-	public String procesarMensaje(String contexto, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException
+	public String procesarMensaje(String contexto, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, JDOMException
 	{
 		JSONObject respuesta = new JSONObject();
 		ObjectMapper mapper = new ObjectMapper();
@@ -55,24 +63,59 @@ public class AgenteCognitivo
 		String intent = getIntent(response);
 		if(intent.equals(Intencion.SALDO.toString()))
 		{
-			//se llama al web service de saldo
-			String respuestaDelWebService = "{\"saldoColeccion\":{\"contable\":\"30344.62\", \"diferido\":\"0.0\",\"disponibleLps\":\"30344.62\",\"disponibleUsd\":\"0.0\",\"disponibleEur\":\"0.0\", \"retenido\":\"0.0\", \"saldoActualLps\":\"0.0\", \"saldoMoraLps\":\"0.0\", \"saldoMoraUsd\":\"0.0\", \"saldoAnteriorLps\":\"0.0\", \"saldoAnteriorUsd\":\"0.0\", \"saldoAlCorteLps\":\"0.0\", \"saldoAlCorteUsd\":\"0.0\"}}";
-			JSONObject objetoRespuestaDelWS = new JSONObject(respuestaDelWebService);
-			Object saldo = objetoRespuestaDelWS.getJSONObject("saldoColeccion").get("contable");
-
-			//falta concatenar el saldo
-			String texto = getText(response)+ "  80000";
+			String requestBody = "<cor:consultaSaldo><activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <transaccionId>100128</transaccionId> <aplicacionId>?</aplicacionId> <paisId>?</paisId> <empresaId>?</empresaId> <regionId>?</regionId> <canalId>102 </canalId> <version>?</version> <llaveSesion></llaveSesion> <usuarioId></usuarioId> <token>?</token> <parametroAdicionalColeccion> <parametroAdicionalItem> <linea>0</linea> <tipoRegistro>UAI</tipoRegistro> <valor>TSTBASAPI01</valor> </parametroAdicionalItem> <parametroAdicionalItem> <linea>1</linea> <tipoRegistro>TC</tipoRegistro> <valor>M</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> <consultaSaldoColeccion> <tipoCuenta>4</tipoCuenta> <peticionId>?</peticionId> </consultaSaldoColeccion> </cor:consultaSaldo>";
+			String responseXML = given().body(requestBody).post("http://localhost:8080/Ecommerce/getOwnAccounts/").asString();
+			writeXmlFile(responseXML, "saldo");
+			SAXBuilder builder = new SAXBuilder();
+			File xmlFile = new File("src/main/resources/saldo.xml");
+			Document document = (Document) builder.build(xmlFile);
+			Element rootNode = document.getRootElement();
+			
+			List<?> nodos = rootNode.getChildren("productoColeccion");
+			Element productoColeccion = (Element) nodos.get(0);
+			String saldoContable = productoColeccion.getChild("cuentaColeccion").getChild("cuentaItem").getChild("saldoColeccion").getChildText("contable");
+			String texto = getText(response) + saldoContable;
 			respuesta.put("texto", texto);
 
 		}
-		if(intent.equals(Intencion.TASA_DE_CAMBIO.toString()))
+		else if(intent.equals(Intencion.TASA_DE_CAMBIO.toString()))
 		{
-			String respuestaWS = "{\"codigo\":\"abc\",\"descripcion\":\"bla bla\",\"detalleTecnico\":\"11\",\"tipo\":\"S1\",\"fecha\":\"0000-00-00\",\"tasaCambioItemUSD\":{\"moneda\":\"usd\",\"compra\":\"560.0\",\"venta\":\"530.0\"},\"tasaCambioEUR\":{\"moneda\":\"usd\",\"compra\":\"560.0\",\"venta\":\"530.0\"}}";
-			//se llama al web service de saldo
+			String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tas=\"http://hn.infatlan.och/ws/ACD082/out/TasaCambio\"> <soapenv:Header/> <soapenv:Body> <tas:MT_TasaCambio> <activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <!--Optional:--> <transaccionId>100054</transaccionId> <!--Optional:--> <aplicacionId>?</aplicacionId> <paisId>?</paisId> <empresaId>?</empresaId> <!--Optional:--> <regionId>?</regionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <version>?</version> <!--Optional:--> <llaveSesion>?</llaveSesion> <!--Optional:--> <usuarioId>?</usuarioId> <!--Optional:--> <token>?</token> <!--Zero or more repetitions:--> <identificadorColeccion> <!--Optional:--> <was>?</was> <!--Optional:--> <pi>?</pi> <!--Optional:--> <omniCanal>?</omniCanal> <!--Optional:--> <recibo>?</recibo> <!--Optional:--> <numeroTransaccion>?</numeroTransaccion> </identificadorColeccion> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> <!--Optional:--> <logColeccion> <!--Zero or more repetitions:--> <logItem> <identificadorWas>?</identificadorWas> <!--Optional:--> <identificadorPi>?</identificadorPi> <!--Optional:--> <identificadorOmniCanal>?</identificadorOmniCanal> <!--Optional:--> <identificadorRecibo>?</identificadorRecibo> <!--Optional:--> <numeroPeticion>?</numeroPeticion> <!--Optional:--> <identificadorNumeroTransaccion>?</identificadorNumeroTransaccion> <!--Optional:--> <aplicacionId>?</aplicacionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <ambienteId>?</ambienteId> <!--Optional:--> <transaccionId>?</transaccionId> <!--Optional:--> <accion>?</accion> <!--Optional:--> <tipo>?</tipo> <!--Optional:--> <fecha>?</fecha> <!--Optional:--> <hora>?</hora> <!--Optional:--> <auxiliar1>?</auxiliar1> <!--Optional:--> <auxiliar2>?</auxiliar2> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> </logItem> </logColeccion> </tas:MT_TasaCambio> </soapenv:Body> </soapenv:Envelope>";
+			String responseXML = given().body(requestBody).post("http://localhost:8080/Ecommerce/getConversionRates/").asString();
+			writeXmlFile(responseXML, "tasa_cambio");
+			SAXBuilder builder = new SAXBuilder();
+			File xmlFile = new File("src/main/resources/tasa_cambio.xml");
+			Document document = (Document) builder.build(xmlFile);
+			Element rootNode = document.getRootElement();
 			
+			System.out.println(rootNode.getChildren("Body"));
+			List<?> nodos = rootNode.getChildren();
+			Element nodoRepuesta = null;
+			for(Object object : nodos)
+			{
+				Element nodo = (Element) object;
+				for(Object nuevoNodo : nodo.getChildren())
+				{
+					Element nuevoElement = (Element) nuevoNodo;
+					nodoRepuesta = (Element) nuevoElement.getChildren().get(0);
+				}
+				
+			}
+			Element tasaCambioColeccion = (Element) nodoRepuesta.getChildren().get(1);
+			StringBuilder tasasDeCambio = new StringBuilder();
+			for(Object tasaCambio : tasaCambioColeccion.getChildren())
+			{
+				Element tasaActual  = (Element) tasaCambio;
+				tasasDeCambio.append(" Moneda ");
+				tasasDeCambio.append(tasaActual.getChildText("moneda"));
+				tasasDeCambio.append(" Compra: ");
+				tasasDeCambio.append(tasaActual.getChildText("compra"));
+				tasasDeCambio.append(" Venta: ");
+				tasasDeCambio.append(tasaActual.getChildText("venta"));
+			}
 			
 			String texto = getText(response);
-			respuesta.put("texto", texto);
+			respuesta.put("texto", texto + tasasDeCambio);
 		}
 		else
 		{
@@ -82,7 +125,16 @@ public class AgenteCognitivo
 		return respuesta.toString();
 		
 	}
-	
+	public void writeXmlFile(String responseXml, String name) throws IOException
+	{
+		PrintWriter writer = new PrintWriter("src/main/resources/" + name +".xml");
+		String [] lines = responseXml.split("\n");
+		for (String line : lines) 
+		{
+			writer.println(line);
+		}
+		writer.close();
+	}
 	public String getIntent(MessageResponse response)
 	{
 		List<Intent> intents = response.getIntents();

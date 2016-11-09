@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
+import org.jdom.JDOMException;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -39,7 +40,7 @@ public class MovilController {
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/", method = RequestMethod.POST)
-	@ResponseBody String conversacionSinContexto(@RequestBody String mensaje, HttpServletRequest request) throws JSONException, JsonParseException, JsonMappingException, IOException 
+	@ResponseBody String conversacionSinContexto(@RequestBody String mensaje, HttpServletRequest request) throws JSONException, JsonParseException, JsonMappingException, IOException, JDOMException 
 	{
 		contadorDeContextos = contadorDeContextos +1;
 		return conversacion( mensaje, ""+contadorDeContextos );
@@ -47,7 +48,7 @@ public class MovilController {
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/{contexto}", method = RequestMethod.POST)
-	@ResponseBody String conversacion(@RequestBody String mensaje, @PathVariable String contexto) throws JSONException, JsonParseException, JsonMappingException, IOException 
+	@ResponseBody String conversacion(@RequestBody String mensaje, @PathVariable String contexto) throws JSONException, JsonParseException, JsonMappingException, IOException, JDOMException 
 	{
 		
 		return serverCognitivo.procesarMensaje(
