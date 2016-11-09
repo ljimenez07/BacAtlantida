@@ -9,60 +9,65 @@
 
 <script>
 $(function(){
-	var conversation = $("#conversation");
-	var campoDeEntrada = $("#campoDeEntrada");
-	var mensajeDeAgente = $('<li style="text-align:right;"><div class="msg"><p class="bck-red color-white"></p><time>20:17</time></div></li>');
-	var mensajeDeUsuario = $('<li><div class="msg"><p class="bck-gray"></p><time>20:17</time></div></li>');
-	var botonDeEnviarMensaje = $("#enviar");
-	var contexto = "";
-	
-	botonDeEnviarMensaje.click(function(){
-	
-		enviarAlServer({ textoAEnviar:campoDeEntrada.val() });
-		
-	});
-	
-	campoDeEntrada.keypress(function(e) {
-	  if(e.which == 13) 
-	  {
-		enviarAlServer({ textoAEnviar:campoDeEntrada.val()});
-	  }
-	});
-	
-	enviarAlServer({sePuedenEnviarVaciosAlServer:true, imprimirElMensajeQueElUsuarioEscribioEnLaConversacion:false, textoAEnviar:"Hola"});
-	
-	function enviarAlServer(param)
+
+	function initChats()
 	{
-		var sePuedenEnviarVaciosAlServer = ( param.sePuedenEnviarVaciosAlServer == undefined ) ? false : true;
-		var imprimirElMensajeQueElUsuarioEscribioEnLaConversacion = ( param.imprimirElMensajeQueElUsuarioEscribioEnLaConversacion == undefined ) ? true : false;
-		var textoAEnviar = param.textoAEnviar;
-				
-		if( ! sePuedenEnviarVaciosAlServer && textoAEnviar == "") return	
-		if( imprimirElMensajeQueElUsuarioEscribioEnLaConversacion )
-		{
-			var mensaje = mensajeDeUsuario.clone();
-			mensaje.find(".msg p").html(textoAEnviar);
-			campoDeEntrada.val("");
-			conversation.prepend(mensaje);
-		}
+		var conversation = $("#conversation");
+		var campoDeEntrada = $("#campoDeEntrada");
+		var mensajeDeAgente = $('<li class="other"><div class="msg"><p></p><time>20:17</time></div></li>');
+		var mensajeDeUsuario = $('<li class="self"><div class="msg"><p></p><time>20:17</time></div></li>');
+		var botonDeEnviarMensaje = $("#enviar");
+		var contexto = "";
 		
-		$.ajax({
-			type: "POST",
-			dataType   : "json",
-			url : serverDomain+"conversacion/"+contexto,
-			data : textoAEnviar
-		})
-		.done(function( data ) 
-		{
-			var respuesta = mensajeDeAgente.clone();
-			respuesta.find(".msg p").html(data.texto);
-			conversation.prepend(respuesta);
+		botonDeEnviarMensaje.click(function(){
+		
+			enviarAlServer({ textoAEnviar:campoDeEntrada.val() });
 			
-			contexto = data.contexto;
 		});
 		
-	}
+		campoDeEntrada.keypress(function(e) {
+		  if(e.which == 13) 
+		  {
+			enviarAlServer({ textoAEnviar:campoDeEntrada.val()});
+		  }
+		});
+		
+		enviarAlServer({sePuedenEnviarVaciosAlServer:true, imprimirElMensajeQueElUsuarioEscribioEnLaConversacion:false, textoAEnviar:"Hola"});
+		
+		function enviarAlServer(param)
+		{
+			var sePuedenEnviarVaciosAlServer = ( param.sePuedenEnviarVaciosAlServer == undefined ) ? false : true;
+			var imprimirElMensajeQueElUsuarioEscribioEnLaConversacion = ( param.imprimirElMensajeQueElUsuarioEscribioEnLaConversacion == undefined ) ? true : false;
+			var textoAEnviar = param.textoAEnviar;
+					
+			if( ! sePuedenEnviarVaciosAlServer && textoAEnviar == "") return	
+			if( imprimirElMensajeQueElUsuarioEscribioEnLaConversacion )
+			{
+				var mensaje = mensajeDeUsuario.clone();
+				mensaje.find(".msg p").html(textoAEnviar);
+				campoDeEntrada.val("");
+				conversation.append(mensaje);
+			}
+			
+			$.ajax({
+				type: "POST",
+				dataType   : "json",
+				url : serverDomain+"conversacion/"+contexto,
+				data : textoAEnviar
+			})
+			.done(function( data ) 
+			{
+				var respuesta = mensajeDeAgente.clone();
+				respuesta.find(".msg p").html(data.texto);
+				conversation.append(respuesta);
+				
+				contexto = data.contexto;
+			});
+			
+		}
 
+	}
+	initChats();
 
 });
 </script>

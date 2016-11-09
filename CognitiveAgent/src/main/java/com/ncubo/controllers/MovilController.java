@@ -39,15 +39,15 @@ public class MovilController {
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/", method = RequestMethod.POST)
-	@ResponseBody String convesacionSinContexto(@RequestBody String mensaje, HttpServletRequest request) throws JSONException, JsonParseException, JsonMappingException, IOException 
+	@ResponseBody String conversacionSinContexto(@RequestBody String mensaje, HttpServletRequest request) throws JSONException, JsonParseException, JsonMappingException, IOException 
 	{
 		contadorDeContextos = contadorDeContextos +1;
-		return convesacion( mensaje, ""+contadorDeContextos );
+		return conversacion( mensaje, ""+contadorDeContextos );
 	}
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/{contexto}", method = RequestMethod.POST)
-	@ResponseBody String convesacion(@RequestBody String mensaje, @PathVariable String contexto) throws JSONException, JsonParseException, JsonMappingException, IOException 
+	@ResponseBody String conversacion(@RequestBody String mensaje, @PathVariable String contexto) throws JSONException, JsonParseException, JsonMappingException, IOException 
 	{
 		
 		return serverCognitivo.procesarMensaje(

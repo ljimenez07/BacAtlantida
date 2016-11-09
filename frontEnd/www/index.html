@@ -62,19 +62,25 @@
 		<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
 		
 		<script type="text/javascript" src="js/ofertas.js"></script>
-		<script type="text/javascript" src="js/chat.js"></script>
 		
-		<script type="text/javascript" src="plantillas/layout.js"></script>
-		<script type="text/javascript" src="plantillas/ofertas.js"></script>
-		<script type="text/javascript" src="plantillas/chats.js"></script>
+		<script type="text/javascript" src="js/layout.handlebars.js"></script>
+		<script type="text/javascript" src="js/ofertas.handlebars.js"></script>
+		<script type="text/javascript" src="js/chats.handlebars.js"></script>
 		
 		
 		<script>
 			$(function(){
-				var context = {title: "Chat", body: '<ol id="conversation"  ></ol>', DebajoDelPanel: Handlebars.templates.chats()};
-				var html    = Handlebars.templates.layout(context);
+				var contextDeChats = {title: "Chat", body: '<ol id="conversation"  ></ol>', DebajoDelPanel: Handlebars.templates.chats()};
+				var contextDeOfertas = {title: "Inicio", body: ofertas(), DebajoDelPanel: ""};
+				
+				var html    = Handlebars.templates.layout(contextDeOfertas);
 
 				$(".app").html(html);
+				
+				$(".header-chat-icon").click(function(){
+					var html    = Handlebars.templates.layout(contextDeChats);
+					$(".app").html(html);
+				});
 			});
 		</script>
 

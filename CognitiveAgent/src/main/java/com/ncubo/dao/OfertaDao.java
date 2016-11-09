@@ -44,7 +44,7 @@ public class OfertaDao
 	
 
 	public ArrayList<Oferta> obtener() throws ClassNotFoundException, SQLException
-	{
+	{ //TODO dalaian no deneria sacar el universo de ofertas.
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
 		String query = "SELECT " + atributo.ID_OFERTA + ", "
 				+ atributo.TITULO_DE_OFERTA + ", "

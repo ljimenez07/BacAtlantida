@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -68,10 +69,10 @@ public class BackOfficeController
 		return "gestionDeOfertas";
 	}
 	
+	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/ofertas", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody public ArrayList<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
 	{
-		response.setHeader("Access-Control-Allow-Origin", "*");
 		return ofertaDao.obtener();
 	}
 }

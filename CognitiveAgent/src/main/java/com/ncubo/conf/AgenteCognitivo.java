@@ -50,7 +50,7 @@ public class AgenteCognitivo
 		MessageResponse response = service.message(workspace, newMessage).execute();
 		
 		respuesta.put("contexto", contexto);
-		contextoPorUsuario.put(contexto, new JSONObject(response.getContext().toString()));
+		contextoPorUsuario.put(contexto, new JSONObject(response.toString()).getJSONObject("context"));
 		
 		String intent = getIntent(response);
 		if(intent.equals(Intencion.SALDO.toString()))

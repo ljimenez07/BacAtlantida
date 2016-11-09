@@ -20,7 +20,7 @@ $(document).ready(function()
 		<div class="row">
 			<div class="col-md-2">
 				<div class="form-group">
-					<label for="tituloOferta">Titulo de oferta</label>
+					<label for="tituloOferta">Título de oferta</label>
 					<input type="text" class="form-control" name="tituloOferta-input">
 				</div>
 			</div>

@@ -1,3 +1,7 @@
 @echo off
-fOR %%f IN (./www/plantillas/*.handlebars) DO @echo handlebars ./www/plantillas/%%f -f ./www/plantillas/%%f.js
+
+@echo var serverDomain = "http://localhost:8080/"; > ./www/js/globals.js
+call handlebars ./www/plantillas/chats.handlebars -f ./www/js/chats.handlebars.js 
+call handlebars ./www/plantillas/layout.handlebars -f ./www/js/layout.handlebars.js 
+call handlebars ./www/plantillas/ofertas.handlebars -f ./www/js/ofertas.handlebars.js 
 cordova run browser
