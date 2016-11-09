@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,8 +69,9 @@ public class BackOfficeController
 	}
 	
 	@RequestMapping(value = "/ofertas", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody public ArrayList<Oferta> ofertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
+	@ResponseBody public ArrayList<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
 	{
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		return ofertaDao.obtener();
 	}
 }
