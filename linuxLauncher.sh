@@ -1,6 +1,6 @@
 #!/bin/bash
-jar xf CognitiveAgent.jar
-export JAR_HOME=./lib/
+unzip /home/tester/jar/CognitiveAgent.jar -d /home/tester/jar/
+export JAR_HOME=/home/tester/jar/lib/
 
 for f in $JAR_HOME/*.jar
 do
@@ -11,4 +11,4 @@ export JAR_CLASSPATH
 #the next line will print the JAR_CLASSPATH to the shell.
 echo the classpath $JAR_CLASSPATH
 
-java -classpath ./:$JAR_CLASSPATH com.ncubo.controllers.InitApplication
+java -classpath /home/tester/jar/:$JAR_CLASSPATH com.ncubo.controllers.InitApplication
