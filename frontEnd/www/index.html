@@ -52,7 +52,7 @@
 		<!-- End Google Tag Manager (noscript) -->
 
         <div class="app">
-			
+
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
@@ -96,6 +96,9 @@
 				</div>
 			</div>
 		</script>
+		<script type="text/javascript" src="js/ofertas.js"></script>
+		<script type="text/javascript" src="plantillas/layout.js"></script>
+		<script type="text/javascript" src="plantillas/ofertas.js"></script>
 
 		<script>
 			$(function(){
@@ -103,16 +106,14 @@
 				var templateChat = Handlebars.compile(sourceChat);
 				var contextChat = {};
 				var htmlChat    = templateChat(contextChat);
-			
-				var source   = $("#layout").html();
-				var template = Handlebars.compile(source);
-				var context = {title: "Chat", body: '<ol id="conversation"  ></ol>', DebajoDelPanel:htmlChat};
-				var html    = template(context);
-				
+
+				var context = {title: "INICIO", body: ofertas(), DebajoDelPanel:""};
+				var html    = Handlebars.templates.layout(context);
+
 				$(".app").html(html);
 			});
 		</script>
-		
+
 		<script type="text/javascript" src="js/chat.js"></script>
 
     </body>
