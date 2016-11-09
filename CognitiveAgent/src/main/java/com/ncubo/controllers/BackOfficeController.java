@@ -1,7 +1,9 @@
 package com.ncubo.controllers;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -53,7 +55,9 @@ public class BackOfficeController
 	@RequestMapping("/insertarOferta")
 	public String insertarOfertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
 	{
-	
+		SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    Date ahora = new Date();
+		
 		Oferta oferta = new Oferta(0, request.getParameter("tituloOferta-input"), 
 				request.getParameter("nombreComercio-input"), 
 				request.getParameter("descripcion-textarea"), 
@@ -62,7 +66,10 @@ public class BackOfficeController
 				(request.getParameter("estado-select").equals("1") ? true : false), 
 				request.getParameter("restricciones-textarea"), 
 				request.getParameter("vigenciaDesde-input"), 
-				request.getParameter("vigenciaHasta-input"));
+				request.getParameter("vigenciaHasta-input"),
+				"Path comercio imagen",
+				"Path Publicidad imagen",
+				formatoFecha.format(ahora));
 		
 		ofertaDao.insertar(oferta);
 		
