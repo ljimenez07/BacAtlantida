@@ -1,4 +1,4 @@
-package com.ncubo;
+package com.ncubo.controllers;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package hello;
+package com.ncubo.conf;
 
 public enum Intencion 
 {

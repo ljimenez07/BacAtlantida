@@ -1,4 +1,4 @@
-package hello;
+package com.ncubo.conf;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -17,12 +17,12 @@ import org.json.JSONObject;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import com.google.gson.JsonObject;
 import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Intent;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageRequest;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 
+@Component
 @ConfigurationProperties("servercognitivo")
 public class AgenteCognitivo 
 {

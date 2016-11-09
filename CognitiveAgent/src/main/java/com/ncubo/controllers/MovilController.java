@@ -1,41 +1,42 @@
-package hello;
+package com.ncubo.controllers;
 
 import java.io.IOException;
 import java.util.Date;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ncubo.conf.AgenteCognitivo;
+import com.ncubo.conf.ManejadorDeErrores;
+
 @Controller
-@EnableAutoConfiguration
-@EnableConfigurationProperties(AgenteCognitivo.class)
-public class SampleController {
+public class MovilController {
 	
 	@Autowired
 	private AgenteCognitivo serverCognitivo;
+	@Autowired
+	private ManejadorDeErrores manejadorDeErrores;
+	
 	private static int contadorDeContextos = 0;//TODO quitarlo de aquí y meterlo en la session
 	
-	@RequestMapping("/")
-	@ResponseBody String home() 
-	{
-		return "Hello World!";
-	}
-
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/", method = RequestMethod.POST)
 	@ResponseBody String convesacionSinContexto(@RequestBody String mensaje, HttpServletRequest request) throws JSONException, JsonParseException, JsonMappingException, IOException 
@@ -55,8 +56,15 @@ public class SampleController {
 				new Date() );
 	}
 	
-	public static void main(String[] args) throws Exception 
+	@ExceptionHandler(Throwable.class)
+	public @ResponseBody String handleAllException(final HttpServletRequest req, HttpServletResponse response, final Exception ex) throws MessagingException 
 	{
-		SpringApplication.run(SampleController.class, args);
+		
+		System.err.println("aaa "+ex.toString());
+		response.setStatus(500);
+		
+		manejadorDeErrores.enviarCorreo(ex);
+		
+		return ex.toString();
 	}
 }
