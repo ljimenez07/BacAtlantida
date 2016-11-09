@@ -36,9 +36,9 @@
 	<div class="container">
 		<div class="row">
 			<ul class="nav nav-tabs">
-				<li role="presentation" class="active"><a href="#">Gestión de ofertas</a></li>
-				<li role="presentation"><a href="#">Reacción de Ofertas</a></li>
-				<li role="presentation"><a href="#">Consultas Realizadas</a></li>
+				<li role="presentation" class="active"><a href="#">GESTIÓN DE OFERTAS</a></li>
+				<li role="presentation"><a href="#">REACCIÓN DE OFERTAS</a></li>
+				<li role="presentation"><a href="#">CONSULTAS REALIZADAS</a></li>
 			</ul>
 		</div>
 		

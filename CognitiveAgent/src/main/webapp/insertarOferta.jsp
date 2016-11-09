@@ -20,7 +20,7 @@ $(document).ready(function()
 		<div class="row">
 			<div class="col-md-2">
 				<div class="form-group">
-					<label for="tituloOferta">Titulo de oferta</label>
+					<label for="tituloOferta">Título de oferta</label>
 					<input type="text" class="form-control" name="tituloOferta-input">
 				</div>
 			</div>
@@ -50,7 +50,7 @@ $(document).ready(function()
 			</div>
 			<div class="col-md-2">
 				<div class="form-group">
-					<label for="categoria">Estado</label>
+					<label for="categoria">Estado</label><br>
 					<div class="btn-group">
 						<select class="form-control" name="estado-select">
 							<option value="1">Activa</option>
@@ -61,7 +61,7 @@ $(document).ready(function()
 			</div>
 			<div class="col-md-2">
 				<div>
-					<p>* Solo las ofertas con estado "activa" serán mostradas en la aplicación</p>
+					<p>* Solo las ofertas con estado "activa" serán mostradas en la aplicación.</p>
 				</div>
 			</div>
 		</div>
