@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ncubo.dao.CategoriaDao;
 import com.ncubo.dao.OfertaDao;
@@ -64,5 +66,10 @@ public class BackOfficeController
 		
 		return "gestionDeOfertas";
 	}
-
+	
+	@RequestMapping(value = "/ofertas", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody public ArrayList<Oferta> ofertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
+	{
+		return ofertaDao.obtener();
+	}
 }
