@@ -9,10 +9,19 @@ $(".boton-like, .boton-dislike").click(function() {
 function ofertas() {
   var context = {ofertas: []};
   $.ajax({
-    url: serverDomain +"/ofertas",
+    url: serverDomain+"/ofertas",
     done: function(data) 
 	{
-        context.ofertas.push(data);
+		for(var i = 0; i < data.length; i++) 
+		{
+			var oferta = data[i];
+			var datosDeLaOferta = {
+				idOferta: oferta.idOferta,
+				imagen: "",
+				tiempoTranscurrido: oferta.idOferta,
+				esUnUsuarioConocido: false
+        };
+        context.ofertas.push(datosDeLaOferta);
       }
     }
   });

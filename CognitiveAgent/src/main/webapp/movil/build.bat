@@ -4,4 +4,4 @@
 call handlebars ./www/plantillas/chats.handlebars -f ./www/js/chats.handlebars.js 
 call handlebars ./www/plantillas/layout.handlebars -f ./www/js/layout.handlebars.js 
 call handlebars ./www/plantillas/ofertas.handlebars -f ./www/js/ofertas.handlebars.js 
-rem cordova run browser
+cordova run browser
