@@ -60,32 +60,9 @@
 		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
-		<script id="layout" type="text/x-handlebars-template">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<div class="row header">
-						<div class="col-md-4">
-							<div class="header-menu-icon"></div>
-						</div>
-						<div class="col-md-4">
-							<img src="img/logo.png">
-						</div>
-						<div class="col-md-4">
-							<div class="header-chat-icon"></div>
-						</div>
-					</div>
-					<div class="row text-center">
-						<div class="col-md-12">
-							{{title}}
-						</div>
-					</div>
-				</div>
-				<div class="panel-body">
-					{{{body}}}
-				</div>
-			</div>
-			{{{DebajoDelPanel}}}
-		</script>
+    <script type="text/javascript" src="js/ofertas.js"></script>
+    <script type="text/javascript" src="plantillas/layout.js"></script>
+    <script type="text/javascript" src="plantillas/ofertas.js"></script>
 		<script id="chatInput" type="text/x-handlebars-template">
 		 	<div class="row">
 				<div class="col-md-11">
@@ -104,10 +81,8 @@
 				var contextChat = {};
 				var htmlChat    = templateChat(contextChat);
 
-				var source   = $("#layout").html();
-				var template = Handlebars.compile(source);
-				var context = {title: "Chat", body: '<ol id="conversation"  ></ol>', DebajoDelPanel:htmlChat};
-				var html    = template(context);
+				var context = {title: "INICIO", body: ofertas(), DebajoDelPanel:""};
+				var html    = Handlebars.templates.layout(context);
 
 				$(".app").html(html);
 			});
