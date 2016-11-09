@@ -8,28 +8,46 @@ import org.springframework.stereotype.Component;
 public class Configuracion 
 {
 	private String url;
+	private String nombreBase;
 	private String usuario;
 	private String clave;
+	
+	
 	public String getUrl() 
 	{
 		return url;
 	}
+	
 	public void setUrl(String url) 
 	{
 		this.url = url;
 	}
+	
+	public String getNombreBase()
+	{
+		return nombreBase;
+	}
+
+	public void setNombreBase(String nombreBase)
+	{
+		this.nombreBase = nombreBase;
+	}
+
 	public String getUsuario() 
 	{
 		return usuario;
 	}
+	
 	public void setUsuario(String usuario) 
 	{
 		this.usuario = usuario;
 	}
+	
 	public String getClave() 
 	{
 		return clave;
 	}
+	
 	public void setClave(String clave) 
 	{
 		this.clave = clave;

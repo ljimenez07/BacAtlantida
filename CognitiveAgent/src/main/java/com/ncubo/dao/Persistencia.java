@@ -12,19 +12,15 @@ import com.ncubo.data.Configuracion;
 @Component
 public class Persistencia
 {
-	
-	private Connection conector;
-	
 	@Autowired
 	private Configuracion config;
+	private Connection conector;
 	
 	public Connection openConBD() throws SQLException, ClassNotFoundException
 	{
 		Class.forName("com.mysql.jdbc.Driver");
 		conector = (Connection) DriverManager.getConnection
-				("jdbc:mysql://"+ config.getUrl() +"/cognitiveagent",
-						config.getUsuario(), 
-						config.getClave());
+				("jdbc:mysql://"+ config.getUrl() +"/" + config.getNombreBase(), config.getUsuario(), config.getClave());
 		return conector;
 	}
 	
