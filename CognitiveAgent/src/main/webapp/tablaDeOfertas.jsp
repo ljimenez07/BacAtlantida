@@ -25,13 +25,13 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>Título de Oferta</th>
-					<th>Comercio</th>
-					<th>Descripción</th>
-					<th>Categoría</th>
-					<th>Ciudad</th>
-					<th>Estado</th>
-					<th colspan="2">Acciones</th>
+					<th class="text-center">Título de Oferta</th>
+					<th class="text-center">Comercio</th>
+					<th class="text-center">Descripción</th>
+					<th class="text-center">Categoría</th>
+					<th class="text-center">Ciudad</th>
+					<th class="text-center">Estado</th>
+					<th class="text-center" colspan="2">Acciones</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -52,7 +52,7 @@
 	</div>
 	<div class="row">
 		<div class="row" align="right">
-			<div class="col-md-10">
+			<div class="col-md-12">
 				<div class="form-group">
 					<button id="mostrar-ingresar-oferta-submit" type="button"
 						class="btn btn-default">Ingresar nueva oferta</button>
