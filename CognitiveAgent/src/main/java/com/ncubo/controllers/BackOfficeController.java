@@ -1,5 +1,10 @@
 package com.ncubo.controllers;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,7 +18,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ncubo.dao.CategoriaDao;
 import com.ncubo.dao.OfertaDao;
@@ -28,12 +35,14 @@ public class BackOfficeController
 	@Autowired
 	private CategoriaDao categoriaDao;
 	
+	@CrossOrigin(origins = "*")
 	@RequestMapping("/gestionDeOfertas")
 	public String visualizarOfertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
 	{
 		return "gestionDeOfertas";
 	}
 	
+	@CrossOrigin(origins = "*")
 	@RequestMapping("/cargarTablaDeOfertas")
 	public String cargarTablaDeOfertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
 	{
@@ -47,6 +56,7 @@ public class BackOfficeController
 		return "tablaDeOfertas";
 	}
 	
+	@CrossOrigin(origins = "*")
 	@RequestMapping("/cargarInsertarOfertas")
 	public String cargarInsertarOfertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
 	{
@@ -54,6 +64,7 @@ public class BackOfficeController
 		return "insertarOferta";
 	}
 	
+	@CrossOrigin(origins = "*")
 	@RequestMapping("/insertarOferta")
 	public String insertarOfertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
 	{
@@ -83,5 +94,20 @@ public class BackOfficeController
 	@ResponseBody public ArrayList<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
 	{
 		return ofertaDao.obtener();
+	}
+	
+	@RequestMapping(value = "/subirArchivo", method = RequestMethod.POST)
+	@ResponseBody
+	public String subirArchivo(@RequestParam("uploadfile") MultipartFile uploadfile) throws IOException
+	{
+		String filename = uploadfile.getOriginalFilename();
+		String directory = "./imagenes";
+		String filepath = Paths.get(directory, filename).toString();
+
+		BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
+		stream.write(uploadfile.getBytes());
+		stream.close();
+
+		return "tablaDeOfertas";
 	}
 }

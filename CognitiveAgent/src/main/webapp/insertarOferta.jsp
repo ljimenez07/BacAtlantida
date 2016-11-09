@@ -1,7 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script>
-$(document).ready(function()
+
+	$(document).ready(function()
 	{
+		$("#logo-comercio-input").on("change", uploadFile);
+		
 		$("#limpiar-submit").click(function()
 		{
 			$.ajax(
@@ -14,6 +17,21 @@ $(document).ready(function()
 			});
 		});
 	});
+	
+	function uploadFile() {
+		$.ajax({
+			url : "/uploadFile",
+			type : "POST",
+			data : new FormData($("#upload-file-form")[0]),
+			enctype : 'multipart/form-data',
+			processData : false,
+			contentType : false,
+			cache : false,
+			success : function()
+			{
+			},
+		});
+	}
 </script>
 <form action="/insertarOferta" method="post" enctype="multipart/form-data" id="agregarOferta-form">
 	<div id="agregarOferta">
@@ -103,17 +121,17 @@ $(document).ready(function()
 			</div>
 			<div class="col-md-2">
 				<div class="form-group">
-					<label for="logo-label">Logo del comercio</label> <label
-						class="btn btn-default btn-file">Seleccionar archivo <input
-						type="file" style="display: none;" name="logo-comercio-input">
+					<label for="logo-label">Logo del comercio</label>
+					<label class="btn btn-default btn-file">Seleccionar archivo
+					<input type="file" style="display: none;" id="logo-comercio-input">
 					</label>
 				</div>
 			</div>
 			<div class="col-md-3">
 				<div class="form-group">
 					<label for="publicidad-label">Imagen de publicidad</label> <label
-						class="btn btn-default btn-file">Seleccionar archivo <input
-						type="file" style="display: none;" name="imagen-publicidad-input">
+						class="btn btn-default btn-file">Seleccionar archivo
+						<input type="file" style="display: none;" name="imagen-publicidad-input">
 					</label>
 				</div>
 			</div>

@@ -19,6 +19,9 @@
 			});
 		});
 	});
+	
+	
+
 </script>
 <div id="tabla-ofertas">
 	<div class="row">
