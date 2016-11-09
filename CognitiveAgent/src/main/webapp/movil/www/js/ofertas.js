@@ -12,16 +12,7 @@ function ofertas() {
     url: serverDomain +"/ofertas",
     done: function(data) 
 	{
-		for(var i = 0; i < data.length; i++) 
-		{
-			var oferta = data[i];
-			var datosDeLaOferta = {
-				idOferta: oferta.idOferta,
-				imagen: "",
-				tiempoTranscurrido: oferta.idOferta,
-				esUnUsuarioConocido: false
-        };
-        context.ofertas.push(datosDeLaOferta);
+        context.ofertas.push(data);
       }
     }
   });

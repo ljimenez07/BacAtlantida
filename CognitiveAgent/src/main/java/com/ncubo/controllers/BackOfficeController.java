@@ -35,6 +35,10 @@ public class BackOfficeController
 	@Autowired
 	private CategoriaDao categoriaDao;
 	
+	private static String pathImagenPublicidad;
+	private static String pathImagenComercio;
+	private String pathCarpetaImagenes = "./imagenes";
+	
 	@CrossOrigin(origins = "*")
 	@RequestMapping("/gestionDeOfertas")
 	public String visualizarOfertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
@@ -80,8 +84,8 @@ public class BackOfficeController
 				request.getParameter("restricciones-textarea"), 
 				request.getParameter("vigenciaDesde-input"), 
 				request.getParameter("vigenciaHasta-input"),
-				"Path comercio imagen",
-				"Path Publicidad imagen",
+				pathImagenComercio,
+				pathImagenPublicidad,
 				formatoFecha.format(ahora));
 		
 		ofertaDao.insertar(oferta);
@@ -96,18 +100,31 @@ public class BackOfficeController
 		return ofertaDao.obtener();
 	}
 	
-	@RequestMapping(value = "/subirArchivo", method = RequestMethod.POST)
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/subirImagenPublicidad", method = RequestMethod.POST)
 	@ResponseBody
-	public String subirArchivo(@RequestParam("uploadfile") MultipartFile uploadfile) throws IOException
+	public void subirImagenPublicidad(@RequestParam("imagen-publicidad-input") MultipartFile uploadfile) throws IOException
+	{
+		pathImagenPublicidad = subirArchivo(uploadfile);
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/subirImagenComercio", method = RequestMethod.POST)
+	@ResponseBody
+	public void subirImagenComercio(@RequestParam("logo-comercio-input") MultipartFile uploadfile) throws IOException
+	{
+		pathImagenComercio = subirArchivo(uploadfile);
+	}
+	
+	private String subirArchivo(MultipartFile uploadfile) throws IOException
 	{
 		String filename = uploadfile.getOriginalFilename();
-		String directory = "./imagenes";
+		String directory = pathCarpetaImagenes;
 		String filepath = Paths.get(directory, filename).toString();
 
 		BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
 		stream.write(uploadfile.getBytes());
 		stream.close();
-
-		return "tablaDeOfertas";
+		return filepath.replace("\\", "/");
 	}
 }
