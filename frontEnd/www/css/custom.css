@@ -3,11 +3,6 @@
 	background-color:red;
 }
 
-.title
-{
-	text-align:center;
-}
-
 .header-chat-icon {
     width: 39px;
     height: 28px;
@@ -18,4 +13,62 @@
     width: 39px;
     height: 28px;
     background: url(../img/iconos-40x28.png) 0 0;
+}
+
+/* Promociones */
+
+.imagen-de-oferta {
+  width: 100%;
+  height: auto;
+}
+
+.tiempo-transcurrido {
+  font-size: 7pt;
+  margin-top: 8px;
+}
+
+.contenedor-de-botones {
+  margin-bottom: 10px;
+}
+
+.boton-like.activo {
+  width: 25px;
+  height: 24px;
+  cursor: pointer;
+  background: url(../img/iconos-rojos-24x23.png) 25px 0;
+}
+
+.boton-dislike.activo {
+  width: 25px;
+  height: 24px;
+  cursor: pointer;
+  background: url(../img/iconos-rojos-24x23.png) 0 0;
+}
+
+.boton-like.inactivo {
+  width: 25px;
+  height: 24px;
+  cursor: pointer;
+  background: url(../img/iconos-25x24.png) 56px 0;
+}
+
+.boton-dislike.inactivo {
+  width: 25px;
+  height: 24px;
+  cursor: pointer;
+  background: url(../img/iconos-25x24.png) 87px 0;
+}
+
+.boton-compartir {
+  width: 25px;
+  height: 24px;
+  cursor: pointer;
+  background: url(../img/iconos-25x24.png) 0 0;
+}
+
+.boton-escuchar {
+  width: 25px;
+  height: 24px;
+  cursor: pointer;
+  background: url(../img/iconos-25x24.png) 25px 0;
 }
