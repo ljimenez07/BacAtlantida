@@ -5,13 +5,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.ncubo.data.CategoriaOferta;
 import com.ncubo.data.Oferta;
 
+@Component
 public class OfertaDao
 {
 	private final String NOMBRE_TABLA = "oferta";
 	private final String NOMBRE_TABLA_CATEGORIA_OFERTA = "categoriaoferta";
+	@Autowired
+	private Persistencia dao;
 	
 	public enum atributo
 	{
@@ -67,7 +73,6 @@ public class OfertaDao
 				+ " FROM " + NOMBRE_TABLA + ", " + NOMBRE_TABLA_CATEGORIA_OFERTA 
 				+ " WHERE " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA + ";";
 
-		Persistencia dao = new Persistencia();
 		Connection con = dao.openConBD();
 		ResultSet rs = con.createStatement().executeQuery(query);
 		
@@ -123,7 +128,7 @@ public class OfertaDao
 					 + atributo.FECHA_HORA_REGISTRO + ")"
 					 + " VALUES (" + queryDatos + ");";
 
-		Persistencia dao = new Persistencia();
+
 		Connection con = dao.openConBD();
 		con.createStatement().execute(query);
 		dao.closeConBD();
