@@ -53,6 +53,11 @@ table {
 	background-color:red;
 }
 
+.bck-gray
+{
+	background-color:gray;
+}
+
 .header-chat-icon {
     width: 39px;
     height: 28px;
@@ -67,6 +72,9 @@ table {
 
 /* Promociones */
 
+  margin-top: 8px;
+}
+
 .imagen-de-oferta {
   width: 100%;
   height: auto;
@@ -74,9 +82,6 @@ table {
 
 .tiempo-transcurrido {
   font-size: 7pt;
-  margin-top: 8px;
-}
-
 .contenedor-de-botones {
   margin-bottom: 10px;
 }

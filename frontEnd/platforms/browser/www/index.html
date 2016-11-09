@@ -60,35 +60,25 @@
 		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
-		<script id="chatInput" type="text/x-handlebars-template">
-		 	<div class="row">
-				<div class="col-md-11">
-					<input type="text" id="campoDeEntrada" class="form-control" >
-				</div>
-				<div class="col-md-1">
-					<button id="enviar" class="btn btn-default">Enviar</button>
-				</div>
-			</div>
-		</script>
+		
 		<script type="text/javascript" src="js/ofertas.js"></script>
+		<script type="text/javascript" src="js/chat.js"></script>
+		
 		<script type="text/javascript" src="plantillas/layout.js"></script>
 		<script type="text/javascript" src="plantillas/ofertas.js"></script>
-
+		<script type="text/javascript" src="plantillas/chats.js"></script>
+		
+		
 		<script>
 			$(function(){
-				var sourceChat   = $("#chatInput").html();
-				var templateChat = Handlebars.compile(sourceChat);
-				var contextChat = {};
-				var htmlChat    = templateChat(contextChat);
-
-				var context = {title: "INICIO", body: ofertas(), DebajoDelPanel:""};
+				var context = {title: "Chat", body: '<ol id="conversation"  ></ol>', DebajoDelPanel: Handlebars.templates.chats()};
 				var html    = Handlebars.templates.layout(context);
 
 				$(".app").html(html);
 			});
 		</script>
 
-		<script type="text/javascript" src="js/chat.js"></script>
+		
 
     </body>
 </html>
