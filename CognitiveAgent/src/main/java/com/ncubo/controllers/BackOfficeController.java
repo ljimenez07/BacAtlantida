@@ -31,7 +31,6 @@ public class BackOfficeController
 	@RequestMapping("/gestionDeOfertas")
 	public String visualizarOfertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
 	{
-		request.setAttribute("listaDeOfertas", ofertaDao.obtener());
 		return "gestionDeOfertas";
 	}
 	
@@ -59,7 +58,7 @@ public class BackOfficeController
 	public String insertarOfertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
 	{
 		SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    Date ahora = new Date();
+		Date ahora = new Date();
 		
 		Oferta oferta = new Oferta(0, request.getParameter("tituloOferta-input"), 
 				request.getParameter("nombreComercio-input"), 
