@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -90,12 +92,18 @@ public class BackOfficeController
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/ofertas", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody public ArrayList<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
+	@ResponseBody public List<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
 	{
-		return ofertaDao.obtener();
+		return ofertaDao.ultimasOfertas();
 	}
 	
 	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/ofertas/{idOferta}", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody public Oferta oferta(@PathVariable int idOferta, HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
+	{
+		return ofertaDao.obtener(idOferta);
+	}
+	
 	@RequestMapping(value = "/subirImagenPublicidad", method = RequestMethod.POST)
 	@ResponseBody
 	public String subirImagenPublicidad(@RequestParam("imagen-publicidad-input") MultipartFile uploadfile) throws IOException
@@ -103,7 +111,6 @@ public class BackOfficeController
 		return subirArchivo(uploadfile);
 	}
 	
-	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/subirImagenComercio", method = RequestMethod.POST)
 	@ResponseBody
 	public String subirImagenComercio(@RequestParam("logo-comercio-input") MultipartFile uploadfile) throws IOException

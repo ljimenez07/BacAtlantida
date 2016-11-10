@@ -12,10 +12,6 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.jdom.JDOMException;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -79,7 +75,6 @@ public class MovilController {
 	@ExceptionHandler(Throwable.class)
 	public @ResponseBody String handleAllException(final HttpServletRequest req, HttpServletResponse response, final Exception ex) throws MessagingException 
 	{
-		
 		System.err.println("aaa "+ex.toString());
 		response.setStatus(500);
 		

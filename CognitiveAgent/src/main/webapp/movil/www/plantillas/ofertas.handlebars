@@ -10,7 +10,7 @@
     <div class="col-xs-12">
       <div class="row">
         <div class="col-xs-12">
-          <img src="{{imagenPublicidadPath}}" class="imagen-de-oferta">
+          <img src="{{imagenPublicidadPath}}" class="imagen-de-oferta" id="{{idOferta}}">
         </div>
       </div>
       <div class="row contenedor-de-botones">
@@ -33,3 +33,23 @@
     </div>
   </div>
 {{/each}}
+
+<script type="text/javascript">
+$(".boton-like, .boton-dislike").click(function() {
+  var activo = $(this).parent().parent().find(".activo");
+  if(activo.attr('class') != $(this).attr('class')) {
+    activo.addClass("inactivo").removeClass("activo");
+  }
+  $(this).toggleClass("activo").toggleClass("inactivo");
+});
+
+$(".imagen-de-oferta").click(function() {
+  var id = $(this).attr("id");
+  $.ajax({
+    url: serverDomain + "/ofertas/" + id,
+    success: function(data) {
+      $(".app").html(Handlebars.templates.layout({title: data.tituloDeOferta, body: Handlebars.templates.oferta(data), DebajoDelPanel: ""}));
+    }
+  });
+});
+</script>
