@@ -23,7 +23,7 @@
 	{
 		$.ajax(
 		{
-			url: "/subirImagenPublicidad",
+			url: "${pageContext.request.contextPath}/subirImagenPublicidad",
 			type: "POST",
 			data: new FormData($("#agregarOferta-form")[0]),
 			enctype: 'multipart/form-data',
@@ -40,7 +40,7 @@
 	{
 		$.ajax(
 		{
-			url: "/subirImagenComercio",
+			url: "${pageContext.request.contextPath}/subirImagenComercio",
 			type: "POST",
 			data: new FormData($("#agregarOferta-form")[0]),
 			enctype: 'multipart/form-data',
@@ -54,7 +54,7 @@
 	}
 
 </script>
-<form action="/insertarOferta" id="agregarOferta-form" method="POST">
+<form action="${pageContext.request.contextPath}/insertarOferta" id="agregarOferta-form" method="POST">
 	<div id="agregarOferta">
 		<div class="row">
 			<div class="col-md-2">
