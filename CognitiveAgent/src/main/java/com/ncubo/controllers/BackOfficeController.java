@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -35,9 +35,7 @@ public class BackOfficeController
 	@Autowired
 	private CategoriaDao categoriaDao;
 	
-	private static String pathImagenPublicidad;
-	private static String pathImagenComercio;
-	private String pathCarpetaImagenes = "./imagenes";
+	private String pathCarpetaImagenes = "./src/main/webapp/imagenes";
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping("/gestionDeOfertas")
@@ -72,9 +70,6 @@ public class BackOfficeController
 	@RequestMapping("/insertarOferta")
 	public String insertarOfertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
 	{
-		SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date ahora = new Date();
-		
 		Oferta oferta = new Oferta(0, request.getParameter("tituloOferta-input"), 
 				request.getParameter("nombreComercio-input"), 
 				request.getParameter("descripcion-textarea"), 
@@ -84,9 +79,9 @@ public class BackOfficeController
 				request.getParameter("restricciones-textarea"), 
 				request.getParameter("vigenciaDesde-input"), 
 				request.getParameter("vigenciaHasta-input"),
-				pathImagenComercio,
-				pathImagenPublicidad,
-				formatoFecha.format(ahora));
+				request.getParameter("logo-comercio"),
+				request.getParameter("imagen-publicidad"),
+				new Timestamp(new Date().getTime()));
 		
 		ofertaDao.insertar(oferta);
 		
@@ -103,17 +98,17 @@ public class BackOfficeController
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/subirImagenPublicidad", method = RequestMethod.POST)
 	@ResponseBody
-	public void subirImagenPublicidad(@RequestParam("imagen-publicidad-input") MultipartFile uploadfile) throws IOException
+	public String subirImagenPublicidad(@RequestParam("imagen-publicidad-input") MultipartFile uploadfile) throws IOException
 	{
-		pathImagenPublicidad = subirArchivo(uploadfile);
+		return subirArchivo(uploadfile);
 	}
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/subirImagenComercio", method = RequestMethod.POST)
 	@ResponseBody
-	public void subirImagenComercio(@RequestParam("logo-comercio-input") MultipartFile uploadfile) throws IOException
+	public String subirImagenComercio(@RequestParam("logo-comercio-input") MultipartFile uploadfile) throws IOException
 	{
-		pathImagenComercio = subirArchivo(uploadfile);
+		return subirArchivo(uploadfile);
 	}
 	
 	private String subirArchivo(MultipartFile uploadfile) throws IOException
@@ -125,6 +120,6 @@ public class BackOfficeController
 		BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
 		stream.write(uploadfile.getBytes());
 		stream.close();
-		return filepath.replace("\\", "/");
+		return String.format("/imagenes/%s", filename);
 	}
 }

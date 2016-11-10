@@ -23,15 +23,16 @@
 	{
 		$.ajax(
 		{
-			url: "/subirImagenPublicidad",
+			url: "${pageContext.request.contextPath}/subirImagenPublicidad",
 			type: "POST",
 			data: new FormData($("#agregarOferta-form")[0]),
 			enctype: 'multipart/form-data',
 			processData: false,
 			contentType: false,
 			cache: false,
-			success: function ()
+			success: function (data)
 			{
+				$("#imagen-publicidad").val(data);
 			}
 		});
 	}
@@ -40,21 +41,22 @@
 	{
 		$.ajax(
 		{
-			url: "/subirImagenComercio",
+			url: "${pageContext.request.contextPath}/subirImagenComercio",
 			type: "POST",
 			data: new FormData($("#agregarOferta-form")[0]),
 			enctype: 'multipart/form-data',
 			processData: false,
 			contentType: false,
 			cache: false,
-			success: function ()
+			success: function (data)
 			{
+				$("#logo-comercio").val(data);
 			}
 		});
 	}
 
 </script>
-<form action="/insertarOferta" id="agregarOferta-form" method="POST">
+<form action="${pageContext.request.contextPath}/insertarOferta" id="agregarOferta-form" method="POST">
 	<div id="agregarOferta">
 		<div class="row">
 			<div class="col-md-2">
@@ -156,6 +158,8 @@
 				</div>
 			</div>
 		</div>
+		<input type="hidden" id="logo-comercio" name="logo-comercio">
+		<input type="hidden" id="imagen-publicidad" name="imagen-publicidad">
 		<div class="row" align="center">
 			<div class="col-md-10">
 				<div class="form-group">
