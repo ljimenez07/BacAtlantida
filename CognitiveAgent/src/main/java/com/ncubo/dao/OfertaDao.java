@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -132,5 +134,13 @@ public class OfertaDao
 		Connection con = dao.openConBD();
 		con.createStatement().execute(query);
 		dao.closeConBD();
-	} 
+	}
+	
+	public List<Oferta> ultimasOfertas() throws ClassNotFoundException, SQLException
+	{
+		ArrayList<Oferta> ofertas = obtener();
+		Collections.sort(ofertas);
+		Collections.reverse(ofertas);
+		return ofertas.subList(0, 10);
+	}
 }

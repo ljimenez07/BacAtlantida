@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class Oferta
+public class Oferta implements Comparable<Oferta>
 {
 	private int idOferta;
 	private String tituloDeOferta;
@@ -193,8 +193,13 @@ public class Oferta
 		}
 		else
 		{
-			return String.format("%d segundos", TimeUnit.MILLISECONDS.toSeconds(tiempoTranscurridoEnMilisegundos));
+			return "un momento";
 		}
+	}
+	
+	public int compareTo(Oferta oferta)
+	{
+		return getFechaHoraRegistro().compareTo(oferta.getFechaHoraRegistro());
 	}
 
 }

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -90,9 +91,9 @@ public class BackOfficeController
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/ofertas", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody public ArrayList<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
+	@ResponseBody public List<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
 	{
-		return ofertaDao.obtener();
+		return ofertaDao.ultimasOfertas();
 	}
 	
 	@CrossOrigin(origins = "*")
