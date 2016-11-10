@@ -143,4 +143,16 @@ public class OfertaDao
 		Collections.reverse(ofertas);
 		return ofertas.subList(0, 10);
 	}
+
+	public Oferta obtener(int idOferta) throws ClassNotFoundException, SQLException
+	{
+		for(final Oferta oferta : obtener())
+		{
+			if(oferta.getIdOferta() == idOferta)
+			{
+				return oferta;
+			}
+		}
+		return null;
+	}
 }

@@ -60,10 +60,9 @@
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
 		
-		<script type="text/javascript" src="js/ofertas.js"></script>
-		
 		<script type="text/javascript" src="js/layout.handlebars.js"></script>
 		<script type="text/javascript" src="js/ofertas.handlebars.js"></script>
+		<script type="text/javascript" src="js/oferta.handlebars.js"></script>
 		<script type="text/javascript" src="js/chats.handlebars.js"></script>
 		
 		
@@ -81,14 +80,20 @@
 					var html = Handlebars.templates.layout(pantallas[$(this).data("href")]);
 					$(".app").html(html);
 				});
-				
-
-				
-				
 			});
+
+			function ofertas() {
+			  var context;
+			  $.ajax({
+			    url: serverDomain + "/ofertas",
+			    async: false,
+			    success: function(data) {
+			      context = {ofertas: data};
+			    }
+			  });
+
+			  return Handlebars.templates.ofertas(context);
+			}
 		</script>
-
-		
-
     </body>
 </html>

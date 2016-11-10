@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -97,6 +98,12 @@ public class BackOfficeController
 	}
 	
 	@CrossOrigin(origins = "*")
+	@RequestMapping(value = "/ofertas/{idOferta}", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody public Oferta oferta(@PathVariable int idOferta, HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
+	{
+		return ofertaDao.obtener(idOferta);
+	}
+	
 	@RequestMapping(value = "/subirImagenPublicidad", method = RequestMethod.POST)
 	@ResponseBody
 	public String subirImagenPublicidad(@RequestParam("imagen-publicidad-input") MultipartFile uploadfile) throws IOException
@@ -104,7 +111,6 @@ public class BackOfficeController
 		return subirArchivo(uploadfile);
 	}
 	
-	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/subirImagenComercio", method = RequestMethod.POST)
 	@ResponseBody
 	public String subirImagenComercio(@RequestParam("logo-comercio-input") MultipartFile uploadfile) throws IOException

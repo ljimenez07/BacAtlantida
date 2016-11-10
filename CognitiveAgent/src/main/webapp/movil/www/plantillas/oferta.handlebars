@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-xs-12">
+    {{#if esHtml}}
+      <div id="html-de-oferta"></div>
+    {{else}}
+      <img src="{{imagenPublicidadPath}}" class="imagen-de-oferta">
+    {{/if}}
+    <div class="row contenedor-de-botones">
+      <div class="col-xs-12">
+        <div class="tiempo-transcurrido">Hace {{tiempoTranscurrido}}</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <img src="./img/icono-94x91.png">
+      </div>
+    </div>
+    <div class="row contenedor-de-botones">
+      <div class="col-xs-6">
+      	<div class="row">
+      	  {{#if esUnUsuarioConocido}}
+            <div class="col-xs-3"><div class="boton-like {{like}}"></div></div>
+            <div class="col-xs-3"><div class="boton-dislike {{dislike}}"></div></div>
+          {{/if}}
+      	</div>
+      </div>
+      <div class="col-xs-6">
+        <div class="row">
+          <div class="col-xs-9"></div>
+            <div class="col-xs-3"><div class="boton-compartir"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
