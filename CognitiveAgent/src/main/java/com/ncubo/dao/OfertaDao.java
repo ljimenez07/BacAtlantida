@@ -141,7 +141,8 @@ public class OfertaDao
 		ArrayList<Oferta> ofertas = obtener();
 		Collections.sort(ofertas);
 		Collections.reverse(ofertas);
-		return ofertas.subList(0, 10);
+		int tamano = ofertas.size();
+		return ofertas.subList(0, tamano > 10 ? 10 : tamano);
 	}
 
 	public Oferta obtener(int idOferta) throws ClassNotFoundException, SQLException
