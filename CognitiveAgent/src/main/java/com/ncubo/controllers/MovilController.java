@@ -1,6 +1,7 @@
 package com.ncubo.controllers;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Date;
 
 import javax.mail.MessagingException;
@@ -50,7 +51,8 @@ public class MovilController {
 	@RequestMapping(value="/conversacion/{contexto}", method = RequestMethod.POST)
 	@ResponseBody String conversacion(@RequestBody String mensaje, @PathVariable String contexto) throws JSONException, JsonParseException, JsonMappingException, IOException, JDOMException 
 	{
-		
+		mensaje = URLDecoder.decode(mensaje, "UTF-8");
+		mensaje = mensaje.substring(0, mensaje.lastIndexOf('='));
 		return serverCognitivo.procesarMensaje(
 				contexto, 
 				mensaje, 
