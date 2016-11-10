@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `cognitiveagent`.`oferta` (
   `vigenciaHasta` date DEFAULT NULL,
   `imagenComercioPath` varchar(255) DEFAULT NULL,
   `imagenPublicidadPath` varchar(255) DEFAULT NULL,
-  `fechaHoraRegistro` datetime DEFAULT NULL,
+  `fechaHoraRegistro` timestamp DEFAULT NULL,
   PRIMARY KEY (`idOferta`, `categoria`),
   INDEX `fk_oferta_categoriaoferta_idx` (`categoria` ASC),
   CONSTRAINT `fk_oferta_categoriaoferta`
