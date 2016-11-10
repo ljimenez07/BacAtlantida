@@ -17,7 +17,6 @@
 <script>
 
 $(function(){
-
 	function initChats()
 	{
 		var conversation = $("#conversation");
@@ -61,7 +60,7 @@ $(function(){
 				type: "POST",
 				contentType :"text/plain; charset=UTF-8",
 				dataType : "json",
-				url : serverDomain+"/conversacion/"+contexto,
+				url : serverDomain+"/conversacion/{{pathDelServidor}}/"+contexto,
 				data : textoAEnviar
 			})
 			.done(function( data ) 

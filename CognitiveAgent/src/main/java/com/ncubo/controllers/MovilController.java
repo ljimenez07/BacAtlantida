@@ -39,19 +39,38 @@ public class MovilController {
 	private static int contadorDeContextos = 0;//TODO quitarlo de aquí y meterlo en la session
 	
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value="/conversacion/", method = RequestMethod.POST)
-	@ResponseBody String conversacionSinContexto(@RequestBody String mensaje, HttpServletRequest request) throws JSONException, JsonParseException, JsonMappingException, IOException, JDOMException 
+	@RequestMapping(value="/conversacion/chat/", method = RequestMethod.POST)
+	@ResponseBody String chatSinContexto(@RequestBody String mensaje, HttpServletRequest request) throws JSONException, JsonParseException, JsonMappingException, IOException, JDOMException 
 	{
 		contadorDeContextos = contadorDeContextos +1;
-		return conversacion( mensaje, ""+contadorDeContextos );
+		return chat( mensaje, ""+contadorDeContextos );
 	}
 	
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value="/conversacion/{contexto}", method = RequestMethod.POST)
-	@ResponseBody String conversacion(@RequestBody String mensaje, @PathVariable String contexto) throws JSONException, JsonParseException, JsonMappingException, IOException, JDOMException 
+	@RequestMapping(value="/conversacion/conocerte/", method = RequestMethod.POST)
+	@ResponseBody String conocerteSinContexto(@RequestBody String mensaje, HttpServletRequest request) throws JSONException, JsonParseException, JsonMappingException, IOException, JDOMException 
+	{
+		contadorDeContextos = contadorDeContextos +1;
+		return conocerte( mensaje, ""+contadorDeContextos );
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/chat/{contexto}", method = RequestMethod.POST)
+	@ResponseBody String chat(@RequestBody String mensaje, @PathVariable String contexto) throws JSONException, JsonParseException, JsonMappingException, IOException, JDOMException 
 	{
 		
-		return serverCognitivo.procesarMensaje(
+		return serverCognitivo.procesarMensajeChat(
+				contexto, 
+				mensaje, 
+				new Date() );
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/conocerte/{contexto}", method = RequestMethod.POST)
+	@ResponseBody String conocerte(@RequestBody String mensaje, @PathVariable String contexto) throws JSONException, JsonParseException, JsonMappingException, IOException, JDOMException 
+	{
+		
+		return serverCognitivo.procesarMensajeConocerte(
 				contexto, 
 				mensaje, 
 				new Date() );

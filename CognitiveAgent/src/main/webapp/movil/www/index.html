@@ -70,7 +70,8 @@
 		<script>
 			$(function(){
 				var pantallas = new Object();
-				pantallas["chats"] = {title: "Chat", body: '<ol id="conversation" class="chat" ></ol>', DebajoDelPanel: Handlebars.templates.chats()};
+				pantallas["chats"] = {title: "Chat", body: '<ol id="conversation" class="chat" ></ol>', DebajoDelPanel: Handlebars.templates.chats({"pathDelServidor":"chat"})};
+				pantallas["conocerte"] = {title: "Conocerte", body: '<ol id="conversation" class="chat" ></ol>', DebajoDelPanel: Handlebars.templates.chats({"pathDelServidor":"conocerte"})};
 				pantallas["inicio"] = {title: "Inicio", body: ofertas(), DebajoDelPanel: ""};
 				
 				var html = Handlebars.templates.layout(pantallas["inicio"]);
@@ -78,17 +79,84 @@
 				
 				$(".clickable").click(function()
 				{
-					var html = Handlebars.templates.layout(pantallas[$(this).data("href")]);
-					$(".app").html(html);
-				});
+					var before = $(this).data("before");
+					var after = $(this).data("after");
+					var href = $(this).data("href");
+					
+					if( before!= undefined )
+					{
+						eval(before);
+					}
+					
+					if(href != undefined )
+					{
+						var html = Handlebars.templates.layout(pantallas[href]);
+						$(".app").html(html);	
+					}
+					
+					if(after != undefined )
+					{
+						eval(after);
+					}
+				});	
 				
-
+				if( getCookie("mostrarpopupdeconocerte") == "" )
+				{
+					$("#popupconocerte").modal('show');
+				}
 				
 				
+				function quitarModal()
+				{
+					setCookie('mostrarpopupdeconocerte', true, 100);
+					$("#popupconocerte").modal('hide');
+				}
 			});
+
 		</script>
 
-		
+		<div id="popupconocerte" class="modal fade" style="display:none;"role="dialog">
+			<div class="modal-dialog modal-sm" style="background-color: white;">
+				<div class="modal-body">
+					 Permíteme conocerte, para ofrecerte mejores ofertas
+				</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6	col-xl-6 pull-left">
+							<button data-href="conocerte" data-after="quitarModal()" class="btn btn-default clickable">Si</button>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6	col-xl-6 pull-right">
+							<button data-after="quitarModal()" class="btn btn-default clickable">Ahora no</button>
+						</div>
+					</div>
+				</div>
+			</div>		
+		</div>
+		<script>
+		function getCookie(cname) {
+			var name = cname + "=";
+			var ca = document.cookie.split(';');
+			for(var i = 0; i <ca.length; i++) 
+			{
+				var c = ca[i];
+				while (c.charAt(0)==' ') 
+				{
+					c = c.substring(1);
+				}
+				if (c.indexOf(name) == 0) {
+					return c.substring(name.length,c.length);
+				}
+			}
+			return "";
+		}
+		function setCookie(cname, cvalue, exdays) 
+		{
+			var d = new Date();
+			d.setTime(d.getTime() + (exdays*24*60*60*1000));
+			var expires = "expires="+ d.toUTCString();
+			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+		}
+		</script>
 
-    </body>
+	</body>
 </html>

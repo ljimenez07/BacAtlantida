@@ -36,10 +36,23 @@ public class AgenteCognitivo
 {
 	private String user;
 	private String password;
-	private String workspace;
+	private String workspaceDeChats;
+	private String workspaceDeConocerte;
+	
 	private HashMap<String, JSONObject> contextoPorUsuario = new HashMap<String, JSONObject>(); //TODO quitarlo de aquí y meterlo en la session
 	
-	public String procesarMensaje(String contexto, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, JDOMException
+	public String procesarMensajeChat(String contexto, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, JDOMException
+	{
+		return procesarMensaje(contexto,mensaje,date, workspaceDeChats);
+	}
+	
+	public String procesarMensajeConocerte(String contexto, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, JDOMException
+	{
+		return procesarMensaje(contexto,mensaje,date, workspaceDeConocerte);
+	}
+	
+	
+	private String procesarMensaje(String contexto, String mensaje, Date date, String workspace) throws JsonParseException, JsonMappingException, IOException, JSONException, JDOMException
 	{
 		JSONObject respuesta = new JSONObject();
 		ObjectMapper mapper = new ObjectMapper();
@@ -175,10 +188,7 @@ public class AgenteCognitivo
 	{
 		return password;
 	}
-	public String getWorkspace() 
-	{
-		return workspace;
-	}
+	
 	public void setUser(String user) 
 	{
 		this.user = user;
@@ -187,10 +197,19 @@ public class AgenteCognitivo
 	{
 		this.password = password;
 	}
-	public void setWorkspace(String workspace) 
-	{
-		this.workspace = workspace;
+	public String getWorkspaceDeChats() {
+		return workspaceDeChats;
 	}
+	public void setWorkspaceDeChats(String workspaceDeChats) {
+		this.workspaceDeChats = workspaceDeChats;
+	}
+	public String getWorkspaceDeConocerte() {
+		return workspaceDeConocerte;
+	}
+	public void setWorkspaceDeConocerte(String workspaceDeConocerte) {
+		this.workspaceDeConocerte = workspaceDeConocerte;
+	}
+	
 	
 	
 	
