@@ -1,5 +1,7 @@
 package com.ncubo.conf;
 
+import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.path.xml.XmlPath.from;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,9 +29,9 @@ import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Intent;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageRequest;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
-
-import static com.jayway.restassured.RestAssured.given;
-
+import com.jayway.restassured.internal.path.xml.NodeChildrenImpl;
+import com.jayway.restassured.internal.path.xml.NodeImpl;
+import com.jayway.restassured.path.xml.XmlPath;
 @Component
 @ConfigurationProperties("servercognitivo")
 public class AgenteCognitivo 
@@ -77,58 +79,39 @@ public class AgenteCognitivo
 		if(intent.equals(Intencion.SALDO.toString()))
 		{
 			String requestBody = "<cor:consultaSaldo><activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <transaccionId>100128</transaccionId> <aplicacionId>?</aplicacionId> <paisId>?</paisId> <empresaId>?</empresaId> <regionId>?</regionId> <canalId>102 </canalId> <version>?</version> <llaveSesion></llaveSesion> <usuarioId></usuarioId> <token>?</token> <parametroAdicionalColeccion> <parametroAdicionalItem> <linea>0</linea> <tipoRegistro>UAI</tipoRegistro> <valor>TSTBASAPI01</valor> </parametroAdicionalItem> <parametroAdicionalItem> <linea>1</linea> <tipoRegistro>TC</tipoRegistro> <valor>M</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> <consultaSaldoColeccion> <tipoCuenta>4</tipoCuenta> <peticionId>?</peticionId> </consultaSaldoColeccion> </cor:consultaSaldo>";
-			String responseXML = given().body(requestBody).post("http://localhost:8080/Ecommerce/getOwnAccounts/").asString();
-			writeXmlFile(responseXML, "saldo");
-			SAXBuilder builder = new SAXBuilder();
-			File xmlFile = new File("src/main/resources/saldo.xml");
-			Document document = (Document) builder.build(xmlFile);
-			Element rootNode = document.getRootElement();
+			String responseXML = given().body(requestBody).post("http://localhost:8080/Ecommerce/getOwnAccounts/").andReturn().asString();
 			
-			List<?> nodos = rootNode.getChildren("productoColeccion");
-			Element productoColeccion = (Element) nodos.get(0);
-			String saldoContable = productoColeccion.getChild("cuentaColeccion").getChild("cuentaItem").getChild("saldoColeccion").getChildText("contable");
-			String texto = getText(response) + saldoContable;
-			respuesta.put("texto", texto);
+			XmlPath xmlPath = new XmlPath(responseXML).setRoot("Respuesta");
+			NodeChildrenImpl productoColeccion = xmlPath.get("productoColeccion");
+			NodeImpl cuentaColeccion = productoColeccion.get(0).get("cuentaColeccion");
+			List<?> lista = cuentaColeccion.get("cuentaItem");
+			NodeImpl saldoColecion = (NodeImpl) lista.get(0);
+			NodeImpl saldoContable = saldoColecion.get("saldoColeccion");
+			String texto = getText(response);
+			respuesta.put("texto", texto + saldoContable.get("contable"));
 
 		}
 		else if(intent.equals(Intencion.TASA_DE_CAMBIO.toString()))
 		{
 			String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tas=\"http://hn.infatlan.och/ws/ACD082/out/TasaCambio\"> <soapenv:Header/> <soapenv:Body> <tas:MT_TasaCambio> <activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <!--Optional:--> <transaccionId>100054</transaccionId> <!--Optional:--> <aplicacionId>?</aplicacionId> <paisId>?</paisId> <empresaId>?</empresaId> <!--Optional:--> <regionId>?</regionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <version>?</version> <!--Optional:--> <llaveSesion>?</llaveSesion> <!--Optional:--> <usuarioId>?</usuarioId> <!--Optional:--> <token>?</token> <!--Zero or more repetitions:--> <identificadorColeccion> <!--Optional:--> <was>?</was> <!--Optional:--> <pi>?</pi> <!--Optional:--> <omniCanal>?</omniCanal> <!--Optional:--> <recibo>?</recibo> <!--Optional:--> <numeroTransaccion>?</numeroTransaccion> </identificadorColeccion> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> <!--Optional:--> <logColeccion> <!--Zero or more repetitions:--> <logItem> <identificadorWas>?</identificadorWas> <!--Optional:--> <identificadorPi>?</identificadorPi> <!--Optional:--> <identificadorOmniCanal>?</identificadorOmniCanal> <!--Optional:--> <identificadorRecibo>?</identificadorRecibo> <!--Optional:--> <numeroPeticion>?</numeroPeticion> <!--Optional:--> <identificadorNumeroTransaccion>?</identificadorNumeroTransaccion> <!--Optional:--> <aplicacionId>?</aplicacionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <ambienteId>?</ambienteId> <!--Optional:--> <transaccionId>?</transaccionId> <!--Optional:--> <accion>?</accion> <!--Optional:--> <tipo>?</tipo> <!--Optional:--> <fecha>?</fecha> <!--Optional:--> <hora>?</hora> <!--Optional:--> <auxiliar1>?</auxiliar1> <!--Optional:--> <auxiliar2>?</auxiliar2> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> </logItem> </logColeccion> </tas:MT_TasaCambio> </soapenv:Body> </soapenv:Envelope>";
-			String responseXML = given().body(requestBody).post("http://localhost:8080/Ecommerce/getConversionRates/").asString();
-			writeXmlFile(responseXML, "tasa_cambio");
-			SAXBuilder builder = new SAXBuilder();
-			File xmlFile = new File("src/main/resources/tasa_cambio.xml");
-			Document document = (Document) builder.build(xmlFile);
-			Element rootNode = document.getRootElement();
+			String responseXML = given().body(requestBody).post("http://localhost:8080/Ecommerce/getConversionRates/").andReturn().asString();
 			
-			System.out.println(rootNode.getChildren("Body"));
-			List<?> nodos = rootNode.getChildren();
-			Element nodoRepuesta = null;
-			for(Object object : nodos)
-			{
-				Element nodo = (Element) object;
-				for(Object nuevoNodo : nodo.getChildren())
-				{
-					Element nuevoElement = (Element) nuevoNodo;
-					nodoRepuesta = (Element) nuevoElement.getChildren().get(0);
-				}
-				
-			}
-			Element tasaCambioColeccion = (Element) nodoRepuesta.getChildren().get(1);
-			StringBuilder tasasDeCambio = new StringBuilder();
-			for(Object tasaCambio : tasaCambioColeccion.getChildren())
-			{
-				Element tasaActual  = (Element) tasaCambio;
-				tasasDeCambio.append(" Moneda ");
-				tasasDeCambio.append(tasaActual.getChildText("moneda"));
-				tasasDeCambio.append(" Compra: ");
-				tasasDeCambio.append(tasaActual.getChildText("compra"));
-				tasasDeCambio.append(" Venta: ");
-				tasasDeCambio.append(tasaActual.getChildText("venta"));
-			}
+			XmlPath xmlPath = new XmlPath(responseXML).setRoot("Envelope");
+			NodeChildrenImpl body = xmlPath.get("Body");
+			NodeImpl tasa = body.get(0).get("MT_TasaCambioResponse");
+			List<?> codigo = tasa.getNode("Respuesta").getNode("tasaCambioColeccion").get("tasaCambioItem");
+			NodeImpl nodeTipoCambio = (NodeImpl) codigo.get(0);
+			NodeImpl compra = nodeTipoCambio.get("compra");
+			NodeImpl venta = nodeTipoCambio.get("venta");
+			String cambioUsd = "USD: " +  compra + " " + venta;
+			NodeImpl nodeTipoCambioEur = (NodeImpl) codigo.get(1);
+			compra = nodeTipoCambioEur.get("compra");
+			venta = nodeTipoCambioEur.get("venta");
+			String cambioEur = "EUR: " +  compra + " " + venta;
+
 			
 			String texto = getText(response);
-			respuesta.put("texto", texto + tasasDeCambio);
+			respuesta.put("texto", texto + cambioUsd + cambioEur);
 		}
 		else
 		{
