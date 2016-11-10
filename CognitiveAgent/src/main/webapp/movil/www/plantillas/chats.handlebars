@@ -59,7 +59,8 @@ $(function(){
 			
 			$.ajax({
 				type: "POST",
-				dataType   : "json",
+				contentType :"text/plain; charset=UTF-8",
+				dataType : "json",
 				url : serverDomain+"/conversacion/"+contexto,
 				data : textoAEnviar
 			})
