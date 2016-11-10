@@ -7,23 +7,16 @@ $(".boton-like, .boton-dislike").click(function() {
 });
 
 function ofertas() {
-  var context = {ofertas: []};
+  var context;
+  console.log(context);
   $.ajax({
     url: serverDomain+"/ofertas",
-    done: function(data) 
-	{
-		for(var i = 0; i < data.length; i++) 
-		{
-			var oferta = data[i];
-			var datosDeLaOferta = {
-				idOferta: oferta.idOferta,
-				imagen: "",
-				tiempoTranscurrido: oferta.idOferta,
-				esUnUsuarioConocido: false
-        };
-        context.ofertas.push(datosDeLaOferta);
+    async: false,
+    success: function(data) {
+      context = {ofertas: data};
+      console.log(context);
       }
-    }
   });
+
   return Handlebars.templates.ofertas(context);
 }

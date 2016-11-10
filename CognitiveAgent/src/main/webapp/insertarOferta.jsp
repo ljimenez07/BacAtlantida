@@ -30,8 +30,9 @@
 			processData: false,
 			contentType: false,
 			cache: false,
-			success: function ()
+			success: function (data)
 			{
+				$("#imagen-publicidad").val(data);
 			}
 		});
 	}
@@ -47,8 +48,9 @@
 			processData: false,
 			contentType: false,
 			cache: false,
-			success: function ()
+			success: function (data)
 			{
+				$("#logo-comercio").val(data);
 			}
 		});
 	}
@@ -156,6 +158,8 @@
 				</div>
 			</div>
 		</div>
+		<input type="hidden" id="logo-comercio" name="logo-comercio">
+		<input type="hidden" id="imagen-publicidad" name="imagen-publicidad">
 		<div class="row" align="center">
 			<div class="col-md-10">
 				<div class="form-group">

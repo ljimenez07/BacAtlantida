@@ -1,5 +1,9 @@
 package com.ncubo.data;
 
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 public class Oferta
 {
 	private int idOferta;
@@ -14,11 +18,11 @@ public class Oferta
 	private String vigenciahasta;
 	private String imagenComercioPath;
 	private String imagenPublicidadPath;
-	private String fechaHoraRegistro;
+	private Timestamp fechaHoraRegistro;
 
 	public Oferta(int idOferta, String tituloDeOferta, String comercio, String descripcion, CategoriaOferta categoria,
 			String ciudad, boolean estado, String restricciones, String vigenciaDesde, String vigenciahasta,
-			String imagenComercioPath, String imagenPublicidadPath, String fechaHoraRegistro)
+			String imagenComercioPath, String imagenPublicidadPath, Timestamp fechaHoraRegistro)
 	{
 		this.idOferta = idOferta;
 		this.tituloDeOferta = tituloDeOferta;
@@ -155,14 +159,42 @@ public class Oferta
 		this.imagenPublicidadPath = imagenPublicidadPath;
 	}
 
-	public String getFechaHoraRegistro()
+	public Timestamp getFechaHoraRegistro()
 	{
 		return fechaHoraRegistro;
 	}
 
-	public void setFechaHoraRegistro(String fechaHoraRegistro)
+	public void setFechaHoraRegistro(Timestamp fechaHoraRegistro)
 	{
 		this.fechaHoraRegistro = fechaHoraRegistro;
+	}
+	
+	public String getTiempoTranscurrido()
+	{
+		long fechaHoraRegistroEnMilisegundos = fechaHoraRegistro.getTime();
+		long fechaHoraActualEnMilisegundos = new Date().getTime();
+		long tiempoTranscurridoEnMilisegundos = fechaHoraActualEnMilisegundos - fechaHoraRegistroEnMilisegundos;
+		
+		long dias = TimeUnit.MILLISECONDS.toDays(tiempoTranscurridoEnMilisegundos);
+		long horas = TimeUnit.MILLISECONDS.toHours(tiempoTranscurridoEnMilisegundos);
+		long minutos = TimeUnit.MILLISECONDS.toMinutes(tiempoTranscurridoEnMilisegundos);
+		
+		if(dias > 0)
+		{
+			return String.format("%d días", dias);
+		}
+		else if(horas > 0)
+		{
+			return String.format("%d horas", horas);
+		}
+		else if(minutos > 0)
+		{
+			return String.format("%d minutos", minutos);
+		}
+		else
+		{
+			return String.format("%d segundos", TimeUnit.MILLISECONDS.toSeconds(tiempoTranscurridoEnMilisegundos));
+		}
 	}
 
 }

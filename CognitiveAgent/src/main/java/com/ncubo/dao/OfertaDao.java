@@ -91,7 +91,7 @@ public class OfertaDao
 					rs.getString(atributo.VIGENCIA_HASTA.toString()),
 					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
 					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
-					rs.getString(atributo.FECHA_HORA_REGISTRO.toString())
+					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString())
 					));
 		}
 		

@@ -5,7 +5,7 @@ templates['ofertas'] = template({"1":function(container,depth0,helpers,partials,
 
   return "  <div class=\"row\">\r\n    <div class=\"col-xs-12\">\r\n      <div class=\"row\">\r\n        <div class=\"col-xs-12\">\r\n          <img src=\""
     + alias4(((helper = (helper = helpers.imagenPublicidadPath || (depth0 != null ? depth0.imagenPublicidadPath : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"imagenPublicidadPath","hash":{},"data":data}) : helper)))
-    + "\" class=\"imagen-de-oferta\">\r\n        </div>\r\n      </div>\r\n      <div class=\"row contenedor-de-botones\">\r\n        <div class=\"col-xs-6\">\r\n          <div class=\"tiempo-transcurrido\">"
+    + "\" class=\"imagen-de-oferta\">\r\n        </div>\r\n      </div>\r\n      <div class=\"row contenedor-de-botones\">\r\n        <div class=\"col-xs-6\">\r\n          <div class=\"tiempo-transcurrido\">Hace "
     + alias4(((helper = (helper = helpers.tiempoTranscurrido || (depth0 != null ? depth0.tiempoTranscurrido : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"tiempoTranscurrido","hash":{},"data":data}) : helper)))
     + "</div>\r\n        </div>\r\n        <div class=\"col-xs-6\">\r\n          <div class=\"row\" id=\""
     + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
