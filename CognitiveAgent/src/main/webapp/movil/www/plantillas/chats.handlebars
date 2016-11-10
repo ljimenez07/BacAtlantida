@@ -1,13 +1,21 @@
 <div class="row">
-	<div class="col-md-11">
-		<input type="text" id="campoDeEntrada" class="form-control" >
+	<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10	col-xl-10">
+		<input placeholder="Escribe aquí" type="text" id="campoDeEntrada" class="form-control" >
 	</div>
-	<div class="col-md-1">
-		<button id="enviar" class="btn btn-default">Enviar</button>
+	<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2	col-xl-2">
+		<button id="enviar" class="btn btn-default"></button>
 	</div>
 </div>
+<style>
+	.panel-body
+	{
+		height: 350px;
+		overflow: scroll
+	}
+</style>
 
 <script>
+
 $(function(){
 
 	function initChats()

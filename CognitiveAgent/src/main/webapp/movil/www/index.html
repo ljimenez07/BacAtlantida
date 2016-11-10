@@ -71,7 +71,7 @@
 		<script>
 			$(function(){
 				var pantallas = new Object();
-				pantallas["chats"] = {title: "Chat", body: '<ol id="conversation"  ></ol>', DebajoDelPanel: Handlebars.templates.chats()};
+				pantallas["chats"] = {title: "Chat", body: '<ol id="conversation" class="chat" ></ol>', DebajoDelPanel: Handlebars.templates.chats()};
 				pantallas["inicio"] = {title: "Inicio", body: ofertas(), DebajoDelPanel: ""};
 				
 				var html = Handlebars.templates.layout(pantallas["inicio"]);
