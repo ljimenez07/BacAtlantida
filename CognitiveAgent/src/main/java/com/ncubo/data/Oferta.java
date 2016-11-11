@@ -15,7 +15,7 @@ public class Oferta implements Comparable<Oferta>
 	private boolean estado;
 	private String restricciones;
 	private String vigenciaDesde;
-	private String vigenciahasta;
+	private String vigenciaHasta;
 	private String imagenComercioPath;
 	private String imagenPublicidadPath;
 	private Timestamp fechaHoraRegistro;
@@ -33,7 +33,7 @@ public class Oferta implements Comparable<Oferta>
 		this.estado = estado;
 		this.restricciones = restricciones;
 		this.vigenciaDesde = vigenciaDesde;
-		this.vigenciahasta = vigenciahasta;
+		this.vigenciaHasta = vigenciahasta;
 		this.imagenComercioPath = imagenComercioPath;
 		this.imagenPublicidadPath = imagenPublicidadPath;
 		this.fechaHoraRegistro = fechaHoraRegistro;
@@ -129,14 +129,14 @@ public class Oferta implements Comparable<Oferta>
 		this.vigenciaDesde = vigenciaDesde;
 	}
 	
-	public String getVigenciahasta()
+	public String getVigenciaHasta()
 	{
-		return vigenciahasta;
+		return vigenciaHasta;
 	}
 	
-	public void setVigenciahasta(String vigenciahasta)
+	public void setVigenciaHasta(String vigenciaHasta)
 	{
-		this.vigenciahasta = vigenciahasta;
+		this.vigenciaHasta = vigenciaHasta;
 	}
 
 	public String getImagenComercioPath()
