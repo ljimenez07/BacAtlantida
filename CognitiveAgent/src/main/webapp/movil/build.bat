@@ -5,4 +5,5 @@ call handlebars ./www/plantillas/chats.handlebars -f ./www/js/chats.handlebars.j
 call handlebars ./www/plantillas/layout.handlebars -f ./www/js/layout.handlebars.js 
 call handlebars ./www/plantillas/ofertas.handlebars -f ./www/js/ofertas.handlebars.js 
 call handlebars ./www/plantillas/oferta.handlebars -f ./www/js/oferta.handlebars.js 
+call handlebars ./www/plantillas/popupconocerte.handlebars -f ./www/js/popupconocerte.handlebars.js 
 rem cordova run browser
