@@ -21,17 +21,6 @@
 			text-align: center;
 		}
 	</style>
-<script>
-	$(document).ready(function(){
-	$.ajax({ url: "${pageContext.request.contextPath}/cargarTablaDeOfertas",
-		context: document.body,
-		success : function(result)
-		{
-			$("#gestion-de-ofertas").html(result);
-		}
-		});
-	});
-</script>
 </head>
 <body>
 	<div class="container">
@@ -41,9 +30,6 @@
 				<li role="presentation"><a href="#">REACCIÓN DE OFERTAS</a></li>
 				<li role="presentation"><a href="#">CONSULTAS REALIZADAS</a></li>
 			</ul>
-		</div>
-		
-		<div id="gestion-de-ofertas">
 		</div>
 	</div>
 </body>
