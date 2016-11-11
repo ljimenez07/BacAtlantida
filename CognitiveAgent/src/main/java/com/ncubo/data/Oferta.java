@@ -1,24 +1,43 @@
 package com.ncubo.data;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class Oferta implements Comparable<Oferta>
 {
 	private int idOferta;
+	@NotEmpty
 	private String tituloDeOferta;
+	@NotEmpty
 	private String comercio;
+	@NotEmpty
 	private String descripcion;
 	private CategoriaOferta categoria;
+	@NotEmpty
 	private String ciudad;
 	private boolean estado;
+	@NotEmpty
 	private String restricciones;
+	@NotEmpty
 	private String vigenciaDesde;
+	@NotEmpty
 	private String vigenciaHasta;
+	@NotEmpty
 	private String imagenComercioPath;
+	@NotEmpty
 	private String imagenPublicidadPath;
 	private Timestamp fechaHoraRegistro;
+
+	public Oferta()
+	{
+		categoria = new CategoriaOferta();
+	}
 
 	public Oferta(int idOferta, String tituloDeOferta, String comercio, String descripcion, CategoriaOferta categoria,
 			String ciudad, boolean estado, String restricciones, String vigenciaDesde, String vigenciahasta,
@@ -131,12 +150,17 @@ public class Oferta implements Comparable<Oferta>
 	
 	public String getVigenciaHasta()
 	{
+		
 		return vigenciaHasta;
 	}
 	
-	public void setVigenciaHasta(String vigenciaHasta)
+	public void setVigenciaHasta(String vigenciaHasta) throws Exception
 	{
 		this.vigenciaHasta = vigenciaHasta;
+		if ( ! fechaHastaMayorAFechaDesde())
+		{
+			throw new Exception("Fechas Incorrectas");
+		}
 	}
 
 	public String getImagenComercioPath()
@@ -167,6 +191,21 @@ public class Oferta implements Comparable<Oferta>
 	public void setFechaHoraRegistro(Timestamp fechaHoraRegistro)
 	{
 		this.fechaHoraRegistro = fechaHoraRegistro;
+	}
+	
+	private boolean fechaHastaMayorAFechaDesde() throws ParseException
+	{
+		DateFormat formatter;
+		formatter = new SimpleDateFormat("yyyy/MM/dd");
+		Date fechaDesde = formatter.parse(vigenciaDesde.replace("-", "/"));
+		Timestamp timeStampFechaDesde = new Timestamp(fechaDesde.getTime());
+		Date fechaHasta = formatter.parse(vigenciaHasta.replace("-", "/"));
+		Timestamp timeStampFechaHasta = new Timestamp(fechaHasta.getTime());
+		
+		long fechaDesdeEnMilisegundos = timeStampFechaDesde.getTime();
+		long fechaHastaEnMilisegundos = timeStampFechaHasta.getTime();
+		
+		return fechaDesdeEnMilisegundos <= fechaHastaEnMilisegundos;
 	}
 	
 	public String getTiempoTranscurrido()

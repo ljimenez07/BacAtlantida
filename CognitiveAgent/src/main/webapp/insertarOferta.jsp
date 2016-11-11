@@ -155,8 +155,8 @@
 			<div class="row" align="center">
 				<div class="col-md-10">
 					<div class="form-group">
-						<button id="limpiar-submit" type="button" class="btn btn-default"
-							onclick="limpiarAgregarOfertaForm()">Limpiar</button>
+						<button id="limpiar-submit" type="button" class="btn btn-default" 
+								onclick="location.href='${pageContext.request.contextPath}/gestionDeOfertas'">Limpiar</button>
 						<button id="ingresar-submit" type="submit" class="btn btn-default">Ingresar</button>
 					</div>
 				</div>
