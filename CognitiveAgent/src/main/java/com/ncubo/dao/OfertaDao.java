@@ -111,7 +111,7 @@ public class OfertaDao
 							+ "," + (oferta.getEstado() ? 1 : 0)
 							+ ",'" + oferta.getRestricciones() + "'"
 							+ ",'" + oferta.getVigenciaDesde() + "'"
-							+ ",'" + oferta.getVigenciahasta() + "'"
+							+ ",'" + oferta.getVigenciaHasta() + "'"
 							+ ",'" + oferta.getImagenComercioPath() + "'"
 							+ ",'" + oferta.getImagenPublicidadPath() + "'"
 							+ ",'" + oferta.getFechaHoraRegistro() + "'";

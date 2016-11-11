@@ -12,7 +12,6 @@ public class Configuracion
 	private String usuario;
 	private String clave;
 	
-	
 	public String getUrl() 
 	{
 		return url;

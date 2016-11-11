@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<title>Gestión de Ofertas</title>
 	<script src="js/jquery.min.js"></script>
+	
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
 	<script type="text/javascript" src="js/bootstrap.js"></script>

@@ -1,10 +1,6 @@
 package com.ncubo.controllers;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -28,6 +24,7 @@ import com.ncubo.dao.CategoriaDao;
 import com.ncubo.dao.OfertaDao;
 import com.ncubo.data.CategoriaOferta;
 import com.ncubo.data.Oferta;
+import com.ncubo.util.GestorDeArchivos;
 
 @Controller
 public class BackOfficeController
@@ -36,17 +33,15 @@ public class BackOfficeController
 	private OfertaDao ofertaDao;
 	@Autowired
 	private CategoriaDao categoriaDao;
+	@Autowired
+	private GestorDeArchivos gestorDeArchivos;
 	
-	private String pathCarpetaImagenes = "./src/main/webapp/imagenes";
-	
-	@CrossOrigin(origins = "*")
 	@RequestMapping("/gestionDeOfertas")
 	public String visualizarOfertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
 	{
 		return "gestionDeOfertas";
 	}
 	
-	@CrossOrigin(origins = "*")
 	@RequestMapping("/cargarTablaDeOfertas")
 	public String cargarTablaDeOfertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
 	{
@@ -60,7 +55,6 @@ public class BackOfficeController
 		return "tablaDeOfertas";
 	}
 	
-	@CrossOrigin(origins = "*")
 	@RequestMapping("/cargarInsertarOfertas")
 	public String cargarInsertarOfertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
 	{
@@ -68,21 +62,20 @@ public class BackOfficeController
 		return "insertarOferta";
 	}
 	
-	@CrossOrigin(origins = "*")
 	@RequestMapping("/insertarOferta")
 	public String insertarOfertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
 	{
-		Oferta oferta = new Oferta(0, request.getParameter("tituloOferta-input"), 
-				request.getParameter("nombreComercio-input"), 
-				request.getParameter("descripcion-textarea"), 
-				new CategoriaOferta(Integer.parseInt(request.getParameter("categoria-select")), ""), 
-				request.getParameter("ciudad-combobox"), 
-				(request.getParameter("estado-select").equals("1") ? true : false), 
-				request.getParameter("restricciones-textarea"), 
-				request.getParameter("vigenciaDesde-input"), 
-				request.getParameter("vigenciaHasta-input"),
-				request.getParameter("logo-comercio"),
-				request.getParameter("imagen-publicidad"),
+		Oferta oferta = new Oferta(0, request.getParameter("tituloDeOferta"), 
+				request.getParameter("comercio"), 
+				request.getParameter("descripcion"), 
+				new CategoriaOferta(Integer.parseInt(request.getParameter("categoria")), ""), 
+				request.getParameter("ciudad"), 
+				(request.getParameter("estado").equals("1") ? true : false), 
+				request.getParameter("restricciones"), 
+				request.getParameter("vigenciaDesde"), 
+				request.getParameter("vigenciaHasta"),
+				request.getParameter("logoComercioPath"),
+				request.getParameter("imagenPublicidadPath"),
 				new Timestamp(new Date().getTime()));
 		
 		ofertaDao.insertar(oferta);
@@ -104,29 +97,19 @@ public class BackOfficeController
 		return ofertaDao.obtener(idOferta);
 	}
 	
-	@RequestMapping(value = "/subirImagenPublicidad", method = RequestMethod.POST)
 	@ResponseBody
+	@RequestMapping(value = "/subirImagenPublicidad", method = RequestMethod.POST)
 	public String subirImagenPublicidad(@RequestParam("imagen-publicidad-input") MultipartFile uploadfile) throws IOException
 	{
-		return subirArchivo(uploadfile);
+		return gestorDeArchivos.subirArchivo(uploadfile);
 	}
 	
-	@RequestMapping(value = "/subirImagenComercio", method = RequestMethod.POST)
 	@ResponseBody
+	@RequestMapping(value = "/subirImagenComercio", method = RequestMethod.POST)
 	public String subirImagenComercio(@RequestParam("logo-comercio-input") MultipartFile uploadfile) throws IOException
 	{
-		return subirArchivo(uploadfile);
+		String asd = gestorDeArchivos.subirArchivo(uploadfile);
+		return asd;
 	}
 	
-	private String subirArchivo(MultipartFile uploadfile) throws IOException
-	{
-		String filename = uploadfile.getOriginalFilename();
-		String directory = pathCarpetaImagenes;
-		String filepath = Paths.get(directory, filename).toString();
-
-		BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
-		stream.write(uploadfile.getBytes());
-		stream.close();
-		return String.format("/imagenes/%s", filename);
-	}
 }
