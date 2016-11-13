@@ -22,7 +22,14 @@
 			cache: false,
 			success: function (data)
 			{
-				$("#imagen-publicidad").val(data);
+				if(data == '')
+				{
+					$("#imagen-publicidad").val("");
+				}
+				else
+				{
+					$("#imagen-publicidad").val(data);
+				}
 			}
 		});
 	}
@@ -40,7 +47,14 @@
 			cache: false,
 			success: function (data)
 			{
-				$("#logo-comercio").val(data);
+				if(data == '')
+				{
+					$("#logo-comercio").val("");
+				}
+				else
+				{
+					$("#logo-comercio").val(data);
+				}
 			}
 		});
 	}
@@ -142,8 +156,8 @@
 				<div class="col-md-2">
 					<div class="form-group">
 						<label for="logo-label-lbl">Logo del comercio</label>
-						<input id="logo-comercio-input" type="file" name="logo-comercio-input" accept="*"/>
-						<p th:if="${#fields.hasErrors('imagenComercioPath')}" th:errors="*{imagenComercioPath}"/>
+						<input id="logo-comercio-input" type="file" name="logo-comercio-input" accept="image/*"/>
+						<p th:if="${#fields.hasErrors('imagenComercioPath')}" th:errors="*{imagenComercioPath}"  id="validador-imagen-comercio"/>
 						<!--  <label class="btn btn-default btn-file">Seleccionar archivo
 						<input type="file" style="display: none;" id="logo-comercio-input" >
 						</label>-->
@@ -152,7 +166,8 @@
 				<div class="col-md-3">
 					<div class="form-group">
 						<label for="publicidad-label-lbl">Imagen de publicidad</label> 
-						<input id="imagen-publicidad-input" type="file" name="imagen-publicidad-input" accept="*"/>
+						<input id="imagen-publicidad-input" type="file" name="imagen-publicidad-input" 
+						accept=".zip,image/*"/>
 						<p th:if="${#fields.hasErrors('imagenPublicidadPath')}" th:errors="*{imagenPublicidadPath}"/>
 					</div>
 				</div>

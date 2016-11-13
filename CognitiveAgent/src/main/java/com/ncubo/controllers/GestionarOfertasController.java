@@ -108,6 +108,10 @@ public class GestionarOfertasController
 	public String subirImagenPublicidad(@RequestParam("imagen-publicidad-input") MultipartFile uploadfile) throws IOException
 	{
 		System.out.println("Imagen publicidad");
+		if( ! gestorDeArchivos.esUnaImagen(uploadfile) || ! gestorDeArchivos.esUnArchivoComprimido(uploadfile))
+		{
+			return "";
+		}
 		return gestorDeArchivos.subirArchivo(uploadfile);
 	}
 	
@@ -116,6 +120,10 @@ public class GestionarOfertasController
 	public String subirImagenComercio(@RequestParam("logo-comercio-input") MultipartFile uploadfile) throws IOException
 	{
 		System.out.println("Imagen Comercio");
+		if( ! gestorDeArchivos.esUnaImagen(uploadfile))
+		{
+			return "";
+		}
 		return gestorDeArchivos.subirArchivo(uploadfile);
 	}
 	
