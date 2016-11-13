@@ -1,14 +1,70 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:include="fragments/gestionDeOfertas :: head (title='Gestión de ofertas')">
 	<meta charset="UTF-8"></meta>
+	
 </head>
+<style>
+		thead tr .text-center
+		{
+			font-family: 'Roboto', serif;
+			font-size: 16px;
+			font-weight: bold;
+			background-color: rgb(231,232,233);
+		}
+		
+		.td-tabla-ca
+		{
+			font-family: 'Roboto', serif;
+			font-size: 16px;
+		}
+		
+		.btn-default
+		{
+			font-family: 'Roboto', serif;
+			font-size: 19px;
+		}
+		
+		tbody tr:nth-child(even)
+		{
+			background-color: rgb(245,246,247);
+		}
+		
+		.boton-editar
+		{
+			border: none;
+			width: 32px;
+			height: 30px;
+			cursor: pointer;
+			background: url(../img/gestion-de-ofertas.png) 0 0;
+		}
+		
+		.boton-eliminar
+		{
+			border: none;
+			width: 32px;
+			height: 30px;
+			cursor: pointer;
+			background: url(../img/gestion-de-ofertas.png) -32px 0;
+		}
+		
+		.imagen-insertar-oferta
+		{
+			text-indent: 100vw;
+			width: 49px;
+			height: 49px;
+			cursor: pointer;
+			background: url(../img/sprite-rojo-45x45.png) -49px 0;
+		}
+		
+	</style>
 <body>
 <div th:include="fragments/gestionDeOfertas :: body"></div>
 <div class="container">
 	<div id="tabla-ofertas">
 		<form th:action="@{/modificarOferta}" th:method="get">
 		<div class="row">
-			<table class="table table-striped">
+			<div class="table-responsive">
+			<table class="table table-bordered">
 				<thead>
 					<tr>
 						<th class="text-center">Título de Oferta</th>
@@ -23,21 +79,22 @@
 				<tbody>
 					<th:block th:each="oferta : ${listaDeOfertas}">
 						<tr>
-							<td th:text="${oferta.tituloDeOferta}"/>
-							<td th:text="${oferta.comercio}"/>
-							<td th:text="${oferta.descripcion}"/>
-							<td th:text="${oferta.categoria.nombre}"/>
-							<td th:text="${oferta.ciudad}"/>
-							<td th:if="${oferta.estado}" th:text="Activa"/>
-							<td th:unless="${oferta.estado}" th:text="Inactiva"/>
-							<td> <button id="modificar-oferta-btn" type="submit" class="btn btn-default"
-								th:name="idOferta" th:value="${oferta.idOferta}">Editar</button></td>
-							<td> <button id="eliminar-oferta-btn" type="button" class="btn btn-default"
-								name="eliminar" th:value="${oferta.idOferta}">Eliminar</button></td>
+							<td class="td-tabla-ca" th:text="${oferta.tituloDeOferta}"/>
+							<td class="td-tabla-ca" th:text="${oferta.comercio}"/>
+							<td class="td-tabla-ca" th:text="${oferta.descripcion}"/>
+							<td class="td-tabla-ca" th:text="${oferta.categoria.nombre}"/>
+							<td class="td-tabla-ca" th:text="${oferta.ciudad}"/>
+							<td class="td-tabla-ca" th:if="${oferta.estado}" th:text="Activa"/>
+							<td class="td-tabla-ca" th:unless="${oferta.estado}" th:text="Inactiva"/>
+							<td class="text-center"> <button id="modificar-oferta-btn" type="submit" class="boton-editar"
+								th:name="idOferta" th:value="${oferta.idOferta}"></button></td>
+							<td class="text-center"> <button id="eliminar-oferta-btn" type="button" class="boton-eliminar"
+								name="eliminar" th:value="${oferta.idOferta}"></button></td>
 						</tr>
 					</th:block>
 				</tbody>
 			</table>
+			</div>
 		</div>
 		</form>
 		<form th:action="@{/insertarOferta}" method="GET">
@@ -46,7 +103,7 @@
 				<div class="col-md-12">
 					<div class="form-group">
 						<button id="mostrar-ingresar-oferta-submit" type="submit"
-							class="btn btn-default">Ingresar nueva oferta</button>
+							class="btn btn-default">Ingresar nueva oferta <img class="imagen-insertar-oferta" src=""/> </button>
 					</div>
 				</div>
 			</div>
