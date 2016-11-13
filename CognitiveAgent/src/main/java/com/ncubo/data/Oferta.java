@@ -12,25 +12,34 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Oferta implements Comparable<Oferta>
 {
 	private int idOferta;
-	@NotEmpty
+	
+	@NotEmpty(message = "*Título necesario")
 	private String tituloDeOferta;
-	@NotEmpty
+	
+	@NotEmpty(message = "*Comercio necesario")
 	private String comercio;
-	@NotEmpty
+	
+	@NotEmpty(message = "*Descripción necesaria")
 	private String descripcion;
 	private CategoriaOferta categoria;
-	@NotEmpty
+	
+	@NotEmpty(message = "*Ciudad necesaria")
 	private String ciudad;
 	private boolean estado;
-	@NotEmpty
+	
+	@NotEmpty(message = "*Restricciones necesarias")
 	private String restricciones;
-	@NotEmpty
+	
+	@NotEmpty(message = "*Fecha necesaria")
 	private String vigenciaDesde;
-	@NotEmpty
+	
+	@NotEmpty(message = "*Fecha necesaria")
 	private String vigenciaHasta;
-	@NotEmpty
+	
+	@NotEmpty(message = "*Logo necesario")
 	private String imagenComercioPath;
-	@NotEmpty
+	
+	@NotEmpty(message = "*Publicidad necesaria")
 	private String imagenPublicidadPath;
 	private Timestamp fechaHoraRegistro;
 
@@ -157,10 +166,6 @@ public class Oferta implements Comparable<Oferta>
 	public void setVigenciaHasta(String vigenciaHasta) throws Exception
 	{
 		this.vigenciaHasta = vigenciaHasta;
-		if ( ! fechaHastaMayorAFechaDesde())
-		{
-			throw new Exception("Fechas Incorrectas");
-		}
 	}
 
 	public String getImagenComercioPath()
@@ -193,8 +198,12 @@ public class Oferta implements Comparable<Oferta>
 		this.fechaHoraRegistro = fechaHoraRegistro;
 	}
 	
-	private boolean fechaHastaMayorAFechaDesde() throws ParseException
+	public boolean fechaHastaMayorAFechaDesde() throws ParseException
 	{
+		if(vigenciaDesde == null || vigenciaHasta == null || vigenciaDesde.equals("") || vigenciaHasta.equals(""))
+		{
+			return false;
+		}
 		DateFormat formatter;
 		formatter = new SimpleDateFormat("yyyy/MM/dd");
 		Date fechaDesde = formatter.parse(vigenciaDesde.replace("-", "/"));

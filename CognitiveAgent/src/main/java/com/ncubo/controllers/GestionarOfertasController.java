@@ -3,6 +3,7 @@ package com.ncubo.controllers;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,36 +42,50 @@ public class GestionarOfertasController
 	private GestorDeArchivos gestorDeArchivos;
 	
 	@RequestMapping("/gestionDeOfertas")
-	public String visualizarOfertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
+	public String visualizarOfertas(Model model) throws ClassNotFoundException, SQLException
 	{
 		ArrayList<Oferta> ofertas = ofertaDao.obtener();
 		if (ofertas.isEmpty())
 		{
-			request.setAttribute("categorias", categoriaDao.obtener());
-			return "insertarOferta";
+			return "redirect:insertarOferta";
 		}
-		request.setAttribute("listaDeOfertas", ofertas);
+		model.addAttribute("listaDeOfertas", ofertas);
 		return "tablaDeOfertas";
 	}
 	
-	@GetMapping("/insertarOfertas")
-	public String cargarInsertarOfertas(HttpServletRequest request, Oferta oferta) throws ClassNotFoundException, SQLException
+	@GetMapping("/insertarOferta")
+	public String cargarInsertarOfertas(Oferta oferta, Model model) throws ClassNotFoundException, SQLException
 	{
-		request.setAttribute("categorias", categoriaDao.obtener());
+		System.out.println("Cargar insertar oferta");
+		model.addAttribute("categorias", categoriaDao.obtener());
 		return "insertarOferta";
 	}
 	
-	@PostMapping("/insertarOfertas")
-	public String insertarOfertas(HttpServletRequest request, @Valid Oferta oferta, BindingResult bindingResult) throws ClassNotFoundException, SQLException
+	@PostMapping(value = "/insertarOferta", params="accion=ingresar")
+	public String insertarOfertas(@Valid Oferta oferta, BindingResult bindingResult, Model model) throws ClassNotFoundException, SQLException, ParseException
 	{
-		request.setAttribute("fields", bindingResult);
+		if( ! bindingResult.hasFieldErrors("vigenciaHasta"))
+		{
+			if( ! oferta.fechaHastaMayorAFechaDesde())
+			{
+				bindingResult.rejectValue("vigenciaHasta", "1", "*Fechas incorrectas");
+			}
+		}
+		
 		if (bindingResult.hasErrors())
 		{
-			return "redirect:insertarOfertas";
+			model.addAttribute("categorias", categoriaDao.obtener());
+			return null;
 		}
 		oferta.setFechaHoraRegistro(new Timestamp(new Date().getTime()));
 		ofertaDao.insertar(oferta);
 		
+		return "redirect:gestionDeOfertas";
+	}
+	
+	@PostMapping(value = "/insertarOferta", params="accion=limpiar")
+	public String insertarOfertasLimpiar(@Valid Oferta oferta, BindingResult bindingResult) throws ClassNotFoundException, SQLException
+	{
 		return "redirect:gestionDeOfertas";
 	}
 	
@@ -91,6 +107,7 @@ public class GestionarOfertasController
 	@RequestMapping(value = "/subirImagenPublicidad", method = RequestMethod.POST)
 	public String subirImagenPublicidad(@RequestParam("imagen-publicidad-input") MultipartFile uploadfile) throws IOException
 	{
+		System.out.println("Imagen publicidad");
 		return gestorDeArchivos.subirArchivo(uploadfile);
 	}
 	
@@ -98,8 +115,25 @@ public class GestionarOfertasController
 	@RequestMapping(value = "/subirImagenComercio", method = RequestMethod.POST)
 	public String subirImagenComercio(@RequestParam("logo-comercio-input") MultipartFile uploadfile) throws IOException
 	{
-		String asd = gestorDeArchivos.subirArchivo(uploadfile);
-		return asd;
+		System.out.println("Imagen Comercio");
+		return gestorDeArchivos.subirArchivo(uploadfile);
+	}
+	
+	@GetMapping(value = "/modificarOferta")
+	public String modificarOferta(Model model, int idOferta) throws ClassNotFoundException, SQLException
+	{
+		Oferta oferta = ofertaDao.obtener(idOferta);
+		model.addAttribute("oferta", oferta);
+		model.addAttribute("categorias", categoriaDao.obtener());
+		model.addAttribute("esModificarForm", true);
+		return "insertarOferta";
+	}
+	
+	@GetMapping("/eliminarOferta/{idOferta}")
+	public String eliminarOferta(@PathVariable int idOferta)
+	{
+		
+		return "insertarOferta";
 	}
 	
 }
