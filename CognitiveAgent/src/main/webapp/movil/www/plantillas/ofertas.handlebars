@@ -48,7 +48,7 @@ $(".imagen-de-oferta").click(function() {
   $.ajax({
     url: serverDomain + "/ofertas/" + id,
     success: function(data) {
-      $(".app").html(Handlebars.templates.layout({title: data.tituloDeOferta, body: Handlebars.templates.oferta(data), DebajoDelPanel: ""}));
+      $(".panel-body").html(Handlebars.templates.oferta(data));
     }
   });
 });
