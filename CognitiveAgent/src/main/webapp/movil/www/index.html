@@ -80,6 +80,11 @@
 
 			     return Handlebars.templates.ofertas(context);
 			   }
+		   function quitarModal()
+			{
+				setCookie('mostrarpopupdeconocerte', true, 100);
+				$("#popupconocerte").modal('hide');
+			}
 			$(function(){
 				
 				

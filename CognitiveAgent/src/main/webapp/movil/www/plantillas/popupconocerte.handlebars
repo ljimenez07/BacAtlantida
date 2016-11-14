@@ -16,15 +16,9 @@
 <script>
 	$(function()
 	{
-	alert("jj");
 		if( getCookie("mostrarpopupdeconocerte") == "" )
 		{
 			$("#popupconocerte").modal('show');
 		}	
 	});
-	function quitarModal()
-	{
-		setCookie('mostrarpopupdeconocerte', true, 100);
-		$("#popupconocerte").modal('hide');
-	}
 </script>
