@@ -19,6 +19,7 @@
 $(function(){
 	function initChats()
 	{
+		var chat = $(".chat");
 		var conversation = $("#conversation");
 		var campoDeEntrada = $("#campoDeEntrada");
 		var mensajeDeAgente = $('<li class="other"><div class="msg"><p></p><time>20:17</time></div></li>');
@@ -70,6 +71,13 @@ $(function(){
 				conversation.append(respuesta);
 				
 				contexto = data.contexto;
+				
+				chat.parent().animate({
+					scrollTop: chat.find("li").last().offset().top
+				}, 2000);
+				
+				
+				chat.scrollTop = chat.scrollHeight
 			});
 			
 		}
