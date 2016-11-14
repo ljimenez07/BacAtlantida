@@ -75,7 +75,9 @@
 <body>
 <div th:include="fragments/gestionDeOfertas :: body"></div>
 <div class="container">
-	<form id="agregarOferta-form" method="POST" th:action="@{/insertarOferta}" th:object="${oferta}" action="#">
+
+	<form id="agregarOferta-form" method="POST" th:action="@{/__${action}__}" th:object="${oferta}" action="#">
+	<input type="hidden" id="id-comercio" th:field="*{idOferta}"/>
 		<div id="agregarOferta">
 			<div class="row">
 				<div class="col-md-2">
@@ -190,9 +192,9 @@
 				<div class="col-md-10">
 					<div class="form-group">
 						<button id="limpiar-submit" type="submit" class="btn btn-default" name="accion" 
-							value="limpiar">Limpiar <img class="imagen-eliminar" src=""/></button>
+							value="limpiar"> Cancelar<img class="imagen-eliminar" src=""/></button>
 						<button id="ingresar-submit" type="submit" class="btn btn-default" name="accion" 
-							value="ingresar">Ingresar <img class="imagen-siguiente" src=""/></button>
+							value="ingresar"><span th:text="${nombreBotonPrincipal}" th:remove="tag"></span> <img th:class="${imagenBotonPrincipal}" src=""/> </button>
 					</div>
 				</div>
 			</div>

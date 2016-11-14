@@ -10,7 +10,7 @@
 	<link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}"></link>
 	<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
 	<link rel="stylesheet" th:href="@{/fonts/roboto.css}"></link>
-	<style>
+	<style th:inline="text">
 		body
 		{
 			padding-top: 50px;
@@ -35,7 +35,7 @@
 		.btn-default
 		{
 			font-family: 'Roboto', serif;
-			font-size: 19px;
+			font-size: 16px;
 			padding-bottom: 1px;
 			padding-top: 1px;
 		}
@@ -45,7 +45,8 @@
 			width: 32px;
 			height: 30px;
 			cursor: pointer;
-			background: url(../img/gestion-de-ofertas.png) 0 0;
+			background: url([[@{/img/gestion-de-ofertas.png}]]) 0 0;
+			
 		}
 		
 		.boton-eliminar
@@ -54,21 +55,29 @@
 			width: 32px;
 			height: 30px;
 			cursor: pointer;
-			background: url(../img/gestion-de-ofertas.png) -32px 0;
+			background: url([[@{/img/gestion-de-ofertas.png}]]) -32px 0;
 		}
 		.imagen-siguiente
 		{
 			width: 50px;
 			height: 49px;
 			cursor: pointer;
-			background: url(../img/sprite-rojo-45x45.png) -50px 0;
+			background: url([[@{/img/sprite-rojo-45x45.png}]]);
+			background-position: -51px 0;
+		}
+		.imagen-check
+		{
+			width: 50px;
+			height: 49px;
+			cursor: pointer;
+			background: url([[@{/img/sprite-rojo-45x45.png}]]) -255px 0;
 		}
 		.imagen-eliminar
 		{
 			width: 50px;
 			height: 49px;
 			cursor: pointer;
-			background: url(../img/sprite-rojo-45x45.png) -150px 0;
+			background: url([[@{/img/sprite-rojo-45x45.png}]]) -153px 0;
 		}
 	</style>
 </head>

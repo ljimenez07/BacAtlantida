@@ -156,4 +156,26 @@ public class OfertaDao
 		}
 		return null;
 	}
+
+	public void modificar(Oferta oferta) throws ClassNotFoundException, SQLException
+	{
+		String queryDatos =  atributo.TITULO_DE_OFERTA + " = '" + oferta.getTituloDeOferta() + "' , "
+				 + atributo.COMERCIO + " = '" + oferta.getComercio() + "' , "
+				 + atributo.DESCRIPCION + " = '" + oferta.getDescripcion() + "' , "
+				 + atributo.CATEGORIA + " = '" + oferta.getCategoria().getId() + "' , "
+				 + atributo.CIUDAD + " = '" + oferta.getCiudad() + "' , "
+				 + atributo.ESTADO + " = " + (oferta.getEstado() ? 1 : 0) + ","
+				 + atributo.RESTRICCIONES + " = '" + oferta.getRestricciones() + "' , "
+				 + atributo.VIGENCIA_DESDE + " = '" + oferta.getVigenciaDesde() + "' , "
+				 + atributo.VIGENCIA_HASTA + " = '" + oferta.getVigenciaHasta() + "' , "
+				 + atributo.IMAGEN_COMERCIO_PATH + " = '" + oferta.getImagenComercioPath() + "' , "
+				 + atributo.IMAGEN_PUBLICIDAD_PATH + " = '" + oferta.getImagenPublicidadPath() + "' , "
+				 + atributo.FECHA_HORA_REGISTRO + " = '" + oferta.getFechaHoraRegistro() + "'";
+		String query = "UPDATE " + NOMBRE_TABLA 
+				+ " SET " + queryDatos
+				+ " WHERE " + atributo.ID_OFERTA + " = " +oferta.getIdOferta() + ";";
+		Connection con = dao.openConBD();
+		con.createStatement().executeUpdate(query);
+		dao.closeConBD();
+	}
 }

@@ -50,6 +50,7 @@ public class GestorDeArchivos
 		String extension = FilenameUtils.getExtension(nombreArchivo);
 		boolean esUnArchivoComprimido = Arrays.asList(extensionesDeArchivosComprimidos).contains(extension.toLowerCase()); 
 		boolean esUnaImagen = Arrays.asList(formatoDeImagenes).contains(extension.toUpperCase());
+		new Descomprimir("").crearCarpetaDeArchivos(archivoDestino);
 		
 		if(esUnArchivoComprimido)
 		{
