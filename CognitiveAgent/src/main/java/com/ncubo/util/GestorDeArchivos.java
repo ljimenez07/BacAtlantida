@@ -23,6 +23,22 @@ public class GestorDeArchivos
 	private String[] extensionesDeArchivosComprimidos = {"zip"};
 	private String path;
 	
+	public boolean esUnArchivoComprimido(MultipartFile uploadfile)
+	{
+		String nombreArchivo = uploadfile.getOriginalFilename();
+		String extension = FilenameUtils.getExtension(nombreArchivo);
+		boolean esUnArchivoComprimido = Arrays.asList(extensionesDeArchivosComprimidos).contains(extension.toLowerCase()); 
+		return esUnArchivoComprimido;
+	}
+	
+	public boolean esUnaImagen(MultipartFile uploadfile)
+	{
+		String nombreArchivo = uploadfile.getOriginalFilename();
+		String extension = FilenameUtils.getExtension(nombreArchivo);
+		boolean esUnArchivoComprimido = Arrays.asList(formatoDeImagenes).contains(extension.toUpperCase());
+		return esUnArchivoComprimido;
+	}
+	
 	public String subirArchivo(MultipartFile uploadfile) throws IOException, ZipException
 	{
 		String nombreArchivo = uploadfile.getOriginalFilename();
@@ -49,18 +65,12 @@ public class GestorDeArchivos
 			borrarDirectorio(filepath);
 			filepath = urlDeAlmacenamiento;
 		}
-		else{
-			if(esUnaImagen)
-			{
-				filepath = path + "/"  + UUIDGenerado + nombreArchivo;
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
-				stream.write(uploadfile.getBytes());
-				stream.close();
-			}
-			else
-			{
-				//TODO no es ni imagen ni zip
-			}
+		if(esUnaImagen)
+		{
+			filepath = path + "/"  + UUIDGenerado + nombreArchivo;
+			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
+			stream.write(uploadfile.getBytes());
+			stream.close();
 		}
 		
 		return filepath;

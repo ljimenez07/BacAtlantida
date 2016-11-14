@@ -5,6 +5,8 @@ public class CategoriaOferta
 	private int id;
 	private String nombre;
 	
+	public CategoriaOferta(){ }
+	
 	public CategoriaOferta(int id, String nombre)
 	{
 		this.id = id;

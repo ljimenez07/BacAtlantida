@@ -1,0 +1,203 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/gestionDeOfertas :: head (title='Insertar Oferta')">
+	<meta charset="UTF-8"></meta>
+</head>
+<script>
+	$(document).ready(function()
+	{
+		$("#imagen-publicidad-input").on("change", subirImagenPublicidad);
+		$("#logo-comercio-input").on("change", subirImagenComercio);
+	});
+	
+	function subirImagenPublicidad()
+	{
+		$.ajax(
+		{
+			url: "subirImagenPublicidad",
+			type: "POST",
+			data: new FormData($("#agregarOferta-form")[0]),
+			enctype: 'multipart/form-data',
+			processData: false,
+			contentType: false,
+			cache: false,
+			success: function (data)
+			{
+				if(data == '')
+				{
+					$("#imagen-publicidad").val("");
+				}
+				else
+				{
+					$("#imagen-publicidad").val(data);
+				}
+			}
+		});
+	}
+		
+	function subirImagenComercio()
+	{
+		$.ajax(
+		{
+			url: "subirImagenComercio",
+			type: "POST",
+			data: new FormData($("#agregarOferta-form")[0]),
+			enctype: 'multipart/form-data',
+			processData: false,
+			contentType: false,
+			cache: false,
+			success: function (data)
+			{
+				if(data == '')
+				{
+					$("#logo-comercio").val("");
+				}
+				else
+				{
+					$("#logo-comercio").val(data);
+				}
+			}
+		});
+	}
+</script>
+<style>
+	.titulo-ca
+	{
+		font-family: 'Roboto', serif;
+		font-size: 16px;
+	}
+	.notas-ca
+	{
+		font-family: 'Roboto', serif;
+		font-size: 16px;
+		color: rgb(177,179,181);
+	}
+</style>
+<body>
+<div th:include="fragments/gestionDeOfertas :: body"></div>
+<div class="container">
+	<form id="agregarOferta-form" method="POST" th:action="@{/insertarOferta}" th:object="${oferta}" action="#">
+		<div id="agregarOferta">
+			<div class="row">
+				<div class="col-md-2">
+					<div class="form-group">
+						<label for="tituloOferta-lbl" class="titulo-ca">Título de oferta*</label>
+						<input type="text" class="form-control" th:field="*{tituloDeOferta}"/>
+						<p th:if="${#fields.hasErrors('tituloDeOferta')}" th:errors="*{tituloDeOferta}"/>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group">
+						<label for="nombreComercio-lbl" class="titulo-ca">Nombre del comercio*</label>
+						<input type="text" class="form-control" th:field="*{comercio}"/>
+						<p th:if="${#fields.hasErrors('comercio')}" th:errors="*{comercio}"/>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group">
+						<label for="ciudad-lbl" class="titulo-ca">Ciudad*</label>
+						<input type="text" class="form-control" th:field="*{ciudad}"/>
+						<p th:if="${#fields.hasErrors('ciudad')}" th:errors="*{ciudad}"/>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group">
+						<label for="categoria-lbl" class="titulo-ca">Categoría</label>
+						<div class="btn-group">
+							<select class="form-control" th:field="*{categoria.id}">
+							<option th:each="categoriaActual : ${categorias}" th:value="${categoriaActual.id}" th:text="${categoriaActual.nombre}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group">
+						<label for="estado-lbl" class="titulo-ca">Estado</label><br/>
+						<div class="btn-group">
+							<select class="form-control" th:field="*{estado}">
+								<option value="1">Activa</option>
+								<option value="0">Inactiva</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div>
+						<p class="notas-ca">* Solo las ofertas con estado "activa" serán mostradas en la aplicación.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-5">
+					<div class="form-group">
+						<label for="descripcion-lbl" class="titulo-ca">Descripción*</label>
+						<textarea class="form-control" rows="4" th:field="*{descripcion}"></textarea>
+						<p th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"/>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="form-group">
+						<label for="restricciones-lbl" class="titulo-ca">Restricciones*</label>
+						<textarea class="form-control" rows="4" th:field="*{restricciones}"></textarea>
+						<p th:if="${#fields.hasErrors('restricciones')}" th:errors="*{restricciones}"/>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-5">
+					<div>
+						<p class="notas-ca">*El usuario podrá escuchar esta descripción si presiona el
+							botón de audio, pero no se despliega como texto en la pantalla.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2">
+					<div class="form-group">
+						<label for="vigenciaDesde-lbl" class="titulo-ca">Vigencia desde*</label>
+						<input type="date" class="form-control" th:field="*{vigenciaDesde}"/>
+						<p th:if="${#fields.hasErrors('vigenciaDesde')}" th:errors="*{vigenciaDesde}"/>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label for="vigenciaHasta-lbl" class="titulo-ca">hasta*</label>
+						<input type="date" class="form-control" th:field="*{vigenciaHasta}"/>
+						<p th:if="${#fields.hasErrors('vigenciaHasta')}" th:errors="*{vigenciaHasta}"/>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group">
+						<label for="logo-label-lbl" class="titulo-ca">Logo del comercio*</label>
+						<input id="logo-comercio-input" type="file" name="logo-comercio-input" accept="image/*"/>
+						<p th:if="${#fields.hasErrors('imagenComercioPath')}" th:errors="*{imagenComercioPath}"  id="validador-imagen-comercio"/>
+						<!--  <label class="btn btn-default btn-file">Seleccionar archivo
+						<input type="file" style="display: none;" id="logo-comercio-input" >
+						</label>-->
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label for="publicidad-label-lbl" class="titulo-ca">Imagen de publicidad*</label> 
+						<input id="imagen-publicidad-input" type="file" name="imagen-publicidad-input" 
+						accept=".zip,image/*"/>
+						<p th:if="${#fields.hasErrors('imagenPublicidadPath')}" th:errors="*{imagenPublicidadPath}"/>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" id="logo-comercio" th:field="*{imagenComercioPath}"/>
+			<input type="hidden" id="imagen-publicidad" th:field="*{imagenPublicidadPath}"/>
+			<div class="row" align="center">
+				<div class="col-md-10">
+					<div class="form-group">
+						<button id="limpiar-submit" type="submit" class="btn btn-default" name="accion" 
+							value="limpiar">Limpiar <img class="imagen-eliminar" src=""/></button>
+						<button id="ingresar-submit" type="submit" class="btn btn-default" name="accion" 
+							value="ingresar">Ingresar <img class="imagen-siguiente" src=""/></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+</body>
+</html>

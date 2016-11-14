@@ -1,24 +1,52 @@
 package com.ncubo.data;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class Oferta implements Comparable<Oferta>
 {
 	private int idOferta;
+	
+	@NotEmpty(message = "*Título necesario")
 	private String tituloDeOferta;
+	
+	@NotEmpty(message = "*Comercio necesario")
 	private String comercio;
+	
+	@NotEmpty(message = "*Descripción necesaria")
 	private String descripcion;
 	private CategoriaOferta categoria;
+	
+	@NotEmpty(message = "*Ciudad necesaria")
 	private String ciudad;
 	private boolean estado;
+	
+	@NotEmpty(message = "*Restricciones necesarias")
 	private String restricciones;
+	
+	@NotEmpty(message = "*Fecha necesaria")
 	private String vigenciaDesde;
+	
+	@NotEmpty(message = "*Fecha necesaria")
 	private String vigenciaHasta;
+	
+	@NotEmpty(message = "*Logo necesario")
 	private String imagenComercioPath;
+	
+	@NotEmpty(message = "*Publicidad necesaria")
 	private String imagenPublicidadPath;
 	private Timestamp fechaHoraRegistro;
+
+	public Oferta()
+	{
+		categoria = new CategoriaOferta();
+	}
 
 	public Oferta(int idOferta, String tituloDeOferta, String comercio, String descripcion, CategoriaOferta categoria,
 			String ciudad, boolean estado, String restricciones, String vigenciaDesde, String vigenciahasta,
@@ -131,10 +159,11 @@ public class Oferta implements Comparable<Oferta>
 	
 	public String getVigenciaHasta()
 	{
+		
 		return vigenciaHasta;
 	}
 	
-	public void setVigenciaHasta(String vigenciaHasta)
+	public void setVigenciaHasta(String vigenciaHasta) throws Exception
 	{
 		this.vigenciaHasta = vigenciaHasta;
 	}
@@ -167,6 +196,25 @@ public class Oferta implements Comparable<Oferta>
 	public void setFechaHoraRegistro(Timestamp fechaHoraRegistro)
 	{
 		this.fechaHoraRegistro = fechaHoraRegistro;
+	}
+	
+	public boolean fechaHastaMayorAFechaDesde() throws ParseException
+	{
+		if(vigenciaDesde == null || vigenciaHasta == null || vigenciaDesde.equals("") || vigenciaHasta.equals(""))
+		{
+			return false;
+		}
+		DateFormat formatter;
+		formatter = new SimpleDateFormat("yyyy/MM/dd");
+		Date fechaDesde = formatter.parse(vigenciaDesde.replace("-", "/"));
+		Timestamp timeStampFechaDesde = new Timestamp(fechaDesde.getTime());
+		Date fechaHasta = formatter.parse(vigenciaHasta.replace("-", "/"));
+		Timestamp timeStampFechaHasta = new Timestamp(fechaHasta.getTime());
+		
+		long fechaDesdeEnMilisegundos = timeStampFechaDesde.getTime();
+		long fechaHastaEnMilisegundos = timeStampFechaHasta.getTime();
+		
+		return fechaDesdeEnMilisegundos <= fechaHastaEnMilisegundos;
 	}
 	
 	public String getTiempoTranscurrido()

@@ -34,10 +34,10 @@ $(function(){
 		});
 		
 		campoDeEntrada.keypress(function(e) {
-		  if(e.which == 13) 
-		  {
-			enviarAlServer({ textoAEnviar:campoDeEntrada.val()});
-		  }
+			if(e.which == 13) 
+			{
+				enviarAlServer({ textoAEnviar:campoDeEntrada.val()});
+			}
 		});
 		
 		enviarAlServer({sePuedenEnviarVaciosAlServer:true, imprimirElMensajeQueElUsuarioEscribioEnLaConversacion:false, textoAEnviar:"Hola"});
@@ -55,6 +55,8 @@ $(function(){
 				mensaje.find(".msg p").html(textoAEnviar);
 				campoDeEntrada.val("");
 				conversation.append(mensaje);
+				
+				moveScrollParaAbjoEnFuncionDelUltimoMEnsaje();
 			}
 			
 			$.ajax({
@@ -72,14 +74,14 @@ $(function(){
 				
 				contexto = data.contexto;
 				
-				chat.parent().animate({
-					scrollTop: chat.find("li").last().offset().top
-				}, 2000);
-				
-				
-				chat.scrollTop = chat.scrollHeight
+				moveScrollParaAbjoEnFuncionDelUltimoMEnsaje();
 			});
 			
+		}
+		function moveScrollParaAbjoEnFuncionDelUltimoMEnsaje()
+		{
+			console.log(chat.parent().height()+"  "+chat.parent()[0].scrollHeight+"   "+$(chat.parent()[0]).html());
+			chat.parent().scrollTop(chat.parent()[0].scrollHeight);
 		}
 
 	}
