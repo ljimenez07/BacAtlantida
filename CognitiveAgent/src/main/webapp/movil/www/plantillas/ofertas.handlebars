@@ -8,9 +8,32 @@
 {{#each ofertas}}
   <div class="row">
     <div class="col-xs-12">
-      <div class="row">
+      <div class="row datos-de-oferta" id="{{idOferta}}">
         <div class="col-xs-12">
-          <img src="{{imagenPublicidadPath}}" class="imagen-de-oferta" id="{{idOferta}}">
+          <div class="row">
+            <div class="col-xs-12">
+              {{#if esHtml}}
+                <div class="html-de-oferta" id="html-de-oferta-{{idOferta}}"></div>
+                <script type="text/javascript">
+                $.get("{{imagenPublicidadPath}}", function(data) {
+                  $("#html-de-oferta-{{idOferta}}").html(data);
+                });
+                </script>
+              {{else}}
+                <img src="{{imagenPublicidadPath}}" class="imagen-de-oferta">
+              {{/if}}
+            </div>
+          </div>
+          <div class="row nombre-del-comercio">
+            <div class="col-xs-12">
+              <strong>{{comercio}}</strong>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <span>{{tituloDeOferta}}</span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="row contenedor-de-botones">
@@ -18,7 +41,7 @@
           <div class="tiempo-transcurrido">Hace {{tiempoTranscurrido}}</div>
         </div>
         <div class="col-xs-6">
-          <div class="row" id="{{idOferta}}">
+          <div class="row" idOferta="{{idOferta}}">
             {{#if esUnUsuarioConocido}}
               <div class="col-xs-3"><div class="boton-like {{like}}"></div></div>
               <div class="col-xs-3"><div class="boton-dislike {{dislike}}"></div></div>
@@ -43,7 +66,7 @@ $(".boton-like, .boton-dislike").click(function() {
   $(this).toggleClass("activo").toggleClass("inactivo");
 });
 
-$(".imagen-de-oferta").click(function() {
+$(".datos-de-oferta").click(function() {
   var id = $(this).attr("id");
   $.ajax({
     url: serverDomain + "/ofertas/" + id,
