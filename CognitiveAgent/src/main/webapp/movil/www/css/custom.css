@@ -313,42 +313,47 @@ input
 
 .boton-like.activo {
   width: 25px;
-  height: 24px;
+  height: 25px;
   cursor: pointer;
   background: url(../img/iconos-rojos-24x23.png) 25px 0;
 }
 
 .boton-dislike.activo {
   width: 25px;
-  height: 24px;
+  height: 25px;
   cursor: pointer;
   background: url(../img/iconos-rojos-24x23.png) 0 0;
 }
 
 .boton-like.inactivo {
   width: 25px;
-  height: 24px;
+  height: 25px;
   cursor: pointer;
   background: url(../img/iconos-25x24.png) 56px 0;
 }
 
 .boton-dislike.inactivo {
   width: 25px;
-  height: 24px;
+  height: 25px;
   cursor: pointer;
   background: url(../img/iconos-25x24.png) 87px 0;
 }
 
 .boton-compartir {
   width: 25px;
-  height: 24px;
+  height: 25px;
   cursor: pointer;
   background: url(../img/iconos-25x24.png) 0 0;
 }
 
 .boton-escuchar {
   width: 25px;
-  height: 24px;
+  height: 25px;
   cursor: pointer;
   background: url(../img/iconos-25x24.png) 25px 0;
+}
+
+#mostrar-mas {
+  color: dodgerblue;
+  cursor: pointer;
 }

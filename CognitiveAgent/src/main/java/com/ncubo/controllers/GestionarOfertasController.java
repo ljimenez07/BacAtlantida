@@ -104,17 +104,25 @@ public class GestionarOfertasController
 	}
 	
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value = "/ofertas", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody public List<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
+	@GetMapping(value = "/ofertas", produces = "application/json")
+	@ResponseBody public List<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response, @RequestParam("pagina") int pagina) throws ClassNotFoundException, SQLException
 	{
-		return ofertaDao.ultimasOfertas();
+		int indiceInicial = (pagina - 1) * 10;
+		return ofertaDao.ultimasDiezOfertasDesde(indiceInicial);
 	}
 	
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value = "/ofertas/{idOferta}", method = RequestMethod.GET, produces = "application/json")
+	@GetMapping(value = "/ofertas/{idOferta}", produces = "application/json")
 	@ResponseBody public Oferta oferta(@PathVariable int idOferta, HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
 	{
 		return ofertaDao.obtener(idOferta);
+	}
+	
+	@CrossOrigin(origins = "*")
+	@GetMapping(value = "/ofertas/cantidad", produces = "application/json")
+	@ResponseBody public int cantidadDeOfertas(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
+	{
+		return ofertaDao.cantidad();
 	}
 	
 	@ResponseBody

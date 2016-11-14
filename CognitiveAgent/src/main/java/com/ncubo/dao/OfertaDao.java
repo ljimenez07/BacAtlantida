@@ -136,13 +136,20 @@ public class OfertaDao
 		dao.closeConBD();
 	}
 	
-	public List<Oferta> ultimasOfertas() throws ClassNotFoundException, SQLException
+	public ArrayList<Oferta> ultimasOfertas() throws ClassNotFoundException, SQLException
 	{
 		ArrayList<Oferta> ofertas = obtener();
 		Collections.sort(ofertas);
 		Collections.reverse(ofertas);
-		int tamano = ofertas.size();
-		return ofertas.subList(0, tamano > 10 ? 10 : tamano);
+		return ofertas;
+	}
+
+	public List<Oferta> ultimasDiezOfertasDesde(int indiceInicial) throws ClassNotFoundException, SQLException
+	{
+		ArrayList<Oferta> ultimasOfertas = ultimasOfertas();
+		int tamano = ultimasOfertas.size();
+		int indiceFinal = indiceInicial + 10;
+		return ultimasOfertas.subList(indiceInicial, tamano > indiceFinal ? indiceFinal : tamano);
 	}
 
 	public Oferta obtener(int idOferta) throws ClassNotFoundException, SQLException
@@ -155,6 +162,10 @@ public class OfertaDao
 			}
 		}
 		return null;
+	}
+
+	public int cantidad() throws ClassNotFoundException, SQLException {
+		return ultimasOfertas().size();
 	}
 
 	public void modificar(Oferta oferta) throws ClassNotFoundException, SQLException

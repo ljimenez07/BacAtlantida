@@ -229,15 +229,15 @@ public class Oferta implements Comparable<Oferta>
 		
 		if(dias > 0)
 		{
-			return String.format("%d días", dias);
+			return String.format("%d día%s", dias, dias == 1 ? "" : "s");
 		}
 		else if(horas > 0)
 		{
-			return String.format("%d horas", horas);
+			return String.format("%d hora%s", horas, horas == 1 ? "" : "s");
 		}
 		else if(minutos > 0)
 		{
-			return String.format("%d minutos", minutos);
+			return String.format("%d minuto%s", minutos, minutos == 1 ? "" : "s");
 		}
 		else
 		{

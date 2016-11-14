@@ -1,78 +1,77 @@
 <div class="row">
   <div class="col-xs-12">
-    <p><strong>¡Hola!</strong></p>
+    <p><strong>¡Hola!</strong></p><br>
     <p>Inicie sesi&oacute;n para que conozcas tus <strong>mejores beneficios</strong></p>
     <br>
   </div>
 </div>
-{{#each ofertas}}
+<div class="contenedor-de-ofertas">
+</div>
+{{#compare cantidad ">" 10}}
+  <br>
   <div class="row">
-    <div class="col-xs-12">
-      <div class="row datos-de-oferta" id="{{idOferta}}">
-        <div class="col-xs-12">
-          <div class="row">
-            <div class="col-xs-12">
-              {{#if esHtml}}
-                <div class="html-de-oferta" id="html-de-oferta-{{idOferta}}"></div>
-                <script type="text/javascript">
-                $.get("{{imagenPublicidadPath}}", function(data) {
-                  $("#html-de-oferta-{{idOferta}}").html(data);
-                });
-                </script>
-              {{else}}
-                <img src="{{imagenPublicidadPath}}" class="imagen-de-oferta">
-              {{/if}}
-            </div>
-          </div>
-          <div class="row nombre-del-comercio">
-            <div class="col-xs-12">
-              <strong>{{comercio}}</strong>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12">
-              <span>{{tituloDeOferta}}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row contenedor-de-botones">
-        <div class="col-xs-6">
-          <div class="tiempo-transcurrido">Hace {{tiempoTranscurrido}}</div>
-        </div>
-        <div class="col-xs-6">
-          <div class="row" idOferta="{{idOferta}}">
-            {{#if esUnUsuarioConocido}}
-              <div class="col-xs-3"><div class="boton-like {{like}}"></div></div>
-              <div class="col-xs-3"><div class="boton-dislike {{dislike}}"></div></div>
-            {{else}}
-              <div class="col-xs-6"></div>
-            {{/if}}
-            <div class="col-xs-3"><div class="boton-escuchar"></div></div>
-            <div class="col-xs-3"><div class="boton-compartir"></div></div>
-          </div>
-        </div>
-      </div>
+    <div class="col-xs-12 text-center">
+      <span id="mostrar-mas">Mostrar más</span>
     </div>
   </div>
-{{/each}}
+{{/compare}}
 
 <script type="text/javascript">
-$(".boton-like, .boton-dislike").click(function() {
-  var activo = $(this).parent().parent().find(".activo");
-  if(activo.attr('class') != $(this).attr('class')) {
-    activo.addClass("inactivo").removeClass("activo");
-  }
-  $(this).toggleClass("activo").toggleClass("inactivo");
-});
+var pagina = 1;
+cargarOfertas();
+pagina++;
 
-$(".datos-de-oferta").click(function() {
-  var id = $(this).attr("id");
+$("#mostrar-mas").click(function() {
   $.ajax({
-    url: serverDomain + "/ofertas/" + id,
+    url: serverDomain + "/ofertas/cantidad",
+    async: false,
     success: function(data) {
-      $(".panel-body").html(Handlebars.templates.oferta(data));
+  	  cargarOfertas();
+      var cantidadDeOfertasMostradas = pagina * 10;
+      console.log(cantidadDeOfertasMostradas);
+      console.log(data);
+      console.log(data < cantidadDeOfertasMostradas);
+      if(data < cantidadDeOfertasMostradas) {
+        $("#mostrar-mas").parent().parent().remove();
+      }
     }
   });
+  pagina++;
 });
+
+function bindAcciones() {
+	$(".datos-de-oferta").click(function() {
+	  var id = $(this).attr("id");
+	  $.ajax({
+	    url: serverDomain + "/ofertas/" + id,
+	    success: function(data) {
+	      $(".panel-body").html(Handlebars.templates.oferta(data));
+	    }
+	  });
+	});
+	
+	$(".boton-like, .boton-dislike").click(function() {
+	  var activo = $(this).parent().parent().find(".activo");
+	  if(activo.attr('class') != $(this).attr('class')) {
+	    activo.addClass("inactivo").removeClass("activo");
+	  }
+	  $(this).toggleClass("activo").toggleClass("inactivo");
+	});
+}
+
+function cargarOfertas() {
+  var context;
+  $.ajax({
+    url: serverDomain + "/ofertas",
+    data: {
+      pagina: pagina
+    },
+    async: false,
+    success: function(data) {
+      context = {ofertas: data};
+    }
+  });
+  $(".contenedor-de-ofertas").append(Handlebars.templates.listaDeOfertas(context));
+  bindAcciones();
+}
 </script>
