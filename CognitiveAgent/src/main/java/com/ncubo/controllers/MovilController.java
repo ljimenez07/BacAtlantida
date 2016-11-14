@@ -1,6 +1,7 @@
 package com.ncubo.controllers;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Date;
 
 import javax.mail.MessagingException;
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
-import org.jdom.JDOMException;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,40 +36,44 @@ public class MovilController {
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/chat/", method = RequestMethod.POST)
-	@ResponseBody String chatSinContexto(@RequestBody String mensaje, HttpServletRequest request) throws JSONException, JsonParseException, JsonMappingException, IOException, JDOMException 
+	@ResponseBody String chatSinContexto(@RequestBody String mensaje, HttpServletRequest request) throws JSONException, JsonParseException, JsonMappingException, IOException,  URISyntaxException 
 	{
 		contadorDeContextos = contadorDeContextos +1;
-		return chat( mensaje, ""+contadorDeContextos );
+		return chat( mensaje, ""+contadorDeContextos, request);
 	}
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/conocerte/", method = RequestMethod.POST)
-	@ResponseBody String conocerteSinContexto(@RequestBody String mensaje, HttpServletRequest request) throws JSONException, JsonParseException, JsonMappingException, IOException, JDOMException 
+	@ResponseBody String conocerteSinContexto(@RequestBody String mensaje, HttpServletRequest request) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException 
 	{
 		contadorDeContextos = contadorDeContextos +1;
-		return conocerte( mensaje, ""+contadorDeContextos );
+		return conocerte( mensaje, ""+contadorDeContextos, request);
 	}
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/chat/{contexto}", method = RequestMethod.POST)
-	@ResponseBody String chat(@RequestBody String mensaje, @PathVariable String contexto) throws JSONException, JsonParseException, JsonMappingException, IOException, JDOMException 
+	@ResponseBody String chat(@RequestBody String mensaje, @PathVariable String contexto,  HttpServletRequest request) throws JSONException, JsonParseException, JsonMappingException, IOException,  URISyntaxException 
 	{
 		
 		return serverCognitivo.procesarMensajeChat(
 				contexto, 
 				mensaje, 
-				new Date() );
+				new Date(),
+				request
+				);
 	}
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/conocerte/{contexto}", method = RequestMethod.POST)
-	@ResponseBody String conocerte(@RequestBody String mensaje, @PathVariable String contexto) throws JSONException, JsonParseException, JsonMappingException, IOException, JDOMException 
+	@ResponseBody String conocerte(@RequestBody String mensaje, @PathVariable String contexto, HttpServletRequest request) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException 
 	{
 		
 		return serverCognitivo.procesarMensajeConocerte(
 				contexto, 
 				mensaje, 
-				new Date() );
+				new Date(),
+				request
+				);
 	}
 	
 	@ExceptionHandler(Throwable.class)
