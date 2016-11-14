@@ -4,59 +4,26 @@
 	
 </head>
 <style>
-		thead tr .text-center
-		{
-			font-family: 'Roboto', serif;
-			font-size: 16px;
-			font-weight: bold;
-			background-color: rgb(231,232,233);
-		}
-		
-		.td-tabla-ca
-		{
-			font-family: 'Roboto', serif;
-			font-size: 16px;
-		}
-		
-		.btn-default
-		{
-			font-family: 'Roboto', serif;
-			font-size: 19px;
-		}
-		
-		tbody tr:nth-child(even)
-		{
-			background-color: rgb(245,246,247);
-		}
-		
-		.boton-editar
-		{
-			border: none;
-			width: 32px;
-			height: 30px;
-			cursor: pointer;
-			background: url(../img/gestion-de-ofertas.png) 0 0;
-		}
-		
-		.boton-eliminar
-		{
-			border: none;
-			width: 32px;
-			height: 30px;
-			cursor: pointer;
-			background: url(../img/gestion-de-ofertas.png) -32px 0;
-		}
-		
-		.imagen-insertar-oferta
-		{
-			text-indent: 100vw;
-			width: 49px;
-			height: 49px;
-			cursor: pointer;
-			background: url(../img/sprite-rojo-45x45.png) -49px 0;
-		}
-		
-	</style>
+	thead tr .text-center
+	{
+		font-family: 'Roboto', serif;
+		font-size: 16px;
+		font-weight: bold;
+		background-color: rgb(231,232,233);
+	}
+	
+	.td-tabla-ca
+	{
+		font-family: 'Roboto', serif;
+		font-size: 16px;
+	}
+	tbody tr:nth-child(even)
+	{
+		background-color: rgb(245,246,247);
+	}
+	
+	
+</style>
 <body>
 <div th:include="fragments/gestionDeOfertas :: body"></div>
 <div class="container">
@@ -103,7 +70,7 @@
 				<div class="col-md-12">
 					<div class="form-group">
 						<button id="mostrar-ingresar-oferta-submit" type="submit"
-							class="btn btn-default">Ingresar nueva oferta <img class="imagen-insertar-oferta" src=""/> </button>
+							class="btn btn-default">Ingresar nueva oferta <img class="imagen-siguiente" src=""/> </button>
 					</div>
 				</div>
 			</div>

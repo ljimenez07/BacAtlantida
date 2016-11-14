@@ -58,8 +58,20 @@
 			}
 		});
 	}
-
 </script>
+<style>
+	.titulo-ca
+	{
+		font-family: 'Roboto', serif;
+		font-size: 16px;
+	}
+	.notas-ca
+	{
+		font-family: 'Roboto', serif;
+		font-size: 16px;
+		color: rgb(177,179,181);
+	}
+</style>
 <body>
 <div th:include="fragments/gestionDeOfertas :: body"></div>
 <div class="container">
@@ -68,28 +80,28 @@
 			<div class="row">
 				<div class="col-md-2">
 					<div class="form-group">
-						<label for="tituloOferta-lbl">Título de oferta*</label>
+						<label for="tituloOferta-lbl" class="titulo-ca">Título de oferta*</label>
 						<input type="text" class="form-control" th:field="*{tituloDeOferta}"/>
 						<p th:if="${#fields.hasErrors('tituloDeOferta')}" th:errors="*{tituloDeOferta}"/>
 					</div>
 				</div>
 				<div class="col-md-2">
 					<div class="form-group">
-						<label for="nombreComercio-lbl">Nombre del comercio*</label>
+						<label for="nombreComercio-lbl" class="titulo-ca">Nombre del comercio*</label>
 						<input type="text" class="form-control" th:field="*{comercio}"/>
 						<p th:if="${#fields.hasErrors('comercio')}" th:errors="*{comercio}"/>
 					</div>
 				</div>
 				<div class="col-md-2">
 					<div class="form-group">
-						<label for="ciudad-lbl">Ciudad*</label>
+						<label for="ciudad-lbl" class="titulo-ca">Ciudad*</label>
 						<input type="text" class="form-control" th:field="*{ciudad}"/>
 						<p th:if="${#fields.hasErrors('ciudad')}" th:errors="*{ciudad}"/>
 					</div>
 				</div>
 				<div class="col-md-2">
 					<div class="form-group">
-						<label for="categoria-lbl">Categoría</label>
+						<label for="categoria-lbl" class="titulo-ca">Categoría</label>
 						<div class="btn-group">
 							<select class="form-control" th:field="*{categoria.id}">
 							<option th:each="categoriaActual : ${categorias}" th:value="${categoriaActual.id}" th:text="${categoriaActual.nombre}"></option>
@@ -99,7 +111,7 @@
 				</div>
 				<div class="col-md-2">
 					<div class="form-group">
-						<label for="estado-lbl">Estado</label><br/>
+						<label for="estado-lbl" class="titulo-ca">Estado</label><br/>
 						<div class="btn-group">
 							<select class="form-control" th:field="*{estado}">
 								<option value="1">Activa</option>
@@ -110,21 +122,21 @@
 				</div>
 				<div class="col-md-2">
 					<div>
-						<p>* Solo las ofertas con estado "activa" serán mostradas en la aplicación.</p>
+						<p class="notas-ca">* Solo las ofertas con estado "activa" serán mostradas en la aplicación.</p>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-5">
 					<div class="form-group">
-						<label for="descripcion-lbl">Descripción*</label>
+						<label for="descripcion-lbl" class="titulo-ca">Descripción*</label>
 						<textarea class="form-control" rows="4" th:field="*{descripcion}"></textarea>
 						<p th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"/>
 					</div>
 				</div>
 				<div class="col-md-5">
 					<div class="form-group">
-						<label for="restricciones-lbl">Restricciones*</label>
+						<label for="restricciones-lbl" class="titulo-ca">Restricciones*</label>
 						<textarea class="form-control" rows="4" th:field="*{restricciones}"></textarea>
 						<p th:if="${#fields.hasErrors('restricciones')}" th:errors="*{restricciones}"/>
 					</div>
@@ -133,7 +145,7 @@
 			<div class="row">
 				<div class="col-md-5">
 					<div>
-						<p>*El usuario podrá escuchar esta descripción si presiona el
+						<p class="notas-ca">*El usuario podrá escuchar esta descripción si presiona el
 							botón de audio, pero no se despliega como texto en la pantalla.</p>
 					</div>
 				</div>
@@ -141,21 +153,21 @@
 			<div class="row">
 				<div class="col-md-2">
 					<div class="form-group">
-						<label for="vigenciaDesde-lbl">Vigencia desde*</label>
+						<label for="vigenciaDesde-lbl" class="titulo-ca">Vigencia desde*</label>
 						<input type="date" class="form-control" th:field="*{vigenciaDesde}"/>
 						<p th:if="${#fields.hasErrors('vigenciaDesde')}" th:errors="*{vigenciaDesde}"/>
 					</div>
 				</div>
 				<div class="col-md-3">
 					<div class="form-group">
-						<label for="vigenciaHasta-lbl">hasta*</label>
+						<label for="vigenciaHasta-lbl" class="titulo-ca">hasta*</label>
 						<input type="date" class="form-control" th:field="*{vigenciaHasta}"/>
 						<p th:if="${#fields.hasErrors('vigenciaHasta')}" th:errors="*{vigenciaHasta}"/>
 					</div>
 				</div>
 				<div class="col-md-2">
 					<div class="form-group">
-						<label for="logo-label-lbl">Logo del comercio</label>
+						<label for="logo-label-lbl" class="titulo-ca">Logo del comercio*</label>
 						<input id="logo-comercio-input" type="file" name="logo-comercio-input" accept="image/*"/>
 						<p th:if="${#fields.hasErrors('imagenComercioPath')}" th:errors="*{imagenComercioPath}"  id="validador-imagen-comercio"/>
 						<!--  <label class="btn btn-default btn-file">Seleccionar archivo
@@ -165,7 +177,7 @@
 				</div>
 				<div class="col-md-3">
 					<div class="form-group">
-						<label for="publicidad-label-lbl">Imagen de publicidad</label> 
+						<label for="publicidad-label-lbl" class="titulo-ca">Imagen de publicidad*</label> 
 						<input id="imagen-publicidad-input" type="file" name="imagen-publicidad-input" 
 						accept=".zip,image/*"/>
 						<p th:if="${#fields.hasErrors('imagenPublicidadPath')}" th:errors="*{imagenPublicidadPath}"/>
@@ -177,8 +189,10 @@
 			<div class="row" align="center">
 				<div class="col-md-10">
 					<div class="form-group">
-						<button id="limpiar-submit" type="submit" class="btn btn-default" name="accion" value="limpiar">Limpiar</button>
-						<button id="ingresar-submit" type="submit" class="btn btn-default" name="accion" value="ingresar">Ingresar</button>
+						<button id="limpiar-submit" type="submit" class="btn btn-default" name="accion" 
+							value="limpiar">Limpiar <img class="imagen-eliminar" src=""/></button>
+						<button id="ingresar-submit" type="submit" class="btn btn-default" name="accion" 
+							value="ingresar">Ingresar <img class="imagen-siguiente" src=""/></button>
 					</div>
 				</div>
 			</div>
