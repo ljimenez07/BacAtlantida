@@ -1,0 +1,238 @@
+package com.ncubo.chatbot.watson;
+
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
+import com.ibm.watson.developer_cloud.conversation.v1.model.MessageRequest;
+import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
+import com.ibm.watson.developer_cloud.service.exception.BadRequestException;
+import com.ibm.watson.developer_cloud.service.exception.InternalServerErrorException;
+import com.ibm.watson.developer_cloud.service.exception.UnauthorizedException;
+import com.ncubo.chatbot.configuracion.Constantes;
+import com.ncubo.chatbot.parser.Operador;
+import com.ncubo.chatbot.parser.Operador.TipoDeOperador;
+import com.ibm.watson.developer_cloud.conversation.v1.model.Intent;
+import com.ibm.watson.developer_cloud.conversation.v1.model.Entity;
+
+public class ConversationWatson {
+
+	private ConversationService service;
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private String usuario;
+	private String contrasena;
+	private String idConversacion;
+	
+	public ConversationWatson(String usuario, String contrasena, String idConversacion) {
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		//get current date time with Date()
+		Date date = new Date();
+		this.service = new ConversationService(dateFormat.format(date));
+		this.service.setUsernameAndPassword(usuario, contrasena);
+		this.usuario = usuario;
+		this.contrasena = contrasena;
+		this.idConversacion = idConversacion;
+	}
+	
+	public String getMSJ(String jsonData){
+		String result = "";
+		try{
+			JSONObject obj;
+			obj = new JSONObject(jsonData);
+			obj = new JSONObject(obj.get("output").toString());
+			result = obj.getJSONArray("text").toString().replace("[", "").replace("]", "").replace("\"", "");
+			logger.info("Watson response: "+result);
+		}catch (Exception e){
+			logger.info("Watson response: "+jsonData);
+		}
+		return result;
+	}
+	
+	/*public String getIntents(String jsonData){
+		String result = "";
+		try{
+			JSONObject obj;
+			obj = new JSONObject(jsonData);
+			//obj = new JSONArray(obj.getJSONArray("intents"));
+			//result = obj.getJSONArray("text").toString().replace("[", "").replace("]", "").replace("\"", "");
+			result = obj.getJSONArray("intents").toString();
+			logger.info("Watson Intents: "+result);
+		}catch (Exception e){
+			logger.info("Watson Intents: "+jsonData);
+		}
+		return result;
+	}*/
+	
+	public Intenciones probablesIntenciones(MessageResponse response){
+		
+		Intenciones intenciones = new Intenciones();
+		List<Intent> intents = response.getIntents();
+		for(int i = 0; i < intents.size(); i++ )
+		{
+			intenciones.agregar(new Intencion(intents.get(i).getIntent(), intents.get(i).getConfidence().doubleValue()){});
+		}
+		return intenciones;
+	}
+	
+	/*public String getEntities(String jsonData){
+		String result = "";
+		try{
+			JSONObject obj;
+			obj = new JSONObject(jsonData);
+			//obj = new JSONArray(obj.getJSONArray("intents"));
+			//result = obj.getJSONArray("text").toString().replace("[", "").replace("]", "").replace("\"", "");
+			result = obj.getJSONArray("entities").toString();
+			logger.info("Watson Entities: "+result);
+		}catch (Exception e){
+			logger.info("Watson Entities: "+jsonData);
+		}
+		return result;
+	}*/
+	
+	/**
+	   * This method is used to get the entities identified in the user input
+	   * @param response The response returned by the service including output, input and context
+	   * @return The entities identified in the user input
+	   */
+	public Entidades entidadesQueWatsonIdentifico(MessageResponse response)
+	{
+		Entidades misEntidades = new Entidades();
+		List<Entity> entities = response.getEntities();
+		for(int i = 0; i < entities.size(); i++ ){
+			Hashtable<String, Operador> valores = new Hashtable<String, Operador>();
+			valores.put(entities.get(i).getValue(), new Operador(TipoDeOperador.AND));
+			misEntidades.agregar(new Entidad(entities.get(i).getEntity(), valores));
+		}
+		return misEntidades;
+	}
+	
+	public MessageResponse enviarMSG(String msg, Map<String, Object> myContext){
+		logger.info("Asking to Watson: "+msg);
+		MessageResponse response = null;
+		try {
+		  // Your code goes here
+			MessageRequest newMessage = new MessageRequest.Builder()
+					.inputText(msg)
+					//.entity(new Entity("countries", "Costa Rica", null))
+					//.intent(new Intent("want_house", null))
+					.context(myContext)
+					.build();
+			
+			response = service.message(idConversacion, newMessage).execute();
+			logger.info("Watson Reponse: "+response.toString());
+		} catch (IllegalArgumentException e) {
+		  // Missing or invalid parameter
+			logger.info("Error1: "+e.getMessage()+" al enviar text");
+		} catch (BadRequestException e) {
+		  // Missing or invalid parameter
+			logger.info("Error2: "+e.getMessage()+" al enviar text");
+		} catch (UnauthorizedException e) {
+		  // Access is denied due to invalid credentials
+			logger.info("Error3: "+e.getMessage()+" al enviar text");
+		} catch (InternalServerErrorException e) {
+		  // Internal Server Error
+			logger.info("Error4: "+e.getMessage()+" al enviar text");
+		}
+		
+		return response;
+	}
+	
+	public MessageResponse enviarAWatson(String msg, String context){
+		logger.info("Asking to Watson: "+msg);
+		JSONObject obj = null;
+		try {
+			obj = new JSONObject(context);
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> myContext = null;
+		try {
+			myContext = mapper.readValue(obj.toString(), new TypeReference<Map<String, Object>>(){});
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		MessageResponse response = null;
+		try {
+		  // Your code goes here
+			MessageRequest newMessage = new MessageRequest.Builder()
+					.inputText(msg)
+					.alternateIntents(true)
+					//.entity(new Entity("countries", "Costa Rica", null))
+					//.intent(new Intent("want_house", null))
+					.context(myContext)
+					.build();
+			
+			response = service.message(idConversacion, newMessage).execute();
+			logger.info("Watson Reponse: "+response.toString());
+		} catch (IllegalArgumentException e) {
+		  // Missing or invalid parameter
+			logger.info("Error1: "+e.getMessage()+" al enviar text");
+		} catch (BadRequestException e) {
+		  // Missing or invalid parameter
+			logger.info("Error2: "+e.getMessage()+" al enviar text");
+		} catch (UnauthorizedException e) {
+		  // Access is denied due to invalid credentials
+			logger.info("Error3: "+e.getMessage()+" al enviar text");
+		} catch (InternalServerErrorException e) {
+		  // Internal Server Error
+			logger.info("Error4: "+e.getMessage()+" al enviar text");
+		}
+		
+		return response;
+	}
+	
+	public String activarTemaEnElContextoDeWatson(String context, String nombreTema){
+		JSONObject obj = null;
+		try {
+			obj = new JSONObject(context);
+			obj.put("idTema", nombreTema);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Contexto modificado: "+obj.toString());
+		return obj.toString();
+	}
+	
+	public static void main(String[] args) throws Exception {
+
+		ConversationWatson myConversation = new ConversationWatson(Constantes.WATSON_CONVERSATION_USER, 
+				Constantes.WATSON_CONVERSATION_PASS, Constantes.WATSON_CONVERSATION_ID);
+		MessageResponse result = myConversation.enviarMSG("Hello!", null);
+		myConversation.getMSJ(result.toString());
+		//myConversation.probablesIntenciones(result);
+		//myConversation.getEntities(result.toString());
+		//myConversation.entidadesQueWatsonIdentifico(result);
+		String context = myConversation.activarTemaEnElContextoDeWatson(result.getContext().toString(), "quiereEnCondominio");
+		result = myConversation.enviarAWatson("", context);
+		
+		result = myConversation.enviarMSG("rent a car", result.getContext());
+		
+		result = myConversation.enviarMSG("yes", result.getContext());
+		result = myConversation.enviarMSG("yes", result.getContext());
+		
+		//result = myConversation.enviarMSG("Estoy buscondo un lote", null);
+		//result = myConversation.getMSJ(result);
+		//System.out.println(result);
+	}
+}

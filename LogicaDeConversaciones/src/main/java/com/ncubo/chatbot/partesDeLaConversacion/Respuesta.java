@@ -1,0 +1,174 @@
+package com.ncubo.chatbot.partesDeLaConversacion;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
+import com.ncubo.chatbot.configuracion.Constantes;
+import com.ncubo.chatbot.watson.ConversationWatson;
+import com.ncubo.chatbot.watson.Entidades;
+import com.ncubo.chatbot.watson.Intencion;
+import com.ncubo.chatbot.watson.Intenciones;
+
+public class Respuesta {
+
+	private Pregunta pregunta;
+	private Entidades misEntidades;
+	private Intenciones misIntenciones;
+	private ConversationWatson miConversacion;
+	private String miContexto;
+	
+	private MessageResponse watsonRespuesta;
+	private boolean terminoElTema;
+	private boolean hayUnAnythingElse;
+	private String fraseActivada;
+	private List<String> idsDeOracionesAfirmativas;
+	private boolean hayOracionesAfirmativas;
+	
+	public Respuesta(Pregunta pregunta, ConversationWatson conversacion, String context){
+		this.terminoElTema = false;
+		this.fraseActivada = "";
+		this.hayUnAnythingElse = false;
+		this.pregunta = pregunta;
+		this.miConversacion = conversacion;
+		this.miContexto = context;
+		this.misEntidades = new Entidades();
+		this.misIntenciones = new Intenciones();
+		this.idsDeOracionesAfirmativas = null;
+		this.hayOracionesAfirmativas = false;
+	}
+	
+	public void llamarAWatson(String texto){
+		// con el id de seccion, pasar la respuesta en texto a conversation
+		// del xml de respuesta de watson set al analizador cuales fueron los intenciones y las entidades (limitado a la pregunta)
+		// Si la respuesta fue pobre o de baja confianza hay que confirmar
+		
+		watsonRespuesta = this.miConversacion.enviarAWatson(texto, this.miContexto);
+		procesarLaRespuestaDeWatson(this.miConversacion, watsonRespuesta);
+	}
+	
+	private void procesarLaRespuestaDeWatson(ConversationWatson conversacion, MessageResponse watsonRespuesta){
+		// tomar la respuesta de watson y set a la respuesta las entidades y las intenciones
+		//resultados.clear();
+		//resultadosN = pregunta.entidades().entidadesConValores();
+		
+		this.misEntidades = conversacion.entidadesQueWatsonIdentifico(watsonRespuesta);
+		this.misIntenciones = conversacion.probablesIntenciones(watsonRespuesta);
+		
+		this.terminoElTema = (obtenerElementoDelContextoDeWatson(Constantes.TERMINO_EL_TEMA).equals("true"));
+		this.hayUnAnythingElse = (obtenerElementoDelContextoDeWatson(Constantes.ANYTHING_ELSE).equals("true"));
+		this.fraseActivada = obtenerElementoDelContextoDeWatson(Constantes.NODO_ACTIVADO);
+		obtenerIDsDeOracionesAfirmativas();
+		
+		/*for(Entidad entidad: pregunta.entidades()){
+			// buscar la entidad en la respueta y guardar en resultados <Entidad, respuestaJson>
+			//Falta el for que Watson puede devolver varios valores para 1 sola entidad
+				//resultados.put(); resultadosN.darValor(entidad, valorWatson);
+		}*/
+	}
+	
+	public boolean entendiLaRespuesta(){
+		// Si no se entendio la pregunta hay que repetirla
+		// Validar: vino anything else o no hay ningun valor para entidad o intencion
+		//return (this.misEntidades.iterator().hasNext() || this.misIntenciones.iterator().hasNext());
+		
+		boolean entendi = true;
+		boolean lasIntencionesEstanBien = true;
+		boolean lasEntidadesEstanBien = true;
+		
+		if(this.pregunta.intenciones().obtenerTodasLasIntenciones().size() > 0){
+			//entendi = (obtenerLaIntencionDeLaRespuesta().esReal() || ! this.hayUnAnythingElse);
+			lasIntencionesEstanBien = this.pregunta.verificarSiLasIntencionesExistenYSonDeConfianza(this.misIntenciones);
+		}
+		
+		if(this.pregunta.entidades().obtenerTodasLasEntidades().size() > 0){
+			// lasEntidadesEstanBien = this.pregunta.verificarSiTodasLasEntidadesExisten(this.misEntidades);
+		}
+		
+		entendi = lasIntencionesEstanBien && lasEntidadesEstanBien;
+		
+		if(entendi){
+			miContexto = watsonRespuesta.getContext().toString();
+		}
+		
+		return entendi;
+	}
+	
+	public boolean entendiLaRespuestaConAnythingElse(){
+		// Si no se entendio la pregunta hay que repetirla
+		// Validar: vino anything else o no hay ningun valor para entidad o intencion
+		//return (this.misEntidades.iterator().hasNext() || this.misIntenciones.iterator().hasNext());
+		
+		boolean entendi = true;
+		boolean lasIntencionesEstanBien = true;
+		boolean lasEntidadesEstanBien = true;
+		
+		if(this.pregunta.intenciones().obtenerTodasLasIntenciones().size() > 0){
+			lasIntencionesEstanBien = this.pregunta.verificarSiLasIntencionesExistenYSonDeConfianza(this.misIntenciones);
+		}
+		
+		if(this.pregunta.entidades().obtenerTodasLasEntidades().size() > 0){
+			// lasEntidadesEstanBien = this.pregunta.verificarSiTodasLasEntidadesExisten(this.misEntidades);
+		}
+		
+		entendi = lasIntencionesEstanBien && lasEntidadesEstanBien && ! this.hayUnAnythingElse;
+		
+		if(entendi){
+			miContexto = watsonRespuesta.getContext().toString();
+		}
+		
+		return entendi;
+	}
+	
+	public Intencion obtenerLaIntencionDeLaRespuesta(){
+		return this.misIntenciones.obtenerLaDeMayorConfianza();
+	}
+	
+	public String getMiContexto() {
+		return miContexto;
+	}
+	
+	public boolean seTerminoElTema(){
+		return this.terminoElTema;
+	}
+	
+	public boolean hayAlgunAnythingElse(){
+		return this.hayUnAnythingElse;
+	}
+	
+	private String obtenerElementoDelContextoDeWatson(String variableDeContexto){
+		try{
+			return watsonRespuesta.getContext().get(variableDeContexto).toString();
+		}catch(Exception e){
+			return "";
+		}
+	}
+	
+	private void obtenerIDsDeOracionesAfirmativas(){
+		String afirmativas = obtenerElementoDelContextoDeWatson(Constantes.ORACIONES_AFIRMATIVAS);
+		if(afirmativas.equals("")){
+			hayOracionesAfirmativas = false;
+		}else{
+			hayOracionesAfirmativas = true;
+			System.out.println("Oraciones afirmativas: "+afirmativas);
+			afirmativas = afirmativas.replace("[", "").replace("]", "");
+			
+			idsDeOracionesAfirmativas = new ArrayList<String>(Arrays.asList(afirmativas.split(",")));
+						
+		}
+	}
+	
+	public boolean hayOracionesAfirmativasActivas(){
+		return this.hayOracionesAfirmativas || (idsDeOracionesAfirmativas != null);
+	}
+	
+	public List<String> obtenerLosIDsDeLasOracionesAfirmativasActivas(){
+		return this.idsDeOracionesAfirmativas;
+	}
+	
+	public String obtenerFraseActivada(){
+		return this.fraseActivada;
+	}
+	
+}
