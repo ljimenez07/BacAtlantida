@@ -192,7 +192,7 @@
 				<div class="col-md-10">
 					<div class="form-group">
 						<button id="limpiar-submit" type="submit" class="btn btn-default" name="accion" 
-							value="limpiar"> Cancelar<img class="imagen-eliminar" src=""/></button>
+							value="limpiar"> Cancelar<img th:class="${imagenBotonSecundario}" src=""/></button>
 						<button id="ingresar-submit" type="submit" class="btn btn-default" name="accion" 
 							value="ingresar"><span th:text="${nombreBotonPrincipal}" th:remove="tag"></span> <img th:class="${imagenBotonPrincipal}" src=""/> </button>
 					</div>

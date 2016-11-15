@@ -49,6 +49,9 @@ public class GestionarOfertasController
 	private final String IMAGEN_MODIFICAR_OFERTA = "imagen-check";
 	private final String IMAGEN_INSERTAR_OFERTA = "imagen-siguiente";
 	
+	private final String BOTON_SECUNDARIO_MODIFICAR_OFERTA = "imagen-cancelar";
+	private final String BOTON_SECUNDARIO_INSERTAR_OFERTA = "imagen-eliminar";
+	
 	
 	@RequestMapping("/gestionDeOfertas")
 	public String visualizarOfertas(Model model) throws ClassNotFoundException, SQLException
@@ -69,6 +72,7 @@ public class GestionarOfertasController
 		model.addAttribute("categorias", categoriaDao.obtener());
 		model.addAttribute("nombreBotonPrincipal", BOTON_INSERTAR_OFERTA);
 		model.addAttribute("imagenBotonPrincipal", IMAGEN_INSERTAR_OFERTA);
+		model.addAttribute("imagenBotonSecundario", BOTON_SECUNDARIO_INSERTAR_OFERTA);
 		return "insertarOferta";
 	}
 	
@@ -85,11 +89,7 @@ public class GestionarOfertasController
 		
 		if (bindingResult.hasErrors())
 		{
-			model.addAttribute("categorias", categoriaDao.obtener());
-			model.addAttribute("action", ACTION_INSERTAR_OFERTA);
-			model.addAttribute("nombreBotonPrincipal", BOTON_INSERTAR_OFERTA);
-			model.addAttribute("imagenBotonPrincipal", IMAGEN_INSERTAR_OFERTA);
-			return null;
+			return cargarInsertarOfertas(oferta, model);
 		}
 		oferta.setFechaHoraRegistro(new Timestamp(new Date().getTime()));
 		ofertaDao.insertar(oferta);
@@ -161,6 +161,7 @@ public class GestionarOfertasController
 		model.addAttribute("action", ACTION_MODIFICAR_OFERTA);
 		model.addAttribute("nombreBotonPrincipal", BOTON_MODIFICAR_OFERTA);
 		model.addAttribute("imagenBotonPrincipal", IMAGEN_MODIFICAR_OFERTA);
+		model.addAttribute("imagenBotonSecundario", BOTON_SECUNDARIO_MODIFICAR_OFERTA);
 		return "insertarOferta";
 	}
 	
@@ -176,13 +177,7 @@ public class GestionarOfertasController
 		}
 		
 		if (bindingResult.hasErrors())
-		{
-			model.addAttribute("categorias", categoriaDao.obtener());
-			model.addAttribute("action", ACTION_MODIFICAR_OFERTA);
-			model.addAttribute("nombreBotonPrincipal", BOTON_MODIFICAR_OFERTA);
-			model.addAttribute("imagenBotonPrincipal", IMAGEN_MODIFICAR_OFERTA);
-			
-			request.setAttribute("idOferta", 0);
+		{		
 			return modificarOferta(model, 0, oferta);
 		}
 		oferta.setFechaHoraRegistro(new Timestamp(new Date().getTime()));
