@@ -13,7 +13,7 @@ import com.ncubo.chatbot.watson.Intenciones;
 
 public class Respuesta {
 
-	private Pregunta pregunta;
+	private Frase miFrase;
 	private Entidades misEntidades;
 	private Intenciones misIntenciones;
 	private ConversationWatson miConversacion;
@@ -26,11 +26,11 @@ public class Respuesta {
 	private List<String> idsDeOracionesAfirmativas;
 	private boolean hayOracionesAfirmativas;
 	
-	public Respuesta(Pregunta pregunta, ConversationWatson conversacion, String context){
+	public Respuesta(Frase frase, ConversationWatson conversacion, String context){
 		this.terminoElTema = false;
 		this.fraseActivada = "";
 		this.hayUnAnythingElse = false;
-		this.pregunta = pregunta;
+		this.miFrase = frase;
 		this.miConversacion = conversacion;
 		this.miContexto = context;
 		this.misEntidades = new Entidades();
@@ -50,9 +50,7 @@ public class Respuesta {
 	
 	private void procesarLaRespuestaDeWatson(ConversationWatson conversacion, MessageResponse watsonRespuesta){
 		// tomar la respuesta de watson y set a la respuesta las entidades y las intenciones
-		//resultados.clear();
-		//resultadosN = pregunta.entidades().entidadesConValores();
-		
+
 		this.misEntidades = conversacion.entidadesQueWatsonIdentifico(watsonRespuesta);
 		this.misIntenciones = conversacion.probablesIntenciones(watsonRespuesta);
 		
@@ -77,42 +75,22 @@ public class Respuesta {
 		boolean lasIntencionesEstanBien = true;
 		boolean lasEntidadesEstanBien = true;
 		
-		if(this.pregunta.intenciones().obtenerTodasLasIntenciones().size() > 0){
-			//entendi = (obtenerLaIntencionDeLaRespuesta().esReal() || ! this.hayUnAnythingElse);
-			lasIntencionesEstanBien = this.pregunta.verificarSiLasIntencionesExistenYSonDeConfianza(this.misIntenciones);
+
+		if (miFrase instanceof Pregunta){
+			Pregunta pregunta = (Pregunta) miFrase;
+			
+			if(pregunta.intenciones().obtenerTodasLasIntenciones().size() > 0){
+				//entendi = (obtenerLaIntencionDeLaRespuesta().esReal() || ! this.hayUnAnythingElse);
+				lasIntencionesEstanBien = pregunta.verificarSiLasIntencionesExistenYSonDeConfianza(this.misIntenciones);
+			}
+			
+			if(pregunta.entidades().obtenerTodasLasEntidades().size() > 0){
+				// lasEntidadesEstanBien = this.pregunta.verificarSiTodasLasEntidadesExisten(this.misEntidades);
+			}
 		}
 		
-		if(this.pregunta.entidades().obtenerTodasLasEntidades().size() > 0){
-			// lasEntidadesEstanBien = this.pregunta.verificarSiTodasLasEntidadesExisten(this.misEntidades);
-		}
 		
 		entendi = lasIntencionesEstanBien && lasEntidadesEstanBien;
-		
-		if(entendi){
-			miContexto = watsonRespuesta.getContext().toString();
-		}
-		
-		return entendi;
-	}
-	
-	public boolean entendiLaRespuestaConAnythingElse(){
-		// Si no se entendio la pregunta hay que repetirla
-		// Validar: vino anything else o no hay ningun valor para entidad o intencion
-		//return (this.misEntidades.iterator().hasNext() || this.misIntenciones.iterator().hasNext());
-		
-		boolean entendi = true;
-		boolean lasIntencionesEstanBien = true;
-		boolean lasEntidadesEstanBien = true;
-		
-		if(this.pregunta.intenciones().obtenerTodasLasIntenciones().size() > 0){
-			lasIntencionesEstanBien = this.pregunta.verificarSiLasIntencionesExistenYSonDeConfianza(this.misIntenciones);
-		}
-		
-		if(this.pregunta.entidades().obtenerTodasLasEntidades().size() > 0){
-			// lasEntidadesEstanBien = this.pregunta.verificarSiTodasLasEntidadesExisten(this.misEntidades);
-		}
-		
-		entendi = lasIntencionesEstanBien && lasEntidadesEstanBien && ! this.hayUnAnythingElse;
 		
 		if(entendi){
 			miContexto = watsonRespuesta.getContext().toString();

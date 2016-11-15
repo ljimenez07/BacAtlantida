@@ -106,36 +106,34 @@ public class Agente extends Participante{
 	public Respuesta analizarRespuestaGeneral(String respuestaDelClinete, Frase frase){
 		Respuesta respuesta = null;
 		
-		if (frase instanceof Pregunta){
-			Pregunta pregunta = (Pregunta) frase;
-			respuesta = new Respuesta(pregunta, miWatsonConversacions.get(nombreDeWorkspaceActual), miContextos.get(nombreDeWorkspaceActual));
-			respuesta.llamarAWatson(respuestaDelClinete);
-			
-			noEntendiLaUltimaRespuesta = (! respuesta.entendiLaRespuesta()) && (pregunta.esMandatorio()) && 
-					(numeroDeIntentosActualesEnRepetirUnaPregunta != MAXIMO_DE_INTENTOS_OPCIONALES);
-			if(noEntendiLaUltimaRespuesta){
-				//volverAPreguntar(pregunta);
-				numeroDeIntentosActualesEnRepetirUnaPregunta ++;
+		respuesta = new Respuesta(frase, miWatsonConversacions.get(nombreDeWorkspaceActual), miContextos.get(nombreDeWorkspaceActual));
+		respuesta.llamarAWatson(respuestaDelClinete);
+		
+		noEntendiLaUltimaRespuesta = (! respuesta.entendiLaRespuesta()) && (frase.esMandatorio()) && 
+				(numeroDeIntentosActualesEnRepetirUnaPregunta != MAXIMO_DE_INTENTOS_OPCIONALES);
+		if(noEntendiLaUltimaRespuesta){
+			//volverAPreguntar(pregunta);
+			numeroDeIntentosActualesEnRepetirUnaPregunta ++;
+		}else{
+			if(numeroDeIntentosActualesEnRepetirUnaPregunta == MAXIMO_DE_INTENTOS_OPCIONALES){
+				// Abordar el tema
+				abordarElTema = true; // Buscar otro tema
 			}else{
-				if(numeroDeIntentosActualesEnRepetirUnaPregunta == MAXIMO_DE_INTENTOS_OPCIONALES){
-					// Abordar el tema
-					abordarElTema = true; // Buscar otro tema
-				}else{
-					// Actualizar contexto
-					miContextos.put(nombreDeWorkspaceActual, respuesta.getMiContexto());
-					
-					// Analizar si ya tengo que cambiar de workspace
-					if( (nombreDeWorkspaceActual.equals(nombreDelWorkSpaceGeneral)) && 
-							(existeAlgunWorkspaceConElNombre(respuesta.obtenerLaIntencionDeLaRespuesta().getNombre()))){
-						nombreDeWorkspaceActual = respuesta.obtenerLaIntencionDeLaRespuesta().getNombre();
-						System.out.println(String.format("Cambiando al workspace %s", nombreDeWorkspaceActual));
-						cambiarDeTema = true; // Buscar otro tema
-						estaEnElWorkspaceGeneral = false;
-					}
+				// Actualizar contexto
+				miContextos.put(nombreDeWorkspaceActual, respuesta.getMiContexto());
+				
+				// Analizar si ya tengo que cambiar de workspace
+				if( (nombreDeWorkspaceActual.equals(nombreDelWorkSpaceGeneral)) && 
+						(existeAlgunWorkspaceConElNombre(respuesta.obtenerLaIntencionDeLaRespuesta().getNombre()))){
+					nombreDeWorkspaceActual = respuesta.obtenerLaIntencionDeLaRespuesta().getNombre();
+					System.out.println(String.format("Cambiando al workspace %s", nombreDeWorkspaceActual));
+					cambiarDeTema = true; // Buscar otro tema
+					estaEnElWorkspaceGeneral = false;
 				}
-				numeroDeIntentosActualesEnRepetirUnaPregunta = 1;
 			}
+			numeroDeIntentosActualesEnRepetirUnaPregunta = 1;
 		}
+		
 		return respuesta;
 	}
 	
@@ -151,45 +149,42 @@ public class Agente extends Participante{
 	public Respuesta analizarRespuesta(String respuestaDelClinete, Frase frase){
 		Respuesta respuesta = null;
 		
-		if (frase instanceof Pregunta){
-			Pregunta pregunta = (Pregunta) frase;
-			respuesta = new Respuesta(pregunta, miWatsonConversacions.get(nombreDeWorkspaceActual), miContextos.get(nombreDeWorkspaceActual));
-			respuesta.llamarAWatson(respuestaDelClinete);
-			
-			noEntendiLaUltimaRespuesta = (! respuesta.entendiLaRespuestaConAnythingElse()) && 
-					(numeroDeIntentosActualesEnRepetirUnaPregunta != MAXIMO_DE_INTENTOS_OPCIONALES);
-			if(noEntendiLaUltimaRespuesta){
-				System.out.println("No entendi la respuesta =( ");
-				// Validar si es que el usuario cambio de intencion
-				String intencion = determinarLaIntencionGeneral(respuestaDelClinete);
-				System.out.println("La intencion del usuario es: "+intencion);
-				if(pregunta.esMandatorio()){	
-					//volverAPreguntar(pregunta);
-					numeroDeIntentosActualesEnRepetirUnaPregunta ++;
-				}else{
-					cambiarDeTema = true;
-					// TODO Tengo que cambiar el contexto
-				}
-				borrarUnaVariableDelContexto(Constantes.ANYTHING_ELSE);
-				borrarUnaVariableDelContexto(Constantes.NODO_ACTIVADO);
+		respuesta = new Respuesta(frase, miWatsonConversacions.get(nombreDeWorkspaceActual), miContextos.get(nombreDeWorkspaceActual));
+		respuesta.llamarAWatson(respuestaDelClinete);
+		
+		noEntendiLaUltimaRespuesta = (! (respuesta.entendiLaRespuesta() && ! respuesta.hayAlgunAnythingElse())) && 
+				(numeroDeIntentosActualesEnRepetirUnaPregunta != MAXIMO_DE_INTENTOS_OPCIONALES);
+		if(noEntendiLaUltimaRespuesta){
+			System.out.println("No entendi la respuesta =( ");
+			// Validar si es que el usuario cambio de intencion
+			String intencion = determinarLaIntencionGeneral(respuestaDelClinete);
+			System.out.println("La intencion del usuario es: "+intencion);
+			if(frase.esMandatorio()){	
+				//volverAPreguntar(pregunta);
+				numeroDeIntentosActualesEnRepetirUnaPregunta ++;
 			}else{
-				if(numeroDeIntentosActualesEnRepetirUnaPregunta == MAXIMO_DE_INTENTOS_OPCIONALES){
-					// Abordar el tema
-					abordarElTema = true; // Buscar otro tema
-				}else{
-					// Actualizar contexto
-					miContextos.put(nombreDeWorkspaceActual, respuesta.getMiContexto());
-					// Analizar si tengo que cambiar de workspace
-					
-					cambiarDeTema = respuesta.seTerminoElTema();
-					if(cambiarDeTema){
-						// Desactivar flag del contexto
-						borrarUnaVariableDelContexto(Constantes.TERMINO_EL_TEMA);
-					}
-				}
-				numeroDeIntentosActualesEnRepetirUnaPregunta = 1;
+				cambiarDeTema = true;
+				// TODO Tengo que cambiar el contexto
 			}
+		}else{
+			if(numeroDeIntentosActualesEnRepetirUnaPregunta == MAXIMO_DE_INTENTOS_OPCIONALES){
+				// Abordar el tema
+				abordarElTema = true; // Buscar otro tema
+			}else{
+				// Actualizar contexto
+				miContextos.put(nombreDeWorkspaceActual, respuesta.getMiContexto());
+				// Analizar si tengo que cambiar de workspace
+				
+				cambiarDeTema = respuesta.seTerminoElTema();
+				if(cambiarDeTema){
+					// Desactivar flag del contexto
+					borrarUnaVariableDelContexto(Constantes.TERMINO_EL_TEMA);
+				}
+			}
+			numeroDeIntentosActualesEnRepetirUnaPregunta = 1;
 		}
+		borrarUnaVariableDelContexto(Constantes.ANYTHING_ELSE);
+		borrarUnaVariableDelContexto(Constantes.NODO_ACTIVADO);
 		
 		return respuesta;
 	}

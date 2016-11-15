@@ -18,6 +18,7 @@ public class MainTests {
 	
 	private void imprimirSalidas(ArrayList<Salida> salidas){
 		
+		System.out.println("");
 		for(Salida salida: salidas){
 			System.out.println("- "+salida.getMiTexto());
 		}

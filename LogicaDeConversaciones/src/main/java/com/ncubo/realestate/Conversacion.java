@@ -103,21 +103,25 @@ public class Conversacion {
 					System.out.println("Id de la frase a decir: "+idFraseActivada);
 					
 					agregarOracionesAfirmativas(agente.obtenerIDsDeOracionesAfirmativas());
-					
-					miPregunta = (Pregunta) this.temaActual.buscarUnaFrase(idFraseActivada);
-					misSalidas.add(agente.decir(miPregunta));
-					fraseActual = miPregunta;
-					ponerComoYaTratado(miPregunta);
+					if( ! idFraseActivada.equals("")){
+						miPregunta = (Pregunta) this.temaActual.buscarUnaFrase(idFraseActivada);
+						misSalidas.add(agente.decir(miPregunta));
+						fraseActual = miPregunta;
+						ponerComoYaTratado(miPregunta);
+					}
 				}
 			}else{
 				if (agente.entendiLaUltimaPregunta()){
 					
 					verificarYAgregarOracionesAfirmativas(respuesta);
 					
-					miPregunta = (Pregunta) this.temaActual.buscarUnaFrase(respuesta.obtenerFraseActivada());
-					misSalidas.add(agente.decir(miPregunta));
-					fraseActual = miPregunta;
-					ponerComoYaTratado(miPregunta);
+					String fraseAvtiva = respuesta.obtenerFraseActivada();
+					if( ! fraseAvtiva.equals("")){
+						miPregunta = (Pregunta) this.temaActual.buscarUnaFrase(fraseAvtiva);
+						misSalidas.add(agente.decir(miPregunta));
+						fraseActual = miPregunta;
+						ponerComoYaTratado(miPregunta);
+					}
 				}else{ 
 					// Verificar que fue	
 					System.out.println("No entendi la ultima pregunta");
