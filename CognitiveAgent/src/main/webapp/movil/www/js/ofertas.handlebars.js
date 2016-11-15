@@ -1,54 +1,12 @@
 (function() {
   var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
 templates['ofertas'] = template({"1":function(container,depth0,helpers,partials,data) {
-    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
-
-  return "  <div class=\"row\">\r\n    <div class=\"col-xs-12\">\r\n      <div class=\"row datos-de-oferta\" id=\""
-    + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
-    + "\">\r\n        <div class=\"col-xs-12\">\r\n          <div class=\"row\">\r\n            <div class=\"col-xs-12\">\r\n"
-    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.esHtml : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.program(4, data, 0),"data":data})) != null ? stack1 : "")
-    + "            </div>\r\n          </div>\r\n          <div class=\"row nombre-del-comercio\">\r\n            <div class=\"col-xs-12\">\r\n              <strong>"
-    + alias4(((helper = (helper = helpers.comercio || (depth0 != null ? depth0.comercio : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"comercio","hash":{},"data":data}) : helper)))
-    + "</strong>\r\n            </div>\r\n          </div>\r\n          <div class=\"row\">\r\n            <div class=\"col-xs-12\">\r\n              <span>"
-    + alias4(((helper = (helper = helpers.tituloDeOferta || (depth0 != null ? depth0.tituloDeOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"tituloDeOferta","hash":{},"data":data}) : helper)))
-    + "</span>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"row contenedor-de-botones\">\r\n        <div class=\"col-xs-6\">\r\n          <div class=\"tiempo-transcurrido\">Hace "
-    + alias4(((helper = (helper = helpers.tiempoTranscurrido || (depth0 != null ? depth0.tiempoTranscurrido : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"tiempoTranscurrido","hash":{},"data":data}) : helper)))
-    + "</div>\r\n        </div>\r\n        <div class=\"col-xs-6\">\r\n          <div class=\"row\" idOferta=\""
-    + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
-    + "\">\r\n"
-    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.esUnUsuarioConocido : depth0),{"name":"if","hash":{},"fn":container.program(6, data, 0),"inverse":container.program(8, data, 0),"data":data})) != null ? stack1 : "")
-    + "            <div class=\"col-xs-3\"><div class=\"boton-escuchar\"></div></div>\r\n            <div class=\"col-xs-3\"><div class=\"boton-compartir\"></div></div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n";
-},"2":function(container,depth0,helpers,partials,data) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
-
-  return "                <div class=\"html-de-oferta\" id=\"html-de-oferta-"
-    + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
-    + "\"></div>\r\n                <script type=\"text/javascript\">\r\n                $.get(\""
-    + alias4(((helper = (helper = helpers.imagenPublicidadPath || (depth0 != null ? depth0.imagenPublicidadPath : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"imagenPublicidadPath","hash":{},"data":data}) : helper)))
-    + "\", function(data) {\r\n                  $(\"#html-de-oferta-"
-    + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
-    + "\").html(data);\r\n                });\r\n                </script>\r\n";
-},"4":function(container,depth0,helpers,partials,data) {
-    var helper;
-
-  return "                <img src=\""
-    + container.escapeExpression(((helper = (helper = helpers.imagenPublicidadPath || (depth0 != null ? depth0.imagenPublicidadPath : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"imagenPublicidadPath","hash":{},"data":data}) : helper)))
-    + "\" class=\"imagen-de-oferta\">\r\n";
-},"6":function(container,depth0,helpers,partials,data) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
-
-  return "              <div class=\"col-xs-3\"><div class=\"boton-like "
-    + alias4(((helper = (helper = helpers.like || (depth0 != null ? depth0.like : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"like","hash":{},"data":data}) : helper)))
-    + "\"></div></div>\r\n              <div class=\"col-xs-3\"><div class=\"boton-dislike "
-    + alias4(((helper = (helper = helpers.dislike || (depth0 != null ? depth0.dislike : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"dislike","hash":{},"data":data}) : helper)))
-    + "\"></div></div>\r\n";
-},"8":function(container,depth0,helpers,partials,data) {
-    return "              <div class=\"col-xs-6\"></div>\r\n";
+    return "  <br>\r\n  <div class=\"row\">\r\n    <div class=\"col-xs-12 text-center\">\r\n      <span id=\"mostrar-mas\">Mostrar más</span>\r\n    </div>\r\n  </div>\r\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<div class=\"row\">\r\n  <div class=\"col-xs-12\">\r\n    <p><strong>¡Hola!</strong></p>\r\n    <p>Inicie sesi&oacute;n para que conozcas tus <strong>mejores beneficios</strong></p>\r\n    <br>\r\n  </div>\r\n</div>\r\n"
-    + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.ofertas : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "\r\n<script type=\"text/javascript\">\r\n$(\".boton-like, .boton-dislike\").click(function() {\r\n  var activo = $(this).parent().parent().find(\".activo\");\r\n  if(activo.attr('class') != $(this).attr('class')) {\r\n    activo.addClass(\"inactivo\").removeClass(\"activo\");\r\n  }\r\n  $(this).toggleClass(\"activo\").toggleClass(\"inactivo\");\r\n});\r\n\r\n$(\".datos-de-oferta\").click(function() {\r\n  var id = $(this).attr(\"id\");\r\n  $.ajax({\r\n    url: serverDomain + \"/ofertas/\" + id,\r\n    success: function(data) {\r\n      $(\".panel-body\").html(Handlebars.templates.oferta(data));\r\n    }\r\n  });\r\n});\r\n</script>\r\n";
+  return "<div class=\"row\">\r\n  <div class=\"col-xs-12\">\r\n    <p><strong>¡Hola!</strong></p><br>\r\n    <p>Inicie sesi&oacute;n para que conozcas tus <strong>mejores beneficios</strong></p>\r\n    <br>\r\n  </div>\r\n</div>\r\n<div class=\"contenedor-de-ofertas\">\r\n</div>\r\n"
+    + ((stack1 = (helpers.compare || (depth0 && depth0.compare) || helpers.helperMissing).call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.cantidad : depth0),">",10,{"name":"compare","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\r\n<script type=\"text/javascript\">\r\nvar pagina = 1;\r\ncargarOfertas();\r\npagina++;\r\n\r\n$(\"#mostrar-mas\").click(function() {\r\n  $.ajax({\r\n    url: serverDomain + \"/ofertas/cantidad\",\r\n    async: false,\r\n    success: function(data) {\r\n  	  cargarOfertas();\r\n      var cantidadDeOfertasMostradas = pagina * 10;\r\n      console.log(cantidadDeOfertasMostradas);\r\n      console.log(data);\r\n      console.log(data < cantidadDeOfertasMostradas);\r\n      if(data < cantidadDeOfertasMostradas) {\r\n        $(\"#mostrar-mas\").parent().parent().remove();\r\n      }\r\n    }\r\n  });\r\n  pagina++;\r\n});\r\n\r\nfunction bindAcciones() {\r\n	$(\".datos-de-oferta\").click(function() {\r\n	  var id = $(this).attr(\"id\");\r\n	  $.ajax({\r\n	    url: serverDomain + \"/ofertas/\" + id,\r\n	    success: function(data) {\r\n	      $(\".panel-body\").html(Handlebars.templates.oferta(data));\r\n	    }\r\n	  });\r\n	});\r\n	\r\n	$(\".boton-like, .boton-dislike\").click(function() {\r\n	  var activo = $(this).parent().parent().find(\".activo\");\r\n	  if(activo.attr('class') != $(this).attr('class')) {\r\n	    activo.addClass(\"inactivo\").removeClass(\"activo\");\r\n	  }\r\n	  $(this).toggleClass(\"activo\").toggleClass(\"inactivo\");\r\n	});\r\n}\r\n\r\nfunction cargarOfertas() {\r\n  var context;\r\n  $.ajax({\r\n    url: serverDomain + \"/ofertas\",\r\n    data: {\r\n      pagina: pagina\r\n    },\r\n    async: false,\r\n    success: function(data) {\r\n      context = {ofertas: data};\r\n    }\r\n  });\r\n  $(\".contenedor-de-ofertas\").append(Handlebars.templates.listaDeOfertas(context));\r\n  bindAcciones();\r\n}\r\n</script>\r\n";
 },"useData":true});
 })();

@@ -40,6 +40,18 @@ public class GestionarOfertasController
 	private CategoriaDao categoriaDao;
 	@Autowired
 	private GestorDeArchivos gestorDeArchivos;
+	private final String ACTION_INSERTAR_OFERTA = "insertarOferta";
+	private final String ACTION_MODIFICAR_OFERTA = "modificarOferta";
+	
+	private final String BOTON_MODIFICAR_OFERTA = "Modificar";
+	private final String BOTON_INSERTAR_OFERTA = "Insertar";
+	
+	private final String IMAGEN_MODIFICAR_OFERTA = "imagen-check";
+	private final String IMAGEN_INSERTAR_OFERTA = "imagen-siguiente";
+	
+	private final String BOTON_SECUNDARIO_MODIFICAR_OFERTA = "imagen-cancelar";
+	private final String BOTON_SECUNDARIO_INSERTAR_OFERTA = "imagen-eliminar";
+	
 	
 	@RequestMapping("/gestionDeOfertas")
 	public String visualizarOfertas(Model model) throws ClassNotFoundException, SQLException
@@ -56,8 +68,11 @@ public class GestionarOfertasController
 	@GetMapping("/insertarOferta")
 	public String cargarInsertarOfertas(Oferta oferta, Model model) throws ClassNotFoundException, SQLException
 	{
-		System.out.println("Cargar insertar oferta");
+		model.addAttribute("action", ACTION_INSERTAR_OFERTA);
 		model.addAttribute("categorias", categoriaDao.obtener());
+		model.addAttribute("nombreBotonPrincipal", BOTON_INSERTAR_OFERTA);
+		model.addAttribute("imagenBotonPrincipal", IMAGEN_INSERTAR_OFERTA);
+		model.addAttribute("imagenBotonSecundario", BOTON_SECUNDARIO_INSERTAR_OFERTA);
 		return "insertarOferta";
 	}
 	
@@ -74,8 +89,7 @@ public class GestionarOfertasController
 		
 		if (bindingResult.hasErrors())
 		{
-			model.addAttribute("categorias", categoriaDao.obtener());
-			return null;
+			return cargarInsertarOfertas(oferta, model);
 		}
 		oferta.setFechaHoraRegistro(new Timestamp(new Date().getTime()));
 		ofertaDao.insertar(oferta);
@@ -90,17 +104,25 @@ public class GestionarOfertasController
 	}
 	
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value = "/ofertas", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody public List<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
+	@GetMapping(value = "/ofertas", produces = "application/json")
+	@ResponseBody public List<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response, @RequestParam("pagina") int pagina) throws ClassNotFoundException, SQLException
 	{
-		return ofertaDao.ultimasOfertas();
+		int indiceInicial = (pagina - 1) * 10;
+		return ofertaDao.ultimasDiezOfertasDesde(indiceInicial);
 	}
 	
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value = "/ofertas/{idOferta}", method = RequestMethod.GET, produces = "application/json")
+	@GetMapping(value = "/ofertas/{idOferta}", produces = "application/json")
 	@ResponseBody public Oferta oferta(@PathVariable int idOferta, HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
 	{
 		return ofertaDao.obtener(idOferta);
+	}
+	
+	@CrossOrigin(origins = "*")
+	@GetMapping(value = "/ofertas/cantidad", produces = "application/json")
+	@ResponseBody public int cantidadDeOfertas(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
+	{
+		return ofertaDao.cantidad();
 	}
 	
 	@ResponseBody
@@ -108,7 +130,7 @@ public class GestionarOfertasController
 	public String subirImagenPublicidad(@RequestParam("imagen-publicidad-input") MultipartFile uploadfile) throws IOException
 	{
 		System.out.println("Imagen publicidad");
-		if( ! gestorDeArchivos.esUnaImagen(uploadfile) || ! gestorDeArchivos.esUnArchivoComprimido(uploadfile))
+		if( ! gestorDeArchivos.esUnaImagen(uploadfile) && ! gestorDeArchivos.esUnArchivoComprimido(uploadfile))
 		{
 			return "";
 		}
@@ -128,20 +150,53 @@ public class GestionarOfertasController
 	}
 	
 	@GetMapping(value = "/modificarOferta")
-	public String modificarOferta(Model model, int idOferta) throws ClassNotFoundException, SQLException
+	public String modificarOferta(Model model, int idOferta, Oferta oferta) throws ClassNotFoundException, SQLException
 	{
-		Oferta oferta = ofertaDao.obtener(idOferta);
+		if(idOferta != 0)
+		{
+			oferta = ofertaDao.obtener(idOferta);
+		}
 		model.addAttribute("oferta", oferta);
 		model.addAttribute("categorias", categoriaDao.obtener());
-		model.addAttribute("esModificarForm", true);
+		model.addAttribute("action", ACTION_MODIFICAR_OFERTA);
+		model.addAttribute("nombreBotonPrincipal", BOTON_MODIFICAR_OFERTA);
+		model.addAttribute("imagenBotonPrincipal", IMAGEN_MODIFICAR_OFERTA);
+		model.addAttribute("imagenBotonSecundario", BOTON_SECUNDARIO_MODIFICAR_OFERTA);
 		return "insertarOferta";
 	}
 	
-	@GetMapping("/eliminarOferta/{idOferta}")
-	public String eliminarOferta(@PathVariable int idOferta)
+	@PostMapping(value = "/modificarOferta", params="accion=ingresar")
+	public String modificarOferta(@Valid Oferta oferta, BindingResult bindingResult, Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException, ParseException
 	{
+		if( ! bindingResult.hasFieldErrors("vigenciaHasta"))
+		{
+			if( ! oferta.fechaHastaMayorAFechaDesde())
+			{
+				bindingResult.rejectValue("vigenciaHasta", "1", "*Fechas incorrectas");
+			}
+		}
 		
-		return "insertarOferta";
+		if (bindingResult.hasErrors())
+		{		
+			return modificarOferta(model, 0, oferta);
+		}
+		oferta.setFechaHoraRegistro(new Timestamp(new Date().getTime()));
+		ofertaDao.modificar(oferta);
+		
+		return "redirect:gestionDeOfertas";
+	}
+	
+	@PostMapping(value = "/modificarOferta", params="accion=limpiar")
+	public String modificarOfertaLimpiar(@Valid Oferta oferta, BindingResult bindingResult) throws ClassNotFoundException, SQLException
+	{
+		return "redirect:gestionDeOfertas";
+	}
+	
+	@PostMapping("/eliminarOferta")
+	public String eliminarOferta(@RequestParam("idOfertaEliminar") int idOferta) throws ClassNotFoundException, SQLException
+	{
+		ofertaDao.eliminar(idOferta);
+		return "redirect:gestionDeOfertas";
 	}
 	
 }

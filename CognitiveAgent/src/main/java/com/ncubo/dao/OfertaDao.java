@@ -40,7 +40,9 @@ public class OfertaDao
 		
 		IMAGEN_COMERCIO_PATH("imagenComercioPath"),
 		IMAGEN_PUBLICIDAD_PATH("imagenPublicidadPath"),
-		FECHA_HORA_REGISTRO("fechaHoraRegistro");
+		FECHA_HORA_REGISTRO("fechaHoraRegistro"),
+		
+		ELIMINADA("eliminada");
 		
 		private String nombre;
 		atributo(String nombre)
@@ -73,7 +75,8 @@ public class OfertaDao
 				+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
 				+ atributo.FECHA_HORA_REGISTRO
 				+ " FROM " + NOMBRE_TABLA + ", " + NOMBRE_TABLA_CATEGORIA_OFERTA 
-				+ " WHERE " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA + ";";
+				+ " WHERE " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA
+				+ " AND " + atributo.ELIMINADA + " = 0" +";";
 
 		Connection con = dao.openConBD();
 		ResultSet rs = con.createStatement().executeQuery(query);
@@ -136,13 +139,20 @@ public class OfertaDao
 		dao.closeConBD();
 	}
 	
-	public List<Oferta> ultimasOfertas() throws ClassNotFoundException, SQLException
+	public ArrayList<Oferta> ultimasOfertas() throws ClassNotFoundException, SQLException
 	{
 		ArrayList<Oferta> ofertas = obtener();
 		Collections.sort(ofertas);
 		Collections.reverse(ofertas);
-		int tamano = ofertas.size();
-		return ofertas.subList(0, tamano > 10 ? 10 : tamano);
+		return ofertas;
+	}
+
+	public List<Oferta> ultimasDiezOfertasDesde(int indiceInicial) throws ClassNotFoundException, SQLException
+	{
+		ArrayList<Oferta> ultimasOfertas = ultimasOfertas();
+		int tamano = ultimasOfertas.size();
+		int indiceFinal = indiceInicial + 10;
+		return ultimasOfertas.subList(indiceInicial, tamano > indiceFinal ? indiceFinal : tamano);
 	}
 
 	public Oferta obtener(int idOferta) throws ClassNotFoundException, SQLException
@@ -156,4 +166,43 @@ public class OfertaDao
 		}
 		return null;
 	}
+
+	public int cantidad() throws ClassNotFoundException, SQLException {
+		return ultimasOfertas().size();
+	}
+
+	public void modificar(Oferta oferta) throws ClassNotFoundException, SQLException
+	{
+		String queryDatos =  atributo.TITULO_DE_OFERTA + " = '" + oferta.getTituloDeOferta() + "' , "
+				 + atributo.COMERCIO + " = '" + oferta.getComercio() + "' , "
+				 + atributo.DESCRIPCION + " = '" + oferta.getDescripcion() + "' , "
+				 + atributo.CATEGORIA + " = '" + oferta.getCategoria().getId() + "' , "
+				 + atributo.CIUDAD + " = '" + oferta.getCiudad() + "' , "
+				 + atributo.ESTADO + " = " + (oferta.getEstado() ? 1 : 0) + ","
+				 + atributo.RESTRICCIONES + " = '" + oferta.getRestricciones() + "' , "
+				 + atributo.VIGENCIA_DESDE + " = '" + oferta.getVigenciaDesde() + "' , "
+				 + atributo.VIGENCIA_HASTA + " = '" + oferta.getVigenciaHasta() + "' , "
+				 + atributo.IMAGEN_COMERCIO_PATH + " = '" + oferta.getImagenComercioPath() + "' , "
+				 + atributo.IMAGEN_PUBLICIDAD_PATH + " = '" + oferta.getImagenPublicidadPath() + "' , "
+				 + atributo.FECHA_HORA_REGISTRO + " = '" + oferta.getFechaHoraRegistro() + "'";
+		String query = "UPDATE " + NOMBRE_TABLA 
+				+ " SET " + queryDatos
+				+ " WHERE " + atributo.ID_OFERTA + " = " +oferta.getIdOferta() + ";";
+		Connection con = dao.openConBD();
+		con.createStatement().executeUpdate(query);
+		dao.closeConBD();
+	}
+	
+	public void eliminar(int idOferta) throws ClassNotFoundException, SQLException
+	{
+		String queryDatos = atributo.ELIMINADA + " = 1";
+		String query = "UPDATE " + NOMBRE_TABLA 
+				+ " SET " + queryDatos
+				+ " WHERE " + atributo.ID_OFERTA + " = " + idOferta + ";";
+		Connection con = dao.openConBD();
+		con.createStatement().executeUpdate(query);
+		dao.closeConBD();
+	}
+	
+	
 }

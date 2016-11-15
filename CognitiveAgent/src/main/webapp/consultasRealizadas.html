@@ -1,0 +1,81 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/backoffice :: head (title='Consultas Realizadas')">
+	<meta charset="UTF-8"></meta>
+</head>
+<script>
+	$(document).ready(function()
+	{
+		$("#imagen-publicidad-input").on("change", subirImagenPublicidad);
+		$("#logo-comercio-input").on("change", subirImagenComercio);
+	});
+	
+	function subirImagenPublicidad()
+	{
+		$.ajax(
+		{
+			url: "subirImagenPublicidad",
+			type: "POST",
+			data: new FormData($("#agregarOferta-form")[0]),
+			enctype: 'multipart/form-data',
+			processData: false,
+			contentType: false,
+			cache: false,
+			success: function (data)
+			{
+				if(data == '')
+				{
+					$("#imagen-publicidad").val("");
+				}
+				else
+				{
+					$("#imagen-publicidad").val(data);
+				}
+			}
+		});
+	}
+		
+	function subirImagenComercio()
+	{
+		$.ajax(
+		{
+			url: "subirImagenComercio",
+			type: "POST",
+			data: new FormData($("#agregarOferta-form")[0]),
+			enctype: 'multipart/form-data',
+			processData: false,
+			contentType: false,
+			cache: false,
+			success: function (data)
+			{
+				if(data == '')
+				{
+					$("#logo-comercio").val("");
+				}
+				else
+				{
+					$("#logo-comercio").val(data);
+				}
+			}
+		});
+	}
+</script>
+<style>
+	.titulo-ca
+	{
+		font-family: 'Roboto', serif;
+		font-size: 16px;
+	}
+	.notas-ca
+	{
+		font-family: 'Roboto', serif;
+		font-size: 16px;
+		color: rgb(177,179,181);
+	}
+</style>
+<body>
+<div th:include="fragments/backoffice :: body(paginaActual='consultasRealizadas')"></div>
+<div class="container">
+
+</div>
+</body>
+</html>
