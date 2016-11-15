@@ -88,13 +88,13 @@
 		}
 	</style>
 </head>
-<body th:fragment="body">
+<body th:fragment="body (paginaActual)">
 	<div class="container" >
 		<div class="row">
 			<ul class="nav nav-tabs">
-				<li role="presentation" class="active"><a href="#">GESTIÓN DE OFERTAS</a></li>
-				<li role="presentation"><a href="#">REACCIÓN DE OFERTAS</a></li>
-				<li role="presentation"><a href="#">CONSULTAS REALIZADAS</a></li>
+				<li role="presentation" th:classappend="${paginaActual == 'gestionDeOfertas'} ? 'active'"><a th:href="@{/gestionDeOfertas}">GESTIÓN DE OFERTAS</a></li>
+				<li role="presentation" th:classappend="${paginaActual == 'reaccionDeOfertas'} ? 'active'"><a >REACCIÓN DE OFERTAS</a></li>
+				<li role="presentation" th:classappend="${paginaActual == 'consultasRealizadas'} ? 'active'"><a th:href="@{/consultasRealizadas}">CONSULTAS REALIZADAS</a></li>
 			</ul>
 		</div>
 	</div>

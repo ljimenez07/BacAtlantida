@@ -1,5 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="fragments/gestionDeOfertas :: head (title='Gestión de ofertas')">
+<head th:include="fragments/backoffice :: head (title='Gestión de ofertas')">
 	<meta charset="UTF-8"></meta>
 	
 </head>
@@ -33,7 +33,7 @@
 </script>
 
 <body>
-<div th:include="fragments/gestionDeOfertas :: body"></div>
+<div th:include="fragments/backoffice :: body(paginaActual='gestionDeOfertas')"></div>
 <div class="container">
 
 		<!-- Modal -->

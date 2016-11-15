@@ -1,5 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="fragments/gestionDeOfertas :: head (title='Insertar Oferta')">
+<head th:include="fragments/backoffice :: head (title='Insertar Oferta')">
 	<meta charset="UTF-8"></meta>
 </head>
 <script>
@@ -73,7 +73,7 @@
 	}
 </style>
 <body>
-<div th:include="fragments/gestionDeOfertas :: body"></div>
+<div th:include="fragments/backoffice :: body(paginaActual='gestionDeOfertas')"></div>
 <div class="container">
 
 	<form id="agregarOferta-form" method="POST" th:action="@{/__${action}__}" th:object="${oferta}" action="#">
