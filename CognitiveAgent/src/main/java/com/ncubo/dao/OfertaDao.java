@@ -40,7 +40,9 @@ public class OfertaDao
 		
 		IMAGEN_COMERCIO_PATH("imagenComercioPath"),
 		IMAGEN_PUBLICIDAD_PATH("imagenPublicidadPath"),
-		FECHA_HORA_REGISTRO("fechaHoraRegistro");
+		FECHA_HORA_REGISTRO("fechaHoraRegistro"),
+		
+		ELIMINADA("eliminada");
 		
 		private String nombre;
 		atributo(String nombre)
@@ -73,7 +75,8 @@ public class OfertaDao
 				+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
 				+ atributo.FECHA_HORA_REGISTRO
 				+ " FROM " + NOMBRE_TABLA + ", " + NOMBRE_TABLA_CATEGORIA_OFERTA 
-				+ " WHERE " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA + ";";
+				+ " WHERE " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA
+				+ " AND " + atributo.ELIMINADA + " = 0" +";";
 
 		Connection con = dao.openConBD();
 		ResultSet rs = con.createStatement().executeQuery(query);
@@ -189,4 +192,17 @@ public class OfertaDao
 		con.createStatement().executeUpdate(query);
 		dao.closeConBD();
 	}
+	
+	public void eliminar(int idOferta) throws ClassNotFoundException, SQLException
+	{
+		String queryDatos = atributo.ELIMINADA + " = 1";
+		String query = "UPDATE " + NOMBRE_TABLA 
+				+ " SET " + queryDatos
+				+ " WHERE " + atributo.ID_OFERTA + " = " + idOferta + ";";
+		Connection con = dao.openConBD();
+		con.createStatement().executeUpdate(query);
+		dao.closeConBD();
+	}
+	
+	
 }

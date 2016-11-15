@@ -192,11 +192,11 @@ public class GestionarOfertasController
 		return "redirect:gestionDeOfertas";
 	}
 	
-	@GetMapping("/eliminarOferta/{idOferta}")
-	public String eliminarOferta(@PathVariable int idOferta)
+	@PostMapping("/eliminarOferta")
+	public String eliminarOferta(@RequestParam("idOfertaEliminar") int idOferta) throws ClassNotFoundException, SQLException
 	{
-		
-		return "insertarOferta";
+		ofertaDao.eliminar(idOferta);
+		return "redirect:gestionDeOfertas";
 	}
 	
 }
