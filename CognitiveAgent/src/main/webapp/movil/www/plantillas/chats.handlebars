@@ -25,7 +25,6 @@ $(function(){
 		var mensajeDeAgente = $('<li class="other"><div class="msg"><p></p><time>20:17</time></div></li>');
 		var mensajeDeUsuario = $('<li class="self"><div class="msg"><p></p><time>20:17</time></div></li>');
 		var botonDeEnviarMensaje = $("#enviar");
-		var contexto = "";
 		
 		botonDeEnviarMensaje.click(function(){
 		
@@ -63,7 +62,7 @@ $(function(){
 				type: "POST",
 				contentType :"text/plain; charset=UTF-8",
 				dataType : "json",
-				url : serverDomain+"/conversacion/{{pathDelServidor}}/"+contexto,
+				url : serverDomain+"/conversacion/{{pathDelServidor}}/",
 				data : textoAEnviar
 			})
 			.done(function( data ) 
@@ -72,9 +71,17 @@ $(function(){
 				respuesta.find(".msg p").html(data.texto);
 				conversation.append(respuesta);
 				
-				contexto = data.contexto;
-				
 				moveScrollParaAbjoEnFuncionDelUltimoMEnsaje();
+			})
+			.fail(function(XMLHttpRequest, textStatus, textStatus) 
+			{
+				console.log(JSON.stringify(XMLHttpRequest));
+				console.log(XMLHttpRequest.responseJSON.exception);
+				if( XMLHttpRequest.responseJSON.exception.includes("NoSessionException") )
+				{
+					var html = Handlebars.templates.layout(pantallas["login"]);
+					$(".app").html(html);
+				}
 			});
 			
 		}
