@@ -51,6 +51,25 @@ strong {
 	font-weight: bold;
 }
 /* Agente Cognitivo */
+
+.btn 
+{
+	background-color: red;
+	color: white;
+}
+
+.btn:hover
+{
+	background-color: red;
+	color: white;
+}
+
+.btn:active
+{
+	background-color: red;
+	color: white;
+}
+
 input 
 {
 	background-color: #f5f5f5;

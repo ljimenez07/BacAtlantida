@@ -22,4 +22,31 @@ public class Stub
 		String respuestaJson = "<SOAP:Envelope xmlns:SOAP=\"http://schemas.xmlsoap.org/soap/envelope/\"> <SOAP:Header/> <SOAP:Body> <ns1:MT_TasaCambioResponse xmlns:ns1=\"http://hn.infatlan.och/ws/ACD082/out/TasaCambio\"> <Respuesta> <estado> <codigo>0000</codigo> <descripcion>Satisfactorio</descripcion> <detalleTecnico/> <tipo>S1</tipo> <fecha>20150909</fecha> </estado> <tasaCambioColeccion> <tasaCambioItem> <moneda>USD</moneda> <compra>22.0606</compra> <venta>21.9072</venta> </tasaCambioItem> <tasaCambioItem> <moneda>EUR</moneda> <compra>25.6314</compra> <venta>23.5502</venta> </tasaCambioItem> </tasaCambioColeccion> </Respuesta> </ns1:MT_TasaCambioResponse> </SOAP:Body> </SOAP:Envelope>";
 		return respuestaJson;
 	}
+	
+	@RequestMapping(value = "/Ecommerce/login", method = RequestMethod.POST)
+	public @ResponseBody String login(@RequestBody String requestXML)
+	{
+		String respuestaJson = 
+				"<SOAP:Envelope xmlns:SOAP=\"http://schemas.xmlsoap.org/soap/envelope/\"> "
+					+ "<SOAP:Header/> "
+					+ "<SOAP:Body> "
+						+ "<Respuesta> "
+							+ "<estado>"
+								+ "	<codigo>0000</codigo>"
+								+ "<descripcion>Satisfactorio</descripcion> "
+								+ "<detalleTecnico/> "
+								+ "<tipo>S1</tipo> "
+								+ "<fecha>20150909</fecha>"
+							+ "</estado> "
+							+ "<validaPreLoginColeccion>"
+								+"<valido>S</valido>"
+								+ "<usuarioId>OPAGOAG025</usuarioId>"
+								+ "<usuarioNombre>Oscar Orlando Pagoaca Argueta</usuarioNombre>"
+								+ "<llaveSession>sdfaerf34tgergvrevrev</llaveSession>"
+							+ "</validaPreLoginColeccion>"
+						+ "</Respuesta> "
+					+ "</SOAP:Body>"
+				+ "</SOAP:Envelope>";
+		return respuestaJson;
+	}
 }
