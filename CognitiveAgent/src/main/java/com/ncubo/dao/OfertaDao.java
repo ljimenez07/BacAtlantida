@@ -67,7 +67,7 @@ public class OfertaDao
 	public ArrayList<Oferta> obtener() throws ClassNotFoundException, SQLException
 	{ //TODO dalaian no deneria sacar el universo de ofertas.
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
-		String query = "SELECT " + atributo.ID_OFERTA + ", "
+		String query = "SELECT " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + ", "
 				+ atributo.TITULO_DE_OFERTA + ", "
 				+ atributo.COMERCIO + ", "
 				+ atributo.DESCRIPCION + ", "
@@ -81,9 +81,13 @@ public class OfertaDao
 				+ atributo.IMAGEN_COMERCIO_PATH + ", "
 				+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
 				+ atributo.FECHA_HORA_REGISTRO
-				+ " FROM " + NOMBRE_TABLA + ", " + NOMBRE_TABLA_CATEGORIA_OFERTA 
+				+ ", SUM(IF(" + atributo.REACCION + " = 1, 1, 0)) AS " + atributo.LIKES
+				+ ", SUM(IF(" + atributo.REACCION + " = 0, 1, 0)) AS " + atributo.DISLIKES
+				+ " FROM " + NOMBRE_TABLA_CATEGORIA_OFERTA + ", " + NOMBRE_TABLA
+				+ " LEFT JOIN " + NOMBRE_TABLA_REACCION + " ON " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + NOMBRE_TABLA_REACCION + ".idOferta"
 				+ " WHERE " + atributo.ELIMINADA + " = 0"
-				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA + ";";
+				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA
+				+ " GROUP BY " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + ";";
 
 		Connection con = dao.openConBD();
 		ResultSet rs = con.createStatement().executeQuery(query);
@@ -226,6 +230,7 @@ public class OfertaDao
 				+ " LEFT JOIN " + NOMBRE_TABLA_REACCION + " ON " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + NOMBRE_TABLA_REACCION + ".idOferta"
 				+ " WHERE " + atributo.ELIMINADA + " = 0"
 				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA
+				+ " GROUP BY " + NOMBRE_TABLA + "." + atributo.ID_OFERTA
 				+ " ORDER BY " + atributo.FECHA_HORA_REGISTRO + " DESC"
 				+ " LIMIT " + indiceInicial + ", 10;";
 		
