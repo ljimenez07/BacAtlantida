@@ -40,7 +40,8 @@ public class Constantes {
             "\"tema\": \"10\"\n" +
             "}";
 	
-	public static String PATH_ARCHIVO_DE_CONFIGURACION = "C:\\Users\\SergioAlberto\\Documents\\SergioGQ\\Ncubo\\Proyectos AI\\Atlantida\\Repo\\BancoAtlantida\\LogicaDeConversaciones\\src\\main\\resources\\conversaciones.xml";
+	//public static String PATH_ARCHIVO_DE_CONFIGURACION = "src/main/resources/conversaciones.xml";
+	public static String PATH_ARCHIVO_DE_CONFIGURACION = "src/main/resources/conversacionesBA.xml";
 	
 	// Agente
 	public static String WORKSPACE_GENERAL = "general";

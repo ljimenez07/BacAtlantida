@@ -1,4 +1,4 @@
-package com.ncubo.realestate;
+package com.ncubo.bancoatlantida;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,24 +76,16 @@ public class Conversacion {
 			Pregunta miPregunta = null;
 			
 			if(agente.hayQueCambiarDeTema()){
-				if( (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_SALUDO)) || (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_DESPEDIDA)) )
-					ponerComoYaTratado(this.temaActual);
+				if(this.temaActual != null){
+					if( (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_SALUDO)) || (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_DESPEDIDA)) )
+						ponerComoYaTratado(this.temaActual);
+				}
 				
+				agregarOracionesAfirmativas(agente.obtenerIDsDeOracionesAfirmativas());
 				this.temaActual = this.temario.proximoTemaATratar(temaActual, hilo.verTemasYaTratadosYQueNoPuedoRepetir(), agente.obtenerNombreDelWorkspaceActual(), agente.obtenerNombreDeLaIntencionGeneralActiva());
 				agente.yaNoCambiarDeTema();
-				if(this.temaActual == null){ // Ya no hay mas temas
-					this.temaActual = this.temario.buscarTema("mostrarResultados");
-					miPregunta = (Pregunta) this.temaActual.buscarUnaFrase("mostrarResultados");
-					misSalidas.add(agente.decir(miPregunta));
-					fraseActual = miPregunta;
-					ponerComoYaTratado(miPregunta);
-					agente.cambiarAWorkspaceGeneral();
-				}else if(this.temaActual.obtenerIdTema().equals("mostrarResultados")){
-					this.temaActual = this.temario.buscarTema("mostrarResultados");
-					miPregunta = (Pregunta) this.temaActual.buscarUnaFrase("mostrarResultados");
-					misSalidas.add(agente.decir(miPregunta));
-					fraseActual = miPregunta;
-					ponerComoYaTratado(miPregunta);
+				if(this.temaActual == null){ // Ya no hay mas temas	
+					this.temaActual = this.temario.buscarTema(Constantes.FRASE_SALUDO);
 					agente.cambiarAWorkspaceGeneral();
 				}else{
 					System.out.println("El proximo tema a tratar es: "+this.temaActual.obtenerIdTema());
@@ -108,8 +100,8 @@ public class Conversacion {
 						agente.borrarUnaVariableDelContexto(Constantes.ANYTHING_ELSE);
 					}
 					System.out.println("Id de la frase a decir: "+idFraseActivada);
-					
 					agregarOracionesAfirmativas(agente.obtenerIDsDeOracionesAfirmativas());
+					
 					if( ! idFraseActivada.equals("")){
 						miPregunta = (Pregunta) this.temaActual.buscarUnaFrase(idFraseActivada);
 						misSalidas.add(agente.decir(miPregunta));
@@ -155,9 +147,11 @@ public class Conversacion {
 		if(afirmativas != null){
 			for(int index = 0; index < afirmativas.size(); index++){
 				miAfirmacion = (Afirmacion) this.temaActual.buscarUnaFrase(afirmativas.get(index));
-				misSalidas.add(agente.decir(miAfirmacion));
-				fraseActual = miAfirmacion;
-				ponerComoYaTratado(miAfirmacion);
+				if( ! misSalidas.contains(miAfirmacion)){
+					misSalidas.add(agente.decir(miAfirmacion));
+					fraseActual = miAfirmacion;
+					ponerComoYaTratado(miAfirmacion);
+				}
 			}
 		}
 	}

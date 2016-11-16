@@ -1,9 +1,6 @@
 package com.ncubo.chatbot.watson;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Iterator;
-
 import com.ncubo.chatbot.exceptiones.ChatException;
 import com.ncubo.chatbot.parser.Operador;
 import com.ncubo.chatbot.parser.Operador.TipoDeOperador;

@@ -6,7 +6,6 @@ import com.ncubo.chatbot.parser.Operador.TipoDeOperador;
 
 public class Intencion //extends WatsonUnderstand
 {
-	//private static Hashtable<String, Intencion> valores = new Hashtable<String, Intencion>();
 	private String nombre;
 	private double umbral;
 	private double confidence;

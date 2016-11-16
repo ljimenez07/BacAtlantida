@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<conversacions>
+	<conversacion id="saludoGeneral">
+		<tipo>saludo</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Bienvenido al Banco Atlántida. Le saluda Lisseth.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="saludoPreguntar">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>¿En qué puedo ayudarle?</curioso>
+			<curioso>¿Que puedo hacer por usted?</curioso>
+		</frases>
+		<vineta></vineta>
+		<when>
+			<condition operador="or" tipo="intencion">saldo</condition>
+			<condition operador="or" tipo="intencion">tasa_cambio</condition>
+			<condition operador="or" tipo="intencion">movimientos</condition>
+		</when>
+	</conversacion>
+	
+	<conversacion id="saldo">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El saldo de su tarjeta de crédito es de: $</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="noTengoSaldo">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Por ahora solo puedo proporcionar el saldo de su tarjeta de crédito.</frase>
+		</frases>
+		<vineta></vineta>
+	
+	</conversacion>
+	
+	<conversacion id="tasaDolar">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>La tasa de cambio del dolar del día de hoy es: $</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="tasaEuro">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>La tasa de cambio del euro del día de hoy es: $</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="tasaCambio">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>¿Te gustaría saber la tasa de cambio del euro también?</curioso>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="despedida">
+		<tipo>despedida</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Chao!</frase>
+		</frases>
+		<vineta></vineta>
+		<when>
+			<condition operador="and" tipo="intencion">despedidas</condition>
+		</when>
+	</conversacion>
+	
+	<conjunciones>
+		<conjuncion id="conjuncion1">Disculpame, pero no te entiendo.</conjuncion>
+		<conjuncion id="conjuncion2">No logro comprenderte.</conjuncion>
+	</conjunciones>
+	
+	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
+		<workspace tipo="general" idIBM="ea7cc165-ac98-4349-92ed-8e04f1ab402e" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="especifico" idIBM="e0ff922e-68f2-4cc3-bc69-ec624d07c36c" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos">BATemas</workspace>
+	</workspaces>
+	
+</conversacions>

@@ -2,6 +2,7 @@ package com.ncubo.realestate;
 
 import java.util.List;
 
+import com.ncubo.chatbot.configuracion.Constantes;
 import com.ncubo.chatbot.partesDeLaConversacion.Contenido;
 import com.ncubo.chatbot.partesDeLaConversacion.Tema;
 import com.ncubo.chatbot.partesDeLaConversacion.Temario;
@@ -19,6 +20,8 @@ public class TemarioDeRealEstate extends Temario
 		(
 			"saludo",
 			"deam_house_universe",
+			true,
+			"deam_house_universe",
 			frase("saludoGeneral"),
 			frase("queBusca"),
 			frase("saludar")
@@ -31,6 +34,8 @@ public class TemarioDeRealEstate extends Temario
 		Tema resultado = new Tema
 		(
 			"cualPais",
+			"want_house",
+			false,
 			"want_house",
 			frase("describirCostaRica"),
 			frase("quiereCostaRica"),
@@ -45,6 +50,8 @@ public class TemarioDeRealEstate extends Temario
 		(
 			"conFamiliaOSolo",
 			"want_house",
+			false,
+			"want_house",
 			frase("vieneSoloOConLaFamilia"),
 			frase("describaLaFamilia")
 		);
@@ -56,6 +63,8 @@ public class TemarioDeRealEstate extends Temario
 		Tema resultado = new Tema
 		(
 			"determinarLocalizacion",
+			"want_house",
+			false,
 			"want_house",
 			frase("determinarLaLocalizacion"),
 			frase("quierePiscina")
@@ -69,6 +78,8 @@ public class TemarioDeRealEstate extends Temario
 		(
 			"quierePatio",
 			"want_house",
+			false,
+			"want_house",
 			frase("describirPatio"),
 			frase("quierePatio")
 		);
@@ -81,6 +92,8 @@ public class TemarioDeRealEstate extends Temario
 		(
 			"quiereEnCondominio",
 			"want_house",
+			false,
+			"want_house",
 			frase("quiereEnCondominio")
 		);
 		return resultado;
@@ -92,6 +105,8 @@ public class TemarioDeRealEstate extends Temario
 		(
 			"mostrarResultados",
 			"want_house",
+			false,
+			"want_house",
 			frase("mostrarResultados")
 		);
 		return resultado;
@@ -102,6 +117,8 @@ public class TemarioDeRealEstate extends Temario
 		Tema resultado = new Tema
 		(
 			"despedida",
+			"deam_house_universe",
+			true,
 			"deam_house_universe",
 			frase("despedida")
 		);
@@ -152,6 +169,6 @@ public class TemarioDeRealEstate extends Temario
 	
 	public static void main(String argv[]) {
 		TemarioDeRealEstate temario = new TemarioDeRealEstate();
-		temario.buscarTema("saludo");
+		temario.buscarTema(Constantes.FRASE_SALUDO);
 	}
 }

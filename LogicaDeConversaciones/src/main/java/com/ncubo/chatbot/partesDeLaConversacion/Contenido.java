@@ -139,6 +139,27 @@ public abstract class Contenido
 				throw new ChatException("Error cargando los workspaces "+e.getMessage());
 			}
 			
+			// Conjunciones
+			try{
+				System.out.println("\nCargando las conjunciones ...\n");
+				NodeList conjunciones = doc.getElementsByTagName("conjunciones");
+				Node conjuncionesNode = conjunciones.item(0);
+				Element conjuncionesElement = (Element) conjuncionesNode;
+				NodeList conjuncion = conjuncionesElement.getElementsByTagName("conjuncion");
+				for (int temp = 0; temp < conjuncion.getLength(); temp++) {
+					Node nNode = conjuncion.item(temp);
+					Element eElement = (Element) nNode;
+					String id = eElement.getAttribute("id");
+					String frase = nNode.getTextContent();
+					String[] frases = new String[1];
+					frases[0] = frase;
+					System.out.println("Conjuncion: "+frase);
+					Conjunciones.getInstance().agregarConjuncion(new Conjuncion(id, frases));
+				}
+			}catch(Exception e){
+				throw new ChatException("Error cargando las conjunciones "+e.getMessage());
+			}
+			
 			//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 			NodeList conversaciones = doc.getElementsByTagName("conversacion");
 			System.out.println("\nCargando las frases ...\n");
@@ -298,6 +319,7 @@ public abstract class Contenido
 		protected File archivoDeConfiguracion() {
 			// TODO Auto-generated method stub
 			return new File(Constantes.PATH_ARCHIVO_DE_CONFIGURACION);
+			//return new File(Constantes.PATH_ARCHIVO_DE_CONFIGURACION);
 		}};
 		contenido.generarAudioEstatico();
 	}

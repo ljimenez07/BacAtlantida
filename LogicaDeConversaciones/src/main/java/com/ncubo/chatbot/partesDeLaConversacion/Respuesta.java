@@ -25,6 +25,7 @@ public class Respuesta {
 	private String fraseActivada;
 	private List<String> idsDeOracionesAfirmativas;
 	private boolean hayOracionesAfirmativas;
+	private String loQueElClienteDijo;
 	
 	public Respuesta(Frase frase, ConversationWatson conversacion, String context){
 		this.terminoElTema = false;
@@ -43,7 +44,7 @@ public class Respuesta {
 		// con el id de seccion, pasar la respuesta en texto a conversation
 		// del xml de respuesta de watson set al analizador cuales fueron los intenciones y las entidades (limitado a la pregunta)
 		// Si la respuesta fue pobre o de baja confianza hay que confirmar
-		
+		this.loQueElClienteDijo = texto;
 		watsonRespuesta = this.miConversacion.enviarAWatson(texto, this.miContexto);
 		procesarLaRespuestaDeWatson(this.miConversacion, watsonRespuesta);
 	}
@@ -58,6 +59,10 @@ public class Respuesta {
 		this.fraseActivada = obtenerElementoDelContextoDeWatson(Constantes.NODO_ACTIVADO);
 		obtenerIDsDeOracionesAfirmativas();
 		
+	}
+	
+	public String loQueElClienteDijoFue(){
+		return loQueElClienteDijo;
 	}
 	
 	public boolean entendiLaRespuesta(){

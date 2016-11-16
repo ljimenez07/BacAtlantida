@@ -134,19 +134,19 @@ public abstract class Frase
 	}
 
 	public String conjuncionParaRepreguntar(){
-		// Podrian vernir de un archivo gigante, que no depende del real state
-		// Las muletillas podrian estar 
-		String muletillas[] = new String[]{"I'm sorry, i didn't undertand.", "I didn't catch that."};
+		/*String muletillas[] = new String[]{"I'm sorry, i didn't undertand.", "I didn't catch that."};
 		
 		int unIndiceAlAzar = (int)Math.floor(Math.random()*muletillas.length);
-		return muletillas[unIndiceAlAzar];
+		return muletillas[unIndiceAlAzar];*/
+		
+		return Conjunciones.getInstance().obtenerUnaConjuncion().texto();
 	}
 	
 	public void setTextosDeLaFrase(String[] textosDeLaFrase) {
 		this.textosDeLaFrase = textosDeLaFrase;
 	}
 	
-	public String muletilla(){
+	/*public String muletilla(){
 		// Podrian vernir de un archivo gigante, que no depende del real state
 		
 		// Las muletillas podrian estar 
@@ -154,6 +154,6 @@ public abstract class Frase
 		
 		int unIndiceAlAzar = (int)Math.floor(Math.random()*muletillas.length);
 		return muletillas[unIndiceAlAzar];
-	}
+	}*/
 	
 }

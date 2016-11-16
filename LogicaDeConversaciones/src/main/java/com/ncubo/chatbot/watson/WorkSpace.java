@@ -19,7 +19,7 @@ public class WorkSpace {
 	}
 
 	public boolean tieneLaIntencion(String nombreDeLaIntencion){
-		for(int index=0; index < listaDeIntencionesUsadasParaReferenciarAlWorkspace.length; index ++){
+		for(int index = 0; index < listaDeIntencionesUsadasParaReferenciarAlWorkspace.length; index ++){
 			if(listaDeIntencionesUsadasParaReferenciarAlWorkspace[index].equals(nombreDeLaIntencion)){
 				return true;
 			}

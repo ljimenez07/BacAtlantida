@@ -27,6 +27,7 @@ public class Agente extends Participante{
 	private String nombreDelWorkSpaceGeneral;
 	private static final int MAXIMO_DE_INTENTOS_OPCIONALES = 4; // Sino se aborda el tema
 	private String nombreDeWorkspaceActual;
+	private String nombreDeLaIntencionGeneralActiva;
 	private boolean estaEnElWorkspaceGeneral;
 	private boolean noEntendiLaUltimaRespuesta;
 	private int numeroDeIntentosActualesEnRepetirUnaPregunta;
@@ -38,14 +39,15 @@ public class Agente extends Participante{
 		this.estaEnElWorkspaceGeneral = true;
 		this.miWorkSpaces = miWorkSpaces;
 		this.nombreDelWorkSpaceGeneral = "";
-		numeroDeIntentosActualesEnRepetirUnaPregunta = 1;
-		inicializarContextos();
+		this.nombreDeLaIntencionGeneralActiva = "";
+		this.numeroDeIntentosActualesEnRepetirUnaPregunta = 1;
+		this.inicializarContextos();
 	}
 	
 	private void inicializarContextos(){
 		for(WorkSpace workspace: miWorkSpaces){
 			ConversationWatson conversacion = new ConversationWatson(workspace.getUsuarioIBM(), workspace.getContrasenaIBM(), workspace.getIdIBM());
-			String contexto = conversacion.enviarMSG("Hello!", null).getContext().toString();
+			String contexto = conversacion.enviarMSG("", null).getContext().toString();
 			miWatsonConversacions.put(workspace.getNombre(), conversacion);
 			miContextos.put(workspace.getNombre(), contexto);
 			System.out.println("Contexto: "+contexto);
@@ -112,7 +114,6 @@ public class Agente extends Participante{
 		noEntendiLaUltimaRespuesta = (! respuesta.entendiLaRespuesta()) && (frase.esMandatorio()) && 
 				(numeroDeIntentosActualesEnRepetirUnaPregunta != MAXIMO_DE_INTENTOS_OPCIONALES);
 		if(noEntendiLaUltimaRespuesta){
-			//volverAPreguntar(pregunta);
 			numeroDeIntentosActualesEnRepetirUnaPregunta ++;
 		}else{
 			if(numeroDeIntentosActualesEnRepetirUnaPregunta == MAXIMO_DE_INTENTOS_OPCIONALES){
@@ -127,7 +128,8 @@ public class Agente extends Participante{
 				WorkSpace workspace = extraerUnWorkspaceConLaIntencion(intencionDelCliente);
 				if( (nombreDeWorkspaceActual.equals(nombreDelWorkSpaceGeneral)) && workspace != null){
 					nombreDeWorkspaceActual = workspace.getNombre();
-					System.out.println(String.format("Cambiando al workspace %s", nombreDeWorkspaceActual));
+					nombreDeLaIntencionGeneralActiva = intencionDelCliente;
+					System.out.println(String.format("Cambiando al workspace %s e intencion %s", nombreDeWorkspaceActual, nombreDeLaIntencionGeneralActiva));
 					cambiarDeTema = true; // Buscar otro tema
 					estaEnElWorkspaceGeneral = false;
 				}
@@ -161,7 +163,6 @@ public class Agente extends Participante{
 			String intencion = determinarLaIntencionGeneral(respuestaDelClinete);
 			System.out.println("La intencion del usuario es: "+intencion);
 			if(frase.esMandatorio()){	
-				//volverAPreguntar(pregunta);
 				numeroDeIntentosActualesEnRepetirUnaPregunta ++;
 			}else{
 				cambiarDeTema = true;
@@ -174,8 +175,8 @@ public class Agente extends Participante{
 			}else{
 				// Actualizar contexto
 				miContextos.put(nombreDeWorkspaceActual, respuesta.getMiContexto());
-				// Analizar si tengo que cambiar de workspace
 				
+				// Analizar si tengo que cambiar de workspace
 				cambiarDeTema = respuesta.seTerminoElTema();
 				if(cambiarDeTema){
 					// Desactivar flag del contexto
@@ -248,7 +249,6 @@ public class Agente extends Participante{
 	
 	public List<String> obtenerIDsDeOracionesAfirmativas(){
 		String context = miContextos.get(nombreDeWorkspaceActual);
-		//String afirmativas = "";
 		JSONArray afirmativas;
 		JSONObject obj = null;
 		List<String> idsDeOracionesAfirmativas = new ArrayList<String>();
@@ -266,5 +266,9 @@ public class Agente extends Participante{
 			// e.printStackTrace();
 		}
 		return idsDeOracionesAfirmativas;
+	}
+	
+	public String obtenerNombreDeLaIntencionGeneralActiva() {
+		return this.nombreDeLaIntencionGeneralActiva;
 	}
 }

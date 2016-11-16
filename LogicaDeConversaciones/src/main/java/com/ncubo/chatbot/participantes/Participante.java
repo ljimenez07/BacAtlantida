@@ -48,7 +48,6 @@ public class Participante{
 		Salida salida = new Salida();
 		
 		if (formaDeManifestarse.esEnFormaEscrita()){
-			//String texto = frase.muletilla() +" "+frase.texto();
 			String texto = frase.texto();
 			salida.escribir(texto);
 		}

@@ -74,10 +74,10 @@ public abstract class Temario
 		return miSaludo.buscarUnaFraseCon(caracteristica);
 	}
 	
-	public Tema proximoTemaATratar(Tema temaActual, Temas temasYaTratados, String nombreDelWorkspace){
+	public Tema proximoTemaATratar(Tema temaActual, Temas temasYaTratados, String nombreDelWorkspace, String nombreIntencionGeneral){
 		Collections.shuffle(temasDelDiscurso); // Desordenar el array
 		for(Tema tema: temasDelDiscurso){
-			if(tema.obtenerElNombreDelWorkspaceAlQuePertenece().equals(nombreDelWorkspace)){
+			if(tema.obtenerElNombreDelWorkspaceAlQuePertenece().equals(nombreDelWorkspace) && tema.obtenerIntencionGeneralAlQuePertenece().equals(nombreIntencionGeneral)){
 				if(! tema.obtenerIdTema().equals(temaActual.obtenerIdTema())){
 					if(temasYaTratados != null){
 						if( ! temasYaTratados.contains(tema)){

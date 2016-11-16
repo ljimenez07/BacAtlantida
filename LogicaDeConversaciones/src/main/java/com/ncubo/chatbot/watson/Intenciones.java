@@ -10,7 +10,6 @@ import com.ncubo.chatbot.exceptiones.ChatException;
 
 public class Intenciones { //implements Iterable<Intencion>
 
-	//private static ArrayList<Intencion> intenciones = new ArrayList<Intencion>();
 	private Hashtable<String, Intencion> intenciones = new Hashtable<String, Intencion>();
 	
 	public Intenciones(){}
