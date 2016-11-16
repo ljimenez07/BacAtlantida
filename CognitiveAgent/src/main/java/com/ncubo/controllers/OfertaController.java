@@ -32,7 +32,7 @@ import com.ncubo.data.Oferta;
 import com.ncubo.util.GestorDeArchivos;
 
 @Controller
-public class GestionarOfertasController
+public class OfertaController
 {
 	@Autowired
 	private OfertaDao ofertaDao;
@@ -57,6 +57,26 @@ public class GestionarOfertasController
 	public String visualizarOfertas(Model model) throws ClassNotFoundException, SQLException
 	{
 		ArrayList<Oferta> ofertas = ofertaDao.obtener();
+		if (ofertas.isEmpty())
+		{
+			return "redirect:insertarOferta";
+		}
+		model.addAttribute("listaDeOfertas", ofertas);
+		return "tablaDeOfertas";
+	}
+	
+	@RequestMapping("/filtrarOfertas")
+	public String filtrarOfertas(@RequestParam("busquedaComercio") String nombreComercio, Model model) throws ClassNotFoundException, SQLException
+	{
+		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+		if(nombreComercio.equals(""))
+		{
+			ofertas = ofertaDao.obtener();
+		}
+		else
+		{
+			ofertas = ofertaDao.filtrarOfertasPorComercioYCategoria(nombreComercio);
+		}
 		if (ofertas.isEmpty())
 		{
 			return "redirect:insertarOferta";

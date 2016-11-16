@@ -4,14 +4,17 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ncubo.data.CategoriaOferta;
 import com.ncubo.data.Oferta;
+import com.ncubo.util.LevenshteinDistance;
 
 @Component
 public class OfertaDao
@@ -56,7 +59,6 @@ public class OfertaDao
 		}
 	}
 	
-
 	public ArrayList<Oferta> obtener() throws ClassNotFoundException, SQLException
 	{ //TODO dalaian no deneria sacar el universo de ofertas.
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
@@ -75,8 +77,8 @@ public class OfertaDao
 				+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
 				+ atributo.FECHA_HORA_REGISTRO
 				+ " FROM " + NOMBRE_TABLA + ", " + NOMBRE_TABLA_CATEGORIA_OFERTA 
-				+ " WHERE " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA
-				+ " AND " + atributo.ELIMINADA + " = 0" +";";
+				+ " WHERE " + atributo.ELIMINADA + " = 0"
+				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA + ";";
 
 		Connection con = dao.openConBD();
 		ResultSet rs = con.createStatement().executeQuery(query);
@@ -141,29 +143,148 @@ public class OfertaDao
 	
 	public ArrayList<Oferta> ultimasOfertas() throws ClassNotFoundException, SQLException
 	{
-		ArrayList<Oferta> ofertas = obtener();
-		Collections.sort(ofertas);
-		Collections.reverse(ofertas);
+		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+		String query = "SELECT " + atributo.ID_OFERTA + ", "
+				+ atributo.TITULO_DE_OFERTA + ", "
+				+ atributo.COMERCIO + ", "
+				+ atributo.DESCRIPCION + ", "
+				+ atributo.CATEGORIA + ", "
+				+ atributo.NOMBRE_CATEGORIA + ", "
+				+ atributo.CIUDAD + ", "
+				+ atributo.ESTADO + ", "
+				+ atributo.RESTRICCIONES + ", "
+				+ atributo.VIGENCIA_DESDE + ", "
+				+ atributo.VIGENCIA_HASTA + ", "
+				+ atributo.IMAGEN_COMERCIO_PATH + ", "
+				+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
+				+ atributo.FECHA_HORA_REGISTRO
+				+ " FROM " + NOMBRE_TABLA + ", " + NOMBRE_TABLA_CATEGORIA_OFERTA 
+				+ " WHERE " + atributo.ELIMINADA + " = 0"
+				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA
+				+ " ORDER BY " + atributo.FECHA_HORA_REGISTRO + " DESC"
+				+ " LIMIT 10;";
+		
+		Connection con = dao.openConBD();
+		ResultSet rs = con.createStatement().executeQuery(query);
+		
+		while (rs.next())
+		{
+			ofertas.add(new Oferta(
+					rs.getInt(atributo.ID_OFERTA.toString()),
+					rs.getString(atributo.TITULO_DE_OFERTA.toString()),
+					rs.getString(atributo.COMERCIO.toString()),
+					rs.getString(atributo.DESCRIPCION.toString()),
+					new CategoriaOferta(rs.getInt(atributo.CATEGORIA.toString()), rs.getString(atributo.NOMBRE_CATEGORIA.toString())),
+					rs.getString(atributo.CIUDAD.toString()),
+					rs.getBoolean(atributo.ESTADO.toString()),
+					rs.getString(atributo.RESTRICCIONES.toString()),
+					rs.getString(atributo.VIGENCIA_DESDE.toString()),
+					rs.getString(atributo.VIGENCIA_HASTA.toString()),
+					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
+					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
+					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString())
+					));
+		}
+		
+		dao.closeConBD();
 		return ofertas;
 	}
 
 	public List<Oferta> ultimasDiezOfertasDesde(int indiceInicial) throws ClassNotFoundException, SQLException
 	{
-		ArrayList<Oferta> ultimasOfertas = ultimasOfertas();
-		int tamano = ultimasOfertas.size();
-		int indiceFinal = indiceInicial + 10;
-		return ultimasOfertas.subList(indiceInicial, tamano > indiceFinal ? indiceFinal : tamano);
+		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+		String query = "SELECT " + atributo.ID_OFERTA + ", "
+				+ atributo.TITULO_DE_OFERTA + ", "
+				+ atributo.COMERCIO + ", "
+				+ atributo.DESCRIPCION + ", "
+				+ atributo.CATEGORIA + ", "
+				+ atributo.NOMBRE_CATEGORIA + ", "
+				+ atributo.CIUDAD + ", "
+				+ atributo.ESTADO + ", "
+				+ atributo.RESTRICCIONES + ", "
+				+ atributo.VIGENCIA_DESDE + ", "
+				+ atributo.VIGENCIA_HASTA + ", "
+				+ atributo.IMAGEN_COMERCIO_PATH + ", "
+				+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
+				+ atributo.FECHA_HORA_REGISTRO
+				+ " FROM " + NOMBRE_TABLA + ", " + NOMBRE_TABLA_CATEGORIA_OFERTA 
+				+ " WHERE " + atributo.ELIMINADA + " = 0"
+				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA
+				+ " ORDER BY " + atributo.FECHA_HORA_REGISTRO + " DESC"
+				+ " LIMIT " + indiceInicial + ", 10;";
+		
+		Connection con = dao.openConBD();
+		ResultSet rs = con.createStatement().executeQuery(query);
+		
+		while (rs.next())
+		{
+			ofertas.add(new Oferta(
+					rs.getInt(atributo.ID_OFERTA.toString()),
+					rs.getString(atributo.TITULO_DE_OFERTA.toString()),
+					rs.getString(atributo.COMERCIO.toString()),
+					rs.getString(atributo.DESCRIPCION.toString()),
+					new CategoriaOferta(rs.getInt(atributo.CATEGORIA.toString()), rs.getString(atributo.NOMBRE_CATEGORIA.toString())),
+					rs.getString(atributo.CIUDAD.toString()),
+					rs.getBoolean(atributo.ESTADO.toString()),
+					rs.getString(atributo.RESTRICCIONES.toString()),
+					rs.getString(atributo.VIGENCIA_DESDE.toString()),
+					rs.getString(atributo.VIGENCIA_HASTA.toString()),
+					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
+					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
+					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString())
+					));
 	}
 
+		dao.closeConBD();
+		return ofertas;
+	}
+	
 	public Oferta obtener(int idOferta) throws ClassNotFoundException, SQLException
 	{
-		for(final Oferta oferta : obtener())
+		String query = "SELECT " + atributo.ID_OFERTA + ", "
+				+ atributo.TITULO_DE_OFERTA + ", "
+				+ atributo.COMERCIO + ", "
+				+ atributo.DESCRIPCION + ", "
+				+ atributo.CATEGORIA + ", "
+				+ atributo.NOMBRE_CATEGORIA + ", "
+				+ atributo.CIUDAD + ", "
+				+ atributo.ESTADO + ", "
+				+ atributo.RESTRICCIONES + ", "
+				+ atributo.VIGENCIA_DESDE + ", "
+				+ atributo.VIGENCIA_HASTA + ", "
+				+ atributo.IMAGEN_COMERCIO_PATH + ", "
+				+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
+				+ atributo.FECHA_HORA_REGISTRO
+				+ " FROM " + NOMBRE_TABLA + ", " + NOMBRE_TABLA_CATEGORIA_OFERTA 
+				+ " WHERE " + atributo.ID_OFERTA + " = " + idOferta
+				+ " AND " + atributo.ELIMINADA + " = 0"
+				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA + ";";
+		
+		Connection con = dao.openConBD();
+		ResultSet rs = con.createStatement().executeQuery(query);
+		
+		while (rs.next())
 		{
-			if(oferta.getIdOferta() == idOferta)
-			{
+			Oferta oferta = new Oferta(
+					rs.getInt(atributo.ID_OFERTA.toString()),
+					rs.getString(atributo.TITULO_DE_OFERTA.toString()),
+					rs.getString(atributo.COMERCIO.toString()),
+					rs.getString(atributo.DESCRIPCION.toString()),
+					new CategoriaOferta(rs.getInt(atributo.CATEGORIA.toString()), rs.getString(atributo.NOMBRE_CATEGORIA.toString())),
+					rs.getString(atributo.CIUDAD.toString()),
+					rs.getBoolean(atributo.ESTADO.toString()),
+					rs.getString(atributo.RESTRICCIONES.toString()),
+					rs.getString(atributo.VIGENCIA_DESDE.toString()),
+					rs.getString(atributo.VIGENCIA_HASTA.toString()),
+					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
+					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
+					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString())
+					);
+			dao.closeConBD();
 				return oferta;
 			}
-		}
+		
+		dao.closeConBD();
 		return null;
 	}
 
@@ -202,6 +323,38 @@ public class OfertaDao
 		Connection con = dao.openConBD();
 		con.createStatement().executeUpdate(query);
 		dao.closeConBD();
+	}
+	
+	public ArrayList<Oferta> filtrarOfertasPorComercioYCategoria(String  nombreComercio) throws ClassNotFoundException, SQLException
+	{
+		ArrayList<Oferta> ultimasOfertas = ultimasOfertas();
+		Map<Integer, Oferta> valoresSimilitud = new HashMap<Integer, Oferta>();
+		
+		for(Oferta ofertaActual : ultimasOfertas)
+		{
+			int levenshteinDistance = LevenshteinDistance.distance( nombreComercio, ofertaActual.getComercio());
+			int levenshteinDistanceCategoria = LevenshteinDistance.distance( nombreComercio, ofertaActual.getCategoria().getNombre());
+			if ( levenshteinDistance < 6 )
+			{
+				valoresSimilitud.put(levenshteinDistance, ofertaActual);
+			}
+			else
+			{
+				if( levenshteinDistanceCategoria < 3 )
+				{
+					valoresSimilitud.put(levenshteinDistanceCategoria, ofertaActual);
+				}
+			}
+		}
+		
+		Map<Integer, Oferta> mapaOrdenado = new TreeMap<Integer, Oferta>(valoresSimilitud);
+		ArrayList<Oferta> ofertasFiltradas = new ArrayList<Oferta>();
+		for(Map.Entry<Integer, Oferta> entryActual : mapaOrdenado.entrySet())
+		{
+			ofertasFiltradas.add(entryActual.getValue());
+		}
+
+		return ofertasFiltradas;
 	}
 	
 	
