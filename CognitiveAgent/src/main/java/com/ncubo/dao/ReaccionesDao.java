@@ -17,10 +17,10 @@ import com.ncubo.data.Reacciones;
 public class ReaccionesDao 
 {
 	List <Reacciones> reacciones;
-	private final String QUERY_LIKES_POR_OFERTA = "SELECT distinct oferta.tituloDeOferta AS tituloLabel, count(*) as meGusta FROM oferta JOIN likes WHERE oferta.idOferta = likes.idOferta AND `likes`='1' AND  likes.fecha BETWEEN ? AND ? GROUP BY oferta.tituloDeOferta;";
-	private final String QUERY_LIKES_POR_CATEGORIA = "SELECT categoriaoferta.nombre AS tituloLabel, count(*) AS meGusta FROM categoriaoferta JOIN oferta,likes WHERE categoriaoferta.idCategoriaOferta = oferta.categoria AND likes='1' AND oferta.idOferta = likes.idOferta AND fecha BETWEEN ? AND ? GROUP BY categoriaoferta.nombre;";
-	private final String QUERY_DISLIKES_POR_OFERTA = "SELECT distinct oferta.tituloDeOferta AS tituloLabelDislike, count(*) as noMegusta FROM oferta JOIN likes WHERE oferta.idOferta = likes.idOferta AND `likes`='0' AND  likes.fecha BETWEEN ? AND ? GROUP BY oferta.tituloDeOferta;";
-	private String QUERY_DISLIKES_POR_CATEGORIA = "SELECT categoriaoferta.nombre AS tituloLabelDislike, count(*) AS noMegusta FROM categoriaoferta JOIN oferta,likes WHERE categoriaoferta.idCategoriaOferta = oferta.categoria AND likes='0' AND oferta.idOferta = likes.idOferta AND fecha BETWEEN ? AND ? GROUP BY categoriaoferta.nombre;";
+	private final String QUERY_LIKES_POR_OFERTA = "SELECT distinct oferta.tituloDeOferta AS tituloLabel, count(*) as meGusta FROM oferta JOIN reaccion WHERE oferta.idOferta = reaccion.idOferta AND reaccion='1' AND  reaccion.fecha BETWEEN ? AND ? GROUP BY oferta.tituloDeOferta;";
+	private final String QUERY_LIKES_POR_CATEGORIA = "SELECT categoriaoferta.nombre AS tituloLabel, count(*) AS meGusta FROM categoriaoferta JOIN oferta,reaccion WHERE categoriaoferta.idCategoriaOferta = oferta.categoria AND reaccion='1' AND oferta.idOferta = reaccion.idOferta AND fecha BETWEEN ? AND ? GROUP BY categoriaoferta.nombre;";
+	private final String QUERY_DISLIKES_POR_OFERTA = "SELECT distinct oferta.tituloDeOferta AS tituloLabelDislike, count(*) as noMegusta FROM oferta JOIN reaccion WHERE oferta.idOferta = reaccion.idOferta AND reaccion='0' AND  reaccion.fecha BETWEEN ? AND ? GROUP BY oferta.tituloDeOferta;";
+	private String QUERY_DISLIKES_POR_CATEGORIA = "SELECT categoriaoferta.nombre AS tituloLabelDislike, count(*) AS noMegusta FROM categoriaoferta JOIN oferta,reaccion WHERE categoriaoferta.idCategoriaOferta = oferta.categoria AND reaccion='0' AND oferta.idOferta = reaccion.idOferta AND fecha BETWEEN ? AND ? GROUP BY categoriaoferta.nombre;";
 	
 	@Autowired
 	private Persistencia dao;
