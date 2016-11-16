@@ -44,7 +44,7 @@ public class MovilController {
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/chat/", method = RequestMethod.POST)
-	@ResponseBody String chat(@RequestBody String mensaje, HttpSession session, HttpServletRequest request) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException 
+	@ResponseBody String chat(@RequestBody String mensaje, HttpSession session) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException 
 	{
 		Usuario usuario = (Usuario)session.getAttribute(Usuario.LLAVE_EN_SESSION) ;
 		if( usuario  == null)
@@ -57,8 +57,7 @@ public class MovilController {
 		return serverCognitivo.procesarMensajeChat(
 				usuario, 
 				mensaje, 
-				new Date(),
-				request );
+				new Date());
 	}
 	
 	@CrossOrigin(origins = "*")
@@ -76,8 +75,7 @@ public class MovilController {
 		return serverCognitivo.procesarMensajeConocerte(
 				usuario, 
 				mensaje, 
-				new Date(),
-				request
+				new Date()
 				);
 	}
 	
