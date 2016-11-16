@@ -6,17 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ncubo.data.Reacciones;
+import com.ncubo.data.Reaccion;
 
 @Component
-public class ReaccionesDao 
+public class ReaccionDao 
 {
-	List <Reacciones> reacciones;
+	ArrayList<Reaccion> reacciones;
 	private final String QUERY_LIKES_POR_OFERTA = "SELECT distinct oferta.tituloDeOferta AS tituloLabel, count(*) as meGusta FROM oferta JOIN reaccion WHERE oferta.idOferta = reaccion.idOferta AND reaccion='1' AND  reaccion.fecha BETWEEN ? AND ? GROUP BY oferta.tituloDeOferta;";
 	private final String QUERY_LIKES_POR_CATEGORIA = "SELECT categoriaoferta.nombre AS tituloLabel, count(*) AS meGusta FROM categoriaoferta JOIN oferta,reaccion WHERE categoriaoferta.idCategoriaOferta = oferta.categoria AND reaccion='1' AND oferta.idOferta = reaccion.idOferta AND fecha BETWEEN ? AND ? GROUP BY categoriaoferta.nombre;";
 	private final String QUERY_DISLIKES_POR_OFERTA = "SELECT distinct oferta.tituloDeOferta AS tituloLabelDislike, count(*) as noMegusta FROM oferta JOIN reaccion WHERE oferta.idOferta = reaccion.idOferta AND reaccion='0' AND  reaccion.fecha BETWEEN ? AND ? GROUP BY oferta.tituloDeOferta;";
@@ -44,12 +43,12 @@ public class ReaccionesDao
 		}
 	}
 	
-	public List<?> obtener(String desde, String hasta, String filtro) throws ClassNotFoundException, SQLException, ParseException
+	public ArrayList<Reaccion> obtener(String desde, String hasta, String filtro) throws ClassNotFoundException, SQLException, ParseException
 	{	
 		Connection connection = dao.openConBD();
 		PreparedStatement preStatementLikes = null;
 		PreparedStatement preStatementDisLikes = null;
-		reacciones = new ArrayList<Reacciones>();
+		reacciones = new ArrayList<Reaccion>();
 		
 		if("oferta".equalsIgnoreCase(filtro))
 		{
@@ -76,7 +75,7 @@ public class ReaccionesDao
 		ResultSet resultSet = preparedStatement.executeQuery();
 		while(resultSet.next())
 		{	
-			Reacciones reaccion = new Reacciones();
+			Reaccion reaccion = new Reaccion();
 			reaccion.setCantidad_like(resultSet.getInt("meGusta"));
 			reaccion.setTituloLabel(resultSet.getString("tituloLabel"));
 			reacciones.add(reaccion);
@@ -92,7 +91,7 @@ public class ReaccionesDao
 		ResultSet resultSet = preparedStatement.executeQuery();
 		while(resultSet.next())
 		{
-			Reacciones reaccion = new Reacciones();
+			Reaccion reaccion = new Reaccion();
 			reaccion.setCantidad_dislike(resultSet.getInt("noMegusta"));
 			reaccion.setTituloLabelDislike(resultSet.getString("tituloLabelDislike"));
 			reacciones.add(reaccion);

@@ -3,7 +3,7 @@ package com.ncubo.controllers;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.ncubo.dao.ReaccionesDao;
+import com.ncubo.dao.ReaccionDao;
+import com.ncubo.data.Reaccion;
 
 @Controller
-public class ReaccionesController 
+public class ReaccionController 
 {
 	@Autowired
-	private ReaccionesDao reaccionesDao;
+	private ReaccionDao reaccionDao;
 	
 	@RequestMapping("/reaccionDeOfertas")
 	public String redireccionarReaccionDeOfertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
@@ -31,7 +32,7 @@ public class ReaccionesController
 	}
 	
 	@RequestMapping(value = "/reaccionDeOfertasDatos", method = RequestMethod.POST)
-	public @ResponseBody List<?> obtenerDatosReaccionDeOfertas(@RequestBody String parametros) throws IOException, ClassNotFoundException, SQLException, ParseException
+	public @ResponseBody ArrayList<Reaccion> obtenerDatosReaccionDeOfertas(@RequestBody String parametros) throws IOException, ClassNotFoundException, SQLException, ParseException
 	{
 		Gson gson = new Gson();
 		Object deserializado = gson.fromJson(parametros, Object.class);
@@ -42,7 +43,7 @@ public class ReaccionesController
 		String fechaHasta = (String) datos.get("hasta");
 		String filtro = (String) datos.get("filtro");
 
-		List<?> resultado = reaccionesDao.obtener(fechaDesde, fechaHasta, filtro);		
+		ArrayList<Reaccion> resultado = reaccionDao.obtener(fechaDesde, fechaHasta, filtro);		
 		return resultado;
 	}
 	

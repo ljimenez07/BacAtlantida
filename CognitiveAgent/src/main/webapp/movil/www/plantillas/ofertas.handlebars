@@ -46,6 +46,7 @@ function bindAcciones() {
 	    url: serverDomain + "/ofertas/" + id,
 	    success: function(data) {
 	      $(".panel-body").html(Handlebars.templates.oferta(data));
+	      $("#titulo-de-pantalla").html("DETALLE DE LA OFERTA");
 	    }
 	  });
 	});
