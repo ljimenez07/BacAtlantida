@@ -88,6 +88,13 @@ public class Conversacion {
 					fraseActual = miPregunta;
 					ponerComoYaTratado(miPregunta);
 					agente.cambiarAWorkspaceGeneral();
+				}else if(this.temaActual.obtenerIdTema().equals("mostrarResultados")){
+					this.temaActual = this.temario.buscarTema("mostrarResultados");
+					miPregunta = (Pregunta) this.temaActual.buscarUnaFrase("mostrarResultados");
+					misSalidas.add(agente.decir(miPregunta));
+					fraseActual = miPregunta;
+					ponerComoYaTratado(miPregunta);
+					agente.cambiarAWorkspaceGeneral();
 				}else{
 					System.out.println("El proximo tema a tratar es: "+this.temaActual.obtenerIdTema());
 					
@@ -95,9 +102,9 @@ public class Conversacion {
 					agente.activarTemaEnElContextoDeWatson(this.temaActual.obtenerIdTema());
 					
 					// llamar a watson y ver que bloque se activo
-					String idFraseActivada = agente.inicializarTemaEnWatson();
+					String idFraseActivada = agente.inicializarTemaEnWatson(respuestaDelCliente);
 					if(idFraseActivada.equals("")){
-						idFraseActivada = agente.inicializarTemaEnWatson();
+						idFraseActivada = agente.inicializarTemaEnWatson(respuestaDelCliente);
 						agente.borrarUnaVariableDelContexto(Constantes.ANYTHING_ELSE);
 					}
 					System.out.println("Id de la frase a decir: "+idFraseActivada);

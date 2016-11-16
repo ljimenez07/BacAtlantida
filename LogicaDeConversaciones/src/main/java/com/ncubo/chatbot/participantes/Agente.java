@@ -123,9 +123,10 @@ public class Agente extends Participante{
 				miContextos.put(nombreDeWorkspaceActual, respuesta.getMiContexto());
 				
 				// Analizar si ya tengo que cambiar de workspace
-				if( (nombreDeWorkspaceActual.equals(nombreDelWorkSpaceGeneral)) && 
-						(existeAlgunWorkspaceConElNombre(respuesta.obtenerLaIntencionDeLaRespuesta().getNombre()))){
-					nombreDeWorkspaceActual = respuesta.obtenerLaIntencionDeLaRespuesta().getNombre();
+				String intencionDelCliente = respuesta.obtenerLaIntencionDeLaRespuesta().getNombre();
+				WorkSpace workspace = extraerUnWorkspaceConLaIntencion(intencionDelCliente);
+				if( (nombreDeWorkspaceActual.equals(nombreDelWorkSpaceGeneral)) && workspace != null){
+					nombreDeWorkspaceActual = workspace.getNombre();
 					System.out.println(String.format("Cambiando al workspace %s", nombreDeWorkspaceActual));
 					cambiarDeTema = true; // Buscar otro tema
 					estaEnElWorkspaceGeneral = false;
@@ -137,13 +138,13 @@ public class Agente extends Participante{
 		return respuesta;
 	}
 	
-	private boolean existeAlgunWorkspaceConElNombre(String nombreDelWorkspace){
+	private WorkSpace extraerUnWorkspaceConLaIntencion(String nombreDeLaIntencion){
 		for(WorkSpace workspace: miWorkSpaces){
-			if(workspace.getNombre().equals(nombreDelWorkspace)){
-				return true;
+			if(workspace.tieneLaIntencion(nombreDeLaIntencion)){
+				return workspace;
 			}
 		}
-		return false;
+		return null;
 	}
 	
 	public Respuesta analizarRespuesta(String respuestaDelClinete, Frase frase){
@@ -233,8 +234,8 @@ public class Agente extends Participante{
 		miContextos.put(nombreDeWorkspaceActual, obj.toString());
 	}
 	
-	public String inicializarTemaEnWatson(){
-		MessageResponse response = miWatsonConversacions.get(nombreDeWorkspaceActual).enviarAWatson("", miContextos.get(nombreDeWorkspaceActual));
+	public String inicializarTemaEnWatson(String respuestaDelCliente){
+		MessageResponse response = miWatsonConversacions.get(nombreDeWorkspaceActual).enviarAWatson(respuestaDelCliente, miContextos.get(nombreDeWorkspaceActual));
 		String context = response.getContext().toString();
 		miContextos.put(nombreDeWorkspaceActual, context);
 		try{

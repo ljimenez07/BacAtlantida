@@ -146,6 +146,8 @@ public class TemarioDeRealEstate extends Temario
 	@Override
 	protected void cargarDependencias(Temas temasDelDiscurso){
 		temasDelDiscurso.get(2).dependeDe(temasDelDiscurso.get(1));
+		temasDelDiscurso.get(6).dependeDe(temasDelDiscurso.get(2)).dependeDe(temasDelDiscurso.get(3))
+							   .dependeDe(temasDelDiscurso.get(4)).dependeDe(temasDelDiscurso.get(5));
 	}
 	
 	public static void main(String argv[]) {

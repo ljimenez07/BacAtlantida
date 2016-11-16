@@ -9,6 +9,7 @@ import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+import com.ncubo.chatbot.configuracion.Constantes;
 import com.ncubo.chatbot.exceptiones.ChatException;
 import com.ncubo.chatbot.parser.Operador;
 import com.ncubo.chatbot.parser.Operador.TipoDeOperador;
@@ -126,12 +127,13 @@ public abstract class Contenido
 					Element eElement = (Element) nNode;
 					String tipo = eElement.getAttribute("tipo");
 					String idIBM = eElement.getAttribute("idIBM");
+					String intencionesParaSeReferenciado = eElement.getAttribute("intencionesParaSeReferenciado");
 					String nombre = nNode.getTextContent();
-					System.out.println("NOMBRE :" + nombre);
-					System.out.println("Tipo :" + tipo);
+					System.out.println("NOMBRE: " + nombre);
+					System.out.println("Tipo: " + tipo);
 					//System.out.println("User :" + user);
 					//System.out.println("idIBM :" + idIBM);
-					miWorkSpaces.add(new WorkSpace(user, pass, idIBM, tipo, nombre));
+					miWorkSpaces.add(new WorkSpace(user, pass, idIBM, tipo, nombre, intencionesParaSeReferenciado.split(",")));
 				}
 			}catch(Exception e){
 				throw new ChatException("Error cargando los workspaces "+e.getMessage());
@@ -295,7 +297,7 @@ public abstract class Contenido
 		@Override
 		protected File archivoDeConfiguracion() {
 			// TODO Auto-generated method stub
-			return new File("C:\\Users\\SergioAlberto\\Documents\\SergioGQ\\Watson\\Repo\\watson\\LogicaDeConversaciones\\src\\main\\resources\\conversaciones.xml");
+			return new File(Constantes.PATH_ARCHIVO_DE_CONFIGURACION);
 		}};
 		contenido.generarAudioEstatico();
 	}
