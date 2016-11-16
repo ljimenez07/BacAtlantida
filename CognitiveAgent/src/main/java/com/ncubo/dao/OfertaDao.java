@@ -5,13 +5,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ncubo.data.CategoriaOferta;
 import com.ncubo.data.Oferta;
+import com.ncubo.util.LevenshteinDistance;
 
 @Component
 public class OfertaDao
@@ -202,6 +206,38 @@ public class OfertaDao
 		Connection con = dao.openConBD();
 		con.createStatement().executeUpdate(query);
 		dao.closeConBD();
+	}
+	
+	public ArrayList<Oferta> filtrarOfertasPorComercioYCategoria(String  nombreComercio) throws ClassNotFoundException, SQLException
+	{
+		ArrayList<Oferta> ultimasOfertas = ultimasOfertas();
+		Map<Integer, Oferta> valoresSimilitud = new HashMap<Integer, Oferta>();
+		
+		for(Oferta ofertaActual : ultimasOfertas)
+		{
+			int levenshteinDistance = LevenshteinDistance.distance( nombreComercio, ofertaActual.getComercio());
+			int levenshteinDistanceCategoria = LevenshteinDistance.distance( nombreComercio, ofertaActual.getCategoria().getNombre());
+			if ( levenshteinDistance < 6 )
+			{
+				valoresSimilitud.put(levenshteinDistance, ofertaActual);
+			}
+			else
+			{
+				if( levenshteinDistanceCategoria < 3 )
+				{
+					valoresSimilitud.put(levenshteinDistanceCategoria, ofertaActual);
+				}
+			}
+		}
+		
+		Map<Integer, Oferta> mapaOrdenado = new TreeMap<Integer, Oferta>(valoresSimilitud);
+		ArrayList<Oferta> ofertasFiltradas = new ArrayList<Oferta>();
+		for(Map.Entry<Integer, Oferta> entryActual : mapaOrdenado.entrySet())
+		{
+			ofertasFiltradas.add(entryActual.getValue());
+		}
+
+		return ofertasFiltradas;
 	}
 	
 	

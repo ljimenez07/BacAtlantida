@@ -65,6 +65,26 @@ public class GestionarOfertasController
 		return "tablaDeOfertas";
 	}
 	
+	@RequestMapping("/filtrarOfertas")
+	public String filtrarOfertas(@RequestParam("busquedaComercio") String nombreComercio, Model model) throws ClassNotFoundException, SQLException
+	{
+		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+		if(nombreComercio.equals(""))
+		{
+			ofertas = ofertaDao.obtener();
+		}
+		else
+		{
+			ofertas = ofertaDao.filtrarOfertasPorComercioYCategoria(nombreComercio);
+		}
+		if (ofertas.isEmpty())
+		{
+			return "redirect:insertarOferta";
+		}
+		model.addAttribute("listaDeOfertas", ofertas);
+		return "tablaDeOfertas";
+	}
+	
 	@GetMapping("/insertarOferta")
 	public String cargarInsertarOfertas(Oferta oferta, Model model) throws ClassNotFoundException, SQLException
 	{
