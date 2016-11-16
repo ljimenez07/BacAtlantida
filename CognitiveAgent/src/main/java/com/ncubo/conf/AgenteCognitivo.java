@@ -4,6 +4,8 @@ import static com.jayway.restassured.RestAssured.given;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,8 +16,10 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
+import org.eclipse.jdt.internal.core.search.matching.ConstructorLocator;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +30,10 @@ import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 import com.jayway.restassured.internal.path.xml.NodeChildrenImpl;
 import com.jayway.restassured.internal.path.xml.NodeImpl;
 import com.jayway.restassured.path.xml.XmlPath;
+import com.ncubo.dao.ConsultaDao;
+import com.ncubo.data.Consulta;
+import com.ncubo.exceptions.NoSessionException;
+
 @Component
 @ConfigurationProperties("servercognitivo")
 
@@ -38,24 +46,23 @@ public class AgenteCognitivo
 	private String wsTasaCambio;
 	private String wsSaldo;
 	private String wsMovimientos;
-	
 
-	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException
+	@Autowired
+	private ConsultaDao consultaDao;
+
+	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
 	{
 	
 		return procesarMensaje(usuario,mensaje,date, workspaceDeChats);
 	}
 	
-	
-	public String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException
+	public String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
 	{
 	
 		return procesarMensaje(usuario,mensaje,date, workspaceDeConocerte);
 	}
 	
-	
-
-	private String procesarMensaje(Usuario usuario, String mensaje, Date date, String workspace) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException
+	private String procesarMensaje(Usuario usuario, String mensaje, Date date, String workspace) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
 	{
 		JSONObject respuesta = new JSONObject();
 		ObjectMapper mapper = new ObjectMapper();
@@ -96,6 +103,9 @@ public class AgenteCognitivo
 			NodeImpl saldoContable = saldoColecion.get("saldoColeccion");
 			String texto = getText(response);
 			respuesta.put("texto", texto + saldoContable.get("contable"));
+			
+			consultaDao.insertar(
+					new Consulta(Intencion.SALDO.toString(), new Timestamp(new Date().getTime()), Intencion.SALDO.toString() , 1));
 
 		}
 	
@@ -121,6 +131,9 @@ public class AgenteCognitivo
 			
 			String texto = getText(response);
 			respuesta.put("texto", texto + tipoCambio1 + " " + tipoCambio2);
+			
+			consultaDao.insertar(
+					new Consulta(Intencion.TASA_DE_CAMBIO.toString(), new Timestamp(new Date().getTime()), Intencion.TASA_DE_CAMBIO_DESCRIPCION.toString() , 1));
 		}
 		else if(intent.equals(Intencion.MOVIMIENTOS.toString()) && usuario.estaLogueado())
 		{
@@ -145,9 +158,9 @@ public class AgenteCognitivo
 				NodeImpl moneda = movimiento.get("moneda");
 
 				if(tipoTransaccion.getValue().equals("5"))
-					movimientos = movimientos +" El d�a "+fecha+ " a las "+ hora + " se realizo un cr�dito por " + montoTransaccion + " " + moneda;
+					movimientos = movimientos +" El d?a "+fecha+ " a las "+ hora + " se realizo un cr?dito por " + montoTransaccion + " " + moneda;
 				if(tipoTransaccion.getValue().equals("0"))
-					movimientos = movimientos +" El d�a "+fecha+ " a las "+ hora + " se realizo un d�bito por " + montoTransaccion + " " + moneda;
+					movimientos = movimientos +" El d?a "+fecha+ " a las "+ hora + " se realizo un d?bito por " + montoTransaccion + " " + moneda;
 				
 				last--;
 			}

@@ -375,8 +375,8 @@ public class OfertaDao
 	
 	public ArrayList<Oferta> filtrarOfertasPorComercioYCategoria(String  nombreComercio) throws ClassNotFoundException, SQLException
 	{
-		ArrayList<Oferta> ultimasOfertas = ultimasOfertas();
-		Map<Integer, Oferta> valoresSimilitud = new HashMap<Integer, Oferta>();
+		ArrayList<Oferta> ultimasOfertas = obtener();
+		Map<Integer, List<Oferta>> valoresSimilitud = new HashMap<Integer, List<Oferta>>();
 		
 		for(Oferta ofertaActual : ultimasOfertas)
 		{
@@ -384,22 +384,41 @@ public class OfertaDao
 			int levenshteinDistanceCategoria = LevenshteinDistance.distance( nombreComercio, ofertaActual.getCategoria().getNombre());
 			if ( levenshteinDistance < 6 )
 			{
-				valoresSimilitud.put(levenshteinDistance, ofertaActual);
+				if (valoresSimilitud.get(levenshteinDistance) == null)
+				{
+					ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+					ofertas.add(ofertaActual);
+					valoresSimilitud.put(levenshteinDistance, ofertas);
+				}
+				else
+				{
+					valoresSimilitud.get(levenshteinDistance).add(ofertaActual);
+				}
 			}
 			else
 			{
 				if( levenshteinDistanceCategoria < 3 )
 				{
-					valoresSimilitud.put(levenshteinDistanceCategoria, ofertaActual);
+					if (valoresSimilitud.get(levenshteinDistanceCategoria) == null)
+					{
+						ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+						ofertas.add(ofertaActual);
+						valoresSimilitud.put(levenshteinDistanceCategoria, ofertas);
+					}
+					else
+					{
+						valoresSimilitud.get(levenshteinDistanceCategoria).add(ofertaActual);
+					}
 				}
 			}
 		}
 		
-		Map<Integer, Oferta> mapaOrdenado = new TreeMap<Integer, Oferta>(valoresSimilitud);
+		Map<Integer, List<Oferta>> mapaOrdenado = new TreeMap<Integer, List<Oferta>>(valoresSimilitud);
 		ArrayList<Oferta> ofertasFiltradas = new ArrayList<Oferta>();
-		for(Map.Entry<Integer, Oferta> entryActual : mapaOrdenado.entrySet())
+		for(Map.Entry<Integer, List<Oferta>> entryActual : mapaOrdenado.entrySet())
 		{
-			ofertasFiltradas.add(entryActual.getValue());
+			for(Oferta ofertaActual : entryActual.getValue())
+			ofertasFiltradas.add(ofertaActual);
 		}
 
 		return ofertasFiltradas;
