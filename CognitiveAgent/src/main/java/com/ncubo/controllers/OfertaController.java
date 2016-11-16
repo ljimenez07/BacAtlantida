@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ncubo.dao.CategoriaDao;
 import com.ncubo.dao.OfertaDao;
 import com.ncubo.data.Oferta;
+import com.ncubo.logica.OfertaLogica;
 import com.ncubo.util.GestorDeArchivos;
 
 @Controller
@@ -40,6 +41,9 @@ public class OfertaController
 	private CategoriaDao categoriaDao;
 	@Autowired
 	private GestorDeArchivos gestorDeArchivos;
+	@Autowired
+	private OfertaLogica ofertaLogica;
+	
 	private final String ACTION_INSERTAR_OFERTA = "insertarOferta";
 	private final String ACTION_MODIFICAR_OFERTA = "modificarOferta";
 	
@@ -68,15 +72,9 @@ public class OfertaController
 	@RequestMapping("/filtrarOfertas")
 	public String filtrarOfertas(@RequestParam("busquedaComercio") String nombreComercio, Model model) throws ClassNotFoundException, SQLException
 	{
-		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
-		if(nombreComercio.equals(""))
-		{
-			ofertas = ofertaDao.obtener();
-		}
-		else
-		{
-			ofertas = ofertaDao.filtrarOfertasPorComercioYCategoria(nombreComercio);
-		}
+		model.addAttribute("busquedaComercio", nombreComercio);
+		ArrayList<Oferta> ofertas = ofertaLogica.filtrarOferta(nombreComercio);
+
 		if (ofertas.isEmpty())
 		{
 			return "redirect:insertarOferta";
@@ -99,13 +97,7 @@ public class OfertaController
 	@PostMapping(value = "/insertarOferta", params="accion=ingresar")
 	public String insertarOfertas(@Valid Oferta oferta, BindingResult bindingResult, Model model) throws ClassNotFoundException, SQLException, ParseException
 	{
-		if( ! bindingResult.hasFieldErrors("vigenciaHasta"))
-		{
-			if( ! oferta.fechaHastaMayorAFechaDesde())
-			{
-				bindingResult.rejectValue("vigenciaHasta", "1", "*Fechas incorrectas");
-			}
-		}
+		bindingResult = ofertaLogica.validarCampos(bindingResult, oferta);
 		
 		if (bindingResult.hasErrors())
 		{
@@ -188,13 +180,7 @@ public class OfertaController
 	@PostMapping(value = "/modificarOferta", params="accion=ingresar")
 	public String modificarOferta(@Valid Oferta oferta, BindingResult bindingResult, Model model, HttpServletRequest request, @RequestParam(value = "idUsuario", required = false) String idUsuario) throws ClassNotFoundException, SQLException, ParseException
 	{
-		if( ! bindingResult.hasFieldErrors("vigenciaHasta"))
-		{
-			if( ! oferta.fechaHastaMayorAFechaDesde())
-			{
-				bindingResult.rejectValue("vigenciaHasta", "1", "*Fechas incorrectas");
-			}
-		}
+		bindingResult = ofertaLogica.validarCampos(bindingResult, oferta);
 		
 		if (bindingResult.hasErrors())
 		{		
