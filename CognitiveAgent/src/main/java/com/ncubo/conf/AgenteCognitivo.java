@@ -10,7 +10,6 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +31,7 @@ import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 import com.jayway.restassured.internal.path.xml.NodeChildrenImpl;
 import com.jayway.restassured.internal.path.xml.NodeImpl;
 import com.jayway.restassured.path.xml.XmlPath;
+import com.ncubo.exceptions.NoSessionException;
 @Component
 @ConfigurationProperties("servercognitivo")
 public class AgenteCognitivo 
@@ -42,25 +42,24 @@ public class AgenteCognitivo
 	private String workspaceDeConocerte;
 
 	
-	private HashMap<String, JSONObject> contextoPorUsuario = new HashMap<String, JSONObject>(); //TODO quitarlo de aquí y meterlo en la session
-	
-	public String procesarMensajeChat(String contexto, String mensaje, Date date, HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException
+	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date, HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException
 	{
-		return procesarMensaje(contexto,mensaje,date, workspaceDeChats, request);
+		return procesarMensaje(usuario,mensaje,date, workspaceDeChats, request);
 	}
 	
-	public String procesarMensajeConocerte(String contexto, String mensaje, Date date, HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException
+	public String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date, HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException
 	{
-		return procesarMensaje(contexto,mensaje,date, workspaceDeConocerte, request);
+		return procesarMensaje(usuario,mensaje,date, workspaceDeConocerte, request);
 	}
 	
 	
-	private String procesarMensaje(String contexto, String mensaje, Date date, String workspace, HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException
+	private String procesarMensaje(Usuario usuario, String mensaje, Date date, String workspace, HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException
 	{
 		JSONObject respuesta = new JSONObject();
 		ObjectMapper mapper = new ObjectMapper();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		JSONObject contenidoDelContexto = contextoPorUsuario.get(contexto);
+	//	String contexto= usuario.getContextoDeWatson();
+		JSONObject contenidoDelContexto = new JSONObject(usuario.getContextoDeWatson());
 		if( contenidoDelContexto == null ) contenidoDelContexto = new JSONObject();
 		
 		Map<String, Object> myContext = mapper.readValue(contenidoDelContexto.toString(), new TypeReference<Map<String, Object>>(){});
@@ -73,12 +72,16 @@ public class AgenteCognitivo
 				.build();		
 		MessageResponse response = service.message(workspace, newMessage).execute();
 		
-		respuesta.put("contexto", contexto);
-		contextoPorUsuario.put(contexto, new JSONObject(response.toString()).getJSONObject("context"));
+		usuario.setContextoDeWatson(new JSONObject(response.toString()).getJSONObject("context").toString());
 		
 		String intent = getIntent(response);
 		if(intent.equals(Intencion.SALDO.toString()))
 		{
+			if( ! usuario.estaLogueado() )
+			{
+				throw new NoSessionException();
+			}
+			
 			String requestBody = "<cor:consultaSaldo><activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <transaccionId>100128</transaccionId> <aplicacionId>?</aplicacionId> <paisId>?</paisId> <empresaId>?</empresaId> <regionId>?</regionId> <canalId>102 </canalId> <version>?</version> <llaveSesion></llaveSesion> <usuarioId></usuarioId> <token>?</token> <parametroAdicionalColeccion> <parametroAdicionalItem> <linea>0</linea> <tipoRegistro>UAI</tipoRegistro> <valor>TSTBASAPI01</valor> </parametroAdicionalItem> <parametroAdicionalItem> <linea>1</linea> <tipoRegistro>TC</tipoRegistro> <valor>M</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> <consultaSaldoColeccion> <tipoCuenta>4</tipoCuenta> <peticionId>?</peticionId> </consultaSaldoColeccion> </cor:consultaSaldo>";
 			String responseXML = given().body(requestBody).post(getCurrentUrl(request) + "/Ecommerce/getOwnAccounts/").andReturn().asString();
 			
@@ -92,8 +95,13 @@ public class AgenteCognitivo
 			respuesta.put("texto", texto + saldoContable.get("contable"));
 
 		}
-		else if(intent.equals(Intencion.TASA_DE_CAMBIO.toString()))
+		else if(intent.equals(Intencion.TASA_DE_CAMBIO.toString()) && usuario.estaLogueado() )
 		{
+			if( ! usuario.estaLogueado() )
+			{
+				throw new NoSessionException();
+			}
+			
 			String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tas=\"http://hn.infatlan.och/ws/ACD082/out/TasaCambio\"> <soapenv:Header/> <soapenv:Body> <tas:MT_TasaCambio> <activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <!--Optional:--> <transaccionId>100054</transaccionId> <!--Optional:--> <aplicacionId>?</aplicacionId> <paisId>?</paisId> <empresaId>?</empresaId> <!--Optional:--> <regionId>?</regionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <version>?</version> <!--Optional:--> <llaveSesion>?</llaveSesion> <!--Optional:--> <usuarioId>?</usuarioId> <!--Optional:--> <token>?</token> <!--Zero or more repetitions:--> <identificadorColeccion> <!--Optional:--> <was>?</was> <!--Optional:--> <pi>?</pi> <!--Optional:--> <omniCanal>?</omniCanal> <!--Optional:--> <recibo>?</recibo> <!--Optional:--> <numeroTransaccion>?</numeroTransaccion> </identificadorColeccion> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> <!--Optional:--> <logColeccion> <!--Zero or more repetitions:--> <logItem> <identificadorWas>?</identificadorWas> <!--Optional:--> <identificadorPi>?</identificadorPi> <!--Optional:--> <identificadorOmniCanal>?</identificadorOmniCanal> <!--Optional:--> <identificadorRecibo>?</identificadorRecibo> <!--Optional:--> <numeroPeticion>?</numeroPeticion> <!--Optional:--> <identificadorNumeroTransaccion>?</identificadorNumeroTransaccion> <!--Optional:--> <aplicacionId>?</aplicacionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <ambienteId>?</ambienteId> <!--Optional:--> <transaccionId>?</transaccionId> <!--Optional:--> <accion>?</accion> <!--Optional:--> <tipo>?</tipo> <!--Optional:--> <fecha>?</fecha> <!--Optional:--> <hora>?</hora> <!--Optional:--> <auxiliar1>?</auxiliar1> <!--Optional:--> <auxiliar2>?</auxiliar2> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> </logItem> </logColeccion> </tas:MT_TasaCambio> </soapenv:Body> </soapenv:Envelope>";
 			String responseXML = given().body(requestBody).post( getCurrentUrl(request)+ "/Ecommerce/getConversionRates/").andReturn().asString();
 
@@ -111,7 +119,6 @@ public class AgenteCognitivo
 			compra = nodeTipoCambio2.get("compra");
 			venta = nodeTipoCambio2.get("venta");
 			String tipoCambio2 = moneda +": " +  compra + " " + venta;
-
 			
 			String texto = getText(response);
 			respuesta.put("texto", texto + tipoCambio1 + " " + tipoCambio2);

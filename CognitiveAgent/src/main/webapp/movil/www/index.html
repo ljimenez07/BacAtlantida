@@ -65,10 +65,12 @@
 		<script type="text/javascript" src="js/listaDeOfertas.handlebars.js"></script>
 		<script type="text/javascript" src="js/oferta.handlebars.js"></script>
 		<script type="text/javascript" src="js/chats.handlebars.js"></script>
-		
+		<script type="text/javascript" src="js/popupconocerte.handlebars.js"></script>
+		<script type="text/javascript" src="js/login.handlebars.js"></script>
 		
 		<script>
-		    function ofertas() {
+			function ofertas() 
+			{
 			  var context;
 			  $.ajax({
 			    url: serverDomain + "/ofertas/cantidad",
@@ -78,17 +80,24 @@
 			    }
 			  });
 		      return Handlebars.templates.ofertas(context);
-		    }
-		    
+			}
+			function quitarModal()
+			{
+				setCookie('mostrarpopupdeconocerte', true, 100);
+				$("#popupconocerte").modal('hide');
+			}
+			
+			var pantallas = new Object();
 			$(function(){
 
 				Handlebars.registerHelper('compare', function (lvalue, operator, rvalue, options) {
 				    var operators, result;
-				    
+				
 				    if (arguments.length < 3) {
 				        throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
 				    }
-				    
+				
+				pantallas["login"] = {title: "Login", body: Handlebars.templates.login(), DebajoDelPanel: ""};
 				    if (options === undefined) {
 				        options = rvalue;
 				        rvalue = operator;
@@ -121,13 +130,14 @@
 
 				});
 				
-				var pantallas = new Object();
-				pantallas["chats"] = {title: "CHAT", body: '<ol id="conversation" class="chat" ></ol>', DebajoDelPanel: Handlebars.templates.chats({"pathDelServidor":"chat"})};
-				pantallas["conocerte"] = {title: "CONOCERTE", body: '<ol id="conversation" class="chat" ></ol>', DebajoDelPanel: Handlebars.templates.chats({"pathDelServidor":"conocerte"})};
-				pantallas["inicio"] = {title: "INICIO", body: ofertas(), DebajoDelPanel: ""};
+				pantallas["chats"] = {title: "Chat", body: '<ol id="conversation" class="chat" ></ol>', DebajoDelPanel: Handlebars.templates.chats({"pathDelServidor":"chat"})};
+				pantallas["conocerte"] = {title: "Conocerte", body: '<ol id="conversation" class="chat" ></ol>', DebajoDelPanel: Handlebars.templates.chats({"pathDelServidor":"conocerte"})};
+				pantallas["popupconocerte"] = Handlebars.templates.popupconocerte({});
+				pantallas["inicio"] = {title: "Inicio", body: ofertas(), DebajoDelPanel: ""};
 				
 				var html = Handlebars.templates.layout(pantallas["inicio"]);
 				$(".app").html(html);
+				$(".app").append(pantallas["popupconocerte"] );
 				
 				$(".clickable").click(function()
 				{
@@ -152,38 +162,11 @@
 					}
 				});	
 				
-				if( getCookie("mostrarpopupdeconocerte") == "" )
-				{
-					$("#popupconocerte").modal('show');
-				}
-				
-				
-				function quitarModal()
-				{
-					setCookie('mostrarpopupdeconocerte', true, 100);
-					$("#popupconocerte").modal('hide');
-				}
 			});
 
 		</script>
 
-		<div id="popupconocerte" class="modal fade" style="display:none;"role="dialog">
-			<div class="modal-dialog modal-sm" style="background-color: white;">
-				<div class="modal-body">
-					 Permíteme conocerte, para ofrecerte mejores ofertas
-				</div>
-				<div class="modal-footer">
-					<div class="row">
-						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6	col-xl-6 pull-left">
-							<button data-href="conocerte" data-after="quitarModal()" class="btn btn-default clickable">Sí</button>
-						</div>
-						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6	col-xl-6 pull-right">
-							<button data-after="quitarModal()" class="btn btn-default clickable">Ahora no</button>
-						</div>
-					</div>
-				</div>
-			</div>		
-		</div>
+
 		<script>
 		function getCookie(cname) {
 			var name = cname + "=";

@@ -19,12 +19,12 @@
 $(function(){
 	function initChats()
 	{
+		var chat = $(".chat");
 		var conversation = $("#conversation");
 		var campoDeEntrada = $("#campoDeEntrada");
 		var mensajeDeAgente = $('<li class="other"><div class="msg"><p></p><time>20:17</time></div></li>');
 		var mensajeDeUsuario = $('<li class="self"><div class="msg"><p></p><time>20:17</time></div></li>');
 		var botonDeEnviarMensaje = $("#enviar");
-		var contexto = "";
 		
 		botonDeEnviarMensaje.click(function(){
 		
@@ -33,10 +33,10 @@ $(function(){
 		});
 		
 		campoDeEntrada.keypress(function(e) {
-		  if(e.which == 13) 
-		  {
-			enviarAlServer({ textoAEnviar:campoDeEntrada.val()});
-		  }
+			if(e.which == 13) 
+			{
+				enviarAlServer({ textoAEnviar:campoDeEntrada.val()});
+			}
 		});
 		
 		enviarAlServer({sePuedenEnviarVaciosAlServer:true, imprimirElMensajeQueElUsuarioEscribioEnLaConversacion:false, textoAEnviar:"Hola"});
@@ -54,13 +54,15 @@ $(function(){
 				mensaje.find(".msg p").html(textoAEnviar);
 				campoDeEntrada.val("");
 				conversation.append(mensaje);
+				
+				moveScrollParaAbjoEnFuncionDelUltimoMEnsaje();
 			}
 			
 			$.ajax({
 				type: "POST",
 				contentType :"text/plain; charset=UTF-8",
 				dataType : "json",
-				url : serverDomain+"/conversacion/{{pathDelServidor}}/"+contexto,
+				url : serverDomain+"/conversacion/{{pathDelServidor}}/",
 				data : textoAEnviar
 			})
 			.done(function( data ) 
@@ -69,9 +71,24 @@ $(function(){
 				respuesta.find(".msg p").html(data.texto);
 				conversation.append(respuesta);
 				
-				contexto = data.contexto;
+				moveScrollParaAbjoEnFuncionDelUltimoMEnsaje();
+			})
+			.fail(function(XMLHttpRequest, textStatus, textStatus) 
+			{
+				console.log(JSON.stringify(XMLHttpRequest));
+				console.log(XMLHttpRequest.responseJSON.exception);
+				if( XMLHttpRequest.responseJSON.exception.includes("NoSessionException") )
+				{
+					var html = Handlebars.templates.layout(pantallas["login"]);
+					$(".app").html(html);
+				}
 			});
 			
+		}
+		function moveScrollParaAbjoEnFuncionDelUltimoMEnsaje()
+		{
+			//console.log(chat.parent().height()+"  "+chat.parent()[0].scrollHeight+"   "+$(chat.parent()[0]).html());
+			chat.parent().scrollTop(chat.parent()[0].scrollHeight);
 		}
 
 	}
