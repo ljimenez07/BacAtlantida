@@ -21,6 +21,7 @@ public class OfertaDao
 {
 	private final String NOMBRE_TABLA = "oferta";
 	private final String NOMBRE_TABLA_CATEGORIA_OFERTA = "categoriaoferta";
+	private final String NOMBRE_TABLA_REACCION = "reaccion";
 	@Autowired
 	private Persistencia dao;
 	
@@ -45,7 +46,11 @@ public class OfertaDao
 		IMAGEN_PUBLICIDAD_PATH("imagenPublicidadPath"),
 		FECHA_HORA_REGISTRO("fechaHoraRegistro"),
 		
-		ELIMINADA("eliminada");
+		ELIMINADA("eliminada"),
+		ID_USUARIO("idUsuario"),
+		REACCION("reaccion"),
+		LIKES("likes"),
+		DISLIKES("dislikes");
 		
 		private String nombre;
 		atributo(String nombre)
@@ -98,7 +103,9 @@ public class OfertaDao
 					rs.getString(atributo.VIGENCIA_HASTA.toString()),
 					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
 					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
-					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString())
+					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),
+					rs.getInt(atributo.LIKES.toString()),
+					rs.getInt(atributo.DISLIKES.toString())
 					));
 		}
 		
@@ -182,7 +189,9 @@ public class OfertaDao
 					rs.getString(atributo.VIGENCIA_HASTA.toString()),
 					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
 					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
-					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString())
+					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),
+					rs.getInt(atributo.LIKES.toString()),
+					rs.getInt(atributo.DISLIKES.toString())
 					));
 		}
 		
@@ -190,10 +199,14 @@ public class OfertaDao
 		return ofertas;
 	}
 
-	public List<Oferta> ultimasDiezOfertasDesde(int indiceInicial) throws ClassNotFoundException, SQLException
+	public List<Oferta> ultimasDiezOfertasDesde(int indiceInicial, String idUsuario) throws ClassNotFoundException, SQLException
 	{
+		if(idUsuario == null)
+		{
+			idUsuario = "NULL";
+		}
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
-		String query = "SELECT " + atributo.ID_OFERTA + ", "
+		String query = "SELECT " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + ", "
 				+ atributo.TITULO_DE_OFERTA + ", "
 				+ atributo.COMERCIO + ", "
 				+ atributo.DESCRIPCION + ", "
@@ -207,7 +220,10 @@ public class OfertaDao
 				+ atributo.IMAGEN_COMERCIO_PATH + ", "
 				+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
 				+ atributo.FECHA_HORA_REGISTRO
-				+ " FROM " + NOMBRE_TABLA + ", " + NOMBRE_TABLA_CATEGORIA_OFERTA 
+				+ ", IF(" + atributo.ID_USUARIO + " = '" + idUsuario + "', IF(" + atributo.REACCION + " = 1, 1, NULL), NULL) AS " + atributo.LIKES
+				+ ", IF(" + atributo.ID_USUARIO + " = '" + idUsuario + "', IF(" + atributo.REACCION + " = 0, 1, NULL), NULL) AS " + atributo.DISLIKES
+				+ " FROM " + NOMBRE_TABLA_CATEGORIA_OFERTA + ", " + NOMBRE_TABLA
+				+ " LEFT JOIN " + NOMBRE_TABLA_REACCION + " ON " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + NOMBRE_TABLA_REACCION + ".idOferta"
 				+ " WHERE " + atributo.ELIMINADA + " = 0"
 				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA
 				+ " ORDER BY " + atributo.FECHA_HORA_REGISTRO + " DESC"
@@ -231,7 +247,9 @@ public class OfertaDao
 					rs.getString(atributo.VIGENCIA_HASTA.toString()),
 					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
 					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
-					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString())
+					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),
+					rs.getInt(atributo.LIKES.toString()),
+					rs.getInt(atributo.DISLIKES.toString())
 					));
 	}
 
@@ -239,9 +257,13 @@ public class OfertaDao
 		return ofertas;
 	}
 	
-	public Oferta obtener(int idOferta) throws ClassNotFoundException, SQLException
+	public Oferta obtener(int idOferta, String idUsuario) throws ClassNotFoundException, SQLException
 	{
-		String query = "SELECT " + atributo.ID_OFERTA + ", "
+		if(idUsuario == null)
+		{
+			idUsuario = "NULL";
+		}
+		String query = "SELECT " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + ", "
 				+ atributo.TITULO_DE_OFERTA + ", "
 				+ atributo.COMERCIO + ", "
 				+ atributo.DESCRIPCION + ", "
@@ -255,8 +277,11 @@ public class OfertaDao
 				+ atributo.IMAGEN_COMERCIO_PATH + ", "
 				+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
 				+ atributo.FECHA_HORA_REGISTRO
-				+ " FROM " + NOMBRE_TABLA + ", " + NOMBRE_TABLA_CATEGORIA_OFERTA 
-				+ " WHERE " + atributo.ID_OFERTA + " = " + idOferta
+				+ ", IF(" + atributo.ID_USUARIO + " = '" + idUsuario + "', IF(" + atributo.REACCION + " = 1, 1, NULL), NULL) AS " + atributo.LIKES
+				+ ", IF(" + atributo.ID_USUARIO + " = '" + idUsuario + "', IF(" + atributo.REACCION + " = 0, 1, NULL), NULL) AS " + atributo.DISLIKES
+				+ " FROM " + NOMBRE_TABLA_CATEGORIA_OFERTA + ", " + NOMBRE_TABLA 
+				+ " LEFT JOIN " + NOMBRE_TABLA_REACCION + " ON " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + NOMBRE_TABLA_REACCION + ".idOferta"
+				+ " WHERE " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + idOferta
 				+ " AND " + atributo.ELIMINADA + " = 0"
 				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA + ";";
 		
@@ -278,18 +303,36 @@ public class OfertaDao
 					rs.getString(atributo.VIGENCIA_HASTA.toString()),
 					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
 					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
-					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString())
+					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),
+					rs.getInt(atributo.LIKES.toString()),
+					rs.getInt(atributo.DISLIKES.toString())
 					);
 			dao.closeConBD();
-				return oferta;
-			}
+			return oferta;
+		}
 		
 		dao.closeConBD();
 		return null;
 	}
 
-	public int cantidad() throws ClassNotFoundException, SQLException {
-		return ultimasOfertas().size();
+	public int cantidad() throws ClassNotFoundException, SQLException
+	{
+		String query = "SELECT COUNT(*) AS cantidad"
+				+ " FROM " + NOMBRE_TABLA
+				+ " WHERE " + atributo.ELIMINADA + " = 0;";
+		
+		Connection con = dao.openConBD();
+		ResultSet rs = con.createStatement().executeQuery(query);
+		
+		while (rs.next())
+		{
+			int cantidad = rs.getInt("cantidad");
+			dao.closeConBD();
+			return cantidad;
+		}
+		
+		dao.closeConBD();
+		return 0;
 	}
 
 	public void modificar(Oferta oferta) throws ClassNotFoundException, SQLException

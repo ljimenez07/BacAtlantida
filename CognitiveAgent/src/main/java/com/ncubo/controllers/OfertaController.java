@@ -125,17 +125,17 @@ public class OfertaController
 	
 	@CrossOrigin(origins = "*")
 	@GetMapping(value = "/ofertas", produces = "application/json")
-	@ResponseBody public List<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response, @RequestParam("pagina") int pagina) throws ClassNotFoundException, SQLException
+	@ResponseBody public List<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response, @RequestParam("pagina") int pagina, @RequestParam(value = "idUsuario", required = false) String idUsuario) throws ClassNotFoundException, SQLException
 	{
 		int indiceInicial = (pagina - 1) * 10;
-		return ofertaDao.ultimasDiezOfertasDesde(indiceInicial);
+		return ofertaDao.ultimasDiezOfertasDesde(indiceInicial, idUsuario);
 	}
 	
 	@CrossOrigin(origins = "*")
 	@GetMapping(value = "/ofertas/{idOferta}", produces = "application/json")
-	@ResponseBody public Oferta oferta(@PathVariable int idOferta, HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
+	@ResponseBody public Oferta oferta(@PathVariable int idOferta, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "idUsuario", required = false) String idUsuario) throws ClassNotFoundException, SQLException
 	{
-		return ofertaDao.obtener(idOferta);
+		return ofertaDao.obtener(idOferta, idUsuario);
 	}
 	
 	@CrossOrigin(origins = "*")
@@ -170,11 +170,11 @@ public class OfertaController
 	}
 	
 	@GetMapping(value = "/modificarOferta")
-	public String modificarOferta(Model model, int idOferta, Oferta oferta) throws ClassNotFoundException, SQLException
+	public String modificarOferta(Model model, int idOferta, Oferta oferta, @RequestParam(value = "idUsuario", required = false) String idUsuario) throws ClassNotFoundException, SQLException
 	{
 		if(idOferta != 0)
 		{
-			oferta = ofertaDao.obtener(idOferta);
+			oferta = ofertaDao.obtener(idOferta, idUsuario);
 		}
 		model.addAttribute("oferta", oferta);
 		model.addAttribute("categorias", categoriaDao.obtener());
@@ -186,7 +186,7 @@ public class OfertaController
 	}
 	
 	@PostMapping(value = "/modificarOferta", params="accion=ingresar")
-	public String modificarOferta(@Valid Oferta oferta, BindingResult bindingResult, Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException, ParseException
+	public String modificarOferta(@Valid Oferta oferta, BindingResult bindingResult, Model model, HttpServletRequest request, @RequestParam(value = "idUsuario", required = false) String idUsuario) throws ClassNotFoundException, SQLException, ParseException
 	{
 		if( ! bindingResult.hasFieldErrors("vigenciaHasta"))
 		{
@@ -198,7 +198,7 @@ public class OfertaController
 		
 		if (bindingResult.hasErrors())
 		{		
-			return modificarOferta(model, 0, oferta);
+			return modificarOferta(model, 0, oferta, idUsuario);
 		}
 		oferta.setFechaHoraRegistro(new Timestamp(new Date().getTime()));
 		ofertaDao.modificar(oferta);

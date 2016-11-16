@@ -61,6 +61,9 @@ public class AgenteCognitivo
 		ObjectMapper mapper = new ObjectMapper();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	//	String contexto= usuario.getContextoDeWatson();
+		
+		System.out.println("contexto de watson cuando entra "+ usuario.getContextoDeWatson());
+		
 		JSONObject contenidoDelContexto = new JSONObject(usuario.getContextoDeWatson());
 		if( contenidoDelContexto == null ) contenidoDelContexto = new JSONObject();
 				
@@ -68,12 +71,12 @@ public class AgenteCognitivo
 		ConversationService service = new ConversationService(dateFormat.format(date));
 		service.setUsernameAndPassword(user, password);
 		
-		System.out.println("contenido del contexto a watson "+contenidoDelContexto.toString());
-			
 		myContext.put("logueado", usuario.estaLogueado());
+		
 		String[] nombre = new String[4];
 		if(usuario.getUsuarioNombre() != null)
-		nombre = usuario.getUsuarioNombre().split(" ");
+			nombre = usuario.getUsuarioNombre().split(" ");
+		
 		myContext.put("nombre", nombre[0]);
 		
 		MessageRequest newMessage = new MessageRequest.Builder()
@@ -84,7 +87,7 @@ public class AgenteCognitivo
 		
 		usuario.setContextoDeWatson(new JSONObject(response.toString()).getJSONObject("context").toString());
 		
-		System.out.println("contexto de watson"+ usuario.getContextoDeWatson());
+		System.out.println("contexto de watson cuando sale "+ usuario.getContextoDeWatson());
 		String intent = getIntent(response);
 
 		if(intent.equals(Intencion.SALDO.toString()) && usuario.estaLogueado())

@@ -42,15 +42,15 @@ public class Oferta implements Comparable<Oferta>
 	@NotEmpty(message = "*Publicidad necesaria")
 	private String imagenPublicidadPath;
 	private Timestamp fechaHoraRegistro;
-
+	private int likes;
+	private int dislikes;
+	
 	public Oferta()
 	{
 		categoria = new CategoriaOferta();
 	}
-
-	public Oferta(int idOferta, String tituloDeOferta, String comercio, String descripcion, CategoriaOferta categoria,
-			String ciudad, boolean estado, String restricciones, String vigenciaDesde, String vigenciahasta,
-			String imagenComercioPath, String imagenPublicidadPath, Timestamp fechaHoraRegistro)
+	
+	public Oferta(int idOferta, String tituloDeOferta, String comercio, String descripcion, CategoriaOferta categoria, String ciudad, boolean estado, String restricciones, String vigenciaDesde, String vigenciahasta, String imagenComercioPath, String imagenPublicidadPath, Timestamp fechaHoraRegistro, int likes, int dislikes)
 	{
 		this.idOferta = idOferta;
 		this.tituloDeOferta = tituloDeOferta;
@@ -65,8 +65,10 @@ public class Oferta implements Comparable<Oferta>
 		this.imagenComercioPath = imagenComercioPath;
 		this.imagenPublicidadPath = imagenPublicidadPath;
 		this.fechaHoraRegistro = fechaHoraRegistro;
+		this.likes = likes;
+		this.setDislikes(dislikes);
 	}
-
+	
 	public int getIdOferta()
 	{
 		return idOferta;
@@ -159,7 +161,6 @@ public class Oferta implements Comparable<Oferta>
 	
 	public String getVigenciaHasta()
 	{
-		
 		return vigenciaHasta;
 	}
 	
@@ -167,37 +168,57 @@ public class Oferta implements Comparable<Oferta>
 	{
 		this.vigenciaHasta = vigenciaHasta;
 	}
-
+	
 	public String getImagenComercioPath()
 	{
 		return imagenComercioPath;
 	}
-
+	
 	public void setImagenComercioPath(String imagenComercioPath)
 	{
 		this.imagenComercioPath = imagenComercioPath;
 	}
-
+	
 	public String getImagenPublicidadPath()
 	{
 		return imagenPublicidadPath;
 	}
-
+	
 	public void setImagenPublicidadPath(String imagenPublicidadPath)
 	{
 		this.imagenPublicidadPath = imagenPublicidadPath;
 	}
-
+	
 	public Timestamp getFechaHoraRegistro()
 	{
 		return fechaHoraRegistro;
 	}
-
+	
 	public void setFechaHoraRegistro(Timestamp fechaHoraRegistro)
 	{
 		this.fechaHoraRegistro = fechaHoraRegistro;
 	}
 	
+	public int getLikes()
+	{
+		return likes;
+	}
+	
+	public void setLikes(int likes)
+	{
+		this.likes = likes;
+	}
+	
+	public int getDislikes()
+	{
+		return dislikes;
+	}
+
+	public void setDislikes(int dislikes)
+	{
+		this.dislikes = dislikes;
+	}
+
 	public boolean fechaHastaMayorAFechaDesde() throws ParseException
 	{
 		if(vigenciaDesde == null || vigenciaHasta == null || vigenciaDesde.equals("") || vigenciaHasta.equals(""))
@@ -249,5 +270,5 @@ public class Oferta implements Comparable<Oferta>
 	{
 		return getFechaHoraRegistro().compareTo(oferta.getFechaHoraRegistro());
 	}
-
+	
 }
