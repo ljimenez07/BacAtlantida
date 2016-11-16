@@ -16,7 +16,7 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12">
-			<input placeholder="" type="passwrod" id="password" name="password" >
+			<input placeholder="" type="password" id="password" class="form-control" name="password" >
 		</div>
 	</div>
 	<div class="row">
@@ -46,8 +46,8 @@ $(function(){
 			})
 			.done(function( data ) 
 			{
-				var html = Handlebars.templates.layout(pantallas["chats"]);
-				$(".app").html(html);
+				//{{initChatschat reenviarUltimoMensajeSinImprimirlo}}
+				cambiarVista("chats");
 			
 			})
 			.fail(function(XMLHttpRequest, textStatus, textStatus) 

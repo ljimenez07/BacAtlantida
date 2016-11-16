@@ -1,4 +1,4 @@
-<div class="row">
+<div id="chat-id-container-{{pathDelServidor}}" class="row">
 	<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10	col-xl-10">
 		<input placeholder="Escribe aquí" type="text" id="campoDeEntrada" class="form-control" >
 	</div>
@@ -17,14 +17,15 @@
 <script>
 
 $(function(){
-	function initChats()
+	function initChats{{pathDelServidor}}()
 	{
-		var chat = $(".chat");
-		var conversation = $("#conversation");
-		var campoDeEntrada = $("#campoDeEntrada");
+		var chat = $("#chat-id-{{pathDelServidor}} .chat");
+		var conversation = $("#chat-id-{{pathDelServidor}} #conversation");
+		var campoDeEntrada = $("#chat-id-container-{{pathDelServidor}} #campoDeEntrada");
 		var mensajeDeAgente = $('<li class="other"><div class="msg"><p></p><time>20:17</time></div></li>');
 		var mensajeDeUsuario = $('<li class="self"><div class="msg"><p></p><time>20:17</time></div></li>');
-		var botonDeEnviarMensaje = $("#enviar");
+		var botonDeEnviarMensaje = $("#chat-id-container-{{pathDelServidor}} #enviar");
+		var ultimoMensajeEnviado="";
 		
 		botonDeEnviarMensaje.click(function(){
 		
@@ -79,20 +80,26 @@ $(function(){
 				console.log(XMLHttpRequest.responseJSON.exception);
 				if( XMLHttpRequest.responseJSON.exception.includes("NoSessionException") )
 				{
-					var html = Handlebars.templates.layout(pantallas["login"]);
-					$(".app").html(html);
+					cambiarVista( "login" );
 				}
 			});
+			
+			ultimoMensajeEnviado = textoAEnviar;
 			
 		}
 		function moveScrollParaAbjoEnFuncionDelUltimoMEnsaje()
 		{
-			//console.log(chat.parent().height()+"  "+chat.parent()[0].scrollHeight+"   "+$(chat.parent()[0]).html());
-			chat.parent().scrollTop(chat.parent()[0].scrollHeight);
+			chat.parent().parent().scrollTop(chat.parent().parent()[0].scrollHeight);
+		}
+		
+		this.reenviarUltimoMensajeSinImprimirlo = function()
+		{
+			enviarAlServer({sePuedenEnviarVaciosAlServer:false, imprimirElMensajeQueElUsuarioEscribioEnLaConversacion:false, textoAEnviar:ultimoMensajeEnviado});
 		}
 
 	}
-	initChats();
-
+	var initChats{{pathDelServidor}} = initChats{{pathDelServidor}}();	
 });
+
+	//Handlebars.registerHelper('initChats{{pathDelServidor}}', initChats{{pathDelServidor}}());
 </script>
