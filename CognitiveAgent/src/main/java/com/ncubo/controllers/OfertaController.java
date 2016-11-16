@@ -32,7 +32,7 @@ import com.ncubo.data.Oferta;
 import com.ncubo.util.GestorDeArchivos;
 
 @Controller
-public class GestionarOfertasController
+public class OfertaController
 {
 	@Autowired
 	private OfertaDao ofertaDao;
