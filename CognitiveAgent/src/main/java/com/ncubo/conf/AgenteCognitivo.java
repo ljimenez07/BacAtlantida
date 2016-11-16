@@ -71,6 +71,10 @@ public class AgenteCognitivo
 		System.out.println("contenido del contexto a watson "+contenidoDelContexto.toString());
 			
 		myContext.put("logueado", usuario.estaLogueado());
+		String[] nombre = new String[4];
+		if(usuario.getUsuarioNombre() != null)
+		nombre = usuario.getUsuarioNombre().split(" ");
+		myContext.put("nombre", nombre[0]);
 		
 		MessageRequest newMessage = new MessageRequest.Builder()
 				.inputText(mensaje)
@@ -80,6 +84,7 @@ public class AgenteCognitivo
 		
 		usuario.setContextoDeWatson(new JSONObject(response.toString()).getJSONObject("context").toString());
 		
+		System.out.println("contexto de watson"+ usuario.getContextoDeWatson());
 		String intent = getIntent(response);
 		if(intent.equals(Intencion.SALDO.toString()) && usuario.estaLogueado())
 		{
