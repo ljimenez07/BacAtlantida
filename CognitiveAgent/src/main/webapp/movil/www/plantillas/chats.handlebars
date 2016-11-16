@@ -45,7 +45,7 @@ $(function(){
 		{
 			var sePuedenEnviarVaciosAlServer = ( param.sePuedenEnviarVaciosAlServer == undefined ) ? false : true;
 			var imprimirElMensajeQueElUsuarioEscribioEnLaConversacion = ( param.imprimirElMensajeQueElUsuarioEscribioEnLaConversacion == undefined ) ? true : false;
-			var textoAEnviar = param.textoAEnviar;
+			var textoAEnviar = param.textoAEnviar.trim();
 					
 			if( ! sePuedenEnviarVaciosAlServer && textoAEnviar == "") return	
 			if( imprimirElMensajeQueElUsuarioEscribioEnLaConversacion )
