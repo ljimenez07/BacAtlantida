@@ -117,7 +117,7 @@ public class AgenteCognitivo
 			respuesta.put("texto", texto + saldoContable.get("contable"));
 			
 			consultaDao.insertar(
-					new Consulta(Intencion.SALDO.toString(), new Timestamp(new Date().getTime()), Intencion.SALDO.toString() , 1));
+					new Consulta(Intencion.SALDO.toString(), new Timestamp(new Date().getTime()), Intencion.SALDO_DESCRIPCION.toString() , 1));
 
 		}
 	
@@ -183,6 +183,8 @@ public class AgenteCognitivo
 					movimientos = movimientos +" El día "+fecha+ " a las "+ hora + " se realizo un débito por " + montoTransaccion + " " + moneda;
 				
 				last--;
+				consultaDao.insertar(
+						new Consulta(Intencion.MOVIMIENTOS.toString(), new Timestamp(new Date().getTime()), Intencion.MOVIMIENTOS_DESCRIPCION.toString() , 1));
 			}
 			respuesta.put("texto", texto + movimientos );
 			

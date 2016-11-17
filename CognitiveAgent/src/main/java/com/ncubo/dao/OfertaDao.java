@@ -119,6 +119,7 @@ public class OfertaDao
 	
 	public void insertar(Oferta oferta) throws ClassNotFoundException, SQLException
 	{
+		oferta.cambiarApostrofes();
 		String queryDatos = "'" + oferta.getTituloDeOferta()+ "'"
 							+ ",'" + oferta.getComercio() + "'"
 							+ ",'" + oferta.getDescripcion() + "'"
@@ -342,6 +343,7 @@ public class OfertaDao
 
 	public void modificar(Oferta oferta) throws ClassNotFoundException, SQLException
 	{
+		oferta.cambiarApostrofes();
 		String queryDatos =  atributo.TITULO_DE_OFERTA + " = '" + oferta.getTituloDeOferta() + "' , "
 				 + atributo.COMERCIO + " = '" + oferta.getComercio() + "' , "
 				 + atributo.DESCRIPCION + " = '" + oferta.getDescripcion() + "' , "

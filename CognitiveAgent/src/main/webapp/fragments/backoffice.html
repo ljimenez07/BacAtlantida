@@ -10,6 +10,8 @@
 	<link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}"></link>
 	<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
 	<link rel="stylesheet" th:href="@{/fonts/roboto.css}"></link>
+	<link rel="stylesheet" th:href="@{css/jquery-ui.css}"></link>
+	<script type="text/javascript" th:src="@{js/jquery-ui.js}"></script>
 	<style th:inline="text">
 		body
 		{
@@ -22,16 +24,50 @@
 			text-align: center;
 		}
 		
-		[role=presentation]
-		{
-			font-family: 'Roboto', serif;
-			font-size: 21px;
-			font-weight:	bold;
-		}
 		.container
 		{
 			padding-top: 10px;
 		}
+		
+		
+		[role=presentation]
+		{
+			font-family: 'Roboto', serif;
+			font-size: 21px;
+			font-weight: bold;
+		}
+		/* fonts y colores de los fonts */
+		.titulo-tabla-ca
+		{
+			font-family: 'Roboto', serif;
+			font-size: 16px;
+			font-weight: bold;
+			background-color: rgb(231,232,233);
+		}
+		.titulo-ca
+		{
+			font-family: 'Roboto', serif;
+			font-size: 16px;
+		}
+		.texto-normal-ca
+		{
+			font-family: 'Roboto', serif;
+			font-size: 16px;
+			font-weight: normal;
+		}
+		.notas-ca
+		{
+			font-family: 'Roboto', serif;
+			font-size: 16px;
+			color: rgb(177,179,181);
+		}
+		.campo-requerido
+		{
+			font-family: 'Roboto', serif;
+			font-size: 13px;
+			color: #3e61ac;
+		}
+		
 		.btn-default
 		{
 			font-family: 'Roboto', serif;
@@ -39,6 +75,8 @@
 			padding-bottom: 1px;
 			padding-top: 1px;
 		}
+		
+		/* Iconos */
 		.boton-editar
 		{
 			border: none;
@@ -60,45 +98,57 @@
 		.imagen-siguiente
 		{
 			width: 37px;
-			height: 37px;
+			height: 35px;
 			cursor: pointer;
 			background: url([[@{/img/sprite-rojo-37x37.png}]]);
 			background-position: -41px 0;
+			display: inline-block;
+			vertical-align: middle;
 		}
 		.imagen-check
 		{
 			width: 37px;
-			height: 37px;
+			height: 35px;
 			cursor: pointer;
 			background: url([[@{/img/sprite-rojo-37x37.png}]]) -210px 0;
+			display: inline-block;
+			vertical-align: middle;
 		}
 		.imagen-eliminar
 		{
 			width: 37px;
-			height: 37px;
+			height: 35px;
 			cursor: pointer;
 			background: url([[@{/img/sprite-rojo-37x37.png}]]) -126px 0;
+			display: inline-block;
+			vertical-align: middle;
 		}
 		.imagen-cancelar
 		{
 			width: 37px;
-			height: 37px;
+			height: 35px;
 			cursor: pointer;
 			background: url([[@{/img/sprite-rojo-37x37.png}]]) -252px 0;
+			display: inline-block;
+			vertical-align: middle;
 		}
 		.imagen-buscar
 		{
 			width: 37px;
-			height: 37px;
+			height: 35px;
 			cursor: pointer;
 			background: url([[@{/img/sprite-rojo-37x37.png}]]) 0 0;
+			display: inline-block;
+			vertical-align: middle;
 		}
 		.imagen-visualizar
 		{
 			width: 37px;
-			height: 37px;
+			height: 35px;
 			cursor: pointer;
 			background: url([[@{/img/sprite-rojo-37x37.png}]]) -168px  0;
+			display: inline-block;
+			vertical-align: middle;
 		}
 		.nav-tabs
 		{
@@ -123,6 +173,11 @@
 		{
 			padding-left: 0px;
 		}
+		.texto-junto-imagen
+		{
+			display: inline-block;
+			vertical-align: middle;
+		}
 	</style>
 </head>
 <body th:fragment="body (paginaActual)">
@@ -140,13 +195,13 @@
 		<div class="container-fluid">
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav nav-tabs">
-					<li role="presentation" th:classappend="${paginaActual == 'gestionDeOfertas'} ? 'active'"><a th:href="@{/gestionDeOfertas}">GESTIÓN DE OFERTAS</a></li>
+					<li role="presentation" th:classappend="${paginaActual == 'gestionDeOfertas'} OR ${paginaActual == 'insertarOferta'} ? 'active'"><a th:href="@{/gestionDeOfertas}">GESTIÓN DE OFERTAS</a></li>
 					<li role="presentation" th:classappend="${paginaActual == 'reaccionDeOfertas'} ? 'active'"><a th:href="@{/reaccionDeOfertas}">REACCIÓN DE OFERTAS</a></li>
 					<li role="presentation" th:classappend="${paginaActual == 'consultasRealizadas'} ? 'active'"><a th:href="@{/consultasRealizadas}">CONSULTAS REALIZADAS</a></li>
 				</ul>
-				<form class="navbar-form navbar-left" id="buscarComercio" th:action="@{/filtrarOfertas}">
+				<form class="navbar-form navbar-left" id="buscarComercio" th:action="@{/filtrarOfertas}" th:if="${paginaActual == 'gestionDeOfertas'}">
 					<div class="form-group" align="right">
-						<input type="text" class="form-control" placeholder="Búsqueda de comercio" id="busquedaComercio" name="busquedaComercio" value="" th:value="${busquedaComercio}"></input>
+						<input type="text" class="form-control" placeholder="Filtrar" id="busquedaComercio" name="busquedaComercio" value="" th:value="${busquedaComercio}"></input>
 					</div>
 				</form>
 			</div>

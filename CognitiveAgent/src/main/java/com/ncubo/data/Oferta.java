@@ -13,33 +13,33 @@ public class Oferta implements Comparable<Oferta>
 {
 	private int idOferta;
 	
-	@NotEmpty(message = "*Título necesario")
+	@NotEmpty(message = "*Campo requerido")
 	private String tituloDeOferta;
 	
-	@NotEmpty(message = "*Comercio necesario")
+	@NotEmpty(message = "*Campo requerido")
 	private String comercio;
 	
-	@NotEmpty(message = "*Descripción necesaria")
+	@NotEmpty(message = "*Campo requerido")
 	private String descripcion;
 	private CategoriaOferta categoria;
 	
-	@NotEmpty(message = "*Ciudad necesaria")
+	@NotEmpty(message = "*Campo requerido")
 	private String ciudad;
 	private boolean estado;
 	
-	@NotEmpty(message = "*Restricciones necesarias")
+	@NotEmpty(message = "*Campo requerido")
 	private String restricciones;
 	
-	@NotEmpty(message = "*Fecha necesaria")
+	@NotEmpty(message = "*Campo requerido")
 	private String vigenciaDesde;
 	
-	@NotEmpty(message = "*Fecha necesaria")
+	@NotEmpty(message = "*Campo requerido")
 	private String vigenciaHasta;
 	
-	@NotEmpty(message = "*Logo necesario")
+	@NotEmpty(message = "*Campo requerido")
 	private String imagenComercioPath;
 	
-	@NotEmpty(message = "*Publicidad necesaria")
+	@NotEmpty(message = "*Campo requerido")
 	private String imagenPublicidadPath;
 	private Timestamp fechaHoraRegistro;
 	private int likes;
@@ -269,6 +269,15 @@ public class Oferta implements Comparable<Oferta>
 	public int compareTo(Oferta oferta)
 	{
 		return getFechaHoraRegistro().compareTo(oferta.getFechaHoraRegistro());
+	}
+	
+	public void cambiarApostrofes()
+	{
+		tituloDeOferta = tituloDeOferta.replace("'", "''");
+		ciudad = ciudad.replace("'", "''");
+		comercio = comercio.replace("'", "''");
+		descripcion = descripcion.replace("'", "''");
+		restricciones = restricciones.replace("'", "''");
 	}
 	
 }
