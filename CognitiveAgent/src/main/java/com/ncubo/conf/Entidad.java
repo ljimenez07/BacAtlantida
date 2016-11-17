@@ -3,8 +3,8 @@ package com.ncubo.conf;
 public enum Entidad 
 {
 	MONEDA("moneda"),
-	DOLAR("dolar"),
-	EURO("euro"),
+	DOLAR("USD"),
+	EURO("EUR"),
 	PRODUCTOS("productos"),
 	TIEMPO("tiempo");
 	

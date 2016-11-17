@@ -134,16 +134,20 @@ public class AgenteCognitivo
 				NodeImpl moneda = nodeTipoCambio1.get("moneda");
 				NodeImpl compra = nodeTipoCambio1.get("compra");
 				NodeImpl venta = nodeTipoCambio1.get("venta");
-				if(moneda.getValue().equals(Entidad.DOLAR)){
+				if(moneda.getValue().equals(Entidad.DOLAR.toString())){
 					
-			
-				texto = texto.replaceAll("%dc", compra.toString());
-				texto = texto.replaceAll("%dv", venta.toString());
-				}
-				if(moneda.getValue().equals(Entidad.EURO)){
 
-					texto = texto.replaceAll("%ec", compra.toString());
-					texto = texto.replaceAll("%ev", venta.toString());			
+					System.out.println(texto);	
+				texto = texto.replaceAll("%dc", compra.toString()+" "+moneda);
+				texto = texto.replaceAll("%dv", venta.toString()+" "+moneda);
+			
+			System.out.println(texto);	
+				
+				}
+				if(moneda.getValue().equals(Entidad.EURO.toString())){
+
+					texto = texto.replaceAll("%ec", compra.toString()+" "+moneda);
+					texto = texto.replaceAll("%ev", venta.toString()+" "+moneda);			
 				}
 			}
 			respuesta.put("texto", texto);
