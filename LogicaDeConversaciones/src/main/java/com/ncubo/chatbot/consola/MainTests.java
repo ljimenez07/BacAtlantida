@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import com.ncubo.bancoatlantida.Coversaciones;
+//import com.ncubo.realestate.Coversaciones;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 
 public class MainTests {
@@ -14,6 +15,14 @@ public class MainTests {
 	public MainTests(){}
 	
 	private void imprimirSalidas(ArrayList<Salida> salidas){
+		
+		for(Salida salida: salidas){
+			try{
+				System.out.println("Contexto: "+salida.obtenerLaRespuestaDeIBM().messageResponse().getContext());
+			}catch(Exception e){
+				
+			}
+		}
 		
 		System.out.println("");
 		for(Salida salida: salidas){

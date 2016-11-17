@@ -5,7 +5,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Bienvenido al Banco Atlántida. Le saluda Lisseth.</frase>
+			<frase>¡Hola Ricky!, soy tu asesor del Banco Atlántida.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -16,6 +16,8 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<frase>Hola!.</frase>
+			<frase>¡Hola Ricky!.</frase>
+			<frase>¡Hola!. Estoy para ayudarte con la información que requieras de tus tarjetas de crédito y cuenta corriente, también con el tipo de cambio del dólar y el euro.</frase>
 		</frases>
 		<vineta></vineta>
 		<when>
@@ -28,9 +30,9 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<curioso>¿En qué puedo ayudarle?</curioso>
-			<curioso>¿Que puedo hacer por usted?</curioso>
-			<impertinente>¿En qué le puedo ayudar?. Conmigo usted puede conocer la tasa de cambio actual, su saldo y sus últimos movimientos.</impertinente>
+			<curioso>¿Cómo te puedo ayudar hoy?</curioso>
+			<curioso>¿Cómo te puedo ayudar?</curioso>
+			<impertinente>¿Cómo te puedo ayudar?. Estoy para ayudarte con la información que requieras de tus tarjetas de crédito y cuenta corriente, también con el tipo de cambio del dólar y el euro.</impertinente>
 		</frases>
 		<vineta></vineta>
 		<when>
@@ -65,7 +67,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>La tasa de cambio del dolar del día de hoy es: $</frase>
+			<frase>Claro, el dólar está a $ la compra y $ la venta.</frase>
+			<frase>El tipo de cambio del dólar para hoy $ es $ la compra, y $ la venta.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -75,7 +78,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>La tasa de cambio del euro del día de hoy es: $</frase>
+			<frase>El tipo de cambio del euro para hoy $ es $ la compra, y $ la venta.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -100,15 +103,48 @@
 		<vineta></vineta>
 	</conversacion>
 	
+	<conversacion id="preguntarPorOtraConsulta">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>¿Hay algo más con lo que te pueda ayudar?</curioso>
+			<curioso>¿Tienes otra consulta?</curioso>
+			<curioso>¿Necesitas algo más?</curioso>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="quiereHacerOtraConsulta">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>Muy bien, ¿qué información necesitas?.</curioso>
+			<curioso>Claro, dime ¿cómo te puedo ayudar?.</curioso>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="noQuiereHacerOtraConsulta">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Fue un placer ayudarte, ¡qué pases un feliz día!.</frase>
+			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
 	<conversacion id="despedida">
 		<tipo>despedida</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Chao!. Fue un placer atenderte.</frase>
-			<frase>Hasta pronto.</frase>
-			<frase>Fue un honor ayudarte.</frase>
-			<frase>Adiós!. Espero que le haya sido de tu ayuda.</frase>
+			<frase>Fue un placer ayudarte, ¡qué pases un feliz día!.</frase>
+			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día.</frase>
+			<frase>Hasta luego Ricky, fue un gusto atenderte.</frase>
 		</frases>
 		<vineta></vineta>
 		<when>
@@ -121,8 +157,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Lo siento, pero en este momento solo puedo responder sobre: tasas de cambio, saldos y movimientos.</frase>
-			<frase>No puedo responder a eso, solo conozco las tasas de cambio, tus saldos y movimientos.</frase>
+			<frase>Por el momento solo puedo responder tus consultas sobre el saldo de tus tarjetas, tus movimientos recientes y la tipo de cambio del dólar y el euro.</frase>
+			<frase>Ahora mismo te puedo ayudar con tus consultas acerca de el saldo de tus tarjetas, tus movimientos recientes y las tasas de cambio del dólar y el euro, para consultas adicionales te puedes comunicar con nuestro call center al 800-2220-0404.</frase>
 		</frases>
 		<vineta></vineta>
 		<when>

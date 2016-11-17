@@ -38,7 +38,10 @@ public class TemarioDelBancoAtlantida extends Temario
 			true,
 			"saldo",
 			frase("saldo"),
-			frase("noTengoSaldo")
+			frase("noTengoSaldo"),
+			frase("preguntarPorOtraConsulta"),
+			frase("quiereHacerOtraConsulta"),
+			frase("noQuiereHacerOtraConsulta")
 		);
 		return resultado;
 	}
@@ -53,7 +56,10 @@ public class TemarioDelBancoAtlantida extends Temario
 			"tasa_cambio",
 			frase("tasaDolar"),
 			frase("tasaEuro"),
-			frase("tasaCambio")
+			frase("tasaCambio"),
+			frase("preguntarPorOtraConsulta"),
+			frase("quiereHacerOtraConsulta"),
+			frase("noQuiereHacerOtraConsulta")
 		);
 		return resultado;
 	}
@@ -66,7 +72,10 @@ public class TemarioDelBancoAtlantida extends Temario
 			"BATemas",
 			true,
 			"movimientos",
-			frase("movimientos")
+			frase("movimientos"),
+			frase("preguntarPorOtraConsulta"),
+			frase("quiereHacerOtraConsulta"),
+			frase("noQuiereHacerOtraConsulta")
 		);
 		return resultado;
 	}

@@ -40,8 +40,8 @@ public class Constantes {
             "\"tema\": \"10\"\n" +
             "}";
 	
-	//public static String PATH_ARCHIVO_DE_CONFIGURACION = "src/main/resources/conversaciones.xml";
-	public static String PATH_ARCHIVO_DE_CONFIGURACION = "src/main/resources/conversacionesBA.xml";
+	public static String PATH_ARCHIVO_DE_CONFIGURACION_RS = "src/main/resources/conversaciones.xml";
+	public static String PATH_ARCHIVO_DE_CONFIGURACION_BA = "src/main/resources/conversacionesBA.xml";
 	
 	// Agente
 	public static String WORKSPACE_GENERAL = "general";
@@ -53,6 +53,6 @@ public class Constantes {
 	// Tipos de frases
 	public static String FRASE_SALUDO = "saludo";
 	public static String FRASE_DESPEDIDA = "despedida";
-	public static String FRASE_FUERA_DE_CONTEXTO= "fueraDeContexto";
+	public static String FRASE_FUERA_DE_CONTEXTO = "fueraDeContexto";
 	
 }

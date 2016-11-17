@@ -318,7 +318,7 @@ public abstract class Contenido
 		@Override
 		protected File archivoDeConfiguracion() {
 			// TODO Auto-generated method stub
-			return new File(Constantes.PATH_ARCHIVO_DE_CONFIGURACION);
+			return new File(Constantes.PATH_ARCHIVO_DE_CONFIGURACION_RS);
 			//return new File(Constantes.PATH_ARCHIVO_DE_CONFIGURACION);
 		}};
 		contenido.generarAudioEstatico();

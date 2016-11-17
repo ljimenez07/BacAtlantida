@@ -5,6 +5,7 @@ import com.ncubo.chatbot.partesDeLaConversacion.Sonido;
 import com.ncubo.chatbot.partesDeLaConversacion.Vineta;
 import com.ncubo.chatbot.partesDeLaConversacion.Frase;
 import com.ncubo.chatbot.partesDeLaConversacion.Pregunta;
+import com.ncubo.chatbot.partesDeLaConversacion.Respuesta;
 
 public class Participante{ 
 	
@@ -44,27 +45,27 @@ public class Participante{
 		this.formaDeManifestarse = forma;
 	}
 	
-	public Salida decir(Frase frase){
+	public Salida decir(Frase frase, Respuesta respuesta){
 		Salida salida = new Salida();
 		
 		if (formaDeManifestarse.esEnFormaEscrita()){
 			String texto = frase.texto();
-			salida.escribir(texto);
+			salida.escribir(texto, respuesta);
 		}
 		
 		if (formaDeManifestarse.esEnFormaOral()){
 			Sonido sonido = frase.sonido();
-			salida.escribir(sonido);
+			salida.escribir(sonido, respuesta);
 		}
 		
 		if (formaDeManifestarse.esFormaVisual()){
 			Vineta vineta = frase.vineta();
-			salida.escribir(vineta);
+			salida.escribir(vineta, respuesta);
 		}
 		return salida;
 	}
 	
-	public Salida volverAPreguntar(Frase pregunta){
+	public Salida volverAPreguntar(Frase pregunta, Respuesta respuesta){
 		
 		Salida salida = new Salida();
 		if (formaDeManifestarse.esEnFormaEscrita()){
@@ -75,16 +76,16 @@ public class Participante{
 				texto = pregunta.conjuncionParaRepreguntar()+" "+pregunta.texto();
 			}
 			
-			salida.escribir(texto);
+			salida.escribir(texto, respuesta);
 		}
 		if (formaDeManifestarse.esEnFormaOral()){
 			Sonido sonido = pregunta.sonido();
-			salida.escribir(sonido);
+			salida.escribir(sonido, respuesta);
 		}
 		
 		if (formaDeManifestarse.esFormaVisual()){
 			Vineta vineta = pregunta.vineta();
-			salida.escribir(vineta);
+			salida.escribir(vineta, respuesta);
 		}
 		
 		return salida;
