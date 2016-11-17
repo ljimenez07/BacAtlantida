@@ -1,17 +1,12 @@
 package com.ncubo.chatbot.watson;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
-
-import com.ncubo.chatbot.exceptiones.ChatException;
 import com.ncubo.chatbot.parser.Operador;
 import com.ncubo.chatbot.parser.Operador.TipoDeOperador;
 
 public class Entidad //extends WatsonUnderstand
 {
-	//private static Hashtable<String, Entidad> universoDeEntidades = new Hashtable<String, Entidad>();
-	
 	private String nombre; // Example: appliance
 	//private ArrayList<String> valores; // Example: radio, lights
 	private Hashtable<String, Operador> valores = new Hashtable<String, Operador>();

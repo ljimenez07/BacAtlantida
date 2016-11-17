@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import com.ncubo.chatbot.configuracion.Constantes;
 import com.ncubo.chatbot.exceptiones.ChatException;
 import com.ncubo.chatbot.watson.Entidades;
 import com.ncubo.chatbot.watson.Intenciones;
@@ -69,15 +70,14 @@ public abstract class Temario
 	}
 	
 	public Frase extraerFraseDeSaludoInicial(CaracteristicaDeLaFrase caracteristica){
-		Tema miSaludo = buscarTema("saludo");
+		Tema miSaludo = buscarTema(Constantes.FRASE_SALUDO);
 		return miSaludo.buscarUnaFraseCon(caracteristica);
 	}
 	
-	public Tema proximoTemaATratar(Tema temaActual, Temas temasYaTratados, String nombreDelWorkspace){
+	public Tema proximoTemaATratar(Tema temaActual, Temas temasYaTratados, String nombreDelWorkspace, String nombreIntencionGeneral){
 		Collections.shuffle(temasDelDiscurso); // Desordenar el array
 		for(Tema tema: temasDelDiscurso){
-			if(tema.obtenerElNombreDelWorkspaceAlQuePertenece().equals(nombreDelWorkspace) 
-					&& ! tema.obtenerIdTema().equals("mostrarResultados")){
+			if(tema.obtenerElNombreDelWorkspaceAlQuePertenece().equals(nombreDelWorkspace) && tema.obtenerIntencionGeneralAlQuePertenece().equals(nombreIntencionGeneral)){
 				if(! tema.obtenerIdTema().equals(temaActual.obtenerIdTema())){
 					if(temasYaTratados != null){
 						if( ! temasYaTratados.contains(tema)){
@@ -96,4 +96,20 @@ public abstract class Temario
 		return null;
 	}
 	
+	private Tema buscarUnUnicoTemaQueCumplaLaCondicion(String nombreDelWorkspace, String nombreIntencionGeneral){
+		int contador = 0;
+		Tema respuesta = null;
+		
+		for(Tema tema: temasDelDiscurso){
+			if(tema.obtenerElNombreDelWorkspaceAlQuePertenece().equals(nombreDelWorkspace) && tema.obtenerIntencionGeneralAlQuePertenece().equals(nombreIntencionGeneral)){
+				respuesta = tema;
+				contador ++;
+			}
+		}
+		
+		if (contador == 1)
+			return respuesta;
+		else
+			return null;
+	}
 }

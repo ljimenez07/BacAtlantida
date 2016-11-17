@@ -1,16 +1,13 @@
 package com.ncubo.chatbot.consola;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import com.ncubo.bancoatlantida.Coversaciones;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
-import com.ncubo.chatbot.partesDeLaConversacion.Temario;
-import com.ncubo.chatbot.participantes.Cliente;
-import com.ncubo.realestate.Conversacion;
-import com.ncubo.realestate.Coversaciones;
-import com.ncubo.realestate.TemarioDeRealEstate;
 
 public class MainTests {
 
@@ -18,6 +15,7 @@ public class MainTests {
 	
 	private void imprimirSalidas(ArrayList<Salida> salidas){
 		
+		System.out.println("");
 		for(Salida salida: salidas){
 			System.out.println("- "+salida.getMiTexto());
 		}

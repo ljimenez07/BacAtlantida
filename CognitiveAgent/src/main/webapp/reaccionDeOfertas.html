@@ -1,0 +1,119 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:include="fragments/backoffice :: head (title='Reacción a ofertas')">
+	<meta charset="UTF-8"/>	
+	</head>
+		<link rel="stylesheet" th:href="@{css/chartist.min.css}"/>
+		<link rel="stylesheet" th:href="@{css/jquery-ui.css}"/>
+	<body>
+	<div th:include="fragments/backoffice :: body(paginaActual='reaccionDeOfertas')"></div>
+		  <div class="container">
+            <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="fecha-desde">Desde</label>
+                    <input type="text" name="fecha-desde" id="fecha-desde" class="form-control"/>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="">Hasta</label>
+                    <input type="text" name="fecha-hasta" id="fecha-hasta" class="form-control"/>
+                </div>
+            </div>
+            <div id="filtro" class="col-md-6">
+                <div >Mostrar por:</div>
+                <div class="col-md-3">
+                    <div class="radio">
+                        <label for="" class="radio-inline"><input type="radio" checked="checked" id= "filtro-categoria" name="filtro" value="categoria"/>Categor&iacute;a</label> 
+                    </div>
+                </div>
+                <div class="col-md-4">
+                     <div class="radio">
+                        <label for="" class="radio-inline"><input type="radio" id="filtro-oferta" name="filtro" value="oferta"/>Oferta</label> 
+                    </div>
+                </div>
+                <div class="col-md-4">
+                     <button class="btn btn-danger" onclick="crearGraficos()">Graficar <span class="glyphicon glyphicon-stats"></span></button>
+                </div>
+            </div>
+        </div>       
+        <!-- Seccion para dibujar los graficos correspondientes -->
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Gr&aacute;fico &quot;Me gusta&quot;</h3>
+                <div id="grafico-megusta">
+                    
+                </div>
+            </div>
+            <div class="col-md-6">     
+                    <h3>Gr&aacute;fico &quot;No me gusta&quot;</h3>
+                    <div id="grafico-no-megusta">
+                    
+                    </div>
+            </div>
+        </div>
+    </div>
+
+	<script type="text/javascript" th:src="@{js/chartist.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery-ui.js}"></script>
+	<script type="text/javascript" th:src="@{js/Graficos.js}"></script>
+	<script>
+		function crearGraficos()
+		{
+			
+			var desde = document.getElementById("fecha-desde").value;
+			var hasta = document.getElementById("fecha-hasta").value;
+			var filtro;
+			if(document.getElementById("filtro-categoria").checked)
+			{
+				filtro = document.getElementById("filtro-categoria").value;
+				
+			}
+			else
+			{
+				filtro = document.getElementById("filtro-oferta").value;	
+			}
+
+			var object = new Object();
+			
+			object.desde = desde;
+			object.hasta = hasta;
+			object.filtro = filtro;
+			
+			var json = JSON.stringify(object);
+		
+			console.log(json);
+			 $.ajax
+		     (
+		        {
+		            method: "POST",
+		            url: "reaccionDeOfertasDatos",
+		            cache: true,
+		            async: false,
+		            dataType: "json",
+		            contentType: "application/json",
+		            data: "{ \"\parametros\"\: " + json + " }",
+		            success: function (resultado)
+					{
+		            	var seriesMegusta = [];
+		            	var labelsMegusta = [];
+		            	
+		            	var seriesNoMegusta = [];
+		            	var labelsNoMegusta = [];
+		            	
+		           		for(elemento of resultado)
+		           		{
+		           			seriesMegusta.push(elemento.cantidad_like);
+		           			labelsMegusta.push(elemento.tituloLabel);
+		           			
+		           			seriesNoMegusta.push(elemento.cantidad_dislike);
+		           			labelsNoMegusta.push(elemento.tituloLabelDislike);
+		           		}
+		           		graficar(seriesMegusta, labelsMegusta, seriesNoMegusta, labelsNoMegusta);
+		            }  
+		        }
+		    );
+		}
+	</script>
+	</body>
+</html>

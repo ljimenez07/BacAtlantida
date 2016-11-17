@@ -7,15 +7,26 @@ public class WorkSpace {
 	private String idIBM;
 	private String tipo;
 	private String nombre;
+	private String[] listaDeIntencionesUsadasParaReferenciarAlWorkspace;
 	
-	public WorkSpace(String usuarioIBM, String contrasenaIBM, String idIBM, String tipo, String nombre) {
+	public WorkSpace(String usuarioIBM, String contrasenaIBM, String idIBM, String tipo, String nombre, String... intenciones) {
 		this.usuarioIBM = usuarioIBM;
 		this.contrasenaIBM = contrasenaIBM;
 		this.idIBM = idIBM;
 		this.tipo = tipo;
 		this.nombre = nombre;
+		this.listaDeIntencionesUsadasParaReferenciarAlWorkspace = intenciones;
 	}
 
+	public boolean tieneLaIntencion(String nombreDeLaIntencion){
+		for(int index = 0; index < listaDeIntencionesUsadasParaReferenciarAlWorkspace.length; index ++){
+			if(listaDeIntencionesUsadasParaReferenciarAlWorkspace[index].equals(nombreDeLaIntencion)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public String getUsuarioIBM() {
 		return usuarioIBM;
 	}

@@ -86,17 +86,72 @@
 			cursor: pointer;
 			background: url([[@{/img/sprite-rojo-37x37.png}]]) -252px 0;
 		}
+		.imagen-buscar
+		{
+			width: 37px;
+			height: 37px;
+			cursor: pointer;
+			background: url([[@{/img/sprite-rojo-37x37.png}]]) 0 0;
+		}
+		.imagen-visualizar
+		{
+			width: 37px;
+			height: 37px;
+			cursor: pointer;
+			background: url([[@{/img/sprite-rojo-37x37.png}]]) -168px  0;
+		}
+		.nav-tabs
+		{
+			border: none;
+		}
+		.navbar-default
+		{
+			background-color: none !important;
+			background: none !important;
+			box-shadow: none !important;
+			border: 0;
+		}
+		.navbar-collapse
+		{
+			padding-left: 0px;
+		}
+		.container-fluid
+		{
+			padding-left: 0px;
+		}
+		.quitar-padding
+		{
+			padding-left: 0px;
+		}
 	</style>
 </head>
 <body th:fragment="body (paginaActual)">
-	<div class="container" >
-		<div class="row">
-			<ul class="nav nav-tabs">
-				<li role="presentation" th:classappend="${paginaActual == 'gestionDeOfertas'} ? 'active'"><a th:href="@{/gestionDeOfertas}">GESTIÓN DE OFERTAS</a></li>
-				<li role="presentation" th:classappend="${paginaActual == 'reaccionDeOfertas'} ? 'active'"><a >REACCIÓN DE OFERTAS</a></li>
-				<li role="presentation" th:classappend="${paginaActual == 'consultasRealizadas'} ? 'active'"><a th:href="@{/consultasRealizadas}">CONSULTAS REALIZADAS</a></li>
-			</ul>
+<script>
+	$("busqueda-comercio").keypress(function(event)
+	{
+		if (event.which == 13) {
+			event.preventDefault();
+			$("form").submit();
+		}
+	});
+</script>
+	<div class="container quitar-padding" >
+		<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav nav-tabs">
+					<li role="presentation" th:classappend="${paginaActual == 'gestionDeOfertas'} ? 'active'"><a th:href="@{/gestionDeOfertas}">GESTIÓN DE OFERTAS</a></li>
+					<li role="presentation" th:classappend="${paginaActual == 'reaccionDeOfertas'} ? 'active'"><a th:href="@{/reaccionDeOfertas}">REACCIÓN DE OFERTAS</a></li>
+					<li role="presentation" th:classappend="${paginaActual == 'consultasRealizadas'} ? 'active'"><a th:href="@{/consultasRealizadas}">CONSULTAS REALIZADAS</a></li>
+				</ul>
+				<form class="navbar-form navbar-left" id="buscarComercio" th:action="@{/filtrarOfertas}">
+					<div class="form-group" align="right">
+						<input type="text" class="form-control" placeholder="Búsqueda de comercio" id="busquedaComercio" name="busquedaComercio" value="" th:value="${busquedaComercio}"></input>
+					</div>
+				</form>
+			</div>
 		</div>
+	</nav>
 	</div>
 </body>
 </html>

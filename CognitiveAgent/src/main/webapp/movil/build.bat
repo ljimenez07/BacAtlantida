@@ -6,4 +6,6 @@ call handlebars ./www/plantillas/layout.handlebars -f ./www/js/layout.handlebars
 call handlebars ./www/plantillas/ofertas.handlebars -f ./www/js/ofertas.handlebars.js 
 call handlebars ./www/plantillas/listaDeOfertas.handlebars -f ./www/js/listaDeOfertas.handlebars.js 
 call handlebars ./www/plantillas/oferta.handlebars -f ./www/js/oferta.handlebars.js 
-rem cordova run browser
+call handlebars ./www/plantillas/popupconocerte.handlebars -f ./www/js/popupconocerte.handlebars.js 
+call handlebars ./www/plantillas/login.handlebars -f ./www/js/login.handlebars.js 
+rem cordova build android

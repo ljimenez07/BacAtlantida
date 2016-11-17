@@ -26,6 +26,7 @@ public class Conversacion {
 	private Agente agente;
 	private Tema temaActual;
 	private Frase fraseActual = null;
+	
 	private ArrayList<Salida> misSalidas = new ArrayList<Salida>();
 	
 	private final boolean hayQueComenzarDeNuevoLaConverzacion;
@@ -38,7 +39,6 @@ public class Conversacion {
 		this.hilo = new HiloDeLaConversacion();
 		//this.participantes.agregar(agente).agregar(participante);
 		this.temario = temario;
-
 		hayQueComenzarDeNuevoLaConverzacion = false; // Cerro seccion o timeout
 	}
 	
@@ -79,9 +79,16 @@ public class Conversacion {
 				if( (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_SALUDO)) || (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_DESPEDIDA)) )
 					ponerComoYaTratado(this.temaActual);
 				
-				this.temaActual = this.temario.proximoTemaATratar(temaActual, hilo.verTemasYaTratados(), agente.obtenerNombreDelWorkspaceActual());
+				this.temaActual = this.temario.proximoTemaATratar(temaActual, hilo.verTemasYaTratadosYQueNoPuedoRepetir(), agente.obtenerNombreDelWorkspaceActual(), agente.obtenerNombreDeLaIntencionGeneralActiva());
 				agente.yaNoCambiarDeTema();
 				if(this.temaActual == null){ // Ya no hay mas temas
+					this.temaActual = this.temario.buscarTema("mostrarResultados");
+					miPregunta = (Pregunta) this.temaActual.buscarUnaFrase("mostrarResultados");
+					misSalidas.add(agente.decir(miPregunta));
+					fraseActual = miPregunta;
+					ponerComoYaTratado(miPregunta);
+					agente.cambiarAWorkspaceGeneral();
+				}else if(this.temaActual.obtenerIdTema().equals("mostrarResultados")){
 					this.temaActual = this.temario.buscarTema("mostrarResultados");
 					miPregunta = (Pregunta) this.temaActual.buscarUnaFrase("mostrarResultados");
 					misSalidas.add(agente.decir(miPregunta));
@@ -95,29 +102,36 @@ public class Conversacion {
 					agente.activarTemaEnElContextoDeWatson(this.temaActual.obtenerIdTema());
 					
 					// llamar a watson y ver que bloque se activo
-					String idFraseActivada = agente.inicializarTemaEnWatson();
+					respuesta = agente.inicializarTemaEnWatson(respuestaDelCliente);
+					String idFraseActivada = agente.obtenerNodoActivado(respuesta.messageResponse());
+					
+					/*String idFraseActivada = agente.inicializarTemaEnWatson(respuestaDelCliente);
 					if(idFraseActivada.equals("")){
-						idFraseActivada = agente.inicializarTemaEnWatson();
+						idFraseActivada = agente.inicializarTemaEnWatson(respuestaDelCliente);
 						agente.borrarUnaVariableDelContexto(Constantes.ANYTHING_ELSE);
-					}
+					}*/
 					System.out.println("Id de la frase a decir: "+idFraseActivada);
 					
 					agregarOracionesAfirmativas(agente.obtenerIDsDeOracionesAfirmativas());
-					
-					miPregunta = (Pregunta) this.temaActual.buscarUnaFrase(idFraseActivada);
-					misSalidas.add(agente.decir(miPregunta));
-					fraseActual = miPregunta;
-					ponerComoYaTratado(miPregunta);
+					if( ! idFraseActivada.equals("")){
+						miPregunta = (Pregunta) this.temaActual.buscarUnaFrase(idFraseActivada);
+						misSalidas.add(agente.decir(miPregunta));
+						fraseActual = miPregunta;
+						ponerComoYaTratado(miPregunta);
+					}
 				}
 			}else{
 				if (agente.entendiLaUltimaPregunta()){
 					
 					verificarYAgregarOracionesAfirmativas(respuesta);
 					
-					miPregunta = (Pregunta) this.temaActual.buscarUnaFrase(respuesta.obtenerFraseActivada());
-					misSalidas.add(agente.decir(miPregunta));
-					fraseActual = miPregunta;
-					ponerComoYaTratado(miPregunta);
+					String fraseAvtiva = respuesta.obtenerFraseActivada();
+					if( ! fraseAvtiva.equals("")){
+						miPregunta = (Pregunta) this.temaActual.buscarUnaFrase(fraseAvtiva);
+						misSalidas.add(agente.decir(miPregunta));
+						fraseActual = miPregunta;
+						ponerComoYaTratado(miPregunta);
+					}
 				}else{ 
 					// Verificar que fue	
 					System.out.println("No entendi la ultima pregunta");
@@ -156,7 +170,11 @@ public class Conversacion {
 	}
 	
 	private void ponerComoYaTratado(Tema tema){
-		hilo.ponerComoDichoEste(tema);
+		if(tema.sePuedeRepetir()){
+			hilo.ponerComoDichoEste(tema);
+		}else{
+			hilo.noPuedoRepetir(tema);
+		}
 	}
 	
 }

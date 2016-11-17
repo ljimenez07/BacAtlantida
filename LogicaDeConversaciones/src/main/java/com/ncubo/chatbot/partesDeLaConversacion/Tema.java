@@ -4,14 +4,18 @@ import com.ncubo.chatbot.exceptiones.ChatException;
 
 public class Tema
 {
-	private Frase frases[];
-	private Temas dependencias;
-	private String idDelTema;
-	private String nombreDelWorkspaceAlQuePertenece;
+	private final Frase frases[];
+	private final Temas dependencias;
+	private final String idDelTema;
+	private final String nombreDelWorkspaceAlQuePertenece;
+	private final String intencionGeneralAlQuePertenece;
+	private final boolean sePuedeRepetir;
 	
-	public Tema (String idDelTema, String idDeLaIntencionGeneral, Frase... frases){
+	public Tema (String idDelTema, String nombreWorkspace, boolean sePuedeRepetir, String idDeLaIntencionGeneral, Frase... frases){
 		this.idDelTema = idDelTema;
-		this.nombreDelWorkspaceAlQuePertenece = idDeLaIntencionGeneral;
+		this.nombreDelWorkspaceAlQuePertenece = nombreWorkspace;
+		this.sePuedeRepetir = sePuedeRepetir;
+		this.intencionGeneralAlQuePertenece = idDeLaIntencionGeneral;
 		this.frases = frases;
 		this.dependencias = new Temas();
 	}
@@ -22,6 +26,10 @@ public class Tema
 		return this;
 	}
 	
+	public String obtenerIntencionGeneralAlQuePertenece() {
+		return intencionGeneralAlQuePertenece;
+	}
+
 	public String obtenerIdTema(){
 		return idDelTema;
 	}
@@ -68,4 +76,8 @@ public class Tema
 		return resultado;
 	}
 
+	public boolean sePuedeRepetir(){
+		return sePuedeRepetir;
+	}
+	
 }

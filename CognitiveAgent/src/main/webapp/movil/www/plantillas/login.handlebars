@@ -1,0 +1,69 @@
+<form id="formLogin" method="POST">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12">
+			Nombre
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12">
+			<input placeholder="" type="text" id="name" name="name" class="form-control" autofocus>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12">
+			Password
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12">
+			<input placeholder="" type="password" id="password" class="form-control" name="password" >
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12">
+			<button class="btn">Enviar</button>
+		</div>
+	</div>
+	<div class="alert alert-danger" style ="display:none;" role="alert"></div>
+</form>
+<style>
+	
+</style>
+
+<script>
+
+$(function(){
+	function initLogin()
+	{
+		$("#formLogin").submit(function(e) 
+		{
+			var url = serverDomain+"/movil/login"; 
+
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: $(this).serialize()
+			})
+			.done(function( data ) 
+			{
+				cambiarVista("chats");
+			
+			})
+			.fail(function(XMLHttpRequest, textStatus, textStatus) 
+			{
+				if( XMLHttpRequest.responseJSON.exception.includes("CredencialesInvalidosException") )
+				{
+					var alert= $(this).find(".alert");
+					alert.html(XMLHttpRequest.responseJSON.message);
+					alert.show("fast");
+				}
+			});
+
+			e.preventDefault(); 
+		});
+
+	}/*CredencialesInvalidosException*/
+	initLogin();
+
+});
+</script>

@@ -3,7 +3,11 @@ package com.ncubo.conf;
 public enum Intencion 
 {
 	SALDO("saldo"),
-	TASA_DE_CAMBIO("tasa_cambio");
+	SALDO_DESCRIPCION("Saldo"),
+	MOVIMIENTOS("movimientos"),
+	MOVIMINETOS_DESCRIPCION("Movimientos"),
+	TASA_DE_CAMBIO("tasa_cambio"),
+	TASA_DE_CAMBIO_DESCRIPCION("Tasa de cambio");
 	
 	private String nombre;
 	Intencion(String nombre)

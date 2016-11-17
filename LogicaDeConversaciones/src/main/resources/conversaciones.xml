@@ -237,9 +237,14 @@
 		</when>
 	</conversacion>
 	
+	<conjunciones>
+		<conjuncion id="conjuncion1">I'm sorry, i didn't undertand.</conjuncion>
+		<conjuncion id="conjuncion2">I didn't catch that.</conjuncion>
+	</conjunciones>
+	
 	<workspaces user="bb9bd2e7-d63f-490c-b5d6-32f026a4c646" pass="Tvm3ZJzX2vab">
-		<workspace tipo="general" idIBM="d0d0e2bd-931a-4bca-ba05-e8bd8b7f1ac0">deam_house_universe</workspace>
-		<workspace tipo="especifico" idIBM="8af4d07d-d2b5-4a32-804c-6a0e2749ffed">want_house</workspace>
+		<workspace tipo="general" idIBM="d0d0e2bd-931a-4bca-ba05-e8bd8b7f1ac0" intencionesParaSeReferenciado="">deam_house_universe</workspace>
+		<workspace tipo="especifico" idIBM="8af4d07d-d2b5-4a32-804c-6a0e2749ffed" intencionesParaSeReferenciado="want_house">want_house</workspace>
 	</workspaces>
 	
 </conversacions>
