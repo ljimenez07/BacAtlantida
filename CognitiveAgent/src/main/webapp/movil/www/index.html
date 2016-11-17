@@ -191,6 +191,35 @@
 
 
 		<script>
+		function ajax(param)
+		{
+			$.ajax({
+				type: param.type,
+				contentType :param.contentType,
+				dataType : "json",
+				url : param.url,
+				data : param.data
+			})
+			.done(function( data ) 
+			{
+				if( param.done != undefined )
+				{
+					param.done(data);
+				}
+				
+				if (data.usuarioEstaLogueado)
+				{
+					$(".botonDeIngresar").remove();
+				}
+			})
+			.fail(function(XMLHttpRequest, textStatus, textStatus) 
+			{
+				if( param.fail != undefined )
+				{
+					param.fail(XMLHttpRequest, textStatus, textStatus);
+				}
+			});
+		}
 		function getCookie(cname) 
 		{
 			var name = cname + "=";

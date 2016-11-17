@@ -59,28 +59,27 @@ $(function(){
 				moveScrollParaAbjoEnFuncionDelUltimoMEnsaje();
 			}
 			
-			$.ajax({
+			ajax({
 				type: "POST",
 				contentType :"text/plain; charset=UTF-8",
-				dataType : "json",
 				url : serverDomain+"/conversacion/{{pathDelServidor}}/",
-				data : textoAEnviar
-			})
-			.done(function( data ) 
-			{
-				var respuesta = mensajeDeAgente.clone();
-				respuesta.find(".msg p").html(data.texto);
-				conversation.append(respuesta);
-				
-				moveScrollParaAbjoEnFuncionDelUltimoMEnsaje();
-			})
-			.fail(function(XMLHttpRequest, textStatus, textStatus) 
-			{
-				console.log(JSON.stringify(XMLHttpRequest));
-				console.log(XMLHttpRequest.responseJSON.exception);
-				if( XMLHttpRequest.responseJSON.exception.includes("NoSessionException") )
+				data : textoAEnviar,
+				done:function( data ) 
 				{
-					cambiarVista( "login" );
+					var respuesta = mensajeDeAgente.clone();
+					respuesta.find(".msg p").html(data.texto);
+					conversation.append(respuesta);
+					
+					moveScrollParaAbjoEnFuncionDelUltimoMEnsaje();
+				},
+				fail: function(XMLHttpRequest, textStatus, textStatus) 
+				{
+					console.log(JSON.stringify(XMLHttpRequest));
+					console.log(XMLHttpRequest.responseJSON.exception);
+					if( XMLHttpRequest.responseJSON.exception.includes("NoSessionException") )
+					{
+						cambiarVista( "login" );
+					}
 				}
 			});
 			
