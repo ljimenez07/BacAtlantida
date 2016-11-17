@@ -178,15 +178,21 @@
 					<div class="col-md-6 ">
 						<div class="form-group">
 							<label for="vigenciaDesde-lbl" class="titulo-ca"><span class="asterisco">*</span>Vigencia desde</label>
-							<input type="text" class="form-control" th:field="*{vigenciaDesde}" id="vigenciaDesde-input" th:classappend="${#fields.hasErrors('vigenciaDesde')} ? 'sobresaltar-field'"/>
-							<p class="campo-requerido" th:if="${#fields.hasErrors('vigenciaDesde')}" th:errors="*{vigenciaDesde}"/>
+							<div class="inner-addon right-addon">
+								<input type="text" class="form-control" th:field="*{vigenciaDesde}" id="vigenciaDesde-input" th:classappend="${#fields.hasErrors('vigenciaDesde')} ? 'sobresaltar-field'"/>
+								<p class="campo-requerido" th:if="${#fields.hasErrors('vigenciaDesde')}" th:errors="*{vigenciaDesde}"/>
+								<i class="glyphicon glyphicon-calendar"></i>
+							</div>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="vigenciaHasta-lbl" class="titulo-ca"><span class="asterisco">*</span>Hasta</label>
-							<input type="text" class="form-control" th:field="*{vigenciaHasta}" id="vigenciaHasta-input" th:classappend="${#fields.hasErrors('vigenciaHasta')} ? 'sobresaltar-field'"/>
-							<p class="campo-requerido" th:if="${#fields.hasErrors('vigenciaHasta')}" th:errors="*{vigenciaHasta}"/>
+							<div class="inner-addon right-addon">
+								<input type="text" class="form-control" th:field="*{vigenciaHasta}" id="vigenciaHasta-input" th:classappend="${#fields.hasErrors('vigenciaHasta')} ? 'sobresaltar-field'"/>
+								<p class="campo-requerido" th:if="${#fields.hasErrors('vigenciaHasta')}" th:errors="*{vigenciaHasta}"/>
+								<i class="glyphicon glyphicon-calendar"></i>
+							</div>
 						</div>
 					</div>
 				</div>

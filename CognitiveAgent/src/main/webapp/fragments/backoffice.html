@@ -150,6 +150,42 @@
 			display: inline-block;
 			vertical-align: middle;
 		}
+		.glyphicon-search
+		{
+			color: red;
+		}
+		
+		/* fin iconos */
+		
+		/* para poner icono de calendario */
+		.inner-addon
+		{ 
+			position: relative; 
+		}
+		.inner-addon .glyphicon
+		{
+			position: absolute;
+			padding: 10px;
+			pointer-events: none;
+		}
+		.left-addon .glyphicon
+		{
+			left: 0px;
+		}
+		.right-addon .glyphicon
+		{
+			right: 0px;
+		}
+		.left-addon input
+		{
+			padding-left: 30px;
+		}
+		.right-addon input
+		{
+			padding-right: 30px;
+		}
+		/*fin poner icono de calendario*/
+		
 		.nav-tabs
 		{
 			border: none;
@@ -201,7 +237,10 @@
 				</ul>
 				<form class="navbar-form navbar-left" id="buscarComercio" th:action="@{/filtrarOfertas}" th:if="${paginaActual == 'gestionDeOfertas'}">
 					<div class="form-group" align="right">
-						<input type="text" class="form-control" placeholder="Filtrar" id="busquedaComercio" name="busquedaComercio" value="" th:value="${busquedaComercio}"></input>
+						<div class="inner-addon right-addon">
+							<input type="text" class="form-control" placeholder="Filtrar" id="busquedaComercio" name="busquedaComercio" value="" th:value="${busquedaComercio}"></input>
+							<i class="glyphicon glyphicon-search"></i>
+						</div>
 					</div>
 				</form>
 			</div>
