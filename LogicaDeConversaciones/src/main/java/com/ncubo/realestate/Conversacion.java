@@ -102,11 +102,14 @@ public class Conversacion {
 					agente.activarTemaEnElContextoDeWatson(this.temaActual.obtenerIdTema());
 					
 					// llamar a watson y ver que bloque se activo
-					String idFraseActivada = agente.inicializarTemaEnWatson(respuestaDelCliente);
+					respuesta = agente.inicializarTemaEnWatson(respuestaDelCliente);
+					String idFraseActivada = agente.obtenerNodoActivado(respuesta.messageResponse());
+					
+					/*String idFraseActivada = agente.inicializarTemaEnWatson(respuestaDelCliente);
 					if(idFraseActivada.equals("")){
 						idFraseActivada = agente.inicializarTemaEnWatson(respuestaDelCliente);
 						agente.borrarUnaVariableDelContexto(Constantes.ANYTHING_ELSE);
-					}
+					}*/
 					System.out.println("Id de la frase a decir: "+idFraseActivada);
 					
 					agregarOracionesAfirmativas(agente.obtenerIDsDeOracionesAfirmativas());

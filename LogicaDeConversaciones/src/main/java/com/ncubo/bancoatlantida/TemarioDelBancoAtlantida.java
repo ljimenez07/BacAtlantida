@@ -23,6 +23,7 @@ public class TemarioDelBancoAtlantida extends Temario
 			true,
 			"BAIntents",
 			frase("saludoGeneral"),
+			frase("saludar"),
 			frase("saludoPreguntar")
 		);
 		return resultado;
@@ -57,6 +58,32 @@ public class TemarioDelBancoAtlantida extends Temario
 		return resultado;
 	}
 	
+	private Tema quiereMovimientos()
+	{
+		Tema resultado = new Tema
+		(
+			"quiereMovimientos",
+			"BATemas",
+			true,
+			"movimientos",
+			frase("movimientos")
+		);
+		return resultado;
+	}
+	
+	private Tema fueraDeContexto()
+	{
+		Tema resultado = new Tema
+		(
+			"fueraDeContexto",
+			"BAIntents",
+			true,
+			"out_of_scope",
+			frase("fueraDeContextoGeneral")
+		);
+		return resultado;
+	}
+	
 	private Tema despedida()
 	{
 		Tema resultado = new Tema
@@ -64,7 +91,7 @@ public class TemarioDelBancoAtlantida extends Temario
 			"despedida",
 			"BAIntents",
 			true,
-			"BAIntents",
+			"despedidas",
 			frase("despedida")
 		);
 		return resultado;
@@ -77,6 +104,8 @@ public class TemarioDelBancoAtlantida extends Temario
 		temasDelDiscurso.add(saludo());
 		temasDelDiscurso.add(quiereSaldo());
 		temasDelDiscurso.add(quiereTasaDeCambio());
+		temasDelDiscurso.add(quiereMovimientos());
+		temasDelDiscurso.add(fueraDeContexto());
 		temasDelDiscurso.add(despedida());
 	}
 	

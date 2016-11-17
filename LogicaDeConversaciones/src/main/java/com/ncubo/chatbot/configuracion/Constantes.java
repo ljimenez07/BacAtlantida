@@ -53,5 +53,6 @@ public class Constantes {
 	// Tipos de frases
 	public static String FRASE_SALUDO = "saludo";
 	public static String FRASE_DESPEDIDA = "despedida";
+	public static String FRASE_FUERA_DE_CONTEXTO= "fueraDeContexto";
 	
 }

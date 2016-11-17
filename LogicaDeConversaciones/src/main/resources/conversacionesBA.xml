@@ -10,6 +10,19 @@
 		<vineta></vineta>
 	</conversacion>
 	
+	<conversacion id="saludar">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Hola!.</frase>
+		</frases>
+		<vineta></vineta>
+		<when>
+			<condition operador="and" tipo="intencion">saludos</condition>
+		</when>
+	</conversacion>
+	
 	<conversacion id="saludoPreguntar">
 		<tipo>pregunta</tipo>
 		<mandatoria>true</mandatoria>
@@ -17,6 +30,7 @@
 		<frases>
 			<curioso>¿En qué puedo ayudarle?</curioso>
 			<curioso>¿Que puedo hacer por usted?</curioso>
+			<impertinente>¿En qué le puedo ayudar?. Conmigo usted puede conocer la tasa de cambio actual, su saldo y sus últimos movimientos.</impertinente>
 		</frases>
 		<vineta></vineta>
 		<when>
@@ -29,7 +43,7 @@
 	<conversacion id="saldo">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
+		<enVozAlta>false</enVozAlta>
 		<frases>
 			<frase>El saldo de su tarjeta de crédito es de: $</frase>
 		</frases>
@@ -44,7 +58,6 @@
 			<frase>Por ahora solo puedo proporcionar el saldo de su tarjeta de crédito.</frase>
 		</frases>
 		<vineta></vineta>
-	
 	</conversacion>
 	
 	<conversacion id="tasaDolar">
@@ -77,16 +90,43 @@
 		<vineta></vineta>
 	</conversacion>
 	
+	<conversacion id="movimientos">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Estos son los últimos movimientos registrados: $</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
 	<conversacion id="despedida">
 		<tipo>despedida</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Chao!</frase>
+			<frase>Chao!. Fue un placer atenderte.</frase>
+			<frase>Hasta pronto.</frase>
+			<frase>Fue un honor ayudarte.</frase>
+			<frase>Adiós!. Espero que le haya sido de tu ayuda.</frase>
 		</frases>
 		<vineta></vineta>
 		<when>
 			<condition operador="and" tipo="intencion">despedidas</condition>
+		</when>
+	</conversacion>
+	
+	<conversacion id="fueraDeContextoGeneral">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Lo siento, pero en este momento solo puedo responder sobre: tasas de cambio, saldos y movimientos.</frase>
+			<frase>No puedo responder a eso, solo conozco las tasas de cambio, tus saldos y movimientos.</frase>
+		</frases>
+		<vineta></vineta>
+		<when>
+			<condition operador="and" tipo="intencion">out_of_scope</condition>
 		</when>
 	</conversacion>
 	

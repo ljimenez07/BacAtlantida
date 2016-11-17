@@ -33,6 +33,7 @@ public class Agente extends Participante{
 	private int numeroDeIntentosActualesEnRepetirUnaPregunta;
 	private boolean abordarElTema = false;
 	private boolean cambiarDeTema = false;
+	private boolean hayIntencionNoAsociadaANingunWorkspace;
 	
 	public Agente(ArrayList<WorkSpace> miWorkSpaces){
 		this.noEntendiLaUltimaRespuesta = true;
@@ -41,6 +42,7 @@ public class Agente extends Participante{
 		this.nombreDelWorkSpaceGeneral = "";
 		this.nombreDeLaIntencionGeneralActiva = "";
 		this.numeroDeIntentosActualesEnRepetirUnaPregunta = 1;
+		this.hayIntencionNoAsociadaANingunWorkspace = false;
 		this.inicializarContextos();
 	}
 	
@@ -85,6 +87,7 @@ public class Agente extends Participante{
 		
 		return resultado;
 	}
+	
 	public MessageResponse llamarAWatson(String mensaje, String nombreWorkspace){
 		return miWatsonConversacions.get(nombreWorkspace).enviarAWatson(mensaje, miContextos.get(nombreWorkspace));
 	}
@@ -132,21 +135,17 @@ public class Agente extends Participante{
 					System.out.println(String.format("Cambiando al workspace %s e intencion %s", nombreDeWorkspaceActual, nombreDeLaIntencionGeneralActiva));
 					cambiarDeTema = true; // Buscar otro tema
 					estaEnElWorkspaceGeneral = false;
+					this.hayIntencionNoAsociadaANingunWorkspace = false;
+				}else{
+					System.out.println("Intencion no asociada a ningun workspace");
+					nombreDeLaIntencionGeneralActiva = intencionDelCliente;
+					hayIntencionNoAsociadaANingunWorkspace = true;
 				}
 			}
 			numeroDeIntentosActualesEnRepetirUnaPregunta = 1;
 		}
 		
 		return respuesta;
-	}
-	
-	private WorkSpace extraerUnWorkspaceConLaIntencion(String nombreDeLaIntencion){
-		for(WorkSpace workspace: miWorkSpaces){
-			if(workspace.tieneLaIntencion(nombreDeLaIntencion)){
-				return workspace;
-			}
-		}
-		return null;
 	}
 	
 	public Respuesta analizarRespuesta(String respuestaDelClinete, Frase frase){
@@ -191,12 +190,25 @@ public class Agente extends Participante{
 		return respuesta;
 	}
 
+	private WorkSpace extraerUnWorkspaceConLaIntencion(String nombreDeLaIntencion){
+		for(WorkSpace workspace: miWorkSpaces){
+			if(workspace.tieneLaIntencion(nombreDeLaIntencion)){
+				return workspace;
+			}
+		}
+		return null;
+	}
+	
 	public boolean hayQueCambiarDeTema(){
 		return cambiarDeTema;
 	}
 	
 	public void yaNoCambiarDeTema(){
 		cambiarDeTema = false;
+	}
+	
+	public void cambiarDeTema(){
+		cambiarDeTema = true;
 	}
 	
 	public boolean entendiLaUltimaPregunta(){
@@ -235,10 +247,23 @@ public class Agente extends Participante{
 		miContextos.put(nombreDeWorkspaceActual, obj.toString());
 	}
 	
-	public String inicializarTemaEnWatson(String respuestaDelCliente){
-		MessageResponse response = miWatsonConversacions.get(nombreDeWorkspaceActual).enviarAWatson(respuestaDelCliente, miContextos.get(nombreDeWorkspaceActual));
-		String context = response.getContext().toString();
+	public Respuesta inicializarTemaEnWatson(String respuestaDelCliente){
+		Respuesta respuesta = new Respuesta(miWatsonConversacions.get(nombreDeWorkspaceActual), miContextos.get(nombreDeWorkspaceActual));
+		//MessageResponse response = miWatsonConversacions.get(nombreDeWorkspaceActual).enviarAWatson(respuestaDelCliente, miContextos.get(nombreDeWorkspaceActual));
+		respuesta.llamarAWatson(respuestaDelCliente);
+		//String context = response.getContext().toString();
+		String context = respuesta.messageResponse().getContext().toString();
 		miContextos.put(nombreDeWorkspaceActual, context);
+		/*try{
+			return response.getContext().get(Constantes.NODO_ACTIVADO).toString();
+		}catch(Exception e){
+			System.out.println("No existe el id nodo");
+			return "";
+		}*/
+		return respuesta;
+	}
+	
+	public String obtenerNodoActivado(MessageResponse response){
 		try{
 			return response.getContext().get(Constantes.NODO_ACTIVADO).toString();
 		}catch(Exception e){
@@ -271,4 +296,9 @@ public class Agente extends Participante{
 	public String obtenerNombreDeLaIntencionGeneralActiva() {
 		return this.nombreDeLaIntencionGeneralActiva;
 	}
+	
+	public boolean hayIntencionNoAsociadaANingunWorkspace(){
+		return this.hayIntencionNoAsociadaANingunWorkspace;
+	}
+	
 }

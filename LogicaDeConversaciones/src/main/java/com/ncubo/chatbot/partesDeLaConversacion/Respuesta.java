@@ -40,6 +40,19 @@ public class Respuesta {
 		this.hayOracionesAfirmativas = false;
 	}
 	
+	public Respuesta(ConversationWatson conversacion, String context){
+		this.terminoElTema = false;
+		this.fraseActivada = "";
+		this.hayUnAnythingElse = false;
+		this.miFrase = null;
+		this.miConversacion = conversacion;
+		this.miContexto = context;
+		this.misEntidades = new Entidades();
+		this.misIntenciones = new Intenciones();
+		this.idsDeOracionesAfirmativas = null;
+		this.hayOracionesAfirmativas = false;
+	}
+	
 	public void llamarAWatson(String texto){
 		// con el id de seccion, pasar la respuesta en texto a conversation
 		// del xml de respuesta de watson set al analizador cuales fueron los intenciones y las entidades (limitado a la pregunta)
@@ -106,6 +119,10 @@ public class Respuesta {
 	
 	public boolean hayAlgunAnythingElse(){
 		return this.hayUnAnythingElse;
+	}
+	
+	public MessageResponse messageResponse(){
+		return watsonRespuesta;
 	}
 	
 	private String obtenerElementoDelContextoDeWatson(String variableDeContexto){

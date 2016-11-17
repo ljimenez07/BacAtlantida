@@ -96,4 +96,20 @@ public abstract class Temario
 		return null;
 	}
 	
+	private Tema buscarUnUnicoTemaQueCumplaLaCondicion(String nombreDelWorkspace, String nombreIntencionGeneral){
+		int contador = 0;
+		Tema respuesta = null;
+		
+		for(Tema tema: temasDelDiscurso){
+			if(tema.obtenerElNombreDelWorkspaceAlQuePertenece().equals(nombreDelWorkspace) && tema.obtenerIntencionGeneralAlQuePertenece().equals(nombreIntencionGeneral)){
+				respuesta = tema;
+				contador ++;
+			}
+		}
+		
+		if (contador == 1)
+			return respuesta;
+		else
+			return null;
+	}
 }
