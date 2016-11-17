@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -55,10 +56,14 @@ public class MovilController {
 		}
 		
 		System.out.println("valor  "+session.getAttribute(Usuario.LLAVE_EN_SESSION));
-		return serverCognitivo.procesarMensajeChat(
+		JSONObject object =new JSONObject( serverCognitivo.procesarMensajeChat(
 				usuario, 
 				mensaje, 
-				new Date());
+				new Date()));
+		
+		object.put("usuarioEstaLogueado", usuario.estaLogueado());
+		
+		return object.toString();
 	}
 	
 	@CrossOrigin(origins = "*")
@@ -72,12 +77,14 @@ public class MovilController {
 			session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 		}
 		
-		System.out.println("valor  "+session.getAttribute(Usuario.LLAVE_EN_SESSION));
-		return serverCognitivo.procesarMensajeConocerte(
+		JSONObject object =new JSONObject( serverCognitivo.procesarMensajeConocerte(
 				usuario, 
 				mensaje, 
-				new Date()
-				);
+				new Date()));
+		
+		object.put("usuarioEstaLogueado", usuario.estaLogueado());
+		
+		return object.toString();
 	}
 	
 	@CrossOrigin(origins = "*")

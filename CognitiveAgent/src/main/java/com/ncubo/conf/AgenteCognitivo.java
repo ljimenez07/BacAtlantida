@@ -142,14 +142,14 @@ public class AgenteCognitivo
 				NodeImpl venta = nodeTipoCambio1.get("venta");
 				if(moneda.getValue().equals(Entidad.DOLAR.toString())){
 					
-				texto = texto.replaceAll("%dc", compra.toString()+" "+moneda);
-				texto = texto.replaceAll("%dv", venta.toString()+" "+moneda);
+				texto = texto.replaceAll("%dc", compra.toString()+" LPS ");
+				texto = texto.replaceAll("%dv", venta.toString()+" LPS ");
 							
 				}
 				if(moneda.getValue().equals(Entidad.EURO.toString())){
 
-					texto = texto.replaceAll("%ec", compra.toString()+" "+moneda);
-					texto = texto.replaceAll("%ev", venta.toString()+" "+moneda);			
+					texto = texto.replaceAll("%ec", compra.toString()+" LPS ");
+					texto = texto.replaceAll("%ev", venta.toString()+" LPS ");			
 				}
 			}
 			respuesta.put("texto", texto);
