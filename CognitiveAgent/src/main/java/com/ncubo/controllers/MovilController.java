@@ -93,7 +93,17 @@ public class MovilController {
 		String usuarioId = validaPreLoginColeccion.getNode("usuarioId").toString();
 		if( validaPreLoginColeccion.getNode("valido").toString().equals("S") )
 		{
-			Usuario usuario = (Usuario)session.getAttribute(Usuario.LLAVE_EN_SESSION) ;
+			Object objeto = session.getAttribute(Usuario.LLAVE_EN_SESSION) ;
+			Usuario usuario;
+			if( objeto == null)
+			{
+				usuario = new Usuario();
+			}
+			else
+			{
+				usuario = (Usuario)objeto;
+			}
+			
 			usuario.setLlaveSession(validaPreLoginColeccion.getNode("llaveSession").toString());
 			usuario.setUsuarioId(validaPreLoginColeccion.getNode("usuarioId").toString());
 			usuario.setUsuarioNombre(validaPreLoginColeccion.getNode("usuarioNombre").toString());
