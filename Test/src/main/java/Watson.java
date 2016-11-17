@@ -77,7 +77,14 @@ public class Watson
 				given().body(text).post(urlTarget+"/conversacion/chat/"):
 				given().cookie("SESSION", session).body(text).post(urlTarget+"/conversacion/chat/");
 		
-		if( ! expected.equals( new JSONObject(ultimaRespuesta.asString()).getString("texto")  ))
+		JSONObject ultimaRespuestaAsObject = new JSONObject(ultimaRespuesta.asString());
+		if( ! ultimaRespuestaAsObject.has("texto") )
+		{
+			System.err.println( ultimaRespuestaAsObject );
+			return;
+		}
+		
+		if( ! expected.equals( ultimaRespuestaAsObject.getString("texto")  ))
 		{
 			System.err.println("Con "+session+" A '"+text+"' \n\t se esperaba '"+expected+"' \n\t  y se recibió '"+new JSONObject(ultimaRespuesta.asString()).getString("texto")+"'");
 		}
