@@ -67,7 +67,7 @@ public class OfertaDao
 	public ArrayList<Oferta> obtener() throws ClassNotFoundException, SQLException
 	{ //TODO dalaian no deneria sacar el universo de ofertas.
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
-		String query = "SELECT " + atributo.ID_OFERTA + ", "
+		String query = "SELECT " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + ", "
 				+ atributo.TITULO_DE_OFERTA + ", "
 				+ atributo.COMERCIO + ", "
 				+ atributo.DESCRIPCION + ", "
@@ -81,9 +81,13 @@ public class OfertaDao
 				+ atributo.IMAGEN_COMERCIO_PATH + ", "
 				+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
 				+ atributo.FECHA_HORA_REGISTRO
-				+ " FROM " + NOMBRE_TABLA + ", " + NOMBRE_TABLA_CATEGORIA_OFERTA 
+				+ ", SUM(IF(" + atributo.REACCION + " = 1, 1, 0)) AS " + atributo.LIKES
+				+ ", SUM(IF(" + atributo.REACCION + " = 0, 1, 0)) AS " + atributo.DISLIKES
+				+ " FROM " + NOMBRE_TABLA_CATEGORIA_OFERTA + ", " + NOMBRE_TABLA
+				+ " LEFT JOIN " + NOMBRE_TABLA_REACCION + " ON " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + NOMBRE_TABLA_REACCION + ".idOferta"
 				+ " WHERE " + atributo.ELIMINADA + " = 0"
-				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA + ";";
+				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA
+				+ " GROUP BY " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + ";";
 
 		Connection con = dao.openConBD();
 		ResultSet rs = con.createStatement().executeQuery(query);
@@ -226,6 +230,7 @@ public class OfertaDao
 				+ " LEFT JOIN " + NOMBRE_TABLA_REACCION + " ON " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + NOMBRE_TABLA_REACCION + ".idOferta"
 				+ " WHERE " + atributo.ELIMINADA + " = 0"
 				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA
+				+ " GROUP BY " + NOMBRE_TABLA + "." + atributo.ID_OFERTA
 				+ " ORDER BY " + atributo.FECHA_HORA_REGISTRO + " DESC"
 				+ " LIMIT " + indiceInicial + ", 10;";
 		
@@ -370,8 +375,8 @@ public class OfertaDao
 	
 	public ArrayList<Oferta> filtrarOfertasPorComercioYCategoria(String  nombreComercio) throws ClassNotFoundException, SQLException
 	{
-		ArrayList<Oferta> ultimasOfertas = ultimasOfertas();
-		Map<Integer, Oferta> valoresSimilitud = new HashMap<Integer, Oferta>();
+		ArrayList<Oferta> ultimasOfertas = obtener();
+		Map<Integer, List<Oferta>> valoresSimilitud = new HashMap<Integer, List<Oferta>>();
 		
 		for(Oferta ofertaActual : ultimasOfertas)
 		{
@@ -379,22 +384,41 @@ public class OfertaDao
 			int levenshteinDistanceCategoria = LevenshteinDistance.distance( nombreComercio, ofertaActual.getCategoria().getNombre());
 			if ( levenshteinDistance < 6 )
 			{
-				valoresSimilitud.put(levenshteinDistance, ofertaActual);
+				if (valoresSimilitud.get(levenshteinDistance) == null)
+				{
+					ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+					ofertas.add(ofertaActual);
+					valoresSimilitud.put(levenshteinDistance, ofertas);
+				}
+				else
+				{
+					valoresSimilitud.get(levenshteinDistance).add(ofertaActual);
+				}
 			}
 			else
 			{
 				if( levenshteinDistanceCategoria < 3 )
 				{
-					valoresSimilitud.put(levenshteinDistanceCategoria, ofertaActual);
+					if (valoresSimilitud.get(levenshteinDistanceCategoria) == null)
+					{
+						ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+						ofertas.add(ofertaActual);
+						valoresSimilitud.put(levenshteinDistanceCategoria, ofertas);
+					}
+					else
+					{
+						valoresSimilitud.get(levenshteinDistanceCategoria).add(ofertaActual);
+					}
 				}
 			}
 		}
 		
-		Map<Integer, Oferta> mapaOrdenado = new TreeMap<Integer, Oferta>(valoresSimilitud);
+		Map<Integer, List<Oferta>> mapaOrdenado = new TreeMap<Integer, List<Oferta>>(valoresSimilitud);
 		ArrayList<Oferta> ofertasFiltradas = new ArrayList<Oferta>();
-		for(Map.Entry<Integer, Oferta> entryActual : mapaOrdenado.entrySet())
+		for(Map.Entry<Integer, List<Oferta>> entryActual : mapaOrdenado.entrySet())
 		{
-			ofertasFiltradas.add(entryActual.getValue());
+			for(Oferta ofertaActual : entryActual.getValue())
+			ofertasFiltradas.add(ofertaActual);
 		}
 
 		return ofertasFiltradas;

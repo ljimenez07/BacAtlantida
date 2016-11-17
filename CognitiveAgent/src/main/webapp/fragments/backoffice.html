@@ -93,6 +93,13 @@
 			cursor: pointer;
 			background: url([[@{/img/sprite-rojo-37x37.png}]]) 0 0;
 		}
+		.imagen-visualizar
+		{
+			width: 37px;
+			height: 37px;
+			cursor: pointer;
+			background: url([[@{/img/sprite-rojo-37x37.png}]]) -168px  0;
+		}
 		.nav-tabs
 		{
 			border: none;
@@ -139,7 +146,7 @@
 				</ul>
 				<form class="navbar-form navbar-left" id="buscarComercio" th:action="@{/filtrarOfertas}">
 					<div class="form-group" align="right">
-						<input type="text" class="form-control" placeholder="Búsqueda de comercio" id="busquedaComercio" name="busquedaComercio" ></input>
+						<input type="text" class="form-control" placeholder="Búsqueda de comercio" id="busquedaComercio" name="busquedaComercio" value="" th:value="${busquedaComercio}"></input>
 					</div>
 				</form>
 			</div>

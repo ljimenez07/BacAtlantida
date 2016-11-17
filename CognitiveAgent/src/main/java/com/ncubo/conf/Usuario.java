@@ -1,6 +1,7 @@
 package com.ncubo.conf;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import org.json.JSONObject;
 
@@ -12,6 +13,7 @@ public class Usuario implements Serializable
 	private String usuarioNombre;
 	private String llaveSession;
 	private boolean estaLogueado;
+	private static ArrayList<Usuario> usuariosLogueados = new ArrayList<Usuario>();
 	
 	public Usuario()
 	{
@@ -41,6 +43,7 @@ public class Usuario implements Serializable
 	public void hizologinExitosaMente()
 	{
 		this.estaLogueado = true;
+		usuariosLogueados.add( this );
 	}
 
 	public String getUsuarioId() {
