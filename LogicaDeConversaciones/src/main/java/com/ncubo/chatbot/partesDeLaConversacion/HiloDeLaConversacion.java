@@ -13,6 +13,7 @@ import com.ncubo.chatbot.watson.Intenciones;
 public class HiloDeLaConversacion {
 
 	private Temas temasYaDichos = new Temas();
+	private Temas temasYaDichosQueNoPuedoRepetir = new Temas();
 	private ArrayList<Frase> loQueYaSeHaDicho = new ArrayList<Frase>();
 	private ArrayList<Respuesta> respuestas = new ArrayList<Respuesta>();
 	
@@ -22,12 +23,21 @@ public class HiloDeLaConversacion {
 		loQueYaSeHaDicho.add(frase);
 	}
 
+	public void noPuedoRepetir(Tema tema){
+		temasYaDichosQueNoPuedoRepetir.add(tema);
+		ponerComoDichoEste(tema);
+	}
+	
 	public void ponerComoDichoEste(Tema tema){
 		temasYaDichos.add(tema);
 	}
 	
 	public Temas verTemasYaTratados(){
 		return temasYaDichos;
+	}
+	
+	public Temas verTemasYaTratadosYQueNoPuedoRepetir(){
+		return temasYaDichosQueNoPuedoRepetir;
 	}
 	
 	public void agregarUnaRespuesta(Respuesta miRespuesta){

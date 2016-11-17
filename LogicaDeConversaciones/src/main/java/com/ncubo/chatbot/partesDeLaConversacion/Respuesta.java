@@ -25,6 +25,7 @@ public class Respuesta {
 	private String fraseActivada;
 	private List<String> idsDeOracionesAfirmativas;
 	private boolean hayOracionesAfirmativas;
+	private String loQueElClienteDijo;
 	
 	public Respuesta(Frase frase, ConversationWatson conversacion, String context){
 		this.terminoElTema = false;
@@ -39,17 +40,29 @@ public class Respuesta {
 		this.hayOracionesAfirmativas = false;
 	}
 	
+	public Respuesta(ConversationWatson conversacion, String context){
+		this.terminoElTema = false;
+		this.fraseActivada = "";
+		this.hayUnAnythingElse = false;
+		this.miFrase = null;
+		this.miConversacion = conversacion;
+		this.miContexto = context;
+		this.misEntidades = new Entidades();
+		this.misIntenciones = new Intenciones();
+		this.idsDeOracionesAfirmativas = null;
+		this.hayOracionesAfirmativas = false;
+	}
+	
 	public void llamarAWatson(String texto){
 		// con el id de seccion, pasar la respuesta en texto a conversation
 		// del xml de respuesta de watson set al analizador cuales fueron los intenciones y las entidades (limitado a la pregunta)
 		// Si la respuesta fue pobre o de baja confianza hay que confirmar
-		
+		this.loQueElClienteDijo = texto;
 		watsonRespuesta = this.miConversacion.enviarAWatson(texto, this.miContexto);
 		procesarLaRespuestaDeWatson(this.miConversacion, watsonRespuesta);
 	}
 	
 	private void procesarLaRespuestaDeWatson(ConversationWatson conversacion, MessageResponse watsonRespuesta){
-		// tomar la respuesta de watson y set a la respuesta las entidades y las intenciones
 
 		this.misEntidades = conversacion.entidadesQueWatsonIdentifico(watsonRespuesta);
 		this.misIntenciones = conversacion.probablesIntenciones(watsonRespuesta);
@@ -59,28 +72,22 @@ public class Respuesta {
 		this.fraseActivada = obtenerElementoDelContextoDeWatson(Constantes.NODO_ACTIVADO);
 		obtenerIDsDeOracionesAfirmativas();
 		
-		/*for(Entidad entidad: pregunta.entidades()){
-			// buscar la entidad en la respueta y guardar en resultados <Entidad, respuestaJson>
-			//Falta el for que Watson puede devolver varios valores para 1 sola entidad
-				//resultados.put(); resultadosN.darValor(entidad, valorWatson);
-		}*/
+	}
+	
+	public String loQueElClienteDijoFue(){
+		return loQueElClienteDijo;
 	}
 	
 	public boolean entendiLaRespuesta(){
-		// Si no se entendio la pregunta hay que repetirla
-		// Validar: vino anything else o no hay ningun valor para entidad o intencion
-		//return (this.misEntidades.iterator().hasNext() || this.misIntenciones.iterator().hasNext());
 		
 		boolean entendi = true;
 		boolean lasIntencionesEstanBien = true;
 		boolean lasEntidadesEstanBien = true;
 		
-
 		if (miFrase instanceof Pregunta){
 			Pregunta pregunta = (Pregunta) miFrase;
 			
 			if(pregunta.intenciones().obtenerTodasLasIntenciones().size() > 0){
-				//entendi = (obtenerLaIntencionDeLaRespuesta().esReal() || ! this.hayUnAnythingElse);
 				lasIntencionesEstanBien = pregunta.verificarSiLasIntencionesExistenYSonDeConfianza(this.misIntenciones);
 			}
 			
@@ -88,7 +95,6 @@ public class Respuesta {
 				// lasEntidadesEstanBien = this.pregunta.verificarSiTodasLasEntidadesExisten(this.misEntidades);
 			}
 		}
-		
 		
 		entendi = lasIntencionesEstanBien && lasEntidadesEstanBien;
 		
@@ -115,6 +121,10 @@ public class Respuesta {
 		return this.hayUnAnythingElse;
 	}
 	
+	public MessageResponse messageResponse(){
+		return watsonRespuesta;
+	}
+	
 	private String obtenerElementoDelContextoDeWatson(String variableDeContexto){
 		try{
 			return watsonRespuesta.getContext().get(variableDeContexto).toString();
@@ -131,9 +141,7 @@ public class Respuesta {
 			hayOracionesAfirmativas = true;
 			System.out.println("Oraciones afirmativas: "+afirmativas);
 			afirmativas = afirmativas.replace("[", "").replace("]", "");
-			
-			idsDeOracionesAfirmativas = new ArrayList<String>(Arrays.asList(afirmativas.split(",")));
-						
+			idsDeOracionesAfirmativas = new ArrayList<String>(Arrays.asList(afirmativas.split(",")));			
 		}
 	}
 	

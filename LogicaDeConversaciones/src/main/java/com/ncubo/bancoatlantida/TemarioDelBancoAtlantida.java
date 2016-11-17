@@ -1,4 +1,4 @@
-package com.ncubo.realestate;
+package com.ncubo.bancoatlantida;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import com.ncubo.chatbot.watson.Entidades;
 import com.ncubo.chatbot.watson.Intenciones;
 
 //TODO: aunque ya veo 1/2 claro... me huele mal que parezca plantilla.
-public class TemarioDeRealEstate extends Temario
+public class TemarioDelBancoAtlantida extends Temario
 {
 	
 	private Tema saludo()
@@ -19,95 +19,67 @@ public class TemarioDeRealEstate extends Temario
 		Tema resultado = new Tema
 		(
 			"saludo",
-			"deam_house_universe",
+			"BAIntents",
 			true,
-			"deam_house_universe",
+			"BAIntents",
 			frase("saludoGeneral"),
-			frase("queBusca"),
-			frase("saludar")
+			frase("saludar"),
+			frase("saludoPreguntar")
 		);
 		return resultado;
 	}
 	
-	private Tema cualPais()
+	private Tema quiereSaldo()
 	{
 		Tema resultado = new Tema
 		(
-			"cualPais",
-			"want_house",
-			false,
-			"want_house",
-			frase("describirCostaRica"),
-			frase("quiereCostaRica"),
-			frase("noQuiereCostaRica")
+			"quiereSaldo",
+			"BATemas",
+			true,
+			"saldo",
+			frase("saldo"),
+			frase("noTengoSaldo")
 		);
 		return resultado;
 	}
 	
-	private Tema conFamiliaOSolo()
+	private Tema quiereTasaDeCambio()
 	{
 		Tema resultado = new Tema
 		(
-			"conFamiliaOSolo",
-			"want_house",
-			false,
-			"want_house",
-			frase("vieneSoloOConLaFamilia"),
-			frase("describaLaFamilia")
-		);
-		return resultado;
-	}		
-	
-	private Tema determinarLocalizacion()
-	{
-		Tema resultado = new Tema
-		(
-			"determinarLocalizacion",
-			"want_house",
-			false,
-			"want_house",
-			frase("determinarLaLocalizacion"),
-			frase("quierePiscina")
+			"quiereTasaDeCambio",
+			"BATemas",
+			true,
+			"tasa_cambio",
+			frase("tasaDolar"),
+			frase("tasaEuro"),
+			frase("tasaCambio")
 		);
 		return resultado;
 	}
 	
-	private Tema quierePatio()
+	private Tema quiereMovimientos()
 	{
 		Tema resultado = new Tema
 		(
-			"quierePatio",
-			"want_house",
-			false,
-			"want_house",
-			frase("describirPatio"),
-			frase("quierePatio")
+			"quiereMovimientos",
+			"BATemas",
+			true,
+			"movimientos",
+			frase("movimientos")
 		);
 		return resultado;
 	}
 	
-	private Tema quiereEnCondominio()
+	private Tema fueraDeContexto()
 	{
 		Tema resultado = new Tema
 		(
-			"quiereEnCondominio",
-			"want_house",
-			false,
-			"want_house",
-			frase("quiereEnCondominio")
-		);
-		return resultado;
-	}
-	
-	private Tema mostrarResultados()
-	{
-		Tema resultado = new Tema
-		(
-			"mostrarResultados",
-			"want_house",
-			false,
-			"want_house",
-			frase("mostrarResultados")
+			"fueraDeContexto",
+			"BAIntents",
+			true,
+			"out_of_scope",
+			frase("fueraDeContextoGeneral")
 		);
 		return resultado;
 	}
@@ -117,9 +89,9 @@ public class TemarioDeRealEstate extends Temario
 		Tema resultado = new Tema
 		(
 			"despedida",
-			"deam_house_universe",
+			"BAIntents",
 			true,
-			"deam_house_universe",
+			"despedidas",
 			frase("despedida")
 		);
 		return resultado;
@@ -130,12 +102,10 @@ public class TemarioDeRealEstate extends Temario
 		
 		System.out.println("Cargando temario ...");
 		temasDelDiscurso.add(saludo());
-		temasDelDiscurso.add(cualPais());
-		temasDelDiscurso.add(conFamiliaOSolo());
-		temasDelDiscurso.add(determinarLocalizacion());
-		temasDelDiscurso.add(quierePatio());
-		temasDelDiscurso.add(quiereEnCondominio());
-		temasDelDiscurso.add(mostrarResultados());
+		temasDelDiscurso.add(quiereSaldo());
+		temasDelDiscurso.add(quiereTasaDeCambio());
+		temasDelDiscurso.add(quiereMovimientos());
+		temasDelDiscurso.add(fueraDeContexto());
 		temasDelDiscurso.add(despedida());
 	}
 	
@@ -157,18 +127,17 @@ public class TemarioDeRealEstate extends Temario
 	
 	@Override
 	protected Contenido cargarContenido(){
-		return new ContenidoDeRealEstate();
+		return new ContenidoDelBancoAtlantida();
 	}
 
 	@Override
 	protected void cargarDependencias(Temas temasDelDiscurso){
-		temasDelDiscurso.get(2).dependeDe(temasDelDiscurso.get(1));
-		temasDelDiscurso.get(6).dependeDe(temasDelDiscurso.get(2)).dependeDe(temasDelDiscurso.get(3))
-							   .dependeDe(temasDelDiscurso.get(4)).dependeDe(temasDelDiscurso.get(5));
+		// temasDelDiscurso.get(2).dependeDe(temasDelDiscurso.get(1));
+
 	}
 	
 	public static void main(String argv[]) {
-		TemarioDeRealEstate temario = new TemarioDeRealEstate();
+		TemarioDelBancoAtlantida temario = new TemarioDelBancoAtlantida();
 		temario.buscarTema(Constantes.FRASE_SALUDO);
 	}
 }

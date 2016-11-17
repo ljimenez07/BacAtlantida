@@ -64,21 +64,6 @@ public class ConversationWatson {
 		return result;
 	}
 	
-	/*public String getIntents(String jsonData){
-		String result = "";
-		try{
-			JSONObject obj;
-			obj = new JSONObject(jsonData);
-			//obj = new JSONArray(obj.getJSONArray("intents"));
-			//result = obj.getJSONArray("text").toString().replace("[", "").replace("]", "").replace("\"", "");
-			result = obj.getJSONArray("intents").toString();
-			logger.info("Watson Intents: "+result);
-		}catch (Exception e){
-			logger.info("Watson Intents: "+jsonData);
-		}
-		return result;
-	}*/
-	
 	public Intenciones probablesIntenciones(MessageResponse response){
 		
 		Intenciones intenciones = new Intenciones();
@@ -90,20 +75,6 @@ public class ConversationWatson {
 		return intenciones;
 	}
 	
-	/*public String getEntities(String jsonData){
-		String result = "";
-		try{
-			JSONObject obj;
-			obj = new JSONObject(jsonData);
-			//obj = new JSONArray(obj.getJSONArray("intents"));
-			//result = obj.getJSONArray("text").toString().replace("[", "").replace("]", "").replace("\"", "");
-			result = obj.getJSONArray("entities").toString();
-			logger.info("Watson Entities: "+result);
-		}catch (Exception e){
-			logger.info("Watson Entities: "+jsonData);
-		}
-		return result;
-	}*/
 	
 	/**
 	   * This method is used to get the entities identified in the user input
