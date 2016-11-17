@@ -4,18 +4,7 @@
 	
 </head>
 <style>
-	thead tr .text-center
-	{
-		font-family: 'Roboto', serif;
-		font-size: 16px;
-		font-weight: bold;
-		background-color: rgb(231,232,233);
-	}
-	.td-tabla-ca
-	{
-		font-family: 'Roboto', serif;
-		font-size: 16px;
-	}
+	
 	tbody tr:nth-child(even)
 	{
 		background-color: rgb(245,246,247) !important;
@@ -67,25 +56,25 @@
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th class="text-center">Título de Oferta</th>
-						<th class="text-center">Comercio</th>
-						<th class="text-center">Descripción</th>
-						<th class="text-center">Categoría</th>
-						<th class="text-center">Ciudad</th>
-						<th class="text-center">Estado</th>
-						<th class="text-center" colspan="2">Acciones</th>
+						<th class="text-center titulo-tabla-ca">Título de Oferta</th>
+						<th class="text-center titulo-tabla-ca">Comercio</th>
+						<th class="text-center titulo-tabla-ca">Descripción</th>
+						<th class="text-center titulo-tabla-ca">Categoría</th>
+						<th class="text-center titulo-tabla-ca">Ciudad</th>
+						<th class="text-center titulo-tabla-ca">Estado</th>
+						<th class="text-center titulo-tabla-ca" colspan="2">Acciones</th>
 					</tr>
 				</thead>
 				<tbody>
 					<th:block th:each="oferta : ${listaDeOfertas}">
 						<tr>
-							<td class="td-tabla-ca" th:text="${oferta.tituloDeOferta}"/>
-							<td class="td-tabla-ca" th:text="${oferta.comercio}"/>
-							<td class="td-tabla-ca" th:text="${oferta.descripcion}"/>
-							<td class="td-tabla-ca" th:text="${oferta.categoria.nombre}"/>
-							<td class="td-tabla-ca" th:text="${oferta.ciudad}"/>
-							<td class="td-tabla-ca" th:if="${oferta.estado}" th:text="Activa"/>
-							<td class="td-tabla-ca" th:unless="${oferta.estado}" th:text="Inactiva"/>
+							<td class="texto-normal-ca" th:text="${oferta.tituloDeOferta}"/>
+							<td class="texto-normal-ca" th:text="${oferta.comercio}"/>
+							<td class="texto-normal-ca" th:text="${oferta.descripcion}"/>
+							<td class="texto-normal-ca" th:text="${oferta.categoria.nombre}"/>
+							<td class="texto-normal-ca" th:text="${oferta.ciudad}"/>
+							<td class="texto-normal-ca" th:if="${oferta.estado}" th:text="Activa"/>
+							<td class="texto-normal-ca" th:unless="${oferta.estado}" th:text="Inactiva"/>
 							<td class="text-center"> <button id="modificar-oferta-btn" type="submit" class="boton-editar"
 								th:name="idOferta" th:value="${oferta.idOferta}"></button></td>
 							<td class="text-center"> <button id="eliminar-oferta-btn" type="button" class="boton-eliminar" 
@@ -104,7 +93,10 @@
 				<div class="col-md-12">
 					<div class="form-group">
 						<button id="mostrar-ingresar-oferta-submit" type="submit"
-							class="btn btn-default">Ingresar nueva oferta <img class="imagen-siguiente" src=""/> </button>
+							class="btn btn-default">
+								<span class="texto-junto-imagen">Ingresar nueva oferta</span>
+								<span class="imagen-siguiente"></span>
+						</button>
 					</div>
 				</div>
 			</div>
