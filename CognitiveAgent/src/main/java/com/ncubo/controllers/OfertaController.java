@@ -54,7 +54,7 @@ public class OfertaController
 	private final String IMAGEN_INSERTAR_OFERTA = "imagen-siguiente";
 	
 	private final String BOTON_SECUNDARIO_MODIFICAR_OFERTA = "imagen-cancelar";
-	private final String BOTON_SECUNDARIO_INSERTAR_OFERTA = "imagen-eliminar";
+	private final String BOTON_SECUNDARIO_INSERTAR_OFERTA = "imagen-cancelar";
 	
 	
 	@RequestMapping("/gestionDeOfertas")

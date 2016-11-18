@@ -2,8 +2,6 @@
 <head th:include="fragments/backoffice :: head (title='Consultas Realizadas')">
 <meta charset="UTF-8"></meta>
 </head>
-<link rel="stylesheet" th:href="@{css/jquery-ui.css}"/>
-<script type="text/javascript" th:src="@{js/jquery-ui.js}"></script>
 <style>
 	.titulo-ca
 	{
@@ -19,7 +17,7 @@
 	}
 	.boton-mostrar
 	{
-		padding-top: 2%;
+		padding-top: 3%;
 	}
 	.center
 	{
@@ -27,6 +25,13 @@
 		width: 70%;
 		padding: 10px;
 	}
+	.agregar-padding-top
+	{
+		padding-top: 2%;
+	}
+	
+	
+
 </style>
 <script>
 	$(function()
@@ -46,19 +51,26 @@
 			<form th:action="@{/filtrarConsultasRealizadas}" th:method="post">
 				<div class="col-md-4">
 					<div class="form-group">
-						<label for="fecha-desde-lbl">Desde</label>
-						<input type="text" name="fechaDesde" id="fechaDesde" class="form-control" value="" th:value="${fechaDesde}"/>
+						<label for="fecha-desde-lbl" class="texto-normal-ca">Desde</label>
+						<div class="inner-addon right-addon">
+							<input type="text" name="fechaDesde" id="fechaDesde" class="form-control" value="" th:value="${fechaDesde}"/>
+							<i class="glyphicon glyphicon-calendar"></i>
+						</div>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="form-group">
-						<label for="fecha-hasta-lbl">Hasta</label>
-						<input type="text" name="fechaHasta" id="fechaHasta" class="form-control" value="" th:value="${fechaHasta}"/>
+						<label for="fecha-hasta-lbl" class="texto-normal-ca">Hasta</label>
+						<div class="inner-addon right-addon">
+							<input type="text" name="fechaHasta" id="fechaHasta" class="form-control" value="" th:value="${fechaHasta}"/>
+							<i class="glyphicon glyphicon-calendar"></i>
+						</div>
 					</div>
 				</div>
 				<div class="col-md-4 boton-mostrar">
-					<button class="btn btn-danger" onclick="crearGraficos()">
-						Mostrar <img class="imagen-visualizar" src=""/>
+					<button class="btn btn-default">
+						<span class="texto-junto-imagen ">Mostrar</span>
+						<span class="imagen-visualizar"></span>
 					</button>
 				</div>
 			</form>
@@ -75,15 +87,15 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<th class="text-center">Tema consultado</th>
-							<th class="text-center">Cantidad</th>
+							<th class="text-center titulo-tabla-ca">Tema consultado</th>
+							<th class="text-center titulo-tabla-ca">Cantidad</th>
 						</tr>
 					</thead>
 					<tbody>
 						<th:block th:each="consulta : ${consultasFiltradas}">
 							<tr>
-								<td class="td-tabla-ca text-center" th:text="${consulta.descripcion}"/>
-								<td class="td-tabla-ca text-center" th:text="${consulta.vecesConsultado}"/>
+								<td class="texto-normal-ca" th:text="${consulta.descripcion}"/>
+								<td class="texto-normal-ca text-center" th:text="${consulta.vecesConsultado}"/>
 							</tr>
 						</th:block>
 					</tbody>

@@ -7,6 +7,10 @@
 	{
 		$("#imagen-publicidad-input").on("change", subirImagenPublicidad);
 		$("#logo-comercio-input").on("change", subirImagenComercio);
+		
+		$("#vigenciaDesde-input").datepicker({dateFormat : "yy-mm-dd"});
+		$("#vigenciaHasta-input").datepicker({dateFormat : "yy-mm-dd"});
+
 	});
 	
 	function subirImagenPublicidad()
@@ -60,143 +64,181 @@
 	}
 </script>
 <style>
-	.titulo-ca
+	
+	.quitar-padding-left
 	{
-		font-family: 'Roboto', serif;
-		font-size: 16px;
+		padding-left: 0;
 	}
-	.notas-ca
+	.agregar-padding-top
 	{
+		padding-top: 3%;
+	}
+	.sobresaltar-field
+	{
+		border-width: 3%;
+		border-color: #3e61ac;
+	}
+	.agregar-padding-left
+	{
+		padding-left: 2%;
+	}
+	.asterisco
+	{
+		color: #3e61ac;
+	}
+	.campo-requerido
+	{
+		color: #3e61ac;
 		font-family: 'Roboto', serif;
-		font-size: 16px;
-		color: rgb(177,179,181);
 	}
 </style>
 <body>
-<div th:include="fragments/backoffice :: body(paginaActual='gestionDeOfertas')"></div>
+<div th:include="fragments/backoffice :: body(paginaActual='insertarOferta')"></div>
 <div class="container">
 
 	<form id="agregarOferta-form" method="POST" th:action="@{/__${action}__}" th:object="${oferta}" action="#">
 	<input type="hidden" id="id-comercio" th:field="*{idOferta}"/>
 		<div id="agregarOferta">
 			<div class="row">
-				<div class="col-md-2">
+				<div class="col-md-6">
 					<div class="form-group">
-						<label for="tituloOferta-lbl" class="titulo-ca">Título de oferta*</label>
-						<input type="text" class="form-control" th:field="*{tituloDeOferta}"/>
-						<p th:if="${#fields.hasErrors('tituloDeOferta')}" th:errors="*{tituloDeOferta}"/>
+						<label for="tituloOferta-lbl" class="titulo-ca"><span class="asterisco">*</span>Título de oferta</label>
+						<input type="text" class="form-control" th:field="*{tituloDeOferta}" th:classappend="${#fields.hasErrors('tituloDeOferta')} ? 'sobresaltar-field'"/>
+						<p class="campo-requerido" th:if="${#fields.hasErrors('tituloDeOferta')}" th:errors="*{tituloDeOferta}"/>
 					</div>
 				</div>
-				<div class="col-md-2">
-					<div class="form-group">
-						<label for="nombreComercio-lbl" class="titulo-ca">Nombre del comercio*</label>
-						<input type="text" class="form-control" th:field="*{comercio}"/>
-						<p th:if="${#fields.hasErrors('comercio')}" th:errors="*{comercio}"/>
+				<div class="col-md-6 quitar-padding-left">
+					<div class="col-md-5">
+						<div class="form-group">
+							<label for="ciudad-lbl" class="titulo-ca"><span class="asterisco">*</span>Ciudad</label>
+							<input type="text" class="form-control" th:field="*{ciudad}" th:classappend="${#fields.hasErrors('ciudad')} ? 'sobresaltar-field'"/>
+							<p class="campo-requerido" th:if="${#fields.hasErrors('ciudad')}" th:errors="*{ciudad}"/>
+						</div>
 					</div>
-				</div>
-				<div class="col-md-2">
-					<div class="form-group">
-						<label for="ciudad-lbl" class="titulo-ca">Ciudad*</label>
-						<input type="text" class="form-control" th:field="*{ciudad}"/>
-						<p th:if="${#fields.hasErrors('ciudad')}" th:errors="*{ciudad}"/>
-					</div>
-				</div>
-				<div class="col-md-2">
-					<div class="form-group">
-						<label for="categoria-lbl" class="titulo-ca">Categoría</label>
-						<div class="btn-group">
+					<div class="col-md-5">
+						<div class="form-group">
+							<label for="categoria-lbl" class="titulo-ca">Categoría</label><br/>
 							<select class="form-control" th:field="*{categoria.id}">
-							<option th:each="categoriaActual : ${categorias}" th:value="${categoriaActual.id}" th:text="${categoriaActual.nombre}"></option>
+								<option th:each="categoriaActual : ${categorias}" th:value="${categoriaActual.id}" th:text="${categoriaActual.nombre}"></option>
 							</select>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-2">
+			</div>
+			
+			<div class="row">
+			
+				<div class="col-md-6">
 					<div class="form-group">
-						<label for="estado-lbl" class="titulo-ca">Estado</label><br/>
-						<div class="btn-group">
-							<select class="form-control" th:field="*{estado}">
+						<label for="nombreComercio-lbl" class="titulo-ca"><span class="asterisco">*</span>Nombre del comercio</label>
+						<input type="text" class="form-control" th:field="*{comercio}" th:classappend="${#fields.hasErrors('comercio')} ? 'sobresaltar-field'"/>
+						<p class="campo-requerido" th:if="${#fields.hasErrors('comercio')}" th:errors="*{comercio}"/>
+					</div>
+				</div>
+				<div class="col-md-6 quitar-padding-left">
+					<div class="col-md-5">
+						<div class="form-group">
+							<label for="estado-lbl" class="titulo-ca">Estado</label><br/>
+							<select class="form-control" th:field="*{estado}" style="width: 100%">
 								<option value="1">Activa</option>
 								<option value="0">Inactiva</option>
 							</select>
 						</div>
 					</div>
+					<div class="col-md-7 agregar-padding-top">
+						<div>
+							<p class="notas-ca">Solo las ofertas con estado "activa" serán mostradas en la aplicación.</p>
+						</div>
+					</div>
 				</div>
-				<div class="col-md-2">
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="descripcion-lbl" class="titulo-ca"><span class="asterisco">*</span>Descripción</label>
+						<textarea class="form-control" rows="4" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')} ? 'sobresaltar-field'"></textarea>
+						<p class="campo-requerido" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"/>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="restricciones-lbl" class="titulo-ca"><span class="asterisco">*</span>Restricciones</label>
+						<textarea class="form-control" rows="4" th:field="*{restricciones}" th:classappend="${#fields.hasErrors('restricciones')} ? 'sobresaltar-field'"></textarea>
+						<p class="campo-requerido" th:if="${#fields.hasErrors('restricciones')}" th:errors="*{restricciones}"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
 					<div>
-						<p class="notas-ca">* Solo las ofertas con estado "activa" serán mostradas en la aplicación.</p>
+						<p class="notas-ca">El usuario podrá escuchar esta descripción si presiona el botón de audio, pero no se despliega como texto en la pantalla.</p>
 					</div>
 				</div>
 			</div>
+			
 			<div class="row">
-				<div class="col-md-5">
-					<div class="form-group">
-						<label for="descripcion-lbl" class="titulo-ca">Descripción*</label>
-						<textarea class="form-control" rows="4" th:field="*{descripcion}"></textarea>
-						<p th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"/>
+				<div class="col-md-5 quitar-padding-left" >
+					<div class="col-md-6 ">
+						<div class="form-group">
+							<label for="vigenciaDesde-lbl" class="titulo-ca"><span class="asterisco">*</span>Vigencia desde</label>
+							<div class="inner-addon right-addon">
+								<input type="text" class="form-control" th:field="*{vigenciaDesde}" id="vigenciaDesde-input" th:classappend="${#fields.hasErrors('vigenciaDesde')} ? 'sobresaltar-field'"/>
+								<p class="campo-requerido" th:if="${#fields.hasErrors('vigenciaDesde')}" th:errors="*{vigenciaDesde}"/>
+								<i class="glyphicon glyphicon-calendar"></i>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="vigenciaHasta-lbl" class="titulo-ca"><span class="asterisco">*</span>Hasta</label>
+							<div class="inner-addon right-addon">
+								<input type="text" class="form-control" th:field="*{vigenciaHasta}" id="vigenciaHasta-input" th:classappend="${#fields.hasErrors('vigenciaHasta')} ? 'sobresaltar-field'"/>
+								<p class="campo-requerido" th:if="${#fields.hasErrors('vigenciaHasta')}" th:errors="*{vigenciaHasta}"/>
+								<i class="glyphicon glyphicon-calendar"></i>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="col-md-5">
-					<div class="form-group">
-						<label for="restricciones-lbl" class="titulo-ca">Restricciones*</label>
-						<textarea class="form-control" rows="4" th:field="*{restricciones}"></textarea>
-						<p th:if="${#fields.hasErrors('restricciones')}" th:errors="*{restricciones}"/>
+				<div class="col-md-7">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="logo-label-lbl" class="titulo-ca"><span class="asterisco">*</span>Logo del comercio</label>
+							<input id="logo-comercio-input" type="file" name="logo-comercio-input" accept="image/*"/>
+							<p class="campo-requerido" th:if="${#fields.hasErrors('imagenComercioPath')}" th:errors="*{imagenComercioPath}"  id="validador-imagen-comercio"/>
+						</div>
 					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-5">
-					<div>
-						<p class="notas-ca">*El usuario podrá escuchar esta descripción si presiona el
-							botón de audio, pero no se despliega como texto en la pantalla.</p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					<div class="form-group">
-						<label for="vigenciaDesde-lbl" class="titulo-ca">Vigencia desde*</label>
-						<input type="date" class="form-control" th:field="*{vigenciaDesde}"/>
-						<p th:if="${#fields.hasErrors('vigenciaDesde')}" th:errors="*{vigenciaDesde}"/>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label for="vigenciaHasta-lbl" class="titulo-ca">hasta*</label>
-						<input type="date" class="form-control" th:field="*{vigenciaHasta}"/>
-						<p th:if="${#fields.hasErrors('vigenciaHasta')}" th:errors="*{vigenciaHasta}"/>
-					</div>
-				</div>
-				<div class="col-md-2">
-					<div class="form-group">
-						<label for="logo-label-lbl" class="titulo-ca">Logo del comercio*</label>
-						<input id="logo-comercio-input" type="file" name="logo-comercio-input" accept="image/*"/>
-						<p th:if="${#fields.hasErrors('imagenComercioPath')}" th:errors="*{imagenComercioPath}"  id="validador-imagen-comercio"/>
-						<!--  <label class="btn btn-default btn-file">Seleccionar archivo
-						<input type="file" style="display: none;" id="logo-comercio-input" >
-						</label>-->
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label for="publicidad-label-lbl" class="titulo-ca">Imagen de publicidad*</label> 
-						<input id="imagen-publicidad-input" type="file" name="imagen-publicidad-input" 
-						accept=".zip,image/*"/>
-						<p th:if="${#fields.hasErrors('imagenPublicidadPath')}" th:errors="*{imagenPublicidadPath}"/>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="publicidad-label-lbl" class="titulo-ca"><span class="asterisco">*</span>Imagen de publicidad</label> 
+							<input id="imagen-publicidad-input" type="file" name="imagen-publicidad-input" 
+							accept=".zip,image/*"/>
+							<p class="campo-requerido" th:if="${#fields.hasErrors('imagenPublicidadPath')}" th:errors="*{imagenPublicidadPath}"/>
+						</div>
 					</div>
 				</div>
 			</div>
+			
 			<input type="hidden" id="logo-comercio" th:field="*{imagenComercioPath}"/>
 			<input type="hidden" id="imagen-publicidad" th:field="*{imagenPublicidadPath}"/>
-			<div class="row" align="center">
-				<div class="col-md-10">
+			
+			<div class="row agregar-padding-top" align="center">
+				<div class="col-md-12">
 					<div class="form-group">
-						<button id="limpiar-submit" type="submit" class="btn btn-default" name="accion" 
-							value="limpiar"> Cancelar<img th:class="${imagenBotonSecundario}" src=""/></button>
-						<button id="ingresar-submit" type="submit" class="btn btn-default" name="accion" 
-							value="ingresar"><span th:text="${nombreBotonPrincipal}" th:remove="tag"></span> <img th:class="${imagenBotonPrincipal}" src=""/> </button>
+						<button id="limpiar-submit" type="submit" class="btn btn-default agregar-padding-left" name="accion" value="limpiar">
+							<span class="texto-junto-imagen">Cancelar</span>
+							<span th:class="${imagenBotonSecundario}"></span>
+						</button>
+						<button id="ingresar-submit" type="submit" class="btn btn-default agregar-padding-left" name="accion" value="ingresar">
+							<span class="texto-junto-imagen" th:text="${nombreBotonPrincipal}"></span>
+							<span th:class="${imagenBotonPrincipal}"></span>
+						</button>
 					</div>
 				</div>
+			</div>
+			<div class="row" align="right">
+				<label for="campo-requerido"><span class="campo-requerido">(*)Campo requerido</span></label> 
 			</div>
 		</div>
 	</form>

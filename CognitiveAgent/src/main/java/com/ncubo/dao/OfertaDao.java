@@ -22,6 +22,7 @@ public class OfertaDao
 	private final String NOMBRE_TABLA = "oferta";
 	private final String NOMBRE_TABLA_CATEGORIA_OFERTA = "categoriaoferta";
 	private final String NOMBRE_TABLA_REACCION = "reaccion";
+	private final String LIMITE = "50";
 	@Autowired
 	private Persistencia dao;
 	
@@ -65,7 +66,7 @@ public class OfertaDao
 	}
 	
 	public ArrayList<Oferta> obtener() throws ClassNotFoundException, SQLException
-	{ //TODO dalaian no deneria sacar el universo de ofertas.
+	{
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
 		String query = "SELECT " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + ", "
 				+ atributo.TITULO_DE_OFERTA + ", "
@@ -87,7 +88,9 @@ public class OfertaDao
 				+ " LEFT JOIN " + NOMBRE_TABLA_REACCION + " ON " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + NOMBRE_TABLA_REACCION + ".idOferta"
 				+ " WHERE " + atributo.ELIMINADA + " = 0"
 				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA
-				+ " GROUP BY " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + ";";
+				+ " GROUP BY " + NOMBRE_TABLA + "." + atributo.ID_OFERTA 
+				+ " ORDER BY " + atributo.FECHA_HORA_REGISTRO + " DESC "
+				+ " LIMIT " + LIMITE + ";";
 
 		Connection con = dao.openConBD();
 		ResultSet rs = con.createStatement().executeQuery(query);
@@ -119,6 +122,7 @@ public class OfertaDao
 	
 	public void insertar(Oferta oferta) throws ClassNotFoundException, SQLException
 	{
+		oferta.cambiarApostrofes();
 		String queryDatos = "'" + oferta.getTituloDeOferta()+ "'"
 							+ ",'" + oferta.getComercio() + "'"
 							+ ",'" + oferta.getDescripcion() + "'"
@@ -342,6 +346,7 @@ public class OfertaDao
 
 	public void modificar(Oferta oferta) throws ClassNotFoundException, SQLException
 	{
+		oferta.cambiarApostrofes();
 		String queryDatos =  atributo.TITULO_DE_OFERTA + " = '" + oferta.getTituloDeOferta() + "' , "
 				 + atributo.COMERCIO + " = '" + oferta.getComercio() + "' , "
 				 + atributo.DESCRIPCION + " = '" + oferta.getDescripcion() + "' , "

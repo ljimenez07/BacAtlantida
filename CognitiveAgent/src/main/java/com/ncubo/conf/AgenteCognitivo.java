@@ -90,12 +90,14 @@ public class AgenteCognitivo
 		MessageRequest newMessage = new MessageRequest.Builder()
 				.inputText(mensaje)
 				.context(myContext)
+				.alternateIntents(true)
 				.build();		
 		MessageResponse response = service.message(workspace, newMessage).execute();
 		
 		usuario.setContextoDeWatson(new JSONObject(response.toString()).getJSONObject("context").toString());
 		
 		System.out.println("contexto de watson cuando sale "+ usuario.getContextoDeWatson());
+		
 		String intent = getIntent(response);
 		String texto = getText(response);
 		if(intent.equals(Intencion.SALDO.toString()) && usuario.estaLogueado())
@@ -115,7 +117,7 @@ public class AgenteCognitivo
 			respuesta.put("texto", texto + saldoContable.get("contable"));
 			
 			consultaDao.insertar(
-					new Consulta(Intencion.SALDO.toString(), new Timestamp(new Date().getTime()), Intencion.SALDO.toString() , 1));
+					new Consulta(Intencion.SALDO.toString(), new Timestamp(new Date().getTime()), Intencion.SALDO_DESCRIPCION.toString() , 1));
 
 		}
 	
@@ -140,18 +142,14 @@ public class AgenteCognitivo
 				NodeImpl venta = nodeTipoCambio1.get("venta");
 				if(moneda.getValue().equals(Entidad.DOLAR.toString())){
 					
-
-					System.out.println(texto);	
-				texto = texto.replaceAll("%dc", compra.toString()+" "+moneda);
-				texto = texto.replaceAll("%dv", venta.toString()+" "+moneda);
-			
-			System.out.println(texto);	
-				
+				texto = texto.replaceAll("%dc", compra.toString()+" LPS ");
+				texto = texto.replaceAll("%dv", venta.toString()+" LPS ");
+							
 				}
 				if(moneda.getValue().equals(Entidad.EURO.toString())){
 
-					texto = texto.replaceAll("%ec", compra.toString()+" "+moneda);
-					texto = texto.replaceAll("%ev", venta.toString()+" "+moneda);			
+					texto = texto.replaceAll("%ec", compra.toString()+" LPS ");
+					texto = texto.replaceAll("%ev", venta.toString()+" LPS ");			
 				}
 			}
 			respuesta.put("texto", texto);
@@ -180,11 +178,13 @@ public class AgenteCognitivo
 				NodeImpl moneda = movimiento.get("moneda");
 
 				if(tipoTransaccion.getValue().equals("5"))
-					movimientos = movimientos +" El d?a "+fecha+ " a las "+ hora + " se realizo un cr?dito por " + montoTransaccion + " " + moneda;
+					movimientos = movimientos +" El día "+fecha+ " a las "+ hora + " se realizo un crédito por " + montoTransaccion + " " + moneda;
 				if(tipoTransaccion.getValue().equals("0"))
-					movimientos = movimientos +" El d?a "+fecha+ " a las "+ hora + " se realizo un d?bito por " + montoTransaccion + " " + moneda;
+					movimientos = movimientos +" El día "+fecha+ " a las "+ hora + " se realizo un débito por " + montoTransaccion + " " + moneda;
 				
 				last--;
+				consultaDao.insertar(
+						new Consulta(Intencion.MOVIMIENTOS.toString(), new Timestamp(new Date().getTime()), Intencion.MOVIMIENTOS_DESCRIPCION.toString() , 1));
 			}
 			respuesta.put("texto", texto + movimientos );
 			
@@ -214,6 +214,7 @@ public class AgenteCognitivo
 		String intent = "";
 		for(int i = 0; i < intents.size(); i++ )
 		{
+			System.out.println("intent  "+ intents.get(i).getIntent()+"   "+intents.get(i).getConfidence().floatValue());
 			if(intents.get(i).getConfidence().floatValue()> confidence)
 			{
 				confidence = intents.get(i).getConfidence().floatValue();
