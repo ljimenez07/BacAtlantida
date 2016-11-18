@@ -17,7 +17,7 @@ public class Usuario implements Serializable
 	private String idSesion;
 	
 	protected Usuario()
-	{		
+	{
 	}
 	
 	public Usuario(String idSesion)

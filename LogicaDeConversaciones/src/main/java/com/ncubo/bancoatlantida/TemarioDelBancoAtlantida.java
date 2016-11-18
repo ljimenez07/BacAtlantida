@@ -2,6 +2,7 @@ package com.ncubo.bancoatlantida;
 
 import java.util.List;
 
+import com.ncubo.bancoatlantida.ContenidoDelBancoAtlantida;
 import com.ncubo.chatbot.configuracion.Constantes;
 import com.ncubo.chatbot.partesDeLaConversacion.Contenido;
 import com.ncubo.chatbot.partesDeLaConversacion.Tema;

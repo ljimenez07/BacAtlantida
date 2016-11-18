@@ -136,6 +136,11 @@
     <version>3.2.3.RELEASE</version>
     <scope>test</scope>
 </dependency>
+	<dependency>
+		<groupId>com.ncubo</groupId>
+		<artifactId>LogicaDeConversaciones</artifactId>
+		<version>0.0.1</version>
+	</dependency>
 	</dependencies>
 	<build>
 		<plugins>

@@ -34,6 +34,7 @@ import com.jayway.restassured.path.xml.XmlPath;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.data.Consulta;
 import com.ncubo.exceptions.NoSessionException;
+import com.ncubo.logicaDeConversaciones.Coversaciones;
 
 @Component
 @ConfigurationProperties("servercognitivo")
@@ -51,6 +52,8 @@ public class AgenteCognitivo
 	@Autowired
 	private ConsultaDao consultaDao;
 
+	private Coversaciones miConversaciones;
+	
 	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
 	{
 	
