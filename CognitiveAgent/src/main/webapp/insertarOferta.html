@@ -86,6 +86,11 @@
 	{
 		color: #3e61ac;
 	}
+	.campo-requerido
+	{
+		color: #3e61ac;
+		font-family: 'Roboto', serif;
+	}
 </style>
 <body>
 <div th:include="fragments/backoffice :: body(paginaActual='insertarOferta')"></div>
@@ -231,6 +236,9 @@
 						</button>
 					</div>
 				</div>
+			</div>
+			<div class="row" align="right">
+				<label for="campo-requerido"><span class="campo-requerido">(*)Campo requerido</span></label> 
 			</div>
 		</div>
 	</form>
