@@ -15,10 +15,15 @@ public class Usuario implements Serializable
 	private String llaveSession;
 	private boolean estaLogueado;
 	private static ArrayList<Usuario> usuariosLogueados = new ArrayList<Usuario>();
+	private String idSesion;
 	
-	public Usuario()
+	protected Usuario()
+	{		
+	}
+	
+	public Usuario(String idSesion)
 	{
-		
+		this.idSesion = idSesion;		
 	}
 
 	public String getContextoDeWatsonParaChats()

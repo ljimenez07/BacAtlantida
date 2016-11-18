@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ibm.watson.developer_cloud.text_to_speech.v1.TextToSpeech;
 import com.jayway.restassured.internal.path.xml.NodeChildrenImpl;
 import com.jayway.restassured.path.xml.XmlPath;
 import com.jayway.restassured.path.xml.element.Node;
@@ -51,7 +53,7 @@ public class MovilController {
 		Usuario usuario = (Usuario)session.getAttribute(Usuario.LLAVE_EN_SESSION) ;
 		if( usuario  == null)
 		{
-			usuario = new Usuario();
+			usuario = new Usuario(session.getId());
 			session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 		}
 		
@@ -75,7 +77,7 @@ public class MovilController {
 		Usuario usuario = (Usuario)session.getAttribute(Usuario.LLAVE_EN_SESSION) ;
 		if( usuario  == null)
 		{
-			usuario = new Usuario();
+			usuario = new Usuario(session.getId());
 			session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 		}
 		
@@ -108,7 +110,7 @@ public class MovilController {
 			Usuario usuario;
 			if( objeto == null)
 			{
-				usuario = new Usuario();
+				usuario = new Usuario( session.getId() );
 			}
 			else
 			{
@@ -127,6 +129,44 @@ public class MovilController {
 		
 		throw new CredencialesInvalidosException();
 	}
+	/*
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/movil/login", method = RequestMethod.POST)
+	@ResponseBody String transformText(@RequestBody String mensaje, HttpSession session) throws JSONException, JsonParseException, JsonMappingException, IOException 
+	{
+		TextToSpeech textService; = new TextToSpeech();
+		textService.setUsernameAndPassword("", "");
+		UUID idOne = UUID.randomUUID();
+
+		String path = Constants.PATH_TO_SAVE+Constants.FOLDER_TO_SAVE+idOne+".ogg";
+		String publicPath = Constants.IP_SERVER+Constants.FOLDER_TO_SAVE+idOne+".ogg";
+
+		InputStream in = null;
+		File directory =    new File(Constants.PATH_TO_SAVE+Constants.FOLDER_TO_SAVE);
+		directory.mkdirs();
+
+		File file = null;
+		file = new File(path);
+
+		BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(file));
+
+		String voice = "en-US_MichaelVoice";
+		in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.OGG_VORBIS).execute();
+
+		byte[] buffer = new byte[2048];
+		int read;
+		while ((read = in.read(buffer)) != -1) 
+		{
+			//file.write(buffer, 0, read);
+			stream.write(buffer, 0, read);
+			}
+		}
+		close(in);
+		close(file);
+		stream.close();
+
+		return publicPath;
+	}*/
 	
 	@ExceptionHandler(Throwable.class)
 	public @ResponseBody String handleAllException(final HttpServletRequest req, HttpServletResponse response, final Exception ex) throws MessagingException 

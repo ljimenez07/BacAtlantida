@@ -29,6 +29,9 @@
 	{
 		padding-top: 2%;
 	}
+	
+	
+
 </style>
 <script>
 	$(function()
@@ -49,13 +52,19 @@
 				<div class="col-md-4">
 					<div class="form-group">
 						<label for="fecha-desde-lbl" class="texto-normal-ca">Desde</label>
-						<input type="text" name="fechaDesde" id="fechaDesde" class="form-control" value="" th:value="${fechaDesde}"/>
+						<div class="inner-addon right-addon">
+							<input type="text" name="fechaDesde" id="fechaDesde" class="form-control" value="" th:value="${fechaDesde}"/>
+							<i class="glyphicon glyphicon-calendar"></i>
+						</div>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="form-group">
 						<label for="fecha-hasta-lbl" class="texto-normal-ca">Hasta</label>
-						<input type="text" name="fechaHasta" id="fechaHasta" class="form-control" value="" th:value="${fechaHasta}"/>
+						<div class="inner-addon right-addon">
+							<input type="text" name="fechaHasta" id="fechaHasta" class="form-control" value="" th:value="${fechaHasta}"/>
+							<i class="glyphicon glyphicon-calendar"></i>
+						</div>
 					</div>
 				</div>
 				<div class="col-md-4 boton-mostrar">
