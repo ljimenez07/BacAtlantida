@@ -66,7 +66,7 @@ public class Coversaciones {
 		return misConversaciones.get(idDelCliente).inicializarLaConversacion();
 	}
 	
-	public ArrayList<Salida> converzarConElAgente(Usuario cliente, String textoDelCliente){
+	public ArrayList<Salida> conversarConElAgente(Usuario cliente, String textoDelCliente){
 		ArrayList<Salida> resultado = null;
 		
 		if( ! cliente.getUsuarioId().equals("") && ! cliente.getLlaveSession().equals("") && cliente.estaLogueado()){ // Esta logueado

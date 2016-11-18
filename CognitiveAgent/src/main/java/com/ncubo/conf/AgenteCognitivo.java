@@ -1,6 +1,7 @@
 package com.ncubo.conf;
 
 import static com.jayway.restassured.RestAssured.given;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -8,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,10 +33,13 @@ import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 import com.jayway.restassured.internal.path.xml.NodeChildrenImpl;
 import com.jayway.restassured.internal.path.xml.NodeImpl;
 import com.jayway.restassured.path.xml.XmlPath;
+import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.data.Consulta;
 import com.ncubo.exceptions.NoSessionException;
 import com.ncubo.logicaDeConversaciones.Coversaciones;
+
+import javassist.expr.NewArray;
 
 @Component
 @ConfigurationProperties("servercognitivo")
@@ -52,7 +57,7 @@ public class AgenteCognitivo
 	@Autowired
 	private ConsultaDao consultaDao;
 
-	private Coversaciones miConversaciones;
+	private Coversaciones miConversaciones = new Coversaciones();
 	
 	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
 	{
@@ -90,19 +95,22 @@ public class AgenteCognitivo
 		
 		myContext.put("nombre", nombre[0]);
 		
-		MessageRequest newMessage = new MessageRequest.Builder()
-				.inputText(mensaje)
-				.context(myContext)
-				.alternateIntents(true)
-				.build();		
-		MessageResponse response = service.message(workspace, newMessage).execute();
+		ArrayList<Salida> salida = miConversaciones.conversarConElAgente(usuario, mensaje);
 		
-		usuario.setContextoDeWatson(new JSONObject(response.toString()).getJSONObject("context").toString());
+		String intent = "";
+		String texto = "";
+		for(int i = 0; i < salida.size(); i++){
+			
+			intent = salida.get(i).obtenerLaRespuestaDeIBM().obtenerLaIntencionDeLaRespuesta().getNombre();
+			texto = texto + " " + salida.get(i).getMiTexto();
+		}
+		
+		//usuario.setContextoDeWatson(new JSONObject(response.toString()).getJSONObject("context").toString());
 		
 		System.out.println("contexto de watson cuando sale "+ usuario.getContextoDeWatson());
 		
-		String intent = getIntent(response);
-		String texto = getText(response);
+		//String intent = getIntent(response);
+		//String texto = getText(response);
 		if(intent.equals(Intencion.SALDO.toString()) && usuario.estaLogueado())
 		{
 
