@@ -35,11 +35,6 @@
 			<impertinente>¿Cómo te puedo ayudar?. Estoy para ayudarte con la información que requieras de tus tarjetas de crédito y cuenta corriente, también con el tipo de cambio del dólar y el euro.</impertinente>
 		</frases>
 		<vineta></vineta>
-		<when>
-			<condition operador="or" tipo="intencion">saldo</condition>
-			<condition operador="or" tipo="intencion">tasa_cambio</condition>
-			<condition operador="or" tipo="intencion">movimientos</condition>
-		</when>
 	</conversacion>
 	
 	<conversacion id="saldo">

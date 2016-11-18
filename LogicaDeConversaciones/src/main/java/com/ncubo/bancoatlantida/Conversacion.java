@@ -75,38 +75,14 @@ public class Conversacion {
 			this.hilo.agregarUnaRespuesta(respuesta);
 			Pregunta miPregunta = null;
 			
-			if(agente.hayIntencionNoAsociadaANingunWorkspace()){
-				if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals("saludos")){
-					System.out.println("Quiere saludar ...");
-					this.temaActual = this.temario.buscarTema(Constantes.FRASE_SALUDO);
-
-					Afirmacion saludar = (Afirmacion) this.temaActual.buscarUnaFrase("saludar");
-					misSalidas.add(agente.decir(saludar, respuesta));
-					ponerComoYaTratado(saludar);
-					
-					Pregunta queQuiere = (Pregunta) this.temario.extraerFraseDeSaludoInicial(CaracteristicaDeLaFrase.esUnaPregunta);
-					misSalidas.add(agente.decir(queQuiere, respuesta));
-					fraseActual = queQuiere;
-					ponerComoYaTratado(queQuiere);
-					
-				}else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals("despedidas")){
-					System.out.println("Quiere despedirce ...");
-					this.temaActual = this.temario.buscarTema(Constantes.FRASE_DESPEDIDA);
-					
-					Despedida saludar = (Despedida) this.temaActual.buscarUnaFrase(Constantes.FRASE_DESPEDIDA);
-					misSalidas.add(agente.decir(saludar, respuesta));
-					fraseActual = saludar;
-					ponerComoYaTratado(saludar);
-					
-				}else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals("out_of_scope")){
-					System.out.println("Esta fuera de contexto ...");
-					this.temaActual = this.temario.buscarTema(Constantes.FRASE_FUERA_DE_CONTEXTO);
-					
-					Afirmacion fueraDeContexto = (Afirmacion) this.temaActual.buscarUnaFrase("fueraDeContextoGeneral");
-					misSalidas.add(agente.decir(fueraDeContexto, respuesta));
-					fraseActual = fueraDeContexto;
-					ponerComoYaTratado(fueraDeContexto);
-				}
+			verificarIntencionNoAsociadaANingunWorkspace(respuesta);
+			
+			if(agente.hayQueAbordarElTema()){
+				agente.yaNoAbordarElTema();
+				this.temaActual = this.temario.buscarTema(Constantes.FRASE_SALUDO);
+				agente.cambiarAWorkspaceGeneral();
+				respuesta = agente.enviarRespuestaAWatson(respuestaDelCliente, fraseActual);
+				this.hilo.agregarUnaRespuesta(respuesta);
 			}
 			
 			if(agente.hayQueCambiarDeTema()){
@@ -138,11 +114,6 @@ public class Conversacion {
 					// llamar a watson y ver que bloque se activo
 					respuesta = agente.inicializarTemaEnWatson(respuestaDelCliente);
 					idFraseActivada = agente.obtenerNodoActivado(respuesta.messageResponse());
-					
-					/*if(idFraseActivada.equals("")){
-						idFraseActivada = agente.inicializarTemaEnWatson(respuestaDelCliente);
-						agente.borrarUnaVariableDelContexto(Constantes.ANYTHING_ELSE);
-					}*/
 					
 					System.out.println("Id de la frase a decir: "+idFraseActivada);
 					agregarOracionesAfirmativas(agente.obtenerIDsDeOracionesAfirmativas(), respuesta);
@@ -186,6 +157,42 @@ public class Conversacion {
 		}
 		
 		return misSalidas;
+	}
+	
+	private void verificarIntencionNoAsociadaANingunWorkspace(Respuesta respuesta){
+		if(agente.hayIntencionNoAsociadaANingunWorkspace()){
+			if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals("saludos")){
+				System.out.println("Quiere saludar ...");
+				this.temaActual = this.temario.buscarTema(Constantes.FRASE_SALUDO);
+
+				Afirmacion saludar = (Afirmacion) this.temaActual.buscarUnaFrase("saludar");
+				misSalidas.add(agente.decir(saludar, respuesta));
+				ponerComoYaTratado(saludar);
+				
+				Pregunta queQuiere = (Pregunta) this.temario.extraerFraseDeSaludoInicial(CaracteristicaDeLaFrase.esUnaPregunta);
+				misSalidas.add(agente.decir(queQuiere, respuesta));
+				fraseActual = queQuiere;
+				ponerComoYaTratado(queQuiere);
+				
+			}else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals("despedidas")){
+				System.out.println("Quiere despedirce ...");
+				this.temaActual = this.temario.buscarTema(Constantes.FRASE_DESPEDIDA);
+				
+				Despedida saludar = (Despedida) this.temaActual.buscarUnaFrase(Constantes.FRASE_DESPEDIDA);
+				misSalidas.add(agente.decir(saludar, respuesta));
+				fraseActual = saludar;
+				ponerComoYaTratado(saludar);
+				
+			}else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals("out_of_scope")){
+				System.out.println("Esta fuera de contexto ...");
+				this.temaActual = this.temario.buscarTema(Constantes.FRASE_FUERA_DE_CONTEXTO);
+				
+				Afirmacion fueraDeContexto = (Afirmacion) this.temaActual.buscarUnaFrase("fueraDeContextoGeneral");
+				misSalidas.add(agente.decir(fueraDeContexto, respuesta));
+				fraseActual = fueraDeContexto;
+				ponerComoYaTratado(fueraDeContexto);
+			}
+		}
 	}
 	
 	private void verificarYAgregarOracionesAfirmativas(Respuesta respuesta){

@@ -31,8 +31,8 @@ public class Agente extends Participante{
 	private boolean estaEnElWorkspaceGeneral;
 	private boolean noEntendiLaUltimaRespuesta;
 	private int numeroDeIntentosActualesEnRepetirUnaPregunta;
-	private boolean abordarElTema = false;
 	private boolean cambiarDeTema = false;
+	private boolean abordarElTema = false;
 	private boolean hayIntencionNoAsociadaANingunWorkspace;
 	
 	public Agente(ArrayList<WorkSpace> miWorkSpaces){
@@ -64,12 +64,17 @@ public class Agente extends Participante{
 		}
 	}
 	
+	public void seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActual(){
+		ConversationWatson conversacion = miWatsonConversacions.get(nombreDeWorkspaceActual);
+		String nuevoContexto = conversacion.enviarMSG("", null).getContext().toString();
+		miContextos.put(nombreDeWorkspaceActual, nuevoContexto);
+	}
+	
 	public MessageResponse llamarAWatsonGeneral(String mensaje){
 		return llamarAWatson(mensaje, nombreDelWorkSpaceGeneral);
 	}
 	
-	private String determinarLaIntencionGeneral(String mensaje){
-		String resultado = "";
+	private Intent determinarLaIntencionGeneral(String mensaje){
 		List<Intent> intenciones = llamarAWatsonGeneral(mensaje).getIntents();
 		Intent intencion = null;
 		double confidence = 0;
@@ -80,12 +85,16 @@ public class Agente extends Participante{
 				intencion = intenciones.get(index);
 			}
 		}
-		
+		System.out.println("La intencion general es: "+intencion.getIntent());
+		return intencion;
+	}
+	
+	private boolean elClienteQuiereCambiarDeIntencionGeneral(Intent intencion){
 		if(intencion != null){
-			resultado = intencion.getIntent();
+			return (intencion.getConfidence() >= Constantes.WATSON_CONVERSATION_CONFIDENCE); 
+		}else{
+			return false;
 		}
-		
-		return resultado;
 	}
 	
 	public MessageResponse llamarAWatson(String mensaje, String nombreWorkspace){
@@ -134,6 +143,7 @@ public class Agente extends Participante{
 					nombreDeLaIntencionGeneralActiva = intencionDelCliente;
 					System.out.println(String.format("Cambiando al workspace %s e intencion %s", nombreDeWorkspaceActual, nombreDeLaIntencionGeneralActiva));
 					cambiarDeTema = true; // Buscar otro tema
+					abordarElTema = false;
 					estaEnElWorkspaceGeneral = false;
 					this.hayIntencionNoAsociadaANingunWorkspace = false;
 				}else{
@@ -157,20 +167,22 @@ public class Agente extends Participante{
 		noEntendiLaUltimaRespuesta = (! (respuesta.entendiLaRespuesta() && ! respuesta.hayAlgunAnythingElse())) && 
 				(numeroDeIntentosActualesEnRepetirUnaPregunta != MAXIMO_DE_INTENTOS_OPCIONALES);
 		if(noEntendiLaUltimaRespuesta){
-			System.out.println("No entendi la respuesta =( ");
+			System.out.println("No entendi la respuesta ...");
 			// Validar si es que el usuario cambio de intencion
-			String intencion = determinarLaIntencionGeneral(respuestaDelClinete);
-			System.out.println("La intencion del usuario es: "+intencion);
+			if(elClienteQuiereCambiarDeIntencionGeneral(determinarLaIntencionGeneral(respuestaDelClinete))){
+				abordarElTema = true;
+				System.out.println("Se requiere abordar el tema ...");
+				// TODO Tengo que cambiar el contexto
+				this.seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActual();
+			}
+			
 			if(frase.esMandatorio()){	
 				numeroDeIntentosActualesEnRepetirUnaPregunta ++;
-			}else{
-				cambiarDeTema = true;
-				// TODO Tengo que cambiar el contexto
 			}
 		}else{
 			if(numeroDeIntentosActualesEnRepetirUnaPregunta == MAXIMO_DE_INTENTOS_OPCIONALES){
 				// Abordar el tema
-				abordarElTema = true; // Buscar otro tema
+				cambiarDeTema = true; // Buscar otro tema
 			}else{
 				// Actualizar contexto
 				miContextos.put(nombreDeWorkspaceActual, respuesta.getMiContexto());
@@ -209,6 +221,14 @@ public class Agente extends Participante{
 	
 	public void cambiarDeTema(){
 		cambiarDeTema = true;
+	}
+	
+	public boolean hayQueAbordarElTema(){
+		return abordarElTema;
+	}
+	
+	public void yaNoAbordarElTema(){
+		abordarElTema = false;
 	}
 	
 	public boolean entendiLaUltimaPregunta(){

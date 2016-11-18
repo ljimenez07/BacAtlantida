@@ -31,16 +31,43 @@ public class Pregunta extends Frase
 		boolean resultado = true;
 		Enumeration<String> keys = misIntenciones.obtenerTodasLasIntenciones().keys();
 		
+		if(verSiTodasLasIntencionesQueExistenSonOr()){
+			int contador = 1;
+			while(keys.hasMoreElements()){
+				String key = keys.nextElement();
+				if( ! intenciones.obtenerTodasLasIntenciones().containsKey(key)){
+					contador ++;
+				}
+			}
+			if(contador == misIntenciones.obtenerTodasLasIntenciones().size()){
+				resultado = false;
+			}
+		}else{
+			while(keys.hasMoreElements()){
+				String key = keys.nextElement();
+				if(intenciones.obtenerTodasLasIntenciones().containsKey(key)){
+					if( ! intenciones.obtenerTodasLasIntenciones().get(key).esReal() && 
+							misIntenciones.obtenerTodasLasIntenciones().get(key).obtenerMiTipoDeOperador().equals(TipoDeOperador.AND)){
+						resultado = false;
+					}
+				}else{
+					if(misIntenciones.obtenerTodasLasIntenciones().get(key).obtenerMiTipoDeOperador().equals(TipoDeOperador.AND))
+						resultado = false;
+				}
+			}
+		}
+		
+		return resultado;
+	}
+	
+	private boolean verSiTodasLasIntencionesQueExistenSonOr(){
+		boolean resultado = true;
+		Enumeration<String> keys = misIntenciones.obtenerTodasLasIntenciones().keys();
+		
 		while(keys.hasMoreElements()){
 			String key = keys.nextElement();
-			if(intenciones.obtenerTodasLasIntenciones().containsKey(key)){
-				if( ! intenciones.obtenerTodasLasIntenciones().get(key).esReal() && 
-						misIntenciones.obtenerTodasLasIntenciones().get(key).obtenerMiTipoDeOperador().equals(TipoDeOperador.AND)){
-					resultado = false;
-				}
-			}else{
-				if(misIntenciones.obtenerTodasLasIntenciones().get(key).obtenerMiTipoDeOperador().equals(TipoDeOperador.AND))
-					resultado = false;
+			if(misIntenciones.obtenerTodasLasIntenciones().get(key).obtenerMiTipoDeOperador().equals(TipoDeOperador.AND)){
+				resultado = false;
 			}
 		}
 		
