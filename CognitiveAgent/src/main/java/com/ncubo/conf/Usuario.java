@@ -9,16 +9,14 @@ public class Usuario implements Serializable
 {
 	public final static String LLAVE_EN_SESSION="user";
 	private String contextoDeWatson = new JSONObject().toString();
-	private String usuarioId;
-	private String usuarioNombre;
-	private String llaveSession;
-	private boolean estaLogueado;
+	private String usuarioId = "";
+	private String usuarioNombre = "";
+	private String llaveSession = "";
+	private boolean estaLogueado = false;
 	private static ArrayList<Usuario> usuariosLogueados = new ArrayList<Usuario>();
-	private String idSesion;
+	private String idSesion = "";
 	
-	protected Usuario()
-	{
-	}
+	protected Usuario(){}
 	
 	public Usuario(String idSesion)
 	{
@@ -75,8 +73,13 @@ public class Usuario implements Serializable
 		this.llaveSession = llaveSession;
 	}
 	
-	
+	public String getIdSesion(){
+		return idSesion;
+	}
 
+	public void setIdSesion(String sesion){
+		idSesion = sesion;
+	}
 	
 }
 

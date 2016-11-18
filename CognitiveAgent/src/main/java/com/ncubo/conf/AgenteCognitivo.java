@@ -37,7 +37,7 @@ import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.data.Consulta;
 import com.ncubo.exceptions.NoSessionException;
-import com.ncubo.logicaDeConversaciones.Coversaciones;
+import com.ncubo.logicaDeConversaciones.Conversaciones;
 
 import javassist.expr.NewArray;
 
@@ -57,8 +57,7 @@ public class AgenteCognitivo
 	@Autowired
 	private ConsultaDao consultaDao;
 
-	@Autowired
-	private Coversaciones miConversaciones = new Coversaciones();
+	private Conversaciones miConversaciones = new Conversaciones();
 	
 	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
 	{
@@ -69,7 +68,7 @@ public class AgenteCognitivo
 	public String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
 	{
 	
-		return procesarMensaje(usuario,mensaje,date, workspaceDeConocerte);
+		return ""; //procesarMensaje(usuario,mensaje,date, workspaceDeConocerte);
 	}
 	
 	private String procesarMensaje(Usuario usuario, String mensaje, Date date, String workspace) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
@@ -102,10 +101,13 @@ public class AgenteCognitivo
 		String texto = "";
 		for(int i = 0; i < salida.size(); i++){
 			
-			intent = salida.get(i).obtenerLaRespuestaDeIBM().obtenerLaIntencionDeLaRespuesta().getNombre();
+			try{
+				intent = salida.get(i).obtenerLaRespuestaDeIBM().obtenerLaIntencionDeLaRespuesta().getNombre();
+				System.out.println("Contexto Watson: "+salida.get(i).obtenerLaRespuestaDeIBM().messageResponse().getContext());
+			}catch(Exception e){}
 			texto = texto + " " + salida.get(i).getMiTexto();
 		}
-		
+		texto = texto.replace("$", "");
 		//usuario.setContextoDeWatson(new JSONObject(response.toString()).getJSONObject("context").toString());
 		
 		System.out.println("contexto de watson cuando sale "+ usuario.getContextoDeWatson());
@@ -114,7 +116,6 @@ public class AgenteCognitivo
 		//String texto = getText(response);
 		if(intent.equals(Intencion.SALDO.toString()) && usuario.estaLogueado())
 		{
-
 			String requestBody = "<cor:consultaSaldo><activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <transaccionId>100128</transaccionId> <aplicacionId>?</aplicacionId> <paisId>?</paisId> <empresaId>?</empresaId> <regionId>?</regionId> <canalId>102 </canalId> <version>?</version> <llaveSesion></llaveSesion> <usuarioId></usuarioId> <token>?</token> <parametroAdicionalColeccion> <parametroAdicionalItem> <linea>0</linea> <tipoRegistro>UAI</tipoRegistro> <valor>TSTBASAPI01</valor> </parametroAdicionalItem> <parametroAdicionalItem> <linea>1</linea> <tipoRegistro>TC</tipoRegistro> <valor>M</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> <consultaSaldoColeccion> <tipoCuenta>4</tipoCuenta> <peticionId>?</peticionId> </consultaSaldoColeccion> </cor:consultaSaldo>";	
 			String responseXML = given().body(requestBody).post(wsSaldo).andReturn().asString();
 			
@@ -130,10 +131,8 @@ public class AgenteCognitivo
 			
 			consultaDao.insertar(
 					new Consulta(Intencion.SALDO.toString(), new Timestamp(new Date().getTime()), Intencion.SALDO_DESCRIPCION.toString() , 1));
-
 		}
-	
-		else if(intent.equals(Intencion.TASA_DE_CAMBIO.toString())){
+		else if(intent.equals(Intencion.TASA_DE_CAMBIO.toString()) || texto.contains("%dc") || texto.contains("%dv") || texto.contains("%ec") || texto.contains("%ev")){
 			
 			String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tas=\"http://hn.infatlan.och/ws/ACD082/out/TasaCambio\"> <soapenv:Header/> <soapenv:Body> <tas:MT_TasaCambio> <activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <!--Optional:--> <transaccionId>100054</transaccionId> <!--Optional:--> <aplicacionId>?</aplicacionId> <paisId>?</paisId> <empresaId>?</empresaId> <!--Optional:--> <regionId>?</regionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <version>?</version> <!--Optional:--> <llaveSesion>?</llaveSesion> <!--Optional:--> <usuarioId>?</usuarioId> <!--Optional:--> <token>?</token> <!--Zero or more repetitions:--> <identificadorColeccion> <!--Optional:--> <was>?</was> <!--Optional:--> <pi>?</pi> <!--Optional:--> <omniCanal>?</omniCanal> <!--Optional:--> <recibo>?</recibo> <!--Optional:--> <numeroTransaccion>?</numeroTransaccion> </identificadorColeccion> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> <!--Optional:--> <logColeccion> <!--Zero or more repetitions:--> <logItem> <identificadorWas>?</identificadorWas> <!--Optional:--> <identificadorPi>?</identificadorPi> <!--Optional:--> <identificadorOmniCanal>?</identificadorOmniCanal> <!--Optional:--> <identificadorRecibo>?</identificadorRecibo> <!--Optional:--> <numeroPeticion>?</numeroPeticion> <!--Optional:--> <identificadorNumeroTransaccion>?</identificadorNumeroTransaccion> <!--Optional:--> <aplicacionId>?</aplicacionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <ambienteId>?</ambienteId> <!--Optional:--> <transaccionId>?</transaccionId> <!--Optional:--> <accion>?</accion> <!--Optional:--> <tipo>?</tipo> <!--Optional:--> <fecha>?</fecha> <!--Optional:--> <hora>?</hora> <!--Optional:--> <auxiliar1>?</auxiliar1> <!--Optional:--> <auxiliar2>?</auxiliar2> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> </logItem> </logColeccion> </tas:MT_TasaCambio> </soapenv:Body> </soapenv:Envelope>";
 
@@ -153,15 +152,10 @@ public class AgenteCognitivo
 				NodeImpl compra = nodeTipoCambio1.get("compra");
 				NodeImpl venta = nodeTipoCambio1.get("venta");
 				if(moneda.getValue().equals(Entidad.DOLAR.toString())){
-					
-				texto = texto.replaceAll("%dc", compra.toString()+" LPS ");
-				texto = texto.replaceAll("%dv", venta.toString()+" LPS ");
-							
+					texto = texto.replace("%dc", compra.toString()+" LPS ").replace("%dv", venta.toString()+" LPS ");
 				}
 				if(moneda.getValue().equals(Entidad.EURO.toString())){
-
-					texto = texto.replaceAll("%ec", compra.toString()+" LPS ");
-					texto = texto.replaceAll("%ev", venta.toString()+" LPS ");			
+					texto = texto.replace("%ec", compra.toString()+" LPS ").replace("%ev", venta.toString()+" LPS ");			
 				}
 			}
 			respuesta.put("texto", texto);
