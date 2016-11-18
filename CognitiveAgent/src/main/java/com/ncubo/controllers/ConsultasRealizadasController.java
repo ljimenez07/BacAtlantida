@@ -2,6 +2,8 @@ package com.ncubo.controllers;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,8 +24,13 @@ public class ConsultasRealizadasController
 	@GetMapping("/consultasRealizadas")
 	public String visualizarOfertas(Model model) throws ClassNotFoundException, SQLException
 	{
-		model.addAttribute("fechaDesde", "");
-		model.addAttribute("fechaHasta", "");
+		Date date = new Date();		
+		String fechaDesde = new SimpleDateFormat("yyyy-MM-dd").format(date);
+		String fechaHasta = fechaDesde;
+		
+		model.addAttribute("fechaDesde", fechaDesde);
+		model.addAttribute("fechaHasta", fechaHasta);
+		model.addAttribute("consultasFiltradas", consultaDao.obtener(fechaDesde, fechaHasta));
 		
 		return "consultasRealizadas";
 	}
