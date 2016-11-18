@@ -57,6 +57,7 @@ public class AgenteCognitivo
 	@Autowired
 	private ConsultaDao consultaDao;
 
+	@Autowired
 	private Coversaciones miConversaciones = new Coversaciones();
 	
 	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
