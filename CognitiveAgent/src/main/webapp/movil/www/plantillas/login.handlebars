@@ -54,8 +54,6 @@ $(function(){
 				if( XMLHttpRequest.responseJSON.exception.includes("CredencialesInvalidosException") )
 				{
 					var alert= $(this).find(".alert");
-					alert.html(XMLHttpRequest.responseJSON.message);
-					alert.show("fast");
 				}
 			});
 

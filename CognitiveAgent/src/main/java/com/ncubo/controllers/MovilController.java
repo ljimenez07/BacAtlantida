@@ -134,45 +134,6 @@ public class MovilController {
 		throw new CredencialesInvalidosException();
 	}
 	
-	@CrossOrigin(origins = "*")
-	@RequestMapping(value="/movil/audio", method = RequestMethod.POST)
-	@ResponseBody String transformText(@RequestBody String mensaje, HttpSession session) throws JSONException, JsonParseException, JsonMappingException, IOException 
-	{
-		TextToSpeech textService = new TextToSpeech();
-		textService.setUsernameAndPassword("8f1ec844-f8ad-4303-9293-3da7192c5b59", "LHVIAi4Kfweb");
-		UUID idOne = UUID.randomUUID();
-
-		String path = "C:/Users/cguillen/Documents/BancoAtlantida/CognitiveAgent/src/main/webapp/imagenes";
-		//String publicPath = Constants.IP_SERVER+Constants.FOLDER_TO_SAVE+idOne+".ogg";
-
-		InputStream in = null;
-		File directory =    new File(path);
-		directory.mkdirs();
-
-		path += "/arc.ogg";
-		
-		File file = null;
-		file = new File(path);
-		
-		BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(file));
-
-		String voice = "es-ES_EnriqueVoice";
-		in = textService.synthesize(mensaje, new Voice(voice, null, null), AudioFormat.OGG_VORBIS).execute();
-
-		byte[] buffer = new byte[2048];
-		int read;
-		while ((read = in.read(buffer)) != -1) 
-		{
-			//file.write(buffer, 0, read);
-			stream.write(buffer, 0, read);
-		}
-		/*close(in);
-		close(file);
-		stream.close();*/
-
-		return path;
-	}
-	
 	@ExceptionHandler(Throwable.class)
 	public @ResponseBody String handleAllException(final HttpServletRequest req, HttpServletResponse response, final Exception ex) throws MessagingException 
 	{

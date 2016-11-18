@@ -1,3 +1,4 @@
+<audio id="buzzer" src="" type="audio/ogg">Your browser does not support the &#60;audio&#62; element.</audio>
 <div class="row">
 	<div class="col-xs-12">
 		<p><strong>¡Hola!</strong></p><br>
@@ -19,6 +20,7 @@
 {{/compare}}
 
 <script type="text/javascript">
+	var buzzer = $('#buzzer'); 
 	var pagina = 1;
 	cargarOfertas();
 	pagina++;
@@ -42,7 +44,8 @@
 		pagina++;
 	});
 
-	function bindAcciones() {
+	function bindAcciones() 
+	{
 		$(".datos-de-oferta").click(function() {
 			var id = $(this).attr("id");
 			$.ajax({
@@ -62,6 +65,16 @@
 			}
 			$(this).toggleClass("activo").toggleClass("inactivo");
 		});
+
+		function playAudio()
+		{
+			$(".boton-escuchar").click(function()
+			{
+				buzzer.attr("src", serverDomain+"/movil/www/archivos"+$(this).data("audio"));
+				buzzer[0].play();  
+			});
+		}
+		playAudio();
 	}
 
 	function cargarOfertas() {
