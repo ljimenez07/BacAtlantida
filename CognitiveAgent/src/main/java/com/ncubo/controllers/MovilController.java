@@ -63,6 +63,8 @@ public class MovilController {
 		
 		object.put("usuarioEstaLogueado", usuario.estaLogueado());
 		
+		session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
+		
 		return object.toString();
 	}
 	
@@ -83,6 +85,8 @@ public class MovilController {
 				new Date()));
 		
 		object.put("usuarioEstaLogueado", usuario.estaLogueado());
+		
+		session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 		
 		return object.toString();
 	}

@@ -8,7 +8,8 @@ import org.json.JSONObject;
 public class Usuario implements Serializable
 {
 	public final static String LLAVE_EN_SESSION="user";
-	private String contextoDeWatson = new JSONObject().toString();
+	private String contextoDeWatsonParaChats = new JSONObject().toString();
+	private String contextoDeWatsonParaConocerte = new JSONObject().toString();
 	private String usuarioId;
 	private String usuarioNombre;
 	private String llaveSession;
@@ -20,21 +21,34 @@ public class Usuario implements Serializable
 		
 	}
 
-	public String getContextoDeWatson()
+	public String getContextoDeWatsonParaChats()
 	{
-		return contextoDeWatson;
+		return contextoDeWatsonParaChats;
 	}
 	
-	public void setContextoDeWatson(String contextoDeWatson)
+	public void setContextoDeWatsonParaChats(String contextoDeWatsonParaChats)
 	{
-		this.contextoDeWatson =  contextoDeWatson;
+		this.contextoDeWatsonParaChats =  contextoDeWatsonParaChats;
 	}
+	
+	public String getContextoDeWatsonParaConocerte()
+	{
+		return contextoDeWatsonParaConocerte;
+	}
+	
+	public void setContextoDeWatsonParaConocerte(String contextoDeWatsonParaConocerte)
+	{
+		this.contextoDeWatsonParaConocerte =  contextoDeWatsonParaConocerte;
+	}
+
 
 	@Override
 	public String toString() {
-		return "Usuario [contextoDeWatson=" + contextoDeWatson + "]";
+		return "Usuario [contextoDeWatsonParaChats=" + contextoDeWatsonParaChats + ", contextoDeWatsonParaConocerte="
+				+ contextoDeWatsonParaConocerte + ", usuarioId=" + usuarioId + ", usuarioNombre=" + usuarioNombre
+				+ ", llaveSession=" + llaveSession + ", estaLogueado=" + estaLogueado + "]";
 	}
-	
+
 	public boolean estaLogueado()
 	{
 		return this.estaLogueado;

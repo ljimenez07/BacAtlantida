@@ -54,25 +54,36 @@ public class AgenteCognitivo
 	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
 	{
 	
-		return procesarMensaje(usuario,mensaje,date, workspaceDeChats);
+		return procesarMensaje(usuario,mensaje,date, workspaceDeChats, false);
 	}
 	
 	public String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
 	{
 	
-		return procesarMensaje(usuario,mensaje,date, workspaceDeConocerte);
+		return procesarMensaje(usuario,mensaje,date, workspaceDeConocerte, true);
 	}
 	
-	private String procesarMensaje(Usuario usuario, String mensaje, Date date, String workspace) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
+	private String procesarMensaje(Usuario usuario, String mensaje, Date date, String workspace, boolean esParaConocerte) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
 	{
 		JSONObject respuesta = new JSONObject();
 		ObjectMapper mapper = new ObjectMapper();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	//	String contexto= usuario.getContextoDeWatson();
 		
-		System.out.println("contexto de watson cuando entra "+ usuario.getContextoDeWatson());
+		JSONObject contenidoDelContexto ;
+		if( esParaConocerte )
+		{
+			System.out.println("contexto de watson cuando entra "+ usuario.getContextoDeWatsonParaConocerte());
+			contenidoDelContexto = new JSONObject(usuario.getContextoDeWatsonParaConocerte());
+		}
+		else
+		{
+			System.out.println("contexto de watson cuando entra "+ usuario.getContextoDeWatsonParaChats());
+			contenidoDelContexto = new JSONObject(usuario.getContextoDeWatsonParaChats());
+		}
 		
-		JSONObject contenidoDelContexto = new JSONObject(usuario.getContextoDeWatson());
+		
+		
 		if( contenidoDelContexto == null ) contenidoDelContexto = new JSONObject();
 				
 		Map<String, Object> myContext = mapper.readValue(contenidoDelContexto.toString(), new TypeReference<Map<String, Object>>(){});
@@ -94,9 +105,21 @@ public class AgenteCognitivo
 				.build();		
 		MessageResponse response = service.message(workspace, newMessage).execute();
 		
-		usuario.setContextoDeWatson(new JSONObject(response.toString()).getJSONObject("context").toString());
 		
-		System.out.println("contexto de watson cuando sale "+ usuario.getContextoDeWatson());
+		
+		if( esParaConocerte )
+		{
+			usuario.setContextoDeWatsonParaConocerte(new JSONObject(response.toString()).getJSONObject("context").toString());
+			System.out.println("contexto de watson cuando sale "+ usuario.getContextoDeWatsonParaConocerte());
+		}
+		else
+		{
+			usuario.setContextoDeWatsonParaChats(new JSONObject(response.toString()).getJSONObject("context").toString());
+			System.out.println("contexto de watson cuando sale "+ usuario.getContextoDeWatsonParaChats());
+		}
+		
+		
+		
 		
 		String intent = getIntent(response);
 		String texto = getText(response);
@@ -108,13 +131,22 @@ public class AgenteCognitivo
 			
 			System.out.println(wsSaldo+" \n\t  "+requestBody+"   \n\t"+responseXML);
 			
-			XmlPath xmlPath = new XmlPath(responseXML).setRoot("Respuesta");
-			NodeChildrenImpl productoColeccion = xmlPath.get("productoColeccion");
-			NodeImpl cuentaColeccion = productoColeccion.get(0).get("cuentaColeccion");
-			List<?> lista = cuentaColeccion.get("cuentaItem");
-			NodeImpl saldoColecion = (NodeImpl) lista.get(0);
-			NodeImpl saldoContable = saldoColecion.get("saldoColeccion");
-			respuesta.put("texto", texto + saldoContable.get("contable"));
+			if(texto.contains("%pp"))
+			{
+				texto = texto.replaceAll("%pp", "200");
+				respuesta.put("texto", texto);
+			}
+			else{
+				XmlPath xmlPath = new XmlPath(responseXML).setRoot("Respuesta");
+				NodeChildrenImpl productoColeccion = xmlPath.get("productoColeccion");
+				NodeImpl cuentaColeccion = productoColeccion.get(0).get("cuentaColeccion");
+				List<?> lista = cuentaColeccion.get("cuentaItem");
+				NodeImpl saldoColecion = (NodeImpl) lista.get(0);
+				NodeImpl saldoContable = saldoColecion.get("saldoColeccion");
+				NodeImpl moneda = saldoColecion.get("moneda");
+				respuesta.put("texto", texto + " "+saldoContable.get("contable")+" "+moneda);
+			}
+			
 			
 			consultaDao.insertar(
 					new Consulta(Intencion.SALDO.toString(), new Timestamp(new Date().getTime()), Intencion.SALDO_DESCRIPCION.toString() , 1));
@@ -142,14 +174,14 @@ public class AgenteCognitivo
 				NodeImpl venta = nodeTipoCambio1.get("venta");
 				if(moneda.getValue().equals(Entidad.DOLAR.toString())){
 					
-				texto = texto.replaceAll("%dc", compra.toString()+" LPS ");
-				texto = texto.replaceAll("%dv", venta.toString()+" LPS ");
+				texto = texto.replaceAll("%dc", compra.toString()+" LPS");
+				texto = texto.replaceAll("%dv", venta.toString()+" LPS");
 							
 				}
 				if(moneda.getValue().equals(Entidad.EURO.toString())){
 
-					texto = texto.replaceAll("%ec", compra.toString()+" LPS ");
-					texto = texto.replaceAll("%ev", venta.toString()+" LPS ");			
+					texto = texto.replaceAll("%ec", compra.toString()+" LPS");
+					texto = texto.replaceAll("%ev", venta.toString()+" LPS");			
 				}
 			}
 			respuesta.put("texto", texto);
@@ -173,14 +205,15 @@ public class AgenteCognitivo
 				NodeImpl movimiento = (NodeImpl) codigo.get(last);
 				NodeImpl fecha = movimiento.get("fecha");
 				NodeImpl hora = movimiento.get("hora");
-				NodeImpl tipoTransaccion = movimiento.get("tipoTransaccion");
+				NodeImpl codigoTransaccion = movimiento.get("codigoTransaccion");
 				NodeImpl montoTransaccion = movimiento.get("montoTransaccion");
 				NodeImpl moneda = movimiento.get("moneda");
+				NodeImpl descripcion = movimiento.get("descripcion");
 
-				if(tipoTransaccion.getValue().equals("5"))
-					movimientos = movimientos +" El día "+fecha+ " a las "+ hora + " se realizo un crédito por " + montoTransaccion + " " + moneda;
-				if(tipoTransaccion.getValue().equals("0"))
-					movimientos = movimientos +" El día "+fecha+ " a las "+ hora + " se realizo un débito por " + montoTransaccion + " " + moneda;
+				if(codigoTransaccion.getValue().equals("CR"))
+					movimientos = movimientos +"<br> El día "+fecha+ " a las "+ hora + " se realizó un crédito por " + montoTransaccion + " " + moneda+" con el detalle "+descripcion+".";
+				if(codigoTransaccion.getValue().equals("DB"))
+					movimientos = movimientos +"<br> El día "+fecha+ " a las "+ hora + " se realizó un débito por " + montoTransaccion + " " + moneda+" con el detalle "+descripcion+".";
 				
 				last--;
 				consultaDao.insertar(
@@ -188,6 +221,15 @@ public class AgenteCognitivo
 			}
 			respuesta.put("texto", texto + movimientos );
 			
+		}
+		else if(intent.equals(Intencion.DISPONIBLE.toString()) && usuario.estaLogueado())
+		{
+			
+			if(texto.contains("%pp"))
+			{
+				texto = texto.replaceAll("%pp", "200");
+				respuesta.put("texto", texto);
+			}
 		}
 		else
 		{
