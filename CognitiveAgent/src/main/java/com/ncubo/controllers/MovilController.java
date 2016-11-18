@@ -1,8 +1,10 @@
 package com.ncubo.controllers;
 
-import static com.jayway.restassured.RestAssured.given;
-
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.Date;
@@ -28,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ibm.watson.developer_cloud.text_to_speech.v1.TextToSpeech;
+import com.ibm.watson.developer_cloud.text_to_speech.v1.model.AudioFormat;
+import com.ibm.watson.developer_cloud.text_to_speech.v1.model.Voice;
 import com.jayway.restassured.internal.path.xml.NodeChildrenImpl;
 import com.jayway.restassured.path.xml.XmlPath;
 import com.jayway.restassured.path.xml.element.Node;
@@ -125,29 +129,31 @@ public class MovilController {
 		
 		throw new CredencialesInvalidosException();
 	}
-	/*
+	
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value="/movil/login", method = RequestMethod.POST)
+	@RequestMapping(value="/movil/audio", method = RequestMethod.POST)
 	@ResponseBody String transformText(@RequestBody String mensaje, HttpSession session) throws JSONException, JsonParseException, JsonMappingException, IOException 
 	{
-		TextToSpeech textService; = new TextToSpeech();
-		textService.setUsernameAndPassword("", "");
+		TextToSpeech textService = new TextToSpeech();
+		textService.setUsernameAndPassword("8f1ec844-f8ad-4303-9293-3da7192c5b59", "LHVIAi4Kfweb");
 		UUID idOne = UUID.randomUUID();
 
-		String path = Constants.PATH_TO_SAVE+Constants.FOLDER_TO_SAVE+idOne+".ogg";
-		String publicPath = Constants.IP_SERVER+Constants.FOLDER_TO_SAVE+idOne+".ogg";
+		String path = "C:/Users/cguillen/Documents/BancoAtlantida/CognitiveAgent/src/main/webapp/imagenes";
+		//String publicPath = Constants.IP_SERVER+Constants.FOLDER_TO_SAVE+idOne+".ogg";
 
 		InputStream in = null;
-		File directory =    new File(Constants.PATH_TO_SAVE+Constants.FOLDER_TO_SAVE);
+		File directory =    new File(path);
 		directory.mkdirs();
 
+		path += "/arc.ogg";
+		
 		File file = null;
 		file = new File(path);
-
+		
 		BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(file));
 
-		String voice = "en-US_MichaelVoice";
-		in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.OGG_VORBIS).execute();
+		String voice = "es-ES_EnriqueVoice";
+		in = textService.synthesize(mensaje, new Voice(voice, null, null), AudioFormat.OGG_VORBIS).execute();
 
 		byte[] buffer = new byte[2048];
 		int read;
@@ -155,14 +161,13 @@ public class MovilController {
 		{
 			//file.write(buffer, 0, read);
 			stream.write(buffer, 0, read);
-			}
 		}
-		close(in);
+		/*close(in);
 		close(file);
-		stream.close();
+		stream.close();*/
 
-		return publicPath;
-	}*/
+		return path;
+	}
 	
 	@ExceptionHandler(Throwable.class)
 	public @ResponseBody String handleAllException(final HttpServletRequest req, HttpServletResponse response, final Exception ex) throws MessagingException 

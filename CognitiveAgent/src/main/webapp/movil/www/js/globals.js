@@ -1,1 +1,1 @@
-var serverDomain = "hppt://intranet.ncubo.com:8082/CognitiveAgent"; 
+var serverDomain = "http://localhost:8080"; 

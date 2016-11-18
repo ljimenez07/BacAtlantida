@@ -1,5 +1,6 @@
 package com.ncubo.data;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -21,6 +22,9 @@ public class Oferta implements Comparable<Oferta>
 	
 	@NotEmpty(message = "*Campo requerido")
 	private String descripcion;
+	private String descripcionAnterior;
+	private String descripcionAudio;
+	
 	private CategoriaOferta categoria;
 	
 	@NotEmpty(message = "*Campo requerido")
@@ -67,6 +71,8 @@ public class Oferta implements Comparable<Oferta>
 		this.fechaHoraRegistro = fechaHoraRegistro;
 		this.likes = likes;
 		this.setDislikes(dislikes);
+		this.descripcionAudio = idOferta+File.separator+"descripcion.ogg";
+		this.descripcionAnterior = descripcion;
 	}
 	
 	public int getIdOferta()
@@ -279,5 +285,29 @@ public class Oferta implements Comparable<Oferta>
 		descripcion = descripcion.replace("'", "''");
 		restricciones = restricciones.replace("'", "''");
 	}
+
+	public String getDescripcionAnterior() 
+	{
+		return descripcionAnterior;
+	}
+
+	public void setDescripcionAnterior(String descripcionAnterior) 
+	{
+		this.descripcionAnterior = descripcionAnterior;
+	}
+	
+	public boolean cambioLaDescripcion()
+	{
+		return ! descripcion.trim().equals( descripcionAnterior.trim() );
+	}
+
+	public String getDescripcionAudio() {
+		return descripcionAudio;
+	}
+
+	public void setDescripcionAudio(String descripcionAudio) {
+		this.descripcionAudio = descripcionAudio;
+	}
+	
 	
 }
