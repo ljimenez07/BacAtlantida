@@ -183,7 +183,7 @@ public class Conversacion {
 				fraseActual = saludar;
 				ponerComoYaTratado(saludar);
 				
-			}else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals("out_of_scope")){
+			}else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals(Constantes.INTENCION_FUERA_DE_CONTEXTO)){
 				System.out.println("Esta fuera de contexto ...");
 				this.temaActual = this.temario.buscarTema(Constantes.FRASE_FUERA_DE_CONTEXTO);
 				

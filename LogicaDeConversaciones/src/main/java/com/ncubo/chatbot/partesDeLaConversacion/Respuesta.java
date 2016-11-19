@@ -106,7 +106,11 @@ public class Respuesta {
 	}
 	
 	public Intencion obtenerLaIntencionDeLaRespuesta(){
-		return this.misIntenciones.obtenerLaDeMayorConfianza();
+		return this.misIntenciones.obtenerLaDeMayorConfianza(0);
+	}
+	
+	public Intencion obtenerLaIntencionDeConfianzaDeLaRespuesta(){
+		return this.misIntenciones.obtenerLaDeMayorConfianza(Constantes.WATSON_CONVERSATION_CONFIDENCE);
 	}
 	
 	public String getMiContexto() {

@@ -55,4 +55,6 @@ public class Constantes {
 	public static String FRASE_DESPEDIDA = "despedida";
 	public static String FRASE_FUERA_DE_CONTEXTO = "fueraDeContexto";
 	
+	// Intenciones
+	public static String INTENCION_FUERA_DE_CONTEXTO = "out_of_scope";
 }
