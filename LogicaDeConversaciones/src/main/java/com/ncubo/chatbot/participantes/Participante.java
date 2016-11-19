@@ -4,7 +4,6 @@ import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.chatbot.partesDeLaConversacion.Sonido;
 import com.ncubo.chatbot.partesDeLaConversacion.Vineta;
 import com.ncubo.chatbot.partesDeLaConversacion.Frase;
-import com.ncubo.chatbot.partesDeLaConversacion.Pregunta;
 import com.ncubo.chatbot.partesDeLaConversacion.Respuesta;
 
 public class Participante{ 
@@ -37,9 +36,7 @@ public class Participante{
 	
 	private Manifestarse formaDeManifestarse = Manifestarse.EnFormaEscrita;
 	
-	
-	public Participante(){
-	}
+	public Participante(){}
 	
 	public void formaDeManifestarse(Manifestarse forma){
 		this.formaDeManifestarse = forma;
@@ -74,8 +71,7 @@ public class Participante{
 				texto = pregunta.textoImpertinete();
 			}else{
 				texto = pregunta.conjuncionParaRepreguntar()+" "+pregunta.texto();
-			}
-			
+			}		
 			salida.escribir(texto, respuesta);
 		}
 		if (formaDeManifestarse.esEnFormaOral()){
@@ -90,5 +86,4 @@ public class Participante{
 		
 		return salida;
 	}
-	
 }
