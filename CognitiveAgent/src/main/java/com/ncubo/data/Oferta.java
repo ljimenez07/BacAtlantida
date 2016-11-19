@@ -44,6 +44,7 @@ public class Oferta implements Comparable<Oferta>
 	private Timestamp fechaHoraRegistro;
 	private int likes;
 	private int dislikes;
+	private boolean esUnUsuarioConocido;
 	
 	public Oferta()
 	{
@@ -217,6 +218,16 @@ public class Oferta implements Comparable<Oferta>
 	public void setDislikes(int dislikes)
 	{
 		this.dislikes = dislikes;
+	}
+
+	public void setEsUnUsuarioConocido(boolean esUnUsuarioConocido)
+	{
+		this.esUnUsuarioConocido = esUnUsuarioConocido;
+	}
+
+	public boolean getEsUnUsuarioConocido()
+	{
+		return esUnUsuarioConocido;
 	}
 
 	public boolean fechaHastaMayorAFechaDesde() throws ParseException

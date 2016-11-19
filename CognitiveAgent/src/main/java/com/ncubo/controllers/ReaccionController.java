@@ -1,50 +1,56 @@
 package com.ncubo.controllers;
 
-import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
+import com.ncubo.conf.Usuario;
 import com.ncubo.dao.ReaccionDao;
 import com.ncubo.data.Reaccion;
 
 @Controller
-public class ReaccionController 
+public class ReaccionController
 {
 	@Autowired
 	private ReaccionDao reaccionDao;
 	
-	@RequestMapping("/reaccionDeOfertas")
-	public String redireccionarReaccionDeOfertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
+	@CrossOrigin(origins = "*")
+	@PostMapping(value = "/reaccion/oferta", produces = "application/json")
+	@ResponseBody public String reaccionAOferta(@RequestParam("idOferta") int idOferta, @RequestParam(value = "reaccion", required = false) Boolean reaccion, HttpSession sesion) throws ClassNotFoundException, SQLException
 	{
-		return "reaccionDeOfertas";
-	}
-	
-	@RequestMapping(value = "/reaccionDeOfertasDatos", method = RequestMethod.POST)
-	public @ResponseBody ArrayList<Reaccion> obtenerDatosReaccionDeOfertas(@RequestBody String parametros) throws IOException, ClassNotFoundException, SQLException, ParseException
-	{
-		Gson gson = new Gson();
-		Object deserializado = gson.fromJson(parametros, Object.class);
-		Map<?,?> mapaDeDatos = (Map<?,?>) deserializado;
-		Map<?,?> datos = (Map<?,?>) mapaDeDatos.get("parametros");
+		JSONObject respuesta = new JSONObject();
+		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
 		
-		String fechaDesde = (String) datos.get("desde");
-		String fechaHasta = (String) datos.get("hasta");
-		String filtro = (String) datos.get("filtro");
+		if(usuario != null)
+		{
+			String idUsuario = usuario.getUsuarioId();
+			if(reaccion == null)
+			{
+				Reaccion objReaccion = new Reaccion(idOferta, idUsuario);
+				reaccionDao.eliminar(objReaccion);
+				respuesta = new JSONObject(objReaccion);
+			}
+			else
+			{
+				Reaccion objReaccion = new Reaccion(idOferta, idUsuario, reaccion);
+				reaccionDao.guardar(objReaccion);
+				respuesta = new JSONObject(objReaccion);
+			}
+			respuesta.put("usuarioEstaLogueado", usuario.estaLogueado());
+		}
+		else
+		{
+			respuesta.put("usuarioEstaLogueado", false);
+		}
 
-		ArrayList<Reaccion> resultado = reaccionDao.obtener(fechaDesde, fechaHasta, filtro);		
-		return resultado;
+		return respuesta.toString();
 	}
-	
 }

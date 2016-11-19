@@ -1,7 +1,5 @@
 package com.ncubo.controllers;
 
-import static com.jayway.restassured.RestAssured.given;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;

@@ -340,28 +340,28 @@ input
   margin-bottom: 10px;
 }
 
-.boton-like.activo {
+.boton-like.estado-1 {
   width: 25px;
   height: 25px;
   cursor: pointer;
   background: url(../img/iconos-rojos-24x23.png) 25px 0;
 }
 
-.boton-dislike.activo {
+.boton-dislike.estado-1 {
   width: 25px;
   height: 25px;
   cursor: pointer;
   background: url(../img/iconos-rojos-24x23.png) 0 0;
 }
 
-.boton-like.inactivo {
+.boton-like.estado-0 {
   width: 25px;
   height: 25px;
   cursor: pointer;
   background: url(../img/iconos-25x24.png) 56px 0;
 }
 
-.boton-dislike.inactivo {
+.boton-dislike.estado-0 {
   width: 25px;
   height: 25px;
   cursor: pointer;

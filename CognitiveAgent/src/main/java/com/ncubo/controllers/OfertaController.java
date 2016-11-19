@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ncubo.conf.Usuario;
 import com.ncubo.dao.CategoriaDao;
 import com.ncubo.dao.OfertaDao;
 import com.ncubo.data.Oferta;
@@ -117,22 +119,26 @@ public class OfertaController
 	
 	@CrossOrigin(origins = "*")
 	@GetMapping(value = "/ofertas", produces = "application/json")
-	@ResponseBody public List<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response, @RequestParam("pagina") int pagina, @RequestParam(value = "idUsuario", required = false) String idUsuario) throws ClassNotFoundException, SQLException
+	@ResponseBody public List<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response, @RequestParam("pagina") int pagina, HttpSession sesion) throws ClassNotFoundException, SQLException
 	{
+		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
+		String idUsuario = usuario == null ? null : usuario.getUsuarioId();
 		int indiceInicial = (pagina - 1) * 10;
 		return ofertaDao.ultimasDiezOfertasDesde(indiceInicial, idUsuario);
 	}
 	
 	@CrossOrigin(origins = "*")
 	@GetMapping(value = "/ofertas/{idOferta}", produces = "application/json")
-	@ResponseBody public Oferta oferta(@PathVariable int idOferta, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "idUsuario", required = false) String idUsuario) throws ClassNotFoundException, SQLException
+	@ResponseBody public Oferta oferta(@PathVariable int idOferta, HttpSession sesion) throws ClassNotFoundException, SQLException
 	{
+		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
+		String idUsuario = usuario == null ? null : usuario.getUsuarioId();
 		return ofertaDao.obtener(idOferta, idUsuario);
 	}
 	
 	@CrossOrigin(origins = "*")
 	@GetMapping(value = "/ofertas/cantidad", produces = "application/json")
-	@ResponseBody public int cantidadDeOfertas(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
+	@ResponseBody public int cantidadDeOfertas() throws ClassNotFoundException, SQLException
 	{
 		return ofertaDao.cantidad();
 	}
