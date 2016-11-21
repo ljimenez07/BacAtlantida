@@ -1,0 +1,4 @@
+Dime mi saldo / #saludos
+Dime mi saldo / Debe iniciar sesión para poder conocer su saldo
+@IniciarSesion
+Quiero mi saldo ahora mismo /  El saldo de su tarjeta de crédito es de:30344.62

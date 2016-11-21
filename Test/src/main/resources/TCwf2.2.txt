@@ -1,0 +1,3 @@
+Necesito conocer el saldo de mi cuenta / ¿Te refieres a tu cuenta corriente?
+Si, por favor. / Perfecto, tu saldo es de Lnn.mm 
+No, el de mi tarjeta de crédito / De acuerdo, el saldo de tu tarjeta de crédito es de Lnn.mm  y en dólares es de $nn.mm
