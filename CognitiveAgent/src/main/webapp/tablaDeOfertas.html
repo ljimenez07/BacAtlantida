@@ -22,87 +22,92 @@
 </script>
 
 <body>
-<div th:include="fragments/backoffice :: body(paginaActual='gestionDeOfertas')"></div>
-<div class="container">
-
-		<!-- Modal -->
-		
-		<div class="modal fade" id="eliminar-oferta-modal" role="dialog">
-			<div class="modal-dialog modal-sm">
-				<!-- Modal content-->
-				<div class="modal-content">
-				<form th:action="@{/eliminarOferta}" th:method="post">
-					<div class="modal-body">
-						<p>Está seguro que desea eliminar "<strong id="eliminar-mensaje"></strong>"</p>
+	<div class="div-contenedor">
+	
+		<div th:include="fragments/header :: body"></div>
+		<div th:include="fragments/backoffice :: body(paginaActual='gestionDeOfertas')"></div>
+	
+		<div class="container agregar-padding-bottom">		
+			<div class="modal fade" id="eliminar-oferta-modal" role="dialog">
+				<div class="modal-dialog modal-sm">
+					<!-- Modal content-->
+					<div class="modal-content">
+					<form th:action="@{/BackOffice/eliminarOferta}" th:method="post">
+						<div class="modal-body">
+							<p>Está seguro que desea eliminar "<strong id="eliminar-mensaje"></strong>"</p>
+						</div>
+						
+						<div class="modal-footer">
+							<div class="row" align="center">
+								<input type="hidden" id="idOfertaEliminar" name="idOfertaEliminar"></input>
+								<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+								<button type="submit" class="btn btn-default">Eliminar</button>
+								</div>
+						</div>
+					</form>
 					</div>
-					
-					<div class="modal-footer">
-						<div class="row" align="center">
-							<input type="hidden" id="idOfertaEliminar" name="idOfertaEliminar"></input>
-							<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-							<button type="submit" class="btn btn-default">Eliminar</button>
-							</div>
-					</div>
-				</form>
 				</div>
 			</div>
-		</div>
-		
-		
-		<div id="tabla-ofertas">
-		<form th:action="@{/modificarOferta}" th:method="get">
-		<div class="row">
-			<div class="table-responsive">
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<th class="text-center titulo-tabla-ca">Título de Oferta</th>
-						<th class="text-center titulo-tabla-ca">Comercio</th>
-						<th class="text-center titulo-tabla-ca">Descripción</th>
-						<th class="text-center titulo-tabla-ca">Categoría</th>
-						<th class="text-center titulo-tabla-ca">Ciudad</th>
-						<th class="text-center titulo-tabla-ca">Estado</th>
-						<th class="text-center titulo-tabla-ca" colspan="2">Acciones</th>
-					</tr>
-				</thead>
-				<tbody>
-					<th:block th:each="oferta : ${listaDeOfertas}">
+			
+			<div id="tabla-ofertas">
+			<form th:action="@{/BackOffice/modificarOferta}" th:method="get">
+			<div class="row">
+				<div class="table-responsive">
+				<table class="table table-bordered">
+					<thead>
 						<tr>
-							<td class="texto-normal-ca" th:text="${oferta.tituloDeOferta}"/>
-							<td class="texto-normal-ca" th:text="${oferta.comercio}"/>
-							<td class="texto-normal-ca" th:text="${oferta.descripcion}"/>
-							<td class="texto-normal-ca" th:text="${oferta.categoria.nombre}"/>
-							<td class="texto-normal-ca" th:text="${oferta.ciudad}"/>
-							<td class="texto-normal-ca" th:if="${oferta.estado}" th:text="Activa"/>
-							<td class="texto-normal-ca" th:unless="${oferta.estado}" th:text="Inactiva"/>
-							<td class="text-center"> <button id="modificar-oferta-btn" type="submit" class="boton-editar"
-								th:name="idOferta" th:value="${oferta.idOferta}"></button></td>
-							<td class="text-center"> <button id="eliminar-oferta-btn" type="button" class="boton-eliminar" 
-								th:onclick="'eliminarOferta(\'' + ${oferta.idOferta} + '\', \'' + ${oferta.tituloDeOferta} + '\');'"
-								name="eliminar"></button></td>
+							<th class="text-center titulo-tabla-ca">Título de Oferta</th>
+							<th class="text-center titulo-tabla-ca">Comercio</th>
+							<th class="text-center titulo-tabla-ca">Descripción</th>
+							<th class="text-center titulo-tabla-ca">Categoría</th>
+							<th class="text-center titulo-tabla-ca">Ciudad</th>
+							<th class="text-center titulo-tabla-ca">Estado</th>
+							<th class="text-center titulo-tabla-ca" colspan="2">Acciones</th>
 						</tr>
-					</th:block>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<th:block th:each="oferta : ${listaDeOfertas}">
+							<tr>
+								<td class="texto-normal-ca" th:text="${oferta.tituloDeOferta}"/>
+								<td class="texto-normal-ca" th:text="${oferta.comercio}"/>
+								<td class="texto-normal-ca" th:text="${oferta.descripcion}"/>
+								<td class="texto-normal-ca" th:text="${oferta.categoria.nombre}"/>
+								<td class="texto-normal-ca" th:text="${oferta.ciudad}"/>
+								<td class="texto-normal-ca" th:if="${oferta.estado}" th:text="Activa"/>
+								<td class="texto-normal-ca" th:unless="${oferta.estado}" th:text="Inactiva"/>
+								<td class="text-center"> <button id="modificar-oferta-btn" type="submit" class="boton-editar"
+									th:name="idOferta" th:value="${oferta.idOferta}"></button></td>
+								<td class="text-center"> <button id="eliminar-oferta-btn" type="button" class="boton-eliminar" 
+									th:onclick="'eliminarOferta(\'' + ${oferta.idOferta} + '\', \'' + ${oferta.tituloDeOferta} + '\');'"
+									name="eliminar"></button></td>
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+				</div>
 			</div>
-		</div>
-		</form>
-		<form th:action="@{/insertarOferta}" method="GET">
-		<div class="row">
-			<div class="row" align="right">
-				<div class="col-md-12">
-					<div class="form-group">
-						<button id="mostrar-ingresar-oferta-submit" type="submit"
-							class="btn btn-default">
-								<span class="texto-junto-imagen">Ingresar nueva oferta</span>
-								<span class="imagen-siguiente"></span>
-						</button>
+			</form>
+			<form th:action="@{/BackOffice/insertarOferta}" method="GET">
+			<div class="row">
+				<div class="row" align="right">
+					<div class="col-md-12">
+						<div class="form-group">
+							<button id="mostrar-ingresar-oferta-submit" type="submit"
+								class="btn btn-default">
+									<span class="texto-junto-imagen">Ingresar nueva oferta</span>
+									<span class="imagen-siguiente"></span>
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
+			</form>
 		</div>
-		</form>
 	</div>
-</div>
+		<br/>
+	</div>
+	
+	<div th:include="fragments/footer :: body"></div>
+	
 </body>
 </html>

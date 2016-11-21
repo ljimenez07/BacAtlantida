@@ -16,7 +16,6 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import org.eclipse.jdt.internal.core.search.matching.ConstructorLocator;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,6 @@ import com.jayway.restassured.internal.path.xml.NodeImpl;
 import com.jayway.restassured.path.xml.XmlPath;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.data.Consulta;
-import com.ncubo.exceptions.NoSessionException;
 
 @Component
 @ConfigurationProperties("servercognitivo")
@@ -47,6 +45,9 @@ public class AgenteCognitivo
 	private String wsTasaCambio;
 	private String wsSaldo;
 	private String wsMovimientos;
+	private String userTextToSpeech;
+	private String passwordTextToSpeech;
+	private String voiceTextToSpeech;
 
 	@Autowired
 	private ConsultaDao consultaDao;
@@ -386,4 +387,37 @@ public class AgenteCognitivo
 	public void setWorkspaceDeConocerte(String workspaceDeConocerte) {
 		this.workspaceDeConocerte = workspaceDeConocerte;
 	}
+
+	public String getUserTextToSpeech() {
+		return userTextToSpeech;
+	}
+
+	public void setUserTextToSpeech(String userTextToSpeech) {
+		this.userTextToSpeech = userTextToSpeech;
+	}
+
+	public String getPasswordTextToSpeech() {
+		return passwordTextToSpeech;
+	}
+
+	public void setPasswordTextToSpeech(String passwordTextToSpeech) {
+		this.passwordTextToSpeech = passwordTextToSpeech;
+	}
+
+	public String getVoiceTextToSpeech() {
+		return voiceTextToSpeech;
+	}
+
+	public void setVoiceTextToSpeech(String voiceTextToSpeech) {
+		this.voiceTextToSpeech = voiceTextToSpeech;
+	}
+
+	public ConsultaDao getConsultaDao() {
+		return consultaDao;
+	}
+
+	public void setConsultaDao(ConsultaDao consultaDao) {
+		this.consultaDao = consultaDao;
+	}
+	
 }

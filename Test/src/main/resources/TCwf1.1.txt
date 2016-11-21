@@ -1,0 +1,5 @@
+Hola / #saludos
+Cual es la tasa de cambio? / #tasaDeCambio
+En este caso yo estaría comprando verdad ? / #tasaDeCambio
+Quiero cambiar dolares a lempiras ? / #tasaDeCambio
+Quiero comprar dolares? / #tasaDeCambio

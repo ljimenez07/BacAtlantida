@@ -1,0 +1,6 @@
+Hola amigo buenas tardes, como esta? / #saludos
+Me podrias decir la tasa de cambio para hoy por favor, es que lo necesito / #tasaDeCambio
+@IniciarSesion
+Tengo aun disponible? /  El saldo de su tarjeta de crédito es de:30344.62
+Necesito conocer el saldo de mi cuenta? /  Te refieres a tu cuenta corriente ?
+Si /  Tu saldo es de:30344.62
