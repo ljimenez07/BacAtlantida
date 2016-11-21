@@ -17,7 +17,7 @@
 	{
 		$.ajax(
 		{
-			url: "subirImagenPublicidad",
+			url: "BackOffice/subirImagenPublicidad",
 			type: "POST",
 			data: new FormData($("#agregarOferta-form")[0]),
 			enctype: 'multipart/form-data',
@@ -42,7 +42,7 @@
 	{
 		$.ajax(
 		{
-			url: "subirImagenComercio",
+			url: "BackOffice/subirImagenComercio",
 			type: "POST",
 			data: new FormData($("#agregarOferta-form")[0]),
 			enctype: 'multipart/form-data',
@@ -93,156 +93,164 @@
 	}
 </style>
 <body>
-<div th:include="fragments/backoffice :: body(paginaActual='insertarOferta')"></div>
-<div class="container">
-
-	<form id="agregarOferta-form" method="POST" th:action="@{/__${action}__}" th:object="${oferta}" action="#">
-	<input type="hidden" id="id-comercio" th:field="*{idOferta}"/>
-		<div id="agregarOferta">
-			<div class="row">
-				<div class="col-md-6">
-					<div class="form-group">
-						<label for="tituloOferta-lbl" class="titulo-ca"><span class="asterisco">*</span>Título de oferta</label>
-						<input type="text" class="form-control" th:field="*{tituloDeOferta}" th:classappend="${#fields.hasErrors('tituloDeOferta')} ? 'sobresaltar-field'"/>
-						<p class="campo-requerido" th:if="${#fields.hasErrors('tituloDeOferta')}" th:errors="*{tituloDeOferta}"/>
-					</div>
-				</div>
-				<div class="col-md-6 quitar-padding-left">
-					<div class="col-md-5">
+	<div class="div-contenedor">
+	
+	<div th:include="fragments/header :: body"></div>
+	<div th:include="fragments/backoffice :: body(paginaActual='insertarOferta')"></div>
+	
+	<div class="container agregar-padding-bottom">
+		<form id="agregarOferta-form" method="POST" th:action="@{/__${action}__}" th:object="${oferta}" action="#">
+		<input type="hidden" id="id-comercio" th:field="*{idOferta}"/>
+			<div id="agregarOferta">
+				<div class="row">
+					<div class="col-md-6">
 						<div class="form-group">
-							<label for="ciudad-lbl" class="titulo-ca"><span class="asterisco">*</span>Ciudad</label>
-							<input type="text" class="form-control" th:field="*{ciudad}" th:classappend="${#fields.hasErrors('ciudad')} ? 'sobresaltar-field'"/>
-							<p class="campo-requerido" th:if="${#fields.hasErrors('ciudad')}" th:errors="*{ciudad}"/>
+							<label for="tituloOferta-lbl" class="titulo-ca"><span class="asterisco">*</span>Título de oferta</label>
+							<input type="text" class="form-control" th:field="*{tituloDeOferta}" th:classappend="${#fields.hasErrors('tituloDeOferta')} ? 'sobresaltar-field'"/>
+							<p class="campo-requerido" th:if="${#fields.hasErrors('tituloDeOferta')}" th:errors="*{tituloDeOferta}"/>
 						</div>
 					</div>
-					<div class="col-md-5">
-						<div class="form-group">
-							<label for="categoria-lbl" class="titulo-ca">Categoría</label><br/>
-							<select class="form-control" th:field="*{categoria.id}">
-								<option th:each="categoriaActual : ${categorias}" th:value="${categoriaActual.id}" th:text="${categoriaActual.nombre}"></option>
-							</select>
+					<div class="col-md-6 quitar-padding-left">
+						<div class="col-md-5">
+							<div class="form-group">
+								<label for="ciudad-lbl" class="titulo-ca"><span class="asterisco">*</span>Ciudad</label>
+								<input type="text" class="form-control" th:field="*{ciudad}" th:classappend="${#fields.hasErrors('ciudad')} ? 'sobresaltar-field'"/>
+								<p class="campo-requerido" th:if="${#fields.hasErrors('ciudad')}" th:errors="*{ciudad}"/>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div class="form-group">
+								<label for="categoria-lbl" class="titulo-ca">Categoría</label><br/>
+								<select class="form-control" th:field="*{categoria.id}">
+									<option th:each="categoriaActual : ${categorias}" th:value="${categoriaActual.id}" th:text="${categoriaActual.nombre}"></option>
+								</select>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			
-			<div class="row">
-			
-				<div class="col-md-6">
-					<div class="form-group">
-						<label for="nombreComercio-lbl" class="titulo-ca"><span class="asterisco">*</span>Nombre del comercio</label>
-						<input type="text" class="form-control" th:field="*{comercio}" th:classappend="${#fields.hasErrors('comercio')} ? 'sobresaltar-field'"/>
-						<p class="campo-requerido" th:if="${#fields.hasErrors('comercio')}" th:errors="*{comercio}"/>
-					</div>
-				</div>
-				<div class="col-md-6 quitar-padding-left">
-					<div class="col-md-5">
+				
+				<div class="row">
+				
+					<div class="col-md-6">
 						<div class="form-group">
-							<label for="estado-lbl" class="titulo-ca">Estado</label><br/>
-							<select class="form-control" th:field="*{estado}" style="width: 100%">
-								<option value="1">Activa</option>
-								<option value="0">Inactiva</option>
-							</select>
+							<label for="nombreComercio-lbl" class="titulo-ca"><span class="asterisco">*</span>Nombre del comercio</label>
+							<input type="text" class="form-control" th:field="*{comercio}" th:classappend="${#fields.hasErrors('comercio')} ? 'sobresaltar-field'"/>
+							<p class="campo-requerido" th:if="${#fields.hasErrors('comercio')}" th:errors="*{comercio}"/>
 						</div>
 					</div>
-					<div class="col-md-7 agregar-padding-top">
+					<div class="col-md-6 quitar-padding-left">
+						<div class="col-md-5">
+							<div class="form-group">
+								<label for="estado-lbl" class="titulo-ca">Estado</label><br/>
+								<select class="form-control" th:field="*{estado}" style="width: 100%">
+									<option value="1">Activa</option>
+									<option value="0">Inactiva</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-7 agregar-padding-top">
+							<div>
+								<p class="notas-ca">Solo las ofertas con estado "activa" serán mostradas en la aplicación.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="descripcion-lbl" class="titulo-ca"><span class="asterisco">*</span>Descripción</label>
+							<textarea class="form-control" rows="4" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')} ? 'sobresaltar-field'"></textarea>
+							<textarea style="display:none;" rows="4" th:field="*{descripcionAnterior}"></textarea>
+							<p class="campo-requerido" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"/>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="restricciones-lbl" class="titulo-ca"><span class="asterisco">*</span>Restricciones</label>
+							<textarea class="form-control" rows="4" th:field="*{restricciones}" th:classappend="${#fields.hasErrors('restricciones')} ? 'sobresaltar-field'"></textarea>
+							<p class="campo-requerido" th:if="${#fields.hasErrors('restricciones')}" th:errors="*{restricciones}"/>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-6">
 						<div>
-							<p class="notas-ca">Solo las ofertas con estado "activa" serán mostradas en la aplicación.</p>
+							<p class="notas-ca">El usuario podrá escuchar esta descripción si presiona el botón de audio, pero no se despliega como texto en la pantalla.</p>
 						</div>
 					</div>
 				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-md-6">
-					<div class="form-group">
-						<label for="descripcion-lbl" class="titulo-ca"><span class="asterisco">*</span>Descripción</label>
-						<textarea class="form-control" rows="4" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')} ? 'sobresaltar-field'"></textarea>
-						<textarea style="display:none;" rows="4" th:field="*{descripcionAnterior}"></textarea>
-						<p class="campo-requerido" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"/>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="form-group">
-						<label for="restricciones-lbl" class="titulo-ca"><span class="asterisco">*</span>Restricciones</label>
-						<textarea class="form-control" rows="4" th:field="*{restricciones}" th:classappend="${#fields.hasErrors('restricciones')} ? 'sobresaltar-field'"></textarea>
-						<p class="campo-requerido" th:if="${#fields.hasErrors('restricciones')}" th:errors="*{restricciones}"/>
-					</div>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-md-6">
-					<div>
-						<p class="notas-ca">El usuario podrá escuchar esta descripción si presiona el botón de audio, pero no se despliega como texto en la pantalla.</p>
-					</div>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-md-5 quitar-padding-left" >
-					<div class="col-md-6 ">
-						<div class="form-group">
-							<label for="vigenciaDesde-lbl" class="titulo-ca"><span class="asterisco">*</span>Vigencia desde</label>
-							<div class="inner-addon right-addon">
-								<input type="text" class="form-control" th:field="*{vigenciaDesde}" id="vigenciaDesde-input" th:classappend="${#fields.hasErrors('vigenciaDesde')} ? 'sobresaltar-field'"/>
-								<p class="campo-requerido" th:if="${#fields.hasErrors('vigenciaDesde')}" th:errors="*{vigenciaDesde}"/>
-								<i class="glyphicon glyphicon-calendar"></i>
+				
+				<div class="row">
+					<div class="col-md-5 quitar-padding-left" >
+						<div class="col-md-6 ">
+							<div class="form-group">
+								<label for="vigenciaDesde-lbl" class="titulo-ca"><span class="asterisco">*</span>Vigencia desde</label>
+								<div class="inner-addon right-addon">
+									<input type="text" class="form-control" th:field="*{vigenciaDesde}" id="vigenciaDesde-input" th:classappend="${#fields.hasErrors('vigenciaDesde')} ? 'sobresaltar-field'"/>
+									<p class="campo-requerido" th:if="${#fields.hasErrors('vigenciaDesde')}" th:errors="*{vigenciaDesde}"/>
+									<i class="glyphicon glyphicon-calendar"></i>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="vigenciaHasta-lbl" class="titulo-ca"><span class="asterisco">*</span>Hasta</label>
+								<div class="inner-addon right-addon">
+									<input type="text" class="form-control" th:field="*{vigenciaHasta}" id="vigenciaHasta-input" th:classappend="${#fields.hasErrors('vigenciaHasta')} ? 'sobresaltar-field'"/>
+									<p class="campo-requerido" th:if="${#fields.hasErrors('vigenciaHasta')}" th:errors="*{vigenciaHasta}"/>
+									<i class="glyphicon glyphicon-calendar"></i>
+								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<label for="vigenciaHasta-lbl" class="titulo-ca"><span class="asterisco">*</span>Hasta</label>
-							<div class="inner-addon right-addon">
-								<input type="text" class="form-control" th:field="*{vigenciaHasta}" id="vigenciaHasta-input" th:classappend="${#fields.hasErrors('vigenciaHasta')} ? 'sobresaltar-field'"/>
-								<p class="campo-requerido" th:if="${#fields.hasErrors('vigenciaHasta')}" th:errors="*{vigenciaHasta}"/>
-								<i class="glyphicon glyphicon-calendar"></i>
+					<div class="col-md-7">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="logo-label-lbl" class="titulo-ca"><span class="asterisco">*</span>Logo del comercio</label>
+								<input id="logo-comercio-input" type="file" name="logo-comercio-input" accept="image/*"/>
+								<p class="campo-requerido" th:if="${#fields.hasErrors('imagenComercioPath')}" th:errors="*{imagenComercioPath}"  id="validador-imagen-comercio"/>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="publicidad-label-lbl" class="titulo-ca"><span class="asterisco">*</span>Imagen de publicidad</label> 
+								<input id="imagen-publicidad-input" type="file" name="imagen-publicidad-input" 
+								accept=".zip,image/*"/>
+								<p class="campo-requerido" th:if="${#fields.hasErrors('imagenPublicidadPath')}" th:errors="*{imagenPublicidadPath}"/>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-7">
-					<div class="col-md-6">
+				
+				<input type="hidden" id="logo-comercio" th:field="*{imagenComercioPath}"/>
+				<input type="hidden" id="imagen-publicidad" th:field="*{imagenPublicidadPath}"/>
+				
+				<div class="row agregar-padding-top" align="center">
+					<div class="col-md-12">
 						<div class="form-group">
-							<label for="logo-label-lbl" class="titulo-ca"><span class="asterisco">*</span>Logo del comercio</label>
-							<input id="logo-comercio-input" type="file" name="logo-comercio-input" accept="image/*"/>
-							<p class="campo-requerido" th:if="${#fields.hasErrors('imagenComercioPath')}" th:errors="*{imagenComercioPath}"  id="validador-imagen-comercio"/>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<label for="publicidad-label-lbl" class="titulo-ca"><span class="asterisco">*</span>Imagen de publicidad</label> 
-							<input id="imagen-publicidad-input" type="file" name="imagen-publicidad-input" 
-							accept=".zip,image/*"/>
-							<p class="campo-requerido" th:if="${#fields.hasErrors('imagenPublicidadPath')}" th:errors="*{imagenPublicidadPath}"/>
+							<button id="limpiar-submit" type="submit" class="btn btn-default agregar-padding-left" name="accion" value="limpiar">
+								<span class="texto-junto-imagen">Cancelar</span>
+								<span th:class="${imagenBotonSecundario}"></span>
+							</button>
+							<button id="ingresar-submit" type="submit" class="btn btn-default agregar-padding-left" name="accion" value="ingresar">
+								<span class="texto-junto-imagen" th:text="${nombreBotonPrincipal}"></span>
+								<span th:class="${imagenBotonPrincipal}"></span>
+							</button>
 						</div>
 					</div>
 				</div>
-			</div>
-			
-			<input type="hidden" id="logo-comercio" th:field="*{imagenComercioPath}"/>
-			<input type="hidden" id="imagen-publicidad" th:field="*{imagenPublicidadPath}"/>
-			
-			<div class="row agregar-padding-top" align="center">
-				<div class="col-md-12">
-					<div class="form-group">
-						<button id="limpiar-submit" type="submit" class="btn btn-default agregar-padding-left" name="accion" value="limpiar">
-							<span class="texto-junto-imagen">Cancelar</span>
-							<span th:class="${imagenBotonSecundario}"></span>
-						</button>
-						<button id="ingresar-submit" type="submit" class="btn btn-default agregar-padding-left" name="accion" value="ingresar">
-							<span class="texto-junto-imagen" th:text="${nombreBotonPrincipal}"></span>
-							<span th:class="${imagenBotonPrincipal}"></span>
-						</button>
-					</div>
+				<div class="row" align="right">
+					<label for="campo-requerido"><span class="campo-requerido">(*)Campo requerido</span></label> 
 				</div>
 			</div>
-			<div class="row" align="right">
-				<label for="campo-requerido"><span class="campo-requerido">(*)Campo requerido</span></label> 
-			</div>
-		</div>
-	</form>
-</div>
+		</form>
+	</div>
+	<br/>
+	</div>
+	
+	<div th:include="fragments/footer :: body"></div>
+	
 </body>
 </html>

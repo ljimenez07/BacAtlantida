@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ncubo.conf.Usuario;
 import com.ncubo.dao.CategoriaDao;
 import com.ncubo.dao.OfertaDao;
 import com.ncubo.data.Oferta;
@@ -44,8 +46,8 @@ public class OfertaController
 	@Autowired
 	private OfertaLogica ofertaLogica;
 	
-	private final String ACTION_INSERTAR_OFERTA = "insertarOferta";
-	private final String ACTION_MODIFICAR_OFERTA = "modificarOferta";
+	private final String ACTION_INSERTAR_OFERTA = "BackOffice/insertarOferta";
+	private final String ACTION_MODIFICAR_OFERTA = "BackOffice/modificarOferta";
 	
 	private final String BOTON_MODIFICAR_OFERTA = "Modificar";
 	private final String BOTON_INSERTAR_OFERTA = "Insertar";
@@ -57,7 +59,7 @@ public class OfertaController
 	private final String BOTON_SECUNDARIO_INSERTAR_OFERTA = "imagen-cancelar";
 	
 	
-	@RequestMapping("/gestionDeOfertas")
+	@RequestMapping("/BackOffice/gestionDeOfertas")
 	public String visualizarOfertas(Model model) throws ClassNotFoundException, SQLException
 	{
 		ArrayList<Oferta> ofertas = ofertaDao.obtener();
@@ -69,7 +71,7 @@ public class OfertaController
 		return "tablaDeOfertas";
 	}
 	
-	@RequestMapping("/filtrarOfertas")
+	@RequestMapping("/BackOffice/filtrarOfertas")
 	public String filtrarOfertas(@RequestParam("busquedaComercio") String nombreComercio, Model model) throws ClassNotFoundException, SQLException
 	{
 		model.addAttribute("busquedaComercio", nombreComercio);
@@ -83,7 +85,7 @@ public class OfertaController
 		return "tablaDeOfertas";
 	}
 	
-	@GetMapping("/insertarOferta")
+	@GetMapping("/BackOffice/insertarOferta")
 	public String cargarInsertarOfertas(Oferta oferta, Model model) throws ClassNotFoundException, SQLException
 	{
 		model.addAttribute("action", ACTION_INSERTAR_OFERTA);
@@ -94,7 +96,7 @@ public class OfertaController
 		return "insertarOferta";
 	}
 	
-	@PostMapping(value = "/insertarOferta", params="accion=ingresar")
+	@PostMapping(value = "/BackOffice/insertarOferta", params="accion=ingresar")
 	public String insertarOfertas(@Valid Oferta oferta, BindingResult bindingResult, Model model) throws ClassNotFoundException, SQLException, ParseException, IOException
 	{
 		bindingResult = ofertaLogica.validarCampos(bindingResult, oferta);
@@ -110,7 +112,7 @@ public class OfertaController
 		return "redirect:gestionDeOfertas";
 	}
 	
-	@PostMapping(value = "/insertarOferta", params="accion=limpiar")
+	@PostMapping(value = "/BackOffice/insertarOferta", params="accion=limpiar")
 	public String insertarOfertasLimpiar(@Valid Oferta oferta, BindingResult bindingResult) throws ClassNotFoundException, SQLException
 	{
 		return "redirect:gestionDeOfertas";
@@ -118,28 +120,32 @@ public class OfertaController
 	
 	@CrossOrigin(origins = "*")
 	@GetMapping(value = "/ofertas", produces = "application/json")
-	@ResponseBody public List<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response, @RequestParam("pagina") int pagina, @RequestParam(value = "idUsuario", required = false) String idUsuario) throws ClassNotFoundException, SQLException
+	@ResponseBody public List<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response, @RequestParam("pagina") int pagina, HttpSession sesion) throws ClassNotFoundException, SQLException
 	{
+		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
+		String idUsuario = usuario == null ? null : usuario.getUsuarioId();
 		int indiceInicial = (pagina - 1) * 10;
 		return ofertaDao.ultimasDiezOfertasDesde(indiceInicial, idUsuario);
 	}
 	
 	@CrossOrigin(origins = "*")
 	@GetMapping(value = "/ofertas/{idOferta}", produces = "application/json")
-	@ResponseBody public Oferta oferta(@PathVariable int idOferta, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "idUsuario", required = false) String idUsuario) throws ClassNotFoundException, SQLException
+	@ResponseBody public Oferta oferta(@PathVariable int idOferta, HttpSession sesion) throws ClassNotFoundException, SQLException
 	{
+		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
+		String idUsuario = usuario == null ? null : usuario.getUsuarioId();
 		return ofertaDao.obtener(idOferta, idUsuario);
 	}
 	
 	@CrossOrigin(origins = "*")
 	@GetMapping(value = "/ofertas/cantidad", produces = "application/json")
-	@ResponseBody public int cantidadDeOfertas(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException
+	@ResponseBody public int cantidadDeOfertas() throws ClassNotFoundException, SQLException
 	{
 		return ofertaDao.cantidad();
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/subirImagenPublicidad", method = RequestMethod.POST)
+	@RequestMapping(value = "/BackOffice/subirImagenPublicidad", method = RequestMethod.POST)
 	public String subirImagenPublicidad(@RequestParam("imagen-publicidad-input") MultipartFile uploadfile) throws IOException
 	{
 		System.out.println("Imagen publicidad");
@@ -151,7 +157,7 @@ public class OfertaController
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/subirImagenComercio", method = RequestMethod.POST)
+	@RequestMapping(value = "/BackOffice/subirImagenComercio", method = RequestMethod.POST)
 	public String subirImagenComercio(@RequestParam("logo-comercio-input") MultipartFile uploadfile) throws IOException
 	{
 		System.out.println("Imagen Comercio");
@@ -162,7 +168,7 @@ public class OfertaController
 		return gestorDeArchivos.subirArchivo(uploadfile);
 	}
 	
-	@GetMapping(value = "/modificarOferta")
+	@GetMapping(value = "/BackOffice/modificarOferta")
 	public String modificarOferta(Model model, int idOferta, Oferta oferta, @RequestParam(value = "idUsuario", required = false) String idUsuario) throws ClassNotFoundException, SQLException
 	{
 		if(idOferta != 0)
@@ -178,7 +184,7 @@ public class OfertaController
 		return "insertarOferta";
 	}
 	
-	@PostMapping(value = "/modificarOferta", params="accion=ingresar")
+	@PostMapping(value = "/BackOffice/modificarOferta", params="accion=ingresar")
 	public String modificarOferta(@Valid Oferta oferta, BindingResult bindingResult, Model model, HttpServletRequest request, @RequestParam(value = "idUsuario", required = false) String idUsuario) throws ClassNotFoundException, SQLException, ParseException, IOException
 	{
 		bindingResult = ofertaLogica.validarCampos(bindingResult, oferta);
@@ -199,13 +205,13 @@ public class OfertaController
 		return "redirect:gestionDeOfertas";
 	}
 	
-	@PostMapping(value = "/modificarOferta", params="accion=limpiar")
+	@PostMapping(value = "/BackOffice/modificarOferta", params="accion=limpiar")
 	public String modificarOfertaLimpiar(@Valid Oferta oferta, BindingResult bindingResult) throws ClassNotFoundException, SQLException
 	{
 		return "redirect:gestionDeOfertas";
 	}
 	
-	@PostMapping("/eliminarOferta")
+	@PostMapping("/BackOffice/eliminarOferta")
 	public String eliminarOferta(@RequestParam("idOfertaEliminar") int idOferta) throws ClassNotFoundException, SQLException
 	{
 		ofertaDao.eliminar(idOferta);

@@ -1,82 +1,73 @@
 package com.ncubo.data;
 
-public class Reaccion 
+import java.sql.Timestamp;
+
+public class Reaccion
 {
-	private String id_oferta;
-	private String fecha;
-	private int cantidad_like;
-	private int cantidad_dislike;
-	private String tituloLabelDislike;
-	private String categoriaOferta;
-	private String tituloLabel;
+	private int idOferta;
+	private String idUsuario;
+	private Timestamp fecha;
+	private boolean reaccion;
 	
-	public String getTituloLabel()
+	public Reaccion(int idOferta, String idUsuario, Timestamp fecha, boolean reaccion)
 	{
-		return tituloLabel;
+		this.idOferta = idOferta;
+		this.idUsuario = idUsuario;
+		this.fecha = fecha;
+		this.reaccion = reaccion;
 	}
 	
-	public void setTituloLabel(String tituloLabel)
+	public Reaccion(int idOferta, String idUsuario, boolean reaccion)
 	{
-		this.tituloLabel = tituloLabel;
+		this.idOferta = idOferta;
+		this.idUsuario = idUsuario;
+		this.reaccion = reaccion;
+		this.fecha = new Timestamp(System.currentTimeMillis());
 	}
 	
-	public String getTituloLabelDislike()
+	public Reaccion(int idOferta, String idUsuario)
 	{
-		return tituloLabelDislike;
+		this.idOferta = idOferta;
+		this.idUsuario = idUsuario;
 	}
-	
-	public void setTituloLabelDislike(String nombreOferta)
+
+	public int getIdOferta()
 	{
-		this.tituloLabelDislike = nombreOferta;
+		return idOferta;
 	}
-	
-	public String getCategoriaOferta()
+
+	public void setIdOferta(int idOferta)
 	{
-		return categoriaOferta;
+		this.idOferta = idOferta;
 	}
-	
-	public void setCategoriaOferta(String categoriaOferta)
+
+	public String getIdUsuario()
 	{
-		this.categoriaOferta = categoriaOferta;
+		return idUsuario;
 	}
-	
-	public String getId_oferta()
+
+	public void setIdUsuario(String idUsuario)
 	{
-		return id_oferta;
+		this.idUsuario = idUsuario;
 	}
-	
-	public void setId_oferta(String id_oferta)
-	{
-		this.id_oferta = id_oferta;
-	}
-	
-	public String getFecha()
+
+	public Timestamp getFecha()
 	{
 		return fecha;
 	}
-	
-	public void setFecha(String fecha)
+
+	public void setFecha(Timestamp fecha)
 	{
 		this.fecha = fecha;
 	}
-	
-	public int getCantidad_like()
+
+	public boolean getReaccion()
 	{
-		return cantidad_like;
+		return reaccion;
 	}
-	
-	public void setCantidad_like(int cantidad_like)
+
+	public void setReaccion(boolean reaccion)
 	{
-		this.cantidad_like = cantidad_like;
-	}
-	
-	public int getCantidad_dislike()
-	{
-		return cantidad_dislike;
-	}
-	
-	public void setCantidad_dislike(int cantidad_dislike)
-	{
-		this.cantidad_dislike = cantidad_dislike;
+		this.reaccion = reaccion;
 	}
 }
