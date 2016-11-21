@@ -21,7 +21,7 @@ public class ConsultasRealizadasController
 	@Autowired
 	private ConsultaDao consultaDao;
 	
-	@GetMapping("/consultasRealizadas")
+	@GetMapping("/BackOffice/consultasRealizadas")
 	public String visualizarOfertas(Model model) throws ClassNotFoundException, SQLException
 	{
 		Date date = new Date();		
@@ -35,7 +35,7 @@ public class ConsultasRealizadasController
 		return "consultasRealizadas";
 	}
 	
-	@PostMapping("/filtrarConsultasRealizadas")
+	@PostMapping("/BackOffice/filtrarConsultasRealizadas")
 	public String filtrarConsultasRealizadas(Model model, @RequestParam("fechaDesde") String fechaDesde, @RequestParam("fechaHasta") String fechaHasta) throws ClassNotFoundException, SQLException, ParseException
 	{
 		model.addAttribute("fechaDesde", fechaDesde);
