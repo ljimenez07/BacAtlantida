@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container contenedor-campo-de-entrada">
 	<div id="chat-id-container-{{pathDelServidor}}" class="row">
 		<div class="col-xs-10">
 			<input placeholder="Escribe aquí" type="text" id="campoDeEntrada" class="form-control" >
@@ -11,7 +11,7 @@
 <style>
 	.panel-body
 	{
-		height: 350px;
+		height: 100%;
 		overflow: scroll
 	}
 </style>
@@ -35,7 +35,45 @@ $(function(){
 			
 		});
 		
-		campoDeEntrada.keypress(function(e) {
+		resizeDiv();
+		
+		window.onresize = function(event) {
+			resizeDiv();
+		}
+		
+		function resizeDiv(muestraTeclado, callback)
+		{
+			vpw = $(window).width();
+			vph = $(window).height();
+			var altura = vph - 73 - 68 - 30;
+			if(muestraTeclado)
+			{
+				altura -= 250;
+			}
+			chat.css({'height': altura + 'px'});
+			
+			if(callback != undefined)
+			{
+				callback();
+			}
+		}
+		
+		$('input').bind('focus', function()
+		{
+			resizeDiv(true, function(){
+				moverScrollParaAbajoEnFuncionDelUltimoMensaje(function(){
+					$("html, body").animate({scrollTop: 0}, "fast");
+				});
+			});
+		});
+		
+		$('input').bind('blur', function()
+		{
+			setTimeout(resizeDiv, 100);
+		});
+		
+		campoDeEntrada.keypress(function(e)
+		{
 			if(e.which == 13) 
 			{
 				enviarAlServer({ textoAEnviar:campoDeEntrada.val()});
@@ -58,7 +96,7 @@ $(function(){
 				campoDeEntrada.val("");
 				conversation.append(mensaje);
 				
-				moveScrollParaAbjoEnFuncionDelUltimoMEnsaje();
+				moverScrollParaAbajoEnFuncionDelUltimoMensaje();
 			}
 			
 			ajax({
@@ -72,7 +110,7 @@ $(function(){
 					respuesta.find(".msg p").html(data.texto);
 					conversation.append(respuesta);
 					
-					moveScrollParaAbjoEnFuncionDelUltimoMEnsaje();
+					moverScrollParaAbajoEnFuncionDelUltimoMensaje();
 				},
 				fail: function(XMLHttpRequest, textStatus, textStatus) 
 				{
@@ -88,9 +126,13 @@ $(function(){
 			ultimoMensajeEnviado = textoAEnviar;
 			
 		}
-		function moveScrollParaAbjoEnFuncionDelUltimoMEnsaje()
+		function moverScrollParaAbajoEnFuncionDelUltimoMensaje(callback)
 		{
 			chat.parent().parent().scrollTop(chat.parent().parent()[0].scrollHeight);
+			if(callback != undefined)
+			{
+				callback();
+			}
 		}
 		
 		this.reenviarUltimoMensajeSinImprimirlo = function()

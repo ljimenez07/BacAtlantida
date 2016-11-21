@@ -20,7 +20,7 @@
 {{/compare}}
 
 <script type="text/javascript">
-	var buzzer = $('#buzzer'); 
+var buzzer = $('#buzzer'); 
 var pagina = 1;
 cargarOfertas();
 pagina++;
@@ -78,7 +78,6 @@ function bindAcciones()
 		{
 			reaccion = false;
 		}
-		console.log(reaccion);
 		ajax({
 			type: "POST",
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -95,16 +94,16 @@ function bindAcciones()
 		});
 	});
 
-		function playAudio()
+	function playAudio()
+	{
+		$(".boton-escuchar").click(function()
 		{
-			$(".boton-escuchar").click(function()
-			{
-				buzzer.attr("src", serverDomain+"/movil/www/archivos"+$(this).data("audio"));
-				buzzer[0].play();  
-			});
-}
-		playAudio();
+			buzzer.attr("src", serverDomain+"/movil/www/archivos"+$(this).data("audio"));
+			buzzer[0].play();  
+		});
 	}
+	playAudio();
+}
 
 function cargarOfertas()
 {
