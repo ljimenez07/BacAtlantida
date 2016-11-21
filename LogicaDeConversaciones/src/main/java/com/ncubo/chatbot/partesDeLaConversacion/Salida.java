@@ -6,6 +6,7 @@ public class Salida {
 	private Sonido miSonido;
 	private Vineta miVineta;
 	private Respuesta miRespuesta;
+	// tema actual
 	
 	public Salida(){
 		miTexto = "";

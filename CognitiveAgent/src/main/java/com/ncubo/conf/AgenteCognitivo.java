@@ -135,34 +135,39 @@ public class AgenteCognitivo
 			System.out.println("contexto de watson cuando sale "+ usuario.getContextoDeWatsonParaChats());
 		}*/
 		
-		if(intent.equals(Intencion.SALDO.toString()) && usuario.estaLogueado() || texto.contains("%stc"))
+		if(intent.equals(Intencion.SALDO.toString()) && usuario.estaLogueado() || texto.contains("%stc") || texto.contains("%cc"))
 		{
 			String requestBody = "<cor:consultaSaldo><activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <transaccionId>100128</transaccionId> <aplicacionId>?</aplicacionId> <paisId>?</paisId> <empresaId>?</empresaId> <regionId>?</regionId> <canalId>102 </canalId> <version>?</version> <llaveSesion></llaveSesion> <usuarioId></usuarioId> <token>?</token> <parametroAdicionalColeccion> <parametroAdicionalItem> <linea>0</linea> <tipoRegistro>UAI</tipoRegistro> <valor>TSTBASAPI01</valor> </parametroAdicionalItem> <parametroAdicionalItem> <linea>1</linea> <tipoRegistro>TC</tipoRegistro> <valor>M</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> <consultaSaldoColeccion> <tipoCuenta>4</tipoCuenta> <peticionId>?</peticionId> </consultaSaldoColeccion> </cor:consultaSaldo>";	
 			String responseXML = given().body(requestBody).post(wsSaldo).andReturn().asString();
 			
 			System.out.println(wsSaldo+" \n\t  "+requestBody+"   \n\t"+responseXML);
 			
-			if(texto.contains("%pp"))
-			{
-				texto = texto.replaceAll("%pp", "200");
-				respuesta.put("texto", texto);
+			XmlPath xmlPath = new XmlPath(responseXML).setRoot("Respuesta");
+			NodeChildrenImpl productoColeccion = xmlPath.get("productoColeccion");
+			NodeImpl cuentaColeccion = productoColeccion.get(0).get("cuentaColeccion");
+			List<?> lista = cuentaColeccion.get("cuentaItem");
+			NodeImpl saldoColecion = (NodeImpl) lista.get(0);
+			NodeImpl saldoContable = saldoColecion.get("saldoColeccion");
+			NodeImpl moneda = saldoColecion.get("moneda");
+			NodeImpl saldo = saldoContable.get("contable");
+			
+			if(moneda.toString().equals("USD"))	{
+				texto = texto.replaceAll("%nmm", "dólares");	 
 			}
-			else{
-				XmlPath xmlPath = new XmlPath(responseXML).setRoot("Respuesta");
-				NodeChildrenImpl productoColeccion = xmlPath.get("productoColeccion");
-				NodeImpl cuentaColeccion = productoColeccion.get(0).get("cuentaColeccion");
-				List<?> lista = cuentaColeccion.get("cuentaItem");
-				NodeImpl saldoColecion = (NodeImpl) lista.get(0);
-				NodeImpl saldoContable = saldoColecion.get("saldoColeccion");
-				NodeImpl moneda = saldoColecion.get("moneda");
-				texto = texto.replace("%stc", saldoContable.get("contable")+" "+moneda);
-				respuesta.put("texto", texto);
-			}
+			if(moneda.toString().equals("EUR"))		
+				texto = texto.replaceAll("%nmm", "euros");		
+			if(moneda.toString().equals("LPS"))		
+				texto = texto.replaceAll("%nmm", "lempiras");		
+			
+			texto = texto.replaceAll("%stc", saldo.toString());		
+			texto = texto.replaceAll("%cc", saldo.toString());		
+			
+			respuesta.put("texto", texto);
 			
 			consultaDao.insertar(
 					new Consulta(Intencion.SALDO.toString(), new Timestamp(new Date().getTime()), Intencion.SALDO_DESCRIPCION.toString() , 1));
 		}
-		else if(intent.equals(Intencion.SALDO.toString()) && ! usuario.estaLogueado())
+		else if(( intent.equals(Intencion.SALDO.toString()) || intent.equals(Intencion.MOVIMIENTOS.toString())) && ! usuario.estaLogueado())
 		{
 			respuesta.put("texto", "Debe iniciar sesión para que conozcas tu disponible.");
 		}

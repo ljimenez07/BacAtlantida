@@ -24,7 +24,7 @@ public class Conversaciones {
 		String resultado = "El usuario no se pudo agregar";
 		try{
 			Cliente cliente = null;
-			try{
+			/*try{
 				if(! usuario.getUsuarioId().equals("") && ! usuario.getIdSesion().equals("")){
 					if( ! existeElCliente(usuario.getUsuarioId())){
 						cliente = new Cliente(usuario.getUsuarioNombre(), usuario.getUsuarioId());
@@ -40,7 +40,7 @@ public class Conversaciones {
 				}
 			}catch(Exception e){
 				System.out.println("Error al extraer el id del usuario y de la sesion");
-			}
+			}*/
 			
 			if (cliente == null){
 				if (! usuario.getIdSesion().equals("")){
@@ -59,9 +59,7 @@ public class Conversaciones {
 					System.out.println(resultado);
 				}
 			}
-			else{
-				System.out.println("Error al crear una conversacion");
-			}
+			
 		}catch(Exception e){
 			System.out.println("Error al crear una conversacion: "+e.getMessage());
 		}

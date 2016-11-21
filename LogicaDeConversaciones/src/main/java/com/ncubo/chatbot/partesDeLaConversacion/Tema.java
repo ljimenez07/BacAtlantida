@@ -41,7 +41,7 @@ public class Tema
 	public Frase buscarUnaFrase(String nombreDeLaFrase){
 		
 		for(int index = 0; index < frases.length; index ++){
-			if(frases[index].getIdFrase().equals(nombreDeLaFrase))
+			if(frases[index].getIdFrase().equals(nombreDeLaFrase.trim()))
 				return frases[index];
 		}
 		

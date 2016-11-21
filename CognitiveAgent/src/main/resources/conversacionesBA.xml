@@ -52,7 +52,9 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>El saldo de su tarjeta de crédito es de: $%stc.</frase>
+			<frase>El saldo de tu tarjeta de crédito es de $%stc $%nmm.</frase>
+			<frase>Tu saldo en $%nmm es de %stc en la tarjeta de crédito.</frase>
+			<frase>Claro, tu saldo en $%nmm es de %stc en la tarjeta de crédito.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -62,7 +64,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>El saldo de su cuenta de ahorros es de: $%stc.</frase>
+			<frase>Tu saldo es de $%cc $%nmm en la cuenta de ahorros.</frase>
+			<frase>Tu cuenta de ahorros tiene un saldo de $%cc $%nmm.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
