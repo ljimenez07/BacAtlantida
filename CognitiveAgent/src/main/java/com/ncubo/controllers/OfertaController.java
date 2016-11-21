@@ -97,7 +97,7 @@ public class OfertaController
 	}
 	
 	@PostMapping(value = "/insertarOferta", params="accion=ingresar")
-	public String insertarOfertas(@Valid Oferta oferta, BindingResult bindingResult, Model model) throws ClassNotFoundException, SQLException, ParseException
+	public String insertarOfertas(@Valid Oferta oferta, BindingResult bindingResult, Model model) throws ClassNotFoundException, SQLException, ParseException, IOException
 	{
 		bindingResult = ofertaLogica.validarCampos(bindingResult, oferta);
 		
@@ -107,6 +107,7 @@ public class OfertaController
 		}
 		oferta.setFechaHoraRegistro(new Timestamp(new Date().getTime()));
 		ofertaDao.insertar(oferta);
+		gestorDeArchivos.textoAAudio( ""+oferta.getIdOferta(), oferta.getDescripcion() );
 		
 		return "redirect:gestionDeOfertas";
 	}
@@ -184,7 +185,7 @@ public class OfertaController
 	}
 	
 	@PostMapping(value = "/modificarOferta", params="accion=ingresar")
-	public String modificarOferta(@Valid Oferta oferta, BindingResult bindingResult, Model model, HttpServletRequest request, @RequestParam(value = "idUsuario", required = false) String idUsuario) throws ClassNotFoundException, SQLException, ParseException
+	public String modificarOferta(@Valid Oferta oferta, BindingResult bindingResult, Model model, HttpServletRequest request, @RequestParam(value = "idUsuario", required = false) String idUsuario) throws ClassNotFoundException, SQLException, ParseException, IOException
 	{
 		bindingResult = ofertaLogica.validarCampos(bindingResult, oferta);
 		
@@ -194,6 +195,12 @@ public class OfertaController
 		}
 		oferta.setFechaHoraRegistro(new Timestamp(new Date().getTime()));
 		ofertaDao.modificar(oferta);
+		
+		if( oferta.cambioLaDescripcion() )
+		{
+			System.err.println("Cambio");
+			gestorDeArchivos.textoAAudio( ""+oferta.getIdOferta(), oferta.getDescripcion() );
+		}
 		
 		return "redirect:gestionDeOfertas";
 	}

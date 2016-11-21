@@ -158,6 +158,7 @@
 					<div class="form-group">
 						<label for="descripcion-lbl" class="titulo-ca"><span class="asterisco">*</span>Descripción</label>
 						<textarea class="form-control" rows="4" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')} ? 'sobresaltar-field'"></textarea>
+						<textarea style="display:none;" rows="4" th:field="*{descripcionAnterior}"></textarea>
 						<p class="campo-requerido" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"/>
 					</div>
 				</div>
