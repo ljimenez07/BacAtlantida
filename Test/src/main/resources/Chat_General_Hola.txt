@@ -1,4 +1,2 @@
-hola / #saludos
-Cual es la tasa de cambio? / La tasa de cambio al día de hoy es:
-@IniciarSesion
-cual es mi saldo /  300
+Hola amigo buenas tardes, como esta? / #saludos
+Me podrias decir la tasa de cambio para hoy por favor, es que lo necesito / #tasaDeCambio
