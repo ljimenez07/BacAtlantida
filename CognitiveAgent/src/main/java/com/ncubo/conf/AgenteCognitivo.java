@@ -91,7 +91,7 @@ public class AgenteCognitivo
 		service.setUsernameAndPassword(user, password);
 		
 		myContext.put("logueado", usuario.estaLogueado());
-		
+		myContext.put("intentActual", "");
 		String[] nombre = new String[4];
 		if(usuario.getUsuarioNombre() != null)
 			nombre = usuario.getUsuarioNombre().split(" ");
@@ -123,37 +123,45 @@ public class AgenteCognitivo
 		
 		String intent = getIntent(response);
 		String texto = getText(response);
-		if(intent.equals(Intencion.SALDO.toString()) && usuario.estaLogueado())
+		String intentActual = getVariable(response,"intentActual");
+		if(intentActual.equals(Intencion.SALDO.toString()) && usuario.estaLogueado())
 		{
-
+			Boolean variableResponder = Boolean.parseBoolean(getVariable(response, "responderSaldo"));
+			
+			if(variableResponder)
+			{
 			String requestBody = "<cor:consultaSaldo><activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <transaccionId>100128</transaccionId> <aplicacionId>?</aplicacionId> <paisId>?</paisId> <empresaId>?</empresaId> <regionId>?</regionId> <canalId>102 </canalId> <version>?</version> <llaveSesion></llaveSesion> <usuarioId></usuarioId> <token>?</token> <parametroAdicionalColeccion> <parametroAdicionalItem> <linea>0</linea> <tipoRegistro>UAI</tipoRegistro> <valor>TSTBASAPI01</valor> </parametroAdicionalItem> <parametroAdicionalItem> <linea>1</linea> <tipoRegistro>TC</tipoRegistro> <valor>M</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> <consultaSaldoColeccion> <tipoCuenta>4</tipoCuenta> <peticionId>?</peticionId> </consultaSaldoColeccion> </cor:consultaSaldo>";	
 			String responseXML = given().body(requestBody).post(wsSaldo).andReturn().asString();
 			
-			System.out.println(wsSaldo+" \n\t  "+requestBody+"   \n\t"+responseXML);
-			
-			if(texto.contains("%pp"))
-			{
-				texto = texto.replaceAll("%pp", "200");
-				respuesta.put("texto", texto);
-			}
-			else{
 				XmlPath xmlPath = new XmlPath(responseXML).setRoot("Respuesta");
 				NodeChildrenImpl productoColeccion = xmlPath.get("productoColeccion");
 				NodeImpl cuentaColeccion = productoColeccion.get(0).get("cuentaColeccion");
 				List<?> lista = cuentaColeccion.get("cuentaItem");
 				NodeImpl saldoColecion = (NodeImpl) lista.get(0);
 				NodeImpl saldoContable = saldoColecion.get("saldoColeccion");
+				NodeImpl saldo = saldoContable.get("contable");
 				NodeImpl moneda = saldoColecion.get("moneda");
-				respuesta.put("texto", texto + " "+saldoContable.get("contable")+" "+moneda);
+				
+				texto = texto.replaceAll("%stc", saldo.toString());
+				if(moneda.toString().equals("USD"))
+					texto = texto.replaceAll("%nmm", "dólares");
+				if(moneda.toString().equals("EUR"))
+					texto = texto.replaceAll("%nmm", "euros");
+				if(moneda.toString().equals("LPS"))
+					texto = texto.replaceAll("%nmm", "lempiras");
+
+				
+				texto = texto.replaceAll("%cc", saldo.toString());
+				
 			}
 			
 			
 			consultaDao.insertar(
 					new Consulta(Intencion.SALDO.toString(), new Timestamp(new Date().getTime()), Intencion.SALDO_DESCRIPCION.toString() , 1));
-
+			respuesta.put("texto", texto);
 		}
 	
-		else if(intent.equals(Intencion.TASA_DE_CAMBIO.toString())){
+		else if(intentActual.equals(Intencion.TASA_DE_CAMBIO.toString())){
 			
 			String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tas=\"http://hn.infatlan.och/ws/ACD082/out/TasaCambio\"> <soapenv:Header/> <soapenv:Body> <tas:MT_TasaCambio> <activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <!--Optional:--> <transaccionId>100054</transaccionId> <!--Optional:--> <aplicacionId>?</aplicacionId> <paisId>?</paisId> <empresaId>?</empresaId> <!--Optional:--> <regionId>?</regionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <version>?</version> <!--Optional:--> <llaveSesion>?</llaveSesion> <!--Optional:--> <usuarioId>?</usuarioId> <!--Optional:--> <token>?</token> <!--Zero or more repetitions:--> <identificadorColeccion> <!--Optional:--> <was>?</was> <!--Optional:--> <pi>?</pi> <!--Optional:--> <omniCanal>?</omniCanal> <!--Optional:--> <recibo>?</recibo> <!--Optional:--> <numeroTransaccion>?</numeroTransaccion> </identificadorColeccion> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> <!--Optional:--> <logColeccion> <!--Zero or more repetitions:--> <logItem> <identificadorWas>?</identificadorWas> <!--Optional:--> <identificadorPi>?</identificadorPi> <!--Optional:--> <identificadorOmniCanal>?</identificadorOmniCanal> <!--Optional:--> <identificadorRecibo>?</identificadorRecibo> <!--Optional:--> <numeroPeticion>?</numeroPeticion> <!--Optional:--> <identificadorNumeroTransaccion>?</identificadorNumeroTransaccion> <!--Optional:--> <aplicacionId>?</aplicacionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <ambienteId>?</ambienteId> <!--Optional:--> <transaccionId>?</transaccionId> <!--Optional:--> <accion>?</accion> <!--Optional:--> <tipo>?</tipo> <!--Optional:--> <fecha>?</fecha> <!--Optional:--> <hora>?</hora> <!--Optional:--> <auxiliar1>?</auxiliar1> <!--Optional:--> <auxiliar2>?</auxiliar2> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> </logItem> </logColeccion> </tas:MT_TasaCambio> </soapenv:Body> </soapenv:Envelope>";
 
@@ -222,14 +230,43 @@ public class AgenteCognitivo
 			respuesta.put("texto", texto + movimientos );
 			
 		}
-		else if(intent.equals(Intencion.DISPONIBLE.toString()) && usuario.estaLogueado())
+		else if(intentActual.equals(Intencion.DISPONIBLE.toString()) && usuario.estaLogueado())
 		{
+			Boolean variableResponder = Boolean.parseBoolean(getVariable(response, "responderDisponible"));
 			
+			if(variableResponder)
+			{
+			String requestBody = "<cor:consultaSaldo><activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <transaccionId>100128</transaccionId> <aplicacionId>?</aplicacionId> <paisId>?</paisId> <empresaId>?</empresaId> <regionId>?</regionId> <canalId>102 </canalId> <version>?</version> <llaveSesion></llaveSesion> <usuarioId></usuarioId> <token>?</token> <parametroAdicionalColeccion> <parametroAdicionalItem> <linea>0</linea> <tipoRegistro>UAI</tipoRegistro> <valor>TSTBASAPI01</valor> </parametroAdicionalItem> <parametroAdicionalItem> <linea>1</linea> <tipoRegistro>TC</tipoRegistro> <valor>M</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> <consultaSaldoColeccion> <tipoCuenta>4</tipoCuenta> <peticionId>?</peticionId> </consultaSaldoColeccion> </cor:consultaSaldo>";	
+			String responseXML = given().body(requestBody).post(wsSaldo).andReturn().asString();
+			
+
+			XmlPath xmlPath = new XmlPath(responseXML).setRoot("Respuesta");
+			NodeChildrenImpl productoColeccion = xmlPath.get("productoColeccion");
+			NodeImpl cuentaColeccion = productoColeccion.get(0).get("cuentaColeccion");
+			List<?> lista = cuentaColeccion.get("cuentaItem");
+			NodeImpl saldoColecion = (NodeImpl) lista.get(0);
+			NodeImpl saldoContable = saldoColecion.get("saldoColeccion");
+			NodeImpl saldo = saldoContable.get("contable");
+			NodeImpl moneda = saldoColecion.get("moneda");
+			
+			texto = texto.replaceAll("%stc", saldo.toString());
+			if(moneda.toString().equals("USD"))
+				texto = texto.replaceAll("%nmm", "dólares");
+			if(moneda.toString().equals("EUR"))
+				texto = texto.replaceAll("%nmm", "euros");
+			if(moneda.toString().equals("LPS"))
+				texto = texto.replaceAll("%nmm", "lempiras");
+
+				
+				texto = texto.replaceAll("%cc", saldo.toString());
+				
+			}
+
 			if(texto.contains("%pp"))
 			{
 				texto = texto.replaceAll("%pp", "200");
-				respuesta.put("texto", texto);
 			}
+			respuesta.put("texto", texto);
 		}
 		else
 		{
@@ -290,6 +327,18 @@ public class AgenteCognitivo
 			entitiesArray[i]= entities.get(i).getEntity();
 		}
 		return entitiesArray;
+	}
+	
+	public String getVariable(MessageResponse response, String variable) throws JSONException
+	{
+		String value = "";
+		
+		JSONObject json = new JSONObject(response.toString());
+		
+		json = new JSONObject(json.get("context").toString());
+		value = json.get(variable).toString();
+		
+		return value;
 	}
 	
 	public String getWsTasaCambio() {
