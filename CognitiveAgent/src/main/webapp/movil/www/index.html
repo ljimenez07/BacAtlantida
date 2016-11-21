@@ -103,12 +103,14 @@
 			function ofertas() 
 			{
 				var context;
-				$.ajax({
+				ajax({
 					url: serverDomain + "/ofertas/cantidad",
 					async: false,
+					data: "",
+					type: "GET",
 					success: function(data)
 					{
-						context = {cantidad: data};
+						context = data;
 					}
 				});
 				return Handlebars.templates.ofertas(context);
@@ -245,6 +247,7 @@
 			$.ajax({
 				type: param.type,
 				contentType :param.contentType,
+				async: param.async != undefined ? param.async : true,
 				dataType : "json",
 				url : param.url,
 				data : param.data
