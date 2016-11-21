@@ -6,17 +6,26 @@
 	<body>
 	<div th:include="fragments/backoffice :: body(paginaActual='reaccionDeOfertas')"></div>
 		  <div class="container">
+  
             <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="fecha-desde">Desde</label>
-                    <input type="text" name="fecha-desde" id="fecha-desde" class="form-control"/>
+                    <label for="fecha-desde">Desde<span>*</span></label>
+                    <div class="inner-addon right-addon">
+                    	<input type="text" name="fecha-desde" id="fecha-desde" class="form-control" />
+                    	<p id="desde-requerido"></p>
+                    	<i class="glyphicon glyphicon-calendar"></i>
+                   	</div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="">Hasta</label>
-                    <input type="text" name="fecha-hasta" id="fecha-hasta" class="form-control"/>
+                    <label for="">Hasta<span>*</span></label>
+                     	<div class="inner-addon right-addon">
+                    		<input type="text" name="fecha-hasta" id="fecha-hasta" class="form-control" />
+                    		<p id="hasta-requerido"></p>
+                    		<i class="glyphicon glyphicon-calendar"></i>
+                    	</div>
                 </div>
             </div>
             <div id="filtro" class="col-md-6">
@@ -35,25 +44,40 @@
                      <button class="btn btn-danger" onclick="crearGraficos()">Graficar <span class="glyphicon glyphicon-stats"></span></button>
                 </div>
             </div>
-        </div>       
+        </div> 
+  
         <!-- Seccion para dibujar los graficos correspondientes -->
         <div class="row">
-            <div class="col-md-6">
-                <h3>Gr&aacute;fico &quot;Me gusta&quot;</h3>
+            <div class="col-md-5">
                 <div id="grafico-megusta">
                     
                 </div>
             </div>
-            <div class="col-md-6">     
-                    <h3>Gr&aacute;fico &quot;No me gusta&quot;</h3>
+            <div class="col-md-5">     
                     <div id="grafico-no-megusta">
                     
                     </div>
             </div>
         </div>
+          <div class="row">
+            <div class="col-md-6" id="div-megusta">
+            	<h3 id="titulo-megusta"></h3>
+          		<canvas id="megusta">
+          			
+          		</canvas>
+            </div>
+            <div class="col-md-6" id="div-nomegusta">
+            	<h3 id="titulo-Nomegusta"></h3>     
+                <canvas id="nomegusta">
+                
+                
+                </canvas>
+            </div>
+        </div>
     </div>
 
 	<script type="text/javascript" th:src="@{js/chartist.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/Chart.min.js}"></script>
 	<script type="text/javascript" th:src="@{js/Graficos.js}"></script>
 	<script>
 		function crearGraficos()
@@ -61,57 +85,92 @@
 			
 			var desde = document.getElementById("fecha-desde").value;
 			var hasta = document.getElementById("fecha-hasta").value;
-			var filtro;
-			if(document.getElementById("filtro-categoria").checked)
+			if(validarFecha(desde, hasta))
 			{
-				filtro = document.getElementById("filtro-categoria").value;
+				var filtro;
+				if(document.getElementById("filtro-categoria").checked)
+				{
+					filtro = document.getElementById("filtro-categoria").value;
+					
+				}
+				else
+				{
+					filtro = document.getElementById("filtro-oferta").value;	
+				}
+
+				var object = new Object();
 				
+				object.desde = desde;
+				object.hasta = hasta;
+				object.filtro = filtro;
+				
+				var json = JSON.stringify(object);
+			
+				console.log(json);
+				 $.ajax
+			     (
+			        {
+			            method: "POST",
+			            url: "reaccionDeOfertasDatos",
+			            cache: true,
+			            async: false,
+			            dataType: "json",
+			            contentType: "application/json",
+			            data: "{ \"\parametros\"\: " + json + " }",
+			            success: function (resultado)
+						{
+			            	var seriesMegusta = [];
+			            	var labelsMegusta = [];
+			            	
+			            	var seriesNoMegusta = [];
+			            	var labelsNoMegusta = [];
+			            	
+			           		for(elemento of resultado)
+			           		{
+			           			if(elemento != null)
+			           			{
+									if(elemento.cantidad_like != 0 || elemento.tituloLabel != null)
+									{
+										seriesMegusta.push(elemento.cantidad_like);
+					           			labelsMegusta.push(elemento.tituloLabel);
+									}
+			           				
+				           			if(elemento.cantidad_dislike != 0 || elemento.tituloLabelDislike != null)
+				           			{
+				           				seriesNoMegusta.push(elemento.cantidad_dislike);
+					           			labelsNoMegusta.push(elemento.tituloLabelDislike); 
+				           			}
+			           			}
+			           			
+			           			
+			           		}
+			           		
+			           		//graficar(seriesMegusta, labelsMegusta, seriesNoMegusta, labelsNoMegusta);
+			           		graficoDePastel(labelsMegusta, seriesMegusta, labelsNoMegusta, seriesNoMegusta);
+			            }  
+			        }
+			    );
 			}
 			else
 			{
-				filtro = document.getElementById("filtro-oferta").value;	
+				var pDesde = document.getElementById("desde-requerido");
+				var pHasta = document.getElementById("hasta-requerido");
+				texto = document.createTextNode("Fecha desde, requerida");
+				texto2 = document.createTextNode("Fecha hasta, requerida");
+				pDesde.appendChild(texto);
+				pHasta.appendChild(texto2);
 			}
-
-			var object = new Object();
-			
-			object.desde = desde;
-			object.hasta = hasta;
-			object.filtro = filtro;
-			
-			var json = JSON.stringify(object);
-		
-			console.log(json);
-			 $.ajax
-		     (
-		        {
-		            method: "POST",
-		            url: "reaccionDeOfertasDatos",
-		            cache: true,
-		            async: false,
-		            dataType: "json",
-		            contentType: "application/json",
-		            data: "{ \"\parametros\"\: " + json + " }",
-		            success: function (resultado)
-					{
-		            	var seriesMegusta = [];
-		            	var labelsMegusta = [];
-		            	
-		            	var seriesNoMegusta = [];
-		            	var labelsNoMegusta = [];
-		            	
-		           		for(elemento of resultado)
-		           		{
-		           			seriesMegusta.push(elemento.cantidad_like);
-		           			labelsMegusta.push(elemento.tituloLabel);
-		           			
-		           			seriesNoMegusta.push(elemento.cantidad_dislike);
-		           			labelsNoMegusta.push(elemento.tituloLabelDislike);
-		           		}
-		           		graficar(seriesMegusta, labelsMegusta, seriesNoMegusta, labelsNoMegusta);
-		            }  
-		        }
-		    );
+	
 		}
+	function validarFecha(desde, hasta)
+	{
+		if(desde == "" || hasta == "")
+		{
+			return false;
+		}
+		else
+			return true;
+	}
 	</script>
 	</body>
 </html>
