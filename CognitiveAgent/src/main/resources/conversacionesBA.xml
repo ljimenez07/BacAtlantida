@@ -41,7 +41,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>El saldo de su tarjeta de crédito es de: $</frase>
+			<frase>El saldo de su tarjeta de crédito es de: $%stc</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>

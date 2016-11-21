@@ -127,10 +127,15 @@ public class AgenteCognitivo
 			List<?> lista = cuentaColeccion.get("cuentaItem");
 			NodeImpl saldoColecion = (NodeImpl) lista.get(0);
 			NodeImpl saldoContable = saldoColecion.get("saldoColeccion");
-			respuesta.put("texto", texto + saldoContable.get("contable"));
+			texto = texto.replace("%stc", saldoContable.get("contable").toString());
+			respuesta.put("texto", texto);
 			
 			consultaDao.insertar(
 					new Consulta(Intencion.SALDO.toString(), new Timestamp(new Date().getTime()), Intencion.SALDO_DESCRIPCION.toString() , 1));
+		}
+		else if(intent.equals(Intencion.SALDO.toString()) && ! usuario.estaLogueado())
+		{
+			respuesta.put("texto", "Debe iniciar sesión para que conozcas tu disponible.");
 		}
 		else if(intent.equals(Intencion.TASA_DE_CAMBIO.toString()) || texto.contains("%dc") || texto.contains("%dv") || texto.contains("%ec") || texto.contains("%ev")){
 			
