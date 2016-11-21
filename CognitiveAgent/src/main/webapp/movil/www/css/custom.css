@@ -91,6 +91,7 @@ input
 
 .panel-default {
 	border: none;
+	margin-bottom: 0;
 }
 
 .row.title {
@@ -100,7 +101,7 @@ input
 #enviar
 {
 	width: 38px;
-	height: 38px;
+	height: 39px;
 	background: url(../img/iconos-rojos-38x38.png) 0 0;
 	border: 0px;
 }
@@ -139,6 +140,66 @@ input
 	color:white;
 }
 
+
+/*Menu*/
+
+.modal-menu {
+	background-color: rgba(0,0,0,0.5);
+}
+
+.container.menu {
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	font-size: 16pt;
+	position: absolute;
+	z-index: 10;
+	left: 0;
+	top: 0;
+	min-width: 300px;
+	background-color: white;
+	color: #58595B;
+	border: 1px solid #E7E7E8;
+}
+
+.menu .row {
+	height: 60px;
+	border-top: 1px solid #E7E7E8;
+	border-bottom: 1px solid #E7E7E8;
+}
+
+.contenedor-imagen-menu
+{
+	padding: 12px;
+}
+
+.contenedor-texto-menu
+{
+	padding: 19.5px 15px;
+}
+
+.icono-conocerme {
+	width: 33px;
+	height: 36px;
+	cursor: pointer;
+	background: url(../img/iconos-menu-32x36.png) 0 0;
+}
+
+.icono-consultar {
+	width: 33px;
+	height: 36px;
+	cursor: pointer;
+	background: url(../img/iconos-menu-32x36.png) -38px 0;
+}
+
+.icono-salir {
+	width: 33px;
+	height: 36px;
+	cursor: pointer;
+	background: url(../img/iconos-menu-32x36.png) 33px 0;
+}
+
+
+/*Chat*/
+
 .header-chat-icon {
 	width: 39px;
 	height: 28px;
@@ -156,9 +217,6 @@ input
 	list-style: none;
 	background: none;
 	margin: 0;
-	padding: 0 0 50px 0;
-	margin-top: 60px;
-	margin-bottom: 10px;
 }
 .chat li {
 	padding: 0.5rem;
@@ -284,13 +342,13 @@ input
 }
 @media screen and (max-width: 800px) {
 	.msg img {
-	width: 300px;
-}
+		width: 300px;
+	}
 }
 @media screen and (max-width: 550px) {
 	.msg img {
-	width: 200px;
-}
+		width: 200px;
+	}
 }
 
 .msg time {
@@ -312,6 +370,15 @@ input
 	margin-right: 4px;
 }
 
+.contenedor-campo-de-entrada
+{
+	position: relative;
+	width: 100%;
+	left: 0;
+	bottom: 0;
+	background-color: white;
+	padding: 15px
+}
 
 
 
@@ -344,14 +411,14 @@ input
 	width: 25px;
 	height: 25px;
 	cursor: pointer;
-	background: url(../img/iconos-rojos-24x23.png) 25px 0;
+	background: url(../img/iconos-rojos-25x24.png) 25px 0;
 }
 
 .boton-dislike.estado-1 {
 	width: 25px;
 	height: 25px;
 	cursor: pointer;
-	background: url(../img/iconos-rojos-24x23.png) 0 0;
+	background: url(../img/iconos-rojos-25x24.png) 0 0;
 }
 
 .boton-like.estado-0 {
