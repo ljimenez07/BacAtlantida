@@ -18,7 +18,6 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import org.eclipse.jdt.internal.core.search.matching.ConstructorLocator;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,6 @@ import com.jayway.restassured.path.xml.XmlPath;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.data.Consulta;
-import com.ncubo.exceptions.NoSessionException;
 import com.ncubo.logicaDeConversaciones.Conversaciones;
 
 import javassist.expr.NewArray;
@@ -53,6 +51,9 @@ public class AgenteCognitivo
 	private String wsTasaCambio;
 	private String wsSaldo;
 	private String wsMovimientos;
+	private String userTextToSpeech;
+	private String passwordTextToSpeech;
+	private String voiceTextToSpeech;
 
 	@Autowired
 	private ConsultaDao consultaDao;
@@ -62,25 +63,35 @@ public class AgenteCognitivo
 	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
 	{
 	
-		return procesarMensaje(usuario,mensaje,date, workspaceDeChats);
+		return procesarMensaje(usuario,mensaje,date, workspaceDeChats, false);
 	}
 	
 	public String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
 	{
 	
-		return ""; //procesarMensaje(usuario,mensaje,date, workspaceDeConocerte);
+		return procesarMensaje(usuario,mensaje,date, workspaceDeConocerte, true);
 	}
 	
-	private String procesarMensaje(Usuario usuario, String mensaje, Date date, String workspace) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
+	private String procesarMensaje(Usuario usuario, String mensaje, Date date, String workspace, boolean esParaConocerte) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
 	{
 		JSONObject respuesta = new JSONObject();
 		ObjectMapper mapper = new ObjectMapper();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	//	String contexto= usuario.getContextoDeWatson();
 		
-		System.out.println("contexto de watson cuando entra "+ usuario.getContextoDeWatson());
+		JSONObject contenidoDelContexto ;
+		if( esParaConocerte )
+		{
+			System.out.println("contexto de watson cuando entra "+ usuario.getContextoDeWatsonParaConocerte());
+			contenidoDelContexto = new JSONObject(usuario.getContextoDeWatsonParaConocerte());
+		}
+		else
+		{
+			System.out.println("contexto de watson cuando entra "+ usuario.getContextoDeWatsonParaChats());
+			contenidoDelContexto = new JSONObject(usuario.getContextoDeWatsonParaChats());
+		}
 		
-		JSONObject contenidoDelContexto = new JSONObject(usuario.getContextoDeWatson());
+		
 		if( contenidoDelContexto == null ) contenidoDelContexto = new JSONObject();
 				
 		Map<String, Object> myContext = mapper.readValue(contenidoDelContexto.toString(), new TypeReference<Map<String, Object>>(){});
@@ -100,35 +111,53 @@ public class AgenteCognitivo
 		String intent = "";
 		String texto = "";
 		for(int i = 0; i < salida.size(); i++){
-			
-			try{
-				intent = salida.get(i).obtenerLaRespuestaDeIBM().obtenerLaIntencionDeLaRespuesta().getNombre();
-				System.out.println("Contexto Watson: "+salida.get(i).obtenerLaRespuestaDeIBM().messageResponse().getContext());
-			}catch(Exception e){}
 			texto = texto + " " + salida.get(i).getMiTexto();
+			if( salida.get(i).obtenerLaRespuestaDeIBM() == null)
+			{
+				continue;
+			}
+			intent = salida.get(i).obtenerLaRespuestaDeIBM().obtenerLaIntencionDeLaRespuesta().getNombre();
+			System.out.println("Contexto Watson: "+salida.get(i).obtenerLaRespuestaDeIBM().messageResponse().getContext());
+		
 		}
 		texto = texto.replace("$", "");
 		//usuario.setContextoDeWatson(new JSONObject(response.toString()).getJSONObject("context").toString());
 		
-		System.out.println("contexto de watson cuando sale "+ usuario.getContextoDeWatson());
 		
-		//String intent = getIntent(response);
-		//String texto = getText(response);
-		if(intent.equals(Intencion.SALDO.toString()) && usuario.estaLogueado())
+	/*	if( esParaConocerte )
+		{
+			usuario.setContextoDeWatsonParaConocerte(new JSONObject(response.toString()).getJSONObject("context").toString());
+			System.out.println("contexto de watson cuando sale "+ usuario.getContextoDeWatsonParaConocerte());
+		}
+		else
+		{
+			usuario.setContextoDeWatsonParaChats(new JSONObject(response.toString()).getJSONObject("context").toString());
+			System.out.println("contexto de watson cuando sale "+ usuario.getContextoDeWatsonParaChats());
+		}*/
+		
+		if(intent.equals(Intencion.SALDO.toString()) && usuario.estaLogueado() || texto.contains("%stc"))
 		{
 			String requestBody = "<cor:consultaSaldo><activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <transaccionId>100128</transaccionId> <aplicacionId>?</aplicacionId> <paisId>?</paisId> <empresaId>?</empresaId> <regionId>?</regionId> <canalId>102 </canalId> <version>?</version> <llaveSesion></llaveSesion> <usuarioId></usuarioId> <token>?</token> <parametroAdicionalColeccion> <parametroAdicionalItem> <linea>0</linea> <tipoRegistro>UAI</tipoRegistro> <valor>TSTBASAPI01</valor> </parametroAdicionalItem> <parametroAdicionalItem> <linea>1</linea> <tipoRegistro>TC</tipoRegistro> <valor>M</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> <consultaSaldoColeccion> <tipoCuenta>4</tipoCuenta> <peticionId>?</peticionId> </consultaSaldoColeccion> </cor:consultaSaldo>";	
 			String responseXML = given().body(requestBody).post(wsSaldo).andReturn().asString();
 			
 			System.out.println(wsSaldo+" \n\t  "+requestBody+"   \n\t"+responseXML);
 			
-			XmlPath xmlPath = new XmlPath(responseXML).setRoot("Respuesta");
-			NodeChildrenImpl productoColeccion = xmlPath.get("productoColeccion");
-			NodeImpl cuentaColeccion = productoColeccion.get(0).get("cuentaColeccion");
-			List<?> lista = cuentaColeccion.get("cuentaItem");
-			NodeImpl saldoColecion = (NodeImpl) lista.get(0);
-			NodeImpl saldoContable = saldoColecion.get("saldoColeccion");
-			texto = texto.replace("%stc", saldoContable.get("contable").toString());
-			respuesta.put("texto", texto);
+			if(texto.contains("%pp"))
+			{
+				texto = texto.replaceAll("%pp", "200");
+				respuesta.put("texto", texto);
+			}
+			else{
+				XmlPath xmlPath = new XmlPath(responseXML).setRoot("Respuesta");
+				NodeChildrenImpl productoColeccion = xmlPath.get("productoColeccion");
+				NodeImpl cuentaColeccion = productoColeccion.get(0).get("cuentaColeccion");
+				List<?> lista = cuentaColeccion.get("cuentaItem");
+				NodeImpl saldoColecion = (NodeImpl) lista.get(0);
+				NodeImpl saldoContable = saldoColecion.get("saldoColeccion");
+				NodeImpl moneda = saldoColecion.get("moneda");
+				texto = texto.replace("%stc", saldoContable.get("contable")+" "+moneda);
+				respuesta.put("texto", texto);
+			}
 			
 			consultaDao.insertar(
 					new Consulta(Intencion.SALDO.toString(), new Timestamp(new Date().getTime()), Intencion.SALDO_DESCRIPCION.toString() , 1));
@@ -184,14 +213,15 @@ public class AgenteCognitivo
 				NodeImpl movimiento = (NodeImpl) codigo.get(last);
 				NodeImpl fecha = movimiento.get("fecha");
 				NodeImpl hora = movimiento.get("hora");
-				NodeImpl tipoTransaccion = movimiento.get("tipoTransaccion");
+				NodeImpl codigoTransaccion = movimiento.get("codigoTransaccion");
 				NodeImpl montoTransaccion = movimiento.get("montoTransaccion");
 				NodeImpl moneda = movimiento.get("moneda");
+				NodeImpl descripcion = movimiento.get("descripcion");
 
-				if(tipoTransaccion.getValue().equals("5"))
-					movimientos = movimientos +" El día "+fecha+ " a las "+ hora + " se realizo un crédito por " + montoTransaccion + " " + moneda;
-				if(tipoTransaccion.getValue().equals("0"))
-					movimientos = movimientos +" El día "+fecha+ " a las "+ hora + " se realizo un débito por " + montoTransaccion + " " + moneda;
+				if(codigoTransaccion.getValue().equals("CR"))
+					movimientos = movimientos +"<br> El día "+fecha+ " a las "+ hora + " se realizó un crédito por " + montoTransaccion + " " + moneda+" con el detalle "+descripcion+".";
+				if(codigoTransaccion.getValue().equals("DB"))
+					movimientos = movimientos +"<br> El día "+fecha+ " a las "+ hora + " se realizó un débito por " + montoTransaccion + " " + moneda+" con el detalle "+descripcion+".";
 				
 				last--;
 				consultaDao.insertar(
@@ -199,6 +229,15 @@ public class AgenteCognitivo
 			}
 			respuesta.put("texto", texto + movimientos );
 			
+		}
+		else if(intent.equals(Intencion.DISPONIBLE.toString()) && usuario.estaLogueado())
+		{
+			
+			if(texto.contains("%pp"))
+			{
+				texto = texto.replaceAll("%pp", "200");
+				respuesta.put("texto", texto);
+			}
 		}
 		else
 		{
@@ -306,4 +345,37 @@ public class AgenteCognitivo
 	public void setWorkspaceDeConocerte(String workspaceDeConocerte) {
 		this.workspaceDeConocerte = workspaceDeConocerte;
 	}
+
+	public String getUserTextToSpeech() {
+		return userTextToSpeech;
+	}
+
+	public void setUserTextToSpeech(String userTextToSpeech) {
+		this.userTextToSpeech = userTextToSpeech;
+	}
+
+	public String getPasswordTextToSpeech() {
+		return passwordTextToSpeech;
+	}
+
+	public void setPasswordTextToSpeech(String passwordTextToSpeech) {
+		this.passwordTextToSpeech = passwordTextToSpeech;
+	}
+
+	public String getVoiceTextToSpeech() {
+		return voiceTextToSpeech;
+	}
+
+	public void setVoiceTextToSpeech(String voiceTextToSpeech) {
+		this.voiceTextToSpeech = voiceTextToSpeech;
+	}
+
+	public ConsultaDao getConsultaDao() {
+		return consultaDao;
+	}
+
+	public void setConsultaDao(ConsultaDao consultaDao) {
+		this.consultaDao = consultaDao;
+	}
+	
 }

@@ -38,6 +38,7 @@ public class Respuesta {
 		this.misIntenciones = new Intenciones();
 		this.idsDeOracionesAfirmativas = null;
 		this.hayOracionesAfirmativas = false;
+		this.watsonRespuesta = null;
 	}
 	
 	public Respuesta(ConversationWatson conversacion, String context){

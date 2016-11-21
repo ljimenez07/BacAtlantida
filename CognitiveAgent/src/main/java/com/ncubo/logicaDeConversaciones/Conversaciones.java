@@ -39,8 +39,9 @@ public class Conversaciones {
 					}
 				}
 			}catch(Exception e){
-				
+				System.out.println("Error al extraer el id del usuario y de la sesion");
 			}
+			
 			if (cliente == null){
 				if (! usuario.getIdSesion().equals("")){
 					if( ! existeLaConversacion(usuario.getIdSesion())){
@@ -83,22 +84,26 @@ public class Conversaciones {
 	public ArrayList<Salida> conversarConElAgente(Usuario cliente, String textoDelCliente){
 		ArrayList<Salida> resultado = null;
 		logger.debug("Conversar ..........");
-		
-		try{
+		System.out.println("Coversar con "+cliente.getIdSesion());
+		/*try{
 			if( ! cliente.getUsuarioId().equals("") && ! cliente.getIdSesion().equals("") && cliente.estaLogueado()){ // Esta logueado
 				// Verificar si ya el usuario existe
 				if(existeElCliente(cliente.getUsuarioId())){
 					// TODO Verificar si cambio el id de sesion, si es asi agregarla al cliente y hacerlo saber a conversacion
-					
 					resultado = misConversaciones.get(cliente.getUsuarioId()).analizarLaRespuestaConWatson(textoDelCliente);
+					
 				}else{ // Crear un nuevo Usuaio
 					crearUnaNuevoConversacion(cliente);
-					resultado = inicializarConversacionConElAgente(cliente.getUsuarioId());
+					if(existeLaConversacion(cliente.getIdSesion())){ // Es porque ya se cliente esta conversando y no se habia logueado, eso quiere decir que se tiene que mantener el contexto y NO saludar de nuevo
+						resultado = misConversaciones.get(cliente.getUsuarioId()).analizarLaRespuestaConWatson(textoDelCliente);
+					}else{
+						resultado = inicializarConversacionConElAgente(cliente.getUsuarioId());
+					}
 				}
 			}
 		}catch(Exception e){
 			resultado = null;
-		}
+		}*/
 		
 		if (resultado == null){
 			if(! cliente.getIdSesion().equals("")){

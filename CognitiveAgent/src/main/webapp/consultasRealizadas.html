@@ -45,69 +45,77 @@
 	});
 </script>
 <body>
-	<div th:include="fragments/backoffice :: body(paginaActual='consultasRealizadas')"></div>
-	<div class="container">
-		<div class="row center">
-			<form th:action="@{/filtrarConsultasRealizadas}" th:method="post">
-				<div class="col-md-4">
-					<div class="form-group">
-						<label for="fecha-desde-lbl" class="texto-normal-ca">Desde</label>
-						<div class="inner-addon right-addon">
-							<input type="text" name="fechaDesde" id="fechaDesde" class="form-control" value="" th:value="${fechaDesde}"/>
-							<i class="glyphicon glyphicon-calendar"></i>
+	<div class="div-contenedor">
+	
+		<div th:include="fragments/header :: body"></div>
+		<div th:include="fragments/backoffice :: body(paginaActual='consultasRealizadas')"></div>
+	
+		<div class="container agregar-padding-bottom">
+			<div class="row center">
+				<form th:action="@{/BackOffice/filtrarConsultasRealizadas}" th:method="post">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="fecha-desde-lbl" class="texto-normal-ca">Desde</label>
+							<div class="inner-addon right-addon">
+								<input type="text" name="fechaDesde" id="fechaDesde" class="form-control" value="" th:value="${fechaDesde}"/>
+								<i class="glyphicon glyphicon-calendar"></i>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="form-group">
-						<label for="fecha-hasta-lbl" class="texto-normal-ca">Hasta</label>
-						<div class="inner-addon right-addon">
-							<input type="text" name="fechaHasta" id="fechaHasta" class="form-control" value="" th:value="${fechaHasta}"/>
-							<i class="glyphicon glyphicon-calendar"></i>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="fecha-hasta-lbl" class="texto-normal-ca">Hasta</label>
+							<div class="inner-addon right-addon">
+								<input type="text" name="fechaHasta" id="fechaHasta" class="form-control" value="" th:value="${fechaHasta}"/>
+								<i class="glyphicon glyphicon-calendar"></i>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-md-4 boton-mostrar">
-					<button class="btn btn-default">
-						<span class="texto-junto-imagen ">Mostrar</span>
-						<span class="imagen-visualizar"></span>
-					</button>
-				</div>
-			</form>
-		</div>
-		<div class="row center" th:if="${mensajeError} != null">
-			<div class="col-md-12">
-				<div class="form-group">
-					<p>**Fechas incorrectas.</p>
-				</div>
+					<div class="col-md-4 boton-mostrar">
+						<button class="btn btn-default">
+							<span class="texto-junto-imagen ">Mostrar</span>
+							<span class="imagen-visualizar"></span>
+						</button>
+					</div>
+				</form>
 			</div>
-		</div>
-		<div class="row center" th:unless="${consultasFiltradas} == null">
-			<div class="table-responsive" th:if="${not #lists.isEmpty(consultasFiltradas)}">
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th class="text-center titulo-tabla-ca">Tema consultado</th>
-							<th class="text-center titulo-tabla-ca">Cantidad</th>
-						</tr>
-					</thead>
-					<tbody>
-						<th:block th:each="consulta : ${consultasFiltradas}">
-							<tr>
-								<td class="texto-normal-ca" th:text="${consulta.descripcion}"/>
-								<td class="texto-normal-ca text-center" th:text="${consulta.vecesConsultado}"/>
-							</tr>
-						</th:block>
-					</tbody>
-				</table>
-			</div>
-			<div th:if="${#lists.isEmpty(consultasFiltradas)}">
+			<div class="row center" th:if="${mensajeError} != null">
 				<div class="col-md-12">
-					<label for="mensajeTablaVacia" class="text-center">No se encontraron registros con esos criterios</label>
+					<div class="form-group">
+						<p>**Fechas incorrectas.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row center" th:unless="${consultasFiltradas} == null">
+				<div class="table-responsive" th:if="${not #lists.isEmpty(consultasFiltradas)}">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th class="text-center titulo-tabla-ca">Tema consultado</th>
+								<th class="text-center titulo-tabla-ca">Cantidad</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="consulta : ${consultasFiltradas}">
+								<tr>
+									<td class="texto-normal-ca" th:text="${consulta.descripcion}"/>
+									<td class="texto-normal-ca text-center" th:text="${consulta.vecesConsultado}"/>
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+				</div>
+				<div th:if="${#lists.isEmpty(consultasFiltradas)}">
+					<div class="col-md-12">
+						<label for="mensajeTablaVacia" class="text-center">No se encontraron registros con esos criterios</label>
+					</div>
 				</div>
 			</div>
 		</div>
-
+		<br/>
 	</div>
+	
+	<div th:include="fragments/footer :: body"></div>
+	
 </body>
 </html>

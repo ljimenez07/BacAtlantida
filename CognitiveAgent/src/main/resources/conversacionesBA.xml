@@ -36,12 +36,33 @@
 		<vineta></vineta>
 	</conversacion>
 	
-	<conversacion id="saldo">
+	<conversacion id="quiereSaldoTarjetaCredito">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>¿Quieres el saldo de tu tarjeta de crédito?</curioso>
+			<impertinente>Necesito saber, ¿si te refieres a la cuenta de ahorros o tarjeta de crédito?.</impertinente>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="saldoCredito">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>El saldo de su tarjeta de crédito es de: $%stc</frase>
+			<frase>El saldo de su tarjeta de crédito es de: $%stc.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="saldoCuentaAhorros">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>false</enVozAlta>
+		<frases>
+			<frase>El saldo de su cuenta de ahorros es de: $%stc.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -51,7 +72,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Por ahora solo puedo proporcionar el saldo de su tarjeta de crédito.</frase>
+			<frase>Por ahora solo puedo proporcionar el saldo de su tarjeta de crédito y de la cuenta de ahorros.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>

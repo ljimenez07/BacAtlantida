@@ -74,15 +74,16 @@
 		<script>
 			function ofertas() 
 			{
-			  var context;
-			  $.ajax({
-			    url: serverDomain + "/ofertas/cantidad",
-			    async: false,
-			    success: function(data) {
-			      context = {cantidad: data};
-			    }
-			  });
-		      return Handlebars.templates.ofertas(context);
+				var context;
+				$.ajax({
+					url: serverDomain + "/ofertas/cantidad",
+					async: false,
+					success: function(data)
+					{
+						context = {cantidad: data};
+					}
+				});
+				return Handlebars.templates.ofertas(context);
 			}
 			function quitarModal()
 			{
@@ -101,9 +102,21 @@
 				app.find("#"+href).addClass("show");
 			}
 			
+			function getCookie(name) {
+				var cookies = document.cookie.split(';');
+				for(var i=0 ; i < cookies.length ; ++i) {
+					var pair = cookies[i].trim().split('=');
+					if(pair[0] == name)
+						return pair[1];
+				}
+				return null;
+			};
+			
 			var pantallas = new Object();
 			$(function(){
 
+				var test = getCookie("SESSION");
+				console.log(test);
 				Handlebars.registerHelper('compare', function (lvalue, operator, rvalue, options) 
 				{
 					var operators, result;
@@ -193,6 +206,7 @@
 		<script>
 		function ajax(param)
 		{
+			console.log(param);
 			$.ajax({
 				type: param.type,
 				contentType :param.contentType,

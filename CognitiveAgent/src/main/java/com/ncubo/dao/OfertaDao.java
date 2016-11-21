@@ -209,9 +209,11 @@ public class OfertaDao
 
 	public List<Oferta> ultimasDiezOfertasDesde(int indiceInicial, String idUsuario) throws ClassNotFoundException, SQLException
 	{
+		boolean esUnUsuarioConocido = true;
 		if(idUsuario == null)
 		{
 			idUsuario = "NULL";
+			esUnUsuarioConocido = false;
 		}
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
 		String query = "SELECT " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + ", "
@@ -243,7 +245,7 @@ public class OfertaDao
 		
 		while (rs.next())
 		{
-			ofertas.add(new Oferta(
+			Oferta oferta = new Oferta(
 					rs.getInt(atributo.ID_OFERTA.toString()),
 					rs.getString(atributo.TITULO_DE_OFERTA.toString()),
 					rs.getString(atributo.COMERCIO.toString()),
@@ -259,8 +261,10 @@ public class OfertaDao
 					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),
 					rs.getInt(atributo.LIKES.toString()),
 					rs.getInt(atributo.DISLIKES.toString())
-					));
-	}
+					);
+			oferta.setEsUnUsuarioConocido(esUnUsuarioConocido);
+			ofertas.add(oferta);
+		}
 
 		dao.closeConBD();
 		return ofertas;
@@ -268,9 +272,11 @@ public class OfertaDao
 	
 	public Oferta obtener(int idOferta, String idUsuario) throws ClassNotFoundException, SQLException
 	{
+		boolean esUnUsuarioConocido = true;
 		if(idUsuario == null)
 		{
 			idUsuario = "NULL";
+			esUnUsuarioConocido = false;
 		}
 		String query = "SELECT " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + ", "
 				+ atributo.TITULO_DE_OFERTA + ", "
@@ -316,6 +322,7 @@ public class OfertaDao
 					rs.getInt(atributo.LIKES.toString()),
 					rs.getInt(atributo.DISLIKES.toString())
 					);
+			oferta.setEsUnUsuarioConocido(esUnUsuarioConocido);
 			dao.closeConBD();
 			return oferta;
 		}
@@ -333,7 +340,7 @@ public class OfertaDao
 		Connection con = dao.openConBD();
 		ResultSet rs = con.createStatement().executeQuery(query);
 		
-		while (rs.next())
+		if(rs.next())
 		{
 			int cantidad = rs.getInt("cantidad");
 			dao.closeConBD();
