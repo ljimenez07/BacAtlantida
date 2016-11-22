@@ -17,7 +17,6 @@ import com.ncubo.chatbot.partesDeLaConversacion.Tema;
 import com.ncubo.chatbot.partesDeLaConversacion.Temario;
 import com.ncubo.chatbot.participantes.Agente;
 import com.ncubo.chatbot.participantes.Cliente;
-import com.ncubo.chatbot.participantes.Participante.Manifestarse;
 
 public class Conversacion {
 
