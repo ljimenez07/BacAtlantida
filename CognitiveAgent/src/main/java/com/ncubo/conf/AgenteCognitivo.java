@@ -1,7 +1,6 @@
 package com.ncubo.conf;
 
 import static com.jayway.restassured.RestAssured.given;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -27,7 +26,6 @@ import org.springframework.stereotype.Component;
 import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Entity;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Intent;
-import com.ibm.watson.developer_cloud.conversation.v1.model.MessageRequest;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 import com.jayway.restassured.internal.path.xml.NodeChildrenImpl;
 import com.jayway.restassured.internal.path.xml.NodeImpl;
@@ -36,8 +34,6 @@ import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.data.Consulta;
 import com.ncubo.logicaDeConversaciones.Conversaciones;
-
-import javassist.expr.NewArray;
 
 @Component
 @ConfigurationProperties("servercognitivo")

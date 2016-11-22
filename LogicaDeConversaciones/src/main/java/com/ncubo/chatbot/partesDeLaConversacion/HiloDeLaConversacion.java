@@ -16,6 +16,7 @@ public class HiloDeLaConversacion {
 	private Temas temasYaDichosQueNoPuedoRepetir = new Temas();
 	private ArrayList<Frase> loQueYaSeHaDicho = new ArrayList<Frase>();
 	private ArrayList<Respuesta> respuestas = new ArrayList<Respuesta>();
+	private ArrayList<Salida> misSalidas = new ArrayList<Salida>();
 	
 	public HiloDeLaConversacion(){}
 	
@@ -44,4 +45,7 @@ public class HiloDeLaConversacion {
 		respuestas.add(miRespuesta);
 	}
 	
+	public void agregarSalidaAlHilo(Salida salida){
+		misSalidas.add(salida);
+	}
 }
