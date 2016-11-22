@@ -112,4 +112,11 @@ public abstract class Temario
 		else
 			return null;
 	}
+	
+	public void generarAudioEstaticosDeTodasLasFrases(String pathAGuardar, String ipPublica){
+		for(Tema tema: temasDelDiscurso){
+			tema.generarAudiosEstaticos(pathAGuardar, ipPublica);
+		}
+	}
+	
 }

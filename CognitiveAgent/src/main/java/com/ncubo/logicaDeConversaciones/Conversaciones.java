@@ -1,15 +1,14 @@
 package com.ncubo.logicaDeConversaciones;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Hashtable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.chatbot.partesDeLaConversacion.Temario;
 import com.ncubo.chatbot.participantes.Cliente;
+import com.ncubo.chatbot.watson.TextToSpeechWatson;
 import com.ncubo.conf.Usuario;
 
 public class Conversaciones {
@@ -19,12 +18,21 @@ public class Conversaciones {
 	private final static Hashtable<String, Cliente> misClientes = new Hashtable<String, Cliente>();
 	private final static Temario temarioDelBancoAtlantida = new TemarioDelBancoAtlantida();
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final String usuarioTTS;
+	private final String contrasenaTTS;
+	private final String vozTTS;
+	
+	public Conversaciones(String usuarioTTS, String contrasenaTTS, String vozTTS){
+		this.usuarioTTS = usuarioTTS;
+		this.contrasenaTTS = contrasenaTTS;
+		this.vozTTS = vozTTS;
+	}
 	
 	private String crearUnaNuevoConversacion(Usuario usuario){
 		String resultado = "El usuario no se pudo agregar";
 		try{
 			Cliente cliente = null;
-			/*try{
+			try{
 				if(! usuario.getUsuarioId().equals("") && ! usuario.getIdSesion().equals("")){
 					if( ! existeElCliente(usuario.getUsuarioId())){
 						cliente = new Cliente(usuario.getUsuarioNombre(), usuario.getUsuarioId());
@@ -40,7 +48,7 @@ public class Conversaciones {
 				}
 			}catch(Exception e){
 				System.out.println("Error al extraer el id del usuario y de la sesion");
-			}*/
+			}
 			
 			if (cliente == null){
 				if (! usuario.getIdSesion().equals("")){
@@ -83,14 +91,14 @@ public class Conversaciones {
 		ArrayList<Salida> resultado = null;
 		logger.debug("Conversar ..........");
 		System.out.println("Coversar con "+cliente.getIdSesion());
-		/*try{
+		try{
 			if( ! cliente.getUsuarioId().equals("") && ! cliente.getIdSesion().equals("") && cliente.estaLogueado()){ // Esta logueado
 				// Verificar si ya el usuario existe
 				if(existeElCliente(cliente.getUsuarioId())){
 					// TODO Verificar si cambio el id de sesion, si es asi agregarla al cliente y hacerlo saber a conversacion
 					resultado = misConversaciones.get(cliente.getUsuarioId()).analizarLaRespuestaConWatson(textoDelCliente);
 					
-				}else{ // Crear un nuevo Usuaio
+				}else{ // Crear un nuevo Cliente
 					crearUnaNuevoConversacion(cliente);
 					if(existeLaConversacion(cliente.getIdSesion())){ // Es porque ya se cliente esta conversando y no se habia logueado, eso quiere decir que se tiene que mantener el contexto y NO saludar de nuevo
 						resultado = misConversaciones.get(cliente.getUsuarioId()).analizarLaRespuestaConWatson(textoDelCliente);
@@ -101,7 +109,7 @@ public class Conversaciones {
 			}
 		}catch(Exception e){
 			resultado = null;
-		}*/
+		}
 		
 		if (resultado == null){
 			if(! cliente.getIdSesion().equals("")){
@@ -117,6 +125,11 @@ public class Conversaciones {
 		}
 		
 		return resultado;
+	}
+	
+	public void generarAudiosEstaticos(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String ipPublica, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP){
+		TextToSpeechWatson.getInstance(usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP);
+		temarioDelBancoAtlantida.generarAudioEstaticosDeTodasLasFrases(pathAGuardar, ipPublica);
 	}
 	
 }

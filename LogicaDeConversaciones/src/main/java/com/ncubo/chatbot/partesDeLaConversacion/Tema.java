@@ -80,4 +80,9 @@ public class Tema
 		return sePuedeRepetir;
 	}
 	
+	public void generarAudiosEstaticos(String pathAGuardar, String ipPublica){
+		for(int index = 0; index < frases.length; index ++){
+			frases[index].generarAudiosEstaticos(pathAGuardar, ipPublica);
+		}
+	}
 }

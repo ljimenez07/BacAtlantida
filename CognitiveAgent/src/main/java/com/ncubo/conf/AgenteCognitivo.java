@@ -54,7 +54,7 @@ public class AgenteCognitivo
 	@Autowired
 	private ConsultaDao consultaDao;
 
-	private Conversaciones miConversaciones = new Conversaciones();
+	private final Conversaciones miConversaciones = new Conversaciones(getUserTextToSpeech(), getPasswordTextToSpeech(), getVoiceTextToSpeech());
 	
 	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
 	{
@@ -299,6 +299,10 @@ public class AgenteCognitivo
 			entitiesArray[i]= entities.get(i).getEntity();
 		}
 		return entitiesArray;
+	}
+	
+	public void generarTodosLosAudiosEstaticos(){
+		//miConversaciones.generarAudiosEstaticos(usuarioTTS, contrasenaTTS, vozTTS, pathAGuardar, ipPublica, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP);
 	}
 	
 	public String getWsTasaCambio() {

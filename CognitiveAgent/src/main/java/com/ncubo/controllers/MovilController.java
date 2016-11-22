@@ -131,6 +131,13 @@ public class MovilController {
 		throw new CredencialesInvalidosException();
 	}
 
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/generarAudiosEstaticos", method = RequestMethod.GET)
+	@ResponseBody String generarAudiosEstaticos(){
+		serverCognitivo.generarTodosLosAudiosEstaticos();
+		return "Ok.";
+	}
+	
 	@ExceptionHandler(Throwable.class)
 	public @ResponseBody String handleAllException(final HttpServletRequest req, HttpServletResponse response, final Exception ex) throws MessagingException 
 	{

@@ -7,6 +7,7 @@ public class Salida {
 	private Vineta miVineta;
 	private Respuesta miRespuesta;
 	private Tema temaActual;
+	private Frase fraseActual;
 	
 	public Salida(){
 		miTexto = "";
@@ -16,40 +17,45 @@ public class Salida {
 		temaActual = null;
 	}
 	
-	public void escribir(String texto, Respuesta respuesta, Tema tema){
+	public void escribir(String texto, Respuesta respuesta, Tema tema, Frase frase){
 		this.miTexto = texto;
 		this.miRespuesta = respuesta;
 		this.temaActual = tema;
+		this.fraseActual = frase;
 		//System.out.println(texto);
 	}
 	
-	public void escribir(Sonido sonido, Respuesta respuesta, Tema tema){
+	public void escribir(Sonido sonido, Respuesta respuesta, Tema tema, Frase frase){
 		this.miSonido = sonido;
 		this.miRespuesta = respuesta;
 		this.temaActual = tema;
+		this.fraseActual = frase;
 		//System.out.println(sonido.url());
 	} 
 	
-	public void escribir(Vineta vineta, Respuesta respuesta, Tema tema){
+	public void escribir(Vineta vineta, Respuesta respuesta, Tema tema, Frase frase){
 		this.miVineta = vineta;
 		this.miRespuesta = respuesta;
 		this.temaActual = tema;
+		this.fraseActual = frase;
 		//System.out.println(vineta.url());
 	} 
 	
-	public void escribir(String texto, Sonido sonido, Respuesta respuesta, Tema tema){
+	public void escribir(String texto, Sonido sonido, Respuesta respuesta, Tema tema, Frase frase){
 		this.miTexto = texto;
 		this.miSonido = sonido;
 		this.miRespuesta = respuesta;
 		this.temaActual = tema;
+		this.fraseActual = frase;
 	}
 	
-	public void escribir(String texto, Sonido sonido, Vineta vineta, Respuesta respuesta, Tema tema){
+	public void escribir(String texto, Sonido sonido, Vineta vineta, Respuesta respuesta, Tema tema, Frase frase){
 		this.miTexto = texto;
 		this.miSonido = sonido;
 		this.miVineta = vineta;
 		this.miRespuesta = respuesta;
 		this.temaActual = tema;
+		this.fraseActual = frase;
 	}
 	
 	public String getMiTexto() {
@@ -66,6 +72,14 @@ public class Salida {
 	
 	public Respuesta obtenerLaRespuestaDeIBM(){
 		return miRespuesta;
+	}
+	
+	public Tema getTemaActual() {
+		return temaActual;
+	}
+
+	public Frase getFraseActual() {
+		return fraseActual;
 	}
 	
 }

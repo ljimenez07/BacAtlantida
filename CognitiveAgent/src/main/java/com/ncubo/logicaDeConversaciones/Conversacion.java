@@ -17,6 +17,7 @@ import com.ncubo.chatbot.partesDeLaConversacion.Tema;
 import com.ncubo.chatbot.partesDeLaConversacion.Temario;
 import com.ncubo.chatbot.participantes.Agente;
 import com.ncubo.chatbot.participantes.Cliente;
+import com.ncubo.chatbot.participantes.Participante.Manifestarse;
 
 public class Conversacion {
 
@@ -37,6 +38,8 @@ public class Conversacion {
 		//this.participantes = new Participantes();
 		this.participante = participante;
 		this.agente = new Agente(temario.contenido().getMiWorkSpaces());
+		this.agente.manifestarseEnFormaOral();
+		
 		this.hilo = new HiloDeLaConversacion();
 		//this.participantes.agregar(agente).agregar(participante);
 		this.temario = temario;
