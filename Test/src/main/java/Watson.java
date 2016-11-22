@@ -35,6 +35,8 @@ public class Watson
 				continue;
 			}
 			
+			System.out.println("Procesando >> "+ficheros[x].getName());
+			
 			FileInputStream fstream = new FileInputStream(ficheros[x]);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 			

@@ -1,0 +1,4 @@
+@IniciarSesion
+Buenos días / #saludos
+Cual es la tasa de cambio? / #tasaDeCambio
+Cual es mi saldo real? /  El saldo de su tarjeta de crédito es de:30344.62

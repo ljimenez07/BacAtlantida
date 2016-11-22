@@ -1,0 +1,3 @@
+Hola joven / #saludos
+Cambió el precio del euro? / #euro
+Dime el cambio de la moneda /  #tasaDeCambio

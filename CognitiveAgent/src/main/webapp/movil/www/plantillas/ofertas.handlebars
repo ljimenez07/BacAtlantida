@@ -1,78 +1,127 @@
+<audio id="buzzer" src="" type="audio/ogg">Your browser does not support the &#60;audio&#62; element.</audio>
 <div class="row">
-  <div class="col-xs-12">
-    <p><strong>¡Hola!</strong></p><br>
-    <p>Inicie sesi&oacute;n para que conozcas tus <strong>mejores beneficios</strong></p>
-    <br>
-  </div>
+	<div class="col-xs-12">
+		<p><strong>¡Hola!</strong></p><br>
+		<p>Inicie sesi&oacute;n para que conozcas tus <strong>mejores beneficios</strong></p>
+		<br>
+	</div>
 </div>
+
 <div class="contenedor-de-ofertas">
 </div>
+
 {{#compare cantidad ">" 10}}
-  <br>
-  <div class="row">
-    <div class="col-xs-12 text-center">
-      <span id="mostrar-mas">Mostrar más</span>
-    </div>
-  </div>
+	<br>
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<span id="mostrar-mas">Mostrar más</span>
+		</div>
+	</div>
 {{/compare}}
 
 <script type="text/javascript">
+	var buzzer = $('#buzzer'); 
 var pagina = 1;
 cargarOfertas();
 pagina++;
 
-$("#mostrar-mas").click(function() {
-  $.ajax({
-    url: serverDomain + "/ofertas/cantidad",
-    async: false,
-    success: function(data) {
-  	  cargarOfertas();
-      var cantidadDeOfertasMostradas = pagina * 10;
-      console.log(cantidadDeOfertasMostradas);
-      console.log(data);
-      console.log(data < cantidadDeOfertasMostradas);
-      if(data < cantidadDeOfertasMostradas) {
-        $("#mostrar-mas").parent().parent().remove();
-      }
-    }
-  });
-  pagina++;
+$("#mostrar-mas").click(function()
+{
+	$.ajax({
+		url: serverDomain + "/ofertas/cantidad",
+		async: false,
+		success: function(data)
+		{
+			cargarOfertas();
+			var cantidadDeOfertasMostradas = pagina * 10;
+			if(data < cantidadDeOfertasMostradas)
+			{
+				$("#mostrar-mas").parent().parent().remove();
+			}
+		}
+	});
+	pagina++;
 });
 
-function bindAcciones() {
-	$(".datos-de-oferta").click(function() {
-	  var id = $(this).attr("id");
-	  $.ajax({
-	    url: serverDomain + "/ofertas/" + id,
-	    success: function(data) {
-	      $(".panel-body").html(Handlebars.templates.oferta(data));
-	      $("#titulo-de-pantalla").html("DETALLE DE LA OFERTA");
-	    }
-	  });
+function bindAcciones()
+{
+	$(".datos-de-oferta").click(function()
+	{
+		var id = $(this).attr("id");
+		$.ajax({
+			url: serverDomain + "/ofertas/" + id,
+			success: function(data)
+			{
+				$(".panel-body").html(Handlebars.templates.oferta(data));
+				$("#titulo-de-pantalla").html("DETALLE DE LA OFERTA");
+	 		}
+		});
 	});
 	
-	$(".boton-like, .boton-dislike").click(function() {
-	  var activo = $(this).parent().parent().find(".activo");
-	  if(activo.attr('class') != $(this).attr('class')) {
-	    activo.addClass("inactivo").removeClass("activo");
-	  }
-	  $(this).toggleClass("activo").toggleClass("inactivo");
+	$(".boton-like, .boton-dislike").click(function()
+	{
+		var parent = $(this).parent().parent();
+		var idDeLaOferta = parent.attr("idoferta");
+		var activo = parent.find(".estado-1");
+		if(activo.attr('class') != $(this).attr('class')) {
+			activo.addClass("estado-0").removeClass("estado-1");
+		}
+		$(this).toggleClass("estado-1").toggleClass("estado-0");
+		var esLike = parent.find(".boton-like").hasClass("estado-1");
+		var esDislike = parent.find(".boton-dislike").hasClass("estado-1");
+		var reaccion = null;
+		if(esLike)
+		{
+			reaccion = true;
+		}
+		else if(esDislike)
+		{
+			reaccion = false;
+		}
+		console.log(reaccion);
+		ajax({
+			type: "POST",
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			url: serverDomain + "/reaccion/oferta",
+			data:
+			{
+				idOferta: idDeLaOferta,
+				reaccion: reaccion
+			},
+			success: function(data)
+			{
+				console.log(data);
+			}
+		});
 	});
-}
 
-function cargarOfertas() {
-  var context;
-  $.ajax({
-    url: serverDomain + "/ofertas",
-    data: {
-      pagina: pagina
-    },
-    async: false,
-    success: function(data) {
-      context = {ofertas: data};
-    }
-  });
-  $(".contenedor-de-ofertas").append(Handlebars.templates.listaDeOfertas(context));
-  bindAcciones();
+		function playAudio()
+		{
+			$(".boton-escuchar").click(function()
+			{
+				buzzer.attr("src", serverDomain+"/movil/www/archivos"+$(this).data("audio"));
+				buzzer[0].play();  
+			});
+}
+		playAudio();
+	}
+
+function cargarOfertas()
+{
+	var context;
+	$.ajax({
+		url: serverDomain + "/ofertas",
+		data:
+		{
+			pagina: pagina
+		},
+		async: false,
+		success: function(data)
+		{
+			context = {ofertas: data};
+		}
+	});
+	$(".contenedor-de-ofertas").append(Handlebars.templates.listaDeOfertas(context));
+	bindAcciones();
 }
 </script>
