@@ -39,10 +39,10 @@ templates['listaDeOfertas'] = template({"1":function(container,depth0,helpers,pa
 },"6":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "							<div class=\"col-xs-3\"><div class=\"boton-like "
-    + alias4(((helper = (helper = helpers.like || (depth0 != null ? depth0.like : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"like","hash":{},"data":data}) : helper)))
-    + "\"></div></div>\r\n							<div class=\"col-xs-3\"><div class=\"boton-dislike "
-    + alias4(((helper = (helper = helpers.dislike || (depth0 != null ? depth0.dislike : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"dislike","hash":{},"data":data}) : helper)))
+  return "							<div class=\"col-xs-3\"><div class=\"boton-like estado-"
+    + alias4(((helper = (helper = helpers.likes || (depth0 != null ? depth0.likes : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"likes","hash":{},"data":data}) : helper)))
+    + "\"></div></div>\r\n							<div class=\"col-xs-3\"><div class=\"boton-dislike estado-"
+    + alias4(((helper = (helper = helpers.dislikes || (depth0 != null ? depth0.dislikes : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"dislikes","hash":{},"data":data}) : helper)))
     + "\"></div></div>\r\n";
 },"8":function(container,depth0,helpers,partials,data) {
     return "							<div class=\"col-xs-6\"></div>\r\n";
