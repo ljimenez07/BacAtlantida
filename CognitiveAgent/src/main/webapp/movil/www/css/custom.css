@@ -64,19 +64,19 @@ strong {
 
 .btn 
 {
-	background-color: red;
+	background-color: #E92531;
 	color: white;
 }
 
 .btn:hover
 {
-	background-color: red;
+	background-color: #E92531;
 	color: white;
 }
 
 .btn:active
 {
-	background-color: red;
+	background-color: #E92531;
 	color: white;
 }
 
@@ -125,19 +125,40 @@ input
 	cursor:pointer;
 }
 
+.panel-heading .bck-red {
+	height: 34px;
+}
+
 .bck-red
 {
-	background-color:red;
+	background-color: #E92531;
 }
 
 .bck-gray
 {
-	background-color:gray;
+	background-color: gray;
 }
 
 .color-white
 {
-	color:white;
+	color: white;
+}
+
+.logo-header {
+	margin: 6px 0;
+}
+
+.botonDeIngresar {
+	color: white;
+	margin-top: 11px;
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+.row.title {
+	font-size: 13pt;
+	font-weight: bold;
+	color: #88898C;
 }
 
 
@@ -204,12 +225,14 @@ input
 	width: 39px;
 	height: 28px;
 	background: url(../img/iconos-40x28.png) -39px 0;
+	margin: 3px 0;
 }
 
 .header-menu-icon {
 	width: 38px;
 	height: 28px;
 	background: url(../img/iconos-40x28.png) 0 0;
+	margin: 3px 0;
 }
 
 
@@ -296,7 +319,7 @@ input
 	order: 1;
 	border-bottom-right-radius: 0px;
 	box-shadow: 1px 2px 0px #D4D4D4;
-	background-color: red;
+	background-color: #E92531;
 	color: white;
 }
 .self .avatar {
@@ -392,7 +415,7 @@ input
 
 .nombre-del-comercio {
 	font-size: 15pt;
-	color: red;
+	color: #E92531;
 	font-weight: bold;
 	margin-bottom: 5px;
 	margin-top: 10px;
