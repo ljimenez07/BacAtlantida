@@ -3,13 +3,45 @@
 <head>
 	<meta charset="UTF-8"></meta>
 </head>
-<style>
-	
-</style>
 <body>
-	<header th:fragment="header">
-		<div class="img-background-header header-img">
-		
+	<header th:fragment="header(paginaActual)">
+		<div class="contenedor-header">
+			<div class="container">
+				<div class="row campos-header">
+					<div class="col-xs-6">
+						<div class="row">
+							<div class="col-xs-6 col-xs-offset-3">
+								<form id="buscarComercio" th:action="@{/BackOffice/filtrarOfertas}" th:if="${paginaActual == 'gestionDeOfertas'}">
+									<div class="form-group" align="right">
+										<div class="inner-addon right-addon">
+											<input type="text" class="form-control" placeholder="Búsqueda de comercios" id="busquedaComercio" name="busquedaComercio" value="" th:value="${busquedaComercio}"></input>
+											<i class="glyphicon glyphicon-search"></i>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="row info-usuario">
+							<div class="col-xs-5 col-xs-offset-6 text-right">
+								<span id="nombre-usuario">Nombre de usuario</span>
+							</div>
+							<div class="col-xs-1">
+								<div id="contenedor-imagen-usuario">
+									<img id="imagen-usuario" src="../img/footer.png"></img>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 logo-header">
+						<img src="../img/header-blanco.png"></img>
+					</div>
+				</div>
+			</div>
+			<div class="relleno-blanco"></div>
 		</div>
 	</header>
 </body>
