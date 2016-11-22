@@ -2,7 +2,6 @@ package com.ncubo.util;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,6 +31,9 @@ public class GestorDeArchivos
 	private String path;
 	@Autowired
 	private AgenteCognitivo agenteCognitivo;
+	@Autowired
+	private FTPServidor ftp;
+	
 	
 	public boolean esUnArchivoComprimido(MultipartFile uploadfile)
 	{
@@ -85,7 +87,10 @@ public class GestorDeArchivos
 			stream.close();
 		}
 		
-		return filepath;
+		String direccionArchivo = ftp.subirArchivo(filepath);
+		borrarDirectorio(filepath);
+		
+		return direccionArchivo;
 	}
 	
 	public String textoAAudio(String subPath, String mensaje) throws IOException
@@ -99,6 +104,7 @@ public class GestorDeArchivos
 		InputStream in = null;
 		File directory = new File(absolutePath);
 		directory.mkdirs();
+		String pathArchivo = absolutePath;
 
 		absolutePath += File.separator+"descripcion.ogg";
 		
@@ -118,6 +124,9 @@ public class GestorDeArchivos
 		}
 
 		stream.close();
+		
+		ftp.subirArchivo(pathArchivo);
+		borrarDirectorio(pathArchivo);
 
 		return path;
 	}

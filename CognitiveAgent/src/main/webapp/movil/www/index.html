@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
+	Licensed to the Apache Software Foundation (ASF) under one
+	or more contributor license agreements.  See the NOTICE file
+	distributed with this work for additional information
+	regarding copyright ownership.  The ASF licenses this file
+	to you under the Apache License, Version 2.0 (the
+	"License"); you may not use this file except in compliance
+	with the License.  You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+	http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
+	Unless required by applicable law or agreed to in writing,
+	software distributed under the License is distributed on an
+	"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+	 KIND, either express or implied.  See the License for the
+	specific language governing permissions and limitations
+	under the License.
 -->
 <html>
-    <head>
+	<head>
 		<!-- Google Tag Manager -->
 		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -26,34 +26,34 @@
 		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 		})(window,document,'script','dataLayer','GTM-MPXB6S');</script>
 		<!-- End Google Tag Manager -->
-        <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
-        <!-- meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;" -->
+		<!--
+		Customize this policy to fit your own app's needs. For more guidance, see:
+			https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+		Some notes:
+			* gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+			* https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+			* Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+				* Enable inline JS: add 'unsafe-inline' to default-src
+		-->
+		<!-- meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;" -->
 		<meta charset="UTF-8">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="msapplication-tap-highlight" content="no">
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/custom.css">
 		<script type="text/javascript" src="js/globals.js"></script>
-        <title>Agente Cognitivo</title>
-    </head>
-    <body>
+		<title>Agente Cognitivo</title>
+	</head>
+	<body>
 		<!-- Google Tag Manager (noscript) -->
 		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPXB6S"
 		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		<!-- End Google Tag Manager (noscript) -->
 
-		<div data-menu="hide" class="modal modal-menu clickable" style="display: none">
+		<div data-accion="ocultar-menu" class="modal modal-menu clickable" style="display: none">
 			<div class="container menu" style="display: none;">
-				<div class="row clickable">
+				<div data-href="conocerte" class="row clickable">
 					<div class="col-xs-2 contenedor-imagen-menu">
 						<div class="icono-conocerme"></div>
 					</div>
@@ -61,7 +61,7 @@
 						<div>Conocerme</div>
 					</div>
 				</div>
-				<div class="row clickable">
+				<div data-href="consultar" class="row clickable">
 					<div class="col-xs-2 contenedor-imagen-menu">
 						<div class="icono-consultar"></div>
 					</div>
@@ -69,7 +69,7 @@
 						<div>Consultar</div>
 					</div>
 				</div>
-				<div class="row clickable">
+				<div data-accion="salir" class="row clickable">
 					<div class="col-xs-2 contenedor-imagen-menu">
 						<div class="icono-salir"></div>
 					</div>
@@ -115,11 +115,13 @@
 				});
 				return Handlebars.templates.ofertas(context);
 			}
+			
 			function quitarModal()
 			{
 				setCookie('mostrarpopupdeconocerte', true, 100);
 				$("#popupconocerte").modal('hide');
 			}
+			
 			function cambiarVista(href)
 			{
 				var app = $(".app");
@@ -131,14 +133,15 @@
 				app.find("#"+href).removeClass("hide");
 				app.find("#"+href).addClass("show");
 			}
+			
 			function menu(accion)
 			{
-				if(accion == "show")
+				if(accion == "mostrar-menu")
 				{
 					$(".modal-menu").fadeIn("fast");
 					$(".menu").show("fast");
 				}
-				else if(accion == "hide")
+				else if(accion == "ocultar-menu")
 				{
 					$(".menu").hide("fast");
 					$(".modal-menu").fadeOut("fast");
@@ -193,15 +196,15 @@
 
 				});
 				
-				pantallas["login"] = {title: "Login", body: Handlebars.templates.login(), DebajoDelPanel: ""};
+				pantallas["login"] = {title: "LOGIN", body: Handlebars.templates.login(), DebajoDelPanel: ""};
 				var chat = {"pathDelServidor":"chat"};
-				pantallas["chats"] = {title: "Chat", body: '<div id="chat-id-'+chat.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(chat)};
+				pantallas["chats"] = {title: "CHAT", body: '<div id="chat-id-'+chat.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(chat)};
 				var conocerte = {"pathDelServidor":"conocerte"};
-				pantallas["conocerte"] = {title: "Conocerte", body: '<div id="chat-id-'+conocerte.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(conocerte)};
+				pantallas["conocerte"] = {title: "CONOCERTE", body: '<div id="chat-id-'+conocerte.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(conocerte)};
 				pantallas["popupconocerte"] ={};		
-				pantallas["inicio"] = {title: "Inicio", body: ofertas(), DebajoDelPanel: ""};
+				pantallas["ofertas"] = {title: "INICIO", body: ofertas(), DebajoDelPanel: ""};
 				
-				$(".app #ofertas").html(Handlebars.templates.layout(pantallas["inicio"]));
+				$(".app #ofertas").html(Handlebars.templates.layout(pantallas["ofertas"]));
 				$(".app #ofertas").append(Handlebars.templates.popupconocerte(pantallas["popupconocerte"]));
 				$(".app #chats").html(Handlebars.templates.layout(pantallas["chats"]));
 				$(".app #conocerte").html(Handlebars.templates.layout(pantallas["conocerte"]));
@@ -212,7 +215,7 @@
 					var before = $(this).data("before");
 					var after = $(this).data("after");
 					var href = $(this).data("href");
-					var accion = $(this).data("menu");
+					var accion = $(this).data("accion");
 					
 					if( before!= undefined )
 					{
@@ -226,7 +229,16 @@
 					
 					if(accion != undefined)
 					{
-						menu(accion);
+						if(accion.indexOf("menu") >= 0)
+						{
+							menu(accion);
+						}
+						else if(accion == "salir")
+						{
+							setCookie('SESSION', "", 0);
+							setCookie('mostrarpopupdeconocerte', false, 0);
+							location.reload();
+						}
 					}
 					
 					if(after != undefined )
@@ -261,7 +273,9 @@
 				
 				if (data.usuarioEstaLogueado)
 				{
-					$(".botonDeIngresar").remove();
+					$(".contenedor-boton-ingresar").remove();
+					$(".chat-icon-logueado").show();
+					$(".header-chat-icon.no-logueado").hide();
 				}
 			})
 			.fail(function(XMLHttpRequest, textStatus, textStatus) 
@@ -272,6 +286,7 @@
 				}
 			});
 		}
+		
 		function getCookie(cname) 
 		{
 			var name = cname + "=";
@@ -289,6 +304,7 @@
 			}
 			return "";
 		}
+		
 		function setCookie(cname, cvalue, exdays) 
 		{
 			var d = new Date();
