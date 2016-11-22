@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -120,7 +121,7 @@ public class OfertaController
 	
 	@CrossOrigin(origins = "*")
 	@GetMapping(value = "/ofertas", produces = "application/json")
-	@ResponseBody public List<Oferta> ofertas(HttpServletRequest request, HttpServletResponse response, @RequestParam("pagina") int pagina, HttpSession sesion) throws ClassNotFoundException, SQLException
+	@ResponseBody public List<Oferta> ofertas(@RequestParam("pagina") int pagina, HttpSession sesion) throws ClassNotFoundException, SQLException
 	{
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
 		String idUsuario = usuario == null ? null : usuario.getUsuarioId();
@@ -139,9 +140,13 @@ public class OfertaController
 	
 	@CrossOrigin(origins = "*")
 	@GetMapping(value = "/ofertas/cantidad", produces = "application/json")
-	@ResponseBody public int cantidadDeOfertas() throws ClassNotFoundException, SQLException
+	@ResponseBody public String cantidadDeOfertas(HttpSession sesion) throws ClassNotFoundException, SQLException
 	{
-		return ofertaDao.cantidad();
+		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
+		JSONObject respuesta = new JSONObject().put("cantidad", ofertaDao.cantidad());
+		respuesta.put("usuarioEstaLogueado", usuario == null ? false : usuario.estaLogueado());
+		
+		return respuesta.toString();
 	}
 	
 	@ResponseBody

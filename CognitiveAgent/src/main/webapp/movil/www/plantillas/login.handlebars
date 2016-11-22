@@ -1,27 +1,19 @@
 <form id="formLogin" method="POST">
 	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12">
-			Nombre
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12">
+		<div class="col-xs-12 form-group">
+			<label>Nombre</label>
 			<input placeholder="" type="text" id="name" name="name" class="form-control" autofocus>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12">
-			Password
+		<div class="col-xs-12 form-group">
+			<label>Password</label>
+			<input placeholder="" type="password" id="password"name="password" class="form-control" >
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12">
-			<input placeholder="" type="password" id="password" class="form-control" name="password" >
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12	col-xl-12">
-			<button class="btn">Enviar</button>
+		<div class="col-xs-12 form-group">
+			<button class="btn form-control">Enviar</button>
 		</div>
 	</div>
 	<div class="alert alert-danger" style ="display:none;" role="alert"></div>
@@ -39,25 +31,26 @@ $(function(){
 		{
 			var url = serverDomain+"/movil/login"; 
 
-			$.ajax({
+			ajax({
 				type: "POST",
 				url: url,
-				data: $(this).serialize()
-			})
-			.done(function( data ) 
-			{
-				cambiarVista("chats");
-			
-			})
-			.fail(function(XMLHttpRequest, textStatus, textStatus) 
-			{
-				if( XMLHttpRequest.responseJSON.exception.includes("CredencialesInvalidosException") )
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				data: $(this).serialize(),
+				success: function(){},
+				done: function( data ) 
 				{
-					var alert= $(this).find(".alert");
+					cambiarVista("chats");
+				
+				},
+				fail: function(XMLHttpRequest, textStatus, textStatus) 
+				{
+					if( XMLHttpRequest.responseJSON.exception.includes("CredencialesInvalidosException") )
+					{
+						var alert= $(this).find(".alert");
+					}
 				}
 			});
-
-			e.preventDefault(); 
+			e.preventDefault();
 		});
 
 	}/*CredencialesInvalidosException*/

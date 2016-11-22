@@ -7,10 +7,12 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.codehaus.jackson.JsonParseException;
@@ -54,23 +56,22 @@ public class AgenteCognitivo
 	@Autowired
 	private ConsultaDao consultaDao;
 
-
 	private Conversaciones miConversaciones = new Conversaciones();
 
 	
-	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
+	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
 	{
 	
 		return procesarMensaje(usuario,mensaje,date, workspaceDeChats, false);
 	}
 	
-	public String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
+	public String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
 	{
 	
 		return procesarMensaje(usuario,mensaje,date, workspaceDeConocerte, true);
 	}
 	
-	private String procesarMensaje(Usuario usuario, String mensaje, Date date, String workspace, boolean esParaConocerte) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException
+	private String procesarMensaje(Usuario usuario, String mensaje, Date date, String workspace, boolean esParaConocerte) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
 	{
 		JSONObject respuesta = new JSONObject();
 		ObjectMapper mapper = new ObjectMapper();
@@ -215,10 +216,12 @@ public class AgenteCognitivo
 			
 			int last = codigo.size()-1;
 			String movimientos = "";
-			for(int i = 0; i < 3 ; i++){
-				
+			for(int i = 0; i < 3 ; i++)
+			{
+				DateFormat formatoDeFechaInicial = new SimpleDateFormat("yyyyMMdd");
+				DateFormat formatoDeFechaFinal = new SimpleDateFormat("dd/MM/yyyy");
 				NodeImpl movimiento = (NodeImpl) codigo.get(last);
-				NodeImpl fecha = movimiento.get("fecha");
+				String fecha = formatoDeFechaFinal.format(formatoDeFechaInicial.parse(movimiento.get("fecha").toString()));
 				NodeImpl hora = movimiento.get("hora");
 				NodeImpl codigoTransaccion = movimiento.get("codigoTransaccion");
 				NodeImpl montoTransaccion = movimiento.get("montoTransaccion");
