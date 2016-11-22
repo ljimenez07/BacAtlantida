@@ -6,4 +6,4 @@ Cual es el tipo de cambio ? / #tasaDeCambio
 A cuanto está el dolar ? / #tasaDeCambio
 A cuanto está el euro ? / #tasaDeCambio
 @IniciarSesion
-cual es mi saldo? /  El saldo de su tarjeta de crédito es de:30344.62
+cual es mi saldo? /  #saldos

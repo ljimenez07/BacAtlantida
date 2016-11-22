@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ public class ReaccionController
 	
 	@CrossOrigin(origins = "*")
 	@PostMapping(value = "/reaccion/oferta", produces = "application/json")
-	@ResponseBody public String reaccionAOferta(@RequestParam("idOferta") int idOferta, @RequestParam(value = "reaccion", required = false) Boolean reaccion, HttpSession sesion) throws ClassNotFoundException, SQLException
+	@ResponseBody public String reaccionAOferta(@RequestParam("idOferta") int idOferta, @RequestParam(value = "reaccion", required = false) Boolean reaccion, HttpSession sesion) throws ClassNotFoundException, SQLException, JSONException
 	{
 		JSONObject respuesta = new JSONObject();
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);

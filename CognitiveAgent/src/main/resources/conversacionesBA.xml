@@ -5,7 +5,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>¡Hola Ricky!, soy tu asesor del Banco Atlántida.</frase>
+			<frase>¡Hola!, soy tu asesor del Banco Atlántida.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -16,7 +16,6 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<frase>Hola!.</frase>
-			<frase>¡Hola Ricky!.</frase>
 			<frase>¡Hola!. Estoy para ayudarte con la información que requieras de tus tarjetas de crédito y cuenta corriente, también con el tipo de cambio del dólar y el euro.</frase>
 		</frases>
 		<vineta></vineta>
@@ -37,12 +36,36 @@
 		<vineta></vineta>
 	</conversacion>
 	
-	<conversacion id="saldo">
+	<conversacion id="quiereSaldoTarjetaCredito">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>¿Quieres el saldo de tu tarjeta de crédito?</curioso>
+			<impertinente>Necesito saber, ¿si te refieres a la cuenta de ahorros o tarjeta de crédito?.</impertinente>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="saldoCredito">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>El saldo de su tarjeta de crédito es de: $</frase>
+			<frase>El saldo de tu tarjeta de crédito es de $%stc $%nmm.</frase>
+			<frase>Tu saldo en $%nmm es de %stc en la tarjeta de crédito.</frase>
+			<frase>Claro, tu saldo en $%nmm es de %stc en la tarjeta de crédito.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="saldoCuentaAhorros">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>false</enVozAlta>
+		<frases>
+			<frase>Tu saldo es de $%cc $%nmm en la cuenta de ahorros.</frase>
+			<frase>Tu cuenta de ahorros tiene un saldo de $%cc $%nmm.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -52,7 +75,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Por ahora solo puedo proporcionar el saldo de su tarjeta de crédito.</frase>
+			<frase>Por ahora solo puedo proporcionar el saldo de su tarjeta de crédito y de la cuenta de ahorros.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -62,8 +85,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Claro, el dólar está a $ la compra y $ la venta.</frase>
-			<frase>El tipo de cambio del dólar para hoy $ es $ la compra, y $ la venta.</frase>
+			<frase>Claro, el dólar está a $%dc la compra y $%dv la venta.</frase>
+			<frase>El tipo de cambio del dólar para hoy es $%dc la compra, y $%dv la venta.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -73,7 +96,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>El tipo de cambio del euro para hoy $ es $ la compra, y $ la venta.</frase>
+			<frase>El tipo de cambio del euro para hoy es $%ec la compra, y $%ev la venta.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>

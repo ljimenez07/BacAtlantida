@@ -2,7 +2,6 @@ package com.ncubo.logicaDeConversaciones;
 
 import java.util.List;
 
-import com.ncubo.bancoatlantida.ContenidoDelBancoAtlantida;
 import com.ncubo.chatbot.configuracion.Constantes;
 import com.ncubo.chatbot.partesDeLaConversacion.Contenido;
 import com.ncubo.chatbot.partesDeLaConversacion.Tema;
@@ -38,7 +37,9 @@ public class TemarioDelBancoAtlantida extends Temario
 			"BATemas",
 			true,
 			"saldo",
-			frase("saldo"),
+			frase("quiereSaldoTarjetaCredito"),
+			frase("saldoCredito"),
+			frase("saldoCuentaAhorros"),
 			frase("noTengoSaldo"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),

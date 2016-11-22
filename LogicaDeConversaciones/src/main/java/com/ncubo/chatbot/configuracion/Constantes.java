@@ -21,6 +21,7 @@ public class Constantes {
 	public static String TOMCAT_ROOT = "/LogicaDeChateadores";
 	public static String IP_SERVER = "http://138.94.58.158:7870/LogicaDeChateadores/";
 	//public static String IP_SERVER = "http://10.102.101.252:8080/LogicaDeChateadores/";
+	
 	public static String PATH_TO_SAVE = "/opt/tomcat/webapps/LogicaDeChateadores/";
 	public static String FOLDER_TO_SAVE = "audios/";
 	
@@ -42,6 +43,7 @@ public class Constantes {
 	
 	public static String PATH_ARCHIVO_DE_CONFIGURACION_RS = "src/main/resources/conversaciones.xml";
 	public static String PATH_ARCHIVO_DE_CONFIGURACION_BA = "src/main/resources/conversacionesBA.xml";
+	//public static String PATH_ARCHIVO_DE_CONFIGURACION_BA = "/home/tester/conversacionesBA.xml";
 	
 	// Agente
 	public static String WORKSPACE_GENERAL = "general";
@@ -55,4 +57,6 @@ public class Constantes {
 	public static String FRASE_DESPEDIDA = "despedida";
 	public static String FRASE_FUERA_DE_CONTEXTO = "fueraDeContexto";
 	
+	// Intenciones
+	public static String INTENCION_FUERA_DE_CONTEXTO = "out_of_scope";
 }

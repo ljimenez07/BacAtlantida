@@ -3,7 +3,6 @@ package com.ncubo.chatbot.watson;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
@@ -11,12 +10,8 @@ import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageRequest;
@@ -33,7 +28,7 @@ import com.ibm.watson.developer_cloud.conversation.v1.model.Entity;
 public class ConversationWatson {
 
 	private ConversationService service;
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	//private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private String usuario;
 	private String contrasena;
 	private String idConversacion;
@@ -57,9 +52,9 @@ public class ConversationWatson {
 			obj = new JSONObject(jsonData);
 			obj = new JSONObject(obj.get("output").toString());
 			result = obj.getJSONArray("text").toString().replace("[", "").replace("]", "").replace("\"", "");
-			logger.info("Watson response: "+result);
+			//logger.info("Watson response: "+result);
 		}catch (Exception e){
-			logger.info("Watson response: "+jsonData);
+			//logger.info("Watson response: "+jsonData);
 		}
 		return result;
 	}
@@ -94,7 +89,7 @@ public class ConversationWatson {
 	}
 	
 	public MessageResponse enviarMSG(String msg, Map<String, Object> myContext){
-		logger.info("Asking to Watson: "+msg);
+		//logger.info("Asking to Watson: "+msg);
 		MessageResponse response = null;
 		try {
 		  // Your code goes here
@@ -106,26 +101,26 @@ public class ConversationWatson {
 					.build();
 			
 			response = service.message(idConversacion, newMessage).execute();
-			logger.info("Watson Reponse: "+response.toString());
+			//logger.info("Watson Reponse: "+response.toString());
 		} catch (IllegalArgumentException e) {
 		  // Missing or invalid parameter
-			logger.info("Error1: "+e.getMessage()+" al enviar text");
+			//logger.info("Error1: "+e.getMessage()+" al enviar text");
 		} catch (BadRequestException e) {
 		  // Missing or invalid parameter
-			logger.info("Error2: "+e.getMessage()+" al enviar text");
+			//logger.info("Error2: "+e.getMessage()+" al enviar text");
 		} catch (UnauthorizedException e) {
 		  // Access is denied due to invalid credentials
-			logger.info("Error3: "+e.getMessage()+" al enviar text");
+			//logger.info("Error3: "+e.getMessage()+" al enviar text");
 		} catch (InternalServerErrorException e) {
 		  // Internal Server Error
-			logger.info("Error4: "+e.getMessage()+" al enviar text");
+			//logger.info("Error4: "+e.getMessage()+" al enviar text");
 		}
 		
 		return response;
 	}
 	
 	public MessageResponse enviarAWatson(String msg, String context){
-		logger.info("Asking to Watson: "+msg);
+		//logger.info("Asking to Watson: "+msg);
 		JSONObject obj = null;
 		try {
 			obj = new JSONObject(context);
@@ -154,19 +149,19 @@ public class ConversationWatson {
 					.build();
 			
 			response = service.message(idConversacion, newMessage).execute();
-			logger.info("Watson Reponse: "+response.toString());
+			//logger.info("Watson Reponse: "+response.toString());
 		} catch (IllegalArgumentException e) {
 		  // Missing or invalid parameter
-			logger.info("Error1: "+e.getMessage()+" al enviar text");
+			//logger.info("Error1: "+e.getMessage()+" al enviar text");
 		} catch (BadRequestException e) {
 		  // Missing or invalid parameter
-			logger.info("Error2: "+e.getMessage()+" al enviar text");
+			//logger.info("Error2: "+e.getMessage()+" al enviar text");
 		} catch (UnauthorizedException e) {
 		  // Access is denied due to invalid credentials
-			logger.info("Error3: "+e.getMessage()+" al enviar text");
+			//logger.info("Error3: "+e.getMessage()+" al enviar text");
 		} catch (InternalServerErrorException e) {
 		  // Internal Server Error
-			logger.info("Error4: "+e.getMessage()+" al enviar text");
+			//logger.info("Error4: "+e.getMessage()+" al enviar text");
 		}
 		
 		return response;

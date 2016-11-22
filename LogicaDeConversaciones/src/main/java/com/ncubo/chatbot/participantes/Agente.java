@@ -136,21 +136,28 @@ public class Agente extends Participante{
 				miContextos.put(nombreDeWorkspaceActual, respuesta.getMiContexto());
 				
 				// Analizar si ya tengo que cambiar de workspace
-				String intencionDelCliente = respuesta.obtenerLaIntencionDeLaRespuesta().getNombre();
-				WorkSpace workspace = extraerUnWorkspaceConLaIntencion(intencionDelCliente);
-				if( (nombreDeWorkspaceActual.equals(nombreDelWorkSpaceGeneral)) && workspace != null){
-					nombreDeWorkspaceActual = workspace.getNombre();
-					nombreDeLaIntencionGeneralActiva = intencionDelCliente;
-					System.out.println(String.format("Cambiando al workspace %s e intencion %s", nombreDeWorkspaceActual, nombreDeLaIntencionGeneralActiva));
-					cambiarDeTema = true; // Buscar otro tema
-					abordarElTema = false;
-					estaEnElWorkspaceGeneral = false;
-					this.hayIntencionNoAsociadaANingunWorkspace = false;
-				}else{
-					System.out.println("Intencion no asociada a ningun workspace");
-					nombreDeLaIntencionGeneralActiva = intencionDelCliente;
+				try{
+					String intencionDelCliente = respuesta.obtenerLaIntencionDeConfianzaDeLaRespuesta().getNombre();
+					WorkSpace workspace = extraerUnWorkspaceConLaIntencion(intencionDelCliente);
+					if( (nombreDeWorkspaceActual.equals(nombreDelWorkSpaceGeneral)) && workspace != null){
+						nombreDeWorkspaceActual = workspace.getNombre();
+						nombreDeLaIntencionGeneralActiva = intencionDelCliente;
+						System.out.println(String.format("Cambiando al workspace %s e intencion %s", nombreDeWorkspaceActual, nombreDeLaIntencionGeneralActiva));
+						cambiarDeTema = true; // Buscar otro tema
+						abordarElTema = false;
+						estaEnElWorkspaceGeneral = false;
+						this.hayIntencionNoAsociadaANingunWorkspace = false;
+					}else{
+						System.out.println("Intencion no asociada a ningun workspace");
+						nombreDeLaIntencionGeneralActiva = intencionDelCliente;
+						hayIntencionNoAsociadaANingunWorkspace = true;
+					}
+				}catch(Exception e){
+					System.out.println("No hay ninguna intencion real o de confianza");
+					nombreDeLaIntencionGeneralActiva = Constantes.INTENCION_FUERA_DE_CONTEXTO;
 					hayIntencionNoAsociadaANingunWorkspace = true;
 				}
+				
 			}
 			numeroDeIntentosActualesEnRepetirUnaPregunta = 1;
 		}

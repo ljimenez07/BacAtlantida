@@ -53,11 +53,11 @@ public class Conversacion {
 		this.temaActual = this.temario.buscarTema(Constantes.FRASE_SALUDO);
 		
 		Saludo saludoGeneral = (Saludo) this.temario.extraerFraseDeSaludoInicial(CaracteristicaDeLaFrase.esUnSaludo);
-		misSalidas.add(agente.decir(saludoGeneral, null));
+		misSalidas.add(agente.decir(saludoGeneral, null, temaActual));
 		ponerComoYaTratado(saludoGeneral);
 		
 		Pregunta queQuiere = (Pregunta) this.temario.extraerFraseDeSaludoInicial(CaracteristicaDeLaFrase.esUnaPregunta);
-		misSalidas.add(agente.decir(queQuiere, null));
+		misSalidas.add(agente.decir(queQuiere, null, temaActual));
 		fraseActual = queQuiere;
 		ponerComoYaTratado(queQuiere);
 		
@@ -95,7 +95,7 @@ public class Conversacion {
 				String idFraseActivada = respuesta.obtenerFraseActivada();
 				if( ! idFraseActivada.equals("")){
 					miPregunta = (Pregunta) this.temaActual.buscarUnaFrase(idFraseActivada);
-					misSalidas.add(agente.decir(miPregunta, respuesta));
+					misSalidas.add(agente.decir(miPregunta, respuesta, temaActual));
 					fraseActual = miPregunta;
 					ponerComoYaTratado(miPregunta);
 				}
@@ -120,7 +120,7 @@ public class Conversacion {
 					
 					if( ! idFraseActivada.equals("")){
 						miPregunta = (Pregunta) this.temaActual.buscarUnaFrase(idFraseActivada);
-						misSalidas.add(agente.decir(miPregunta, respuesta));
+						misSalidas.add(agente.decir(miPregunta, respuesta, temaActual));
 						fraseActual = miPregunta;
 						ponerComoYaTratado(miPregunta);
 					}
@@ -133,7 +133,7 @@ public class Conversacion {
 					String fraseAvtiva = respuesta.obtenerFraseActivada();
 					if( ! fraseAvtiva.equals("")){
 						miPregunta = (Pregunta) this.temaActual.buscarUnaFrase(fraseAvtiva);
-						misSalidas.add(agente.decir(miPregunta, respuesta));
+						misSalidas.add(agente.decir(miPregunta, respuesta, temaActual));
 						fraseActual = miPregunta;
 						ponerComoYaTratado(miPregunta);
 					}
@@ -141,7 +141,7 @@ public class Conversacion {
 					// Verificar que fue	
 					System.out.println("No entendi la ultima pregunta");
 					if(fraseActual.esMandatorio()){
-						misSalidas.add(agente.volverAPreguntar(fraseActual, respuesta));
+						misSalidas.add(agente.volverAPreguntar(fraseActual, respuesta, temaActual));
 					}
 				}
 			}
@@ -166,11 +166,11 @@ public class Conversacion {
 				this.temaActual = this.temario.buscarTema(Constantes.FRASE_SALUDO);
 
 				Afirmacion saludar = (Afirmacion) this.temaActual.buscarUnaFrase("saludar");
-				misSalidas.add(agente.decir(saludar, respuesta));
+				misSalidas.add(agente.decir(saludar, respuesta, temaActual));
 				ponerComoYaTratado(saludar);
 				
 				Pregunta queQuiere = (Pregunta) this.temario.extraerFraseDeSaludoInicial(CaracteristicaDeLaFrase.esUnaPregunta);
-				misSalidas.add(agente.decir(queQuiere, respuesta));
+				misSalidas.add(agente.decir(queQuiere, respuesta, temaActual));
 				fraseActual = queQuiere;
 				ponerComoYaTratado(queQuiere);
 				
@@ -179,16 +179,16 @@ public class Conversacion {
 				this.temaActual = this.temario.buscarTema(Constantes.FRASE_DESPEDIDA);
 				
 				Despedida saludar = (Despedida) this.temaActual.buscarUnaFrase(Constantes.FRASE_DESPEDIDA);
-				misSalidas.add(agente.decir(saludar, respuesta));
+				misSalidas.add(agente.decir(saludar, respuesta, temaActual));
 				fraseActual = saludar;
 				ponerComoYaTratado(saludar);
 				
-			}else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals("out_of_scope")){
+			}else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals(Constantes.INTENCION_FUERA_DE_CONTEXTO)){
 				System.out.println("Esta fuera de contexto ...");
 				this.temaActual = this.temario.buscarTema(Constantes.FRASE_FUERA_DE_CONTEXTO);
 				
 				Afirmacion fueraDeContexto = (Afirmacion) this.temaActual.buscarUnaFrase("fueraDeContextoGeneral");
-				misSalidas.add(agente.decir(fueraDeContexto, respuesta));
+				misSalidas.add(agente.decir(fueraDeContexto, respuesta, temaActual));
 				fraseActual = fueraDeContexto;
 				ponerComoYaTratado(fueraDeContexto);
 			}
@@ -209,7 +209,7 @@ public class Conversacion {
 			for(int index = 0; index < afirmativas.size(); index++){
 				miAfirmacion = (Afirmacion) this.temaActual.buscarUnaFrase(afirmativas.get(index));
 				if( ! misSalidas.contains(miAfirmacion)){
-					misSalidas.add(agente.decir(miAfirmacion, respuesta));
+					misSalidas.add(agente.decir(miAfirmacion, respuesta, temaActual));
 					fraseActual = miAfirmacion;
 					ponerComoYaTratado(miAfirmacion);
 				}

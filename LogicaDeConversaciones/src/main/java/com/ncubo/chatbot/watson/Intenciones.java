@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
+import com.ncubo.chatbot.configuracion.Constantes;
 import com.ncubo.chatbot.exceptiones.ChatException;
 
 public class Intenciones { //implements Iterable<Intencion>
@@ -40,9 +41,8 @@ public class Intenciones { //implements Iterable<Intencion>
 		return intenciones;
 	}
 	
-	public Intencion obtenerLaDeMayorConfianza(){
+	public Intencion obtenerLaDeMayorConfianza(double confidence){
 		Intencion intencion = null;
-		double confidence = 0;
 		Enumeration<String> misInteciones = intenciones.keys();
 		while(misInteciones.hasMoreElements()){
 			String key = (String) misInteciones.nextElement();

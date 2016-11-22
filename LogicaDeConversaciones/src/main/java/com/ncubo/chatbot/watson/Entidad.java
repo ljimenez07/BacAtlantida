@@ -35,13 +35,17 @@ public class Entidad //extends WatsonUnderstand
 	}*/
 	
 	public void agregarValorConOperador(String miValor, Operador miOperador){
-		if( ! existeElValor(miValor)) 
+		if( ! existeElValor(miValor)){
+			System.out.println("Valor de la entidad a agregar: "+miValor);
 			valores.put(miValor, miOperador);
+		} 
 	}
 	
 	public void agregarValor(String miValor){
-		if( ! existeElValor(miValor)) 
+		if( ! existeElValor(miValor)){
+			System.out.println("Valor de la entidad a agregar: "+miValor);
 			valores.put(miValor, null);
+		} 
 	}
 	
 	public void agregarValores(Hashtable<String, Operador> misValores){

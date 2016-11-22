@@ -8,9 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.ibm.watson.developer_cloud.text_to_speech.v1.TextToSpeech;
 import com.ibm.watson.developer_cloud.text_to_speech.v1.model.AudioFormat;
 import com.ibm.watson.developer_cloud.text_to_speech.v1.model.Voice;
@@ -18,7 +15,7 @@ import com.ncubo.chatbot.configuracion.Constantes;
 
 public class TextToSpeechWatson {
 	
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	//private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private TextToSpeech textService;
 	private String voice;
 	
@@ -33,7 +30,7 @@ public class TextToSpeechWatson {
 		try {
 	         in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.OGG).execute();
 		} catch (Exception e) {
-			logger.info("Got error: " + e.getMessage());
+			//logger.info("Got error: " + e.getMessage());
 		} 
 		return in;
 	}
@@ -61,7 +58,7 @@ public class TextToSpeechWatson {
 	        	stream.write(buffer, 0, read);
 	         }   
 		} catch (Exception e) {
-			logger.info("Got error: " + e.getMessage());
+			//logger.info("Got error: " + e.getMessage());
 		} finally {
 		    close(in);
 		    stream.close();
@@ -75,7 +72,7 @@ public class TextToSpeechWatson {
 	        try {
 	            closeable.close();
 	        } catch (IOException e) {
-	        	logger.info("Got error: " + e.getMessage());
+	        	//logger.info("Got error: " + e.getMessage());
 	        }
 	    }	      	   
 	}
