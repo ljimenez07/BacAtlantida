@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.net.SocketException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,9 +13,12 @@ import java.nio.file.Paths;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-import org.springframework.util.SystemPropertyUtils;
 
 @Component
 @ConfigurationProperties("serverFTP")
@@ -60,14 +64,10 @@ public class FTPServidor
 				if (item.isFile())
 				{
 					String extensionArchivo = FilenameUtils.getExtension(item.getAbsolutePath()); 
-					String nombreArchivo = FilenameUtils.getBaseName(item.getAbsolutePath());
 					if (extensionArchivo.equalsIgnoreCase("html"))
 					{
-						if(nombreArchivo.equals(remoteParentDir))
-						{
-							directorioFinalArchivo = remoteFilePath;
-						}
-						
+						directorioFinalArchivo = remoteFilePath;
+						ajustarRutaDeImagenesEnPlantillaHTML(item, remoteDirPath + "/" + remoteParentDir + "/");	
 					}
 					String localFilePath = item.getAbsolutePath();
 					subirUnArchivo(ftpClient, localFilePath, remoteFilePath);
@@ -139,6 +139,24 @@ public class FTPServidor
 			ftpClient.disconnect();
 		}
 		
+	}
+	
+	private void ajustarRutaDeImagenesEnPlantillaHTML(File html, String rutaArchivoEnFTP) throws IOException
+	{
+		Document doc = Jsoup.parse(html, "UTF-8", "http://example.com/");
+		Elements imgElementos = doc.getElementsByTag("img");
+		for(Element elemento : imgElementos)
+		{
+			String srcDeImg = elemento.attr("src");
+			String[] imagenPath = srcDeImg.split("/");
+			String srcModificado = ( rutaArchivoEnFTP + imagenPath[ imagenPath.length-1 ] ).replaceAll("-", ".").replaceAll("/", "-");
+			elemento.attr("src", srcModificado);
+		}
+		
+		PrintWriter writer = new PrintWriter(html,"UTF-8");
+		writer.write( doc.html() ) ;
+		writer.flush();
+		writer.close();	
 	}
 	
 	public String getUsuario()
