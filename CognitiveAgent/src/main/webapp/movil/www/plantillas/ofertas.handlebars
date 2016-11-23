@@ -9,56 +9,59 @@
 
 <div class="contenedor-de-ofertas">
 </div>
-
-{{#compare cantidad ">" 10}}
+<div id="contenedor-mostrar-mas" style="display: none">
 	<br>
 	<div class="row">
 		<div class="col-xs-12 text-center">
 			<span id="mostrar-mas">Mostrar más</span>
 		</div>
 	</div>
-{{/compare}}
+</div>
 
 <script type="text/javascript">
 var buzzer = $('#buzzer'); 
 var pagina = 1;
-cargarOfertas();
-pagina++;
 
-$("#mostrar-mas").click(function()
+function evaluarVerMas()
 {
-	$.ajax({
+	ajax({
 		url: serverDomain + "/ofertas/cantidad",
-		async: false,
-		success: function(data)
+		done: function(data)
 		{
 			cargarOfertas();
 			var cantidadDeOfertasMostradas = pagina * 10;
-			if(data < cantidadDeOfertasMostradas)
+			if(data.cantidad > cantidadDeOfertasMostradas)
 			{
-				$("#mostrar-mas").parent().parent().remove();
+				$("#contenedor-mostrar-mas").show();
 			}
 		}
 	});
+}
+
+evaluarVerMas();
+
+$("#mostrar-mas").click(function()
+{
+	evaluarVerMas();
 	pagina++;
 });
 
 function bindAcciones()
 {
-	$(".datos-de-oferta").click(function()
+	$("#ofertas .datos-de-oferta").click(function()
 	{
+		$("#oferta .panel-body").html("");
 		var id = $(this).attr("id");
-		$.ajax({
+		ajax({
 			url: serverDomain + "/ofertas/" + id,
-			success: function(data)
+			done: function(data)
 			{
-				$(".panel-body").html(Handlebars.templates.oferta(data));
-				$("#titulo-de-pantalla").html("DETALLE DE LA OFERTA");
+				$("#oferta .panel-body").html(Handlebars.templates.oferta(data));
 	 		}
 		});
 	});
 	
-	$(".boton-like, .boton-dislike").click(function()
+	$("#ofertas .boton-like, #ofertas .boton-dislike").click(function()
 	{
 		var parent = $(this).parent().parent();
 		var idDeLaOferta = parent.attr("idoferta");
@@ -80,47 +83,36 @@ function bindAcciones()
 		}
 		ajax({
 			type: "POST",
-			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 			url: serverDomain + "/reaccion/oferta",
 			data:
 			{
 				idOferta: idDeLaOferta,
 				reaccion: reaccion
-			},
-			success: function(data)
-			{
-				console.log(data);
 			}
 		});
 	});
-
-	function playAudio()
+	
+	$("#ofertas .boton-escuchar").click(function()
 	{
-		$(".boton-escuchar").click(function()
-		{
-			buzzer.attr("src", serverDomain+"/movil/www/archivos"+$(this).data("audio"));
-			buzzer[0].play();  
-		});
-	}
-	playAudio();
+		buzzer.attr("src", serverDomain+"/movil/www/archivos"+$(this).data("audio"));
+		buzzer[0].play();  
+	});
 }
 
 function cargarOfertas()
 {
-	var context;
-	$.ajax({
+	ajax({
 		url: serverDomain + "/ofertas",
 		data:
 		{
 			pagina: pagina
 		},
-		async: false,
-		success: function(data)
+		done: function(data)
 		{
-			context = {ofertas: data};
+			$("#ofertas .contenedor-de-ofertas").append(Handlebars.templates.listaDeOfertas(ofertas: data));
+			bindAcciones();
+			bindClickeable();
 		}
 	});
-	$(".contenedor-de-ofertas").append(Handlebars.templates.listaDeOfertas(context));
-	bindAcciones();
 }
 </script>
