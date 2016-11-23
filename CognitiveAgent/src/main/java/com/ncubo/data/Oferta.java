@@ -1,11 +1,9 @@
 package com.ncubo.data;
 
 import java.io.File;
+import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -35,10 +33,10 @@ public class Oferta implements Comparable<Oferta>
 	private String restricciones;
 	
 	@NotEmpty(message = "*Campo requerido")
-	private String vigenciaDesde;
+	private Date vigenciaDesde;
 	
 	@NotEmpty(message = "*Campo requerido")
-	private String vigenciaHasta;
+	private Date vigenciaHasta;
 	
 	@NotEmpty(message = "*Campo requerido")
 	private String imagenComercioPath;
@@ -55,7 +53,7 @@ public class Oferta implements Comparable<Oferta>
 		categoria = new CategoriaOferta();
 	}
 	
-	public Oferta(int idOferta, String tituloDeOferta, String comercio, String descripcion, CategoriaOferta categoria, String ciudad, boolean estado, String restricciones, String vigenciaDesde, String vigenciahasta, String imagenComercioPath, String imagenPublicidadPath, Timestamp fechaHoraRegistro, int likes, int dislikes)
+	public Oferta(int idOferta, String tituloDeOferta, String comercio, String descripcion, CategoriaOferta categoria, String ciudad, boolean estado, String restricciones, Date vigenciaDesde, Date vigenciahasta, String imagenComercioPath, String imagenPublicidadPath, Timestamp fechaHoraRegistro, int likes, int dislikes)
 	{
 		this.idOferta = idOferta;
 		this.tituloDeOferta = tituloDeOferta;
@@ -156,22 +154,22 @@ public class Oferta implements Comparable<Oferta>
 		this.restricciones = restricciones;
 	}
 	
-	public String getVigenciaDesde()
+	public Date getVigenciaDesde()
 	{
 		return vigenciaDesde;
 	}
 	
-	public void setVigenciaDesde(String vigenciaDesde)
+	public void setVigenciaDesde(Date vigenciaDesde)
 	{
 		this.vigenciaDesde = vigenciaDesde;
 	}
 	
-	public String getVigenciaHasta()
+	public Date getVigenciaHasta()
 	{
 		return vigenciaHasta;
 	}
 	
-	public void setVigenciaHasta(String vigenciaHasta) throws Exception
+	public void setVigenciaHasta(Date vigenciaHasta)
 	{
 		this.vigenciaHasta = vigenciaHasta;
 	}
@@ -242,15 +240,9 @@ public class Oferta implements Comparable<Oferta>
 		{
 			return false;
 		}
-		DateFormat formatter;
-		formatter = new SimpleDateFormat("yyyy/MM/dd");
-		Date fechaDesde = formatter.parse(vigenciaDesde.replace("-", "/"));
-		Timestamp timeStampFechaDesde = new Timestamp(fechaDesde.getTime());
-		Date fechaHasta = formatter.parse(vigenciaHasta.replace("-", "/"));
-		Timestamp timeStampFechaHasta = new Timestamp(fechaHasta.getTime());
 		
-		long fechaDesdeEnMilisegundos = timeStampFechaDesde.getTime();
-		long fechaHastaEnMilisegundos = timeStampFechaHasta.getTime();
+		long fechaDesdeEnMilisegundos = vigenciaDesde.getTime();
+		long fechaHastaEnMilisegundos = vigenciaHasta.getTime();
 		
 		return fechaDesdeEnMilisegundos <= fechaHastaEnMilisegundos;
 	}
@@ -258,7 +250,7 @@ public class Oferta implements Comparable<Oferta>
 	public String getTiempoTranscurrido()
 	{
 		long fechaHoraRegistroEnMilisegundos = fechaHoraRegistro.getTime();
-		long fechaHoraActualEnMilisegundos = new Date().getTime();
+		long fechaHoraActualEnMilisegundos = new java.util.Date().getTime();
 		long tiempoTranscurridoEnMilisegundos = fechaHoraActualEnMilisegundos - fechaHoraRegistroEnMilisegundos;
 		
 		long dias = TimeUnit.MILLISECONDS.toDays(tiempoTranscurridoEnMilisegundos);
