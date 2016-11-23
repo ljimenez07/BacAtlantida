@@ -52,9 +52,9 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>El saldo de tu tarjeta de crédito es de $%stc $%nmm.</frase>
-			<frase>Tu saldo en $%nmm es de %stc en la tarjeta de crédito.</frase>
-			<frase>Claro, tu saldo en $%nmm es de %stc en la tarjeta de crédito.</frase>
+			<frase>El saldo de tu tarjeta de crédito $%ntc es de $%stc $%nmm.</frase>
+			<frase>Tu saldo en $%nmm es de %stc en la tarjeta de crédito $%ntc.</frase>
+			<frase>Claro, tu saldo en $%nmm es de %stc en la tarjeta de crédito $%ntc.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -64,8 +64,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>Tu saldo es de $%cc $%nmm en la cuenta de ahorros.</frase>
-			<frase>Tu cuenta de ahorros tiene un saldo de $%cc $%nmm.</frase>
+			<frase>Tu saldo es de $%cc $%nmm en la cuenta de ahorros $%ncc.</frase>
+			<frase>Tu cuenta de ahorros $%ncc tiene un saldo de $%cc $%nmm.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -76,6 +76,71 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<frase>Por ahora solo puedo proporcionar el saldo de su tarjeta de crédito y de la cuenta de ahorros.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="quiereDisponibleTarjetaCredito">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>¿Quieres el disponible de tu tarjeta de crédito?</curioso>
+			<impertinente>Necesito saber, ¿si te refieres a la cuenta de ahorros o tarjeta de crédito?.</impertinente>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="disponibleCredito">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>false</enVozAlta>
+		<frases>
+			<frase>El disponible de tu tarjeta de crédito $%ntc es de $%stc $%nmm.</frase>
+			<frase>Tu disponible en $%nmm es de %stc en la tarjeta de crédito $%ntc.</frase>
+			<frase>Claro, tu disponible en $%nmm es de %stc en la tarjeta de crédito $%ntc.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="disponibleCuentaAhorros">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>false</enVozAlta>
+		<frases>
+			<frase>Tu disponible es de $%cc $%nmm en la cuenta de ahorros $%ncc.</frase>
+			<frase>Tu cuenta de ahorros $%ncc tiene un disponible de $%cc $%nmm.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+		<conversacion id="disponiblePuntos">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>false</enVozAlta>
+		<frases>
+			<frase>Tienes $%pp puntos.</frase>
+			<frase>Tus puntos son $%pp.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+		<conversacion id="disponibleMillas">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>false</enVozAlta>
+		<frases>
+			<frase>En este momento no puedo obtener información sobre millas. Puedes consultar http://www.bancatlan.hn/ para más detalles</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="noTengoDisponible">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Por ahora solo puedo proporcionar el disponible de tarjeta de crédito y cuenta de ahorros.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>

@@ -48,6 +48,27 @@ public class TemarioDelBancoAtlantida extends Temario
 		return resultado;
 	}
 	
+	private Tema quiereDisponible()
+	{
+		Tema resultado = new Tema
+		(
+			"quiereDisponible",
+			"BATemas",
+			true,
+			"disponible",
+			frase("quiereDisponibleTarjetaCredito"),
+			frase("disponibleCredito"),
+			frase("disponibleCuentaAhorros"),
+			frase("disponiblePuntos"),
+			frase("disponibleMillas"),
+			frase("noTengoDisponible"),
+			frase("preguntarPorOtraConsulta"),
+			frase("quiereHacerOtraConsulta"),
+			frase("noQuiereHacerOtraConsulta")
+		);
+		return resultado;
+	}
+	
 	private Tema quiereTasaDeCambio()
 	{
 		Tema resultado = new Tema
@@ -118,6 +139,7 @@ public class TemarioDelBancoAtlantida extends Temario
 		temasDelDiscurso.add(quiereMovimientos());
 		temasDelDiscurso.add(fueraDeContexto());
 		temasDelDiscurso.add(despedida());
+		temasDelDiscurso.add(quiereDisponible());
 	}
 	
 	public void cargarIntenciones(List<Intenciones> intenciones)
