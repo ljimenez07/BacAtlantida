@@ -28,6 +28,8 @@ public class FTPServidor
 	private String password;
 	private String host;
 	private int puerto;
+	
+	private final String charset = "ISO-8859-1";
 
 	private boolean subirUnArchivo(FTPClient ftpClient, String localFilePath, String remoteFilePath) throws IOException
 	{
@@ -143,7 +145,7 @@ public class FTPServidor
 	
 	private void ajustarRutaDeImagenesEnPlantillaHTML(File html, String rutaArchivoEnFTP) throws IOException
 	{
-		Document doc = Jsoup.parse(html, "UTF-8", "http://example.com/");
+		Document doc = Jsoup.parse(html, charset, "http://example.com/");
 		Elements imgElementos = doc.getElementsByTag("img");
 		for(Element elemento : imgElementos)
 		{
@@ -153,10 +155,10 @@ public class FTPServidor
 			elemento.attr("src", srcModificado);
 		}
 		
-		PrintWriter writer = new PrintWriter(html,"UTF-8");
+		PrintWriter writer = new PrintWriter(html, charset);
 		writer.write( doc.html() ) ;
 		writer.flush();
-		writer.close();	
+		writer.close();
 	}
 	
 	public String getUsuario()

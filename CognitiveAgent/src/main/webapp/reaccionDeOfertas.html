@@ -2,7 +2,7 @@
 	<head th:include="fragments/backoffice :: head (title='Reacción a ofertas')">
 	<meta charset="UTF-8"/>	
 	</head>
-		<link rel="stylesheet" th:href="@{css/chartist.min.css}"/>
+		<link rel="stylesheet" th:href="@{/css/chartist.min.css}"/>
 	<style>
 	.tipo-letra-comun
 	{
@@ -37,8 +37,11 @@
 	}
 </style>
 	<body onload="graficar(0)">
+	<div class="div-contenedor">
+	
+	<div th:include="fragments/header :: header(paginaActual='reaccionDeOfertas')"></div>
 	<div th:include="fragments/backoffice :: body(paginaActual='reaccionDeOfertas')"></div>
-		  <div class="container">
+		  <div class="container agregar-padding-bottom">
   
             <div class="row">
             <div class="col-md-3">
@@ -116,10 +119,10 @@
         <p class="asterisco">(*) Campo requerido</p>
     </div>
 
-	<script type="text/javascript" th:src="@{js/chartist.min.js}"></script>
-	<script type="text/javascript" th:src="@{js/Chart.min.js}"></script>
-	<script type="text/javascript" th:src="@{js/Graficos.js}"></script>
-	<script type="text/javascript" th:src="@{js/Validaciones.js}"></script>
+	<script type="text/javascript" th:src="@{/js/chartist.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/Chart.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/Graficos.js}"></script>
+	<script type="text/javascript" th:src="@{/js/Validaciones.js}"></script>
 	<script>
 		function crearGraficos(desde, hasta)
 		{
@@ -224,5 +227,9 @@
 			
 		}
 	</script>
+		<br/>
+	</div>
+	<div th:include="fragments/footer :: body"></div>
+	
 	</body>
 </html>
