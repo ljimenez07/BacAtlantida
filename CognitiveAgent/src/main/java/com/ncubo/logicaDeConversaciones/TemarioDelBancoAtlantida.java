@@ -14,6 +14,11 @@ import com.ncubo.chatbot.watson.Intenciones;
 public class TemarioDelBancoAtlantida extends Temario
 {
 	
+	protected TemarioDelBancoAtlantida(String pathXML) {
+		super(pathXML);
+		// TODO Auto-generated constructor stub
+	}
+
 	private Tema saludo()
 	{
 		Tema resultado = new Tema
@@ -137,8 +142,8 @@ public class TemarioDelBancoAtlantida extends Temario
 	}
 	
 	@Override
-	protected Contenido cargarContenido(){
-		return new ContenidoDelBancoAtlantida();
+	protected Contenido cargarContenido(String path){
+		return new ContenidoDelBancoAtlantida(path);
 	}
 
 	@Override
@@ -148,7 +153,7 @@ public class TemarioDelBancoAtlantida extends Temario
 	}
 	
 	public static void main(String argv[]) {
-		TemarioDelBancoAtlantida temario = new TemarioDelBancoAtlantida();
+		TemarioDelBancoAtlantida temario = new TemarioDelBancoAtlantida(Constantes.PATH_ARCHIVO_DE_CONFIGURACION_BA);
 		temario.buscarTema(Constantes.FRASE_SALUDO);
 	}
 }

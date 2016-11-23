@@ -13,14 +13,14 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
-public class FTPServidor
+public class FTPCliente
 {
 	private String usuario;
 	private String password;
 	private String host;
 	private int puerto;
 
-	public FTPServidor(String usuario, String contrasena, String host, int puerto){
+	public FTPCliente(String usuario, String contrasena, String host, int puerto){
 		this.usuario = usuario;
 		this.password = contrasena;
 		this.host = host;

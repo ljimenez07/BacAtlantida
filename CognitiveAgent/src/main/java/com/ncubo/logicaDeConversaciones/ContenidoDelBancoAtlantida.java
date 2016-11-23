@@ -7,8 +7,13 @@ import com.ncubo.chatbot.partesDeLaConversacion.Contenido;
 
 public class ContenidoDelBancoAtlantida extends Contenido{
 	
+	protected ContenidoDelBancoAtlantida(String path) {
+		super(path);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
-	protected File archivoDeConfiguracion(){
-		return new File(Constantes.PATH_ARCHIVO_DE_CONFIGURACION_BA);
+	protected File archivoDeConfiguracion(String path){
+		return new File(path);
 	}
 }

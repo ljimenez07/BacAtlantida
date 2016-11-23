@@ -63,6 +63,9 @@ public class Salida {
 	}
 
 	public Sonido getMiSonido() {
+		if(miSonido == null){
+			return new Sonido("", "");
+		}
 		return miSonido;
 	}
 

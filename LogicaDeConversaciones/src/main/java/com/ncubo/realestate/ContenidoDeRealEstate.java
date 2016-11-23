@@ -7,8 +7,13 @@ import com.ncubo.chatbot.partesDeLaConversacion.Contenido;
 
 public class ContenidoDeRealEstate extends Contenido{
 	
+	protected ContenidoDeRealEstate(String path) {
+		super(path);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
-	protected File archivoDeConfiguracion(){
-		return new File(Constantes.PATH_ARCHIVO_DE_CONFIGURACION_RS);
+	protected File archivoDeConfiguracion(String path){
+		return new File(path);
 	}
 }

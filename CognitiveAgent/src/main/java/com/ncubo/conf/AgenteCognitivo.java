@@ -12,8 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+
+import javax.annotation.PostConstruct;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -35,6 +36,7 @@ import com.jayway.restassured.path.xml.XmlPath;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.data.Consulta;
+import com.ncubo.util.FTPServidor;
 import com.ncubo.logicaDeConversaciones.Conversaciones;
 
 @Component
@@ -52,12 +54,23 @@ public class AgenteCognitivo
 	private String userTextToSpeech;
 	private String passwordTextToSpeech;
 	private String voiceTextToSpeech;
+	private String pathAudio;
+	private String pathXML;
+	private String urlPublicaAudios;
 
 	@Autowired
 	private ConsultaDao consultaDao;
 
-	private final Conversaciones miConversaciones = new Conversaciones(getUserTextToSpeech(), getPasswordTextToSpeech(), getVoiceTextToSpeech());
+	@Autowired
+	private FTPServidor ftp;
+	
+	private Conversaciones miConversaciones;
 
+	@PostConstruct
+    public void init(){
+        // start your monitoring in here
+		miConversaciones = new Conversaciones(getPathXML());
+    }
 	
 	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
 	{
@@ -111,6 +124,9 @@ public class AgenteCognitivo
 		String texto = "";
 		for(int i = 0; i < salida.size(); i++){
 			texto = texto + " " + salida.get(i).getMiTexto();
+			if( ! salida.get(i).getMiSonido().url().equals("")){
+				System.out.println("La url del audio es: "+salida.get(i).getMiSonido().url());
+			}
 			if( salida.get(i).obtenerLaRespuestaDeIBM() == null)
 			{
 				continue;
@@ -311,7 +327,9 @@ public class AgenteCognitivo
 	}
 	
 	public void generarTodosLosAudiosEstaticos(){
-		//miConversaciones.generarAudiosEstaticos(usuarioTTS, contrasenaTTS, vozTTS, pathAGuardar, ipPublica, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP);
+		System.out.println("El path xml es: "+getPathXML());
+		miConversaciones.generarAudiosEstaticos(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
+				this.getPathAudio(), this.getUrlPublicaAudios(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto());
 	}
 	
 	public String getWsTasaCambio() {
@@ -392,4 +410,27 @@ public class AgenteCognitivo
 		this.consultaDao = consultaDao;
 	}
 	
+	public String getPathAudio(){
+		return pathAudio;
+	}
+
+	public void setPathAudio(String path){
+		this.pathAudio = path;
+	}
+	
+	public String getUrlPublicaAudios() {
+		return urlPublicaAudios;
+	}
+
+	public void setUrlPublicaAudios(String urlPublicaAudios) {
+		this.urlPublicaAudios = urlPublicaAudios;
+	}
+	
+	public String getPathXML() {
+		return pathXML;
+	}
+
+	public void setPathXML(String pathXML) {
+		this.pathXML = pathXML;
+	}
 }

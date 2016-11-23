@@ -16,16 +16,12 @@ public class Conversaciones {
 	// key puede ser el id del usuario o el id de la seccion
 	private final static Hashtable<String, Conversacion> misConversaciones = new Hashtable<String, Conversacion>();
 	private final static Hashtable<String, Cliente> misClientes = new Hashtable<String, Cliente>();
-	private final static Temario temarioDelBancoAtlantida = new TemarioDelBancoAtlantida();
+	private static Temario temarioDelBancoAtlantida;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final String usuarioTTS;
-	private final String contrasenaTTS;
-	private final String vozTTS;
 	
-	public Conversaciones(String usuarioTTS, String contrasenaTTS, String vozTTS){
-		this.usuarioTTS = usuarioTTS;
-		this.contrasenaTTS = contrasenaTTS;
-		this.vozTTS = vozTTS;
+	public Conversaciones(String pathXML){
+		System.out.println("El path xml es: "+pathXML);
+		temarioDelBancoAtlantida = new TemarioDelBancoAtlantida(pathXML);
 	}
 	
 	private String crearUnaNuevoConversacion(Usuario usuario){
@@ -128,8 +124,39 @@ public class Conversaciones {
 	}
 	
 	public void generarAudiosEstaticos(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String ipPublica, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP){
-		TextToSpeechWatson.getInstance(usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP);
-		temarioDelBancoAtlantida.generarAudioEstaticosDeTodasLasFrases(pathAGuardar, ipPublica);
+		HiloParaGenerarAudiosEstaticos hilo = new HiloParaGenerarAudiosEstaticos(usuarioTTS, contrasenaTTS, vozTTS, pathAGuardar, ipPublica, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP);
+		hilo.start();
 	}
 	
+	private class HiloParaGenerarAudiosEstaticos extends Thread{
+		private String usuarioTTS;
+		private String contrasenaTTS;
+		private String vozTTS;
+		private String pathAGuardar;
+		private String ipPublica;
+		private String usuarioFTP;
+		private String contrasenaFTP;
+		private String hostFTP;
+		private int puetoFTP;
+		
+		public HiloParaGenerarAudiosEstaticos(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String ipPublica, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP){
+			this.usuarioTTS = usuarioTTS;
+			this.contrasenaTTS = contrasenaTTS;
+			this.vozTTS = vozTTS;
+			this.pathAGuardar = pathAGuardar;
+			this.ipPublica = ipPublica;
+			this.usuarioFTP = usuarioFTP;
+			this.contrasenaFTP = contrasenaFTP;
+			this.hostFTP = hostFTP;
+			this.puetoFTP = puetoFTP;
+		}
+		
+		public void run(){
+			TextToSpeechWatson.getInstance(usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAGuardar);
+			System.out.println(String.format("El path a guardar los audios es %s y la url publica es %s", pathAGuardar, ipPublica));
+			temarioDelBancoAtlantida.generarAudioEstaticosDeTodasLasFrases(pathAGuardar, ipPublica);
+			System.out.println("Se termino de generar audios estaticos.");
+		}
+	}
+
 }

@@ -173,14 +173,14 @@ public class MovilController {
 	@RequestMapping(value="/conversacion/generarAudiosEstaticos", method = RequestMethod.GET)
 	@ResponseBody String generarAudiosEstaticos(){
 		serverCognitivo.generarTodosLosAudiosEstaticos();
-		return "Ok.";
+		return "Ok";
 	}
 	
 	@ExceptionHandler(Throwable.class)
 	public @ResponseBody String handleAllException(final HttpServletRequest req, HttpServletResponse response, final Exception ex) throws MessagingException 
 	{
 		
-		System.err.println("aaa "+ex.toString());
+		System.err.println("Error: "+ex.toString());
 		
 		if( ! (ex instanceof NoEmailException) )
 		{

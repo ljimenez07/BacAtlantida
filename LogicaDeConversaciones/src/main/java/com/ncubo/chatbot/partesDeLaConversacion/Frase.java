@@ -116,7 +116,11 @@ public abstract class Frase
 	}
 	
 	public boolean hayTextosImpertinetes(){
-		return (textosImpertinetesDeLaFrase.length > 0);
+		try{
+			return (textosImpertinetesDeLaFrase.length > 0);
+		}catch(Exception e){
+			return false;
+		}
 	}
 	
 	boolean esEstatica(){
@@ -155,23 +159,25 @@ public abstract class Frase
 		this.pathAGuardarLosAudiosTTS = pathAGuardar;
 		this.ipPublicaAMostrarLosAudioTTS = ipPublica;
 		
-		if(esEstatica()){
-			for(int index = 0; index < textosDeLaFrase.length; index ++){
-				String texto = textosDeLaFrase[index];
-				String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAGuardar);
-				String path = pathAGuardar+File.separator+nombreDelArchivo;
-				String miIp = ipPublica+File.separator+nombreDelArchivo;
-				sonidosDeLosTextosDeLaFrase.add(new Sonido(miIp, path));
+		if (sePuedeDecirEnVozAlta()){
+			if(esEstatica()){
+				for(int index = 0; index < textosDeLaFrase.length; index ++){
+					String texto = textosDeLaFrase[index];
+					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAGuardar);
+					String path = pathAGuardar+File.separator+nombreDelArchivo;
+					String miIp = ipPublica+nombreDelArchivo;
+					sonidosDeLosTextosDeLaFrase.add(new Sonido(miIp, path));
+				}
 			}
-		}
-		
-		if(hayTextosImpertinetes()){
-			for(int index = 0; index < textosImpertinetesDeLaFrase.length; index ++){
-				String texto = textosImpertinetesDeLaFrase[index];
-				String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAGuardar);
-				String path = pathAGuardar+File.separator+nombreDelArchivo;
-				String miIp = ipPublica+File.separator+nombreDelArchivo;
-				sonidosDeLosTextosImpertinentesDeLaFrase.add(new Sonido(miIp, path));
+			
+			if(hayTextosImpertinetes()){
+				for(int index = 0; index < textosImpertinetesDeLaFrase.length; index ++){
+					String texto = textosImpertinetesDeLaFrase[index];
+					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAGuardar);
+					String path = pathAGuardar+File.separator+nombreDelArchivo;
+					String miIp = ipPublica+nombreDelArchivo;
+					sonidosDeLosTextosImpertinentesDeLaFrase.add(new Sonido(miIp, path));
+				}
 			}
 		}
 	}
@@ -198,6 +204,10 @@ public abstract class Frase
 	
 	public boolean esMandatorio(){
 		return buscarCaracteristica(CaracteristicaDeLaFrase.esUnaPreguntaMandatoria);
+	}
+	
+	public boolean sePuedeDecirEnVozAlta(){
+		return buscarCaracteristica(CaracteristicaDeLaFrase.sePuedeDecirEnVozAlta);
 	}
 	
 	public String[] getTextosDeLaFrase() {
