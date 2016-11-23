@@ -109,7 +109,7 @@ function cargarOfertas()
 		},
 		done: function(data)
 		{
-			$("#ofertas .contenedor-de-ofertas").append(Handlebars.templates.listaDeOfertas(ofertas: data));
+			$("#ofertas .contenedor-de-ofertas").append(Handlebars.templates.listaDeOfertas({ofertas: data}));
 			bindAcciones();
 			bindClickeable();
 		}
