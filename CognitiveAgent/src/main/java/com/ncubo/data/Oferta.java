@@ -6,7 +6,11 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.concurrent.TimeUnit;
 
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.ncubo.util.AtLeastToday;
 
 public class Oferta implements Comparable<Oferta>
 {
@@ -32,10 +36,13 @@ public class Oferta implements Comparable<Oferta>
 	@NotEmpty(message = "*Campo requerido")
 	private String restricciones;
 	
-	@NotEmpty(message = "*Campo requerido")
+	@NotNull
+	@com.ncubo.util.Date
 	private Date vigenciaDesde;
-	
-	@NotEmpty(message = "*Campo requerido")
+
+	@NotNull
+	@com.ncubo.util.Date
+	@AtLeastToday
 	private Date vigenciaHasta;
 	
 	@NotEmpty(message = "*Campo requerido")
