@@ -23,7 +23,7 @@ public class Usuario implements Serializable
 	
 	public Usuario(String idSesion)
 	{
-		this.idSesion = idSesion;		
+		this.setIdSesion(idSesion);		
 	}
 
 	public String getContextoDeWatsonParaChats()
@@ -87,6 +87,16 @@ public class Usuario implements Serializable
 
 	public void setLlaveSession(String llaveSession) {
 		this.llaveSession = llaveSession;
+	}
+
+	public String getIdSesion()
+	{
+		return idSesion;
+	}
+
+	public void setIdSesion(String idSesion)
+	{
+		this.idSesion = idSesion;
 	}
 	
 	

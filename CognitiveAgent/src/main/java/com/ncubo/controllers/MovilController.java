@@ -141,7 +141,6 @@ public class MovilController {
 		XmlPath xmlPath = new XmlPath(responseXML).setRoot("Envelope");
 		NodeChildrenImpl body = xmlPath.get("Body");
 		Node validaPreLoginColeccion = body.get(0).getNode("Respuesta").getNode("validaPreLoginColeccion");
-		String usuarioId = validaPreLoginColeccion.getNode("usuarioId").toString();
 		if( validaPreLoginColeccion.getNode("valido").toString().equals("S") )
 		{
 			Object objeto = session.getAttribute(Usuario.LLAVE_EN_SESSION) ;

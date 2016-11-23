@@ -11,7 +11,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.codehaus.jackson.JsonParseException;
@@ -85,10 +84,6 @@ public class AgenteCognitivo
 			contenidoDelContexto = new JSONObject(usuario.getContextoDeWatsonParaChats());
 		}
 		
-		
-		
-		if( contenidoDelContexto == null ) contenidoDelContexto = new JSONObject();
-				
 		Map<String, Object> myContext = mapper.readValue(contenidoDelContexto.toString(), new TypeReference<Map<String, Object>>(){});
 		ConversationService service = new ConversationService(dateFormat.format(date));
 		service.setUsernameAndPassword(user, password);
