@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 public class Usuario implements Serializable
 {
+	private static final long serialVersionUID = -3968177701312019004L;
 	public final static String LLAVE_EN_SESSION="user";
 	private String contextoDeWatsonParaChats = new JSONObject().toString();
 	private String contextoDeWatsonParaConocerte = new JSONObject().toString();
