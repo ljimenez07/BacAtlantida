@@ -230,7 +230,7 @@ public class OfertaDao
 		}
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
 		Connection con = dao.openConBD();
-		String query = String.format("SELECT %s FROM %s, %s LEFT JOIN %s ON %s.%s = %s.%s WHERE %s = 0 AND %s = %s AND %s >= ? GROUP BY %s.%s ORDER BY %s DESC LIMIT ?, 10;",
+		String query = String.format("SELECT %s FROM %s, %s LEFT JOIN %s ON %s.%s = %s.%s WHERE %s = 0 AND %s = 1 AND %s = %s AND %s >= ? GROUP BY %s.%s ORDER BY %s DESC LIMIT ?, 10;",
 				CAMPOS_PARA_SELECT,
 				NOMBRE_TABLA_CATEGORIA_OFERTA,
 				NOMBRE_TABLA,
@@ -240,6 +240,7 @@ public class OfertaDao
 				NOMBRE_TABLA_REACCION,
 				atributo.ID_OFERTA,
 				atributo.ELIMINADA,
+				atributo.ESTADO,
 				atributo.CATEGORIA,
 				atributo.ID_CATEGORIA,
 				atributo.VIGENCIA_HASTA,
