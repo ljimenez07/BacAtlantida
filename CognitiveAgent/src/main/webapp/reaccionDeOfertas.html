@@ -3,176 +3,226 @@
 	<meta charset="UTF-8"/>	
 	</head>
 		<link rel="stylesheet" th:href="@{css/chartist.min.css}"/>
-	<body>
-	<div th:include="fragments/header :: body(paginaActual='reaccionDeOfertas')"></div>
+	<style>
+	.tipo-letra-comun
+	{
+		font-family: 'Roboto';
+		font-size: 14px;
+	}
+	.quitar-padding-left
+	{
+		padding-left: 0;
+	}
+	.agregar-padding-top
+	{
+		padding-top: 3%;
+	}
+	.sobresaltar-field
+	{
+		border-width: 3%;
+		border-color: #3e61ac;
+	}
+	.agregar-padding-left
+	{
+		padding-left: 2%;
+	}
+	.asterisco
+	{
+		color: #3e61ac;
+	}
+	.campo-requerido
+	{
+		color: #3e61ac;
+		font-family: 'Roboto', serif;
+	}
+</style>
+	<body onload="graficar(0)">
 	<div th:include="fragments/backoffice :: body(paginaActual='reaccionDeOfertas')"></div>
 		  <div class="container">
   
-			<div class="row">
-			<div class="col-md-3">
-				<div class="form-group">
-					<label for="fecha-desde">Desde<span>*</span></label>
-					<div class="inner-addon right-addon">
-						<input type="text" name="fecha-desde" id="fecha-desde" class="form-control" />
-						<p id="desde-requerido"></p>
-						<i class="glyphicon glyphicon-calendar"></i>
-				   	</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="form-group">
-					<label for="">Hasta<span>*</span></label>
-					 	<div class="inner-addon right-addon">
-							<input type="text" name="fecha-hasta" id="fecha-hasta" class="form-control" />
-							<p id="hasta-requerido"></p>
-							<i class="glyphicon glyphicon-calendar"></i>
-						</div>
-				</div>
-			</div>
-			<div id="filtro" class="col-md-6">
-				<div >Mostrar por:</div>
-				<div class="col-md-3">
-					<div class="radio">
-						<label for="" class="radio-inline"><input type="radio" checked="checked" id= "filtro-categoria" name="filtro" value="categoria"/>Categor&iacute;a</label> 
-					</div>
-				</div>
-				<div class="col-md-4">
-					 <div class="radio">
-						<label for="" class="radio-inline"><input type="radio" id="filtro-oferta" name="filtro" value="oferta"/>Oferta</label> 
-					</div>
-				</div>
-				<div class="col-md-4">
-					 <button class="btn btn-danger" onclick="crearGraficos()">Graficar <span class="glyphicon glyphicon-stats"></span></button>
-				</div>
-			</div>
-		</div> 
+            <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="fecha-desde"><span class="asterisco">*</span><span class="tipo-letra-comun">Desde</span></label>
+                    <div class="inner-addon right-addon">
+                    	<input type="text" name="fecha-desde" id="fecha-desde" class="form-control" />
+                    	<p id="desde-requerido" class="campo-requerido" style="visibility:hidden">Fecha desde requerida</p>
+                    	<i class="glyphicon glyphicon-calendar"></i>
+                   	</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for=""><span class="asterisco">*</span><span class="tipo-letra-comun">Hasta</span></label>
+                     	<div class="inner-addon right-addon">
+                    		<input type="text" name="fecha-hasta" id="fecha-hasta" class="form-control" />
+                    		<p id="hasta-requerido" class="campo-requerido" style="visibility:hidden">Fecha hasta requerida</p>
+                    		<i class="glyphicon glyphicon-calendar"></i>
+                    	</div>
+                </div>
+            </div>
+            <div id="filtro" class="col-md-6">
+                <div ><span class="tipo-letra-comun">Mostrar por:</span></div>
+                <div class="col-md-3">
+                    <div class="radio">
+                        <label for="" class="radio-inline"><input type="radio" checked="checked" id= "filtro-categoria" name="filtro" value="categoria"/>Categor&iacute;a</label> 
+                    </div>
+                </div>
+                <div class="col-md-4">
+                     <div class="radio">
+                        <label for="" class="radio-inline"><input type="radio" id="filtro-oferta" name="filtro" value="oferta"/>Oferta</label> 
+                    </div>
+                </div>
+                <div class="col-md-4">
+                     <button class="btn btn-danger" onclick="graficar(1)">Graficar <span class="glyphicon glyphicon-stats"></span></button>
+                </div>
+            </div>
+        </div> 
   
-		<!-- Seccion para dibujar los graficos correspondientes -->
-		<div class="row">
-			<div class="col-md-5">
-				<div id="grafico-megusta">
-					
-				</div>
-			</div>
-			<div class="col-md-5">	 
-					<div id="grafico-no-megusta">
-					
-					</div>
-			</div>
-		</div>
-		  <div class="row">
-			<div class="col-md-6" id="div-megusta">
-				<h3 id="titulo-megusta"></h3>
-		  		<canvas id="megusta">
-		  			
-		  		</canvas>
-			</div>
-			<div class="col-md-6" id="div-nomegusta">
-				<h3 id="titulo-Nomegusta"></h3>	 
-				<canvas id="nomegusta">
-				
-				
-				</canvas>
-			</div>
-		</div>
-	</div>
-	<div th:include="fragments/footer :: body"></div>
+        <!-- Seccion para dibujar los graficos correspondientes -->
+        <div class="row">
+            <div class="col-md-5">
+                <div id="grafico-megusta">
+                    
+                </div>
+            </div>
+            <div class="col-md-5">     
+                    <div id="grafico-no-megusta">
+                    
+                    </div>
+            </div>
+        </div>
+          <div class="row">
+            <div class="col-md-6" id="div-megusta">
+            	<h3 id="titulo-megusta"></h3>
+          		<canvas id="megusta">
+          			
+          		</canvas>
+          		<div id="total-likes">
+          			
+          		</div>
+            </div>
+            <div class="col-md-6" id="div-nomegusta">
+            	<h3 id="titulo-Nomegusta"></h3>     
+                <canvas id="nomegusta">
+                
+                
+                </canvas>
+                <div id="total-dislikes">
+          			
+          		</div>
+            </div>
+        </div>
+        <p class="asterisco">(*) Campo requerido</p>
+    </div>
 
 	<script type="text/javascript" th:src="@{js/chartist.min.js}"></script>
 	<script type="text/javascript" th:src="@{js/Chart.min.js}"></script>
 	<script type="text/javascript" th:src="@{js/Graficos.js}"></script>
+	<script type="text/javascript" th:src="@{js/Validaciones.js}"></script>
 	<script>
-		function crearGraficos()
+		function crearGraficos(desde, hasta)
 		{
-			
-			var desde = document.getElementById("fecha-desde").value;
-			var hasta = document.getElementById("fecha-hasta").value;
-			if(validarFecha(desde, hasta))
+	
+		if(validarFecha(desde, hasta))
+		{
+			var filtro;
+			if(document.getElementById("filtro-categoria").checked)
 			{
-				var filtro;
-				if(document.getElementById("filtro-categoria").checked)
-				{
-					filtro = document.getElementById("filtro-categoria").value;
-					
-				}
-				else
-				{
-					filtro = document.getElementById("filtro-oferta").value;	
-				}
-
-				var object = new Object();
+				filtro = document.getElementById("filtro-categoria").value;
 				
-				object.desde = desde;
-				object.hasta = hasta;
-				object.filtro = filtro;
-				
-				var json = JSON.stringify(object);
-			
-				console.log(json);
-				 $.ajax
-				 (
-					{
-						method: "POST",
-						url: "reaccionDeOfertasDatos",
-						cache: true,
-						async: false,
-						dataType: "json",
-						contentType: "application/json",
-						data: "{ \"\parametros\"\: " + json + " }",
-						success: function (resultado)
-						{
-							var seriesMegusta = [];
-							var labelsMegusta = [];
-							
-							var seriesNoMegusta = [];
-							var labelsNoMegusta = [];
-							
-					   		for(elemento of resultado)
-					   		{
-					   			if(elemento != null)
-					   			{
-									if(elemento.cantidadLikes != 0 || elemento.tituloLabel != null)
-									{
-										seriesMegusta.push(elemento.cantidadLikes);
-							   			labelsMegusta.push(elemento.tituloLabel);
-									}
-					   				
-						   			if(elemento.cantidadDislikes != 0 || elemento.tituloLabelDislike != null)
-						   			{
-						   				seriesNoMegusta.push(elemento.cantidadDislikes);
-							   			labelsNoMegusta.push(elemento.tituloLabelDislike); 
-						   			}
-					   			}
-					   			
-					   			
-					   		}
-					   		
-					   		//graficar(seriesMegusta, labelsMegusta, seriesNoMegusta, labelsNoMegusta);
-					   		graficoDePastel(labelsMegusta, seriesMegusta, labelsNoMegusta, seriesNoMegusta);
-						}  
-					}
-				);
 			}
 			else
 			{
-				var pDesde = document.getElementById("desde-requerido");
-				var pHasta = document.getElementById("hasta-requerido");
-				texto = document.createTextNode("Fecha desde, requerida");
-				texto2 = document.createTextNode("Fecha hasta, requerida");
-				pDesde.appendChild(texto);
-				pHasta.appendChild(texto2);
+				filtro = document.getElementById("filtro-oferta").value;	
 			}
-	
+
+			var object = new Object();
+			
+			object.desde = desde;
+			object.hasta = hasta;
+			object.filtro = filtro;
+			
+			var json = JSON.stringify(object);
+		
+			console.log(json);
+			 $.ajax
+		     (
+		        {
+		            method: "POST",
+		            url: "reaccionDeOfertasDatos",
+		            cache: true,
+		            async: false,
+		            dataType: "json",
+		            contentType: "application/json",
+		            data: "{ \"\parametros\"\: " + json + " }",
+		            success: function (resultado)
+					{
+		            	var seriesMegusta = [];
+		            	var labelsMegusta = [];
+		            	
+		            	var seriesNoMegusta = [];
+		            	var labelsNoMegusta = [];
+		            	
+		            	var sumaTotalLikes = 0;
+		            	var sumaTotalDislikes = 0;
+		            	
+		           		for(elemento of resultado)
+		           		{
+		           			if(elemento != null)
+		           			{
+								if(elemento.cantidadLikes != 0 || elemento.tituloLabel != null)
+								{
+									seriesMegusta.push(elemento.cantidadLikes);
+				           			labelsMegusta.push(elemento.tituloLabel);
+				           			sumaTotalLikes += elemento.cantidadLikes;
+								}
+		           				
+			           			if(elemento.cantidadDislikes != 0 || elemento.tituloLabelDislike != null)
+			           			{
+			           				seriesNoMegusta.push(elemento.cantidadDislikes);
+				           			labelsNoMegusta.push(elemento.tituloLabelDislike);
+				           			sumaTotalDislikes += elemento.cantidadDislikes;
+			           			}
+		           			}
+		           		}
+		           		
+		           		//graficar(seriesMegusta, labelsMegusta, seriesNoMegusta, labelsNoMegusta);
+		           		graficoDePastel(labelsMegusta, seriesMegusta, labelsNoMegusta, seriesNoMegusta);
+		           		var totalLikesDiv = document.getElementById("total-likes");
+		           		var totalDislikesDiv = document.getElementById("total-dislikes");
+		           		totalLikesDiv.innerHTML = "Total Me gusta " + sumaTotalLikes;
+		           		totalDislikesDiv.innerHTML = "Total No Me gusta " + sumaTotalDislikes;
+		           		
+		            }  
+		        }
+		    );
 		}
-	function validarFecha(desde, hasta)
-	{
-		if(desde == "" || hasta == "")
+		}
+		function graficar(type)
 		{
-			return false;
+			if(type == 0)
+			{
+				var RANGO_MAXIMO_DE_DIAS = 7;
+				var fecha = new Date();
+				var fechaFinal = fecha.getFullYear() +"-"+ (fecha.getMonth() +1) +"-"+ fecha.getDate();
+				
+				fecha.setDate(fecha.getDate() - RANGO_MAXIMO_DE_DIAS); 
+				var fechaInicial = fecha.getFullYear() +"-"+ (fecha.getMonth() +1) +"-"+ fecha.getDate();
+				
+				var desde = document.getElementById("fecha-desde").value = fechaInicial;
+				var hasta = document.getElementById("fecha-hasta").value = fechaFinal;
+				crearGraficos(fechaInicial,fechaFinal);
+			}
+			else
+			{
+				var desde = document.getElementById("fecha-desde").value;
+				var hasta = document.getElementById("fecha-hasta").value;
+				crearGraficos(desde, hasta);	
+			}
+			
+			
 		}
-		else
-			return true;
-	}
 	</script>
 	</body>
 </html>
