@@ -1,11 +1,13 @@
 package com.ncubo.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +27,7 @@ public class OfertaDao
 	private final String NOMBRE_TABLA_CATEGORIA_OFERTA = "categoriaoferta";
 	private final String NOMBRE_TABLA_REACCION = "reaccion";
 	private final String LIMITE = "50";
+	private final String CAMPOS_PARA_SELECT = String.format("%s.%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, IF(%s = ?, IF(%s = 1, 1, NULL), NULL) AS %s, IF(%s = ?, IF(%s = 0, 1, NULL), NULL) AS %s", NOMBRE_TABLA, atributo.ID_OFERTA, atributo.TITULO_DE_OFERTA, atributo.COMERCIO, atributo.DESCRIPCION, atributo.CATEGORIA, atributo.NOMBRE_CATEGORIA, atributo.CIUDAD, atributo.ESTADO, atributo.RESTRICCIONES, atributo.VIGENCIA_DESDE, atributo.VIGENCIA_HASTA, atributo.IMAGEN_COMERCIO_PATH, atributo.IMAGEN_PUBLICIDAD_PATH, atributo.FECHA_HORA_REGISTRO, atributo.ID_USUARIO, atributo.REACCION, atributo.LIKES, atributo.ID_USUARIO, atributo.REACCION, atributo.DISLIKES);
 	@Autowired
 	private Persistencia dao;
 	
@@ -108,8 +111,8 @@ public class OfertaDao
 					rs.getString(atributo.CIUDAD.toString()),
 					rs.getBoolean(atributo.ESTADO.toString()),
 					rs.getString(atributo.RESTRICCIONES.toString()),
-					rs.getString(atributo.VIGENCIA_DESDE.toString()),
-					rs.getString(atributo.VIGENCIA_HASTA.toString()),
+					rs.getDate(atributo.VIGENCIA_DESDE.toString()),
+					rs.getDate(atributo.VIGENCIA_HASTA.toString()),
 					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
 					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
 					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),
@@ -185,6 +188,7 @@ public class OfertaDao
 				+ " FROM " + NOMBRE_TABLA + ", " + NOMBRE_TABLA_CATEGORIA_OFERTA 
 				+ " WHERE " + atributo.ELIMINADA + " = 0"
 				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA
+				+ " AND " + atributo.VIGENCIA_HASTA + " >= '" + new Date(Calendar.getInstance().getTimeInMillis()) + "'"
 				+ " ORDER BY " + atributo.FECHA_HORA_REGISTRO + " DESC"
 				+ " LIMIT 10;";
 		
@@ -202,8 +206,8 @@ public class OfertaDao
 					rs.getString(atributo.CIUDAD.toString()),
 					rs.getBoolean(atributo.ESTADO.toString()),
 					rs.getString(atributo.RESTRICCIONES.toString()),
-					rs.getString(atributo.VIGENCIA_DESDE.toString()),
-					rs.getString(atributo.VIGENCIA_HASTA.toString()),
+					rs.getDate(atributo.VIGENCIA_DESDE.toString()),
+					rs.getDate(atributo.VIGENCIA_HASTA.toString()),
 					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
 					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
 					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),
@@ -225,32 +229,32 @@ public class OfertaDao
 			esUnUsuarioConocido = false;
 		}
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
-		String query = "SELECT " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + ", "
-				+ atributo.TITULO_DE_OFERTA + ", "
-				+ atributo.COMERCIO + ", "
-				+ atributo.DESCRIPCION + ", "
-				+ atributo.CATEGORIA + ", "
-				+ atributo.NOMBRE_CATEGORIA + ", "
-				+ atributo.CIUDAD + ", "
-				+ atributo.ESTADO + ", "
-				+ atributo.RESTRICCIONES + ", "
-				+ atributo.VIGENCIA_DESDE + ", "
-				+ atributo.VIGENCIA_HASTA + ", "
-				+ atributo.IMAGEN_COMERCIO_PATH + ", "
-				+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
-				+ atributo.FECHA_HORA_REGISTRO
-				+ ", IF(" + atributo.ID_USUARIO + " = '" + idUsuario + "', IF(" + atributo.REACCION + " = 1, 1, NULL), NULL) AS " + atributo.LIKES
-				+ ", IF(" + atributo.ID_USUARIO + " = '" + idUsuario + "', IF(" + atributo.REACCION + " = 0, 1, NULL), NULL) AS " + atributo.DISLIKES
-				+ " FROM " + NOMBRE_TABLA_CATEGORIA_OFERTA + ", " + NOMBRE_TABLA
-				+ " LEFT JOIN " + NOMBRE_TABLA_REACCION + " ON " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + NOMBRE_TABLA_REACCION + ".idOferta"
-				+ " WHERE " + atributo.ELIMINADA + " = 0"
-				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA
-				+ " GROUP BY " + NOMBRE_TABLA + "." + atributo.ID_OFERTA
-				+ " ORDER BY " + atributo.FECHA_HORA_REGISTRO + " DESC"
-				+ " LIMIT " + indiceInicial + ", 10;";
-		
 		Connection con = dao.openConBD();
-		ResultSet rs = con.createStatement().executeQuery(query);
+		String query = String.format("SELECT %s FROM %s, %s LEFT JOIN %s ON %s.%s = %s.%s WHERE %s = 0 AND %s = 1 AND %s = %s AND %s >= ? GROUP BY %s.%s ORDER BY %s DESC LIMIT ?, 10;",
+				CAMPOS_PARA_SELECT,
+				NOMBRE_TABLA_CATEGORIA_OFERTA,
+				NOMBRE_TABLA,
+				NOMBRE_TABLA_REACCION,
+				NOMBRE_TABLA,
+				atributo.ID_OFERTA,
+				NOMBRE_TABLA_REACCION,
+				atributo.ID_OFERTA,
+				atributo.ELIMINADA,
+				atributo.ESTADO,
+				atributo.CATEGORIA,
+				atributo.ID_CATEGORIA,
+				atributo.VIGENCIA_HASTA,
+				NOMBRE_TABLA,
+				atributo.ID_OFERTA,
+				atributo.FECHA_HORA_REGISTRO);
+				
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setString(1, idUsuario);
+		stmt.setString(2, idUsuario);
+		stmt.setDate(3, new Date(Calendar.getInstance().getTimeInMillis()));
+		stmt.setInt(4, indiceInicial);
+		
+		ResultSet rs = stmt.executeQuery();
 		
 		while (rs.next())
 		{
@@ -263,8 +267,8 @@ public class OfertaDao
 					rs.getString(atributo.CIUDAD.toString()),
 					rs.getBoolean(atributo.ESTADO.toString()),
 					rs.getString(atributo.RESTRICCIONES.toString()),
-					rs.getString(atributo.VIGENCIA_DESDE.toString()),
-					rs.getString(atributo.VIGENCIA_HASTA.toString()),
+					rs.getDate(atributo.VIGENCIA_DESDE.toString()),
+					rs.getDate(atributo.VIGENCIA_HASTA.toString()),
 					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
 					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
 					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),
@@ -287,30 +291,27 @@ public class OfertaDao
 			idUsuario = "NULL";
 			esUnUsuarioConocido = false;
 		}
-		String query = "SELECT " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + ", "
-				+ atributo.TITULO_DE_OFERTA + ", "
-				+ atributo.COMERCIO + ", "
-				+ atributo.DESCRIPCION + ", "
-				+ atributo.CATEGORIA + ", "
-				+ atributo.NOMBRE_CATEGORIA + ", "
-				+ atributo.CIUDAD + ", "
-				+ atributo.ESTADO + ", "
-				+ atributo.RESTRICCIONES + ", "
-				+ atributo.VIGENCIA_DESDE + ", "
-				+ atributo.VIGENCIA_HASTA + ", "
-				+ atributo.IMAGEN_COMERCIO_PATH + ", "
-				+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
-				+ atributo.FECHA_HORA_REGISTRO
-				+ ", IF(" + atributo.ID_USUARIO + " = '" + idUsuario + "', IF(" + atributo.REACCION + " = 1, 1, NULL), NULL) AS " + atributo.LIKES
-				+ ", IF(" + atributo.ID_USUARIO + " = '" + idUsuario + "', IF(" + atributo.REACCION + " = 0, 1, NULL), NULL) AS " + atributo.DISLIKES
-				+ " FROM " + NOMBRE_TABLA_CATEGORIA_OFERTA + ", " + NOMBRE_TABLA 
-				+ " LEFT JOIN " + NOMBRE_TABLA_REACCION + " ON " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + NOMBRE_TABLA_REACCION + ".idOferta"
-				+ " WHERE " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + idOferta
-				+ " AND " + atributo.ELIMINADA + " = 0"
-				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA + ";";
+		String query = String.format("SELECT %s FROM %s, %s LEFT JOIN %s ON %s.%s = %s.%s WHERE %s.%s = ? AND %s = %s;",
+				CAMPOS_PARA_SELECT,
+				NOMBRE_TABLA_CATEGORIA_OFERTA,
+				NOMBRE_TABLA,
+				NOMBRE_TABLA_REACCION,
+				NOMBRE_TABLA,
+				atributo.ID_OFERTA,
+				NOMBRE_TABLA_REACCION,
+				atributo.ID_OFERTA,
+				NOMBRE_TABLA,
+				atributo.ID_OFERTA,
+				atributo.CATEGORIA,
+				atributo.ID_CATEGORIA);
 		
 		Connection con = dao.openConBD();
-		ResultSet rs = con.createStatement().executeQuery(query);
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setString(1, idUsuario);
+		stmt.setString(2, idUsuario);
+		stmt.setInt(3, idOferta);
+		
+		ResultSet rs = stmt.executeQuery();
 		
 		while (rs.next())
 		{
@@ -323,8 +324,8 @@ public class OfertaDao
 					rs.getString(atributo.CIUDAD.toString()),
 					rs.getBoolean(atributo.ESTADO.toString()),
 					rs.getString(atributo.RESTRICCIONES.toString()),
-					rs.getString(atributo.VIGENCIA_DESDE.toString()),
-					rs.getString(atributo.VIGENCIA_HASTA.toString()),
+					rs.getDate(atributo.VIGENCIA_DESDE.toString()),
+					rs.getDate(atributo.VIGENCIA_HASTA.toString()),
 					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
 					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
 					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),

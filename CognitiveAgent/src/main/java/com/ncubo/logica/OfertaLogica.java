@@ -19,7 +19,7 @@ public class OfertaLogica
 	
 	public BindingResult validarCampos(BindingResult bindingResult, Oferta oferta) throws ParseException
 	{
-		if( ! bindingResult.hasFieldErrors("vigenciaHasta"))
+		if( ! bindingResult.hasFieldErrors("vigenciaHasta") && ! bindingResult.hasFieldErrors("vigenciaDesde"))
 		{
 			if( ! oferta.fechaHastaMayorAFechaDesde())
 			{

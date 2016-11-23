@@ -24,7 +24,7 @@
 <body>
 	<div class="div-contenedor">
 	
-		<div th:include="fragments/header :: body"></div>
+		<div th:include="fragments/header :: header(paginaActual='gestionDeOfertas')"></div>
 		<div th:include="fragments/backoffice :: body(paginaActual='gestionDeOfertas')"></div>
 	
 		<div class="container agregar-padding-bottom">		
