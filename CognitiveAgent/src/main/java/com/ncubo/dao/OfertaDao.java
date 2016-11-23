@@ -1,8 +1,10 @@
 package com.ncubo.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -152,7 +154,14 @@ public class OfertaDao
 
 
 		Connection con = dao.openConBD();
-		con.createStatement().execute(query);
+		PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+		preparedStatement.executeUpdate();
+		ResultSet rs = preparedStatement.getGeneratedKeys();
+		if (rs.next())
+		{
+			oferta.setIdOferta(rs.getInt(1));
+		}
+		
 		dao.closeConBD();
 	}
 	

@@ -1,51 +1,51 @@
 {{#each ofertas}}
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="row datos-de-oferta" id="{{idOferta}}">
-        <div class="col-xs-12">
-          <div class="row">
-            <div class="col-xs-12">
-              {{#if esHtml}}
-                <div class="html-de-oferta" id="html-de-oferta-{{idOferta}}"></div>
-                <script type="text/javascript">
-                $.get("{{imagenPublicidadPath}}", function(data) {
-                  $("#html-de-oferta-{{idOferta}}").html(data);
-                });
-                </script>
-              {{else}}
-                <img src="{{imagenPublicidadPath}}" class="imagen-de-oferta">
-              {{/if}}
-            </div>
-          </div>
-          <div class="row nombre-del-comercio">
-            <div class="col-xs-12">
-              <strong>{{comercio}}</strong>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12">
-              <span>{{tituloDeOferta}}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row contenedor-de-botones">
-        <div class="col-xs-6">
-          <div class="tiempo-transcurrido">Hace {{tiempoTranscurrido}}</div>
-        </div>
-        <div class="col-xs-6">
-          <div class="row" idOferta="{{idOferta}}">
-            {{#if esUnUsuarioConocido}}
-              <div class="col-xs-3"><div class="boton-like {{like}}"></div></div>
-              <div class="col-xs-3"><div class="boton-dislike {{dislike}}"></div></div>
-            {{else}}
-              <div class="col-xs-6"></div>
-            {{/if}}
-            <div class="col-xs-3"><div data-audio="{{descripcionAudio}}" class="boton-escuchar"></div></div>
-            <div class="col-xs-3"><div class="boton-compartir"></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="row datos-de-oferta" id="{{idOferta}}">
+				<div class="col-xs-12">
+					<div class="row">
+						<div class="col-xs-12">
+							{{#if esHtml}}
+								<div class="html-de-oferta" id="html-de-oferta-{{idOferta}}"></div>
+								<script type="text/javascript">
+								$.get("{{imagenPublicidadPath}}", function(data) {
+									$("#html-de-oferta-{{idOferta}}").html(data);
+								});
+								</script>
+							{{else}}
+								<img src="{{imagenPublicidadPath}}" class="imagen-de-oferta">
+							{{/if}}
+						</div>
+					</div>
+					<div class="row nombre-del-comercio">
+						<div class="col-xs-12">
+							<strong>{{comercio}}</strong>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<span>{{tituloDeOferta}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row contenedor-de-botones">
+				<div class="col-xs-6">
+					<div class="tiempo-transcurrido">Hace {{tiempoTranscurrido}}</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="row" idOferta="{{idOferta}}">
+						{{#if esUnUsuarioConocido}}
+							<div class="col-xs-3"><div class="boton-like estado-{{likes}}"></div></div>
+							<div class="col-xs-3"><div class="boton-dislike estado-{{dislikes}}"></div></div>
+						{{else}}
+							<div class="col-xs-6"></div>
+						{{/if}}
+						<div class="col-xs-3"><div data-audio="{{descripcionAudio}}" class="boton-escuchar"></div></div>
+						<div class="col-xs-3"><div class="boton-compartir"></div></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {{/each}}

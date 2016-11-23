@@ -14,6 +14,11 @@ import com.ncubo.chatbot.watson.Intenciones;
 public class TemarioDeRealEstate extends Temario
 {
 	
+	protected TemarioDeRealEstate(String pathXML) {
+		super(pathXML);
+		// TODO Auto-generated constructor stub
+	}
+
 	private Tema saludo()
 	{
 		Tema resultado = new Tema
@@ -156,8 +161,8 @@ public class TemarioDeRealEstate extends Temario
 	}
 	
 	@Override
-	protected Contenido cargarContenido(){
-		return new ContenidoDeRealEstate();
+	protected Contenido cargarContenido(String path){
+		return new ContenidoDeRealEstate(path);
 	}
 
 	@Override
@@ -168,7 +173,7 @@ public class TemarioDeRealEstate extends Temario
 	}
 	
 	public static void main(String argv[]) {
-		TemarioDeRealEstate temario = new TemarioDeRealEstate();
+		TemarioDeRealEstate temario = new TemarioDeRealEstate(Constantes.PATH_ARCHIVO_DE_CONFIGURACION_RS);
 		temario.buscarTema(Constantes.FRASE_SALUDO);
 	}
 }

@@ -2,9 +2,7 @@ package com.ncubo.chatbot.partesDeLaConversacion;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-
 import com.ncubo.chatbot.configuracion.Constantes;
 import com.ncubo.chatbot.exceptiones.ChatException;
 import com.ncubo.chatbot.watson.Entidades;
@@ -17,10 +15,10 @@ public abstract class Temario
 	private ArrayList<Intenciones> intenciones = new ArrayList<Intenciones>();
 	private ArrayList<Entidades> entidades = new ArrayList<Entidades>();
 	
-	protected Temario()
+	protected Temario(String pathXML)
 	{
 		temasDelDiscurso = new Temas();
-		contenido = cargarContenido();
+		contenido = cargarContenido(pathXML);
 		cargarTemario(temasDelDiscurso);
 		valirQueLasDependenciasEstenEnLosTemas();
 		cargarDependencias(temasDelDiscurso);
@@ -37,7 +35,7 @@ public abstract class Temario
 		
 	protected abstract void cargarIntenciones(List<Intenciones> intenciones);
 	
-	protected abstract Contenido cargarContenido();
+	protected abstract Contenido cargarContenido(String path);
 	
 	public Contenido contenido(){
 		return contenido;
@@ -112,4 +110,13 @@ public abstract class Temario
 		else
 			return null;
 	}
+	
+	public void generarAudioEstaticosDeTodasLasFrases(String pathAGuardar, String ipPublica){
+		temasDelDiscurso.get(0).generarAudiosEstaticos(pathAGuardar, ipPublica);
+		/*for(Tema tema: temasDelDiscurso){
+			System.out.println("Generando audios al TEMA: "+tema.obtenerIdTema());
+			tema.generarAudiosEstaticos(pathAGuardar, ipPublica);
+		}*/
+	}
+	
 }

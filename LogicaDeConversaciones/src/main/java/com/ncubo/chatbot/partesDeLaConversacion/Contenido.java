@@ -28,14 +28,16 @@ public abstract class Contenido
 	private ArrayList<Frase> frases = new ArrayList<Frase>();
 	//private ArrayList<Intencion> intenciones = new ArrayList<Intencion>();
 	private ArrayList<WorkSpace> miWorkSpaces = new ArrayList<WorkSpace>();
+	private String pathFileXML;
 	
-	protected Contenido(){
-		File archivoDeConfiguracion = archivoDeConfiguracion();
+	protected Contenido(String path){
+		pathFileXML = path;
+		File archivoDeConfiguracion = archivoDeConfiguracion(path);
 		// TODO Ver que el archivo existe, sino return error
 		cargarPreguntasYRespuestasDelArchivoDeConfiguracion(archivoDeConfiguracion);
 	}
 	
-	protected abstract File archivoDeConfiguracion();
+	protected abstract File archivoDeConfiguracion(String path);
 
 	public Frase frase(String idDeLaFrase){
 		
@@ -46,7 +48,7 @@ public abstract class Contenido
 		}
 		
 		throw new ChatException(
-			String.format("El el archivo de contenido '%s' no se esta ninguna frase cuyo id sea '%s'", archivoDeConfiguracion().getAbsoluteFile(), idDeLaFrase)
+			String.format("El el archivo de contenido '%s' no se esta ninguna frase cuyo id sea '%s'", archivoDeConfiguracion(pathFileXML).getAbsoluteFile(), idDeLaFrase)
 		);
 	}
 	
@@ -206,7 +208,8 @@ public abstract class Contenido
 					String[] textosDeLaFrase = obtenerFrasesPorTipo(frases, tipoDeFraseACargar);
 					
 					if(elTipoEs.equals("saludo")){
-						miFrase = new Saludo(idDeLaFrase, textosDeLaFrase);
+						caracteristicasDeLaFrase[2] = CaracteristicaDeLaFrase.esUnSaludo;
+						miFrase = new Saludo(idDeLaFrase, textosDeLaFrase, caracteristicasDeLaFrase);
 					}else if(elTipoEs.equals("pregunta")){
 						caracteristicasDeLaFrase[2] = CaracteristicaDeLaFrase.esUnaPregunta;
 						miFrase = new Pregunta(idDeLaFrase, textosDeLaFrase, obtenerFrasesPorTipo(frases, "impertinente"), 
@@ -214,9 +217,11 @@ public abstract class Contenido
 								obtenerEntidades((Element) eElement.getElementsByTagName("when").item(0)), 
 								obtenerIntenciones((Element) eElement.getElementsByTagName("when").item(0)));
 					}else if(elTipoEs.equals("afirmativa")){
-						miFrase = new Afirmacion(idDeLaFrase, textosDeLaFrase);
+						caracteristicasDeLaFrase[2] = CaracteristicaDeLaFrase.esUnaOracionAfirmativa;
+						miFrase = new Afirmacion(idDeLaFrase, textosDeLaFrase, caracteristicasDeLaFrase);
 					}else if(elTipoEs.equals("despedida")){
-						miFrase = new Despedida(idDeLaFrase, textosDeLaFrase);
+						caracteristicasDeLaFrase[2] = CaracteristicaDeLaFrase.esUnaDespedida;
+						miFrase = new Despedida(idDeLaFrase, textosDeLaFrase, caracteristicasDeLaFrase);
 					}
 					agregarFrase(miFrase);
 				}
@@ -314,11 +319,11 @@ public abstract class Contenido
 	}
 	
 	public static void main(String argv[]) {
-		Contenido contenido = new Contenido(){
+		Contenido contenido = new Contenido(Constantes.PATH_ARCHIVO_DE_CONFIGURACION_BA){
 		@Override
-		protected File archivoDeConfiguracion() {
+		protected File archivoDeConfiguracion(String path) {
 			// TODO Auto-generated method stub
-			return new File(Constantes.PATH_ARCHIVO_DE_CONFIGURACION_RS);
+			return new File(path);
 			//return new File(Constantes.PATH_ARCHIVO_DE_CONFIGURACION);
 		}};
 		contenido.generarAudioEstatico();

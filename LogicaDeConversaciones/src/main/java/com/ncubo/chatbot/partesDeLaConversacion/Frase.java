@@ -1,17 +1,29 @@
 package com.ncubo.chatbot.partesDeLaConversacion;
 
+import java.io.File;
+import java.util.ArrayList;
 import com.ncubo.chatbot.exceptiones.ChatException;
+import com.ncubo.chatbot.watson.TextToSpeechWatson;
 
 public abstract class Frase
 {
 	private final String idFrase;
 	
 	private String[] textosDeLaFrase;
+	private ArrayList<Sonido> sonidosDeLosTextosDeLaFrase = new ArrayList<Sonido>();
+	private int idDelSonidoAUsar = -1;
+	
 	private String[] textosImpertinetesDeLaFrase;
+	private ArrayList<Sonido> sonidosDeLosTextosImpertinentesDeLaFrase = new ArrayList<Sonido>();
+	private int idDelSonidoImpertineteAUsar = -1;
+	
 	private final CaracteristicaDeLaFrase[] caracteristicas;
 	//private Intencion intencion;
 	private boolean esEstatica = true;
 	//private final Contenido contenido;
+	
+	private String pathAGuardarLosAudiosTTS;
+	private String ipPublicaAMostrarLosAudioTTS;
 	
 	protected Frase (String idFrase, String[] textosDeLaFrase, String[] textosImpertinetesDeLaFrase, 
 			CaracteristicaDeLaFrase... caracteristicas)
@@ -30,6 +42,15 @@ public abstract class Frase
 		if(esDinamica()){
 			System.out.println("Es dinamicaaaaa");
 		}
+		
+	}
+	
+	public void agregarSonido(int index, Sonido sonido){
+		sonidosDeLosTextosDeLaFrase.add(index, sonido);
+	}
+	
+	public void agregarSonidoImpertinente(int index, Sonido sonido){
+		sonidosDeLosTextosImpertinentesDeLaFrase.add(index, sonido);
 	}
 	
 	private void verSiLaFraseTienePlaceHolders(){
@@ -43,13 +64,13 @@ public abstract class Frase
 		esEstatica = ! tieneUnoOVariosPlaceHolders;
 	}
 	
-	public Sonido sonido(){
+/*	public Sonido sonido(){
 		return new Sonido("");
 	}
 	
 	public Vineta vineta(){
 		return new Vineta("");
-	}
+	}*/
 	
 	public String getIdFrase() {
 		return idFrase;
@@ -57,20 +78,49 @@ public abstract class Frase
 	
 	public String texto(){
 		int unIndiceAlAzar = (int)Math.floor(Math.random()*textosDeLaFrase.length);
+		idDelSonidoAUsar = unIndiceAlAzar;
 		return textosDeLaFrase[unIndiceAlAzar];
+	}
+	
+	public Sonido obtenerSonidoAUsar(){
+		Sonido resultado = null;
+		if(esEstatica() && sonidosDeLosTextosDeLaFrase.size() > 0){
+			if (idDelSonidoAUsar == -1){
+				idDelSonidoAUsar = (int)Math.floor(Math.random()*sonidosDeLosTextosDeLaFrase.size());
+			}
+			resultado = sonidosDeLosTextosDeLaFrase.get(idDelSonidoAUsar);
+		}
+		idDelSonidoAUsar = -1;
+		return resultado;
 	}
 	
 	public String textoImpertinete(){
 		if(textosImpertinetesDeLaFrase.length > 0){
 			int unIndiceAlAzar = (int)Math.floor(Math.random()*textosImpertinetesDeLaFrase.length);
+			idDelSonidoImpertineteAUsar = unIndiceAlAzar;
 			return textosImpertinetesDeLaFrase[unIndiceAlAzar];
 		}else{
 			return texto();
 		}
 	}
 	
+	public Sonido obtenerSonidoImpertienteAUsar(){
+		Sonido resultado = null;
+		if(hayTextosImpertinetes() && sonidosDeLosTextosImpertinentesDeLaFrase.size() > 0){
+			if (idDelSonidoImpertineteAUsar == -1){
+				idDelSonidoImpertineteAUsar = (int)Math.floor(Math.random()*sonidosDeLosTextosImpertinentesDeLaFrase.size());
+			}resultado = sonidosDeLosTextosImpertinentesDeLaFrase.get(idDelSonidoImpertineteAUsar);
+		}
+		idDelSonidoImpertineteAUsar = -1;
+		return resultado;
+	}
+	
 	public boolean hayTextosImpertinetes(){
-		return (textosImpertinetesDeLaFrase.length > 0);
+		try{
+			return (textosImpertinetesDeLaFrase.length > 0);
+		}catch(Exception e){
+			return false;
+		}
 	}
 	
 	boolean esEstatica(){
@@ -105,6 +155,33 @@ public abstract class Frase
 		return resultado;
 	}
 	
+	public void generarAudiosEstaticos(String pathAGuardar, String ipPublica){
+		this.pathAGuardarLosAudiosTTS = pathAGuardar;
+		this.ipPublicaAMostrarLosAudioTTS = ipPublica;
+		
+		if (sePuedeDecirEnVozAlta()){
+			if(esEstatica()){
+				for(int index = 0; index < textosDeLaFrase.length; index ++){
+					String texto = textosDeLaFrase[index];
+					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAGuardar);
+					String path = pathAGuardar+File.separator+nombreDelArchivo;
+					String miIp = ipPublica+nombreDelArchivo;
+					sonidosDeLosTextosDeLaFrase.add(new Sonido(miIp, path));
+				}
+			}
+			
+			if(hayTextosImpertinetes()){
+				for(int index = 0; index < textosImpertinetesDeLaFrase.length; index ++){
+					String texto = textosImpertinetesDeLaFrase[index];
+					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAGuardar);
+					String path = pathAGuardar+File.separator+nombreDelArchivo;
+					String miIp = ipPublica+nombreDelArchivo;
+					sonidosDeLosTextosImpertinentesDeLaFrase.add(new Sonido(miIp, path));
+				}
+			}
+		}
+	}
+	
 	public boolean esUnaPregunta(){
 		//boolean resultado = IntStream.of(caracteristicas).anyMatch(x -> x == CaracteristicaDeLaFrase.esUnaPregunta);
 		return buscarCaracteristica(CaracteristicaDeLaFrase.esUnaPregunta);
@@ -129,6 +206,10 @@ public abstract class Frase
 		return buscarCaracteristica(CaracteristicaDeLaFrase.esUnaPreguntaMandatoria);
 	}
 	
+	public boolean sePuedeDecirEnVozAlta(){
+		return buscarCaracteristica(CaracteristicaDeLaFrase.sePuedeDecirEnVozAlta);
+	}
+	
 	public String[] getTextosDeLaFrase() {
 		return textosDeLaFrase;
 	}
@@ -144,6 +225,14 @@ public abstract class Frase
 	
 	public void setTextosDeLaFrase(String[] textosDeLaFrase) {
 		this.textosDeLaFrase = textosDeLaFrase;
+	}
+	
+	public String getPathAGuardarLosAudiosTTS() {
+		return pathAGuardarLosAudiosTTS;
+	}
+
+	public String getIpPublicaAMostrarLosAudioTTS() {
+		return ipPublicaAMostrarLosAudioTTS;
 	}
 	
 	/*public String muletilla(){

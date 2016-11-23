@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+import com.ncubo.chatbot.configuracion.Constantes;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.chatbot.partesDeLaConversacion.Temario;
 import com.ncubo.chatbot.participantes.Cliente;
@@ -12,9 +13,11 @@ public class Coversaciones {
 
 	private final static Hashtable<String, Conversacion> misConversaciones = new Hashtable<String, Conversacion>();
 	private final static Hashtable<String, Cliente> misClientes = new Hashtable<String, Cliente>();
-	private final static Temario temarioDelRealEstate = new TemarioDeRealEstate();
+	private static Temario temarioDelRealEstate;
 	
-	public Coversaciones(){}
+	public Coversaciones(){
+		temarioDelRealEstate = new TemarioDeRealEstate(Constantes.PATH_ARCHIVO_DE_CONFIGURACION_RS);
+	}
 	
 	public String agregarUnNuevoCliente(String nombreDelCliente, String idDelCliente){
 		String resultado = "El usuario no se pudo agregar";

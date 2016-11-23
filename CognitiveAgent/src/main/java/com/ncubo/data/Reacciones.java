@@ -71,7 +71,7 @@ public class Reacciones
 		this.fecha = fecha;
 	}
 	
-	public int getCantidad_like()
+	public int getCantidadLikes()
 	{
 		return cantidadLikes;
 	}
