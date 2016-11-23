@@ -40,7 +40,7 @@ function evaluarVerMas()
 
 evaluarVerMas();
 
-$("#mostrar-mas").click(function()
+$("#mostrar-mas").on("click", function()
 {
 	evaluarVerMas();
 	pagina++;
@@ -48,7 +48,7 @@ $("#mostrar-mas").click(function()
 
 function bindAcciones()
 {
-	$("#ofertas .datos-de-oferta").click(function()
+	$("#ofertas .datos-de-oferta").off("click").on("click", function()
 	{
 		$("#oferta .panel-body").html("");
 		var id = $(this).attr("id");
@@ -61,7 +61,7 @@ function bindAcciones()
 		});
 	});
 	
-	$("#ofertas .boton-like, #ofertas .boton-dislike").click(function()
+	$("#ofertas .boton-like, #ofertas .boton-dislike").off("click").on("click", function()
 	{
 		var parent = $(this).parent().parent();
 		var idDeLaOferta = parent.attr("idoferta");
@@ -92,7 +92,7 @@ function bindAcciones()
 		});
 	});
 	
-	$("#ofertas .boton-escuchar").click(function()
+	$("#ofertas .boton-escuchar").off("click").on("click", function()
 	{
 		buzzer.attr("src", serverDomain+"/movil/www/archivos"+$(this).data("audio"));
 		buzzer[0].play();  
