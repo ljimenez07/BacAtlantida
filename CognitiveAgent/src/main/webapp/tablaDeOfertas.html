@@ -12,11 +12,12 @@
 	
 </style>
 <script>
-	function eliminarOferta(idOferta, tituloOferta)
+	function eliminarOferta(idOferta)
 	{
-		$("#eliminar-mensaje").html(tituloOferta);
 		$("#idOfertaEliminar").val(idOferta);
+		var tituloOferta = $("#tituloOferta"+idOferta).text();
 		
+		$("#eliminar-mensaje").html(tituloOferta);
 		$('.modal').modal('toggle');
 	}
 </script>
@@ -68,7 +69,8 @@
 					<tbody>
 						<th:block th:each="oferta : ${listaDeOfertas}">
 							<tr>
-								<td class="texto-normal-ca" th:text="${oferta.tituloDeOferta}"/>
+								
+								<td class="texto-normal-ca" th:id=" ${ 'tituloOferta' + oferta.idOferta}" th:text="${oferta.tituloDeOferta}"/>
 								<td class="texto-normal-ca" th:text="${oferta.comercio}"/>
 								<td class="texto-normal-ca" th:text="${oferta.descripcion}"/>
 								<td class="texto-normal-ca" th:text="${oferta.categoria.nombre}"/>
@@ -77,9 +79,15 @@
 								<td class="texto-normal-ca" th:unless="${oferta.estado}" th:text="Inactiva"/>
 								<td class="text-center"> <button id="modificar-oferta-btn" type="submit" class="boton-editar"
 									th:name="idOferta" th:value="${oferta.idOferta}"></button></td>
-								<td class="text-center"> <button id="eliminar-oferta-btn" type="button" class="boton-eliminar" 
-									th:onclick="'eliminarOferta(\'' + ${oferta.idOferta} + '\', \'' + ${oferta.tituloDeOferta} + '\');'"
-									name="eliminar"></button></td>
+								<td class="text-center">
+									<!-- <input type="hidden" id="idOfertaAEliminar" th:name="${oferta.idOferta}" th:value="${oferta.tituloDeOferta}"></input> -->
+									<button id="eliminar-oferta-btn" type="button" class="boton-eliminar" 
+										th:onclick="'eliminarOferta(\'' + ${oferta.idOferta} + '\');'"
+										name="eliminar">
+									</button>
+									<!--  th:onclick="'eliminarOferta(\'' + ${oferta.idOferta} + '\', \'' + ${oferta.tituloDeOferta} + '\');'" -->	
+										
+								</td>
 							</tr>
 						</th:block>
 					</tbody>

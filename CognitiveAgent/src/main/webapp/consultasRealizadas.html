@@ -8,7 +8,6 @@
 		font-family: 'Roboto', serif;
 		font-size: 16px;
 	}
-	
 	.notas-ca
 	{
 		font-family: 'Roboto', serif;
@@ -25,22 +24,26 @@
 		width: 70%;
 		padding: 10px;
 	}
-	.agregar-padding-top
-	{
-		padding-top: 2%;
-	}
-	
-	
 
 </style>
 <script>
 	$(function()
 	{
-		$("#fechaDesde").datepicker({
-			dateFormat : "yy-mm-dd"
+		$("#fechaDesde").datepicker(
+		{
+			dateFormat : "yy-mm-dd",
+			beforeShow : function() {
+				jQuery(this).datepicker('option', 'maxDate',
+						jQuery('#fechaHasta').val());
+			}
 		});
-		$("#fechaHasta").datepicker({
-			dateFormat : "yy-mm-dd"
+		$("#fechaHasta").datepicker(
+		{
+			dateFormat : "yy-mm-dd",
+			beforeShow : function() {
+				jQuery(this).datepicker('option', 'minDate',
+						jQuery('#fechaDesde').val());
+			}
 		});
 	});
 </script>

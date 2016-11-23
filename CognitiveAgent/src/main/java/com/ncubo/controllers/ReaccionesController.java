@@ -25,13 +25,13 @@ public class ReaccionesController
 	@Autowired
 	private ReaccionesDao reaccionesDao;
 	
-	@RequestMapping("/reaccionDeOfertas")
+	@RequestMapping("/BackOffice/reaccionDeOfertas")
 	public String redireccionarReaccionDeOfertas(HttpServletRequest request) throws ClassNotFoundException, SQLException
 	{
 		return "reaccionDeOfertas";
 	}
 	
-	@RequestMapping(value = "/reaccionDeOfertasDatos", method = RequestMethod.POST)
+	@RequestMapping(value = "/BackOffice/reaccionDeOfertasDatos", method = RequestMethod.POST)
 	public @ResponseBody ArrayList<Reacciones> obtenerDatosReaccionDeOfertas(@RequestBody String parametros) throws IOException, ClassNotFoundException, SQLException, ParseException
 	{
 		Gson gson = new Gson();
