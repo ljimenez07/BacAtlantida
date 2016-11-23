@@ -103,9 +103,12 @@ public class AgenteCognitivo
 			contenidoDelContexto = new JSONObject(usuario.getContextoDeWatsonParaChats());
 		}
 		
+<<<<<<< HEAD
 		
 		if( contenidoDelContexto == null ) contenidoDelContexto = new JSONObject();
 				
+=======
+>>>>>>> master
 		Map<String, Object> myContext = mapper.readValue(contenidoDelContexto.toString(), new TypeReference<Map<String, Object>>(){});
 		ConversationService service = new ConversationService(dateFormat.format(date));
 		service.setUsernameAndPassword(user, password);

@@ -3,7 +3,7 @@
 templates['listaDeOfertas'] = template({"1":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "	<div class=\"row\">\r\n		<div class=\"col-xs-12\">\r\n			<div class=\"row datos-de-oferta\" id=\""
+  return "	<div class=\"row\">\r\n		<div class=\"col-xs-12\">\r\n			<div data-href=\"oferta\" class=\"row datos-de-oferta clickable\" id=\""
     + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
     + "\">\r\n				<div class=\"col-xs-12\">\r\n					<div class=\"row\">\r\n						<div class=\"col-xs-12\">\r\n"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.esHtml : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.program(4, data, 0),"data":data})) != null ? stack1 : "")

@@ -8,8 +8,22 @@
 		$("#imagen-publicidad-input").on("change", subirImagenPublicidad);
 		$("#logo-comercio-input").on("change", subirImagenComercio);
 		
-		$("#vigenciaDesde-input").datepicker({dateFormat : "yy-mm-dd"});
-		$("#vigenciaHasta-input").datepicker({dateFormat : "yy-mm-dd"});
+		$("#vigenciaDesde-input").datepicker(
+				{
+					dateFormat : "yy-mm-dd",
+					beforeShow : function() {
+						jQuery(this).datepicker('option', 'maxDate',
+								jQuery('#vigenciaHasta-input').val());
+					}
+				});
+				$("#vigenciaHasta-input").datepicker(
+				{
+					dateFormat : "yy-mm-dd",
+					beforeShow : function() {
+						jQuery(this).datepicker('option', 'minDate',
+								jQuery('#vigenciaDesde-input').val());
+					}
+				});
 
 	});
 	
