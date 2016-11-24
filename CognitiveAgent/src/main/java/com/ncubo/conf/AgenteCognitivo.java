@@ -1,7 +1,5 @@
 package com.ncubo.conf;
 
-import static com.jayway.restassured.RestAssured.given;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
@@ -10,7 +8,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -21,10 +18,9 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import org.json.simple.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.mockito.cglib.core.EmitUtils.ArrayDelimiters;
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -33,16 +29,11 @@ import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Entity;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Intent;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
-import com.jayway.restassured.internal.path.xml.NodeChildrenImpl;
-import com.jayway.restassured.internal.path.xml.NodeImpl;
-import com.jayway.restassured.path.xml.XmlPath;
-import com.mysql.fabric.xmlrpc.base.Array;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
-import com.ncubo.chatbot.partesDeLaConversacion.Sonido;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.data.Consulta;
-import com.ncubo.util.FTPServidor;
 import com.ncubo.logicaDeConversaciones.Conversaciones;
+import com.ncubo.util.FTPServidor;
 
 @Component
 @ConfigurationProperties("servercognitivo")
@@ -113,7 +104,7 @@ public class AgenteCognitivo
 		ConversationService service = new ConversationService(dateFormat.format(date));
 		service.setUsernameAndPassword(user, password);
 		
-		myContext.put("logueado", usuario.getEstaLogueado());
+		myContext.put("logueado", usuario.estaLogueado());
 		
 		String[] nombre = new String[4];
 		if(usuario.getUsuarioNombre() != null)

@@ -53,7 +53,7 @@ public class Usuario implements Serializable
 				+ ", llaveSession=" + llaveSession + ", estaLogueado=" + estaLogueado + "]";
 	}
 
-	public boolean getEstaLogueado()
+	public boolean estaLogueado()
 	{
 		return this.estaLogueado;
 	}
