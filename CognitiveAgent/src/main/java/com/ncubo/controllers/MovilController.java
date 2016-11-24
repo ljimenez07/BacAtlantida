@@ -62,8 +62,8 @@ public class MovilController {
 			session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 		}
 		
-		System.out.println("valor  "+session.getAttribute(Usuario.LLAVE_EN_SESSION));
-		JSONObject object =new JSONObject( serverCognitivo.procesarMensajeChat(
+		System.out.println("valor "+session.getAttribute(Usuario.LLAVE_EN_SESSION));
+		JSONObject object = new JSONObject(serverCognitivo.procesarMensajeChat(
 				usuario, 
 				mensaje, 
 				new Date()));
@@ -170,7 +170,7 @@ public class MovilController {
 	}
 	
 	@GetMapping("/movil/logout")
-	@ResponseBody String logout(HttpSession sesion)
+	@ResponseBody String logout(HttpSession sesion) throws JSONException
 	{
 		sesion.setAttribute(Usuario.LLAVE_EN_SESSION, null);
 		return new JSONObject().put("usuarioEstaLogueado", false).toString();

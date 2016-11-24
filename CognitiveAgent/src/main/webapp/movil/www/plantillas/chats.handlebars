@@ -107,14 +107,18 @@ $(function(){
 				contentType :"text/plain; charset=UTF-8",
 				url : serverDomain+"/conversacion/{{pathDelServidor}}/",
 				data : textoAEnviar,
-				done:function( data ) 
+				done: function( data ) 
 				{
-					var fecha = new Date();
-					var hora = fecha.getHours() + ":" + fecha.getMinutes();
-					var respuesta = mensajeDeAgente.clone();
-					respuesta.find(".msg p").html(data.texto);
-					respuesta.find("time").html(hora);
-					conversation.append(respuesta);
+					var textos = data.textos;
+					for(var i = 0; i < textos.length; i++)
+					{
+						var fecha = new Date();
+						var hora = fecha.getHours() + ":" + fecha.getMinutes();
+						var respuesta = mensajeDeAgente.clone();
+						respuesta.find(".msg p").html(textos[i].texto);
+						respuesta.find("time").html(hora);
+						conversation.append(respuesta);
+					}
 					
 					moverScrollParaAbajoEnFuncionDelUltimoMensaje();
 				},

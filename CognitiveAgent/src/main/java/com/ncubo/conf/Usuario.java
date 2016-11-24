@@ -98,13 +98,5 @@ public class Usuario implements Serializable
 		this.idSesion = idSesion;
 	}
 	
-	public String getIdSesion(){
-		return idSesion;
-	}
-
-	public void setIdSesion(String sesion){
-		idSesion = sesion;
-	}
-	
 }
 

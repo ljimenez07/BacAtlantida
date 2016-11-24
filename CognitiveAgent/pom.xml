@@ -118,23 +118,27 @@
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>1.8.3</version>
-</dependency>
+		</dependency>
 
-	<dependency>
-		<groupId>com.ncubo</groupId>
-		<artifactId>LogicaDeConversaciones</artifactId>
-		<version>0.0.1</version>
-	</dependency>
+		<dependency>
+			<groupId>com.ncubo</groupId>
+			<artifactId>LogicaDeConversaciones</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
-	<finalName>CognitiveAgent</finalName>
+		<finalName>CognitiveAgent</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>${jdk.version}</source>
-					<target>${jdk.version}</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 				</configuration>
 			</plugin>
 			<plugin>

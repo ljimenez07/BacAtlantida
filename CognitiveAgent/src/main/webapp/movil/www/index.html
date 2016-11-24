@@ -1,265 +1,249 @@
 <!DOCTYPE html>
-<!--
-	Licensed to the Apache Software Foundation (ASF) under one
-	or more contributor license agreements.  See the NOTICE file
-	distributed with this work for additional information
-	regarding copyright ownership.  The ASF licenses this file
-	to you under the Apache License, Version 2.0 (the
-	"License"); you may not use this file except in compliance
-	with the License.  You may obtain a copy of the License at
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-MPXB6S');</script>
+	<!-- End Google Tag Manager -->
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="msapplication-tap-highlight" content="no">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/custom.css">
+	<script type="text/javascript" src="js/globals.js"></script>
+	<title>Agente Cognitivo</title>
+</head>
+<body>
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPXB6S"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
 
-	http://www.apache.org/licenses/LICENSE-2.0
-
-	Unless required by applicable law or agreed to in writing,
-	software distributed under the License is distributed on an
-	"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-	 KIND, either express or implied.  See the License for the
-	specific language governing permissions and limitations
-	under the License.
--->
-<html>
-	<head>
-		<!-- Google Tag Manager -->
-		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-		})(window,document,'script','dataLayer','GTM-MPXB6S');</script>
-		<!-- End Google Tag Manager -->
-		<!--
-		Customize this policy to fit your own app's needs. For more guidance, see:
-			https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-		Some notes:
-			* gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-			* https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-			* Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-				* Enable inline JS: add 'unsafe-inline' to default-src
-		-->
-		<!-- meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;" -->
-		<meta charset="UTF-8">
-		<meta name="format-detection" content="telephone=no">
-		<meta name="msapplication-tap-highlight" content="no">
-		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="css/custom.css">
-		<script type="text/javascript" src="js/globals.js"></script>
-		<title>Agente Cognitivo</title>
-	</head>
-	<body>
-		<!-- Google Tag Manager (noscript) -->
-		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPXB6S"
-		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-		<!-- End Google Tag Manager (noscript) -->
-
-		<div data-accion="ocultar-menu" class="modal modal-menu clickable" style="display: none">
-			<div class="container menu" style="display: none;">
-				<div data-href="conocerte" class="row clickable">
-					<div class="col-xs-2 contenedor-imagen-menu">
-						<div class="icono-conocerme"></div>
-					</div>
-					<div class="col-xs-10 contenedor-texto-menu">
-						<div>Conocerme</div>
-					</div>
+	<div data-accion="ocultar-menu" class="modal modal-menu clickable" style="display: none">
+		<div class="container menu" style="display: none;">
+			<div data-href="conocerte" class="row clickable">
+				<div class="col-xs-2 contenedor-imagen-menu">
+					<div class="icono-conocerme"></div>
 				</div>
-				<div data-href="consultar" class="row clickable">
-					<div class="col-xs-2 contenedor-imagen-menu">
-						<div class="icono-consultar"></div>
-					</div>
-					<div class="col-xs-10 contenedor-texto-menu">
-						<div>Consultar</div>
-					</div>
+				<div class="col-xs-10 contenedor-texto-menu">
+					<div>Conocerme</div>
 				</div>
-				<div data-accion="salir" class="row clickable">
-					<div class="col-xs-2 contenedor-imagen-menu">
-						<div class="icono-salir"></div>
-					</div>
-					<div class="col-xs-10 contenedor-texto-menu">
-						<div>Salir</div>
-					</div>
+			</div>
+			<div data-href="consultar" class="row clickable">
+				<div class="col-xs-2 contenedor-imagen-menu">
+					<div class="icono-consultar"></div>
+				</div>
+				<div class="col-xs-10 contenedor-texto-menu">
+					<div>Consultar</div>
+				</div>
+			</div>
+			<div data-accion="salir" class="row clickable">
+				<div class="col-xs-2 contenedor-imagen-menu">
+					<div class="icono-salir"></div>
+				</div>
+				<div class="col-xs-10 contenedor-texto-menu">
+					<div>Salir</div>
 				</div>
 			</div>
 		</div>
-		<div class="app">
-			<div id="ofertas" class="show" ></div>
-			<div id="oferta" class="hide" ></div>
-			<div id="chats" class="hide"></div>
-			<div id="conocerte" class="hide"></div>
-			<div id="login" class="hide"></div>
-		</div>
-		<script type="text/javascript" src="js/index.js"></script>
-		<script type="text/javascript" src="js/angular.min.js"></script>
-		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
+	</div>
+	<div class="app">
+		<div id="ofertas" class="show" ></div>
+		<div id="oferta" class="hide" ></div>
+		<div id="chats" class="hide"></div>
+		<div id="conocerte" class="hide"></div>
+		<div id="login" class="hide"></div>
+	</div>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
+	
+	<script type="text/javascript" src="js/layout.handlebars.js"></script>
+	<script type="text/javascript" src="js/ofertas.handlebars.js"></script>
+	<script type="text/javascript" src="js/listaDeOfertas.handlebars.js"></script>
+	<script type="text/javascript" src="js/oferta.handlebars.js"></script>
+	<script type="text/javascript" src="js/chats.handlebars.js"></script>
+	<script type="text/javascript" src="js/popupconocerte.handlebars.js"></script>
+	<script type="text/javascript" src="js/login.handlebars.js"></script>
+	
+	<script>
+	function quitarModal()
+	{
+		setCookie('mostrarpopupdeconocerte', true, 100);
+		$("#popupconocerte").modal('hide');
+	}
+	
+	function cambiarVista(href)
+	{
+		var app = $(".app");
 		
-		<script type="text/javascript" src="js/layout.handlebars.js"></script>
-		<script type="text/javascript" src="js/ofertas.handlebars.js"></script>
-		<script type="text/javascript" src="js/listaDeOfertas.handlebars.js"></script>
-		<script type="text/javascript" src="js/oferta.handlebars.js"></script>
-		<script type="text/javascript" src="js/chats.handlebars.js"></script>
-		<script type="text/javascript" src="js/popupconocerte.handlebars.js"></script>
-		<script type="text/javascript" src="js/login.handlebars.js"></script>
+		app.find(".show").hide();
+		app.find("#"+href).show();
 		
-		<script>
-			function quitarModal()
+		app.find(".show").removeClass("show");
+		app.find("#"+href).removeClass("hide");
+		app.find("#"+href).addClass("show");
+	}
+	
+	function menu(accion)
+	{
+		if(accion == "mostrar-menu")
+		{
+			$(".modal-menu").fadeIn("fast");
+			$(".menu").show("fast");
+		}
+		else if(accion == "ocultar-menu")
+		{
+			$(".menu").hide("fast");
+			$(".modal-menu").fadeOut("fast");
+		}
+	}
+	
+	var pantallas = new Object();
+	$(function(){
+
+		pantallas["login"] = {title: "LOGIN", body: Handlebars.templates.login(), DebajoDelPanel: ""};
+		var chat = {"pathDelServidor":"chat"};
+		pantallas["chats"] = {title: "CHAT", body: '<div id="chat-id-'+chat.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(chat)};
+		var conocerte = {"pathDelServidor":"conocerte"};
+		pantallas["conocerte"] = {title: "CONOCERTE", body: '<div id="chat-id-'+conocerte.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(conocerte)};
+		pantallas["popupconocerte"] ={};		
+		pantallas["ofertas"] = {title: "INICIO", body: Handlebars.templates.ofertas(), DebajoDelPanel: ""};
+		pantallas["oferta"] = {title: "DETALLE DE LA OFERTA", body: "", DebajoDelPanel: ""};
+		
+		$(".app #ofertas").html(Handlebars.templates.layout(pantallas["ofertas"]));
+		$(".app #oferta").html(Handlebars.templates.layout(pantallas["oferta"]));
+		$(".app #ofertas").append(Handlebars.templates.popupconocerte(pantallas["popupconocerte"]));
+		$(".app #chats").html(Handlebars.templates.layout(pantallas["chats"]));
+		$(".app #conocerte").html(Handlebars.templates.layout(pantallas["conocerte"]));
+		$(".app #login").html(Handlebars.templates.layout(pantallas["login"]));
+		
+		bindClickeable();
+		
+		ajax({
+			url: serverDomain + "/movil/usuario",
+			done: function(data)
 			{
-				setCookie('mostrarpopupdeconocerte', true, 100);
-				$("#popupconocerte").modal('hide');
+				if(data.estaLogueado)
+				{
+					cambiarVista("chats");
+				}
+			}
+		});
+	});
+
+	function bindClickeable()
+	{
+		$(".clickable").off("click").on("click", function()
+		{
+			var before = $(this).data("before");
+			var after = $(this).data("after");
+			var href = $(this).data("href");
+			var accion = $(this).data("accion");
+			
+			if( before!= undefined )
+			{
+				eval(before);
 			}
 			
-			function cambiarVista(href)
+			if(href != undefined )
 			{
-				var app = $(".app");
-				
-				app.find(".show").hide();
-				app.find("#"+href).show();
-				
-				app.find(".show").removeClass("show");
-				app.find("#"+href).removeClass("hide");
-				app.find("#"+href).addClass("show");
+				cambiarVista( href );
 			}
 			
-			function menu(accion)
+			if(accion != undefined)
 			{
-				if(accion == "mostrar-menu")
+				if(accion.indexOf("menu") >= 0)
 				{
-					$(".modal-menu").fadeIn("fast");
-					$(".menu").show("fast");
+					menu(accion);
 				}
-				else if(accion == "ocultar-menu")
+				else if(accion == "salir")
 				{
-					$(".menu").hide("fast");
-					$(".modal-menu").fadeOut("fast");
+					setCookie('mostrarpopupdeconocerte', false, 0);
+					ajax({
+						url: serverDomain + "/movil/logout",
+						done: function(data)
+						{
+							location.reload();
+						}
+					});
 				}
 			}
 			
-			var pantallas = new Object();
-			$(function(){
-
-				pantallas["login"] = {title: "LOGIN", body: Handlebars.templates.login(), DebajoDelPanel: ""};
-				var chat = {"pathDelServidor":"chat"};
-				pantallas["chats"] = {title: "CHAT", body: '<div id="chat-id-'+chat.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(chat)};
-				var conocerte = {"pathDelServidor":"conocerte"};
-				pantallas["conocerte"] = {title: "CONOCERTE", body: '<div id="chat-id-'+conocerte.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(conocerte)};
-				pantallas["popupconocerte"] ={};		
-				pantallas["ofertas"] = {title: "INICIO", body: Handlebars.templates.ofertas(), DebajoDelPanel: ""};
-				pantallas["oferta"] = {title: "DETALLE DE LA OFERTA", body: "", DebajoDelPanel: ""};
-				
-				$(".app #ofertas").html(Handlebars.templates.layout(pantallas["ofertas"]));
-				$(".app #oferta").html(Handlebars.templates.layout(pantallas["oferta"]));
-				$(".app #ofertas").append(Handlebars.templates.popupconocerte(pantallas["popupconocerte"]));
-				$(".app #chats").html(Handlebars.templates.layout(pantallas["chats"]));
-				$(".app #conocerte").html(Handlebars.templates.layout(pantallas["conocerte"]));
-				$(".app #login").html(Handlebars.templates.layout(pantallas["login"]));
-				
-				bindClickeable();
-			});
-
-		</script>
-
-
-		<script>
-		function bindClickeable()
-		{
-			$(".clickable").click(function()
+			if(after != undefined )
 			{
-				var before = $(this).data("before");
-				var after = $(this).data("after");
-				var href = $(this).data("href");
-				var accion = $(this).data("accion");
-				
-				if( before!= undefined )
-				{
-					eval(before);
-				}
-				
-				if(href != undefined )
-				{
-					cambiarVista( href );
-				}
-				
-				if(accion != undefined)
-				{
-					if(accion.indexOf("menu") >= 0)
-					{
-						menu(accion);
-					}
-					else if(accion == "salir")
-					{
-						setCookie('SESSION', "", 0);
-						setCookie('mostrarpopupdeconocerte', false, 0);
-						location.reload();
-					}
-				}
-				
-				if(after != undefined )
-				{
-					eval(after);
-				}
-			});	
-		}
-		
-		function ajax(param)
-		{
-			console.log({ajax: param});
-			$.ajax({
-				type: param.type != undefined ? param.type : "GET",
-				contentType :param.contentType != undefined ? param.contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-				async: param.async != undefined ? param.async : true,
-				dataType : "json",
-				url : param.url,
-				data : param.data != undefined ? param.data : ""
-			})
-			.done(function( data ) 
-			{
-				console.log({respuesta: data});
-				if( param.done != undefined )
-				{
-					param.done(data);
-				}
-				
-				if (data.usuarioEstaLogueado)
-				{
-					$(".contenedor-boton-ingresar").remove();
-					$(".chat-icon-logueado").show();
-					$(".header-chat-icon.no-logueado").hide();
-				}
-			})
-			.fail(function(XMLHttpRequest, textStatus, textStatus) 
-			{
-				if( param.fail != undefined )
-				{
-					param.fail(XMLHttpRequest, textStatus, textStatus);
-				}
-			});
-		}
-		
-		function getCookie(cname) 
-		{
-			var name = cname + "=";
-			var ca = document.cookie.split(';');
-			for(var i = 0; i <ca.length; i++) 
-			{
-				var c = ca[i];
-				while (c.charAt(0)==' ') 
-				{
-					c = c.substring(1);
-				}
-				if (c.indexOf(name) == 0) {
-					return c.substring(name.length,c.length);
-				}
+				eval(after);
 			}
-			return "";
-		}
-		
-		function setCookie(cname, cvalue, exdays) 
+		});	
+	}
+	
+	function ajax(param)
+	{
+		console.log({ajax: param});
+		$.ajax({
+			type: param.type != undefined ? param.type : "GET",
+			contentType :param.contentType != undefined ? param.contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+			async: param.async != undefined ? param.async : true,
+			dataType : "json",
+			url : param.url,
+			data : param.data != undefined ? param.data : ""
+		})
+		.done(function( data ) 
 		{
-			var d = new Date();
-			d.setTime(d.getTime() + (exdays*24*60*60*1000));
-			var expires = "expires="+ d.toUTCString();
-			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+			console.log({respuesta: data});
+			if( param.done != undefined )
+			{
+				param.done(data);
+			}
+			
+			if (data.usuarioEstaLogueado)
+			{
+				$(".contenedor-boton-ingresar").remove();
+				$(".chat-icon-logueado").show();
+				$(".header-chat-icon.no-logueado").hide();
+			}
+		})
+		.fail(function(XMLHttpRequest, textStatus, textStatus) 
+		{
+			if( param.fail != undefined )
+			{
+				param.fail(XMLHttpRequest, textStatus, textStatus);
+			}
+		});
+	}
+	
+	function getCookie(cname) 
+	{
+		var name = cname + "=";
+		var ca = document.cookie.split(';');
+		for(var i = 0; i <ca.length; i++) 
+		{
+			var c = ca[i];
+			while (c.charAt(0)==' ') 
+			{
+				c = c.substring(1);
+			}
+			if (c.indexOf(name) == 0) {
+				return c.substring(name.length,c.length);
+			}
 		}
-		</script>
+		return "";
+	}
+	
+	function setCookie(cname, cvalue, exdays) 
+	{
+		var d = new Date();
+		d.setTime(d.getTime() + (exdays*24*60*60*1000));
+		var expires = "expires="+ d.toUTCString();
+		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
+	</script>
 
-	</body>
+</body>
 </html>
