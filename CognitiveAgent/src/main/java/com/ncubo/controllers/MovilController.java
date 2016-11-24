@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -143,6 +144,19 @@ public class MovilController {
 	@ResponseBody String generarAudiosEstaticos(){
 		serverCognitivo.generarTodosLosAudiosEstaticos();
 		return "Ok";
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/generarAudioEstatico/{id}", method = RequestMethod.GET)
+	@ResponseBody String generarAudioEstatico(@PathVariable("id") String id){
+		serverCognitivo.generarAudioEstatico(id);
+		return "Ok";
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/verMiTemario", method = RequestMethod.GET)
+	@ResponseBody String verMiTemario(){
+		return serverCognitivo.verMiTemario();
 	}
 	
 	@ExceptionHandler(Throwable.class)

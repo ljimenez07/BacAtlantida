@@ -10,6 +10,16 @@
 		<vineta></vineta>
 	</conversacion>
 	
+	<conversacion id="saludoBuenosDias">
+		<tipo>saludo</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>¡Buenos días!, soy tu asesor del Banco Atlántida.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
 	<conversacion id="saludar">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
@@ -263,6 +273,13 @@
 		<conjuncion id="conjuncion1">Disculpame, pero no te entiendo.</conjuncion>
 		<conjuncion id="conjuncion2">No logro comprenderte.</conjuncion>
 	</conjunciones>
+	
+	<variablesDeAmbiente>
+		<variable nombre="tieneTarjetaCredito" tipo=""></variable>
+		<variable nombre="tieneCuentaAhorros" tipo=""></variable>
+		<variable nombre="nombre" tipo=""></variable>
+		<variable nombre="hora" tipo=""></variable>
+	</variablesDeAmbiente>
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
 		<workspace tipo="general" idIBM="ea7cc165-ac98-4349-92ed-8e04f1ab402e" intencionesParaSeReferenciado="">BAIntents</workspace>

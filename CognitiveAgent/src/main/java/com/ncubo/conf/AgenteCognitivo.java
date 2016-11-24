@@ -52,7 +52,6 @@ public class AgenteCognitivo
 	private String voiceTextToSpeech;
 	private String pathAudio;
 	private String pathXML;
-	private String urlPublicaAudios;
 
 	@Autowired
 	private ConsultaDao consultaDao;
@@ -310,7 +309,24 @@ public class AgenteCognitivo
 	public void generarTodosLosAudiosEstaticos(){
 		System.out.println("El path xml es: "+getPathXML());
 		miConversaciones.generarAudiosEstaticos(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
-				this.getPathAudio(), this.getUrlPublicaAudios(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto());
+				this.getPathAudio(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto());
+	}
+	
+	public void generarAudioEstatico(String id){
+		System.out.println("El path xml es: "+getPathXML());
+		int index = 0;
+		try{
+			index = Integer.parseInt(id);
+			miConversaciones.generarAudiosEstaticosDeUnTema(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
+					this.getPathAudio(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), index);
+		}catch(Exception e){
+			e.getStackTrace();
+		}
+		
+	}
+	
+	public String verMiTemario(){
+		return miConversaciones.verMiTemario();
 	}
 	
 	public String getWsTasaCambio() {
@@ -397,14 +413,6 @@ public class AgenteCognitivo
 
 	public void setPathAudio(String path){
 		this.pathAudio = path;
-	}
-	
-	public String getUrlPublicaAudios() {
-		return urlPublicaAudios;
-	}
-
-	public void setUrlPublicaAudios(String urlPublicaAudios) {
-		this.urlPublicaAudios = urlPublicaAudios;
 	}
 	
 	public String getPathXML() {

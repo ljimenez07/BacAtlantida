@@ -18,6 +18,7 @@ public class Conversaciones {
 	private final static Hashtable<String, Cliente> misClientes = new Hashtable<String, Cliente>();
 	private static Temario temarioDelBancoAtlantida;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final static String URL_DE_LOS_AUDIOS = "archivossubidos/audios-";
 	
 	public Conversaciones(String pathXML){
 		System.out.println("El path xml es: "+pathXML);
@@ -67,7 +68,6 @@ public class Conversaciones {
 		}catch(Exception e){
 			System.out.println("Error al crear una conversacion: "+e.getMessage());
 		}
-		
 		return resultado;
 	}
 	
@@ -123,9 +123,20 @@ public class Conversaciones {
 		return resultado;
 	}
 	
-	public void generarAudiosEstaticos(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String ipPublica, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP){
-		HiloParaGenerarAudiosEstaticos hilo = new HiloParaGenerarAudiosEstaticos(usuarioTTS, contrasenaTTS, vozTTS, pathAGuardar, ipPublica, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP);
+	public void generarAudiosEstaticos(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP){
+		HiloParaGenerarAudiosEstaticos hilo = new HiloParaGenerarAudiosEstaticos(usuarioTTS, contrasenaTTS, vozTTS, pathAGuardar, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP);
 		hilo.start();
+	}
+	
+	public void generarAudiosEstaticosDeUnTema(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, int index){
+		TextToSpeechWatson.getInstance(usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAGuardar);
+		System.out.println(String.format("El path a guardar los audios es %s y la url publica es %s", pathAGuardar, URL_DE_LOS_AUDIOS));
+		temarioDelBancoAtlantida.generarAudioEstaticosDeUnTema(pathAGuardar, URL_DE_LOS_AUDIOS, index);
+		System.out.println("Se termino de generar audios estaticos.");
+	}
+	
+	public String verMiTemario(){
+		return temarioDelBancoAtlantida.verMiTemario();
 	}
 	
 	private class HiloParaGenerarAudiosEstaticos extends Thread{
@@ -133,18 +144,16 @@ public class Conversaciones {
 		private String contrasenaTTS;
 		private String vozTTS;
 		private String pathAGuardar;
-		private String ipPublica;
 		private String usuarioFTP;
 		private String contrasenaFTP;
 		private String hostFTP;
 		private int puetoFTP;
 		
-		public HiloParaGenerarAudiosEstaticos(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String ipPublica, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP){
+		public HiloParaGenerarAudiosEstaticos(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP){
 			this.usuarioTTS = usuarioTTS;
 			this.contrasenaTTS = contrasenaTTS;
 			this.vozTTS = vozTTS;
 			this.pathAGuardar = pathAGuardar;
-			this.ipPublica = ipPublica;
 			this.usuarioFTP = usuarioFTP;
 			this.contrasenaFTP = contrasenaFTP;
 			this.hostFTP = hostFTP;
@@ -153,8 +162,8 @@ public class Conversaciones {
 		
 		public void run(){
 			TextToSpeechWatson.getInstance(usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAGuardar);
-			System.out.println(String.format("El path a guardar los audios es %s y la url publica es %s", pathAGuardar, ipPublica));
-			temarioDelBancoAtlantida.generarAudioEstaticosDeTodasLasFrases(pathAGuardar, ipPublica);
+			System.out.println(String.format("El path a guardar los audios es %s y la url publica es %s", pathAGuardar, URL_DE_LOS_AUDIOS));
+			temarioDelBancoAtlantida.generarAudioEstaticosDeTodasLasFrases(pathAGuardar, URL_DE_LOS_AUDIOS);
 			System.out.println("Se termino de generar audios estaticos.");
 		}
 	}

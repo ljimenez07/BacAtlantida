@@ -112,12 +112,26 @@ public abstract class Temario
 	}
 	
 	public void generarAudioEstaticosDeTodasLasFrases(String pathAGuardar, String ipPublica){
-		temasDelDiscurso.get(0).generarAudiosEstaticos(pathAGuardar, ipPublica);
-		temasDelDiscurso.get(1).generarAudiosEstaticos(pathAGuardar, ipPublica);
-		/*for(Tema tema: temasDelDiscurso){
+		for(Tema tema: temasDelDiscurso){
 			System.out.println("Generando audios al TEMA: "+tema.obtenerIdTema());
 			tema.generarAudiosEstaticos(pathAGuardar, ipPublica);
-		}*/
+		}
+	}
+	
+	public void generarAudioEstaticosDeUnTema(String pathAGuardar, String ipPublica, int index){
+		temasDelDiscurso.get(index).generarAudiosEstaticos(pathAGuardar, ipPublica);
+	}
+	
+	public String verMiTemario(){
+		String resultado = "";
+		int contador = 0;
+		
+		for(Tema tema: temasDelDiscurso){
+			resultado +=tema.obtenerTodasMisFrases(contador);
+			contador ++;
+		}
+		
+		return resultado;
 	}
 	
 }
