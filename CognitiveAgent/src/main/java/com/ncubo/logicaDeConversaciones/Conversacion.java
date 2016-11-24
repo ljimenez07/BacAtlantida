@@ -246,7 +246,7 @@ public class Conversacion {
 		
 		if(respuesta.seTerminoElTema()){
 			Tema miTema = this.temario.proximoTemaATratar(temaActual, hilo.verTemasYaTratadosYQueNoPuedoRepetir(), agente.obtenerNombreDelWorkspaceActual(), agente.obtenerNombreDeLaIntencionGeneralActiva());
-			if(miTema == null){
+			if(miTema == null){ // TODO Ya no hay mas temas -  Que hago
 				this.temaActual = this.temario.buscarTema(Constantes.FRASE_SALUDO);
 				agente.borrarUnaVariableDelContexto(Constantes.TERMINO_EL_TEMA);
 			}
