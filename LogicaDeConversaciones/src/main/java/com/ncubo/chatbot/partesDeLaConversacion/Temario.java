@@ -121,4 +121,17 @@ public abstract class Temario
 	public void generarAudioEstaticosDeUnTema(String pathAGuardar, String ipPublica, int index){
 		temasDelDiscurso.get(index).generarAudiosEstaticos(pathAGuardar, ipPublica);
 	}
+	
+	public String verMiTemario(){
+		String resultado = "";
+		int contador = 0;
+		
+		for(Tema tema: temasDelDiscurso){
+			resultado +=tema.obtenerTodasMisFrases(contador);
+			contador ++;
+		}
+		
+		return resultado;
+	}
+	
 }

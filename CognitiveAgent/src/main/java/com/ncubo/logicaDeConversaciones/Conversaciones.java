@@ -68,7 +68,6 @@ public class Conversaciones {
 		}catch(Exception e){
 			System.out.println("Error al crear una conversacion: "+e.getMessage());
 		}
-		
 		return resultado;
 	}
 	
@@ -134,6 +133,10 @@ public class Conversaciones {
 		System.out.println(String.format("El path a guardar los audios es %s y la url publica es %s", pathAGuardar, URL_DE_LOS_AUDIOS));
 		temarioDelBancoAtlantida.generarAudioEstaticosDeUnTema(pathAGuardar, URL_DE_LOS_AUDIOS, index);
 		System.out.println("Se termino de generar audios estaticos.");
+	}
+	
+	public String verMiTemario(){
+		return temarioDelBancoAtlantida.verMiTemario();
 	}
 	
 	private class HiloParaGenerarAudiosEstaticos extends Thread{

@@ -190,6 +190,12 @@ public class MovilController {
 		return "Ok";
 	}
 	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/verMiTemario", method = RequestMethod.GET)
+	@ResponseBody String verMiTemario(){
+		return serverCognitivo.verMiTemario();
+	}
+	
 	@ExceptionHandler(Throwable.class)
 	public @ResponseBody String handleAllException(final HttpServletRequest req, HttpServletResponse response, final Exception ex) throws MessagingException 
 	{

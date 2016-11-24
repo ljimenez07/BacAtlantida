@@ -86,4 +86,17 @@ public class Tema
 			frases[index].generarAudiosEstaticos(pathAGuardar, ipPublica);
 		}
 	}
+	
+	public Frase[] obtenerMisFrases(){
+		return frases;
+	}
+	
+	public String obtenerTodasMisFrases(int id){
+		String resultado = "";
+		resultado += "IdTema: "+id+" - "+obtenerIdTema()+" => \n"; 
+		for(int index = 0; index < frases.length; index ++){
+			resultado += frases[index].optenerLaInformacionDeLaFrase()+"\n";
+		}
+		return resultado;
+	}
 }

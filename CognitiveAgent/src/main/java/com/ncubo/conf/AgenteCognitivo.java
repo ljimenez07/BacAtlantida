@@ -325,6 +325,10 @@ public class AgenteCognitivo
 		
 	}
 	
+	public String verMiTemario(){
+		return miConversaciones.verMiTemario();
+	}
+	
 	public String getWsTasaCambio() {
 		return wsTasaCambio;
 	}
