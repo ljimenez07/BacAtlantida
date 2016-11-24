@@ -2,17 +2,14 @@ package com.ncubo.conf;
 
 import static com.jayway.restassured.RestAssured.given;
 
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import com.jayway.restassured.internal.path.xml.NodeChildrenImpl;
 import com.jayway.restassured.internal.path.xml.NodeImpl;
 import com.jayway.restassured.path.xml.XmlPath;
-import com.ncubo.data.Consulta;
 
 public class ExtraerDatosWebService {
 	protected ExtraerDatosWebService()
