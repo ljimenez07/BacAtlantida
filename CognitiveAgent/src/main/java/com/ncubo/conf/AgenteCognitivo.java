@@ -88,7 +88,7 @@ public class AgenteCognitivo
 		ConversationService service = new ConversationService(dateFormat.format(date));
 		service.setUsernameAndPassword(user, password);
 		
-		myContext.put("logueado", usuario.estaLogueado());
+		myContext.put("logueado", usuario.getEstaLogueado());
 		myContext.put("intentActual", "");
 		String[] nombre = new String[4];
 		if(usuario.getUsuarioNombre() != null)
@@ -122,7 +122,7 @@ public class AgenteCognitivo
 		String intent = getIntent(response);
 		String texto = getText(response);
 		String intentActual = getVariable(response,"intentActual");
-		if(intentActual.equals(Intencion.SALDO.toString()) && usuario.estaLogueado())
+		if(intentActual.equals(Intencion.SALDO.toString()) && usuario.getEstaLogueado())
 		{
 			Boolean variableResponder = Boolean.parseBoolean(getVariable(response, "responderSaldo"));
 			
@@ -192,7 +192,7 @@ public class AgenteCognitivo
 			}
 			respuesta.put("texto", texto);
 		}
-		else if(intent.equals(Intencion.MOVIMIENTOS.toString()) && usuario.estaLogueado())
+		else if(intent.equals(Intencion.MOVIMIENTOS.toString()) && usuario.getEstaLogueado())
 		{
 			String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tas=\"http://hn.infatlan.och/ws/ACD082/out/TasaCambio\"> <soapenv:Header/> <soapenv:Body> <tas:MT_TasaCambio> <activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <!--Optional:--> <transaccionId>100054</transaccionId> <!--Optional:--> <aplicacionId>?</aplicacionId> <paisId>?</paisId> <empresaId>?</empresaId> <!--Optional:--> <regionId>?</regionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <version>?</version> <!--Optional:--> <llaveSesion>?</llaveSesion> <!--Optional:--> <usuarioId>?</usuarioId> <!--Optional:--> <token>?</token> <!--Zero or more repetitions:--> <identificadorColeccion> <!--Optional:--> <was>?</was> <!--Optional:--> <pi>?</pi> <!--Optional:--> <omniCanal>?</omniCanal> <!--Optional:--> <recibo>?</recibo> <!--Optional:--> <numeroTransaccion>?</numeroTransaccion> </identificadorColeccion> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> <!--Optional:--> <logColeccion> <!--Zero or more repetitions:--> <logItem> <identificadorWas>?</identificadorWas> <!--Optional:--> <identificadorPi>?</identificadorPi> <!--Optional:--> <identificadorOmniCanal>?</identificadorOmniCanal> <!--Optional:--> <identificadorRecibo>?</identificadorRecibo> <!--Optional:--> <numeroPeticion>?</numeroPeticion> <!--Optional:--> <identificadorNumeroTransaccion>?</identificadorNumeroTransaccion> <!--Optional:--> <aplicacionId>?</aplicacionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <ambienteId>?</ambienteId> <!--Optional:--> <transaccionId>?</transaccionId> <!--Optional:--> <accion>?</accion> <!--Optional:--> <tipo>?</tipo> <!--Optional:--> <fecha>?</fecha> <!--Optional:--> <hora>?</hora> <!--Optional:--> <auxiliar1>?</auxiliar1> <!--Optional:--> <auxiliar2>?</auxiliar2> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> </logItem> </logColeccion> </tas:MT_TasaCambio> </soapenv:Body> </soapenv:Envelope>";
 			String responseXML = given().body(requestBody).post( wsMovimientos).andReturn().asString();
@@ -230,7 +230,7 @@ public class AgenteCognitivo
 			respuesta.put("texto", texto + movimientos );
 			
 		}
-		else if(intentActual.equals(Intencion.DISPONIBLE.toString()) && usuario.estaLogueado())
+		else if(intentActual.equals(Intencion.DISPONIBLE.toString()) && usuario.getEstaLogueado())
 		{
 			Boolean variableResponder = Boolean.parseBoolean(getVariable(response, "responderDisponible"));
 			

@@ -1,7 +1,7 @@
 {{#each ofertas}}
 	<div class="row">
 		<div class="col-xs-12">
-			<div data-href="oferta" class="row datos-de-oferta clickable" id="{{idOferta}}">
+			<div class="row datos-de-oferta" id="{{idOferta}}">
 				<div class="col-xs-12">
 					<div class="row">
 						<div class="col-xs-12">
@@ -34,10 +34,10 @@
 					<div class="tiempo-transcurrido">Hace {{tiempoTranscurrido}}</div>
 				</div>
 				<div class="col-xs-6">
-					<div class="row" idOferta="{{idOferta}}">
+					<div class="row">
 						{{#if esUnUsuarioConocido}}
-							<div class="col-xs-3"><div class="boton-like estado-{{likes}}"></div></div>
-							<div class="col-xs-3"><div class="boton-dislike estado-{{dislikes}}"></div></div>
+							<div class="col-xs-3"><div data-id="{{idOferta}}" class="boton-like estado-{{likes}}"></div></div>
+							<div class="col-xs-3"><div data-id="{{idOferta}}" class="boton-dislike estado-{{dislikes}}"></div></div>
 						{{else}}
 							<div class="col-xs-6"></div>
 						{{/if}}

@@ -51,6 +51,7 @@ function bindAcciones()
 	$("#ofertas .datos-de-oferta").off("click").on("click", function()
 	{
 		$("#oferta .panel-body").html("");
+		cambiarVista("oferta");
 		var id = $(this).attr("id");
 		ajax({
 			url: serverDomain + "/ofertas/" + id,
@@ -64,7 +65,7 @@ function bindAcciones()
 	$("#ofertas .boton-like, #ofertas .boton-dislike").off("click").on("click", function()
 	{
 		var parent = $(this).parent().parent();
-		var idDeLaOferta = parent.attr("idoferta");
+		var idDeLaOferta = $(this).data("id");
 		var activo = parent.find(".estado-1");
 		if(activo.attr('class') != $(this).attr('class')) {
 			activo.addClass("estado-0").removeClass("estado-1");
@@ -96,6 +97,11 @@ function bindAcciones()
 	{
 		buzzer.attr("src", serverDomain+"/movil/www/archivos"+$(this).data("audio"));
 		buzzer[0].play();  
+	});
+	
+	$("#ofertas .boton-compartir").off("click").on("click", function()
+	{
+		
 	});
 }
 

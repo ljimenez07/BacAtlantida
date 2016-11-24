@@ -147,7 +147,7 @@ public class OfertaController
 	{
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
 		JSONObject respuesta = new JSONObject().put("cantidad", ofertaDao.cantidad());
-		respuesta.put("usuarioEstaLogueado", usuario == null ? false : usuario.estaLogueado());
+		respuesta.put("usuarioEstaLogueado", usuario == null ? false : usuario.getEstaLogueado());
 		
 		return respuesta.toString();
 	}
