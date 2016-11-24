@@ -73,6 +73,9 @@
 	<script type="text/javascript" src="js/login.handlebars.js"></script>
 	
 	<script>
+	var audios = new Array();
+	var estaReproduciendo = false;
+	
 	function quitarModal()
 	{
 		setCookie('mostrarpopupdeconocerte', true, 100);
@@ -81,6 +84,7 @@
 	
 	function cambiarVista(href)
 	{
+		audios = new Array();
 		var app = $(".app");
 		
 		app.find(".show").hide();
@@ -89,6 +93,12 @@
 		app.find(".show").removeClass("show");
 		app.find("#"+href).removeClass("hide");
 		app.find("#"+href).addClass("show");
+		
+		var botonEscucharMensajes = $("#chat-id-" + href + " .boton-escuchar-mensajes");
+		if(botonEscucharMensajes.hasClass("desactivado"))
+		{
+			botonEscucharMensajes.click();
+		}
 	}
 	
 	function menu(accion)
@@ -109,7 +119,7 @@
 	$(function(){
 
 		pantallas["login"] = {title: "LOGIN", body: Handlebars.templates.login(), DebajoDelPanel: ""};
-		var chat = {"pathDelServidor":"chat"};
+		var chat = {"pathDelServidor":"chats"};
 		pantallas["chats"] = {title: "CHAT", body: '<div id="chat-id-'+chat.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(chat)};
 		var conocerte = {"pathDelServidor":"conocerte"};
 		pantallas["conocerte"] = {title: "CONOCERTE", body: '<div id="chat-id-'+conocerte.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(conocerte)};
@@ -181,6 +191,36 @@
 				eval(after);
 			}
 		});	
+	}
+	
+	function agregarAColaDeReproduccion(pathDelArchivo)
+	{
+		var audio = new Audio(serverDomain + pathDelArchivo);
+		audios.push(audio);
+		reproducirCola();
+	}
+	
+	function reproducirCola()
+	{
+		if(audios.length > 0 && !estaReproduciendo)
+		{
+			estaReproduciendo = true;
+			var audio = audios.shift();
+			reproducir(audio, function()
+			{
+				estaReproduciendo = false;
+				reproducirCola();
+			});
+		}
+	}
+	
+	function reproducir(audio, callback)
+	{
+		audio.play();
+		if(callback)
+		{
+			audio.onended = callback;
+		}
 	}
 	
 	function ajax(param)
