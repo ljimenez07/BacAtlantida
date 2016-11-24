@@ -101,11 +101,6 @@ public class Agente extends Participante{
 		return miWatsonConversacions.get(nombreWorkspace).enviarAWatson(mensaje, miContextos.get(nombreWorkspace));
 	}
 	
-	public void cambiarAWorkspaceGeneral(){
-		estaEnElWorkspaceGeneral = true;
-		nombreDeWorkspaceActual = nombreDelWorkSpaceGeneral;
-	}
-	
 	public Respuesta enviarRespuestaAWatson(String respuestaDelClinete, Frase frase){
 		Respuesta respuesta = null;
 		if(estaEnElWorkspaceGeneral){
@@ -246,6 +241,16 @@ public class Agente extends Participante{
 		return nombreDeWorkspaceActual;
 	}
 	
+	public void establecerNombreDelWorkspaceActual(String nombreDelWorkSpace){
+		estaEnElWorkspaceGeneral = false;
+		nombreDeWorkspaceActual = nombreDelWorkSpace;
+	}
+	
+	public void cambiarAWorkspaceGeneral(){
+		estaEnElWorkspaceGeneral = true;
+		nombreDeWorkspaceActual = nombreDelWorkSpaceGeneral;
+	}
+	
 	public void activarTemaEnElContextoDeWatson(String nombreTema){
 		String context = miContextos.get(nombreDeWorkspaceActual);
 		JSONObject obj = null;
@@ -322,6 +327,10 @@ public class Agente extends Participante{
 	
 	public String obtenerNombreDeLaIntencionGeneralActiva() {
 		return this.nombreDeLaIntencionGeneralActiva;
+	}
+	
+	public void establecerNombreDeLaIntencionGeneralActiva(String nombreDeLaIntencion) {
+		this.nombreDeLaIntencionGeneralActiva = nombreDeLaIntencion;
 	}
 	
 	public boolean hayIntencionNoAsociadaANingunWorkspace(){
