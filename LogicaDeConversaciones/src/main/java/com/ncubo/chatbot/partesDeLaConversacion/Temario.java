@@ -113,6 +113,7 @@ public abstract class Temario
 	
 	public void generarAudioEstaticosDeTodasLasFrases(String pathAGuardar, String ipPublica){
 		temasDelDiscurso.get(0).generarAudiosEstaticos(pathAGuardar, ipPublica);
+		temasDelDiscurso.get(1).generarAudiosEstaticos(pathAGuardar, ipPublica);
 		/*for(Tema tema: temasDelDiscurso){
 			System.out.println("Generando audios al TEMA: "+tema.obtenerIdTema());
 			tema.generarAudiosEstaticos(pathAGuardar, ipPublica);

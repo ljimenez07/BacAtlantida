@@ -141,33 +141,18 @@ public class AgenteCognitivo
 			System.out.println("texto  "+texto);
 			System.out.println();
 			
-			if( ! salida.get(i).getMiSonido().url().equals("")){
-				System.out.println("La url del audio es: "+salida.get(i).getMiSonido().url());
-			}
-			if( salida.get(i).obtenerLaRespuestaDeIBM() == null)
+			if(salida.get(i).obtenerLaRespuestaDeIBM() != null)
 			{
-				continue;
+				intent = salida.get(i).obtenerLaRespuestaDeIBM().obtenerLaIntencionDeLaRespuesta().getNombre();
 			}
-			intent = salida.get(i).obtenerLaRespuestaDeIBM().obtenerLaIntencionDeLaRespuesta().getNombre();
-			System.out.println("Contexto Watson: "+salida.get(i).obtenerLaRespuestaDeIBM().messageResponse().getContext());
-			
+			String idFrase = salida.get(i).getFraseActual().getIdFrase();
 			texto = texto.replace("$", "");
 			
 		
-			if(intent.equals(Intencion.SALDO.toString()) && usuario.estaLogueado())
+			if((idFrase.equals("saldoCredito") ||  idFrase.equals("disponibleCredito") ) && usuario.estaLogueado())
 			{
-				String quiereSaldo = getVariable(salida.get(i).obtenerLaRespuestaDeIBM().messageResponse().getContext().toString(), "quiereSaldo");
-	
-				String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:con=\"http://hn.infatlan.och/ws/ACD004/out/ConsultaSaldo\"><soapenv:Header/> <soapenv:Body> <con:MT_ConsultaSaldo> <activarMultipleEntrada>?</activarMultipleEntrada><activarParametroAdicional>?</activarParametroAdicional> <!--Optional:--><transaccionId>?</transaccionId><!--Optional:--><aplicacionId>?</aplicacionId><paisId>?</paisId><empresaId>?</empresaId>  <!--Optional:-->  <regionId>?</regionId>   <!--Optional:--> <canalId>?</canalId><!--Optional:-->  <version>?</version> <!--Optional:--> <llaveSesion></llaveSesion>  <!--Optional:--><usuarioId>?</usuarioId> <!--Optional:--> <token>?</token> <!--Zero or more repetitions:-->  <identificadorColeccion> <!--Optional:--> <was>?</was> <!--Optional:-->  <pi>?</pi><!--Optional:--><omniCanal>?</omniCanal>  <!--Optional:--> <recibo>?</recibo> <!--Optional:--><numeroTransaccion>?</numeroTransaccion></identificadorColeccion> <!--Optional:-->  <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem>  <linea>?</linea>  <!--Optional:-->  <tipoRegistro>UAI</tipoRegistro> <!--Optional:-->    <valor>%s</valor></parametroAdicionalItem>  </parametroAdicionalColeccion> <!--Optional:--> <logColeccion><!--Zero or more repetitions:--> <logItem> <identificadorWas>?</identificadorWas> <!--Optional:--><identificadorPi>?</identificadorPi> <!--Optional:--> <identificadorOmniCanal>?</identificadorOmniCanal>  <!--Optional:--><identificadorRecibo>?</identificadorRecibo> <!--Optional:--><numeroPeticion>?</numeroPeticion> <!--Optional:--> <identificadorNumeroTransaccion>?</identificadorNumeroTransaccion> <!--Optional:--> <aplicacionId>?</aplicacionId> <!--Optional:-->   <canalId>?</canalId> <!--Optional:-->  <ambienteId>?</ambienteId> <!--Optional:-->  <transaccionId>?</transaccionId> <!--Optional:--><accion>?</accion> <!--Optional:--> <tipo>?</tipo> <!--Optional:--> <fecha>?</fecha> <!--Optional:--> <hora>?</hora><!--Optional:--><auxiliar1>?</auxiliar1> <!--Optional:--> <auxiliar2>?</auxiliar2>  <!--Optional:--> <parametroAdicionalColeccion>  <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea>  <!--Optional:-->  <tipoRegistro>?</tipoRegistro>  <!--Optional:-->   <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> </logItem> </logColeccion>  <!--Optional:-->  <consultaSaldoColeccion> <tipoCuenta>%s</tipoCuenta> <!--Optional:--> <peticionId>?</peticionId> </consultaSaldoColeccion> </con:MT_ConsultaSaldo></soapenv:Body></soapenv:Envelope>";
-				if(quiereSaldo.equals("credito"))
-				{
-					textos = extraerDatos.obtenerSaldoTarjetaCredito(requestBody, wsSaldo, texto, usuario.getUsuarioId());
-				}
-				if(quiereSaldo.equals("ahorro"))
-				{
-					textos = extraerDatos.obtenerSaldoCuentaAhorros(requestBody, wsSaldo, texto, usuario.getUsuarioId());
-				}			
 				
+				textos = extraerDatos.obtenerSaldoTarjetaCredito(wsSaldo, texto, usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
 				{
 					JSONObject jsonObject = new JSONObject();
@@ -179,48 +164,50 @@ public class AgenteCognitivo
 				consultaDao.insertar(
 						new Consulta(Intencion.SALDO.toString(), new Timestamp(new Date().getTime()), Intencion.SALDO_DESCRIPCION.toString() , 1));
 			}
-			else if(( intent.equals(Intencion.SALDO.toString()) || intent.equals(Intencion.MOVIMIENTOS.toString())) && ! usuario.estaLogueado())
+			else if(idFrase.equals("saldoCuentaAhorros") && usuario.estaLogueado())
+			{
+				textos = extraerDatos.obtenerSaldoCuentaAhorros(wsSaldo, texto, usuario.getUsuarioId());
+				for(int j = 0; j < textos.length; j++)
+				{
+					JSONObject jsonObject = new JSONObject();
+					jsonObject.put("texto", textos[j]);
+					jsonObject.put("audio", "");	
+					arrayList.add(jsonObject);
+				}
+			}
+			else if((idFrase.equals("saldoCuentaAhorros") || idFrase.equals("saldoCredito")|| idFrase.equals("quiereSaldoTarjetaCredito")) && ! usuario.estaLogueado())
+			{
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("texto", "Debe iniciar sesión para que conozcas tu saldo.");
+				jsonObject.put("audio", "");	
+				arrayList.add(jsonObject);
+			}
+			else if((idFrase.equals("disponibleCredito") || idFrase.equals("disponibleCuentaAhorros")|| idFrase.equals("disponiblePuntos") || idFrase.equals("quiereDisponibleTarjetaCredito")) && ! usuario.estaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", "Debe iniciar sesión para que conozcas tu disponible.");
 				jsonObject.put("audio", "");	
 				arrayList.add(jsonObject);
 			}
-			else if(intent.equals(Intencion.TASA_DE_CAMBIO.toString()) || texto.contains("%dc") || texto.contains("%dv") || texto.contains("%ec") || texto.contains("%ev")){
+			else if(idFrase.equals("movimientos") && ! usuario.estaLogueado())
+			{
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("texto", "Debe iniciar sesión para que conozcas tus movimientos.");
+				jsonObject.put("audio", "");	
+				arrayList.add(jsonObject);
+			}
+			else if(idFrase.equals("tasaDolar")||idFrase.equals("tasaEuro")){
 				
-				String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tas=\"http://hn.infatlan.och/ws/ACD082/out/TasaCambio\"> <soapenv:Header/> <soapenv:Body> <tas:MT_TasaCambio> <activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <!--Optional:--> <transaccionId>100054</transaccionId> <!--Optional:--> <aplicacionId>?</aplicacionId> <paisId>?</paisId> <empresaId>?</empresaId> <!--Optional:--> <regionId>?</regionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <version>?</version> <!--Optional:--> <llaveSesion>?</llaveSesion> <!--Optional:--> <usuarioId>?</usuarioId> <!--Optional:--> <token>?</token> <!--Zero or more repetitions:--> <identificadorColeccion> <!--Optional:--> <was>?</was> <!--Optional:--> <pi>?</pi> <!--Optional:--> <omniCanal>?</omniCanal> <!--Optional:--> <recibo>?</recibo> <!--Optional:--> <numeroTransaccion>?</numeroTransaccion> </identificadorColeccion> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> <!--Optional:--> <logColeccion> <!--Zero or more repetitions:--> <logItem> <identificadorWas>?</identificadorWas> <!--Optional:--> <identificadorPi>?</identificadorPi> <!--Optional:--> <identificadorOmniCanal>?</identificadorOmniCanal> <!--Optional:--> <identificadorRecibo>?</identificadorRecibo> <!--Optional:--> <numeroPeticion>?</numeroPeticion> <!--Optional:--> <identificadorNumeroTransaccion>?</identificadorNumeroTransaccion> <!--Optional:--> <aplicacionId>?</aplicacionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <ambienteId>?</ambienteId> <!--Optional:--> <transaccionId>?</transaccionId> <!--Optional:--> <accion>?</accion> <!--Optional:--> <tipo>?</tipo> <!--Optional:--> <fecha>?</fecha> <!--Optional:--> <hora>?</hora> <!--Optional:--> <auxiliar1>?</auxiliar1> <!--Optional:--> <auxiliar2>?</auxiliar2> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> </logItem> </logColeccion> </tas:MT_TasaCambio> </soapenv:Body> </soapenv:Envelope>";
-	
-				String responseXML = given().body(requestBody).post(wsTasaCambio).andReturn().asString();
+				texto = extraerDatos.obtenerTasaCambio(wsTasaCambio, texto);
 				
-				System.out.println(wsSaldo+" \n\t  "+requestBody+"   \n\t"+responseXML);
-				
-				XmlPath xmlPath = new XmlPath(responseXML).setRoot("Envelope");
-				NodeChildrenImpl body = xmlPath.get("Body");
-				NodeImpl tasa = body.get(0).get("MT_TasaCambioResponse");
-				List<?> codigo = tasa.getNode("Respuesta").getNode("tasaCambioColeccion").get("tasaCambioItem");
-				
-				for(int s = 0; s < codigo.size(); s++)
-				{
-					NodeImpl nodeTipoCambio1 = (NodeImpl) codigo.get(s);
-					NodeImpl moneda = nodeTipoCambio1.get("moneda");
-					NodeImpl compra = nodeTipoCambio1.get("compra");
-					NodeImpl venta = nodeTipoCambio1.get("venta");
-					if(moneda.getValue().equals(Entidad.DOLAR.toString())){
-						texto = texto.replace("%dc", compra.toString()+" LPS ").replace("%dv", venta.toString()+" LPS ");
-					}
-					if(moneda.getValue().equals(Entidad.EURO.toString())){
-						texto = texto.replace("%ec", compra.toString()+" LPS ").replace("%ev", venta.toString()+" LPS ");			
-					}
-				}
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
 				jsonObject.put("audio", "");	
 				arrayList.add(jsonObject);
 			}
-			else if(intent.equals(Intencion.MOVIMIENTOS.toString()) && usuario.estaLogueado())
+			else if(idFrase.equals("movimientos")&& usuario.estaLogueado())
 			{
-				String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:cor=\"http://corebancario.ext.srv.infatlan.hn/\"> <soapenv:Header/> <soapenv:Body> <cor:consultaMovimiento> <activarMultipleEntrada>?</activarMultipleEntrada><activarParametroAdicional>?</activarParametroAdicional><!--Optional:--><transaccionId>?</transaccionId><!--Optional:--><aplicacionId>?</aplicacionId><paisId>?</paisId><empresaId>?</empresaId><!--Optional:--><regionId>?</regionId><!--Optional:--><canalId>?</canalId><!--Optional:--><version>?</version><!--Optional:--><llaveSesion>?</llaveSesion><!--Optional:--><usuarioId>?</usuarioId><!--Optional:--><token>?</token><!--Optional:--><identificadorColeccion><!--Optional:--><was>?</was><!--Optional:--><pi>?</pi><!--Optional:--><omniCanal>?</omniCanal><!--Optional:--><recibo>?</recibo> <!--Optional:--><numeroTransaccion>?</numeroTransaccion> </identificadorColeccion><!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem><linea>?</linea> <!--Optional:-->   <tipoRegistro>?</tipoRegistro>  <!--Optional:--><valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion>  <!--Optional:-->  <logColeccion>  <!--Zero or more repetitions:--> <logItem><identificadorWas>?</identificadorWas> <!--Optional:--> <identificadorPi>?</identificadorPi> <!--Optional:--> <identificadorOmniCanal>?</identificadorOmniCanal> <!--Optional:--> <identificadorRecibo>?</identificadorRecibo> <!--Optional:--> <numeroPeticion>?</numeroPeticion> <!--Optional:--><identificadorNumeroTransaccion>?</identificadorNumeroTransaccion> <!--Optional:--><aplicacionId>?</aplicacionId> <!--Optional:--><canalId>?</canalId>    <!--Optional:--> <ambienteId>?</ambienteId>  <!--Optional:-->  <transaccionId>?</transaccionId>  <!--Optional:--><accion>?</accion> <!--Optional:--><tipo>?</tipo><!--Optional:--> <fecha>?</fecha> <!--Optional:--> <hora>?</hora> <!--Optional:--> <auxiliar1>?</auxiliar1> <!--Optional:--><auxiliar2>?</auxiliar2> <!--Optional:-->  <parametroAdicionalColeccion> <!--Zero or more repetitions:-->   <parametroAdicionalItem> <linea>?</linea>  <!--Optional:-->  <tipoRegistro>UAI</tipoRegistro> <!--Optional:--> <valor>%s</valor></parametroAdicionalItem> </parametroAdicionalColeccion>   </logItem></logColeccion> <!--Optional:--> <consultaMovimientoColeccion>  <!--Optional:--> <tipoConsulta>E</tipoConsulta> <!--Optional:--> <tipoCuenta>%s</tipoCuenta> <!--Optional:--> <numeroCuenta>?</numeroCuenta> <!--Optional:--><periodo>01</periodo> <!--Optional:--> <fechaInicio>?</fechaInicio>   <!--Optional:--> <fechaFinal>?</fechaFinal><!--Optional:--><tipoMonto>?</tipoMonto> <!--Optional:--> <monto>?</monto> <!--Optional:--> <operacion>?</operacion> </consultaMovimientoColeccion></cor:consultaMovimiento></soapenv:Body></soapenv:Envelope>";
-				textos = extraerDatos.obtenerMovimientos(requestBody, wsMovimientos, texto, usuario.getUsuarioId(), "");
+				textos = extraerDatos.obtenerMovimientos(wsMovimientos, texto, usuario.getUsuarioId(), "");
 				
 				for(int j = 0; j < textos.length; j++)
 				{
@@ -232,37 +219,33 @@ public class AgenteCognitivo
 				
 				consultaDao.insertar(
 						new Consulta(Intencion.MOVIMIENTOS.toString(), new Timestamp(new Date().getTime()), Intencion.MOVIMIENTOS_DESCRIPCION.toString() , 1));
-			
+		
+			}
+			else if(idFrase.equals("disponibleCuentaAhorros") && usuario.estaLogueado())
+			{
+				textos = extraerDatos.obtenerSaldoCuentaAhorros(wsSaldo, texto, usuario.getUsuarioId());
+				for(int j = 0; j < textos.length; j++)
+				{
+					JSONObject jsonObject = new JSONObject();
+					jsonObject.put("texto", textos[j]);
+					jsonObject.put("audio", "");	
+					arrayList.add(jsonObject);
+				}
 				
 			}
-			else if(intent.equals(Intencion.DISPONIBLE.toString()) && usuario.estaLogueado())
-			{
-				String quiereDisponible = getVariable(salida.get(i).obtenerLaRespuestaDeIBM().messageResponse().getContext().toString(), "quiereSaldo");
-				String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:con=\"http://hn.infatlan.och/ws/ACD004/out/ConsultaSaldo\"><soapenv:Header/> <soapenv:Body> <con:MT_ConsultaSaldo> <activarMultipleEntrada>?</activarMultipleEntrada><activarParametroAdicional>?</activarParametroAdicional> <!--Optional:--><transaccionId>?</transaccionId><!--Optional:--><aplicacionId>?</aplicacionId><paisId>?</paisId><empresaId>?</empresaId>  <!--Optional:-->  <regionId>?</regionId>   <!--Optional:--> <canalId>?</canalId><!--Optional:-->  <version>?</version> <!--Optional:--> <llaveSesion></llaveSesion>  <!--Optional:--><usuarioId>?</usuarioId> <!--Optional:--> <token>?</token> <!--Zero or more repetitions:-->  <identificadorColeccion> <!--Optional:--> <was>?</was> <!--Optional:-->  <pi>?</pi><!--Optional:--><omniCanal>?</omniCanal>  <!--Optional:--> <recibo>?</recibo> <!--Optional:--><numeroTransaccion>?</numeroTransaccion></identificadorColeccion> <!--Optional:-->  <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem>  <linea>?</linea>  <!--Optional:-->  <tipoRegistro>UAI</tipoRegistro> <!--Optional:-->    <valor>%s</valor></parametroAdicionalItem>  </parametroAdicionalColeccion> <!--Optional:--> <logColeccion><!--Zero or more repetitions:--> <logItem> <identificadorWas>?</identificadorWas> <!--Optional:--><identificadorPi>?</identificadorPi> <!--Optional:--> <identificadorOmniCanal>?</identificadorOmniCanal>  <!--Optional:--><identificadorRecibo>?</identificadorRecibo> <!--Optional:--><numeroPeticion>?</numeroPeticion> <!--Optional:--> <identificadorNumeroTransaccion>?</identificadorNumeroTransaccion> <!--Optional:--> <aplicacionId>?</aplicacionId> <!--Optional:-->   <canalId>?</canalId> <!--Optional:-->  <ambienteId>?</ambienteId> <!--Optional:-->  <transaccionId>?</transaccionId> <!--Optional:--><accion>?</accion> <!--Optional:--> <tipo>?</tipo> <!--Optional:--> <fecha>?</fecha> <!--Optional:--> <hora>?</hora><!--Optional:--><auxiliar1>?</auxiliar1> <!--Optional:--> <auxiliar2>?</auxiliar2>  <!--Optional:--> <parametroAdicionalColeccion>  <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea>  <!--Optional:-->  <tipoRegistro>?</tipoRegistro>  <!--Optional:-->   <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> </logItem> </logColeccion>  <!--Optional:-->  <consultaSaldoColeccion> <tipoCuenta>%s</tipoCuenta> <!--Optional:--> <peticionId>?</peticionId> </consultaSaldoColeccion> </con:MT_ConsultaSaldo></soapenv:Body></soapenv:Envelope>";
-				
-				if(quiereDisponible.equals("credito"))
-				{
-					textos = extraerDatos.obtenerDisponibleTarjetaCredito(requestBody, wsSaldo, texto, usuario.getUsuarioId());
-				}
-				if(quiereDisponible.equals("ahorro"))
-				{
-					textos = extraerDatos.obtenerSaldoCuentaAhorros(requestBody, wsSaldo, texto, usuario.getUsuarioId());
-				}			
-				if(quiereDisponible.equals("puntos"))
-				{
-					texto = texto.replaceAll("%pp", "200");
+			else if(idFrase.equals("disponiblePuntos") && usuario.estaLogueado())	
+			{			
+				texto = texto.replaceAll("%pp", "200");
 					JSONObject jsonObject = new JSONObject();
 					jsonObject.put("texto", texto);
 					jsonObject.put("audio", "");	
 					arrayList.add(jsonObject);
-				}
-				else{}
 			}
 			else
 			{
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
-				jsonObject.put("audio", "");	
+				jsonObject.put("audio", salida.get(i).getMiSonido().url());	
 				arrayList.add(jsonObject);
 			}
 		}

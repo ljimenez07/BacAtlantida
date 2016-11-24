@@ -140,11 +140,12 @@ public class TemarioDelBancoAtlantida extends Temario
 		System.out.println("Cargando temario ...");
 		temasDelDiscurso.add(saludo());
 		temasDelDiscurso.add(quiereSaldo());
+		temasDelDiscurso.add(quiereDisponible());
 		temasDelDiscurso.add(quiereTasaDeCambio());
 		temasDelDiscurso.add(quiereMovimientos());
 		temasDelDiscurso.add(fueraDeContexto());
 		temasDelDiscurso.add(despedida());
-		temasDelDiscurso.add(quiereDisponible());
+		
 	}
 	
 	public void cargarIntenciones(List<Intenciones> intenciones)
