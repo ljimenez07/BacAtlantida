@@ -138,7 +138,7 @@ public class OfertaController
 	@ResponseBody public Oferta oferta(@PathVariable int idOferta, HttpSession sesion) throws ClassNotFoundException, SQLException
 	{
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-		String idUsuario = usuario == null ? null : usuario.getUsuarioId();
+		String idUsuario = usuario == null ? null : usuario.estaLogueado() ? usuario.getUsuarioId() : null;
 		return ofertaDao.obtener(idOferta, idUsuario);
 	}
 	
