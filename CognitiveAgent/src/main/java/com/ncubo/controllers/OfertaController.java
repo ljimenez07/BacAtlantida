@@ -89,6 +89,13 @@ public class OfertaController
 		return "tablaDeOfertas";
 	}
 	
+
+	@RequestMapping("/login")
+	public String login( Model model) throws ClassNotFoundException, SQLException
+	{
+		return "login";
+	}
+	
 	@GetMapping("/BackOffice/insertarOferta")
 	public String cargarInsertarOfertas(Oferta oferta, Model model) throws ClassNotFoundException, SQLException
 	{
