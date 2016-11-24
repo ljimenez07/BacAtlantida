@@ -88,7 +88,7 @@ public class Conversaciones {
 		logger.debug("Conversar ..........");
 		System.out.println("Coversar con "+cliente.getIdSesion());
 		try{
-			if( ! cliente.getUsuarioId().equals("") && ! cliente.getIdSesion().equals("") && cliente.estaLogueado()){ // Esta logueado
+			if( ! cliente.getUsuarioId().equals("") && ! cliente.getIdSesion().equals("") && cliente.getEstaLogueado()){ // Esta logueado
 				// Verificar si ya el usuario existe
 				if(existeElCliente(cliente.getUsuarioId())){
 					// TODO Verificar si cambio el id de sesion, si es asi agregarla al cliente y hacerlo saber a conversacion

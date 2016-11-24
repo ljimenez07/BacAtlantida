@@ -1,7 +1,5 @@
 package com.ncubo.conf;
 
-import static com.jayway.restassured.RestAssured.given;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
@@ -10,7 +8,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -21,10 +18,9 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import org.json.simple.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.mockito.cglib.core.EmitUtils.ArrayDelimiters;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -33,16 +29,11 @@ import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Entity;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Intent;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
-import com.jayway.restassured.internal.path.xml.NodeChildrenImpl;
-import com.jayway.restassured.internal.path.xml.NodeImpl;
-import com.jayway.restassured.path.xml.XmlPath;
-import com.mysql.fabric.xmlrpc.base.Array;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
-import com.ncubo.chatbot.partesDeLaConversacion.Sonido;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.data.Consulta;
-import com.ncubo.util.FTPServidor;
 import com.ncubo.logicaDeConversaciones.Conversaciones;
+import com.ncubo.util.FTPServidor;
 
 @Component
 @ConfigurationProperties("servercognitivo")
@@ -146,7 +137,7 @@ public class AgenteCognitivo
 			texto = texto.replace("$", "");
 			
 		
-			if((idFrase.equals("saldoCredito") ||  idFrase.equals("disponibleCredito") ) && usuario.estaLogueado())
+			if((idFrase.equals("saldoCredito") ||  idFrase.equals("disponibleCredito") ) && usuario.getEstaLogueado())
 			{
 				
 				textos = extraerDatos.obtenerSaldoTarjetaCredito(wsSaldo, texto, usuario.getUsuarioId());
@@ -155,13 +146,13 @@ public class AgenteCognitivo
 					JSONObject jsonObject = new JSONObject();
 					jsonObject.put("texto", textos[j]);
 					jsonObject.put("audio", "");	
-					arrayList.add(jsonObject);
+					arrayList.put(jsonObject);
 				}
 				
 				consultaDao.insertar(
 						new Consulta(Intencion.SALDO.toString(), new Timestamp(new Date().getTime()), Intencion.SALDO_DESCRIPCION.toString() , 1));
 			}
-			else if(idFrase.equals("saldoCuentaAhorros") && usuario.estaLogueado())
+			else if(idFrase.equals("saldoCuentaAhorros") && usuario.getEstaLogueado())
 			{
 				textos = extraerDatos.obtenerSaldoCuentaAhorros(wsSaldo, texto, usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
@@ -169,29 +160,29 @@ public class AgenteCognitivo
 					JSONObject jsonObject = new JSONObject();
 					jsonObject.put("texto", textos[j]);
 					jsonObject.put("audio", "");	
-					arrayList.add(jsonObject);
+					arrayList.put(jsonObject);
 				}
 			}
-			else if((idFrase.equals("saldoCuentaAhorros") || idFrase.equals("saldoCredito")|| idFrase.equals("quiereSaldoTarjetaCredito")) && ! usuario.estaLogueado())
+			else if((idFrase.equals("saldoCuentaAhorros") || idFrase.equals("saldoCredito")|| idFrase.equals("quiereSaldoTarjetaCredito")) && ! usuario.getEstaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", "Debe iniciar sesión para que conozcas tu saldo.");
 				jsonObject.put("audio", "");	
-				arrayList.add(jsonObject);
+				arrayList.put(jsonObject);
 			}
-			else if((idFrase.equals("disponibleCredito") || idFrase.equals("disponibleCuentaAhorros")|| idFrase.equals("disponiblePuntos") || idFrase.equals("quiereDisponibleTarjetaCredito")) && ! usuario.estaLogueado())
+			else if((idFrase.equals("disponibleCredito") || idFrase.equals("disponibleCuentaAhorros")|| idFrase.equals("disponiblePuntos") || idFrase.equals("quiereDisponibleTarjetaCredito")) && ! usuario.getEstaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", "Debe iniciar sesión para que conozcas tu disponible.");
 				jsonObject.put("audio", "");	
-				arrayList.add(jsonObject);
+				arrayList.put(jsonObject);
 			}
-			else if(idFrase.equals("movimientos") && ! usuario.estaLogueado())
+			else if(idFrase.equals("movimientos") && ! usuario.getEstaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", "Debe iniciar sesión para que conozcas tus movimientos.");
 				jsonObject.put("audio", "");	
-				arrayList.add(jsonObject);
+				arrayList.put(jsonObject);
 			}
 			else if(idFrase.equals("tasaDolar")||idFrase.equals("tasaEuro")){
 				
@@ -200,9 +191,9 @@ public class AgenteCognitivo
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
 				jsonObject.put("audio", "");	
-				arrayList.add(jsonObject);
+				arrayList.put(jsonObject);
 			}
-			else if(idFrase.equals("movimientos")&& usuario.estaLogueado())
+			else if(idFrase.equals("movimientos")&& usuario.getEstaLogueado())
 			{
 				textos = extraerDatos.obtenerMovimientos(wsMovimientos, texto, usuario.getUsuarioId(), "");
 				
@@ -211,14 +202,14 @@ public class AgenteCognitivo
 					JSONObject jsonObject = new JSONObject();
 					jsonObject.put("texto", textos[j]);
 					jsonObject.put("audio", "");	
-					arrayList.add(jsonObject);
+					arrayList.put(jsonObject);
 				}
 				
 				consultaDao.insertar(
 						new Consulta(Intencion.MOVIMIENTOS.toString(), new Timestamp(new Date().getTime()), Intencion.MOVIMIENTOS_DESCRIPCION.toString() , 1));
 		
 			}
-			else if(idFrase.equals("disponibleCuentaAhorros") && usuario.estaLogueado())
+			else if(idFrase.equals("disponibleCuentaAhorros") && usuario.getEstaLogueado())
 			{
 				textos = extraerDatos.obtenerSaldoCuentaAhorros(wsSaldo, texto, usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
@@ -226,24 +217,24 @@ public class AgenteCognitivo
 					JSONObject jsonObject = new JSONObject();
 					jsonObject.put("texto", textos[j]);
 					jsonObject.put("audio", "");	
-					arrayList.add(jsonObject);
+					arrayList.put(jsonObject);
 				}
 				
 			}
-			else if(idFrase.equals("disponiblePuntos") && usuario.estaLogueado())	
+			else if(idFrase.equals("disponiblePuntos") && usuario.getEstaLogueado())	
 			{			
 				texto = texto.replaceAll("%pp", "200");
 					JSONObject jsonObject = new JSONObject();
 					jsonObject.put("texto", texto);
 					jsonObject.put("audio", "");	
-					arrayList.add(jsonObject);
+					arrayList.put(jsonObject);
 			}
 			else
 			{
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
 				jsonObject.put("audio", salida.get(i).getMiSonido().url());	
-				arrayList.add(jsonObject);
+				arrayList.put(jsonObject);
 			}
 		}
 		respuesta.put("textos", arrayList);
