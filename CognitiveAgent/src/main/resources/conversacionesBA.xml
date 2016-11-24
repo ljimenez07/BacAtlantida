@@ -256,7 +256,7 @@
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
 		<workspace tipo="general" idIBM="ea7cc165-ac98-4349-92ed-8e04f1ab402e" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="e0ff922e-68f2-4cc3-bc69-ec624d07c36c" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos">BATemas</workspace>
+		<workspace tipo="especifico" idIBM="a3c340ed-86b5-4bef-8d9c-2da86bd4f16f" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos">BATemas</workspace>
 	</workspaces>
 	
 </conversacions>
