@@ -61,6 +61,11 @@ function bindAcciones()
 				{
 					agregarAColaDeReproduccion("/archivossubidos" + $(this).data("audio"));
 				});
+				$("#oferta .imagen-de-oferta").each(function()
+				{
+					var path = serverDomain + $(this).attr("src");
+					$(this).attr("src", path);
+				});
 	 		}
 		});
 	});
