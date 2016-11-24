@@ -183,6 +183,13 @@ public class MovilController {
 		return "Ok";
 	}
 	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/generarAudioEstatico/{id}", method = RequestMethod.GET)
+	@ResponseBody String generarAudioEstatico(@PathVariable("id") String id){
+		serverCognitivo.generarAudioEstatico(id);
+		return "Ok";
+	}
+	
 	@ExceptionHandler(Throwable.class)
 	public @ResponseBody String handleAllException(final HttpServletRequest req, HttpServletResponse response, final Exception ex) throws MessagingException 
 	{
