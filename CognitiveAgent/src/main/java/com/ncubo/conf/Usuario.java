@@ -2,6 +2,7 @@ package com.ncubo.conf;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import org.json.JSONObject;
 
@@ -17,6 +18,7 @@ public class Usuario implements Serializable
 	private boolean estaLogueado = false;
 	private static ArrayList<Usuario> usuariosLogueados = new ArrayList<Usuario>();
 	private String idSesion = "";
+	private Hashtable<String, String> variablesDeContexto = new Hashtable<String, String>();
 	
 	protected Usuario(){}
 	
@@ -97,6 +99,17 @@ public class Usuario implements Serializable
 	{
 		this.idSesion = idSesion;
 	}
+
+	public void setVariablesDeContexto(String variable, String valor){
+		if(this.variablesDeContexto.contains(variable))
+			this.variablesDeContexto.replace(variable, valor);
+		else this.variablesDeContexto.put(variable, valor);
+	}
+
+	public String getVariablesDeContexto(String variable){
+		return variablesDeContexto.get(variable);
+	}
+	
 	
 }
 

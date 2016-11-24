@@ -3,7 +3,9 @@ package com.ncubo.data;
 import java.io.File;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 
 import javax.validation.constraints.NotNull;
@@ -36,11 +38,11 @@ public class Oferta implements Comparable<Oferta>
 	@NotEmpty(message = "*Campo requerido")
 	private String restricciones;
 	
-	@NotNull
+	@NotNull(message = "*Campo requerido")
 	@com.ncubo.util.Date
 	private Date vigenciaDesde;
 
-	@NotNull
+	@NotNull(message = "*Campo requerido")
 	@com.ncubo.util.Date
 	@AtLeastToday
 	private Date vigenciaHasta;
@@ -166,9 +168,18 @@ public class Oferta implements Comparable<Oferta>
 		return vigenciaDesde;
 	}
 	
-	public void setVigenciaDesde(Date vigenciaDesde)
+	public void setVigenciaDesde(String vigenciaDesde)
 	{
-		this.vigenciaDesde = vigenciaDesde;
+		try
+		{
+			DateFormat formatter;
+			formatter = new SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date parsed = formatter.parse(vigenciaDesde);
+			this.vigenciaDesde = new Date(parsed.getTime());
+		}
+		catch(Exception ex)
+		{
+		}
 	}
 	
 	public Date getVigenciaHasta()
@@ -176,9 +187,18 @@ public class Oferta implements Comparable<Oferta>
 		return vigenciaHasta;
 	}
 	
-	public void setVigenciaHasta(Date vigenciaHasta)
+	public void setVigenciaHasta(String vigenciaHasta)
 	{
-		this.vigenciaHasta = vigenciaHasta;
+		try
+		{
+			DateFormat formatter;
+			formatter = new SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date parsed = formatter.parse(vigenciaHasta);
+			this.vigenciaHasta = new Date(parsed.getTime());
+		}
+		catch(Exception ex)
+		{
+		}
 	}
 	
 	public String getImagenComercioPath()

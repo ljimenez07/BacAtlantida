@@ -1,15 +1,12 @@
 package com.ncubo.controllers;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
 
 import javax.mail.MessagingException;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -34,12 +31,11 @@ import com.jayway.restassured.internal.path.xml.NodeChildrenImpl;
 import com.jayway.restassured.path.xml.XmlPath;
 import com.jayway.restassured.path.xml.element.Node;
 import com.ncubo.conf.AgenteCognitivo;
+import com.ncubo.conf.ExtraerDatosWebService;
 import com.ncubo.conf.ManejadorDeErrores;
 import com.ncubo.conf.Usuario;
 import com.ncubo.exceptions.CredencialesInvalidosException;
 import com.ncubo.exceptions.NoEmailException;
-import com.ncubo.util.FTPServidor;
-
 
 @Controller
 public class MovilController {
@@ -48,8 +44,7 @@ public class MovilController {
 	private AgenteCognitivo serverCognitivo;
 	@Autowired
 	private ManejadorDeErrores manejadorDeErrores;
-	@Autowired
-	private FTPServidor ftp;
+	private ExtraerDatosWebService extraerDatos;
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/chat/", method = RequestMethod.POST)
@@ -73,40 +68,6 @@ public class MovilController {
 		session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 		
 		return object.toString();
-	}
-	
-	@CrossOrigin(origins = "*")
-	@RequestMapping(value="/archivossubidos/{nombre:.*}", method = RequestMethod.GET)
-	void archivossubidos(HttpSession session, HttpServletRequest request, HttpServletResponse response, @PathVariable String nombre) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ClassNotFoundException, SQLException 
-	{
-		String remoteFile2 = nombre.replace("-", "/");
-
-		InputStream inputStream = ftp.descargarArchivo(remoteFile2);
-
-		byte[] bytesArray = new byte[4096];
-		int bytesRead = -1;
-
-		ServletContext context = request.getServletContext();
-		String mimetype = context.getMimeType(remoteFile2);
-
-		if (mimetype == null)
-		{
-			mimetype = "application/octet-stream";
-		}
-		
-		response.setContentType(mimetype);
-		// response.setHeader("Content-Disposition", "attachment; filename=\"" +
-		// remoteFile2.substring(1) + "\"");
-
-		OutputStream outStream = response.getOutputStream();
-
-		while ((bytesRead = inputStream.read(bytesArray)) != -1)
-		{
-			outStream.write(bytesArray, 0, bytesRead);
-		}
-
-		outStream.close();
-		inputStream.close();
 	}
 	
 	@CrossOrigin(origins = "*")
@@ -136,13 +97,9 @@ public class MovilController {
 	@RequestMapping(value="/movil/login", method = RequestMethod.POST)
 	@ResponseBody String login(@RequestBody String mensaje, HttpSession sesion, @RequestParam String name, @RequestParam String password) throws JSONException, JsonParseException, JsonMappingException, IOException 
 	{
-		String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tas=\"http://hn.infatlan.och/ws/ACD082/out/TasaCambio\"> <soapenv:Header/> <soapenv:Body> <tas:MT_TasaCambio> <activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <!--Optional:--> <transaccionId>100054</transaccionId> <!--Optional:--> <aplicacionId>?</aplicacionId> <paisId>?</paisId> <empresaId>?</empresaId> <!--Optional:--> <regionId>?</regionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <version>?</version> <!--Optional:--> <llaveSesion>?</llaveSesion> <!--Optional:--> <usuarioId>?</usuarioId> <!--Optional:--> <token>?</token> <!--Zero or more repetitions:--> <identificadorColeccion> <!--Optional:--> <was>?</was> <!--Optional:--> <pi>?</pi> <!--Optional:--> <omniCanal>?</omniCanal> <!--Optional:--> <recibo>?</recibo> <!--Optional:--> <numeroTransaccion>?</numeroTransaccion> </identificadorColeccion> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> <!--Optional:--> <logColeccion> <!--Zero or more repetitions:--> <logItem> <identificadorWas>?</identificadorWas> <!--Optional:--> <identificadorPi>?</identificadorPi> <!--Optional:--> <identificadorOmniCanal>?</identificadorOmniCanal> <!--Optional:--> <identificadorRecibo>?</identificadorRecibo> <!--Optional:--> <numeroPeticion>?</numeroPeticion> <!--Optional:--> <identificadorNumeroTransaccion>?</identificadorNumeroTransaccion> <!--Optional:--> <aplicacionId>?</aplicacionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <ambienteId>?</ambienteId> <!--Optional:--> <transaccionId>?</transaccionId> <!--Optional:--> <accion>?</accion> <!--Optional:--> <tipo>?</tipo> <!--Optional:--> <fecha>?</fecha> <!--Optional:--> <hora>?</hora> <!--Optional:--> <auxiliar1>?</auxiliar1> <!--Optional:--> <auxiliar2>?</auxiliar2> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> </logItem> </logColeccion> </tas:MT_TasaCambio> </soapenv:Body> </soapenv:Envelope>";
-		String responseXML = new Stub().login(requestBody);//given().body(requestBody).post("http://localhost:8080/Ecommerce/login/").andReturn().asString();
-		
-		XmlPath xmlPath = new XmlPath(responseXML).setRoot("Envelope");
-		NodeChildrenImpl body = xmlPath.get("Body");
-		Node validaPreLoginColeccion = body.get(0).getNode("Respuesta").getNode("validaPreLoginColeccion");
-		if( validaPreLoginColeccion.getNode("valido").toString().equals("S") )
+		extraerDatos = new ExtraerDatosWebService();
+		String[] responseLogin = extraerDatos.login(name , password);
+		if( responseLogin[0].equals("S") )
 		{
 			Object objeto = sesion.getAttribute(Usuario.LLAVE_EN_SESSION) ;
 			Usuario usuario;
@@ -155,13 +112,19 @@ public class MovilController {
 				usuario = (Usuario)objeto;
 			}
 			
-			usuario.setLlaveSession(validaPreLoginColeccion.getNode("llaveSession").toString());
-			usuario.setUsuarioId(validaPreLoginColeccion.getNode("usuarioId").toString());
-			usuario.setUsuarioNombre(validaPreLoginColeccion.getNode("usuarioNombre").toString());
+			usuario.setLlaveSession(responseLogin[1]);
+			usuario.setUsuarioId(responseLogin[2]);
+			usuario.setUsuarioNombre(responseLogin[3]);
 			
 			usuario.hizologinExitosaMente();
 			sesion.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 			JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.estaLogueado());
+			
+			String[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);
+			
+			for(int i = 0; i < cuentas.length; i++){
+				usuario.setVariablesDeContexto(cuentas[i], "true");
+			}
 			
 			return respuesta.toString();
 		}
@@ -181,6 +144,19 @@ public class MovilController {
 	@ResponseBody String generarAudiosEstaticos(){
 		serverCognitivo.generarTodosLosAudiosEstaticos();
 		return "Ok";
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/generarAudioEstatico/{id}", method = RequestMethod.GET)
+	@ResponseBody String generarAudioEstatico(@PathVariable("id") String id){
+		serverCognitivo.generarAudioEstatico(id);
+		return "Ok";
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/verMiTemario", method = RequestMethod.GET)
+	@ResponseBody String verMiTemario(){
+		return serverCognitivo.verMiTemario();
 	}
 	
 	@ExceptionHandler(Throwable.class)

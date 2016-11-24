@@ -245,4 +245,23 @@ public abstract class Frase
 		return muletillas[unIndiceAlAzar];
 	}*/
 	
+	public String optenerLaInformacionDeLaFrase(){
+		String resultado = "";
+		
+		if(textosDeLaFrase.length > 0){
+			resultado += "Frases: \n";
+			for (int index = 0; index < textosDeLaFrase.length; index ++){
+				resultado += "     - "+textosDeLaFrase[index]+"\n";
+			}
+		}
+		
+		if(hayTextosImpertinetes()){
+			resultado += "Frases Impertinentes: \n";
+			for (int index = 0; index < textosImpertinetesDeLaFrase.length; index ++){
+				resultado += "     - "+textosImpertinetesDeLaFrase[index]+"\n";
+			}
+		}
+		
+		return resultado;
+	}
 }
