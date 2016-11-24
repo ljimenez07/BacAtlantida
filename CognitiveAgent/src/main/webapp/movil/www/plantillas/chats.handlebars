@@ -28,11 +28,26 @@ $(function(){
 		var mensajeDeUsuario = $('<li class="self"><div class="msg"><p></p><time>20:17</time></div></li>');
 		var botonDeEnviarMensaje = $("#chat-id-container-{{pathDelServidor}} #enviar");
 		var ultimoMensajeEnviado="";
+		var debeReproducirElAudio = false;
 		
-		botonDeEnviarMensaje.click(function(){
+		$("#chat-id-{{pathDelServidor}}").prepend('<div class="row"><div class="col-xs-6"><div class="boton-escuchar-mensajes desactivado" /></div></div>');
+		$("#chat-id-{{pathDelServidor}} .boton-escuchar-mensajes").click(function()
+		{
+			$(this).toggleClass("activado").toggleClass("desactivado");
+			debeReproducirElAudio = !debeReproducirElAudio;
+		});
 		
+		function reproducirMensaje(pathDelAudio)
+		{
+			if(debeReproducirElAudio)
+			{
+				agregarAColaDeReproduccion(pathDelAudio);
+			}
+		}
+		
+		botonDeEnviarMensaje.click(function()
+		{
 			enviarAlServer({ textoAEnviar:campoDeEntrada.val() });
-			
 		});
 		
 		resizeDiv();
@@ -45,7 +60,7 @@ $(function(){
 		{
 			vpw = $(window).width();
 			vph = $(window).height();
-			var altura = vph - 72 - 68 - 30;
+			var altura = vph - 72 - 68 - 38 - 30;
 			if(muestraTeclado)
 			{
 				altura -= 250;
@@ -105,7 +120,7 @@ $(function(){
 			ajax({
 				type: "POST",
 				contentType :"text/plain; charset=UTF-8",
-				url : serverDomain+"/conversacion/{{pathDelServidor}}/",
+				url : serverDomain + "/conversacion/{{pathDelServidor}}/",
 				data : textoAEnviar,
 				done: function( data ) 
 				{
@@ -118,6 +133,7 @@ $(function(){
 						respuesta.find(".msg p").html(textos[i].texto);
 						respuesta.find("time").html(hora);
 						conversation.append(respuesta);
+						reproducirMensaje(textos[i].audio);
 					}
 					
 					moverScrollParaAbajoEnFuncionDelUltimoMensaje();

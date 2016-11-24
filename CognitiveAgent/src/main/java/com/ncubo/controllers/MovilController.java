@@ -31,6 +31,7 @@ import com.jayway.restassured.internal.path.xml.NodeChildrenImpl;
 import com.jayway.restassured.path.xml.XmlPath;
 import com.jayway.restassured.path.xml.element.Node;
 import com.ncubo.conf.AgenteCognitivo;
+import com.ncubo.conf.ExtraerDatosWebService;
 import com.ncubo.conf.ManejadorDeErrores;
 import com.ncubo.conf.Usuario;
 import com.ncubo.exceptions.CredencialesInvalidosException;
@@ -43,6 +44,7 @@ public class MovilController {
 	private AgenteCognitivo serverCognitivo;
 	@Autowired
 	private ManejadorDeErrores manejadorDeErrores;
+	private ExtraerDatosWebService extraerDatos;
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/chat/", method = RequestMethod.POST)
@@ -95,13 +97,9 @@ public class MovilController {
 	@RequestMapping(value="/movil/login", method = RequestMethod.POST)
 	@ResponseBody String login(@RequestBody String mensaje, HttpSession sesion, @RequestParam String name, @RequestParam String password) throws JSONException, JsonParseException, JsonMappingException, IOException 
 	{
-		String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tas=\"http://hn.infatlan.och/ws/ACD082/out/TasaCambio\"> <soapenv:Header/> <soapenv:Body> <tas:MT_TasaCambio> <activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <!--Optional:--> <transaccionId>100054</transaccionId> <!--Optional:--> <aplicacionId>?</aplicacionId> <paisId>?</paisId> <empresaId>?</empresaId> <!--Optional:--> <regionId>?</regionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <version>?</version> <!--Optional:--> <llaveSesion>?</llaveSesion> <!--Optional:--> <usuarioId>?</usuarioId> <!--Optional:--> <token>?</token> <!--Zero or more repetitions:--> <identificadorColeccion> <!--Optional:--> <was>?</was> <!--Optional:--> <pi>?</pi> <!--Optional:--> <omniCanal>?</omniCanal> <!--Optional:--> <recibo>?</recibo> <!--Optional:--> <numeroTransaccion>?</numeroTransaccion> </identificadorColeccion> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> <!--Optional:--> <logColeccion> <!--Zero or more repetitions:--> <logItem> <identificadorWas>?</identificadorWas> <!--Optional:--> <identificadorPi>?</identificadorPi> <!--Optional:--> <identificadorOmniCanal>?</identificadorOmniCanal> <!--Optional:--> <identificadorRecibo>?</identificadorRecibo> <!--Optional:--> <numeroPeticion>?</numeroPeticion> <!--Optional:--> <identificadorNumeroTransaccion>?</identificadorNumeroTransaccion> <!--Optional:--> <aplicacionId>?</aplicacionId> <!--Optional:--> <canalId>?</canalId> <!--Optional:--> <ambienteId>?</ambienteId> <!--Optional:--> <transaccionId>?</transaccionId> <!--Optional:--> <accion>?</accion> <!--Optional:--> <tipo>?</tipo> <!--Optional:--> <fecha>?</fecha> <!--Optional:--> <hora>?</hora> <!--Optional:--> <auxiliar1>?</auxiliar1> <!--Optional:--> <auxiliar2>?</auxiliar2> <!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea> <!--Optional:--> <tipoRegistro>?</tipoRegistro> <!--Optional:--> <valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> </logItem> </logColeccion> </tas:MT_TasaCambio> </soapenv:Body> </soapenv:Envelope>";
-		String responseXML = new Stub().login(requestBody);//given().body(requestBody).post("http://localhost:8080/Ecommerce/login/").andReturn().asString();
-		
-		XmlPath xmlPath = new XmlPath(responseXML).setRoot("Envelope");
-		NodeChildrenImpl body = xmlPath.get("Body");
-		Node validaPreLoginColeccion = body.get(0).getNode("Respuesta").getNode("validaPreLoginColeccion");
-		if( validaPreLoginColeccion.getNode("valido").toString().equals("S") )
+		extraerDatos = new ExtraerDatosWebService();
+		String[] responseLogin = extraerDatos.login(name , password);
+		if( responseLogin[0].equals("S") )
 		{
 			Object objeto = sesion.getAttribute(Usuario.LLAVE_EN_SESSION) ;
 			Usuario usuario;
@@ -114,13 +112,19 @@ public class MovilController {
 				usuario = (Usuario)objeto;
 			}
 			
-			usuario.setLlaveSession(validaPreLoginColeccion.getNode("llaveSession").toString());
-			usuario.setUsuarioId(validaPreLoginColeccion.getNode("usuarioId").toString());
-			usuario.setUsuarioNombre(validaPreLoginColeccion.getNode("usuarioNombre").toString());
+			usuario.setLlaveSession(responseLogin[1]);
+			usuario.setUsuarioId(responseLogin[2]);
+			usuario.setUsuarioNombre(responseLogin[3]);
 			
 			usuario.hizologinExitosaMente();
 			sesion.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 			JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.estaLogueado());
+			
+			String[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);
+			
+			for(int i = 0; i < cuentas.length; i++){
+				usuario.setVariablesDeContexto(cuentas[i], "true");
+			}
 			
 			return respuesta.toString();
 		}

@@ -1,4 +1,3 @@
-<audio id="buzzer" src="" type="audio/ogg">Your browser does not support the &#60;audio&#62; element.</audio>
 <div class="row">
 	<div class="col-xs-12">
 		<p><strong>¡Hola!</strong></p><br>
@@ -19,7 +18,6 @@
 </div>
 
 <script type="text/javascript">
-var buzzer = $('#buzzer'); 
 var pagina = 1;
 
 function evaluarVerMas()
@@ -58,6 +56,11 @@ function bindAcciones()
 			done: function(data)
 			{
 				$("#oferta .panel-body").html(Handlebars.templates.oferta(data));
+	
+				$("#oferta .boton-escuchar-oferta").off("click").on("click", function()
+				{
+					agregarAColaDeReproduccion("/archivossubidos" + $(this).data("audio"));
+				});
 	 		}
 		});
 	});
@@ -95,13 +98,21 @@ function bindAcciones()
 	
 	$("#ofertas .boton-escuchar").off("click").on("click", function()
 	{
-		buzzer.attr("src", serverDomain+"/movil/www/archivos"+$(this).data("audio"));
-		buzzer[0].play();  
+		agregarAColaDeReproduccion("/archivossubidos" + $(this).data("audio"));
 	});
 	
 	$("#ofertas .boton-compartir").off("click").on("click", function()
 	{
 		
+	});
+}
+
+function agregarDominioAImagenes()
+{
+	$("#ofertas .imagen-de-oferta").each(function()
+	{
+		var path = serverDomain + $(this).attr("src");
+		$(this).attr("src", path);
 	});
 }
 
@@ -118,6 +129,7 @@ function cargarOfertas()
 			$("#ofertas .contenedor-de-ofertas").append(Handlebars.templates.listaDeOfertas({ofertas: data}));
 			bindAcciones();
 			bindClickeable();
+			agregarDominioAImagenes();
 		}
 	});
 }
