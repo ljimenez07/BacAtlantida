@@ -1,15 +1,12 @@
 package com.ncubo.controllers;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
 
 import javax.mail.MessagingException;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,7 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,8 +34,6 @@ import com.ncubo.conf.ManejadorDeErrores;
 import com.ncubo.conf.Usuario;
 import com.ncubo.exceptions.CredencialesInvalidosException;
 import com.ncubo.exceptions.NoEmailException;
-import com.ncubo.util.FTPServidor;
-
 
 @Controller
 public class MovilController {
@@ -48,8 +42,6 @@ public class MovilController {
 	private AgenteCognitivo serverCognitivo;
 	@Autowired
 	private ManejadorDeErrores manejadorDeErrores;
-	@Autowired
-	private FTPServidor ftp;
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/chat/", method = RequestMethod.POST)
@@ -73,40 +65,6 @@ public class MovilController {
 		session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 		
 		return object.toString();
-	}
-	
-	@CrossOrigin(origins = "*")
-	@RequestMapping(value="/archivossubidos/{nombre:.*}", method = RequestMethod.GET)
-	void archivossubidos(HttpSession session, HttpServletRequest request, HttpServletResponse response, @PathVariable String nombre) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ClassNotFoundException, SQLException 
-	{
-		String remoteFile2 = nombre.replace("-", "/");
-
-		InputStream inputStream = ftp.descargarArchivo(remoteFile2);
-
-		byte[] bytesArray = new byte[4096];
-		int bytesRead = -1;
-
-		ServletContext context = request.getServletContext();
-		String mimetype = context.getMimeType(remoteFile2);
-
-		if (mimetype == null)
-		{
-			mimetype = "application/octet-stream";
-		}
-		
-		response.setContentType(mimetype);
-		// response.setHeader("Content-Disposition", "attachment; filename=\"" +
-		// remoteFile2.substring(1) + "\"");
-
-		OutputStream outStream = response.getOutputStream();
-
-		while ((bytesRead = inputStream.read(bytesArray)) != -1)
-		{
-			outStream.write(bytesArray, 0, bytesRead);
-		}
-
-		outStream.close();
-		inputStream.close();
 	}
 	
 	@CrossOrigin(origins = "*")
