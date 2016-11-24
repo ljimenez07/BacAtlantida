@@ -88,11 +88,13 @@ public class Usuario implements Serializable
 		this.llaveSession = llaveSession;
 	}
 
-	public String getIdSesion() {
+	public String getIdSesion()
+	{
 		return idSesion;
 	}
 
-	public void setIdSesion(String idSesion) {
+	public void setIdSesion(String idSesion)
+	{
 		this.idSesion = idSesion;
 	}
 	
