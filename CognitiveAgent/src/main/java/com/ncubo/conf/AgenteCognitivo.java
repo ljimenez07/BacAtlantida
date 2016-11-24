@@ -223,8 +223,11 @@ public class AgenteCognitivo
 					jsonObject.put("audio", "");	
 					arrayList.put(jsonObject);
 			}
-			else if(idFrase.equals("millas")){
-				
+			else if(idFrase.equals("disponibleMillas")){
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("texto", texto);
+				jsonObject.put("audio", salida.get(i).getMiSonido().url());	
+				arrayList.put(jsonObject);
 			}
 			else
 			{
