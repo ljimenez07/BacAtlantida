@@ -113,7 +113,7 @@ public class AgenteCognitivo
 		ConversationService service = new ConversationService(dateFormat.format(date));
 		service.setUsernameAndPassword(user, password);
 		
-		myContext.put("logueado", usuario.estaLogueado());
+		myContext.put("logueado", usuario.getEstaLogueado());
 		
 		String[] nombre = new String[4];
 		if(usuario.getUsuarioNombre() != null)
