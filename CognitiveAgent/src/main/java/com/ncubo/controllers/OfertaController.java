@@ -128,7 +128,7 @@ public class OfertaController
 	@ResponseBody public List<Oferta> ofertas(@RequestParam("pagina") int pagina, HttpSession sesion) throws ClassNotFoundException, SQLException
 	{
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-		String idUsuario = usuario == null ? null : usuario.getUsuarioId();
+		String idUsuario = usuario == null ? null : usuario.estaLogueado() ? usuario.getUsuarioId() : null;
 		int indiceInicial = (pagina - 1) * 10;
 		return ofertaDao.ultimasDiezOfertasDesde(indiceInicial, idUsuario);
 	}
