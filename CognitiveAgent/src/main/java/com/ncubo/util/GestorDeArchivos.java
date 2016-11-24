@@ -97,7 +97,6 @@ public class GestorDeArchivos
 	{
 		TextToSpeech textService = new TextToSpeech();
 		textService.setUsernameAndPassword(agenteCognitivo.getUserTextToSpeech(), agenteCognitivo.getPasswordTextToSpeech());
-		UUID idOne = UUID.randomUUID();
 		
 		String absolutePath= path+File.separator+subPath;
 		

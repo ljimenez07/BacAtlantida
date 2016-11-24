@@ -81,6 +81,7 @@
 		</div>
 		<div class="app">
 			<div id="ofertas" class="show" ></div>
+			<div id="oferta" class="hide" ></div>
 			<div id="chats" class="hide"></div>
 			<div id="conocerte" class="hide"></div>
 			<div id="login" class="hide"></div>
@@ -100,22 +101,6 @@
 		<script type="text/javascript" src="js/login.handlebars.js"></script>
 		
 		<script>
-			function ofertas() 
-			{
-				var context;
-				ajax({
-					url: serverDomain + "/ofertas/cantidad",
-					async: false,
-					data: "",
-					type: "GET",
-					success: function(data)
-					{
-						context = data;
-					}
-				});
-				return Handlebars.templates.ofertas(context);
-			}
-			
 			function quitarModal()
 			{
 				setCookie('mostrarpopupdeconocerte', true, 100);
@@ -151,121 +136,83 @@
 			var pantallas = new Object();
 			$(function(){
 
-				Handlebars.registerHelper('compare', function (lvalue, operator, rvalue, options) 
-				{
-					var operators, result;
-					if (arguments.length < 3) 
-					{
-						throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
-					}
-				
-
-					if (options === undefined) 
-					{
-						options = rvalue;
-						rvalue = operator;
-						operator = "===";
-					}
-
-					operators = {
-						'==': function (l, r) { return l == r; },
-						'===': function (l, r) { return l === r; },
-						'!=': function (l, r) { return l != r; },
-						'!==': function (l, r) { return l !== r; },
-						'<': function (l, r) { return l < r; },
-						'>': function (l, r) { return l > r; },
-						'<=': function (l, r) { return l <= r; },
-						'>=': function (l, r) { return l >= r; },
-						'typeof': function (l, r) { return typeof l == r; }
-					};
-
-					if (!operators[operator]) {
-						throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
-					}
-
-					result = operators[operator](lvalue, rvalue);
-
-					if (result) 
-					{
-						return options.fn(this);
-					} 
-					else 
-					{
-						return options.inverse(this);
-					}
-
-				});
-				
 				pantallas["login"] = {title: "LOGIN", body: Handlebars.templates.login(), DebajoDelPanel: ""};
 				var chat = {"pathDelServidor":"chat"};
 				pantallas["chats"] = {title: "CHAT", body: '<div id="chat-id-'+chat.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(chat)};
 				var conocerte = {"pathDelServidor":"conocerte"};
 				pantallas["conocerte"] = {title: "CONOCERTE", body: '<div id="chat-id-'+conocerte.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(conocerte)};
 				pantallas["popupconocerte"] ={};		
-				pantallas["ofertas"] = {title: "INICIO", body: ofertas(), DebajoDelPanel: ""};
+				pantallas["ofertas"] = {title: "INICIO", body: Handlebars.templates.ofertas(), DebajoDelPanel: ""};
+				pantallas["oferta"] = {title: "DETALLE DE LA OFERTA", body: "", DebajoDelPanel: ""};
 				
 				$(".app #ofertas").html(Handlebars.templates.layout(pantallas["ofertas"]));
+				$(".app #oferta").html(Handlebars.templates.layout(pantallas["oferta"]));
 				$(".app #ofertas").append(Handlebars.templates.popupconocerte(pantallas["popupconocerte"]));
 				$(".app #chats").html(Handlebars.templates.layout(pantallas["chats"]));
 				$(".app #conocerte").html(Handlebars.templates.layout(pantallas["conocerte"]));
 				$(".app #login").html(Handlebars.templates.layout(pantallas["login"]));
 				
-				$(".clickable").click(function()
-				{
-					var before = $(this).data("before");
-					var after = $(this).data("after");
-					var href = $(this).data("href");
-					var accion = $(this).data("accion");
-					
-					if( before!= undefined )
-					{
-						eval(before);
-					}
-					
-					if(href != undefined )
-					{
-						cambiarVista( href );
-					}
-					
-					if(accion != undefined)
-					{
-						if(accion.indexOf("menu") >= 0)
-						{
-							menu(accion);
-						}
-						else if(accion == "salir")
-						{
-							setCookie('SESSION', "", 0);
-							setCookie('mostrarpopupdeconocerte', false, 0);
-							location.reload();
-						}
-					}
-					
-					if(after != undefined )
-					{
-						eval(after);
-					}
-				});	
-				
+				bindClickeable();
 			});
 
 		</script>
 
 
 		<script>
+		function bindClickeable()
+		{
+			$(".clickable").click(function()
+			{
+				var before = $(this).data("before");
+				var after = $(this).data("after");
+				var href = $(this).data("href");
+				var accion = $(this).data("accion");
+				
+				if( before!= undefined )
+				{
+					eval(before);
+				}
+				
+				if(href != undefined )
+				{
+					cambiarVista( href );
+				}
+				
+				if(accion != undefined)
+				{
+					if(accion.indexOf("menu") >= 0)
+					{
+						menu(accion);
+					}
+					else if(accion == "salir")
+					{
+						setCookie('SESSION', "", 0);
+						setCookie('mostrarpopupdeconocerte', false, 0);
+						location.reload();
+					}
+				}
+				
+				if(after != undefined )
+				{
+					eval(after);
+				}
+			});	
+		}
+		
 		function ajax(param)
 		{
-			console.log(param);
+			console.log({ajax: param});
 			$.ajax({
-				type: param.type,
-				contentType :param.contentType,
+				type: param.type != undefined ? param.type : "GET",
+				contentType :param.contentType != undefined ? param.contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 				async: param.async != undefined ? param.async : true,
 				dataType : "json",
 				url : param.url,
-				data : param.data
+				data : param.data != undefined ? param.data : ""
 			})
 			.done(function( data ) 
 			{
+				console.log({respuesta: data});
 				if( param.done != undefined )
 				{
 					param.done(data);
