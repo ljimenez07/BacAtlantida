@@ -12,6 +12,8 @@
 	<link rel="stylesheet" th:href="@{/fonts/roboto.css}"></link>
 	<link rel="stylesheet" th:href="@{/css/jquery-ui.css}"></link>
 	<script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery.maskedinput.js}"></script>
+	
 	<style th:inline="text">
 		body
 		{
@@ -315,6 +317,12 @@
 			$(window).on('resize', function()
 			{
 				rellenarBorde();
+			});
+			
+			$(document).ready(function()
+			{
+				$('.fechaInput').mask('9999-99-99');
+				$('.fechaInput').attr('placeholder','yyyy-MM-dd');
 			});
 		</script>
 		<div class="container quitar-padding agregar-padding-top" >
