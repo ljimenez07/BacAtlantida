@@ -45,7 +45,7 @@ public class ReaccionController
 				reaccionDao.guardar(objReaccion);
 				respuesta = new JSONObject(objReaccion);
 			}
-			respuesta.put("usuarioEstaLogueado", usuario.getEstaLogueado());
+			respuesta.put("usuarioEstaLogueado", usuario.estaLogueado());
 		}
 		else
 		{
