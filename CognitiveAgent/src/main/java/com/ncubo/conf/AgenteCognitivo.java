@@ -20,7 +20,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.simple.JSONArray;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -146,7 +146,7 @@ public class AgenteCognitivo
 					JSONObject jsonObject = new JSONObject();
 					jsonObject.put("texto", textos[j]);
 					jsonObject.put("audio", "");	
-					arrayList.add(jsonObject);
+					arrayList.put(jsonObject);
 				}
 				
 				consultaDao.insertar(
@@ -160,7 +160,7 @@ public class AgenteCognitivo
 					JSONObject jsonObject = new JSONObject();
 					jsonObject.put("texto", textos[j]);
 					jsonObject.put("audio", "");	
-					arrayList.add(jsonObject);
+					arrayList.put(jsonObject);
 				}
 			}
 			else if((idFrase.equals("saldoCuentaAhorros") || idFrase.equals("saldoCredito")|| idFrase.equals("quiereSaldoTarjetaCredito")) && ! usuario.estaLogueado())
@@ -168,21 +168,21 @@ public class AgenteCognitivo
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", "Debe iniciar sesión para que conozcas tu saldo.");
 				jsonObject.put("audio", "");	
-				arrayList.add(jsonObject);
+				arrayList.put(jsonObject);
 			}
 			else if((idFrase.equals("disponibleCredito") || idFrase.equals("disponibleCuentaAhorros")|| idFrase.equals("disponiblePuntos") || idFrase.equals("quiereDisponibleTarjetaCredito")) && ! usuario.estaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", "Debe iniciar sesión para que conozcas tu disponible.");
 				jsonObject.put("audio", "");	
-				arrayList.add(jsonObject);
+				arrayList.put(jsonObject);
 			}
 			else if(idFrase.equals("movimientos") && ! usuario.estaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", "Debe iniciar sesión para que conozcas tus movimientos.");
 				jsonObject.put("audio", "");	
-				arrayList.add(jsonObject);
+				arrayList.put(jsonObject);
 			}
 			else if(idFrase.equals("tasaDolar")||idFrase.equals("tasaEuro")){
 				
@@ -191,7 +191,7 @@ public class AgenteCognitivo
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
 				jsonObject.put("audio", "");	
-				arrayList.add(jsonObject);
+				arrayList.put(jsonObject);
 			}
 			else if(idFrase.equals("movimientos")&& usuario.estaLogueado())
 			{
@@ -202,7 +202,7 @@ public class AgenteCognitivo
 					JSONObject jsonObject = new JSONObject();
 					jsonObject.put("texto", textos[j]);
 					jsonObject.put("audio", "");	
-					arrayList.add(jsonObject);
+					arrayList.put(jsonObject);
 				}
 				
 				consultaDao.insertar(
@@ -217,7 +217,7 @@ public class AgenteCognitivo
 					JSONObject jsonObject = new JSONObject();
 					jsonObject.put("texto", textos[j]);
 					jsonObject.put("audio", "");	
-					arrayList.add(jsonObject);
+					arrayList.put(jsonObject);
 				}
 				
 			}
@@ -227,14 +227,14 @@ public class AgenteCognitivo
 					JSONObject jsonObject = new JSONObject();
 					jsonObject.put("texto", texto);
 					jsonObject.put("audio", "");	
-					arrayList.add(jsonObject);
+					arrayList.put(jsonObject);
 			}
 			else
 			{
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
 				jsonObject.put("audio", salida.get(i).getMiSonido().url());	
-				arrayList.add(jsonObject);
+				arrayList.put(jsonObject);
 			}
 		}
 		respuesta.put("textos", arrayList);
