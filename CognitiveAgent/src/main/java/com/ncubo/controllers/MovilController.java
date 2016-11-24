@@ -80,7 +80,6 @@ public class MovilController {
 	void archivossubidos(HttpSession session, HttpServletRequest request, HttpServletResponse response, @PathVariable String nombre) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ClassNotFoundException, SQLException 
 	{
 		String remoteFile2 = nombre.replace("-", "/");
-
 		InputStream inputStream = ftp.descargarArchivo(remoteFile2);
 
 		byte[] bytesArray = new byte[4096];
@@ -95,9 +94,6 @@ public class MovilController {
 		}
 		
 		response.setContentType(mimetype);
-		// response.setHeader("Content-Disposition", "attachment; filename=\"" +
-		// remoteFile2.substring(1) + "\"");
-
 		OutputStream outStream = response.getOutputStream();
 
 		while ((bytesRead = inputStream.read(bytesArray)) != -1)

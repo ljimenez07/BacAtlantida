@@ -26,4 +26,19 @@ public class Validacion
 		
 		return fechaDesdeEnMilisegundos <= fechaHastaEnMilisegundos;
 	}
+	
+	public static boolean fechaEsValida(String fecha)
+	{
+		try
+		{
+			DateFormat formatter;
+			formatter = new SimpleDateFormat("yyyy/MM/dd");
+			Date fechaDesdeDate = formatter.parse(fecha.replace("-", "/"));
+		}
+		catch(Exception ex)
+		{
+			return false;
+		}
+		return true;
+	}
 }
