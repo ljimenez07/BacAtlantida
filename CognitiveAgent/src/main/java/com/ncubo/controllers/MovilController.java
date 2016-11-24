@@ -27,9 +27,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jayway.restassured.internal.path.xml.NodeChildrenImpl;
-import com.jayway.restassured.path.xml.XmlPath;
-import com.jayway.restassured.path.xml.element.Node;
 import com.ncubo.conf.AgenteCognitivo;
 import com.ncubo.conf.ExtraerDatosWebService;
 import com.ncubo.conf.ManejadorDeErrores;

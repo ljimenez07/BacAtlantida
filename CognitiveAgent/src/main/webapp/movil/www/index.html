@@ -54,7 +54,7 @@
 	<div class="app">
 		<div id="ofertas" class="show" ></div>
 		<div id="oferta" class="hide" ></div>
-		<div id="chats" class="hide"></div>
+		<div id="chat" class="hide"></div>
 		<div id="conocerte" class="hide"></div>
 		<div id="login" class="hide"></div>
 	</div>
@@ -119,8 +119,8 @@
 	$(function(){
 
 		pantallas["login"] = {title: "LOGIN", body: Handlebars.templates.login(), DebajoDelPanel: ""};
-		var chat = {"pathDelServidor":"chats"};
-		pantallas["chats"] = {title: "CHAT", body: '<div id="chat-id-'+chat.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(chat)};
+		var chat = {"pathDelServidor":"chat"};
+		pantallas["chat"] = {title: "CHAT", body: '<div id="chat-id-'+chat.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(chat)};
 		var conocerte = {"pathDelServidor":"conocerte"};
 		pantallas["conocerte"] = {title: "CONOCERTE", body: '<div id="chat-id-'+conocerte.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(conocerte)};
 		pantallas["popupconocerte"] ={};		
@@ -130,7 +130,7 @@
 		$(".app #ofertas").html(Handlebars.templates.layout(pantallas["ofertas"]));
 		$(".app #oferta").html(Handlebars.templates.layout(pantallas["oferta"]));
 		$(".app #ofertas").append(Handlebars.templates.popupconocerte(pantallas["popupconocerte"]));
-		$(".app #chats").html(Handlebars.templates.layout(pantallas["chats"]));
+		$(".app #chat").html(Handlebars.templates.layout(pantallas["chat"]));
 		$(".app #conocerte").html(Handlebars.templates.layout(pantallas["conocerte"]));
 		$(".app #login").html(Handlebars.templates.layout(pantallas["login"]));
 		
@@ -142,7 +142,7 @@
 			{
 				if(data.estaLogueado)
 				{
-					cambiarVista("chats");
+					cambiarVista("chat");
 				}
 			}
 		});
