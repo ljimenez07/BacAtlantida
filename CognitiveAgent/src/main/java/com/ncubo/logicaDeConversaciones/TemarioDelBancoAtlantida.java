@@ -108,6 +108,22 @@ public class TemarioDelBancoAtlantida extends Temario
 		return resultado;
 	}
 	
+	private Tema quiereAyudaComo()
+	{
+		Tema resultado = new Tema
+		(
+			"quiereAyudaComo",
+			"BATemas",
+			true,
+			"ayuda_como",
+			frase("ayudaLogin"),
+			frase("preguntarPorOtraConsulta"),
+			frase("quiereHacerOtraConsulta"),
+			frase("noQuiereHacerOtraConsulta")
+		);
+		return resultado;
+	}
+	
 	private Tema fueraDeContexto()
 	{
 		Tema resultado = new Tema
@@ -144,6 +160,7 @@ public class TemarioDelBancoAtlantida extends Temario
 		temasDelDiscurso.add(quiereTasaDeCambio());
 		temasDelDiscurso.add(quiereMovimientos());
 		temasDelDiscurso.add(fueraDeContexto());
+		temasDelDiscurso.add(quiereAyudaComo());
 		temasDelDiscurso.add(despedida());
 		
 	}

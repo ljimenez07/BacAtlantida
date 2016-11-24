@@ -115,9 +115,7 @@ public class AgenteCognitivo
 		String[] textos = null;
 		ArrayList<Salida> salida = miConversaciones.conversarConElAgente(usuario, mensaje);
 		
-		String intent = "";
 		String texto = "";
-		String audio = "";
 		JSONArray arrayList = new JSONArray(); 
 		
 		System.out.println(salida.size());
@@ -129,10 +127,6 @@ public class AgenteCognitivo
 			System.out.println("texto  "+texto);
 			System.out.println();
 			
-			if(salida.get(i).obtenerLaRespuestaDeIBM() != null)
-			{
-				intent = salida.get(i).obtenerLaRespuestaDeIBM().obtenerLaIntencionDeLaRespuesta().getNombre();
-			}
 			String idFrase = salida.get(i).getFraseActual().getIdFrase();
 			texto = texto.replace("$", "");
 			
@@ -228,6 +222,9 @@ public class AgenteCognitivo
 					jsonObject.put("texto", texto);
 					jsonObject.put("audio", "");	
 					arrayList.put(jsonObject);
+			}
+			else if(idFrase.equals("millas")){
+				
 			}
 			else
 			{

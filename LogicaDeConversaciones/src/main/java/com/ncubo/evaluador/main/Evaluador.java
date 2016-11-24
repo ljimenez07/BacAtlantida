@@ -40,7 +40,7 @@ public class Evaluador {
     {
 		Evaluador evaluador = new Evaluador();
 		evaluador.crearContexto("a=10;b=5;f=23/11/2016;");
-		System.out.println(evaluador.ejecutaComando("show 1 >= 16;"));
+		System.out.println(evaluador.ejecutaComando("show a+b;"));
 		//System.out.println(evaluador.ejecutaComando("show f.getDia();"));
     }
 }

@@ -1,8 +1,6 @@
 package com.ncubo.logicaDeConversaciones;
 
 import java.io.File;
-
-import com.ncubo.chatbot.configuracion.Constantes;
 import com.ncubo.chatbot.partesDeLaConversacion.Contenido;
 
 public class ContenidoDelBancoAtlantida extends Contenido{
