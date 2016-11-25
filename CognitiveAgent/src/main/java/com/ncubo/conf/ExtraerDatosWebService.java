@@ -286,7 +286,7 @@ public class ExtraerDatosWebService {
 	}
 
 	public String[] tieneCuentas(String usuario){
-		String[] cuentas = new String[2];
+		String[] cuentas = new String[1];
 		cuentas[0] = "tieneTarjetaCredito";
 		return cuentas;
 	}
