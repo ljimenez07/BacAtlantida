@@ -25,8 +25,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Hola!.</frase>
-			<frase>¡Hola!. Estoy para ayudarte con la información que requieras de tus tarjetas de crédito y cuenta corriente, también con el tipo de cambio del dólar y el euro.</frase>
+			<frase>Hola!</frase>
+			<frase>¡Hola! Estoy para ayudarte con la información que requieras de tus tarjetas de crédito y cuenta corriente, también con el tipo de cambio del dólar y el euro.</frase>
 		</frases>
 		<vineta></vineta>
 		<when>
@@ -52,7 +52,7 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<curioso>¿Quieres el saldo de tu tarjeta de crédito?</curioso>
-			<impertinente>Necesito saber, ¿si te refieres a la cuenta de ahorros o tarjeta de crédito?.</impertinente>
+			<impertinente>Necesito saber, si te refieres a la cuenta de ahorros o tarjeta de crédito.</impertinente>
 		</frases>
 		<vineta></vineta>
 	</conversacion>

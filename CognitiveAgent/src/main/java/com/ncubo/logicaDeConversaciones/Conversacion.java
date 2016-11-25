@@ -66,7 +66,7 @@ public class Conversacion {
 		misSalidas.add(agente.decir(queQuiere, null, temaActual));
 		fraseActual = queQuiere;
 		ponerComoYaTratado(queQuiere);
-		
+		estaEnWorkSpaceEspecifico = false;
 		return misSalidas;
 	}
 	

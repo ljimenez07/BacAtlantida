@@ -59,13 +59,13 @@ public class AgenteCognitivo
 	@Autowired
 	private FTPServidor ftp;
 	
-	private Conversaciones miConversaciones;
+	private Conversaciones misConversaciones;
 	private ExtraerDatosWebService extraerDatos = new ExtraerDatosWebService();
 
 	@PostConstruct
     public void init(){
         // start your monitoring in here
-		miConversaciones = new Conversaciones(getPathXML());
+		misConversaciones = new Conversaciones(getPathXML());
     }
 	
 	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
@@ -111,7 +111,7 @@ public class AgenteCognitivo
 		myContext.put("nombre", nombre[0]);
 		
 		String[] textos = null;
-		ArrayList<Salida> salida = miConversaciones.conversarConElAgente(usuario, mensaje, false);
+		ArrayList<Salida> salida = misConversaciones.conversarConElAgente(usuario, mensaje, false);
 		
 		String texto = "";
 		JSONArray arrayList = new JSONArray(); 
@@ -247,7 +247,7 @@ public class AgenteCognitivo
 		String texto = "";
 		JSONArray arrayList = new JSONArray(); 
 		
-		ArrayList<Salida> salida = miConversaciones.conversarConElAgente(usuario, mensaje, true);
+		ArrayList<Salida> salida = misConversaciones.conversarConElAgente(usuario, mensaje, true);
 		
 		for(int i = 0; i < salida.size(); i++){	
 			texto = salida.get(i).getMiTexto();
@@ -346,7 +346,7 @@ public class AgenteCognitivo
 
 	public void generarTodosLosAudiosEstaticos(){
 		System.out.println("El path xml es: "+getPathXML());
-		miConversaciones.generarAudiosEstaticos(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
+		misConversaciones.generarAudiosEstaticos(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
 				this.getPathAudio(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto());
 	}
 	
@@ -355,7 +355,7 @@ public class AgenteCognitivo
 		int index = 0;
 		try{
 			index = Integer.parseInt(id);
-			miConversaciones.generarAudiosEstaticosDeUnTema(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
+			misConversaciones.generarAudiosEstaticosDeUnTema(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
 					this.getPathAudio(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), index);
 		}catch(Exception e){
 			e.getStackTrace();
@@ -364,7 +364,7 @@ public class AgenteCognitivo
 	}
 	
 	public String verMiTemario(){
-		return miConversaciones.verMiTemario();
+		return misConversaciones.verMiTemario();
 	}
 	
 	public String getWsTasaCambio() {

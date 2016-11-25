@@ -101,15 +101,11 @@ public class Conversaciones {
 				if(existeElCliente(cliente.getUsuarioId())){
 					// TODO Verificar si cambio el id de sesion, si es asi agregarla al cliente y hacerlo saber a conversacion
 					misClientes.get(cliente.getUsuarioId()).verificarSiExisteElIdSesion(cliente.getIdSesion());
-					if(esConocerte){
-						resultado = misConversaciones.get(cliente.getIdSesion()).analizarLaRespuestaConWatsonEnUnWorkspaceEspecifico(textoDelCliente, "ConocerteGeneral", "conocerte");
-					}else{
-						resultado = misConversaciones.get(cliente.getIdSesion()).analizarLaRespuestaConWatson(textoDelCliente);
-					}
+					resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
 				}else{ // Crear un nuevo Cliente
 					crearUnaNuevoConversacion(cliente);
 					if(existeLaConversacion(cliente.getIdSesion())){ // Es porque ya se cliente esta conversando y no se habia logueado, eso quiere decir que se tiene que mantener el contexto y NO saludar de nuevo
-						resultado = misConversaciones.get(cliente.getIdSesion()).analizarLaRespuestaConWatson(textoDelCliente);
+						resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
 					}else{
 						resultado = inicializarConversacionConElAgente(cliente.getIdSesion());
 					}
@@ -122,7 +118,7 @@ public class Conversaciones {
 		if (resultado == null){
 			if(! cliente.getIdSesion().equals("")){
 				if(existeLaConversacion(cliente.getIdSesion())){
-					resultado = misConversaciones.get(cliente.getIdSesion()).analizarLaRespuestaConWatson(textoDelCliente);
+					resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
 				}else{ // Crear una nueva conversacion
 					crearUnaNuevoConversacion(cliente);
 					resultado = inicializarConversacionConElAgente(cliente.getIdSesion());
@@ -130,6 +126,18 @@ public class Conversaciones {
 			}else{
 				System.out.println("No existe el usuario o conversacion en el sistema");
 			}
+		}
+		
+		return resultado;
+	}
+	
+	public ArrayList<Salida> hablarConElAjente(Usuario cliente, String textoDelCliente, boolean esConocerte){
+		ArrayList<Salida> resultado = null;
+		
+		if(esConocerte){
+			resultado = misConversaciones.get(cliente.getIdSesion()).analizarLaRespuestaConWatsonEnUnWorkspaceEspecifico(textoDelCliente, "ConocerteGeneral", "conocerte");
+		}else{
+			resultado = misConversaciones.get(cliente.getIdSesion()).analizarLaRespuestaConWatson(textoDelCliente);
 		}
 		
 		return resultado;
