@@ -122,6 +122,7 @@ public class ConversationWatson {
 	public MessageResponse enviarAWatson(String msg, String context){
 		//logger.info("Asking to Watson: "+msg);
 		JSONObject obj = null;
+		System.out.println("CONTEXTO a enviar a Watson: "+context);
 		try {
 			obj = new JSONObject(context);
 		} catch (JSONException e1) {
@@ -149,7 +150,7 @@ public class ConversationWatson {
 					.build();
 			
 			response = service.message(idConversacion, newMessage).execute();
-			//logger.info("Watson Reponse: "+response.toString());
+			System.out.println("CONTEXTO recibido de Watson: "+response.getContext());
 		} catch (IllegalArgumentException e) {
 		  // Missing or invalid parameter
 			//logger.info("Error1: "+e.getMessage()+" al enviar text");
