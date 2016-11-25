@@ -150,6 +150,46 @@ public class TemarioDelBancoAtlantida extends Temario
 		return resultado;
 	}		
 	
+	private Tema saludarConocerte()
+	{
+		Tema resultado = new Tema
+		(
+			"saludarConocerte",
+			"ConocerteGeneral",
+			false,
+			"conocerte",
+			frase("saludarConocerte"),
+			frase("preguntarPorTiempoLibre")
+		);
+		return resultado;
+	}
+	
+	private Tema preguntarPorFinesDeSemana()
+	{
+		Tema resultado = new Tema
+		(
+			"preguntarPorFinesDeSemana",
+			"ConocerteGeneral",
+			false,
+			"conocerte",
+			frase("preguntarPorFinesDeSemana")
+		);
+		return resultado;
+	}
+	
+	private Tema despedidaConocerte()
+	{
+		Tema resultado = new Tema
+		(
+			"despedidaConocerte",
+			"ConocerteGeneral",
+			false,
+			"conocerte",
+			frase("despedidaConocerte")
+		);
+		return resultado;
+	}
+	
 	@Override
 	protected void cargarTemario(Temas temasDelDiscurso){
 		
@@ -162,6 +202,10 @@ public class TemarioDelBancoAtlantida extends Temario
 		temasDelDiscurso.add(fueraDeContexto());
 		temasDelDiscurso.add(quiereAyudaComo());
 		temasDelDiscurso.add(despedida());
+		
+		temasDelDiscurso.add(saludarConocerte());
+		temasDelDiscurso.add(preguntarPorFinesDeSemana());
+		temasDelDiscurso.add(despedidaConocerte());
 		
 	}
 	
@@ -188,8 +232,9 @@ public class TemarioDelBancoAtlantida extends Temario
 
 	@Override
 	protected void cargarDependencias(Temas temasDelDiscurso){
-		// temasDelDiscurso.get(2).dependeDe(temasDelDiscurso.get(1));
-
+		temasDelDiscurso.get(9).dependeDe(temasDelDiscurso.get(8));
+		temasDelDiscurso.get(10).dependeDe(temasDelDiscurso.get(9));
+		
 	}
 	
 	public static void main(String argv[]) {

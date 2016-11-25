@@ -25,8 +25,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Hola!.</frase>
-			<frase>¡Hola!. Estoy para ayudarte con la información que requieras de tus tarjetas de crédito y cuenta corriente, también con el tipo de cambio del dólar y el euro.</frase>
+			<frase>Hola!</frase>
+			<frase>¡Hola! Estoy para ayudarte con la información que requieras de tus tarjetas de crédito y cuenta corriente, también con el tipo de cambio del dólar y el euro.</frase>
 		</frases>
 		<vineta></vineta>
 		<when>
@@ -52,7 +52,7 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<curioso>¿Quieres el saldo de tu tarjeta de crédito?</curioso>
-			<impertinente>Necesito saber, ¿si te refieres a la cuenta de ahorros o tarjeta de crédito?.</impertinente>
+			<impertinente>Necesito saber, si te refieres a la cuenta de ahorros o tarjeta de crédito.</impertinente>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -269,6 +269,53 @@
 		</when>
 	</conversacion>
 	
+	<conversacion id="saludarConocerte">		
+		<tipo>afirmativa</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<frase>¡Hola! Para poder conocer lo que más te gusta, te haré algunas preguntas.</frase>		
+			<frase>Hola Ricky, quiero darte información que sea relevante para ti, por eso te haré algunas consultas, así sabré que te interesa conocer</frase>		
+			<frase>¡Buenas!. Te haré algunas preguntas para poder conocer lo que te gusta y poder recomendarte promociones y beneficios especiales que sean de tu interés</frase>			
+		</frases>		
+		<vineta></vineta>		
+		<when>		
+			<condition operador="and" tipo="intencion">saludos</condition>		
+		</when>		
+	</conversacion>		
+			
+	<conversacion id="preguntarPorTiempoLibre">		
+		<tipo>pregunta</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<curioso>¿Qué te gusta hacer en tu tiempo libre?</curioso>		
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>		
+			
+	<conversacion id="preguntarPorFinesDeSemana">		
+		<tipo>pregunta</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<curioso>Muy bien y dime,  ¿qué te gusta hacer fines de semana por la noche?</curioso>		
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>		
+					
+	<conversacion id="despedidaConocerte">		
+		<tipo>despedida</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<frase>Genial, en base a tus respuestas te estaremos informando de beneficios que puedes aprovechar por ser cliente de Banco Atlantida</frase>		
+			<frase>Gracias por tus respuestas Ricky, te estaremos enviando información relevante para ti acerca de promociones y beneficios</frase>		
+			<frase>Muy bien, por ahora es todo lo que requiero conocer para evitar compartir información que no sea de tu interés y solo informarte de promociones y beneficios que te interese aprovechar</frase>		
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>
+	
 	<conjunciones>
 		<conjuncion id="conjuncion1">Disculpame, pero no te entiendo.</conjuncion>
 		<conjuncion id="conjuncion2">No logro comprenderte.</conjuncion>
@@ -283,7 +330,8 @@
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
 		<workspace tipo="general" idIBM="ea7cc165-ac98-4349-92ed-8e04f1ab402e" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="f84bd7bb-00c2-4b25-ac18-9440c5fa4a20" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible,ayuda_como">BATemas</workspace>
+		<workspace tipo="especifico" idIBM="e0ff922e-68f2-4cc3-bc69-ec624d07c36c" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible,ayuda_como">BATemas</workspace>
+		<workspace tipo="especifico" idIBM="d4b0e759-9557-4f5e-9049-fcc3472e5ea2" intencionesParaSeReferenciado="conocerte">ConocerteGeneral</workspace>
 	</workspaces>
 	
 </conversacions>

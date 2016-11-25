@@ -97,10 +97,15 @@ public class Participante{
 				sonido = pregunta.obtenerSonidoImpertienteAUsar();
 			}else{
 				if(! texto.equals("")){
-					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, pregunta.getPathAGuardarLosAudiosTTS());
-					String path = pregunta.getPathAGuardarLosAudiosTTS()+File.separator+nombreDelArchivo;
-					String miIp = pregunta.getIpPublicaAMostrarLosAudioTTS()+File.separator+nombreDelArchivo;
-					sonido = new Sonido(miIp, path);
+					try{
+						String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, pregunta.getPathAGuardarLosAudiosTTS());
+						String path = pregunta.getPathAGuardarLosAudiosTTS()+File.separator+nombreDelArchivo;
+						String miIp = pregunta.getIpPublicaAMostrarLosAudioTTS()+File.separator+nombreDelArchivo;
+						sonido = new Sonido(miIp, path);
+					}catch(Exception e){
+						
+					}
+					
 				}
 			}
 			if(sonido != null)

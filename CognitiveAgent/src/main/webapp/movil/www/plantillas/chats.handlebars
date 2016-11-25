@@ -29,12 +29,22 @@ $(function(){
 		var botonDeEnviarMensaje = $("#chat-id-container-{{pathDelServidor}} #enviar");
 		var ultimoMensajeEnviado="";
 		var debeReproducirElAudio = false;
+		var guardarCola = true;
+		var colaDeReproduccion = new Array();
 		
-		$("#chat-id-{{pathDelServidor}}").prepend('<div class="row"><div class="col-xs-6"><div class="boton-escuchar-mensajes desactivado" /></div></div>');
+		$("#chat-id-{{pathDelServidor}}").prepend('<div class="row contenedor-boton-escuchar-mensajes"><div class="col-xs-6"><div class="boton-escuchar-mensajes desactivado" /></div></div><div class="row" style="height: 54px" />');
 		$("#chat-id-{{pathDelServidor}} .boton-escuchar-mensajes").click(function()
 		{
 			$(this).toggleClass("activado").toggleClass("desactivado");
 			debeReproducirElAudio = !debeReproducirElAudio;
+			guardarCola = false;
+			if(colaDeReproduccion.length > 0)
+			{
+				$.each(colaDeReproduccion, function(index, value)
+				{
+					reproducirMensaje(value);
+				});
+			}
 		});
 		
 		function reproducirMensaje(pathDelAudio)
@@ -42,6 +52,10 @@ $(function(){
 			if(debeReproducirElAudio)
 			{
 				agregarAColaDeReproduccion(pathDelAudio);
+			}
+			else if(guardarCola)
+			{
+				colaDeReproduccion.push(pathDelAudio);
 			}
 		}
 		
@@ -60,7 +74,7 @@ $(function(){
 		{
 			vpw = $(window).width();
 			vph = $(window).height();
-			var altura = vph - 72 - 68 - 38 - 30;
+			var altura = vph - 72 - 68 - 53 - 30;
 			if(muestraTeclado)
 			{
 				altura -= 250;
@@ -103,11 +117,11 @@ $(function(){
 			var imprimirElMensajeQueElUsuarioEscribioEnLaConversacion = ( param.imprimirElMensajeQueElUsuarioEscribioEnLaConversacion == undefined ) ? true : false;
 			var textoAEnviar = param.textoAEnviar.trim();
 					
-			if( ! sePuedenEnviarVaciosAlServer && textoAEnviar == "") return	
-			if( imprimirElMensajeQueElUsuarioEscribioEnLaConversacion )
+			if(!sePuedenEnviarVaciosAlServer && textoAEnviar == "") return	
+			if(imprimirElMensajeQueElUsuarioEscribioEnLaConversacion)
 			{
 				var fecha = new Date();
-				var hora = fecha.getHours() + ":" + fecha.getMinutes();
+				var hora = dosDigitos(fecha.getHours()) + ":" + dosDigitos(fecha.getMinutes());
 				var mensaje = mensajeDeUsuario.clone();
 				mensaje.find(".msg p").html(textoAEnviar);
 				mensaje.find("time").html(hora);
@@ -125,15 +139,21 @@ $(function(){
 				done: function( data ) 
 				{
 					var textos = data.textos;
-					for(var i = 0; i < textos.length; i++)
+					if(textos != undefined)
 					{
-						var fecha = new Date();
-						var hora = fecha.getHours() + ":" + fecha.getMinutes();
-						var respuesta = mensajeDeAgente.clone();
-						respuesta.find(".msg p").html(textos[i].texto);
-						respuesta.find("time").html(hora);
-						conversation.append(respuesta);
-						reproducirMensaje(textos[i].audio);
+						for(var i = 0; i < textos.length; i++)
+						{
+							var fecha = new Date();
+							var hora = dosDigitos(fecha.getHours()) + ":" + dosDigitos(fecha.getMinutes());
+							var respuesta = mensajeDeAgente.clone();
+							respuesta.find(".msg p").html(textos[i].texto);
+							respuesta.find("time").html(hora);
+							conversation.append(respuesta);
+							if(textos[i].audio != "")
+							{
+								reproducirMensaje(textos[i].audio);
+							}
+						}
 					}
 					
 					moverScrollParaAbajoEnFuncionDelUltimoMensaje();
@@ -150,8 +170,8 @@ $(function(){
 			});
 			
 			ultimoMensajeEnviado = textoAEnviar;
-			
 		}
+		
 		function moverScrollParaAbajoEnFuncionDelUltimoMensaje(callback)
 		{
 			chat.parent().parent().scrollTop(chat.parent().parent()[0].scrollHeight);
@@ -165,7 +185,11 @@ $(function(){
 		{
 			enviarAlServer({sePuedenEnviarVaciosAlServer:false, imprimirElMensajeQueElUsuarioEscribioEnLaConversacion:false, textoAEnviar:ultimoMensajeEnviado});
 		}
-
+		
+		function dosDigitos(numero)
+		{
+			return numero > 9 ? numero : "0" + numero
+		}
 	}
 	var initChats{{pathDelServidor}} = initChats{{pathDelServidor}}();	
 });
