@@ -48,6 +48,7 @@ public class Constantes {
 	// Agente
 	public static String WORKSPACE_GENERAL = "general";
 	public static String ANYTHING_ELSE = "anyThingElse";
+	public static String CAMBIAR_INTENCION = "cambiarIntencion";
 	public static String NODO_ACTIVADO = "nodo";
 	public static String TERMINO_EL_TEMA = "terminoTema";
 	public static String ORACIONES_AFIRMATIVAS = "oracionesAfirmativas";
