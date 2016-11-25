@@ -3,6 +3,8 @@
 	<meta charset="UTF-8"/>	
 	</head>
 		<link rel="stylesheet" th:href="@{/css/chartist.min.css}"/>
+		<link rel="stylesheet" th:href="@{/alertifyjs/css/alertify.min.css}"/>
+		<link rel="stylesheet" th:href="@{/alertifyjs/css/themes/default.min.css}"/>
 	<style>
 	.tipo-letra-comun
 	{
@@ -42,7 +44,7 @@
 	<div th:include="fragments/header :: header(paginaActual='reaccionDeOfertas')"></div>
 	<div th:include="fragments/backoffice :: body(paginaActual='reaccionDeOfertas')"></div>
 		  <div class="container agregar-padding-bottom">
-  
+  		 <p class="asterisco">(*) Campo requerido</p>
             <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
@@ -116,17 +118,18 @@
           		</div>
             </div>
         </div>
-        <p class="asterisco">(*) Campo requerido</p>
+       
     </div>
 
 	<script type="text/javascript" th:src="@{/js/chartist.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/Chart.min.js}"></script>
+	<script type="text/javascript" th:src="@{/alertifyjs/alertify.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/Graficos.js}"></script>
-	<script type="text/javascript" th:src="@{/js/Validaciones.js}"></script>
+	<script type="text/javascript" th:src="@{/js/Validaciones.js}"></script>	
 	<script>
 		function crearGraficos(desde, hasta)
 		{
-	
+			
 		if(validarFecha(desde, hasta))
 		{
 			var filtro;
@@ -172,6 +175,7 @@
 		            	
 		           		for(elemento of resultado)
 		           		{
+		           			
 		           			if(elemento != null)
 		           			{
 								if(elemento.cantidadLikes != 0 || elemento.tituloLabel != null)
@@ -191,12 +195,7 @@
 		           		}
 		           		
 		           		//graficar(seriesMegusta, labelsMegusta, seriesNoMegusta, labelsNoMegusta);
-		           		graficoDePastel(labelsMegusta, seriesMegusta, labelsNoMegusta, seriesNoMegusta);
-		           		var totalLikesDiv = document.getElementById("total-likes");
-		           		var totalDislikesDiv = document.getElementById("total-dislikes");
-		           		totalLikesDiv.innerHTML = "Total Me gusta " + sumaTotalLikes;
-		           		totalDislikesDiv.innerHTML = "Total No Me gusta " + sumaTotalDislikes;
-		           		
+	           			graficoDePastel(labelsMegusta, seriesMegusta, labelsNoMegusta, seriesNoMegusta, sumaTotalLikes, sumaTotalDislikes);
 		            }  
 		        }
 		    );
@@ -215,16 +214,16 @@
 				
 				var desde = document.getElementById("fecha-desde").value = fechaInicial;
 				var hasta = document.getElementById("fecha-hasta").value = fechaFinal;
+				fechaFinal = sumarUnDiaAlaFechaDada(fechaFinal); //Por defecto la fecha se toma hasta 00 del dia anterior.
 				crearGraficos(fechaInicial,fechaFinal);
 			}
 			else
 			{
 				var desde = document.getElementById("fecha-desde").value;
 				var hasta = document.getElementById("fecha-hasta").value;
+				hasta = sumarUnDiaAlaFechaDada(hasta); 
 				crearGraficos(desde, hasta);	
 			}
-			
-			
 		}
 	</script>
 		<br/>

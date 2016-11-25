@@ -35,3 +35,13 @@
 		}
 		return flag;	
 	}
+	
+	function sumarUnDiaAlaFechaDada(fecha)
+	{
+		var arrayDate = fecha.split("-");
+		var date = new Date();
+		date.setDate(parseInt(arrayDate[2]) + 1 );
+		console.log(date.getDate());
+		fecha = date.getFullYear() +"-"+ (date.getMonth() +1) +"-"+ date.getDate();
+		return fecha;
+	}
