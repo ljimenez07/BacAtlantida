@@ -16,10 +16,47 @@ import com.ncubo.data.Reacciones;
 public class ReaccionesDao 
 {
 	ArrayList<Reacciones> reacciones;
-	private final String QUERY_LIKES_POR_OFERTA = "SELECT distinct oferta.tituloDeOferta AS tituloLabel, count(*) as meGusta FROM oferta JOIN reaccion WHERE oferta.idOferta = reaccion.idOferta AND reaccion='1' AND  reaccion.fecha BETWEEN ? AND ? GROUP BY oferta.tituloDeOferta;";
-	private final String QUERY_LIKES_POR_CATEGORIA = "SELECT categoriaoferta.nombre AS tituloLabel, count(*) AS meGusta FROM categoriaoferta JOIN oferta,reaccion WHERE categoriaoferta.idCategoriaOferta = oferta.categoria AND reaccion='1' AND oferta.idOferta = reaccion.idOferta AND fecha BETWEEN ? AND ? GROUP BY categoriaoferta.nombre;";
-	private final String QUERY_DISLIKES_POR_OFERTA = "SELECT distinct oferta.tituloDeOferta AS tituloLabelDislike, count(*) as noMegusta FROM oferta JOIN reaccion WHERE oferta.idOferta = reaccion.idOferta AND reaccion='0' AND  reaccion.fecha BETWEEN ? AND ? GROUP BY oferta.tituloDeOferta;";
-	private String QUERY_DISLIKES_POR_CATEGORIA = "SELECT categoriaoferta.nombre AS tituloLabelDislike, count(*) AS noMegusta FROM categoriaoferta JOIN oferta,reaccion WHERE categoriaoferta.idCategoriaOferta = oferta.categoria AND reaccion='0' AND oferta.idOferta = reaccion.idOferta AND fecha BETWEEN ? AND ? GROUP BY categoriaoferta.nombre;";
+	private final String QUERY_LIKES_POR_OFERTA = "SELECT  oferta.tituloDeOferta"
+												+ " AS tituloLabel, count(*) as meGusta FROM oferta "
+												+ "JOIN reaccion WHERE oferta.idOferta = reaccion.idOferta "
+												+ "AND reaccion='1' "
+												+ "AND oferta.estado = 1 "
+												+ "AND oferta.eliminada = 0 "
+												+ "AND  reaccion.fecha BETWEEN ? AND ? "
+												+ "AND oferta.vigenciaHasta >= ? "
+												+ "GROUP BY oferta.tituloDeOferta;";
+	
+	private final String QUERY_LIKES_POR_CATEGORIA = "SELECT categoriaoferta.nombre "
+													+ "AS tituloLabel, count(*) AS meGusta FROM categoriaoferta "
+													+ "JOIN oferta,reaccion WHERE categoriaoferta.idCategoriaOferta = oferta.categoria "
+													+ "AND reaccion='1' "
+													+ "AND oferta.estado=1 "
+													+ "AND oferta.eliminada=0 "
+													+ "AND oferta.idOferta = reaccion.idOferta "
+													+ "AND fecha BETWEEN ? AND ? "
+													+ "AND oferta.vigenciaHasta >= ? "
+													+ "GROUP BY categoriaoferta.nombre;";
+	
+	private final String QUERY_DISLIKES_POR_OFERTA = "SELECT  oferta.tituloDeOferta "
+													+ "AS tituloLabelDislike, count(*) as noMegusta FROM oferta "
+													+ "JOIN reaccion WHERE oferta.idOferta = reaccion.idOferta "
+													+ "AND reaccion='0' "
+													+ "AND oferta.estado=1 "
+													+ "AND oferta.eliminada = 0 "
+													+ "AND  reaccion.fecha BETWEEN ? AND ? "
+													+ "AND oferta.vigenciaHasta >= ? "
+													+ "GROUP BY oferta.tituloDeOferta;";
+	
+	private String QUERY_DISLIKES_POR_CATEGORIA = "SELECT categoriaoferta.nombre "
+													+ "AS tituloLabelDislike, count(*) AS noMegusta FROM categoriaoferta "
+													+ "JOIN oferta,reaccion WHERE categoriaoferta.idCategoriaOferta = oferta.categoria "
+													+ "AND reaccion='0' "
+													+ "AND oferta.estado=1 "
+													+ "AND oferta.eliminada = 0 "
+													+ "AND oferta.idOferta = reaccion.idOferta "
+													+ "AND fecha BETWEEN ? AND ? "
+													+ "AND oferta.vigenciaHasta >= ? "
+													+ "GROUP BY categoriaoferta.nombre;";
 	
 	@Autowired
 	private Persistencia dao;
@@ -73,7 +110,8 @@ public class ReaccionesDao
 	private void ejecutarComandosParaObtenerDatosMegusta(String desde, String hasta, PreparedStatement preparedStatement) throws SQLException {
 		preparedStatement.setString(1, desde);
 		preparedStatement.setString(2, hasta);
-
+		preparedStatement.setString(3, hasta);
+		
 		ResultSet resultSet = preparedStatement.executeQuery();
 		while(resultSet.next())
 		{	
@@ -88,7 +126,9 @@ public class ReaccionesDao
 	{
 		preparedStatement.setString(1, desde);
 		preparedStatement.setString(2, hasta);
-
+		preparedStatement.setString(3, hasta);
+		
+		
 		ResultSet resultSet = preparedStatement.executeQuery();
 		while(resultSet.next())
 		{
