@@ -66,7 +66,7 @@ public class TextToSpeechWatson {
 	public InputStream getAudio(String text){
 		InputStream in = null;	
 		try {
-	         in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.OGG).execute();
+	         in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.WAV).execute();
 		} catch (Exception e) {
 			//logger.info("Got error: " + e.getMessage());
 		} 
@@ -91,7 +91,7 @@ public class TextToSpeechWatson {
 		try {
 			stream = new BufferedOutputStream(new FileOutputStream(file));
 			try {
-				in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.OGG_VORBIS).execute();
+				in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.WAV).execute();
 		        byte[] buffer = new byte[2048];
 		        int read;
 		        while ((read = in.read(buffer)) != -1) {
