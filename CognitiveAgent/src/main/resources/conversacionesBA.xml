@@ -52,7 +52,7 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<curioso>¿Quieres el saldo de tu tarjeta de crédito?</curioso>
-			<impertinente>Necesito saber, si te refieres a la cuenta de ahorros o tarjeta de crédito.</impertinente>
+			<impertinente>Necesito saber si te refieres a la cuenta de ahorros o tarjeta de crédito.</impertinente>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -186,6 +186,16 @@
 		<vineta></vineta>
 	</conversacion>
 	
+	<conversacion id="tasaOtras">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Lamento decirte que solo tengo la tasa de cambio del dólar y el euro.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
 	<conversacion id="movimientos">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
@@ -269,6 +279,47 @@
 		</when>
 	</conversacion>
 	
+	<conversacion id="cualProducto">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>Claro, ¿sobre cúal de nuestros productos necesitas información?</curioso>
+			<curioso>¿En cúal de nuestros productos estás interesado?</curioso>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="montoInicialCuentaAhorros">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El monto inicial de una cuenta de ahorros es de 500 Lempiras.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="saldoMinimoCuentaAhorros">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Te cuento que el saldo mínimo para cuenta de ahorros es de 500 Lempiras, y no olvides que hay un cargo por 30 Lempiras en caso que no se cumpla ese mínimo.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="requisitosCuentaAhorros">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para abrir una cuenta de ahorro debes presentar tarjeta de Identidad, carnet de residencia, completar la solicitud del producto y realizar el depósito inicial.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
 	<conversacion id="saludarConocerte">		
 		<tipo>afirmativa</tipo>		
 		<mandatoria>true</mandatoria>		
@@ -330,8 +381,9 @@
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
 		<workspace tipo="general" idIBM="ea7cc165-ac98-4349-92ed-8e04f1ab402e" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="e0ff922e-68f2-4cc3-bc69-ec624d07c36c" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible,ayuda_como">BATemas</workspace>
-		<workspace tipo="especifico" idIBM="d4b0e759-9557-4f5e-9049-fcc3472e5ea2" intencionesParaSeReferenciado="conocerte">ConocerteGeneral</workspace>
+		<workspace tipo="especifico" idIBM="acdff3cd-1deb-4300-8cce-d6e8b0018ec8" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible,ayuda_como">BATemas</workspace>
+		<workspace tipo="especifico" idIBM="d4b0e759-9557-4f5e-9049-fcc3472e5ea2" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
+		<workspace tipo="especifico" idIBM="cee0a88f-f4db-4650-a18e-7c124718faac" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>

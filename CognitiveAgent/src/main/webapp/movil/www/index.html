@@ -22,6 +22,21 @@
 	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPXB6S"
 	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<!-- End Google Tag Manager (noscript) -->
+	
+	<div id="sesion-expirada" class="modal fade" style="display:none;"role="dialog">
+		<div class="modal-dialog modal-sm" style="background-color: white;">
+			<div class="modal-body">
+				 Su sesión ha expirado
+			</div>
+			<div class="modal-footer">
+				<div class="row">
+					<div class="col-xs-12">
+						<button data-after="quitarModalSesion()" class="btn btn-default clickable">Ok</button>
+					</div>
+				</div>
+			</div>
+		</div>		
+	</div>
 
 	<div data-accion="ocultar-menu" class="modal modal-menu clickable" style="display: none">
 		<div class="container menu" style="display: none;">
@@ -75,11 +90,18 @@
 	<script>
 	var audios = new Array();
 	var estaReproduciendo = false;
+	var estaLogueado = false;
 	
 	function quitarModal()
 	{
 		setCookie('mostrarpopupdeconocerte', true, 100);
 		$("#popupconocerte").modal('hide');
+	}
+	
+	function quitarModalSesion()
+	{
+		$("#sesion-expirada").modal('hide');
+		location.reload();
 	}
 	
 	function cambiarVista(href)
@@ -234,19 +256,28 @@
 			url : param.url,
 			data : param.data != undefined ? param.data : ""
 		})
-		.done(function( data ) 
+		.done(function(data) 
 		{
 			console.log({respuesta: data});
-			if( param.done != undefined )
-			{
-				param.done(data);
-			}
 			
-			if (data.usuarioEstaLogueado)
+			if(data.usuarioEstaLogueado)
 			{
+				estaLogueado = true;
 				$(".contenedor-boton-ingresar").remove();
 				$(".chat-icon-logueado").show();
 				$(".header-chat-icon.no-logueado").hide();
+				if(param.done != undefined)
+				{
+					param.done(data);
+				}
+			}
+			else if(data.usuarioEstaLogueado != undefined && estaLogueado)
+			{
+				$("#sesion-expirada").modal('show');
+			}
+			else if(param.done != undefined)
+			{
+				param.done(data);
 			}
 		})
 		.fail(function(XMLHttpRequest, textStatus, textStatus) 

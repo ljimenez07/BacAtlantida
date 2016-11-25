@@ -175,7 +175,7 @@ public class Agente extends Participante{
 				abordarElTema = true;
 				System.out.println("Se requiere abordar el tema ...");
 				// TODO Tengo que cambiar el contexto
-				this.seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActual();
+				//this.seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActual();
 			}
 			
 			if(frase.esMandatorio()){	
@@ -253,6 +253,7 @@ public class Agente extends Participante{
 	
 	public void activarTemaEnElContextoDeWatson(String nombreTema){
 		String context = miContextos.get(nombreDeWorkspaceActual);
+		System.out.println(context);
 		JSONObject obj = null;
 		try {
 			obj = new JSONObject(context);
