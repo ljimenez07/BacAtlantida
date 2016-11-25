@@ -43,7 +43,7 @@ public class ReaccionesController
 		String fechaHasta = (String) datos.get("hasta");
 		String filtro = (String) datos.get("filtro");
 
-		ArrayList<Reacciones> resultado = reaccionesDao.obtener(fechaDesde, fechaHasta, filtro);		
+		ArrayList<Reacciones> resultado = reaccionesDao.obtener(fechaDesde, fechaHasta, filtro);	
 		return resultado;
 	}
 }

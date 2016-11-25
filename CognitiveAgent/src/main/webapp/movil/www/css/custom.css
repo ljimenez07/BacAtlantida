@@ -144,7 +144,6 @@ input
 	font-size: 16pt;
 }
 
-
 .clickable:hover
 {
 	cursor:pointer;
@@ -432,6 +431,30 @@ input
 
 
 /* Promociones */
+
+.contenedor-de-mensaje-bienvenida
+{
+	border-bottom: 2px solid rgba(0,0,0,0.1);
+}
+
+red
+{
+	color: #E92531;
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+.top10
+{
+	font-size: 14pt;
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+.beneficios
+{
+	font-size: 13pt;
+}
 
 .imagen-de-oferta {
 	width: 100%;

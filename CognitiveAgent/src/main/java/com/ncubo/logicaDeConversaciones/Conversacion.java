@@ -121,6 +121,7 @@ public class Conversacion {
 					// llamar a watson y ver que bloque se activo
 					respuesta = agente.inicializarTemaEnWatson(respuestaDelCliente);
 					idFraseActivada = agente.obtenerNodoActivado(respuesta.messageResponse());
+					agente.borrarUnaVariableDelContexto(Constantes.NODO_ACTIVADO);
 					
 					System.out.println("Id de la frase a decir: "+idFraseActivada);
 					agregarOracionesAfirmativas(agente.obtenerIDsDeOracionesAfirmativas(), respuesta);

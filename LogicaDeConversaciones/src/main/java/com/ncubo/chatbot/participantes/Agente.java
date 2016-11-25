@@ -175,7 +175,7 @@ public class Agente extends Participante{
 				abordarElTema = true;
 				System.out.println("Se requiere abordar el tema ...");
 				// TODO Tengo que cambiar el contexto
-				this.seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActual();
+				//this.seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActual();
 			}
 			
 			if(frase.esMandatorio()){	
@@ -190,16 +190,23 @@ public class Agente extends Participante{
 				miContextos.put(nombreDeWorkspaceActual, respuesta.getMiContexto());
 				
 				// Analizar si tengo que cambiar de workspace
-				cambiarDeTema = respuesta.seTerminoElTema();
+				cambiarDeTema = respuesta.seTerminoElTema() || respuesta.quiereCambiarIntencion();
 				if(cambiarDeTema){
 					// Desactivar flag del contexto
 					borrarUnaVariableDelContexto(Constantes.TERMINO_EL_TEMA);
+					borrarUnaVariableDelContexto(Constantes.CAMBIAR_INTENCION);
+				}
+				if(respuesta.quiereCambiarIntencion()){
+					nombreDeLaIntencionGeneralActiva = respuesta.obtenerLaIntencionDeConfianzaDeLaRespuesta().getNombre();
+					borrarUnaVariableDelContexto(Constantes.CAMBIAR_INTENCION);
+					borrarUnaVariableDelContexto(Constantes.NODO_ACTIVADO);
 				}
 			}
 			numeroDeIntentosActualesEnRepetirUnaPregunta = 1;
 		}
 		borrarUnaVariableDelContexto(Constantes.ANYTHING_ELSE);
 		borrarUnaVariableDelContexto(Constantes.NODO_ACTIVADO);
+		borrarUnaVariableDelContexto(Constantes.ORACIONES_AFIRMATIVAS);
 		
 		return respuesta;
 	}
@@ -253,6 +260,7 @@ public class Agente extends Participante{
 	
 	public void activarTemaEnElContextoDeWatson(String nombreTema){
 		String context = miContextos.get(nombreDeWorkspaceActual);
+		System.out.println(context);
 		JSONObject obj = null;
 		try {
 			obj = new JSONObject(context);

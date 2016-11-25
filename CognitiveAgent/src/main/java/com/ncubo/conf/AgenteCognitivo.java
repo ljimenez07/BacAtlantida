@@ -128,7 +128,6 @@ public class AgenteCognitivo
 			String idFrase = salida.get(i).getFraseActual().getIdFrase();
 			texto = texto.replace("$", "");
 			
-		
 			if((idFrase.equals("saldoCredito") ||  idFrase.equals("disponibleCredito") ) && usuario.getEstaLogueado())
 			{
 				
@@ -158,21 +157,21 @@ public class AgenteCognitivo
 			else if((idFrase.equals("saldoCuentaAhorros") || idFrase.equals("saldoCredito")|| idFrase.equals("quiereSaldoTarjetaCredito")) && ! usuario.getEstaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", "Debe iniciar sesión para que conozcas tu saldo.");
+				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión!.");
 				jsonObject.put("audio", "");	
 				arrayList.put(jsonObject);
 			}
 			else if((idFrase.equals("disponibleCredito") || idFrase.equals("disponibleCuentaAhorros")|| idFrase.equals("disponiblePuntos") || idFrase.equals("quiereDisponibleTarjetaCredito")) && ! usuario.getEstaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", "Debe iniciar sesión para que conozcas tu disponible.");
+				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión!.");
 				jsonObject.put("audio", "");	
 				arrayList.put(jsonObject);
 			}
 			else if(idFrase.equals("movimientos") && ! usuario.getEstaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", "Debe iniciar sesión para que conozcas tus movimientos.");
+				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión!.");
 				jsonObject.put("audio", "");	
 				arrayList.put(jsonObject);
 			}
