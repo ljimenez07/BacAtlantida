@@ -76,7 +76,7 @@ public class TextToSpeechWatson {
 	public String getAudioToURL(String text, String pathAGuardar){
 		
 		UUID idOne = UUID.randomUUID();
-		String nombreDelArchivo = idOne+".ogg";
+		String nombreDelArchivo = idOne+".wav";
 		nombreDelArchivo = nombreDelArchivo.replace("-", "");
 		String path = pathAGuardar+File.separator+nombreDelArchivo;
 
