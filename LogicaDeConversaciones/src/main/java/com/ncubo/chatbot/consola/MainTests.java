@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import com.ncubo.realestate.Coversaciones;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
-//import com.ncubo.bancoatlantida.Coversaciones;
 
 public class MainTests {
 

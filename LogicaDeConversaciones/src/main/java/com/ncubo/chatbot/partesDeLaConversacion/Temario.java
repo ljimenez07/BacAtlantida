@@ -76,7 +76,21 @@ public abstract class Temario
 		Collections.shuffle(temasDelDiscurso); // Desordenar el array
 		for(Tema tema: temasDelDiscurso){
 			if(tema.obtenerElNombreDelWorkspaceAlQuePertenece().equals(nombreDelWorkspace) && tema.obtenerIntencionGeneralAlQuePertenece().equals(nombreIntencionGeneral)){
-				if(! tema.obtenerIdTema().equals(temaActual.obtenerIdTema())){
+				if(temaActual != null){
+					if(! tema.obtenerIdTema().equals(temaActual.obtenerIdTema())){
+						if(temasYaTratados != null){
+							if( ! temasYaTratados.contains(tema)){
+								if(tema.buscarSiTodasLasDependenciasYaFueronTratadas(temasYaTratados)){
+									return tema;
+								}
+							}
+						}else{
+							if( ! tema.tieneDependencias()){
+								return tema;
+							}
+						}
+					}
+				}else{
 					if(temasYaTratados != null){
 						if( ! temasYaTratados.contains(tema)){
 							if(tema.buscarSiTodasLasDependenciasYaFueronTratadas(temasYaTratados)){
@@ -89,6 +103,7 @@ public abstract class Temario
 						}
 					}
 				}
+				
 			}
 		}	
 		return null;

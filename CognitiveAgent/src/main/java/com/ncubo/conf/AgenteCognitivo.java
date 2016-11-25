@@ -76,8 +76,7 @@ public class AgenteCognitivo
 	
 	public String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
 	{
-	
-		return procesarMensaje(usuario,mensaje,date, workspaceDeConocerte, true);
+		return procesarMensajeConocerte(usuario, mensaje, date, workspaceDeConocerte);
 	}
 	
 	private String procesarMensaje(Usuario usuario, String mensaje, Date date, String workspace, boolean esParaConocerte) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
@@ -112,7 +111,7 @@ public class AgenteCognitivo
 		myContext.put("nombre", nombre[0]);
 		
 		String[] textos = null;
-		ArrayList<Salida> salida = miConversaciones.conversarConElAgente(usuario, mensaje);
+		ArrayList<Salida> salida = miConversaciones.conversarConElAgente(usuario, mensaje, false);
 		
 		String texto = "";
 		JSONArray arrayList = new JSONArray(); 
@@ -242,6 +241,45 @@ public class AgenteCognitivo
 		
 	}
 
+	private String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date, String workspace) throws JSONException
+	{
+		JSONObject respuesta = new JSONObject();
+		String texto = "";
+		JSONArray arrayList = new JSONArray(); 
+		
+		ArrayList<Salida> salida = miConversaciones.conversarConElAgente(usuario, mensaje, true);
+		
+		for(int i = 0; i < salida.size(); i++){	
+			texto = salida.get(i).getMiTexto();
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("texto", texto);
+			jsonObject.put("audio", salida.get(i).getMiSonido().url());
+			arrayList.put(jsonObject);
+		}
+		
+		/*if(usuario.estaLogueado()){
+			ArrayList<Salida> salida = miConversaciones.conversarConElAgente(usuario, mensaje, true);
+			
+			for(int i = 0; i < salida.size(); i++){	
+				texto = salida.get(i).getMiTexto();
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("texto", texto);
+				jsonObject.put("audio", salida.get(i).getMiSonido().url());
+				arrayList.put(jsonObject);
+			}
+		}else{
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("texto", "Debe iniciar sesión.");
+			jsonObject.put("audio", "");
+			arrayList.put(jsonObject);
+		}*/
+		
+		respuesta.put("textos", arrayList);
+		System.out.println(respuesta.toString());
+		
+		return respuesta.toString();
+	}
+	
 	public String getWsMovimientos() {
 		return wsMovimientos;
 	}
