@@ -85,6 +85,7 @@ public class TemarioDelBancoAtlantida extends Temario
 			frase("tasaDolar"),
 			frase("tasaEuro"),
 			frase("tasaCambio"),
+			frase("tasaOtras"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta")
@@ -150,6 +151,74 @@ public class TemarioDelBancoAtlantida extends Temario
 		return resultado;
 	}		
 	
+	private Tema quiereAbrirCuenta()
+	{
+		Tema resultado = new Tema
+		(
+			"quiereAbrirCuenta",
+			"BAFAQ",
+			true,
+			"abrir_cuenta",
+			frase("requisitosCuentaAhorros"),
+			frase("cualProducto"),
+			frase("preguntarPorOtraConsulta"),
+			frase("quiereHacerOtraConsulta"),
+			frase("noQuiereHacerOtraConsulta")
+		);
+		return resultado;
+	}
+	
+	private Tema quiereMontoInicial()
+	{
+		Tema resultado = new Tema
+		(
+			"quiereMontoInicial",
+			"BAFAQ",
+			true,
+			"precio",
+			frase("montoInicialCuentaAhorros"),
+			frase("cualProducto"),
+			frase("preguntarPorOtraConsulta"),
+			frase("quiereHacerOtraConsulta"),
+			frase("noQuiereHacerOtraConsulta")
+		);
+		return resultado;
+	}
+	
+	private Tema quiereSaldoMinimo()
+	{
+		Tema resultado = new Tema
+		(
+			"quiereSaldoMinimo",
+			"BAFAQ",
+			true,
+			"saldo_minimo",
+			frase("saldoMinimoCuentaAhorros"),
+			frase("cualProducto"),
+			frase("preguntarPorOtraConsulta"),
+			frase("quiereHacerOtraConsulta"),
+			frase("noQuiereHacerOtraConsulta")
+		);
+		return resultado;
+	}
+	
+	private Tema quiereRequisitos()
+	{
+		Tema resultado = new Tema
+		(
+			"quiereRequisitos",
+			"BAFAQ",
+			true,
+			"requisitos",
+			frase("requisitosCuentaAhorros"),			
+			frase("cualProducto"),
+			frase("preguntarPorOtraConsulta"),
+			frase("quiereHacerOtraConsulta"),
+			frase("noQuiereHacerOtraConsulta")
+		);
+		return resultado;
+	}
+	
 	@Override
 	protected void cargarTemario(Temas temasDelDiscurso){
 		
@@ -162,6 +231,10 @@ public class TemarioDelBancoAtlantida extends Temario
 		temasDelDiscurso.add(fueraDeContexto());
 		temasDelDiscurso.add(quiereAyudaComo());
 		temasDelDiscurso.add(despedida());
+		temasDelDiscurso.add(quiereAbrirCuenta());
+		temasDelDiscurso.add(quiereMontoInicial());
+		temasDelDiscurso.add(quiereSaldoMinimo());
+		temasDelDiscurso.add(quiereRequisitos());
 		
 	}
 	
