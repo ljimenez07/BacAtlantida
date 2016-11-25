@@ -102,7 +102,7 @@ public class AgenteCognitivo
 		ConversationService service = new ConversationService(dateFormat.format(date));
 		service.setUsernameAndPassword(user, password);
 		
-		myContext.put("logueado", usuario.estaLogueado());
+		myContext.put("logueado", usuario.getEstaLogueado());
 		
 		String[] nombre = new String[4];
 		if(usuario.getUsuarioNombre() != null)
@@ -129,7 +129,7 @@ public class AgenteCognitivo
 			texto = texto.replace("$", "");
 			
 		
-			if((idFrase.equals("saldoCredito") ||  idFrase.equals("disponibleCredito") ) && usuario.estaLogueado())
+			if((idFrase.equals("saldoCredito") ||  idFrase.equals("disponibleCredito") ) && usuario.getEstaLogueado())
 			{
 				
 				textos = extraerDatos.obtenerSaldoTarjetaCredito(wsSaldo, texto, usuario.getUsuarioId());
@@ -144,7 +144,7 @@ public class AgenteCognitivo
 				consultaDao.insertar(
 						new Consulta(Intencion.SALDO.toString(), new Timestamp(new Date().getTime()), Intencion.SALDO_DESCRIPCION.toString() , 1));
 			}
-			else if(idFrase.equals("saldoCuentaAhorros") && usuario.estaLogueado())
+			else if(idFrase.equals("saldoCuentaAhorros") && usuario.getEstaLogueado())
 			{
 				textos = extraerDatos.obtenerSaldoCuentaAhorros(wsSaldo, texto, usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
@@ -155,21 +155,21 @@ public class AgenteCognitivo
 					arrayList.put(jsonObject);
 				}
 			}
-			else if((idFrase.equals("saldoCuentaAhorros") || idFrase.equals("saldoCredito")|| idFrase.equals("quiereSaldoTarjetaCredito")) && ! usuario.estaLogueado())
+			else if((idFrase.equals("saldoCuentaAhorros") || idFrase.equals("saldoCredito")|| idFrase.equals("quiereSaldoTarjetaCredito")) && ! usuario.getEstaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", "Debe iniciar sesión para que conozcas tu saldo.");
 				jsonObject.put("audio", "");	
 				arrayList.put(jsonObject);
 			}
-			else if((idFrase.equals("disponibleCredito") || idFrase.equals("disponibleCuentaAhorros")|| idFrase.equals("disponiblePuntos") || idFrase.equals("quiereDisponibleTarjetaCredito")) && ! usuario.estaLogueado())
+			else if((idFrase.equals("disponibleCredito") || idFrase.equals("disponibleCuentaAhorros")|| idFrase.equals("disponiblePuntos") || idFrase.equals("quiereDisponibleTarjetaCredito")) && ! usuario.getEstaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", "Debe iniciar sesión para que conozcas tu disponible.");
 				jsonObject.put("audio", "");	
 				arrayList.put(jsonObject);
 			}
-			else if(idFrase.equals("movimientos") && ! usuario.estaLogueado())
+			else if(idFrase.equals("movimientos") && ! usuario.getEstaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", "Debe iniciar sesión para que conozcas tus movimientos.");
@@ -185,7 +185,7 @@ public class AgenteCognitivo
 				jsonObject.put("audio", "");	
 				arrayList.put(jsonObject);
 			}
-			else if(idFrase.equals("movimientos")&& usuario.estaLogueado())
+			else if(idFrase.equals("movimientos")&& usuario.getEstaLogueado())
 			{
 				textos = extraerDatos.obtenerMovimientos(wsMovimientos, texto, usuario.getUsuarioId(), "");
 				
@@ -201,7 +201,7 @@ public class AgenteCognitivo
 						new Consulta(Intencion.MOVIMIENTOS.toString(), new Timestamp(new Date().getTime()), Intencion.MOVIMIENTOS_DESCRIPCION.toString() , 1));
 		
 			}
-			else if(idFrase.equals("disponibleCuentaAhorros") && usuario.estaLogueado())
+			else if(idFrase.equals("disponibleCuentaAhorros") && usuario.getEstaLogueado())
 			{
 				textos = extraerDatos.obtenerSaldoCuentaAhorros(wsSaldo, texto, usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
@@ -213,7 +213,7 @@ public class AgenteCognitivo
 				}
 				
 			}
-			else if(idFrase.equals("disponiblePuntos") && usuario.estaLogueado())	
+			else if(idFrase.equals("disponiblePuntos") && usuario.getEstaLogueado())	
 			{			
 				texto = texto.replaceAll("%pp", "200");
 					JSONObject jsonObject = new JSONObject();

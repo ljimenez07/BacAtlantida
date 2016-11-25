@@ -18,7 +18,7 @@ public class Conversaciones {
 	private final static Hashtable<String, Cliente> misClientes = new Hashtable<String, Cliente>();
 	private static Temario temarioDelBancoAtlantida;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final static String URL_DE_LOS_AUDIOS = "archivossubidos/audios-";
+	private final static String URL_DE_LOS_AUDIOS = "/archivossubidos/audios-";
 	
 	public Conversaciones(String pathXML){
 		System.out.println("El path xml es: "+pathXML);
@@ -96,7 +96,7 @@ public class Conversaciones {
 		logger.debug("Conversar ..........");
 		System.out.println("Coversar con "+cliente.getIdSesion());
 		try{
-			if( ! cliente.getUsuarioId().equals("") && ! cliente.getIdSesion().equals("") && cliente.estaLogueado()){ // Esta logueado
+			if( ! cliente.getUsuarioId().equals("") && ! cliente.getIdSesion().equals("") && cliente.getEstaLogueado()){ // Esta logueado
 				// Verificar si ya el usuario existe
 				if(existeElCliente(cliente.getUsuarioId())){
 					// TODO Verificar si cambio el id de sesion, si es asi agregarla al cliente y hacerlo saber a conversacion

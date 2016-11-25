@@ -47,12 +47,7 @@ public class MovilController {
 	@RequestMapping(value="/conversacion/chat/", method = RequestMethod.POST)
 	@ResponseBody String chat(@RequestBody String mensaje, HttpSession session) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ClassNotFoundException, SQLException, ParseException 
 	{
-		Usuario usuario = (Usuario)session.getAttribute(Usuario.LLAVE_EN_SESSION) ;
-		if( usuario  == null)
-		{
-			usuario = new Usuario(session.getId());
-			session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
-		}
+		Usuario usuario = obtenerUsuario(session);
 		
 		System.out.println("valor "+session.getAttribute(Usuario.LLAVE_EN_SESSION));
 		JSONObject object = new JSONObject(serverCognitivo.procesarMensajeChat(
@@ -60,7 +55,7 @@ public class MovilController {
 				mensaje, 
 				new Date()));
 		
-		object.put("usuarioEstaLogueado", usuario.estaLogueado());
+		object.put("usuarioEstaLogueado", usuario.getEstaLogueado());
 		
 		session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 		
@@ -83,7 +78,7 @@ public class MovilController {
 				mensaje, 
 				new Date()));*/
 		JSONObject object = new JSONObject();
-		object.put("usuarioEstaLogueado", usuario.estaLogueado());
+		object.put("usuarioEstaLogueado", usuario.getEstaLogueado());
 		
 		session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 		
@@ -98,16 +93,7 @@ public class MovilController {
 		String[] responseLogin = extraerDatos.login(name , password);
 		if( responseLogin[0].equals("S") )
 		{
-			Object objeto = sesion.getAttribute(Usuario.LLAVE_EN_SESSION) ;
-			Usuario usuario;
-			if( objeto == null)
-			{
-				usuario = new Usuario( sesion.getId() );
-			}
-			else
-			{
-				usuario = (Usuario)objeto;
-			}
+			Usuario usuario = obtenerUsuario(sesion);
 			
 			usuario.setLlaveSession(responseLogin[1]);
 			usuario.setUsuarioId(responseLogin[2]);
@@ -115,7 +101,7 @@ public class MovilController {
 			
 			usuario.hizologinExitosaMente();
 			sesion.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
-			JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.estaLogueado());
+			JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.getEstaLogueado());
 			
 			String[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);
 			
@@ -134,6 +120,20 @@ public class MovilController {
 	{
 		sesion.setAttribute(Usuario.LLAVE_EN_SESSION, null);
 		return new JSONObject().put("usuarioEstaLogueado", false).toString();
+	}
+	
+	@GetMapping("/movil/usuario")
+	@ResponseBody Usuario obtenerUsuario(HttpSession sesion) throws JSONException
+	{
+		Object objeto = sesion.getAttribute(Usuario.LLAVE_EN_SESSION) ;
+		if(objeto == null)
+		{
+			return new Usuario( sesion.getId() );
+		}
+		else
+		{
+			return (Usuario)objeto;
+		}
 	}
 
 	@CrossOrigin(origins = "*")

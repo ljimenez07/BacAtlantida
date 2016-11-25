@@ -55,7 +55,7 @@ public class Usuario implements Serializable
 				+ ", llaveSession=" + llaveSession + ", estaLogueado=" + estaLogueado + "]";
 	}
 
-	public boolean estaLogueado()
+	public boolean getEstaLogueado()
 	{
 		return this.estaLogueado;
 	}
@@ -101,9 +101,7 @@ public class Usuario implements Serializable
 	}
 
 	public void setVariablesDeContexto(String variable, String valor){
-		if(this.variablesDeContexto.contains(variable))
-			this.variablesDeContexto.replace(variable, valor);
-		else this.variablesDeContexto.put(variable, valor);
+		this.variablesDeContexto.put(variable, valor);
 	}
 
 	public String getVariablesDeContexto(String variable){
