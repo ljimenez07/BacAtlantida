@@ -9,4 +9,9 @@ handlebars $2/www/plantillas/oferta.handlebars -f $2/www/js/oferta.handlebars.js
 handlebars $2/www/plantillas/popupconocerte.handlebars -f $2/www/js/popupconocerte.handlebars.js 
 handlebars $2/www/plantillas/login.handlebars -f $2/www/js/login.handlebars.js 
 
-# cordova run browser
+if [ ${#3} -gt 0 ]; then
+	cordova platform add iso
+	cordova platform add android
+	cordova build $3
+fi
+echo "fin"
