@@ -58,7 +58,8 @@ public class TextToSpeechWatson {
 	
 	public static TextToSpeechWatson getInstance(){
 		if(textToSpeechWatson == null){
-			textToSpeechWatson = new TextToSpeechWatson(usuarioTTS, contrasenaTTS, vozTTS, ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), pathAudios);
+			//textToSpeechWatson = new TextToSpeechWatson(usuarioTTS, contrasenaTTS, vozTTS, ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), pathAudios);
+			throw new ChatException("No se a inicializado esta clase. Debe instanciar esta clase primero.");
 		}
 		return textToSpeechWatson;
 	}
@@ -66,7 +67,7 @@ public class TextToSpeechWatson {
 	public InputStream getAudio(String text){
 		InputStream in = null;	
 		try {
-	         in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.OGG).execute();
+	         in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.WAV).execute();
 		} catch (Exception e) {
 			//logger.info("Got error: " + e.getMessage());
 		} 
@@ -76,7 +77,7 @@ public class TextToSpeechWatson {
 	public String getAudioToURL(String text, String pathAGuardar){
 		
 		UUID idOne = UUID.randomUUID();
-		String nombreDelArchivo = idOne+".ogg";
+		String nombreDelArchivo = idOne+".wav";
 		nombreDelArchivo = nombreDelArchivo.replace("-", "");
 		String path = pathAGuardar+File.separator+nombreDelArchivo;
 
@@ -91,7 +92,7 @@ public class TextToSpeechWatson {
 		try {
 			stream = new BufferedOutputStream(new FileOutputStream(file));
 			try {
-				in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.OGG_VORBIS).execute();
+				in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.WAV).execute();
 		        byte[] buffer = new byte[2048];
 		        int read;
 		        while ((read = in.read(buffer)) != -1) {

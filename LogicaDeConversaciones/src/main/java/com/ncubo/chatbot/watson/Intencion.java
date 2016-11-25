@@ -16,7 +16,7 @@ public class Intencion //extends WatsonUnderstand
 		this.confidence = confidence;
 		this.umbral = Constantes.WATSON_CONVERSATION_CONFIDENCE;
 		this.miOperador = null;
-		System.out.println("Agrenado intencion "+nombre+" con confianza "+confidence);
+		System.out.println("Agregando intencion "+nombre+" con confianza "+confidence);
 	}
 	
 	public Intencion(String nombre){
@@ -24,7 +24,7 @@ public class Intencion //extends WatsonUnderstand
 		this.confidence = 0;
 		this.umbral = Constantes.WATSON_CONVERSATION_CONFIDENCE;
 		this.miOperador = null;
-		System.out.println("Agrenado intencion "+nombre);
+		System.out.println("Agregando intencion "+nombre);
 	}
 	
 	public Intencion(String nombre, Operador operador){
@@ -32,7 +32,7 @@ public class Intencion //extends WatsonUnderstand
 		this.confidence = 0;
 		this.umbral = Constantes.WATSON_CONVERSATION_CONFIDENCE;
 		this.miOperador = operador;
-		System.out.println("Agrenado intencion "+nombre);
+		System.out.println("Agregando intencion "+nombre);
 	}
 	
 	/*Intencion get (String nombre)
