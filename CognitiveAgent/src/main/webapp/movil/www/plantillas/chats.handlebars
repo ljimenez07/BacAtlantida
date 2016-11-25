@@ -72,15 +72,6 @@ $(function(){
 		
 		function resizeDiv(muestraTeclado, callback)
 		{
-			vpw = $(window).width();
-			vph = $(window).height();
-			var altura = vph - 72 - 68 - 53 - 30;
-			if(muestraTeclado)
-			{
-				altura -= 250;
-			}
-			chat.css({'height': altura + 'px'});
-			
 			if(callback != undefined)
 			{
 				callback();
@@ -193,4 +184,4 @@ $(function(){
 	}
 	var initChats{{pathDelServidor}} = initChats{{pathDelServidor}}();	
 });
-</script>
+</script>>
