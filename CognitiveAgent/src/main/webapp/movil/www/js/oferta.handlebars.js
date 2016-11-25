@@ -5,7 +5,7 @@ templates['oferta'] = template({"1":function(container,depth0,helpers,partials,d
 },"3":function(container,depth0,helpers,partials,data) {
     var helper;
 
-  return "			<img src=\""
+  return "			<img src=\"/archivossubidos/"
     + container.escapeExpression(((helper = (helper = helpers.imagenPublicidadPath || (depth0 != null ? depth0.imagenPublicidadPath : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"imagenPublicidadPath","hash":{},"data":data}) : helper)))
     + "\" class=\"imagen-de-oferta\">\r\n";
 },"5":function(container,depth0,helpers,partials,data) {

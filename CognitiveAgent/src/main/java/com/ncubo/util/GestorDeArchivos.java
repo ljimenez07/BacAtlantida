@@ -113,7 +113,7 @@ public class GestorDeArchivos
 		BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(file));
 
 		String voice = agenteCognitivo.getVoiceTextToSpeech();
-		in = textService.synthesize(mensaje, new Voice(voice, null, null), AudioFormat.OGG_VORBIS).execute();
+		in = textService.synthesize(mensaje, new Voice(voice, null, null), AudioFormat.WAV).execute();
 
 		byte[] buffer = new byte[2048];
 		int read;
