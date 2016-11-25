@@ -23,24 +23,26 @@
 	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<!-- End Google Tag Manager (noscript) -->
 	
-	<div id="sesion-expirada" class="modal fade" style="display:none;"role="dialog">
-		<div class="modal-dialog modal-sm" style="background-color: white;">
-			<div class="modal-body">
-				 Su sesión ha expirado
-			</div>
-			<div class="modal-footer">
-				<div class="row">
-					<div class="col-xs-12">
-						<button data-after="quitarModalSesion()" class="btn btn-default clickable">Ok</button>
+	<div id="modales">
+		<div id="sesion-expirada" class="modal fade" style="display:none;"role="dialog">
+			<div class="modal-dialog modal-sm" style="background-color: white;">
+				<div class="modal-body">
+					 Su sesión ha expirado
+				</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-xs-12">
+							<button data-after="quitarModalSesion()" class="btn btn-default clickable">Ok</button>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>		
+			</div>		
+		</div>
 	</div>
 
 	<div data-accion="ocultar-menu" class="modal modal-menu clickable" style="display: none">
 		<div class="container menu" style="display: none;">
-			<div data-href="conocerte" class="row clickable">
+			<div data-href="conocerte" class="row clickable" id="menu-item-conocerte" style="display: none;">
 				<div class="col-xs-2 contenedor-imagen-menu">
 					<div class="icono-conocerme"></div>
 				</div>
@@ -48,7 +50,7 @@
 					<div>Conocerme</div>
 				</div>
 			</div>
-			<div data-href="consultar" class="row clickable">
+			<div data-href="chat" class="row clickable">
 				<div class="col-xs-2 contenedor-imagen-menu">
 					<div class="icono-consultar"></div>
 				</div>
@@ -56,7 +58,7 @@
 					<div>Consultar</div>
 				</div>
 			</div>
-			<div data-accion="salir" class="row clickable">
+			<div data-accion="salir" class="row clickable" id="menu-item-salir" style="display: none;">
 				<div class="col-xs-2 contenedor-imagen-menu">
 					<div class="icono-salir"></div>
 				</div>
@@ -151,12 +153,17 @@
 		
 		$(".app #ofertas").html(Handlebars.templates.layout(pantallas["ofertas"]));
 		$(".app #oferta").html(Handlebars.templates.layout(pantallas["oferta"]));
-		$(".app #ofertas").append(Handlebars.templates.popupconocerte(pantallas["popupconocerte"]));
+		$("#modales").append(Handlebars.templates.popupconocerte(pantallas["popupconocerte"]));
 		$(".app #chat").html(Handlebars.templates.layout(pantallas["chat"]));
 		$(".app #conocerte").html(Handlebars.templates.layout(pantallas["conocerte"]));
 		$(".app #login").html(Handlebars.templates.layout(pantallas["login"]));
 		
 		bindClickeable();
+		
+		if(getCookie("mostrarpopupdeconocerte") == "")
+		{
+			$("#popupconocerte").modal('show');
+		}	
 		
 		ajax({
 			url: serverDomain + "/movil/usuario",
@@ -165,6 +172,8 @@
 				if(data.estaLogueado)
 				{
 					cambiarVista("chat");
+					$("#ofertas .contenedor-de-mensaje-bienvenida").html("<p><strong>¡Hola " + data.usuarioNombre + "!</strong></p><br><p><strong>¡Perfecto!</strong> Has acumulado <red>1 punto</red></p><br>");
+					$("#ofertas .contenedor-de-ofertas").prepend('<div class="row"><div class="col-xs-12 text-center"><div class="top10">TOP 10</div><div class="beneficios">Sus mejores beneficios y ofertas</div><br></div</div>')
 				}
 			}
 		});
@@ -197,7 +206,6 @@
 				}
 				else if(accion == "salir")
 				{
-					setCookie('mostrarpopupdeconocerte', false, 0);
 					ajax({
 						url: serverDomain + "/movil/logout",
 						done: function(data)
@@ -247,7 +255,6 @@
 	
 	function ajax(param)
 	{
-		console.log({ajax: param});
 		$.ajax({
 			type: param.type != undefined ? param.type : "GET",
 			contentType :param.contentType != undefined ? param.contentType : "application/x-www-form-urlencoded; charset=UTF-8",
@@ -258,20 +265,20 @@
 		})
 		.done(function(data) 
 		{
-			console.log({respuesta: data});
-			
 			if(data.usuarioEstaLogueado)
 			{
 				estaLogueado = true;
 				$(".contenedor-boton-ingresar").remove();
 				$(".chat-icon-logueado").show();
 				$(".header-chat-icon.no-logueado").hide();
+				$("#menu-item-conocerte").show();
+				$("#menu-item-salir").show();
 				if(param.done != undefined)
 				{
 					param.done(data);
 				}
 			}
-			else if(data.usuarioEstaLogueado != undefined && estaLogueado)
+			else if(data.usuarioEstaLogueado != undefined && estaLogueado && param.url.indexOf("logout") < 0)
 			{
 				$("#sesion-expirada").modal('show');
 			}
