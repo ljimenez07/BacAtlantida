@@ -135,7 +135,7 @@ public class OfertaController
 	@ResponseBody public List<Oferta> ofertas(@RequestParam("pagina") int pagina, HttpSession sesion) throws ClassNotFoundException, SQLException
 	{
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-		String idUsuario = usuario == null ? null : usuario.estaLogueado() ? usuario.getUsuarioId() : null;
+		String idUsuario = usuario == null ? null : usuario.getEstaLogueado() ? usuario.getUsuarioId() : null;
 		int indiceInicial = (pagina - 1) * 10;
 		return ofertaDao.ultimasDiezOfertasDesde(indiceInicial, idUsuario);
 	}
@@ -145,7 +145,7 @@ public class OfertaController
 	@ResponseBody public Oferta oferta(@PathVariable int idOferta, HttpSession sesion) throws ClassNotFoundException, SQLException
 	{
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-		String idUsuario = usuario == null ? null : usuario.estaLogueado() ? usuario.getUsuarioId() : null;
+		String idUsuario = usuario == null ? null : usuario.getEstaLogueado() ? usuario.getUsuarioId() : null;
 		return ofertaDao.obtener(idOferta, idUsuario);
 	}
 	
@@ -155,7 +155,7 @@ public class OfertaController
 	{
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
 		JSONObject respuesta = new JSONObject().put("cantidad", ofertaDao.cantidad());
-		respuesta.put("usuarioEstaLogueado", usuario == null ? false : usuario.estaLogueado());
+		respuesta.put("usuarioEstaLogueado", usuario == null ? false : usuario.getEstaLogueado());
 		
 		return respuesta.toString();
 	}
