@@ -18,7 +18,7 @@ public class Conversaciones {
 	private final static Hashtable<String, Cliente> misClientes = new Hashtable<String, Cliente>();
 	private static Temario temarioDelBancoAtlantida;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final static String URL_DE_LOS_AUDIOS = "archivossubidos/audios-";
+	private final static String URL_DE_LOS_AUDIOS = "/archivossubidos/audios-";
 	
 	public Conversaciones(String pathXML){
 		System.out.println("El path xml es: "+pathXML);

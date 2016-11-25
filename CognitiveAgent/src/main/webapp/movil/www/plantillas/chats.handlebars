@@ -29,12 +29,22 @@ $(function(){
 		var botonDeEnviarMensaje = $("#chat-id-container-{{pathDelServidor}} #enviar");
 		var ultimoMensajeEnviado="";
 		var debeReproducirElAudio = false;
+		var guardarCola = true;
+		var colaDeReproduccion = new Array();
 		
 		$("#chat-id-{{pathDelServidor}}").prepend('<div class="row"><div class="col-xs-6"><div class="boton-escuchar-mensajes desactivado" /></div></div>');
 		$("#chat-id-{{pathDelServidor}} .boton-escuchar-mensajes").click(function()
 		{
 			$(this).toggleClass("activado").toggleClass("desactivado");
 			debeReproducirElAudio = !debeReproducirElAudio;
+			guardarCola = false;
+			if(colaDeReproduccion.length > 0)
+			{
+				$.each(colaDeReproduccion, function(index, value)
+				{
+					reproducirMensaje(value);
+				});
+			}
 		});
 		
 		function reproducirMensaje(pathDelAudio)
@@ -42,6 +52,10 @@ $(function(){
 			if(debeReproducirElAudio)
 			{
 				agregarAColaDeReproduccion(pathDelAudio);
+			}
+			else if(guardarCola)
+			{
+				colaDeReproduccion.push(pathDelAudio);
 			}
 		}
 		
@@ -133,7 +147,10 @@ $(function(){
 						respuesta.find(".msg p").html(textos[i].texto);
 						respuesta.find("time").html(hora);
 						conversation.append(respuesta);
-						reproducirMensaje(textos[i].audio);
+						if(textos[i].audio != "")
+						{
+							reproducirMensaje(textos[i].audio);
+						}
 					}
 					
 					moverScrollParaAbajoEnFuncionDelUltimoMensaje();
