@@ -124,12 +124,4 @@ public class Participante{
 		miContexto.agregarAMiContexto(key, valor);
 	}
 	
-	public void agregarVariablesDeContexto(Hashtable<String, String> variables){
-		Enumeration<String> misLlaves = variables.keys();
-		while(misLlaves.hasMoreElements()){
-			String key = misLlaves.nextElement();
-			miContexto.agregarAMiContexto(key, variables.get(key));
-		}
-	}
-	
 }

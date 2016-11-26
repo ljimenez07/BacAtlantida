@@ -78,7 +78,7 @@ public abstract class Temario
 			if(tema.obtenerElNombreDelWorkspaceAlQuePertenece().equals(nombreDelWorkspace) && tema.obtenerIntencionGeneralAlQuePertenece().equals(nombreIntencionGeneral)){
 				if(temaActual != null){
 					if(! tema.obtenerIdTema().equals(temaActual.obtenerIdTema())){
-						if(temasYaTratados != null){
+						if(temasYaTratados.size() > 0){
 							if( ! temasYaTratados.contains(tema)){
 								if(tema.buscarSiTodasLasDependenciasYaFueronTratadas(temasYaTratados)){
 									return tema;
@@ -105,8 +105,11 @@ public abstract class Temario
 				}
 				
 			}
-		}	
-		return null;
+		}
+		if(temaActual.obtenerElNombreDelWorkspaceAlQuePertenece().equals(nombreDelWorkspace) && temaActual.obtenerIntencionGeneralAlQuePertenece().equals(nombreIntencionGeneral))
+			return temaActual;
+		else
+			return null;
 	}
 	
 	private Tema buscarUnUnicoTemaQueCumplaLaCondicion(String nombreDelWorkspace, String nombreIntencionGeneral){

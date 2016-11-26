@@ -112,7 +112,7 @@ public class Conversacion {
 					}*/
 					System.out.println("Id de la frase a decir: "+idFraseActivada);
 					
-					agregarOracionesAfirmativas(agente.obtenerIDsDeOracionesAfirmativas(), respuesta);
+					agregarOracionesAfirmativas(respuesta.obtenerLosIDsDeLasOracionesAfirmativasActivas(), respuesta);
 					if( ! idFraseActivada.equals("")){
 						miPregunta = (Pregunta) this.temaActual.buscarUnaFrase(idFraseActivada);
 						misSalidas.add(agente.decir(miPregunta, respuesta, temaActual));

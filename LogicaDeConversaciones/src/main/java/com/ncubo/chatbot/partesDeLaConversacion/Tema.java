@@ -58,7 +58,7 @@ public class Tema
 	}
 
 	public boolean tieneDependencias(){
-		return dependencias.isEmpty();
+		return dependencias.size() > 0;
 	}
 	
 	public Temas obtenerTodasLasDependencias(){

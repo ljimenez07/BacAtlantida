@@ -42,7 +42,7 @@ public class Intenciones { //implements Iterable<Intencion>
 	}
 	
 	public Intencion obtenerLaDeMayorConfianza(double confidence){
-		Intencion intencion = null;
+		Intencion intencion = new Intencion("");
 		Enumeration<String> misInteciones = intenciones.keys();
 		while(misInteciones.hasMoreElements()){
 			String key = (String) misInteciones.nextElement();

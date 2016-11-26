@@ -52,6 +52,8 @@ public class Constantes {
 	public static String NODO_ACTIVADO = "nodo";
 	public static String TERMINO_EL_TEMA = "terminoTema";
 	public static String ORACIONES_AFIRMATIVAS = "oracionesAfirmativas";
+	public static String CAMBIAR_A_GENERAL = "cambiarAGeneral";
+	public static String ID_TEMA = "idTema";
 	
 	// Tipos de frases
 	public static String FRASE_SALUDO = "saludo";
