@@ -28,4 +28,8 @@
 	<allow-navigation href="https://*/*" />
 	<allow-navigation href="data:*" />
 	<preference name="StatusBarOverlaysWebView" value="false" />
+	
+	<feature name="StatusBar">
+		<param name="ios-package" value="CDVStatusBar" onload="true" />
+     </feature>
 </widget>

@@ -90,6 +90,13 @@
 	<script type="text/javascript" src="js/login.handlebars.js"></script>
 	
 	<script>
+	document.addEventListener("deviceready", onDeviceReady, false);
+	function onDeviceReady() 
+	{
+		console.log(StatusBar);
+		StatusBar.overlaysWebView(false);
+	}
+	
 	var audios = new Array();
 	var estaReproduciendo = false;
 	var estaLogueado = false;

@@ -10,8 +10,10 @@ handlebars $2/www/plantillas/popupconocerte.handlebars -f $2/www/js/popupconocer
 handlebars $2/www/plantillas/login.handlebars -f $2/www/js/login.handlebars.js 
 
 if [ ${#3} -gt 0 ]; then
-	cordova platform add iso
+	rm -rf platforms
+	cordova platform add ios
 	cordova platform add android
+	cordova plugin add cordova-plugin-statusbar
 	cordova build $3
 fi
 echo "fin"

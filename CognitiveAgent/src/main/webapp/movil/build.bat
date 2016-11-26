@@ -8,4 +8,8 @@ call handlebars ./www/plantillas/listaDeOfertas.handlebars -f ./www/js/listaDeOf
 call handlebars ./www/plantillas/oferta.handlebars -f ./www/js/oferta.handlebars.js 
 call handlebars ./www/plantillas/popupconocerte.handlebars -f ./www/js/popupconocerte.handlebars.js 
 call handlebars ./www/plantillas/login.handlebars -f ./www/js/login.handlebars.js 
-rem cordova build android
+
+rem rm -rf platforms
+rem cordova platform add ios
+rem cordova platform add android
+cordova run android
