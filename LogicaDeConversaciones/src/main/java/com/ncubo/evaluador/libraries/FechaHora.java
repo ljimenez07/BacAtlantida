@@ -119,15 +119,125 @@ public class FechaHora extends Objeto implements Comparable<FechaHora>
 		return resultado;  
 	}
 
-	public boolean esMayorQue(FechaHora otraFecha) 
+
+	@Override
+	public boolean esMayorOIgualQue(Objeto otraFecha)
 	{
-		Date miFecha = covertirFechaADate();
-		Date laOtraFecha = otraFecha.covertirFechaADate();
-		
-		return miFecha.after(laOtraFecha);
+		try
+		{
+			if (otraFecha instanceof FechaHora)
+				return this.esMayorOIgualQue((FechaHora) otraFecha);
+			else
+			{
+				Fecha fecha = (Fecha) otraFecha;
+				return this.esMayorOIgualQue(new FechaHora(fecha.getDia(), fecha.getMes(), fecha.getAnno(), 0, 0, 0) );
+			}
+		}
+		catch(ClassCastException p)
+		{
+			throw new LanguageException(
+					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", FechaHora.class.getSimpleName(), otraFecha.getClass().getSimpleName())
+					);
+		}
 	}
 	
-	public boolean esMayorOIgualQue(FechaHora otraFecha)
+	@Override
+	public boolean esMenorOIgualQue(Objeto otraFecha)
+	{
+		try
+		{
+			if (otraFecha instanceof FechaHora)
+				return this.esMenorOIgualQue((FechaHora) otraFecha);
+			else
+			{
+				Fecha fecha = (Fecha) otraFecha;
+				return this.esMenorOIgualQue(new FechaHora(fecha.getDia(), fecha.getMes(), fecha.getAnno(), 0, 0, 0) );
+			}
+		}
+		catch(ClassCastException p)
+		{
+			throw new LanguageException(
+					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", FechaHora.class.getSimpleName(), otraFecha.getClass().getSimpleName())
+					);
+		}
+	}
+	
+	@Override
+	public boolean esMenorQue(Objeto otraFecha)
+	{
+		try
+		{
+			if (otraFecha instanceof FechaHora)
+				return this.esMenorQue((FechaHora) otraFecha);
+			else
+			{
+				Fecha fecha = (Fecha) otraFecha;
+				return this.esMenorQue(new FechaHora(fecha.getDia(), fecha.getMes(), fecha.getAnno(), 0, 0, 0) );
+			}
+		}
+		catch(ClassCastException p)
+		{
+			throw new LanguageException(
+					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", FechaHora.class.getSimpleName(), otraFecha.getClass().getSimpleName())
+					);
+		}
+	}
+	
+	@Override
+	public boolean esMayorQue(Objeto otraFecha)
+	{
+		try
+		{
+			if (otraFecha instanceof FechaHora)
+				return this.esMayorQue((FechaHora) otraFecha);
+			else
+			{
+				Fecha fecha = (Fecha) otraFecha;
+				return this.esMayorQue(new FechaHora(fecha.getDia(), fecha.getMes(), fecha.getAnno(), 0, 0, 0) );
+			}
+		}
+		catch(ClassCastException p)
+		{
+			throw new LanguageException(
+					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", FechaHora.class.getSimpleName(), otraFecha.getClass().getSimpleName())
+					);
+		}
+	}
+	
+	@Override
+	public boolean esIgualQue(Objeto otraFecha)
+	{
+		try
+		{
+			if (otraFecha instanceof FechaHora)
+				return this.esIgualQue((FechaHora) otraFecha);
+			else
+			{
+				Fecha fecha = (Fecha) otraFecha;
+				return this.esIgualQue(new FechaHora(fecha.getDia(), fecha.getMes(), fecha.getAnno(), 0, 0, 0) );
+			}
+		}
+		catch(ClassCastException p)
+		{
+			throw new LanguageException(
+					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", FechaHora.class.getSimpleName(), otraFecha.getClass().getSimpleName())
+					);
+		}
+	}
+	
+	@Override
+	public boolean noEsIgualQue(Objeto objeto)
+	{
+		return ! esIgualQue(objeto);
+	}
+	
+	private boolean esIgualQue(FechaHora fechaHora)
+	{
+		return dia == fechaHora.dia && mes == fechaHora.mes && anno == fechaHora.anno && hora == fechaHora.hora &&
+				minutos == fechaHora.minutos && segundos == fechaHora.segundos;
+	}
+	
+	private boolean esMayorOIgualQue(FechaHora otraFecha)
 	{	
 		Date miFecha = covertirFechaADate();
 		Date laOtraFecha = otraFecha.covertirFechaADate();
@@ -145,17 +255,28 @@ public class FechaHora extends Objeto implements Comparable<FechaHora>
 		}
 	}
 	
-	public boolean esMenorOIgualQue(FechaHora otraFecha)
+	private boolean esMayorQue(FechaHora otraFecha) 
 	{
-		int fechaActual = convertirAEntero(this);
-		int fechaAComparar = convertirAEntero(otraFecha);      
+		Date miFecha = covertirFechaADate();
+		Date laOtraFecha = otraFecha.covertirFechaADate();
 		
-		return fechaActual <= fechaAComparar;
+		return miFecha.after(laOtraFecha);
 	}
 	
-	int convertirAEntero(FechaHora fecha)
+	private boolean esMenorOIgualQue(FechaHora otraFecha)
 	{
-		return fecha.anno * 1000000 + fecha.mes * 100000 + fecha.dia * 1000 + fecha.hora * 100 + fecha.minutos * 10 + fecha.segundos;
+		Date miFecha = covertirFechaADate();
+		Date laOtraFecha = otraFecha.covertirFechaADate();     
+		
+		return laOtraFecha.after(miFecha) || miFecha.equals(laOtraFecha);
+	}
+	
+	private boolean esMenorQue(FechaHora otraFecha) 
+	{
+		Date miFecha = covertirFechaADate();
+		Date laOtraFecha = otraFecha.covertirFechaADate();
+		
+		return laOtraFecha.after(miFecha);
 	}
 	
 	public Fecha Fecha()
@@ -163,48 +284,6 @@ public class FechaHora extends Objeto implements Comparable<FechaHora>
 		return new Fecha(dia, mes, anno);
 	}
 
-	public boolean esIgualQue(FechaHora fechaUltimoComando)
-	{
-		long fechaActual = Long.parseLong
-				(
-						""+anno +
-						mes +
-						dia +
-						hora +
-						minutos +
-						segundos
-						);
-		long fechaAComparar = Long.parseLong
-				(
-						""+
-								fechaUltimoComando.anno +
-								fechaUltimoComando.mes +
-								fechaUltimoComando.dia +
-								fechaUltimoComando.hora +
-								fechaUltimoComando.minutos +
-								fechaUltimoComando.segundos
-						);   
-		return fechaActual == fechaAComparar ;
-	}
-
-	@Override
-	public boolean esIgualQue(Objeto objeto) 
-	{
-		FechaHora fechaHora = null;
-		try
-		{
-			fechaHora = (FechaHora)objeto;
-		}
-		catch(ClassCastException e)
-		{
-			throw new LanguageException(
-					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Hilera.class.getSimpleName(), objeto.getClass().getSimpleName())
-					);
-		}
-		return dia == fechaHora.dia && mes == fechaHora.mes && anno == fechaHora.anno && hora == fechaHora.hora &&
-				minutos == fechaHora.minutos && segundos == fechaHora.segundos;
-	}
-	
 	@Override
 	public int hashCode()
 	{
@@ -227,12 +306,6 @@ public class FechaHora extends Objeto implements Comparable<FechaHora>
 		return anno == otraFecha.anno && mes == otraFecha.mes && dia == otraFecha.dia && hora == otraFecha.hora && minutos == otraFecha.minutos && segundos == otraFecha.segundos;
 	}
 
-	@Override
-	public boolean noEsIgualQue(Objeto objeto)
-	{
-		return ! esIgualQue(objeto);
-	}
-	
 	public Fecha toFecha()
 	{
 		return new Fecha(dia, mes, anno);
@@ -326,4 +399,3 @@ public class FechaHora extends Objeto implements Comparable<FechaHora>
 	}
 
 }
-

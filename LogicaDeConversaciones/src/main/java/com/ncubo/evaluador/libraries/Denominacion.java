@@ -57,27 +57,4 @@ public class Denominacion extends Moneda
 	{
 		return new Denominacion( new Numero( (int) this.monto.getValor()),tipoDeMoneda);
 	}
-	
-	@Override
-	public boolean esIgualQue(Objeto objeto) 
-	{
-		Denominacion otraMoneda = null;
-		try
-		{
-			otraMoneda = (Denominacion)objeto;				
-		}
-		catch(ClassCastException p)
-		{
-			throw new LanguageException(
-					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Denominacion.class.getSimpleName(), objeto.getClass().getSimpleName())
-					);
-		}
-		return convertirADouble() == otraMoneda.convertirADouble() && tipoDeMoneda == otraMoneda.tipoDeMoneda;
-	}
-	
-	@Override
-	public boolean noEsIgualQue(Objeto objeto) 
-	{
-		return ! esIgualQue(objeto);
-	}
 }

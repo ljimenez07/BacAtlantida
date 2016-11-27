@@ -195,28 +195,88 @@ public class Fecha  extends Objeto implements Comparable<Fecha>
 		return dia == literal.getDia() && mes == literal.getMes() && anno == literal.getAnno();
 	}
 
-	public boolean esMayorQue(Fecha otraFecha)
+	@Override
+	public boolean esMayorQue(Objeto otraFecha)
+	{
+		try
+		{
+			return otraFecha instanceof Fecha ? esMayorQue((Fecha) otraFecha) : new FechaHora(dia, mes, anno, 0, 0 , 0).esMayorQue(otraFecha);
+		}
+		catch(ClassCastException e)
+		{
+			throw new LanguageException(
+					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Fecha.class.getSimpleName(), otraFecha.getClass().getSimpleName())
+					);
+		}
+	}
+	
+	@Override
+	public boolean esMenorQue(Objeto otraFecha)
+	{
+		try
+		{
+			return otraFecha instanceof Fecha ? esMenorQue((Fecha) otraFecha) : new FechaHora(dia, mes, anno, 0, 0 , 0).esMenorQue(otraFecha);
+		}
+		catch(ClassCastException e)
+		{
+			throw new LanguageException(
+					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Fecha.class.getSimpleName(), otraFecha.getClass().getSimpleName())
+					);
+		}
+	}
+	
+	@Override
+	public boolean esMayorOIgualQue(Objeto otraFecha)
+	{
+		try
+		{
+			return otraFecha instanceof Fecha ? esMayorOIgualQue((Fecha) otraFecha) : new FechaHora(dia, mes, anno, 0, 0 , 0).esMayorOIgualQue(otraFecha);
+		}
+		catch(ClassCastException e)
+		{
+			throw new LanguageException(
+					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Fecha.class.getSimpleName(), otraFecha.getClass().getSimpleName())
+					);
+		}
+	}
+	
+	@Override
+	public boolean esMenorOIgualQue(Objeto otraFecha)
+	{
+		try
+		{
+			return otraFecha instanceof Fecha ? esMenorOIgualQue((Fecha) otraFecha) : new FechaHora(dia, mes, anno, 0, 0 , 0).esMenorOIgualQue(otraFecha);
+		}
+		catch(ClassCastException e)
+		{
+			throw new LanguageException(
+					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Fecha.class.getSimpleName(), otraFecha.getClass().getSimpleName())
+					);
+		}
+	}
+	
+	private boolean esMayorQue(Fecha otraFecha)
 	{
 		int miFecha = anno * 10000 + mes * 100 + dia;  //22/11/2013 => 20131122 
 		int laOtraFecha = otraFecha.anno * 10000 + otraFecha.mes * 100 + otraFecha.dia;
 		return miFecha > laOtraFecha;
 	}
 
-	public boolean esMenorQue(Fecha otraFecha)
+	private boolean esMenorQue(Fecha otraFecha)
 	{
 		int miFecha = anno * 10000 + mes * 100 + dia;  //22/11/2013 => 20131122 
 		int laOtraFecha = otraFecha.anno * 10000 + otraFecha.mes * 100 + otraFecha.dia;
 		return miFecha < laOtraFecha;
 	}
 
-	public boolean esMayorOIgualQue(Fecha otraFecha)
+	private boolean esMayorOIgualQue(Fecha otraFecha)
 	{
 		int miFecha = anno * 10000 + mes * 100 + dia;  //22/11/2013 => 20131122 
 		int laOtraFecha = otraFecha.anno * 10000 + otraFecha.mes * 100 + otraFecha.dia;
 		return miFecha >= laOtraFecha;
 	}
 
-	public boolean esMenorOIgualQue(Fecha otraFecha)
+	private boolean esMenorOIgualQue(Fecha otraFecha)
 	{
 		int miFecha = anno * 10000 + mes * 100 + dia;  //22/11/2013 => 20131122 
 		int laOtraFecha = otraFecha.anno * 10000 + otraFecha.mes * 100 + otraFecha.dia;
@@ -226,10 +286,18 @@ public class Fecha  extends Objeto implements Comparable<Fecha>
 	@Override
 	public boolean esIgualQue(Objeto objeto) 
 	{
-		Fecha fecha = null;
 		try
 		{
-			fecha = (Fecha)objeto;
+			if (objeto instanceof Fecha)
+			{
+				Fecha fecha = (Fecha)objeto;
+				return dia == fecha.dia && mes == fecha.mes && anno == fecha.anno;
+			}
+			else
+			{
+				FechaHora fecha = (FechaHora)objeto;
+				return new FechaHora(dia, mes, anno, 0, 0 , 0).esIgualQue(fecha);
+			}
 		}
 		catch(ClassCastException e)
 		{
@@ -237,7 +305,7 @@ public class Fecha  extends Objeto implements Comparable<Fecha>
 					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Fecha.class.getSimpleName(), objeto.getClass().getSimpleName())
 					);
 		}
-		return dia == fecha.dia && mes == fecha.mes && anno == fecha.anno;
+		
 	}
 	
 	@Override

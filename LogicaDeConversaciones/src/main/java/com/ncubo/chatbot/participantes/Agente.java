@@ -177,6 +177,8 @@ public class Agente extends Participante{
 				// Analizar si tengo que cambiar de workspace
 				cambiarDeTema = respuesta.seTerminoElTema() || respuesta.quiereCambiarIntencion();
 				if(cambiarDeTema){
+					borrarUnaVariableDelContexto(Constantes.ID_TEMA); // Solo se borra el id cuando el tema termina
+					
 					// Desactivar flag del contexto
 					nombreDeLaIntencionEspecificaActiva = respuesta.obtenerLaIntencionDeConfianzaDeLaRespuesta().getNombre();
 					seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActualConRespaldo();
@@ -190,7 +192,6 @@ public class Agente extends Participante{
 	    borrarUnaVariableDelContexto(Constantes.CAMBIAR_A_GENERAL);
 	    borrarUnaVariableDelContexto(Constantes.TERMINO_EL_TEMA);
 		borrarUnaVariableDelContexto(Constantes.CAMBIAR_INTENCION);
-		borrarUnaVariableDelContexto(Constantes.ID_TEMA);
 		
 		return respuesta;
 	}
@@ -363,7 +364,6 @@ public class Agente extends Participante{
 	    borrarUnaVariableDelContexto(Constantes.CAMBIAR_A_GENERAL);
 	    borrarUnaVariableDelContexto(Constantes.TERMINO_EL_TEMA);
 		borrarUnaVariableDelContexto(Constantes.CAMBIAR_INTENCION);
-		borrarUnaVariableDelContexto(Constantes.ID_TEMA);
 		
 		/*try{
 			return response.getContext().get(Constantes.NODO_ACTIVADO).toString();

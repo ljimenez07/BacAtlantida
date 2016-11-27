@@ -121,10 +121,10 @@ public class Numero extends Objeto implements Comparable<Numero>
 	@Override
 	public boolean esIgualQue(Objeto objeto)
 	{
-		Numero num = null;
+		double otroValor;
 		try
 		{
-			num = (Numero)objeto;				
+			otroValor = objeto instanceof Numero ? ((Numero) objeto).valor : ((Decimal)objeto).getValor();		
 		}
 		catch(ClassCastException p)
 		{
@@ -132,16 +132,16 @@ public class Numero extends Objeto implements Comparable<Numero>
 					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Numero.class.getSimpleName(),  objeto.getClass().getSimpleName())
 					);
 		}
-		return valor == num.valor;
+		return valor == otroValor;
 	}
 	
 	@Override
 	public boolean esMayorQue(Objeto objeto)
 	{
-		Numero num = null;
+		double otroValor;
 		try
 		{
-			num = (Numero)objeto;				
+			otroValor = objeto instanceof Numero ? ((Numero) objeto).valor : ((Decimal)objeto).getValor();	
 		}
 		catch(ClassCastException p)
 		{
@@ -149,16 +149,16 @@ public class Numero extends Objeto implements Comparable<Numero>
 					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Numero.class.getSimpleName(),  objeto.getClass().getSimpleName())
 					);
 		}
-		return valor > num.valor;
+		return valor > otroValor;
 	}
-
+	
 	@Override
 	public boolean esMenorQue(Objeto objeto)
 	{
-		Numero num = null;
+		double otroValor;
 		try
 		{
-			num = (Numero)objeto;				
+			otroValor = objeto instanceof Numero ? ((Numero) objeto).valor : ((Decimal)objeto).getValor();				
 		}
 		catch(ClassCastException p)
 		{
@@ -166,16 +166,16 @@ public class Numero extends Objeto implements Comparable<Numero>
 					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Numero.class.getSimpleName(),  objeto.getClass().getSimpleName())
 					);
 		}
-		return valor < num.valor;
+		return valor < otroValor;
 	}
 	
 	@Override
 	public boolean esMenorOIgualQue(Objeto objeto)
 	{
-		Numero num = null;
+		double otroValor;
 		try
 		{
-			num = (Numero)objeto;				
+			otroValor = objeto instanceof Numero ? ((Numero) objeto).valor : ((Decimal)objeto).getValor();
 		}
 		catch(ClassCastException p)
 		{
@@ -183,16 +183,16 @@ public class Numero extends Objeto implements Comparable<Numero>
 					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Numero.class.getSimpleName(),  objeto.getClass().getSimpleName())
 					);
 		}
-		return valor <= num.valor;
+		return valor <= otroValor;
 	}
 	
 	@Override
 	public boolean esMayorOIgualQue(Objeto objeto)
 	{
-		Numero num = null;
+		double otroValor;
 		try
 		{
-			num = (Numero)objeto;				
+			otroValor = objeto instanceof Numero ? ((Numero) objeto).valor : ((Decimal)objeto).getValor();		
 		}
 		catch(ClassCastException p)
 		{
@@ -200,9 +200,9 @@ public class Numero extends Objeto implements Comparable<Numero>
 					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Numero.class.getSimpleName(),  objeto.getClass().getSimpleName())
 					);
 		}
-		return valor >= num.valor;
+		return valor >= otroValor;
 	}
-	
+
 	@Override
 	public boolean noEsIgualQue(Objeto objeto) 
 	{

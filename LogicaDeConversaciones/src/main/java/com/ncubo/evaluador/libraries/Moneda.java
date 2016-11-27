@@ -161,7 +161,7 @@ public abstract class Moneda extends Objeto
 	public String show()
 	{
 		String simbolo = simboloMonetario();
-		if (simbolo.equals("CRC")) simbolo = "�";
+		if (simbolo.equals("CRC")) simbolo = "�";
 		if (simbolo.equals("USD")) simbolo = "$";
 		String montoConFormato;
 		if( montoEntero != null)
@@ -201,16 +201,48 @@ public abstract class Moneda extends Objeto
 
 	public abstract double convertirADouble();
 
-	public abstract Objeto sinDecimales(); 
+	public abstract Objeto sinDecimales();
+	
+	@Override
+	public boolean esIgualQue(Objeto objeto) 
+	{
+		
+		Moneda otraMoneda = null;
+		try
+		{
+			otraMoneda = (Moneda)objeto;
+			if (tipoDeMoneda != otraMoneda.tipoDeMoneda)
+				throw new LanguageException(
+						String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", tipoDeMoneda.name(), otraMoneda.tipoDeMoneda.name())
+						);
+		}
+		catch(ClassCastException p)
+		{
+			throw new LanguageException(
+					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Denominacion.class.getSimpleName(), objeto.getClass().getSimpleName())
+					);
+		}
+		return convertirADouble() == otraMoneda.convertirADouble() && tipoDeMoneda == otraMoneda.tipoDeMoneda;
+	}
+	
+	@Override
+	public boolean noEsIgualQue(Objeto objeto) 
+	{
+		return ! esIgualQue(objeto);
+	}
 	
 	@Override
 	public boolean esMenorQue(Objeto objeto) 
 	{	
-		boolean esMenor = false;
+		boolean resultado = false;
 		if (objeto instanceof Moneda) 
 		{
-			Moneda estaMoneda = (Moneda) objeto;			
-			esMenor = convertirADouble() < estaMoneda.convertirADouble();
+			Moneda estaMoneda = (Moneda) objeto;
+			if (tipoDeMoneda != estaMoneda.tipoDeMoneda)
+				throw new LanguageException(
+						String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", tipoDeMoneda.name(), estaMoneda.tipoDeMoneda.name())
+						);
+			resultado = convertirADouble() < estaMoneda.convertirADouble();
 		}
 		else 
 		{
@@ -218,7 +250,73 @@ public abstract class Moneda extends Objeto
 					String.format("No se puede comparar un %s con un %s.", objeto.getClass().getSimpleName(), getClass().getSimpleName()));
 		}
 		
-		return esMenor;
+		return resultado;
+	}
+	
+	@Override
+	public boolean esMayorQue(Objeto objeto) 
+	{	
+		boolean resultado = false;
+		if (objeto instanceof Moneda) 
+		{
+			Moneda estaMoneda = (Moneda) objeto;
+			if (tipoDeMoneda != estaMoneda.tipoDeMoneda)
+				throw new LanguageException(
+						String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", tipoDeMoneda.name(), estaMoneda.tipoDeMoneda.name())
+						);
+			resultado = convertirADouble() > estaMoneda.convertirADouble();
+		}
+		else 
+		{
+			throw new LanguageException(
+					String.format("No se puede comparar un %s con un %s.", objeto.getClass().getSimpleName(), getClass().getSimpleName()));
+		}
+		
+		return resultado;
+	}
+	
+	@Override
+	public boolean esMayorOIgualQue(Objeto objeto) 
+	{	
+		boolean resultado = false;
+		if (objeto instanceof Moneda) 
+		{
+			Moneda estaMoneda = (Moneda) objeto;
+			if (tipoDeMoneda != estaMoneda.tipoDeMoneda)
+				throw new LanguageException(
+						String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", tipoDeMoneda.name(), estaMoneda.tipoDeMoneda.name())
+						);
+			resultado = convertirADouble() >= estaMoneda.convertirADouble();
+		}
+		else 
+		{
+			throw new LanguageException(
+					String.format("No se puede comparar un %s con un %s.", objeto.getClass().getSimpleName(), getClass().getSimpleName()));
+		}
+		
+		return resultado;
+	}
+	
+	@Override
+	public boolean esMenorOIgualQue(Objeto objeto) 
+	{	
+		boolean resultado = false;
+		if (objeto instanceof Moneda) 
+		{
+			Moneda estaMoneda = (Moneda) objeto;
+			if (tipoDeMoneda != estaMoneda.tipoDeMoneda)
+				throw new LanguageException(
+						String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", tipoDeMoneda.name(), estaMoneda.tipoDeMoneda.name())
+						);
+			resultado = convertirADouble() <= estaMoneda.convertirADouble();
+		}
+		else 
+		{
+			throw new LanguageException(
+					String.format("No se puede comparar un %s con un %s.", objeto.getClass().getSimpleName(), getClass().getSimpleName()));
+		}
+		
+		return resultado;
 	}
 
 	public boolean esDeTipo(Monedas tipo) 

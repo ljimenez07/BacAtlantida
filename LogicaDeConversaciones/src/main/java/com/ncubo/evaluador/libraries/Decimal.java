@@ -132,10 +132,10 @@ public class Decimal extends Objeto
 	@Override
 	public boolean esIgualQue(Objeto objeto) 
 	{
-		Decimal monto = null;
+		double otroValor = 0.0;
 		try
 		{
-			monto = (Decimal)objeto;				
+			otroValor = objeto instanceof Numero ? ((Numero) objeto).valor : ((Decimal)objeto).valor; 				
 		}
 		catch(ClassCastException p)
 		{
@@ -143,7 +143,75 @@ public class Decimal extends Objeto
 					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Decimal.class.getSimpleName(), objeto.getClass().getSimpleName())
 					);
 		}
-		return valor == monto.valor;
+		return valor == otroValor;
+	}
+	
+	@Override
+	public boolean esMayorQue(Objeto objeto) 
+	{
+		double otroValor = 0.0;
+		try
+		{
+			otroValor = objeto instanceof Numero ? ((Numero) objeto).valor : ((Decimal)objeto).valor; 
+		}
+		catch(ClassCastException p)
+		{
+			throw new LanguageException(
+					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Decimal.class.getSimpleName(), objeto.getClass().getSimpleName())
+					);
+		}
+		return valor > otroValor;
+	}
+	
+	@Override
+	public boolean esMenorQue(Objeto objeto) 
+	{
+		double otroValor = 0.0;
+		try
+		{
+			otroValor = objeto instanceof Numero ? ((Numero) objeto).valor : ((Decimal)objeto).valor; 				
+		}
+		catch(ClassCastException p)
+		{
+			throw new LanguageException(
+					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Decimal.class.getSimpleName(), objeto.getClass().getSimpleName())
+					);
+		}
+		return valor < otroValor;
+	}
+	
+	@Override
+	public boolean esMenorOIgualQue(Objeto objeto) 
+	{
+		double otroValor = 0.0;
+		try
+		{
+			otroValor = objeto instanceof Numero ? ((Numero) objeto).valor : ((Decimal)objeto).valor;				
+		}
+		catch(ClassCastException p)
+		{
+			throw new LanguageException(
+					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Decimal.class.getSimpleName(), objeto.getClass().getSimpleName())
+					);
+		}
+		return valor <= otroValor;
+	}
+	
+	@Override
+	public boolean esMayorOIgualQue(Objeto objeto) 
+	{
+		double otroValor = 0.0;
+		try
+		{
+			otroValor = objeto instanceof Numero ? ((Numero) objeto).valor : ((Decimal)objeto).valor;				
+		}
+		catch(ClassCastException p)
+		{
+			throw new LanguageException(
+					String.format("En la comparación se esperaba el valor de tipo [%s] pero se encontro un valor de tipo [%s]", Decimal.class.getSimpleName(), objeto.getClass().getSimpleName())
+					);
+		}
+		return valor >= otroValor;
 	}
 	
 	@Override
