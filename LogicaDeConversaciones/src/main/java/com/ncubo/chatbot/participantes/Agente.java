@@ -101,9 +101,11 @@ public class Agente extends Participante{
 			if(numeroDeIntentosActualesEnRepetirUnaPregunta == MAXIMO_DE_INTENTOS_OPCIONALES){
 				// Abordar el tema
 				abordarElTemaPorNOLoEntendi = true; // Buscar otro tema
+				cambiarDeTema = true; // Buscar otro tema
 			}else{
 				// Actualizar contexto
 				miContextos.put(nombreDeWorkspaceActual, respuesta.getMiContexto());
+				abordarElTemaPorNOLoEntendi = false;
 				
 				// Analizar si ya tengo que cambiar de workspace
 				try{
@@ -152,11 +154,11 @@ public class Agente extends Participante{
 			Intent miIntencion = this.determinarLaIntencionGeneral(respuestaDelClinete);
 			if(elClienteQuiereCambiarDeIntencionGeneral(miIntencion)){
 				if(! miIntencion.getIntent().equals(nombreDeLaIntencionGeneralActiva)){
-					System.out.println("Se requiere cambiar a workspace general ...");
-					this.seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActual();
+					System.out.println("Se requiere cambiar a WROKSPACE GENERAL ...");
+					this.seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActualConRespaldo();;
 					cambiarAWorkspaceGeneral();
-					enviarRespuestaAWatson(respuestaDelClinete, frase); // General
-					respuesta = enviarRespuestaAWatson(respuestaDelClinete, frase); // Especifico
+					respuesta = enviarRespuestaAWatson(respuestaDelClinete, frase); // General
+					//respuesta = enviarRespuestaAWatson(respuestaDelClinete, frase); // Especifico
 				}else{
 					this.seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActualConRespaldo();
 				}
@@ -170,9 +172,11 @@ public class Agente extends Participante{
 			if(numeroDeIntentosActualesEnRepetirUnaPregunta == MAXIMO_DE_INTENTOS_OPCIONALES){
 				// Abordar el tema
 				cambiarDeTema = true; // Buscar otro tema
+				abordarElTemaPorNOLoEntendi = true;
 			}else{
 				// Actualizar contexto
 				miContextos.put(nombreDeWorkspaceActual, respuesta.getMiContexto());
+				abordarElTemaPorNOLoEntendi = false;
 				
 				// Analizar si tengo que cambiar de workspace
 				cambiarDeTema = respuesta.seTerminoElTema() || respuesta.quiereCambiarIntencion();
@@ -236,9 +240,9 @@ public class Agente extends Participante{
 		Iterator<?> json_keys = jsonObj.keys();
 		while( json_keys.hasNext() ){
 			String json_key = (String) json_keys.next();
-			System.out.println(json_key);
 			if( ! json_key.equals("system") && ! json_key.equals("conversation_id")){
 				try {
+					System.out.println("Respaldando: "+json_key);
 					misVariables.put(json_key, jsonObj.getString(json_key));
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -260,7 +264,6 @@ public class Agente extends Participante{
 		
 	private Intent determinarLaIntencionGeneral(String mensaje){
 		Intent intencion = determinarLaIntencionDeConfianzaEnUnWorkspace(mensaje, nombreDelWorkSpaceGeneral);
-		System.out.println("La intencion general es: "+intencion.getIntent());
 		return intencion;
 	}
 	
