@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ncubo.chatbot.exceptiones.ChatException;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.chatbot.partesDeLaConversacion.Temario;
 import com.ncubo.chatbot.participantes.Cliente;
@@ -26,56 +27,80 @@ public class Conversaciones {
 	}
 	
 	private String crearUnaNuevoConversacion(Usuario usuario){
-		String resultado = "El usuario no se pudo agregar";
-		try{
-			Cliente cliente = null;
-			try{
-				if(! usuario.getUsuarioId().equals("") && ! usuario.getIdSesion().equals("")){
-					if( ! existeElCliente(usuario.getUsuarioId())){
-						cliente = new Cliente(usuario.getUsuarioNombre(), usuario.getUsuarioId());
-						cliente.agregarIdsDeSesiones(usuario.getIdSesion());
-						misClientes.put(cliente.getMiId(), cliente);
-						
-						if(existeLaConversacion(usuario.getIdSesion())){
-							Conversacion coversacion = misConversaciones.get(usuario.getIdSesion());
-							coversacion.cambiarParticipante(cliente);
-							misConversaciones.put(usuario.getIdSesion(), coversacion);
-						}else{
-							Conversacion coversacion = new Conversacion(temarioDelBancoAtlantida, cliente);
-							misConversaciones.put(usuario.getIdSesion(), coversacion);
-						}
-						resultado = "La nueva conversacion se creo exitosamente.";
-						System.out.println(resultado);
-					}else{
-						resultado = "El cliente logueado ya existe.";
-						System.out.println(resultado);
-					}
-				}
-			}catch(Exception e){
-				System.out.println("Error al extraer el id del usuario y de la sesion.");
-			}
+		String resultado = "";
+		Cliente cliente = null;
+		
+		if(usuario.getEstaLogueado()){
+			cliente = new Cliente(usuario.getUsuarioNombre(), usuario.getUsuarioId());
+			cliente.agregarIdsDeSesiones(usuario.getIdSesion());
+			misClientes.put(cliente.getMiId(), cliente);
 			
-			if (cliente == null){
-				if (! usuario.getIdSesion().equals("")){
-					if( ! existeLaConversacion(usuario.getIdSesion())){
-						cliente = new Cliente();
-						Conversacion coversacion = new Conversacion(temarioDelBancoAtlantida, cliente);
-						misConversaciones.put(usuario.getIdSesion(), coversacion);
-						resultado = "La conversacion se creo exitosamente.";
-						System.out.println(resultado);
-					}else{
-						resultado = "La conversacion ya existe.";
-						System.out.println(resultado);
-					}
-				}else{
-					resultado = "La conversacion NO pudo ser creada";
+			if(existeLaConversacion(usuario.getIdSesion())){
+				Conversacion coversacion = misConversaciones.get(usuario.getIdSesion());
+				coversacion.cambiarParticipante(cliente);
+				misConversaciones.put(usuario.getIdSesion(), coversacion);
+			}else{
+				Conversacion coversacion = new Conversacion(temarioDelBancoAtlantida, cliente);
+				misConversaciones.put(usuario.getIdSesion(), coversacion);
+			}
+			resultado = "La nueva conversacion se creo exitosamente.";
+			System.out.println(resultado);
+		}else{
+			if (! usuario.getIdSesion().equals("")){
+				if( ! existeLaConversacion(usuario.getIdSesion())){
+					cliente = new Cliente();
+					Conversacion coversacion = new Conversacion(temarioDelBancoAtlantida, cliente);
+					misConversaciones.put(usuario.getIdSesion(), coversacion);
+					resultado = "La nueva conversacion se creo exitosamente.";
 					System.out.println(resultado);
 				}
+			}else{
+				resultado = "La conversacion NO pudo ser creada";
+				throw new ChatException(resultado);
 			}
-			
-		}catch(Exception e){
-			System.out.println("Error al crear una conversacion: "+e.getMessage());
 		}
+		
+		return resultado;
+	}
+	
+	public ArrayList<Salida> conversarConElAgente(Usuario cliente, String textoDelCliente, boolean esConocerte){
+		ArrayList<Salida> resultado = null;
+		logger.debug("Conversar ..........");
+		System.out.println("Coversar con "+cliente.getIdSesion());
+		
+		if( cliente.getUsuarioId().equals("") && cliente.getIdSesion().equals("") || (cliente.getUsuarioId().equals("") && cliente.getEstaLogueado())){ // Esta logueado
+			throw new ChatException("No se puede chatear porque no existe usuario ni id de sesion");
+		}
+		
+		if(cliente.getEstaLogueado()){ // Esta logueado
+			// Verificar si ya el usuario existe
+			if(existeElCliente(cliente.getUsuarioId()) && existeLaConversacion(cliente.getIdSesion())){
+				// TODO Verificar si cambio el id de sesion, si es asi agregarla al cliente y hacerlo saber a conversacion
+				misClientes.get(cliente.getUsuarioId()).verificarSiExisteElIdSesion(cliente.getIdSesion());
+				misConversaciones.get(cliente.getIdSesion()).cambiarParticipante(misClientes.get(cliente.getUsuarioId())); // Actualizar cliente
+				resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
+			}else{ // Crear un nuevo Cliente
+				crearUnaNuevoConversacion(cliente);
+				resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
+				/*if(existeLaConversacion(cliente.getIdSesion())){ // Es porque ya se cliente esta conversando y no se habia logueado, eso quiere decir que se tiene que mantener el contexto y NO saludar de nuevo
+					resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
+				}else{
+					resultado = inicializarConversacionConElAgente(cliente.getIdSesion());
+				}*/
+			}
+		}else{
+			if(! cliente.getIdSesion().equals("")){
+				if(existeLaConversacion(cliente.getIdSesion())){
+					resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
+				}else{ // Crear una nueva conversacion
+					crearUnaNuevoConversacion(cliente);
+					resultado = inicializarConversacionConElAgente(cliente.getIdSesion());
+				}
+			}else{
+				throw new ChatException("No se puede chatear porque no existe id de sesion");
+			}
+		}
+		
 		return resultado;
 	}
 	
@@ -89,46 +114,6 @@ public class Conversaciones {
 	
 	public ArrayList<Salida> inicializarConversacionConElAgente(String idDelCliente){
 		return misConversaciones.get(idDelCliente).inicializarLaConversacion();
-	}
-	
-	public ArrayList<Salida> conversarConElAgente(Usuario cliente, String textoDelCliente, boolean esConocerte){
-		ArrayList<Salida> resultado = null;
-		logger.debug("Conversar ..........");
-		System.out.println("Coversar con "+cliente.getIdSesion());
-		try{
-			if( ! cliente.getUsuarioId().equals("") && ! cliente.getIdSesion().equals("") && cliente.getEstaLogueado()){ // Esta logueado
-				// Verificar si ya el usuario existe
-				if(existeElCliente(cliente.getUsuarioId())){
-					// TODO Verificar si cambio el id de sesion, si es asi agregarla al cliente y hacerlo saber a conversacion
-					misClientes.get(cliente.getUsuarioId()).verificarSiExisteElIdSesion(cliente.getIdSesion());
-					resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
-				}else{ // Crear un nuevo Cliente
-					crearUnaNuevoConversacion(cliente);
-					if(existeLaConversacion(cliente.getIdSesion())){ // Es porque ya se cliente esta conversando y no se habia logueado, eso quiere decir que se tiene que mantener el contexto y NO saludar de nuevo
-						resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
-					}else{
-						resultado = inicializarConversacionConElAgente(cliente.getIdSesion());
-					}
-				}
-			}
-		}catch(Exception e){
-			resultado = null;
-		}
-		
-		if (resultado == null){
-			if(! cliente.getIdSesion().equals("")){
-				if(existeLaConversacion(cliente.getIdSesion())){
-					resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
-				}else{ // Crear una nueva conversacion
-					crearUnaNuevoConversacion(cliente);
-					resultado = inicializarConversacionConElAgente(cliente.getIdSesion());
-				}
-			}else{
-				System.out.println("No existe el usuario o conversacion en el sistema");
-			}
-		}
-		
-		return resultado;
 	}
 	
 	public ArrayList<Salida> hablarConElAjente(Usuario cliente, String textoDelCliente, boolean esConocerte){
