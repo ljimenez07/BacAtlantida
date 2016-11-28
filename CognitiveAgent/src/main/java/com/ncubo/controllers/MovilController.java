@@ -115,14 +115,16 @@ public class MovilController {
 		
 		throw new CredencialesInvalidosException();
 	}
-	
+
+	@CrossOrigin(origins = "*")
 	@GetMapping("/movil/logout")
 	@ResponseBody String logout(HttpSession sesion) throws JSONException
 	{
 		sesion.setAttribute(Usuario.LLAVE_EN_SESSION, null);
 		return new JSONObject().put("usuarioEstaLogueado", false).toString();
 	}
-	
+
+	@CrossOrigin(origins = "*")
 	@GetMapping("/movil/usuario")
 	@ResponseBody Usuario obtenerUsuario(HttpSession sesion) throws JSONException
 	{

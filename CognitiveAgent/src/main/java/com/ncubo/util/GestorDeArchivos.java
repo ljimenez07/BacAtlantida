@@ -105,7 +105,7 @@ public class GestorDeArchivos
 		directory.mkdirs();
 		String pathArchivo = absolutePath;
 
-		absolutePath += File.separator+"descripcion.ogg";
+		absolutePath += File.separator+"descripcion.wav";
 		
 		File file = null;
 		file = new File(absolutePath);

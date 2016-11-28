@@ -2,9 +2,11 @@ package com.ncubo.data;
 
 import java.sql.Timestamp;
 
+import com.ncubo.chatbot.partesDeLaConversacion.Tema;
+
 public class Consulta
 {
-	private String intent;
+	private Tema tema;
 	private Timestamp fecha;
 	private String descripcion;
 	private int vecesConsultado;
@@ -13,22 +15,29 @@ public class Consulta
 	{
 	}
 	
-	public Consulta(String intent, Timestamp fecha, String descripcion, int vecesConsultado)
+	public Consulta(Tema tema, Timestamp fecha)
 	{
-		this.intent = intent;
+		this.tema = tema;
+		this.fecha = fecha;
+		this.vecesConsultado = 1;
+	}
+	
+	public Consulta(Tema tema, Timestamp fecha, String descripcion, int vecesConsultado)
+	{
+		this.tema = tema;
 		this.fecha = fecha;
 		this.descripcion = descripcion;
 		this.vecesConsultado = vecesConsultado;
 	}
 
-	public String getIntent()
+	public Tema getTema()
 	{
-		return intent;
+		return tema;
 	}
 	
-	public void setIntent(String intent)
+	public void setTema(Tema tema)
 	{
-		this.intent = intent;
+		this.tema = tema;
 	}
 	
 	public Timestamp getFecha()
