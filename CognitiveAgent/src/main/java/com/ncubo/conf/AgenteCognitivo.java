@@ -30,6 +30,7 @@ import com.ibm.watson.developer_cloud.conversation.v1.model.Entity;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Intent;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
+import com.ncubo.chatbot.watson.TextToSpeechWatson;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.data.Consulta;
 import com.ncubo.logicaDeConversaciones.Conversaciones;
@@ -117,7 +118,6 @@ public class AgenteCognitivo
 		JSONArray arrayList = new JSONArray(); 
 		
 		System.out.println(salida.size());
-		
 		for(int i = 0; i < salida.size(); i++){
 			
 			texto = salida.get(i).getMiTexto();
@@ -224,6 +224,14 @@ public class AgenteCognitivo
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
 				jsonObject.put("audio", salida.get(i).getMiSonido().url());	
+				arrayList.put(jsonObject);
+			}
+			else if(texto.contains("%br"))
+			{
+				texto = texto.replaceAll("%br", "<br/>");
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("texto", texto);
+				jsonObject.put("audio","");	
 				arrayList.put(jsonObject);
 			}
 			else
