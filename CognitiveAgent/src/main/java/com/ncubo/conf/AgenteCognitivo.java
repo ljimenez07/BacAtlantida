@@ -187,7 +187,7 @@ public class AgenteCognitivo
 				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAudio));	
 				arrayList.put(jsonObject);
 			}
-			else if(idFrase.equals("movimientos")&& usuario.getEstaLogueado())
+			else if(idFrase.equals("movimientosTarjeta") || idFrase.equals("movimientosCuenta") && usuario.getEstaLogueado())
 			{
 				textos = extraerDatos.obtenerMovimientos(wsMovimientos, texto, usuario.getUsuarioId(), "");
 				
