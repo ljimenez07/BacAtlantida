@@ -139,7 +139,7 @@ public class TextToSpeechWatson {
 	public static void main (String[] args) throws IOException{
 		
 		/*InputStream in = null;
-		FileOutputStream file = new FileOutputStream("C:\\Users\\SergioAlberto\\Documents\\SergioGQ\\Watson\\Repo\\watson\\LogicaDeConversaciones\\src\\main\\resources\\test.ogg");
+		FileOutputStream file = new FileOutputStream("C:\\Users\\SergioAlberto\\Documents\\SergioGQ\\Watson\\Repo\\watson\\LogicaDeConversaciones\\src\\main\\resources\\test.wav");
 
 		try {
 	         TextToSpeech textService = new TextToSpeech();
