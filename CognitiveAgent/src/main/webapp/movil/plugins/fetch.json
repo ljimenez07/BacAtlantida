@@ -7,10 +7,10 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-statusbar": {
+    "cordova-plugin-queries-schemes": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-statusbar@2.2.0"
+            "id": "cordova-plugin-queries-schemes"
         },
         "is_top_level": true,
         "variables": {}

@@ -331,9 +331,8 @@ private Tema quiereAbrirCuenta()
 
 	@Override
 	protected void cargarDependencias(Temas temasDelDiscurso){
-		/*temasDelDiscurso.get(9).dependeDe(temasDelDiscurso.get(8));
-		temasDelDiscurso.get(10).dependeDe(temasDelDiscurso.get(9));*/
-		
+		temasDelDiscurso.get(13).dependeDe(temasDelDiscurso.get(12));
+		temasDelDiscurso.get(14).dependeDe(temasDelDiscurso.get(13));
 	}
 	
 	public static void main(String argv[]) {
