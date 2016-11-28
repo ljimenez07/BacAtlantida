@@ -293,7 +293,37 @@
 		<vineta></vineta>
 	</conversacion>
 	
-	<conversacion id="montoInicialCuentaAhorros">
+<conversacion id="cualProductoAhorro">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>Te cuento que tenemos a tu disposición estos tipos de cuenta de ahorros: $%br Ahorros Atlántida $%br Ahorros Atlántida Kids $%br Virtual Atlántida "U" $%br ¿Sobre cúal de estos productos necesitas información?</curioso>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="cualMonedaAhorros">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>Esta cuenta esta disponible en Lempiras, Dólares y Euros. ¿Cúal es la que necesitas?</curioso>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="cualMonedaAhorrosKids">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>¿Podrias indicar la moneda en la que quieres la cuenta de ahorros Atlántida Kids? Hay en Lempiras y Dólares. </curioso>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="montoInicialCuentaAhorrosLempiras">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
@@ -303,7 +333,47 @@
 		<vineta></vineta>
 	</conversacion>
 	
-	<conversacion id="saldoMinimoCuentaAhorros">
+	<conversacion id="montoInicialCuentaAhorrosDolares">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El monto inicial de una cuenta de ahorros es de 100 Dólares.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="montoInicialCuentaAhorrosEuros">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El monto inicial de una cuenta de ahorros es de 500 Euros.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="montoInicialCuentaAhorrosKidsLempiras">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El monto inicial de una cuenta de ahorros es de 100 Lempiras.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="montoInicialCuentaAhorrosKidsDolares">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El monto inicial de una cuenta de ahorros es de 30 Dólares.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="saldoMinimoCuentaAhorrosLempiras">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
@@ -313,15 +383,97 @@
 		<vineta></vineta>
 	</conversacion>
 	
-	<conversacion id="requisitosCuentaAhorros">
+	<conversacion id="saldoMinimoCuentaAhorrosDolares">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para abrir una cuenta de ahorro debes presentar tarjeta de Identidad, carnet de residencia, completar la solicitud del producto y realizar el depósito inicial.</frase>
+			<frase>Te cuento que el saldo mínimo para cuenta de ahorros es de 100 Dólares, y no olvides que hay un cargo por 1 Dólar en caso que no se cumpla ese mínimo.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
+	
+	<conversacion id="saldoMinimoCuentaAhorrosEuros">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Te cuento que el saldo mínimo para cuenta de ahorros es de 500 Euros, y no olvides que hay un cargo por 1 Euro en caso que no se cumpla ese mínimo.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="saldoMinimoCuentaAhorrosKidsLempiras">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Te cuento que el saldo mínimo para cuenta de ahorros Atlántida Kids es de 100 Lempiras, en esta cuenta el cargo por saldo menor al mínimo no aplica.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="saldoMinimoCuentaAhorrosKidsDolares">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Te cuento que el saldo mínimo para cuenta de ahorros Atlántida Kids es de 30 Dólares, en esta cuenta el cargo por saldo menor al mínimo no aplica.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+
+	
+	<conversacion id="requisitosCuentaAhorrosLempiras">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para abrir una cuenta de ahorro debes: $%br 1) Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia y/o pasaporte. $%br2) Completar la solicitud. $%br3) Realizar el depósito inicial de 500 Lempiras. $%br Recuerda que el saldo mínimo para cuenta de ahorros es de 500 Lempiras, y no olvides que hay un cargo por 30 Lempiras en caso que no se cumpla ese mínimo.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="requisitosCuentaAhorrosEuros">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para abrir una cuenta de ahorro debes: $%br 1) Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia y/o pasaporte. $%br2) Completar la solicitud. $%br3) Realizar el depósito inicial de 500 Euros. $%br Recuerda que el saldo mínimo para cuenta de ahorros es de 500 Euros, y no olvides que hay un cargo por 1 Euro en caso que no se cumpla ese mínimo.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="requisitosCuentaAhorrosDolares">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para abrir una cuenta de ahorro debes: $%br 1) Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia y/o pasaporte. $%br2) Completar la solicitud. $%br3) Realizar el depósito inicial de 100 Dólares. $%br Recuerda que el saldo mínimo para cuenta de ahorros es de 100 Dólares, y no olvides que hay un cargo por 1 Dólar en caso que no se cumpla ese mínimo.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="requisitosCuentaAhorrosKidsLempiras">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para abrir una cuenta de ahorro debes:  $%br 1) Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia y/o pasaporte. $%br 2) Partida de nacimiento del niño. $%br 3) Completar la solicitud. $%br 4) Realizar el depósito inicial de 100 Lempiras. $%br Recuerda que el saldo mínimo para cuenta de ahorros Atlántida Kids es de 100 Lempiras, en esta cuenta el cargo por saldo menor al mínimo no aplica.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="requisitosCuentaAhorrosKidsDolares">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para abrir una cuenta de ahorro debes: $%br 1) Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia y/o pasaporte. $%br 2) Partida de nacimiento del niño. $%br 3) Completar la solicitud. $%br 4) Realizar el depósito inicial 30 Dólares. $%br Recuerda que el saldo mínimo para cuenta de ahorros Atlántida Kids es de 30 Dólares, en esta cuenta el cargo por saldo menor al mínimo no aplica.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
 	
 	<conversacion id="saludarConocerte">		
 		<tipo>afirmativa</tipo>		
@@ -387,7 +539,7 @@
 		<workspace tipo="general" idIBM="ea7cc165-ac98-4349-92ed-8e04f1ab402e" intencionesParaSeReferenciado="">BAIntents</workspace>
 		<workspace tipo="especifico" idIBM="acdff3cd-1deb-4300-8cce-d6e8b0018ec8" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible,ayuda_como">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="d4b0e759-9557-4f5e-9049-fcc3472e5ea2" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="cee0a88f-f4db-4650-a18e-7c124718faac" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="49d682cc-5160-4f22-817c-27cbd4db7a1e" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>
