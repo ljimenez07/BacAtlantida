@@ -7,6 +7,9 @@
         "files": {}
     },
     "installed_plugins": {
+        "cordova-plugin-queries-schemes": {
+            "PACKAGE_NAME": "io.ncubo.agentecognitivo"
+        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "io.ncubo.agentecognitivo"
         }

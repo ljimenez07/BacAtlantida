@@ -30,6 +30,7 @@ import com.ibm.watson.developer_cloud.conversation.v1.model.Entity;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Intent;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
+import com.ncubo.chatbot.watson.TextToSpeechWatson;
 import com.ncubo.chatbot.partesDeLaConversacion.Tema;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.data.Consulta;
@@ -53,6 +54,7 @@ public class AgenteCognitivo
 	private String voiceTextToSpeech;
 	private String pathAudio;
 	private String pathXML;
+	private String urlPublicaAudios;
 
 	@Autowired
 	private ConsultaDao consultaDao;
@@ -118,7 +120,6 @@ public class AgenteCognitivo
 		JSONArray arrayList = new JSONArray(); 
 		
 		System.out.println(salida.size());
-		
 		boolean estaditicaSeDebeGuardar = true;
 		Tema tema = null;
 		ArrayList<Tema> temasTratados = new ArrayList<>();
@@ -159,21 +160,21 @@ public class AgenteCognitivo
 			{
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión!.");
-				jsonObject.put("audio", "");	
+				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAudio));	
 				arrayList.put(jsonObject);
 			}
 			else if((idFrase.equals("disponibleCredito") || idFrase.equals("disponibleCuentaAhorros")|| idFrase.equals("disponiblePuntos") || idFrase.equals("quiereDisponibleTarjetaCredito")) && ! usuario.getEstaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión!.");
-				jsonObject.put("audio", "");	
+				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.");
+				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL("Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.", pathAudio));	
 				arrayList.put(jsonObject);
 			}
 			else if(idFrase.equals("movimientos") && ! usuario.getEstaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión!.");
-				jsonObject.put("audio", "");	
+				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.");
+				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL("Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.", pathAudio));	
 				arrayList.put(jsonObject);
 			}
 			else if(idFrase.equals("tasaDolar")||idFrase.equals("tasaEuro")){
@@ -182,7 +183,7 @@ public class AgenteCognitivo
 				
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
-				jsonObject.put("audio", "");	
+				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAudio));	
 				arrayList.put(jsonObject);
 			}
 			else if(idFrase.equals("movimientos")&& usuario.getEstaLogueado())
@@ -221,6 +222,15 @@ public class AgenteCognitivo
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
 				jsonObject.put("audio", salida.get(i).getMiSonido().url());	
+				arrayList.put(jsonObject);
+			}
+			else if(texto.contains("%br"))
+			{
+				texto = texto.replaceAll("%br", "<br/>");
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("texto", texto);
+				jsonObject.put("audio",urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAudio));	
+				
 				arrayList.put(jsonObject);
 			}
 			else
@@ -465,6 +475,14 @@ public class AgenteCognitivo
 
 	public void setPathAudio(String path){
 		this.pathAudio = path;
+	}
+	
+	public String geturlPublicaAudios(){
+		return urlPublicaAudios;
+	}
+
+	public void seturlPublicaAudios(String path){
+		this.urlPublicaAudios = path;
 	}
 	
 	public String getPathXML() {

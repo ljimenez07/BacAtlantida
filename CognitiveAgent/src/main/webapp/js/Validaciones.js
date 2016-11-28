@@ -45,3 +45,15 @@
 		fecha = date.getFullYear() +"-"+ (date.getMonth() +1) +"-"+ date.getDate();
 		return fecha;
 	}
+	function verificarSiSeCargaronLasImagenes()
+	{
+		var logoComercio = document.getElementById("logo-comercio").value;
+		var imagenPublicidad = document.getElementById("imagen-publicidad").value;
+		if(logoComercio === '' || imagenPublicidad === '')
+		{
+			console.log('Las imagenes no se han terminado de cargar. ');
+			return false;
+		}
+		else
+			return true;
+	}

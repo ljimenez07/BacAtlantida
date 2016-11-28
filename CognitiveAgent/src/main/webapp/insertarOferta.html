@@ -6,6 +6,8 @@
 
 
 <script>
+var logoEstatus;
+var imagenNegocio;
 	$(document).ready(function()
 	{
 		$("#imagen-publicidad-input").on("change", subirImagenPublicidad);
@@ -118,7 +120,7 @@
 	<div th:include="fragments/backoffice :: body(paginaActual='insertarOferta')"></div>
 	
 	<div class="container agregar-padding-bottom">
-		<form id="agregarOferta-form" method="POST" th:action="@{/__${action}__}" th:object="${oferta}" action="#">
+		<form onsubmit="verificarSiSeCargaronLasImagenes()" id="agregarOferta-form" method="POST" th:action="@{/__${action}__}" th:object="${oferta}" action="#">
 		<input type="hidden" id="id-comercio" th:field="*{idOferta}"/>
 			<div id="agregarOferta">
 				<div class="row">
@@ -257,7 +259,7 @@
 								<span class="texto-junto-imagen">Cancelar</span>
 								<span th:class="${imagenBotonSecundario}"></span>
 							</button>
-							<button id="ingresar-submit" type="submit" class="btn btn-default agregar-padding-left" name="accion" value="ingresar">
+							<button id="ingresar-submit" type="submit"  class="btn btn-default agregar-padding-left" name="accion" value="ingresar">
 								<span class="texto-junto-imagen" th:text="${nombreBotonPrincipal}"></span>
 								<span th:class="${imagenBotonPrincipal}"></span>
 							</button>
@@ -274,6 +276,6 @@
 	</div>
 	
 	<div th:include="fragments/footer :: body"></div>
-	
 </body>
+
 </html>
