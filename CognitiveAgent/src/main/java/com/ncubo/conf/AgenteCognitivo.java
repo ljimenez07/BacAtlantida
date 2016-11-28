@@ -69,6 +69,7 @@ public class AgenteCognitivo
     public void init(){
         // start your monitoring in here
 		misConversaciones = new Conversaciones(getPathXML());
+		inicializarGeneradorDeAudiosSingleton();
     }
 	
 	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
@@ -170,7 +171,7 @@ public class AgenteCognitivo
 				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL("Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.", pathAudio));	
 				arrayList.put(jsonObject);
 			}
-			else if(idFrase.equals("movimientos") && ! usuario.getEstaLogueado())
+			else if(idFrase.equals("movimientosTarjeta") || idFrase.equals("movimientosCuenta") && ! usuario.getEstaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.");
@@ -368,6 +369,11 @@ public class AgenteCognitivo
 		return value;
 	}
 
+	private void inicializarGeneradorDeAudiosSingleton(){
+		TextToSpeechWatson.getInstance(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), 
+				this.getVoiceTextToSpeech(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), this.getPathAudio());
+	}
+	
 	public void generarTodosLosAudiosEstaticos(){
 		System.out.println("El path xml es: "+getPathXML());
 		misConversaciones.generarAudiosEstaticos(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 

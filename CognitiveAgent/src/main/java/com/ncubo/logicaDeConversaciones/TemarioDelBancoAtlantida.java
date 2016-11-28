@@ -101,7 +101,9 @@ public class TemarioDelBancoAtlantida extends Temario
 			"BATemas",
 			true,
 			"movimientos",
-			frase("movimientos"),
+			frase("quiereMovimiento"),
+			frase("movimientosTarjeta"),
+			frase("movimientosCuenta"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta")
