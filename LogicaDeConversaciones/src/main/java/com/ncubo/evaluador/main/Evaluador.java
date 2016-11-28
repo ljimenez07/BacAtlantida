@@ -13,7 +13,7 @@ public class Evaluador {
 	private final TablaDeSimbolos tablaDeSimbolos = new TablaDeSimbolos();
 	private final Salida salida = new Salida();
 	
-	private void crearContexto(String contexto) throws Exception
+	public void crearContexto(String contexto) throws Exception
 	{
 		Programa programa = null;
 		this.parser = new Parser(tablaDeSimbolos, salida, contexto);
