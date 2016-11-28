@@ -80,6 +80,7 @@ public class MovilController {
 		JSONObject object = new JSONObject();
 		object.put("usuarioEstaLogueado", usuario.getEstaLogueado());
 		
+		
 		session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 		
 		return object.toString();

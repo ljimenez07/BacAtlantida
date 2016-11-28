@@ -25,7 +25,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Hola!</frase>
+			<frase>¡Hola!</frase>
+			<frase>¡Hola!, soy tu asesor del Banco Atlántida.</frase>
 			<frase>¡Hola! Estoy para ayudarte con la información que requieras de tus tarjetas de crédito y cuenta corriente, también con el tipo de cambio del dólar y el euro.</frase>
 		</frases>
 		<vineta></vineta>
@@ -40,7 +41,7 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<curioso>¿Cómo te puedo ayudar hoy?</curioso>
-			<curioso>¿Cómo te puedo ayudar?</curioso>
+			<curioso>¿En qué puedo ayudarte?</curioso>
 			<impertinente>¿Cómo te puedo ayudar?. Estoy para brindarte la información que requieras de tus tarjetas de crédito y cuenta corriente, también con el tipo de cambio del dólar y el euro.</impertinente>
 		</frases>
 		<vineta></vineta>
@@ -224,6 +225,7 @@
 			<curioso>¿Hay algo más con lo que te pueda ayudar?</curioso>
 			<curioso>¿Tienes otra consulta?</curioso>
 			<curioso>¿Necesitas algo más?</curioso>
+			<curioso>¿Te gustaría que te ayude en algo más?</curioso>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -257,7 +259,8 @@
 		<frases>
 			<frase>Fue un placer ayudarte, ¡qué pases un feliz día!.</frase>
 			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día.</frase>
-			<frase>Hasta luego Ricky, fue un gusto atenderte.</frase>
+			<frase>Es un placcer servirle y recuerde que le atendemos las 24 horas del día.</frase>
+			<frase>Hasta luego, fue un gusto atenderte.</frase>
 		</frases>
 		<vineta></vineta>
 		<when>
@@ -325,8 +328,8 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<frase>¡Hola! Para poder conocer lo que más te gusta, te haré algunas preguntas.</frase>		
-			<frase>Hola Ricky, quiero darte información que sea relevante para ti, por eso te haré algunas consultas, así sabré que te interesa conocer</frase>		
+			<frase>¡Hola!, para poder conocer lo que más te gusta, te haré algunas preguntas.</frase>		
+			<frase>¡Hola!, quiero darte información que sea relevante para ti, por eso te haré algunas consultas, así sabré que te interesa conocer</frase>		
 			<frase>¡Buenas!. Te haré algunas preguntas para poder conocer lo que te gusta y poder recomendarte promociones y beneficios especiales que sean de tu interés</frase>			
 		</frases>		
 		<vineta></vineta>		
@@ -356,12 +359,12 @@
 	</conversacion>		
 					
 	<conversacion id="despedidaConocerte">		
-		<tipo>despedida</tipo>		
+		<tipo>afirmativa</tipo>		
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
 			<frase>Genial, en base a tus respuestas te estaremos informando de beneficios que puedes aprovechar por ser cliente de Banco Atlantida</frase>		
-			<frase>Gracias por tus respuestas Ricky, te estaremos enviando información relevante para ti acerca de promociones y beneficios</frase>		
+			<frase>Gracias por tus respuestas, te estaremos enviando información relevante para ti acerca de promociones y beneficios</frase>		
 			<frase>Muy bien, por ahora es todo lo que requiero conocer para evitar compartir información que no sea de tu interés y solo informarte de promociones y beneficios que te interese aprovechar</frase>		
 		</frases>		
 		<vineta></vineta>		
