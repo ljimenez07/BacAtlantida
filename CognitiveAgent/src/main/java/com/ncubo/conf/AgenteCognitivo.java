@@ -30,6 +30,7 @@ import com.ibm.watson.developer_cloud.conversation.v1.model.Entity;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Intent;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
+import com.ncubo.chatbot.partesDeLaConversacion.Tema;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.data.Consulta;
 import com.ncubo.logicaDeConversaciones.Conversaciones;
@@ -118,6 +119,10 @@ public class AgenteCognitivo
 		
 		System.out.println(salida.size());
 		
+		boolean estaditicaSeDebeGuardar = true;
+		Tema tema = null;
+		ArrayList<Tema> temasTratados = new ArrayList<>();
+		
 		for(int i = 0; i < salida.size(); i++){
 			
 			texto = salida.get(i).getMiTexto();
@@ -130,7 +135,6 @@ public class AgenteCognitivo
 			
 			if((idFrase.equals("saldoCredito") ||  idFrase.equals("disponibleCredito") ) && usuario.getEstaLogueado())
 			{
-				
 				textos = extraerDatos.obtenerSaldoTarjetaCredito(wsSaldo, texto, usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
 				{
@@ -139,9 +143,6 @@ public class AgenteCognitivo
 					jsonObject.put("audio", "");	
 					arrayList.put(jsonObject);
 				}
-				
-				consultaDao.insertar(
-						new Consulta(Intencion.SALDO.toString(), new Timestamp(new Date().getTime()), Intencion.SALDO_DESCRIPCION.toString() , 1));
 			}
 			else if(idFrase.equals("saldoCuentaAhorros") && usuario.getEstaLogueado())
 			{
@@ -195,10 +196,6 @@ public class AgenteCognitivo
 					jsonObject.put("audio", "");	
 					arrayList.put(jsonObject);
 				}
-				
-				consultaDao.insertar(
-						new Consulta(Intencion.MOVIMIENTOS.toString(), new Timestamp(new Date().getTime()), Intencion.MOVIMIENTOS_DESCRIPCION.toString() , 1));
-		
 			}
 			else if(idFrase.equals("disponibleCuentaAhorros") && usuario.getEstaLogueado())
 			{
@@ -232,8 +229,26 @@ public class AgenteCognitivo
 				jsonObject.put("texto", texto);
 				jsonObject.put("audio", salida.get(i).getMiSonido().url());	
 				arrayList.put(jsonObject);
+				
+				estaditicaSeDebeGuardar = false;
+			}
+			
+			tema = salida.get(i).getTemaActual();
+			if ( estaditicaSeDebeGuardar && ! temasTratados.contains(tema) )
+			{
+				temasTratados.add(tema);
+				System.out.println(tema);
 			}
 		}
+		
+		for(Tema temaActual : temasTratados)
+		{
+			consultaDao.insertar( new Consulta(temaActual, new Timestamp(new Date().getTime())) );
+		}
+			//System.out.println(tema);
+			//consultaDao.insertar(
+			//		new Consulta(Intencion.MOVIMIENTOS.toString(), new Timestamp(new Date().getTime()), Intencion.MOVIMIENTOS_DESCRIPCION.toString() , 1));
+		
 		respuesta.put("textos", arrayList);
 		System.out.println(respuesta.toString());
 		return respuesta.toString();
