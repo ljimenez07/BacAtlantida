@@ -1,18 +1,28 @@
 package com.ncubo.data;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
 
+import com.ncubo.dao.OfertaDao;
 import com.ncubo.util.AtLeastToday;
+import com.ncubo.util.GestorDeArchivos;
 
 public class Oferta implements Comparable<Oferta>
 {
@@ -56,6 +66,7 @@ public class Oferta implements Comparable<Oferta>
 	private int likes;
 	private int dislikes;
 	private boolean esUnUsuarioConocido;
+	
 	
 	public Oferta()
 	{
@@ -340,4 +351,16 @@ public class Oferta implements Comparable<Oferta>
 	}
 	
 	
+	public BindingResult validarCampos(BindingResult bindingResult, Oferta oferta) throws ParseException
+	{
+		if( ! bindingResult.hasFieldErrors("vigenciaHasta") && ! bindingResult.hasFieldErrors("vigenciaDesde"))
+		{
+			if( ! oferta.fechaHastaMayorAFechaDesde())
+			{
+				bindingResult.rejectValue("vigenciaHasta", "1", "*Fechas incorrectas");
+			}
+		}
+		return bindingResult;
+	}
+		
 }

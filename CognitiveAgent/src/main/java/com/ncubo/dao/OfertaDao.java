@@ -1,5 +1,6 @@
 package com.ncubo.dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import com.ncubo.data.CategoriaOferta;
 import com.ncubo.data.Oferta;
+import com.ncubo.util.GestorDeArchivos;
 import com.ncubo.util.LevenshteinDistance;
 
 @Component
@@ -30,6 +32,7 @@ public class OfertaDao
 	private final String CAMPOS_PARA_SELECT = String.format("%s.%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, IF(%s = ?, IF(%s = 1, 1, NULL), NULL) AS %s, IF(%s = ?, IF(%s = 0, 1, NULL), NULL) AS %s", NOMBRE_TABLA, atributo.ID_OFERTA, atributo.TITULO_DE_OFERTA, atributo.COMERCIO, atributo.DESCRIPCION, atributo.CATEGORIA, atributo.NOMBRE_CATEGORIA, atributo.CIUDAD, atributo.ESTADO, atributo.RESTRICCIONES, atributo.VIGENCIA_DESDE, atributo.VIGENCIA_HASTA, atributo.IMAGEN_COMERCIO_PATH, atributo.IMAGEN_PUBLICIDAD_PATH, atributo.FECHA_HORA_REGISTRO, atributo.ID_USUARIO, atributo.REACCION, atributo.LIKES, atributo.ID_USUARIO, atributo.REACCION, atributo.DISLIKES);
 	@Autowired
 	private Persistencia dao;
+
 	
 	public enum atributo
 	{
@@ -125,7 +128,7 @@ public class OfertaDao
 		return ofertas;
 	}
 	
-	public void insertar(Oferta oferta) throws ClassNotFoundException, SQLException
+	public void insertar(Oferta oferta) throws ClassNotFoundException, SQLException, IOException
 	{
 		oferta.cambiarApostrofes();
 		String queryDatos = "'" + oferta.getTituloDeOferta()+ "'"
@@ -341,7 +344,7 @@ public class OfertaDao
 		return null;
 	}
 
-	public int cantidad() throws ClassNotFoundException, SQLException
+	public int consultarCantidadDeOfertasNOEliminadas() throws ClassNotFoundException, SQLException
 	{
 		String query = "SELECT COUNT(*) AS cantidad"
 				+ " FROM " + NOMBRE_TABLA
@@ -361,7 +364,7 @@ public class OfertaDao
 		return 0;
 	}
 
-	public void modificar(Oferta oferta) throws ClassNotFoundException, SQLException
+	public void modificar(Oferta oferta) throws ClassNotFoundException, SQLException, IOException
 	{
 		oferta.cambiarApostrofes();
 		String queryDatos =  atributo.TITULO_DE_OFERTA + " = '" + oferta.getTituloDeOferta() + "' , "
@@ -382,6 +385,7 @@ public class OfertaDao
 		Connection con = dao.openConBD();
 		con.createStatement().executeUpdate(query);
 		dao.closeConBD();
+		
 	}
 	
 	public void eliminar(int idOferta) throws ClassNotFoundException, SQLException
