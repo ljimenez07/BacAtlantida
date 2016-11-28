@@ -90,13 +90,6 @@
 	<script type="text/javascript" src="js/login.handlebars.js"></script>
 	
 	<script>
-	document.addEventListener("deviceready", onDeviceReady, false);
-	function onDeviceReady() 
-	{
-		console.log(StatusBar);
-		StatusBar.overlaysWebView(false);
-	}
-	
 	var audios = new Array();
 	var estaReproduciendo = false;
 	var estaLogueado = false;
@@ -179,7 +172,7 @@
 				if(data.estaLogueado)
 				{
 					cambiarVista("chat");
-					$("#ofertas .contenedor-de-mensaje-bienvenida").html("<p><strong>¡Hola " + data.usuarioNombre + "!</strong></p><br><p><strong>¡Perfecto!</strong> Has acumulado <red>1 punto</red></p><br>");
+					$("#ofertas .contenedor-de-mensaje-bienvenida").html("<p><strong>¡Hola " + data.usuarioNombre + "!</strong></p><br><p><strong>¡Perfecto!</strong> Has acumulado <red>200 puntos</red></p><br>");
 					$("#ofertas .contenedor-de-ofertas").prepend('<div class="row"><div class="col-xs-12 text-center"><div class="top10">TOP 10</div><div class="beneficios">Sus mejores beneficios y ofertas</div><br></div</div>')
 				}
 			}
