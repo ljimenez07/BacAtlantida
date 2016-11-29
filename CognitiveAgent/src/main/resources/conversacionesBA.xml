@@ -474,6 +474,65 @@
 		<vineta></vineta>
 	</conversacion>
 	
+	<conversacion id="requisitosAOL">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para solicitar Atlántida Online debes: $%br 1) Ser uno de nuestros clientes. $%br 2) Tener correo electrónico. $%br 3) Completar la solicitud. $%br 4) Firmar el contrato de la banca personal por Internet. $%br 5) Presentar fotocopia de tarjeta de identidad (para hondureños), carné de residencia o pasaporte (para extranjeros).</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="requisitosPrestamoPersonal">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para solicitar un préstamo personal debes presentar: $%br 1) Original y copia de tarjeta de identidad. $%br 2) Último recibo público pagado servicios públicos (ENEE, HONDUTEL, SANAA). $%br 3) Copia de RTN numérico. $%br 4) Constancia  de trabajo donde indique cargo, sueldo y antigüedad. $%br $%br Además debes cumplir con las siguientes condiciones: $%br 1) Un año de laborar en empresa privada y dos en sector público. $%br 2) Ingreso mínimo mensual sea de 12,500.00 Lempiras (tega, Sps y la Ceiba) y 9,500 Lempiras ( el resto del pais). $%br 3) Ser mayor de 21 años. $%br 4) En el caso de ser comerciante individual presentar los estados financieros de los dos últimos años autenticados por un perito, estados de cuenta bancario de los dos últimos meses y el permiso de operación del negocio.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="requisitosPrestamoVehiculo">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para solicitar un préstamo de vehículo en el caso que seas asalariado debes presentar: $%br 1) Factura Proforma. $%br 2) Fotocopia de tarjeta de Identidad. $%br 3) Fotocopia de RTN. $%br 4) Fotocopia de último recibo de servicios públicos. $%br 5) Constancia de trabajo con deducciones y detalle de antigüedad (1 año de laborar en empresa privada y 2 en sector público) exceptuando empleados bajo convenio. $%br $%br Si eres comerciante individual debes presentar lo siguiente: $%br 1) Factura Proforma. $%br 2) Fotocopia de Tarjeta de Identidad. $%br 3) Estados Financieros de los 2 últimos años. $%br 4) Escritura de Comerciante Individual. $%br 5) Permiso de Operación Vigente o Carnet de Colegiación o Permiso de Explotación.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="requisitosPrestamoVivienda">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para solicitar un préstamo de vivienda en el caso que seas asalariado debes presentar: $%br 1) Fotocopia de tarjeta de Identidad. $%br 2) Fotocopia de RTN. $%br 3) Constancia de Trabajo con Deducciones y Detalle de Antigüedad (1 año de laborar en empresa privada y 2 en sector público) exceptuando empleados bajo convenio. $%br 4) Escritura del Inmueble que otorgara en garantía más Promesa de venta. $%br 5) Documentos del vendedor (Fotocopia de Id y RTN). $%br 6) Constancia de no poseer Bienes Inmuebles (Fondos Banhprovi). $%br 7) Si es construcción o mejoras presentar presupuesto de construcción y el plano de construcción. $%br $%br Si eres comerciante individual debes presentar: $%br 1) Fotocopia de Tarjeta de Identidad. $%br 2) Estados Financieros de los 2 últimos años. $%br 3) Escritura de comerciante individual. $%br 4) Permiso de operación vigente o carnet de colegiación o permiso de explotación. $%br 5) Escritura del inmueble que otorgara en garantía. $%br 6) Promesa de venta. $%br 7) Documentos del vendedor (Fotocopia de Id y RTN). $%br 8) Constancia de no poseer Bienes Inmuebles (Fondos Banhprovi). $%br 9) Si es construcción o mejoras presentar presupuesto de construcción y el plano de construcción.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+		<conversacion id="cualProductoPrestamo">		
+		<tipo>pregunta</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<curioso>¿Quieres un préstamo personal, de vehículo o de vivienda?</curioso>		
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>	
+	
+		<conversacion id="reportarExtravio">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Lamento lo sucedido, si necesitas reportar el extravío de tus tarjetas de crédito y débito puedes llamar a: $%br  $%br En Honduras: $%br 2280-1010 /2580-1010/ 2480-1010 $%br  $%br En el Extranjero:  $%br $%br VISA: $%br USA y Canadá: 1-800-847-2911 $%br En otros países: (410)-581-0120 $%br $%br MASTERCARD: $%br USA y Canadá: 1-800-307-7309 $%br En otros países: 1- 636-722-7111  $%br $%br Recuerda que este servicio está disponible las 24 horas, los 7 días de la semana</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
 	
 	<conversacion id="saludarConocerte">		
 		<tipo>afirmativa</tipo>		
@@ -539,7 +598,7 @@
 		<workspace tipo="general" idIBM="ea7cc165-ac98-4349-92ed-8e04f1ab402e" intencionesParaSeReferenciado="">BAIntents</workspace>
 		<workspace tipo="especifico" idIBM="acdff3cd-1deb-4300-8cce-d6e8b0018ec8" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible,ayuda_como">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="d4b0e759-9557-4f5e-9049-fcc3472e5ea2" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="49d682cc-5160-4f22-817c-27cbd4db7a1e" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="23314e4c-47ad-49c6-8d05-de4ddb1ccf86" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>

@@ -226,10 +226,11 @@ public class AgenteCognitivo
 			}
 			else if(texto.contains("%br"))
 			{
+				String textoParaReproducir = texto.replaceAll("%br", "");
 				texto = texto.replaceAll("%br", "<br/>");
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
-				jsonObject.put("audio",urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAudio));	
+				jsonObject.put("audio",urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir, pathAudio));	
 				
 				arrayList.put(jsonObject);
 			}
