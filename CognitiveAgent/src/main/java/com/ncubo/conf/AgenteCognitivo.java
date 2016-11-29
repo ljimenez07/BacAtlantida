@@ -171,7 +171,7 @@ public class AgenteCognitivo
 				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL("Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.", pathAudio));	
 				arrayList.put(jsonObject);
 			}
-			else if(idFrase.equals("movimientosTarjeta") || idFrase.equals("movimientosCuenta") && ! usuario.getEstaLogueado())
+			else if((idFrase.equals("quiereMovimiento") || idFrase.equals("movimientosCuenta") || idFrase.equals("movimientosCuenta")) && ! usuario.getEstaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.");
