@@ -211,7 +211,7 @@ public class Conversacion {
 				extraerOracionesAfirmarivasYPreguntasDeWorkspaceEspecifico(respuesta, idFraseActivada, true);
 			}
 		}else{
-			if (agente.entendiLaUltimaPregunta()){				
+			if (agente.entendiLaUltimaPreguntaWSEspecifico()){				
 				String idFraseActivada = respuesta.obtenerFraseActivada();
 				extraerOracionesAfirmarivasYPreguntasDeWorkspaceEspecifico(respuesta, idFraseActivada, true);
 			}else{ 

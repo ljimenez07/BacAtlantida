@@ -73,13 +73,12 @@ public class MovilController {
 			session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 		}
 		
-		/*JSONObject object = new JSONObject(serverCognitivo.procesarMensajeConocerte(
+		JSONObject object = new JSONObject(serverCognitivo.procesarMensajeConocerte(
 				usuario, 
 				mensaje, 
-				new Date()));*/
-		JSONObject object = new JSONObject();
+				new Date()));
+		//JSONObject object = new JSONObject();
 		object.put("usuarioEstaLogueado", usuario.getEstaLogueado());
-		
 		session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 		
 		return object.toString();
