@@ -89,7 +89,119 @@ public class ExtraerDatosWebService {
 	
 	public String[] obtenerSaldoCuentaAhorros(String texto, String usuario){
 		
-		String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:con=\"http://hn.infatlan.och/ws/ACD004/out/ConsultaSaldo\"><soapenv:Header/> <soapenv:Body> <con:MT_ConsultaSaldo> <activarMultipleEntrada>?</activarMultipleEntrada><activarParametroAdicional>?</activarParametroAdicional> <!--Optional:--><transaccionId>?</transaccionId><!--Optional:--><aplicacionId>?</aplicacionId><paisId>?</paisId><empresaId>?</empresaId>  <!--Optional:-->  <regionId>?</regionId>	<!--Optional:--> <canalId>?</canalId><!--Optional:-->  <version>?</version> <!--Optional:--> <llaveSesion></llaveSesion>  <!--Optional:--><usuarioId>?</usuarioId> <!--Optional:--> <token>?</token> <!--Zero or more repetitions:-->  <identificadorColeccion> <!--Optional:--> <was>?</was> <!--Optional:-->  <pi>?</pi><!--Optional:--><omniCanal>?</omniCanal>  <!--Optional:--> <recibo>?</recibo> <!--Optional:--><numeroTransaccion>?</numeroTransaccion></identificadorColeccion> <!--Optional:-->  <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem>  <linea>?</linea>  <!--Optional:-->  <tipoRegistro>UAI</tipoRegistro> <!--Optional:-->	 <valor>%s</valor></parametroAdicionalItem>  </parametroAdicionalColeccion> <!--Optional:--> <logColeccion><!--Zero or more repetitions:--> <logItem> <identificadorWas>?</identificadorWas> <!--Optional:--><identificadorPi>?</identificadorPi> <!--Optional:--> <identificadorOmniCanal>?</identificadorOmniCanal>  <!--Optional:--><identificadorRecibo>?</identificadorRecibo> <!--Optional:--><numeroPeticion>?</numeroPeticion> <!--Optional:--> <identificadorNumeroTransaccion>?</identificadorNumeroTransaccion> <!--Optional:--> <aplicacionId>?</aplicacionId> <!--Optional:-->	<canalId>?</canalId> <!--Optional:-->  <ambienteId>?</ambienteId> <!--Optional:-->  <transaccionId>?</transaccionId> <!--Optional:--><accion>?</accion> <!--Optional:--> <tipo>?</tipo> <!--Optional:--> <fecha>?</fecha> <!--Optional:--> <hora>?</hora><!--Optional:--><auxiliar1>?</auxiliar1> <!--Optional:--> <auxiliar2>?</auxiliar2>  <!--Optional:--> <parametroAdicionalColeccion>  <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea>  <!--Optional:-->  <tipoRegistro>?</tipoRegistro>  <!--Optional:-->	<valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> </logItem> </logColeccion>  <!--Optional:-->  <consultaSaldoColeccion> <tipoCuenta>%s</tipoCuenta> <!--Optional:--> <peticionId>?</peticionId> </consultaSaldoColeccion> </con:MT_ConsultaSaldo></soapenv:Body></soapenv:Envelope>";
+		String requestBody = ""+
+		"<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:con=\"http://hn.infatlan.och/ws/ACD004/out/ConsultaSaldo\">"+
+			"<soapenv:Header/>"+
+			"<soapenv:Body>"+
+				"<con:MT_ConsultaSaldo>"+
+					"<activarMultipleEntrada>?</activarMultipleEntrada>"+
+					"<activarParametroAdicional>?</activarParametroAdicional>"+
+					"<!--Optional:-->"+
+					"<transaccionId>100128</transaccionId>"+
+					"<!--Optional:-->"+
+					"<aplicacionId>001</aplicacionId>"+
+					"<paisId>?</paisId>"+
+					"<empresaId>?</empresaId>"+
+					"<!--Optional:-->"+
+					"<regionId>?</regionId>"+
+					"<!--Optional:-->"+
+					"<canalId>?</canalId>"+
+					"<!--Optional:-->"+
+					"<version>?</version>"+
+					"<!--Optional:-->"+
+					"<llaveSesion>?</llaveSesion>"+
+					"<!--Optional:-->"+
+					"<usuarioId>?</usuarioId>"+
+					"<!--Optional:-->"+
+					"<token>?</token>"+
+					"<!--Zero or more repetitions:-->"+
+					"<identificadorColeccion>"+
+						"<!--Optional:-->"+
+						"<was>?</was>"+
+						"<!--Optional:-->"+
+						"<pi>?</pi>"+
+						"<!--Optional:-->"+
+						"<omniCanal>?</omniCanal>"+
+						"<!--Optional:-->"+
+						"<recibo>?</recibo>"+
+						"<!--Optional:-->"+
+						"<numeroTransaccion>?</numeroTransaccion>"+
+					"</identificadorColeccion>"+
+					"<!--Optional:-->"+
+					"<parametroAdicionalColeccion>"+
+						"<!--Zero or more repetitions:-->"+
+						"<parametroAdicionalItem>"+
+							"<linea>0</linea>"+
+							"<!--Optional:-->"+
+							"<tipoRegistro>UAI</tipoRegistro>"+
+							"<!--Optional:-->"+
+							"<valor>tsbasapi23</valor>"+
+						"</parametroAdicionalItem>"+
+							"<parametroAdicionalItem>"+
+							"<linea>1</linea>"+
+							"<!--Optional:-->"+
+							"<tipoRegistro>TC</tipoRegistro>"+
+							"<!--Optional:-->"+
+							"<valor>E</valor>"+
+						"</parametroAdicionalItem>"+
+					"</parametroAdicionalColeccion>"+
+					"<!--Optional:-->"+
+					"<logColeccion>"+
+						"<!--Zero or more repetitions:-->"+
+						"<logItem>"+
+							"<identificadorWas>?</identificadorWas>"+
+							"<!--Optional:-->"+
+							"<identificadorPi>?</identificadorPi>"+
+							"<!--Optional:-->"+
+							"<identificadorOmniCanal>?</identificadorOmniCanal>"+
+							"<!--Optional:-->"+
+							"<identificadorRecibo>?</identificadorRecibo>"+
+							"<!--Optional:-->"+
+							"<numeroPeticion>?</numeroPeticion>"+
+							"<!--Optional:-->"+
+							"<identificadorNumeroTransaccion>?</identificadorNumeroTransaccion>"+
+							"<!--Optional:-->"+
+							"<aplicacionId>?</aplicacionId>"+
+							"<!--Optional:-->"+
+							"<canalId>?</canalId>"+
+							"<!--Optional:-->"+
+							"<ambienteId>?</ambienteId>"+
+							"<!--Optional:-->"+
+							"<transaccionId>?</transaccionId>"+
+							"<!--Optional:-->"+
+							"<accion>?</accion>"+
+							"<!--Optional:-->"+
+							"<tipo>?</tipo>"+
+							"<!--Optional:-->"+
+							"<fecha>?</fecha>"+
+							"<!--Optional:-->"+
+							"<hora>?</hora>"+
+							"<!--Optional:-->"+
+							"<auxiliar1>?</auxiliar1>"+
+							"<!--Optional:-->"+
+							"<auxiliar2>?</auxiliar2>"+
+							"<!--Optional:-->"+
+							"<parametroAdicionalColeccion>"+
+								"<!--Zero or more repetitions:-->"+
+								"<parametroAdicionalItem>"+
+									"<linea>?</linea>"+
+									"<!--Optional:-->"+
+									"<tipoRegistro>?</tipoRegistro>"+
+									"<!--Optional:-->"+
+									"<valor>?</valor>"+
+								"</parametroAdicionalItem>"+
+							"</parametroAdicionalColeccion>"+
+						"</logItem>"+
+					"</logColeccion>"+
+					"<!--Optional:-->"+
+					"<consultaSaldoColeccion>"+
+						"<tipoCuenta>4</tipoCuenta>"+
+						"<!--Optional:-->"+
+						"<peticionId>?</peticionId>"+
+					"</consultaSaldoColeccion>"+
+				"</con:MT_ConsultaSaldo>"+
+			"</soapenv:Body>"+
+		"</soapenv:Envelope>";
 		
 		requestBody = String.format(requestBody, usuario, "2");
 		System.out.println(requestBody);
@@ -147,7 +259,47 @@ public class ExtraerDatosWebService {
 	
 	public String[] obtenerMovimientos(String texto, String usuario, String cuenta) throws ParseException{
 		
-		String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:cor=\"http://corebancario.ext.srv.infatlan.hn/\"> <soapenv:Header/> <soapenv:Body> <cor:consultaMovimiento> <activarMultipleEntrada>?</activarMultipleEntrada><activarParametroAdicional>?</activarParametroAdicional><!--Optional:--><transaccionId>?</transaccionId><!--Optional:--><aplicacionId>?</aplicacionId><paisId>?</paisId><empresaId>?</empresaId><!--Optional:--><regionId>?</regionId><!--Optional:--><canalId>?</canalId><!--Optional:--><version>?</version><!--Optional:--><llaveSesion>?</llaveSesion><!--Optional:--><usuarioId>?</usuarioId><!--Optional:--><token>?</token><!--Optional:--><identificadorColeccion><!--Optional:--><was>?</was><!--Optional:--><pi>?</pi><!--Optional:--><omniCanal>?</omniCanal><!--Optional:--><recibo>?</recibo> <!--Optional:--><numeroTransaccion>?</numeroTransaccion> </identificadorColeccion><!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem><linea>?</linea> <!--Optional:-->	<tipoRegistro>?</tipoRegistro>  <!--Optional:--><valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion>  <!--Optional:-->  <logColeccion>  <!--Zero or more repetitions:--> <logItem><identificadorWas>?</identificadorWas> <!--Optional:--> <identificadorPi>?</identificadorPi> <!--Optional:--> <identificadorOmniCanal>?</identificadorOmniCanal> <!--Optional:--> <identificadorRecibo>?</identificadorRecibo> <!--Optional:--> <numeroPeticion>?</numeroPeticion> <!--Optional:--><identificadorNumeroTransaccion>?</identificadorNumeroTransaccion> <!--Optional:--><aplicacionId>?</aplicacionId> <!--Optional:--><canalId>?</canalId>	 <!--Optional:--> <ambienteId>?</ambienteId>  <!--Optional:-->  <transaccionId>?</transaccionId>  <!--Optional:--><accion>?</accion> <!--Optional:--><tipo>?</tipo><!--Optional:--> <fecha>?</fecha> <!--Optional:--> <hora>?</hora> <!--Optional:--> <auxiliar1>?</auxiliar1> <!--Optional:--><auxiliar2>?</auxiliar2> <!--Optional:-->  <parametroAdicionalColeccion> <!--Zero or more repetitions:-->	<parametroAdicionalItem> <linea>?</linea>  <!--Optional:-->  <tipoRegistro>UAI</tipoRegistro> <!--Optional:--> <valor>%s</valor></parametroAdicionalItem> </parametroAdicionalColeccion>	</logItem></logColeccion> <!--Optional:--> <consultaMovimientoColeccion>  <!--Optional:--> <tipoConsulta>E</tipoConsulta> <!--Optional:--> <tipoCuenta>%s</tipoCuenta> <!--Optional:--> <numeroCuenta>?</numeroCuenta> <!--Optional:--><periodo>01</periodo> <!--Optional:--> <fechaInicio>?</fechaInicio>	<!--Optional:--> <fechaFinal>?</fechaFinal><!--Optional:--><tipoMonto>?</tipoMonto> <!--Optional:--> <monto>?</monto> <!--Optional:--> <operacion>?</operacion> </consultaMovimientoColeccion></cor:consultaMovimiento></soapenv:Body></soapenv:Envelope>";
+		String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:cor=\"http://corebancario.ext.srv.infatlan.hn/\"> "
+				+ "<soapenv:Header/> <soapenv:Body> "
+				+ "<cor:consultaMovimiento> <activarMultipleEntrada>?</activarMultipleEntrada>"
+				+ "<activarParametroAdicional>?</activarParametroAdicional><!--Optional:-->"
+				+ "<transaccionId>?</transaccionId><!--Optional:--><aplicacionId>?</aplicacionId>"
+				+ "<paisId>?</paisId><empresaId>?</empresaId><!--Optional:-->"
+				+ "<regionId>?</regionId><!--Optional:--><canalId>?</canalId>"
+				+ "<!--Optional:--><version>?</version><!--Optional:--><llaveSesion>?</llaveSesion>"
+				+ "<!--Optional:--><usuarioId>?</usuarioId>"
+				+ "<!--Optional:--><token>?</token><!--Optional:-->"
+				+ "<identificadorColeccion><!--Optional:--><was>?</was><!--Optional:--><pi>?</pi><!--Optional:-->"
+				+ "<omniCanal>?</omniCanal><!--Optional:--><recibo>?</recibo> <!--Optional:-->"
+				+ "<numeroTransaccion>?</numeroTransaccion> </identificadorColeccion>"
+				+ "<!--Optional:--> <parametroAdicionalColeccion> <!--Zero or more repetitions:--> "
+				+ "<parametroAdicionalItem><linea>?</linea> <!--Optional:-->	<tipoRegistro>?</tipoRegistro> "
+				+ " <!--Optional:--><valor>?</valor> </parametroAdicionalItem> "
+				+ "</parametroAdicionalColeccion>  <!--Optional:-->  <logColeccion> "
+				+ " <!--Zero or more repetitions:--> <logItem><identificadorWas>?</identificadorWas>"
+				+ " <!--Optional:--> <identificadorPi>?</identificadorPi> <!--Optional:--> "
+				+ "<identificadorOmniCanal>?</identificadorOmniCanal> <!--Optional:-->"
+				+ " <identificadorRecibo>?</identificadorRecibo> <!--Optional:-->"
+				+ " <numeroPeticion>?</numeroPeticion> <!--Optional:--><identificadorNumeroTransaccion>?"
+				+ "</identificadorNumeroTransaccion> <!--Optional:--><aplicacionId>?</aplicacionId> "
+				+ "<!--Optional:--><canalId>?</canalId>	 <!--Optional:--> <ambienteId>?</ambienteId> "
+				+ " <!--Optional:-->  <transaccionId>?</transaccionId>  <!--Optional:--><accion>?</accion>"
+				+ " <!--Optional:--><tipo>?</tipo><!--Optional:--> <fecha>?</fecha> <!--Optional:-->"
+				+ " <hora>?</hora> <!--Optional:--> <auxiliar1>?</auxiliar1> <!--Optional:--><auxiliar2>?</auxiliar2>"
+				+ " <!--Optional:-->  <parametroAdicionalColeccion> <!--Zero or more repetitions:-->"
+				+ "	<parametroAdicionalItem> <linea>?</linea>  <!--Optional:--> "
+				+ " <tipoRegistro>UAI</tipoRegistro> <!--Optional:--> "
+				+ "<valor>%s</valor></parametroAdicionalItem> "
+				+ "</parametroAdicionalColeccion>	</logItem></logColeccion>"
+				+ " <!--Optional:--> <consultaMovimientoColeccion> "
+				+ " <!--Optional:--> <tipoConsulta>E</tipoConsulta> <!--Optional:--> "
+				+ "<tipoCuenta>%s</tipoCuenta> <!--Optional:--> <numeroCuenta>?</numeroCuenta> "
+				+ "<!--Optional:--><periodo>01</periodo> <!--Optional:--> <fechaInicio>?</fechaInicio>"
+				+ "	<!--Optional:--> <fechaFinal>?</fechaFinal><!--Optional:--><tipoMonto>?</tipoMonto>"
+				+ " <!--Optional:--> <monto>?</monto> <!--Optional:--> <operacion>?</operacion>"
+				+ " </consultaMovimientoColeccion>"
+				+ "</cor:consultaMovimiento></soapenv:Body>"
+				+ "</soapenv:Envelope>";
 		
 		String[] movimientos = new String[4];
 		movimientos[0] = texto;
