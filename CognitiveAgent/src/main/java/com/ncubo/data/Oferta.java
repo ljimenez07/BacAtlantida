@@ -90,7 +90,7 @@ public class Oferta implements Comparable<Oferta>
 		this.fechaHoraRegistro = fechaHoraRegistro;
 		this.likes = likes;
 		this.setDislikes(dislikes);
-		this.descripcionAudio = File.separator+idOferta+"-descripcion.ogg";
+		this.descripcionAudio = File.separator+idOferta+"-descripcion.wav";
 		this.descripcionAnterior = descripcion;
 	}
 	

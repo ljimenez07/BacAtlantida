@@ -71,7 +71,7 @@ public class Conversacion {
 			this.hilo = new HiloDeLaConversacion();
 			return inicializarLaConversacion();
 		}else{
-			Respuesta respuesta = agente.enviarRespuestaAWatson(respuestaDelCliente, fraseActual);
+			Respuesta respuesta = agente.enviarRespuestaAWatson(respuestaDelCliente, fraseActual, false);
 			this.hilo.agregarUnaRespuesta(respuesta);
 			Pregunta miPregunta = null;
 			

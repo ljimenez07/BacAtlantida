@@ -25,7 +25,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Hola!</frase>
+			<frase>¡Hola!</frase>
+			<frase>¡Hola!, soy tu asesor del Banco Atlántida.</frase>
 			<frase>¡Hola! Estoy para ayudarte con la información que requieras de tus tarjetas de crédito y cuenta corriente, también con el tipo de cambio del dólar y el euro.</frase>
 		</frases>
 		<vineta></vineta>
@@ -40,7 +41,7 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<curioso>¿Cómo te puedo ayudar hoy?</curioso>
-			<curioso>¿Cómo te puedo ayudar?</curioso>
+			<curioso>¿En qué puedo ayudarte?</curioso>
 			<impertinente>¿Cómo te puedo ayudar?. Estoy para brindarte la información que requieras de tus tarjetas de crédito y cuenta corriente, también con el tipo de cambio del dólar y el euro.</impertinente>
 		</frases>
 		<vineta></vineta>
@@ -196,12 +197,32 @@
 		<vineta></vineta>
 	</conversacion>
 	
-	<conversacion id="movimientos">
+	<conversacion id="quiereMovimiento">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>¿Te refieres a tu tarjeta de crédito o tu cuenta corriente?</curioso>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="movimientosTarjeta">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Estos son los últimos movimientos registrados: $</frase>
+			<frase>Estos son los últimos movimientos registrados en tu tarjeta de crédito: $</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="movimientosCuenta">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Estos son los últimos movimientos registrados en tu cuenta corriente: $</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -224,6 +245,7 @@
 			<curioso>¿Hay algo más con lo que te pueda ayudar?</curioso>
 			<curioso>¿Tienes otra consulta?</curioso>
 			<curioso>¿Necesitas algo más?</curioso>
+			<curioso>¿Te gustaría que te ayude en algo más?</curioso>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -257,7 +279,8 @@
 		<frases>
 			<frase>Fue un placer ayudarte, ¡qué pases un feliz día!.</frase>
 			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día.</frase>
-			<frase>Hasta luego Ricky, fue un gusto atenderte.</frase>
+			<frase>Es un placcer servirle y recuerde que le atendemos las 24 horas del día.</frase>
+			<frase>Hasta luego, fue un gusto atenderte.</frase>
 		</frases>
 		<vineta></vineta>
 		<when>
@@ -290,7 +313,37 @@
 		<vineta></vineta>
 	</conversacion>
 	
-	<conversacion id="montoInicialCuentaAhorros">
+	<conversacion id="cualProductoAhorro">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>Te cuento que tenemos a tu disposición estos tipos de cuenta de ahorros: $%br Ahorros Atlántida $%br Ahorros Atlántida Kids $%br Virtual Atlántida "U" $%br ¿Sobre cúal de estos productos necesitas información?</curioso>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="cualMonedaAhorros">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>Esta cuenta esta disponible en Lempiras, Dólares y Euros. ¿Cúal es la que necesitas?</curioso>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="cualMonedaAhorrosKids">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>¿Podrias indicar la moneda en la que quieres la cuenta de ahorros Atlántida Kids? Hay en Lempiras y Dólares. </curioso>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="montoInicialCuentaAhorrosLempiras">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
@@ -300,7 +353,47 @@
 		<vineta></vineta>
 	</conversacion>
 	
-	<conversacion id="saldoMinimoCuentaAhorros">
+	<conversacion id="montoInicialCuentaAhorrosDolares">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El monto inicial de una cuenta de ahorros es de 100 Dólares.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="montoInicialCuentaAhorrosEuros">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El monto inicial de una cuenta de ahorros es de 500 Euros.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="montoInicialCuentaAhorrosKidsLempiras">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El monto inicial de una cuenta de ahorros es de 100 Lempiras.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="montoInicialCuentaAhorrosKidsDolares">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El monto inicial de una cuenta de ahorros es de 30 Dólares.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="saldoMinimoCuentaAhorrosLempiras">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
@@ -310,23 +403,105 @@
 		<vineta></vineta>
 	</conversacion>
 	
-	<conversacion id="requisitosCuentaAhorros">
+	<conversacion id="saldoMinimoCuentaAhorrosDolares">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para abrir una cuenta de ahorro debes presentar tarjeta de Identidad, carnet de residencia, completar la solicitud del producto y realizar el depósito inicial.</frase>
+			<frase>Te cuento que el saldo mínimo para cuenta de ahorros es de 100 Dólares, y no olvides que hay un cargo por 1 Dólar en caso que no se cumpla ese mínimo.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
+	
+	<conversacion id="saldoMinimoCuentaAhorrosEuros">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Te cuento que el saldo mínimo para cuenta de ahorros es de 500 Euros, y no olvides que hay un cargo por 1 Euro en caso que no se cumpla ese mínimo.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="saldoMinimoCuentaAhorrosKidsLempiras">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Te cuento que el saldo mínimo para cuenta de ahorros Atlántida Kids es de 100 Lempiras, en esta cuenta el cargo por saldo menor al mínimo no aplica.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="saldoMinimoCuentaAhorrosKidsDolares">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Te cuento que el saldo mínimo para cuenta de ahorros Atlántida Kids es de 30 Dólares, en esta cuenta el cargo por saldo menor al mínimo no aplica.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+
+	
+	<conversacion id="requisitosCuentaAhorrosLempiras">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para abrir una cuenta de ahorro debes: $%br 1) Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia y/o pasaporte. $%br2) Completar la solicitud. $%br3) Realizar el depósito inicial de 500 Lempiras. $%br Recuerda que el saldo mínimo para cuenta de ahorros es de 500 Lempiras, y no olvides que hay un cargo por 30 Lempiras en caso que no se cumpla ese mínimo.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="requisitosCuentaAhorrosEuros">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para abrir una cuenta de ahorro debes: $%br 1) Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia y/o pasaporte. $%br2) Completar la solicitud. $%br3) Realizar el depósito inicial de 500 Euros. $%br Recuerda que el saldo mínimo para cuenta de ahorros es de 500 Euros, y no olvides que hay un cargo por 1 Euro en caso que no se cumpla ese mínimo.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="requisitosCuentaAhorrosDolares">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para abrir una cuenta de ahorro debes: $%br 1) Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia y/o pasaporte. $%br2) Completar la solicitud. $%br3) Realizar el depósito inicial de 100 Dólares. $%br Recuerda que el saldo mínimo para cuenta de ahorros es de 100 Dólares, y no olvides que hay un cargo por 1 Dólar en caso que no se cumpla ese mínimo.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="requisitosCuentaAhorrosKidsLempiras">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para abrir una cuenta de ahorro debes:  $%br 1) Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia y/o pasaporte. $%br 2) Partida de nacimiento del niño. $%br 3) Completar la solicitud. $%br 4) Realizar el depósito inicial de 100 Lempiras. $%br Recuerda que el saldo mínimo para cuenta de ahorros Atlántida Kids es de 100 Lempiras, en esta cuenta el cargo por saldo menor al mínimo no aplica.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="requisitosCuentaAhorrosKidsDolares">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para abrir una cuenta de ahorro debes: $%br 1) Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia y/o pasaporte. $%br 2) Partida de nacimiento del niño. $%br 3) Completar la solicitud. $%br 4) Realizar el depósito inicial 30 Dólares. $%br Recuerda que el saldo mínimo para cuenta de ahorros Atlántida Kids es de 30 Dólares, en esta cuenta el cargo por saldo menor al mínimo no aplica.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
 	
 	<conversacion id="saludarConocerte">		
 		<tipo>afirmativa</tipo>		
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<frase>¡Hola! Para poder conocer lo que más te gusta, te haré algunas preguntas.</frase>		
-			<frase>Hola Ricky, quiero darte información que sea relevante para ti, por eso te haré algunas consultas, así sabré que te interesa conocer</frase>		
+			<frase>¡Hola!, para poder conocer lo que más te gusta, te haré algunas preguntas.</frase>		
+			<frase>¡Hola!, quiero darte información que sea relevante para ti, por eso te haré algunas consultas, así sabré que te interesa conocer</frase>		
 			<frase>¡Buenas!. Te haré algunas preguntas para poder conocer lo que te gusta y poder recomendarte promociones y beneficios especiales que sean de tu interés</frase>			
 		</frases>		
 		<vineta></vineta>		
@@ -356,12 +531,12 @@
 	</conversacion>		
 					
 	<conversacion id="despedidaConocerte">		
-		<tipo>despedida</tipo>		
+		<tipo>afirmativa</tipo>		
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
 			<frase>Genial, en base a tus respuestas te estaremos informando de beneficios que puedes aprovechar por ser cliente de Banco Atlantida</frase>		
-			<frase>Gracias por tus respuestas Ricky, te estaremos enviando información relevante para ti acerca de promociones y beneficios</frase>		
+			<frase>Gracias por tus respuestas, te estaremos enviando información relevante para ti acerca de promociones y beneficios</frase>		
 			<frase>Muy bien, por ahora es todo lo que requiero conocer para evitar compartir información que no sea de tu interés y solo informarte de promociones y beneficios que te interese aprovechar</frase>		
 		</frases>		
 		<vineta></vineta>		

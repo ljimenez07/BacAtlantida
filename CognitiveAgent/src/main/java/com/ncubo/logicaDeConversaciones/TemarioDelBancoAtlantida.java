@@ -101,7 +101,9 @@ public class TemarioDelBancoAtlantida extends Temario
 			"BATemas",
 			true,
 			"movimientos",
-			frase("movimientos"),
+			frase("quiereMovimiento"),
+			frase("movimientosTarjeta"),
+			frase("movimientosCuenta"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta")
@@ -198,9 +200,15 @@ private Tema quiereAbrirCuenta()
 			"quiereAbrirCuenta",
 			"BAFAQ",
 			true,
-			"abrir_cuenta",
-			frase("requisitosCuentaAhorros"),
-			frase("cualProducto"),
+			"abrir_cuenta",			
+			frase("cualProductoAhorro"),
+			frase("cualMonedaAhorros"),
+			frase("cualMonedaAhorrosKids"),
+			frase("requisitosCuentaAhorrosLempiras"),
+			frase("requisitosCuentaAhorrosEuros"),
+			frase("requisitosCuentaAhorrosDolares"),
+			frase("requisitosCuentaAhorrosKidsLempiras"),
+			frase("requisitosCuentaAhorrosKidsDolares"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta")
@@ -216,8 +224,15 @@ private Tema quiereAbrirCuenta()
 			"BAFAQ",
 			true,
 			"precio",
-			frase("montoInicialCuentaAhorros"),
+			frase("montoInicialCuentaAhorrosLempiras"),
+			frase("montoInicialCuentaAhorrosDolares"),
+			frase("montoInicialCuentaAhorrosEuros"),
+			frase("montoInicialCuentaAhorrosKidsLempiras"),
+			frase("montoInicialCuentaAhorrosKidsDolares"),
 			frase("cualProducto"),
+			frase("cualProductoAhorro"),
+			frase("cualMonedaAhorros"),
+			frase("cualMonedaAhorrosKids"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta")
@@ -233,8 +248,15 @@ private Tema quiereAbrirCuenta()
 			"BAFAQ",
 			true,
 			"saldo_minimo",
-			frase("saldoMinimoCuentaAhorros"),
+			frase("saldoMinimoCuentaAhorrosLempiras"),
+			frase("saldoMinimoCuentaAhorrosDolares"),
+			frase("saldoMinimoCuentaAhorrosEuros"),
+			frase("saldoMinimoCuentaAhorrosKidsLempiras"),
+			frase("saldoMinimoCuentaAhorrosKidsDolares"),
 			frase("cualProducto"),
+			frase("cualProductoAhorro"),
+			frase("cualMonedaAhorros"),
+			frase("cualMonedaAhorrosKids"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta")
@@ -250,8 +272,15 @@ private Tema quiereAbrirCuenta()
 			"BAFAQ",
 			true,
 			"requisitos",
-			frase("requisitosCuentaAhorros"),			
 			frase("cualProducto"),
+			frase("cualProductoAhorro"),
+			frase("cualMonedaAhorros"),
+			frase("cualMonedaAhorrosKids"),
+			frase("requisitosCuentaAhorrosLempiras"),
+			frase("requisitosCuentaAhorrosEuros"),
+			frase("requisitosCuentaAhorrosDolares"),
+			frase("requisitosCuentaAhorrosKidsLempiras"),
+			frase("requisitosCuentaAhorrosKidsDolares"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta")
@@ -304,9 +333,8 @@ private Tema quiereAbrirCuenta()
 
 	@Override
 	protected void cargarDependencias(Temas temasDelDiscurso){
-		/*temasDelDiscurso.get(9).dependeDe(temasDelDiscurso.get(8));
-		temasDelDiscurso.get(10).dependeDe(temasDelDiscurso.get(9));*/
-		
+		temasDelDiscurso.get(13).dependeDe(temasDelDiscurso.get(12));
+		temasDelDiscurso.get(14).dependeDe(temasDelDiscurso.get(13));
 	}
 	
 	public static void main(String argv[]) {

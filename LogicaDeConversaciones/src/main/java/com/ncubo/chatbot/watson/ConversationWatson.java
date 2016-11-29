@@ -62,10 +62,14 @@ public class ConversationWatson {
 	public Intenciones probablesIntenciones(MessageResponse response){
 		
 		Intenciones intenciones = new Intenciones();
-		List<Intent> intents = response.getIntents();
-		for(int i = 0; i < intents.size(); i++ )
-		{
-			intenciones.agregar(new Intencion(intents.get(i).getIntent(), intents.get(i).getConfidence().doubleValue()){});
+		try{
+			List<Intent> intents = response.getIntents();
+			for(int i = 0; i < intents.size(); i++ )
+			{
+				intenciones.agregar(new Intencion(intents.get(i).getIntent(), intents.get(i).getConfidence().doubleValue()){});
+			}
+		}catch(Exception e){
+			System.out.println("Error al cargar las intenciones: "+e.getMessage());
 		}
 		return intenciones;
 	}
@@ -79,11 +83,15 @@ public class ConversationWatson {
 	public Entidades entidadesQueWatsonIdentifico(MessageResponse response)
 	{
 		Entidades misEntidades = new Entidades();
-		List<Entity> entities = response.getEntities();
-		for(int i = 0; i < entities.size(); i++ ){
-			Hashtable<String, Operador> valores = new Hashtable<String, Operador>();
-			valores.put(entities.get(i).getValue(), new Operador(TipoDeOperador.AND));
-			misEntidades.agregar(new Entidad(entities.get(i).getEntity(), valores));
+		try{
+			List<Entity> entities = response.getEntities();
+			for(int i = 0; i < entities.size(); i++ ){
+				Hashtable<String, Operador> valores = new Hashtable<String, Operador>();
+				valores.put(entities.get(i).getValue(), new Operador(TipoDeOperador.AND));
+				misEntidades.agregar(new Entidad(entities.get(i).getEntity(), valores));
+			}
+		}catch(Exception e){
+			System.out.println("Error al cargar las entidades: "+e.getMessage());
 		}
 		return misEntidades;
 	}

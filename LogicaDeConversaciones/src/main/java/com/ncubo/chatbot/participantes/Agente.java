@@ -76,12 +76,12 @@ public class Agente extends Participante{
 		return miWatsonConversacions.get(nombreWorkspace).enviarAWatson(mensaje, miContextos.get(nombreWorkspace));
 	}
 	
-	public Respuesta enviarRespuestaAWatson(String respuestaDelClinete, Frase frase){
+	public Respuesta enviarRespuestaAWatson(String respuestaDelClinete, Frase frase, boolean estaEnWorkSpaceEspecifico){
 		Respuesta respuesta = null;
 		if(estaEnElWorkspaceGeneral){
 			respuesta = analizarRespuestaGeneral(respuestaDelClinete, frase);
 		}else{
-			respuesta = analizarRespuesta(respuestaDelClinete, frase);
+			respuesta = analizarRespuesta(respuestaDelClinete, frase, estaEnWorkSpaceEspecifico);
 		}
 		
 		return respuesta;
@@ -140,7 +140,7 @@ public class Agente extends Participante{
 		return respuesta;
 	}
 	
-	public Respuesta analizarRespuesta(String respuestaDelClinete, Frase frase){
+	public Respuesta analizarRespuesta(String respuestaDelClinete, Frase frase, boolean estaEnWorkSpaceEspecifico){
 		Respuesta respuesta = null;
 		
 		respuesta = new Respuesta(frase, miWatsonConversacions.get(nombreDeWorkspaceActual), miContextos.get(nombreDeWorkspaceActual));
@@ -157,7 +157,7 @@ public class Agente extends Participante{
 					System.out.println("Se requiere cambiar a WROKSPACE GENERAL ...");
 					this.seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActualConRespaldo();;
 					cambiarAWorkspaceGeneral();
-					respuesta = enviarRespuestaAWatson(respuestaDelClinete, frase); // General
+					respuesta = enviarRespuestaAWatson(respuestaDelClinete, frase, estaEnWorkSpaceEspecifico); // General
 					//respuesta = enviarRespuestaAWatson(respuestaDelClinete, frase); // Especifico
 				}else{
 					this.seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActualConRespaldo();
@@ -184,8 +184,10 @@ public class Agente extends Participante{
 					borrarUnaVariableDelContexto(Constantes.ID_TEMA); // Solo se borra el id cuando el tema termina
 					
 					// Desactivar flag del contexto
-					nombreDeLaIntencionEspecificaActiva = respuesta.obtenerLaIntencionDeConfianzaDeLaRespuesta().getNombre();
-					seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActualConRespaldo();
+					if( ! estaEnWorkSpaceEspecifico){
+						nombreDeLaIntencionEspecificaActiva = respuesta.obtenerLaIntencionDeConfianzaDeLaRespuesta().getNombre();
+						seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActualConRespaldo();
+					}
 				}
 			}
 			numeroDeIntentosActualesEnRepetirUnaPregunta = 1;

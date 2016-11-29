@@ -30,6 +30,8 @@ import com.ibm.watson.developer_cloud.conversation.v1.model.Entity;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Intent;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
+import com.ncubo.chatbot.watson.TextToSpeechWatson;
+import com.ncubo.chatbot.partesDeLaConversacion.Tema;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.data.Consulta;
 import com.ncubo.logicaDeConversaciones.Conversaciones;
@@ -52,6 +54,7 @@ public class AgenteCognitivo
 	private String voiceTextToSpeech;
 	private String pathAudio;
 	private String pathXML;
+	private String urlPublicaAudios;
 
 	@Autowired
 	private ConsultaDao consultaDao;
@@ -66,6 +69,7 @@ public class AgenteCognitivo
     public void init(){
         // start your monitoring in here
 		misConversaciones = new Conversaciones(getPathXML());
+		inicializarGeneradorDeAudiosSingleton();
     }
 	
 	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
@@ -117,6 +121,9 @@ public class AgenteCognitivo
 		JSONArray arrayList = new JSONArray(); 
 		
 		System.out.println(salida.size());
+		boolean estaditicaSeDebeGuardar = true;
+		Tema tema = null;
+		ArrayList<Tema> temasTratados = new ArrayList<>();
 		
 		for(int i = 0; i < salida.size(); i++){
 			
@@ -130,7 +137,6 @@ public class AgenteCognitivo
 			
 			if((idFrase.equals("saldoCredito") ||  idFrase.equals("disponibleCredito") ) && usuario.getEstaLogueado())
 			{
-				
 				textos = extraerDatos.obtenerSaldoTarjetaCredito(wsSaldo, texto, usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
 				{
@@ -139,9 +145,6 @@ public class AgenteCognitivo
 					jsonObject.put("audio", "");	
 					arrayList.put(jsonObject);
 				}
-				
-				consultaDao.insertar(
-						new Consulta(Intencion.SALDO.toString(), new Timestamp(new Date().getTime()), Intencion.SALDO_DESCRIPCION.toString() , 1));
 			}
 			else if(idFrase.equals("saldoCuentaAhorros") && usuario.getEstaLogueado())
 			{
@@ -158,21 +161,21 @@ public class AgenteCognitivo
 			{
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión!.");
-				jsonObject.put("audio", "");	
+				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAudio));	
 				arrayList.put(jsonObject);
 			}
 			else if((idFrase.equals("disponibleCredito") || idFrase.equals("disponibleCuentaAhorros")|| idFrase.equals("disponiblePuntos") || idFrase.equals("quiereDisponibleTarjetaCredito")) && ! usuario.getEstaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión!.");
-				jsonObject.put("audio", "");	
+				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.");
+				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL("Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.", pathAudio));	
 				arrayList.put(jsonObject);
 			}
-			else if(idFrase.equals("movimientos") && ! usuario.getEstaLogueado())
+			else if((idFrase.equals("quiereMovimiento") || idFrase.equals("movimientosCuenta") || idFrase.equals("movimientosCuenta")) && ! usuario.getEstaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión!.");
-				jsonObject.put("audio", "");	
+				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.");
+				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL("Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.", pathAudio));	
 				arrayList.put(jsonObject);
 			}
 			else if(idFrase.equals("tasaDolar")||idFrase.equals("tasaEuro")){
@@ -181,10 +184,10 @@ public class AgenteCognitivo
 				
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
-				jsonObject.put("audio", "");	
+				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAudio));	
 				arrayList.put(jsonObject);
 			}
-			else if(idFrase.equals("movimientos")&& usuario.getEstaLogueado())
+			else if(idFrase.equals("movimientosTarjeta") || idFrase.equals("movimientosCuenta") && usuario.getEstaLogueado())
 			{
 				textos = extraerDatos.obtenerMovimientos(wsMovimientos, texto, usuario.getUsuarioId(), "");
 				
@@ -195,10 +198,6 @@ public class AgenteCognitivo
 					jsonObject.put("audio", "");	
 					arrayList.put(jsonObject);
 				}
-				
-				consultaDao.insertar(
-						new Consulta(Intencion.MOVIMIENTOS.toString(), new Timestamp(new Date().getTime()), Intencion.MOVIMIENTOS_DESCRIPCION.toString() , 1));
-		
 			}
 			else if(idFrase.equals("disponibleCuentaAhorros") && usuario.getEstaLogueado())
 			{
@@ -226,14 +225,41 @@ public class AgenteCognitivo
 				jsonObject.put("audio", salida.get(i).getMiSonido().url());	
 				arrayList.put(jsonObject);
 			}
+			else if(texto.contains("%br"))
+			{
+				texto = texto.replaceAll("%br", "<br/>");
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("texto", texto);
+				jsonObject.put("audio",urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAudio));	
+				
+				arrayList.put(jsonObject);
+			}
 			else
 			{
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
 				jsonObject.put("audio", salida.get(i).getMiSonido().url());	
 				arrayList.put(jsonObject);
+				
+				estaditicaSeDebeGuardar = false;
+			}
+			
+			tema = salida.get(i).getTemaActual();
+			if ( estaditicaSeDebeGuardar && ! temasTratados.contains(tema) )
+			{
+				temasTratados.add(tema);
+				System.out.println(tema);
 			}
 		}
+		
+		for(Tema temaActual : temasTratados)
+		{
+			consultaDao.insertar( new Consulta(temaActual, new Timestamp(new Date().getTime())) );
+		}
+			//System.out.println(tema);
+			//consultaDao.insertar(
+			//		new Consulta(Intencion.MOVIMIENTOS.toString(), new Timestamp(new Date().getTime()), Intencion.MOVIMIENTOS_DESCRIPCION.toString() , 1));
+		
 		respuesta.put("textos", arrayList);
 		System.out.println(respuesta.toString());
 		return respuesta.toString();
@@ -343,6 +369,11 @@ public class AgenteCognitivo
 		return value;
 	}
 
+	private void inicializarGeneradorDeAudiosSingleton(){
+		TextToSpeechWatson.getInstance(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), 
+				this.getVoiceTextToSpeech(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), this.getPathAudio());
+	}
+	
 	public void generarTodosLosAudiosEstaticos(){
 		System.out.println("El path xml es: "+getPathXML());
 		misConversaciones.generarAudiosEstaticos(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
@@ -450,6 +481,14 @@ public class AgenteCognitivo
 
 	public void setPathAudio(String path){
 		this.pathAudio = path;
+	}
+	
+	public String geturlPublicaAudios(){
+		return urlPublicaAudios;
+	}
+
+	public void seturlPublicaAudios(String path){
+		this.urlPublicaAudios = path;
 	}
 	
 	public String getPathXML() {
