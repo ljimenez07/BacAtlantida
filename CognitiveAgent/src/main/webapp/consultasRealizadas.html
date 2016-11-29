@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:include="fragments/backoffice :: head (title='Consultas Realizadas')">
 <meta charset="UTF-8"></meta>
 </head>
@@ -18,12 +18,7 @@
 	{
 		padding-top: 3%;
 	}
-	.center
-	{
-		margin: auto;
-		width: 70%;
-		padding: 10px;
-	}
+	
 
 </style>
 <script>
@@ -54,7 +49,7 @@
 		<div th:include="fragments/backoffice :: body(paginaActual='consultasRealizadas')"></div>
 	
 		<div class="container agregar-padding-bottom">
-			<div class="row center">
+			<div class="row centrar">
 				<form th:action="@{/BackOffice/filtrarConsultasRealizadas}" th:method="post">
 					<div class="col-md-4">
 						<div class="form-group">
@@ -82,14 +77,14 @@
 					</div>
 				</form>
 			</div>
-			<div class="row center" th:if="${mensajeError} != null">
+			<div class="row centrar" th:if="${mensajeError} != null">
 				<div class="col-md-12">
 					<div class="form-group">
 						<p>**Fechas incorrectas.</p>
 					</div>
 				</div>
 			</div>
-			<div class="row center" th:unless="${consultasFiltradas} == null">
+			<div class="row centrar" th:unless="${consultasFiltradas} == null">
 				<div class="table-responsive" th:if="${not #lists.isEmpty(consultasFiltradas)}">
 					<table class="table table-bordered">
 						<thead>

@@ -1,6 +1,6 @@
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:fragment="head (title)">
 	<meta charset="UTF-8"></meta>
 	<title th:text="${title}">Page Title</title>
@@ -75,12 +75,17 @@
 			color: #3e61ac;
 		}
 		
-		.btn-default
+		.btn-default, .acomodar-padding-boton
 		{
 			font-family: 'Roboto', serif;
 			font-size: 16px;
 			padding-bottom: 1px;
 			padding-top: 1px;
+		}
+		
+		.my-btn
+		{
+			background-color: #e92531;
 		}
 		/* fin fonts y colores de los fonts */
 		
@@ -158,7 +163,16 @@
 			display: inline-block;
 			vertical-align: middle;
 		}
-		.glyphicon-search
+		.icono-menu-salir
+		{
+			width: 37px;
+			height: 33px;
+			cursor: pointer;
+			background: url([[@{/img/iconos-menu-33x33-34.png}]]) -33px  0;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		.glyphicon-search, .glyphicon-log-out
 		{
 			color: red;
 		}
@@ -296,6 +310,18 @@
 		
 		#buscarComercio, #buscarComercio .form-group {
 			margin-bottom: 0;
+		}
+
+		.pull-left-menu
+		{
+			right: 0;
+			left: auto;
+		}
+		.centrar
+		{
+			margin: auto;
+			width: 70%;
+			padding: 10px;
 		}
 	</style>
 </head>
