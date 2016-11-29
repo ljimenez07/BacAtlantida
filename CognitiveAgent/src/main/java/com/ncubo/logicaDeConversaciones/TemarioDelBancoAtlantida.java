@@ -281,6 +281,27 @@ public class TemarioDelBancoAtlantida extends Temario
 			frase("requisitosCuentaAhorrosDolares"),
 			frase("requisitosCuentaAhorrosKidsLempiras"),
 			frase("requisitosCuentaAhorrosKidsDolares"),
+			frase("requisitosAOL"),
+			frase("requisitosPrestamoPersonal"),
+			frase("requisitosPrestamoVivienda"),
+			frase("requisitosPrestamoVehiculo"),
+			frase("cualProductoPrestamo"),
+			frase("preguntarPorOtraConsulta"),
+			frase("quiereHacerOtraConsulta"),
+			frase("noQuiereHacerOtraConsulta")
+		);
+		return resultado;
+	}
+	
+	private Tema quiereReportarExtravio()
+	{
+		Tema resultado = new Tema
+		(
+			"quiereReportarExtravio",
+			"BAFAQ",
+			true,
+			"reportar_extravio",
+			frase("reportarExtravio"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta")
@@ -309,6 +330,8 @@ public class TemarioDelBancoAtlantida extends Temario
 		temasDelDiscurso.add(preguntarPorFinesDeSemana());
 		temasDelDiscurso.add(despedidaConocerte());
 		
+		
+		temasDelDiscurso.add(quiereReportarExtravio());
 	}
 	
 	public void cargarIntenciones(List<Intenciones> intenciones)
