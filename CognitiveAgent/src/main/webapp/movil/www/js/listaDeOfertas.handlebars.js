@@ -3,37 +3,37 @@
 templates['listaDeOfertas'] = template({"1":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "	<div class=\"row\">\n		<div class=\"col-xs-12\">\n			<div class=\"row datos-de-oferta\" id=\""
+  return "	<div class=\"row\">\r\n		<div class=\"col-xs-12\">\r\n			<div class=\"row datos-de-oferta\" id=\""
     + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
-    + "\">\n				<div class=\"col-xs-12\">\n					<div class=\"row\">\n						<div class=\"col-xs-12\">\n"
+    + "\">\r\n				<div class=\"col-xs-12\">\r\n					<div class=\"row\">\r\n						<div class=\"col-xs-12\">\r\n"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.esHtml : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.program(4, data, 0),"data":data})) != null ? stack1 : "")
-    + "						</div>\n					</div>\n					<div class=\"row nombre-del-comercio\">\n						<div class=\"col-xs-12\">\n							<strong>"
+    + "						</div>\r\n					</div>\r\n					<div class=\"row nombre-del-comercio\">\r\n						<div class=\"col-xs-12\">\r\n							<strong>"
     + alias4(((helper = (helper = helpers.comercio || (depth0 != null ? depth0.comercio : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"comercio","hash":{},"data":data}) : helper)))
-    + "</strong>\n						</div>\n					</div>\n					<div class=\"row\">\n						<div class=\"col-xs-12\">\n							<span>"
+    + "</strong>\r\n						</div>\r\n					</div>\r\n					<div class=\"row\">\r\n						<div class=\"col-xs-12\">\r\n							<span>"
     + alias4(((helper = (helper = helpers.tituloDeOferta || (depth0 != null ? depth0.tituloDeOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"tituloDeOferta","hash":{},"data":data}) : helper)))
-    + "</span>\n						</div>\n					</div>\n				</div>\n			</div>\n			<div class=\"row contenedor-de-botones\">\n				<div class=\"col-xs-6\">\n					<div class=\"tiempo-transcurrido\">Hace "
+    + "</span>\r\n						</div>\r\n					</div>\r\n				</div>\r\n			</div>\r\n			<div class=\"row contenedor-de-botones\">\r\n				<div class=\"col-xs-6\">\r\n					<div class=\"tiempo-transcurrido\">Hace "
     + alias4(((helper = (helper = helpers.tiempoTranscurrido || (depth0 != null ? depth0.tiempoTranscurrido : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"tiempoTranscurrido","hash":{},"data":data}) : helper)))
-    + "</div>\n				</div>\n				<div class=\"col-xs-6\">\n					<div class=\"row\">\n"
+    + "</div>\r\n				</div>\r\n				<div class=\"col-xs-6\">\r\n					<div class=\"row\">\r\n"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.esUnUsuarioConocido : depth0),{"name":"if","hash":{},"fn":container.program(6, data, 0),"inverse":container.program(8, data, 0),"data":data})) != null ? stack1 : "")
     + "						<div class=\"col-xs-3\"><div data-audio=\""
     + alias4(((helper = (helper = helpers.descripcionAudio || (depth0 != null ? depth0.descripcionAudio : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"descripcionAudio","hash":{},"data":data}) : helper)))
-    + "\" class=\"boton-escuchar\"></div></div>\n						<div class=\"col-xs-3\"><div class=\"boton-compartir\"></div></div>\n					</div>\n				</div>\n			</div>\n		</div>\n	</div>\n";
+    + "\" class=\"boton-escuchar\"></div></div>\r\n						<div class=\"col-xs-3\"><div class=\"boton-compartir\"></div></div>\r\n					</div>\r\n				</div>\r\n			</div>\r\n		</div>\r\n	</div>\r\n";
 },"2":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "								<div class=\"html-de-oferta\" id=\"html-de-oferta-"
     + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
-    + "\"></div>\n								<script type=\"text/javascript\">\n								$.get(\""
+    + "\"></div>\r\n								<script type=\"text/javascript\">\r\n								$.get(\""
     + alias4(((helper = (helper = helpers.imagenPublicidadPath || (depth0 != null ? depth0.imagenPublicidadPath : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"imagenPublicidadPath","hash":{},"data":data}) : helper)))
-    + "\", function(data) {\n									$(\"#html-de-oferta-"
+    + "\", function(data) {\r\n									$(\"#html-de-oferta-"
     + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
-    + "\").html(data);\n								});\n								</script>\n";
+    + "\").html(data);\r\n								});\r\n								</script>\r\n";
 },"4":function(container,depth0,helpers,partials,data) {
     var helper;
 
   return "								<img src=\"/archivossubidos/"
     + container.escapeExpression(((helper = (helper = helpers.imagenPublicidadPath || (depth0 != null ? depth0.imagenPublicidadPath : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"imagenPublicidadPath","hash":{},"data":data}) : helper)))
-    + "\" class=\"imagen-de-oferta\">\n";
+    + "\" class=\"imagen-de-oferta\">\r\n";
 },"6":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
@@ -41,13 +41,13 @@ templates['listaDeOfertas'] = template({"1":function(container,depth0,helpers,pa
     + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
     + "\" class=\"boton-like estado-"
     + alias4(((helper = (helper = helpers.likes || (depth0 != null ? depth0.likes : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"likes","hash":{},"data":data}) : helper)))
-    + "\"></div></div>\n							<div class=\"col-xs-3\"><div data-id=\""
+    + "\"></div></div>\r\n							<div class=\"col-xs-3\"><div data-id=\""
     + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
     + "\" class=\"boton-dislike estado-"
     + alias4(((helper = (helper = helpers.dislikes || (depth0 != null ? depth0.dislikes : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"dislikes","hash":{},"data":data}) : helper)))
-    + "\"></div></div>\n";
+    + "\"></div></div>\r\n";
 },"8":function(container,depth0,helpers,partials,data) {
-    return "							<div class=\"col-xs-6\"></div>\n";
+    return "							<div class=\"col-xs-6\"></div>\r\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
