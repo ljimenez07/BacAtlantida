@@ -42,6 +42,10 @@ public class Cliente extends Participante{
 		return misIdsDeSesiones;
 	}
 
+	public void borrarTodosLosIdsDeSesiones() {
+		this.misIdsDeSesiones.clear();
+	}
+	
 	public void agregarIdsDeSesiones(String idDeSesion) {
 		this.misIdsDeSesiones.add(idDeSesion);
 	}

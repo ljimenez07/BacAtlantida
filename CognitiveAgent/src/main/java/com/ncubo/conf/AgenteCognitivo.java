@@ -393,6 +393,26 @@ public class AgenteCognitivo
 		
 	}
 	
+	public String borrarUnaConversacion(String idSession){
+		return misConversaciones.borrarUnaConversacion(idSession);
+	}
+	
+	public String verTodasLasCoversacionesActivas(){
+		return misConversaciones.verTodasLasCoversacionesActivas();
+	}
+	
+	public String verTodosLosClientesActivos(){
+		return misConversaciones.verTodosLosClientesActivos();
+	}
+	
+	public String verLosIdsDeLasConversacionesActivasPorCliente(String idCliente){
+		return misConversaciones.verLosIdsDeLasConversacionesActivasPorCliente(idCliente);
+	}
+	
+	public String borrarTodasLasConversacionesDeUnCliente(String idCliente){
+		return misConversaciones.borrarTodasLasConversacionesDeUnCliente(idCliente);
+	}
+	
 	public String verMiTemario(){
 		return misConversaciones.verMiTemario();
 	}

@@ -74,7 +74,7 @@ public class Conversacion {
 		misSalidas.clear();
 		estaEnWorkSpaceEspecifico = false;
 		
-		Respuesta respuesta = agente.enviarRespuestaAWatson(respuestaDelCliente, fraseActual, estaEnWorkSpaceEspecifico);
+		Respuesta respuesta = agente.enviarRespuestaAWatson(respuestaDelCliente, fraseActual);
 		this.hilo.agregarUnaRespuesta(respuesta);
 		Pregunta miPregunta = null;
 		
@@ -177,19 +177,17 @@ public class Conversacion {
 		Respuesta respuesta = null;
 		if(estaEnWorkSpaceEspecifico == false){
 			estaEnWorkSpaceEspecifico = true;
-			agente.establecerNombreDelWorkspaceActual(nombreDelWorkSpaseAUsar);
 			this.temaActualDelWorkSpaceEspecifico = null;
 			this.fraseActualDelWorkSpaceEspecifico = null;
 			
 			//this.temaActual = this.temario.buscarTema("saludarConocerte"); // Poner tema saludo del conocerte
-			agente.establecerNombreDeLaIntencionEspecificaActiva(nombreDeLaIntencion);
-			agente.cambiarDeTema();
+			agente.cambiarDeTemaWSEspecifico();
 		}else{
-			respuesta = agente.enviarRespuestaAWatson(respuestaDelCliente, fraseActualDelWorkSpaceEspecifico, estaEnWorkSpaceEspecifico);
+			respuesta = agente.analizarRespuestaWSEspecifico(respuestaDelCliente, fraseActualDelWorkSpaceEspecifico, nombreDelWorkSpaseAUsar);
 			this.hilo.agregarUnaRespuesta(respuesta);
 		}
 		
-		if(agente.hayQueCambiarDeTema()){
+		if(agente.hayQueCambiarDeTemaWSEspecifico()){
 			if(this.temaActualDelWorkSpaceEspecifico != null){
 				ponerComoYaTratado(this.temaActualDelWorkSpaceEspecifico);
 			}
@@ -200,8 +198,8 @@ public class Conversacion {
 				extraerOracionesAfirmarivasYPreguntas(respuesta, idFraseActivada);
 			}
 			
-			this.temaActualDelWorkSpaceEspecifico = this.temario.proximoTemaATratar(temaActualDelWorkSpaceEspecifico, hilo.verTemasYaTratadosYQueNoPuedoRepetir(), agente.obtenerNombreDelWorkspaceActual(), agente.obtenernombreDeLaIntencionEspecificaActiva());
-			agente.yaNoCambiarDeTema();
+			this.temaActualDelWorkSpaceEspecifico = this.temario.proximoTemaATratar(temaActualDelWorkSpaceEspecifico, hilo.verTemasYaTratadosYQueNoPuedoRepetir(), nombreDelWorkSpaseAUsar, nombreDeLaIntencion);
+			agente.yaNoCambiarDeTemaWSEspecifico();
 			if(this.temaActualDelWorkSpaceEspecifico == null){ // Ya no hay mas temas	
 				this.temaActualDelWorkSpaceEspecifico = this.temario.buscarTema("saludarConocerte");
 				//agente.cambiarAWorkspaceGeneral();
@@ -209,17 +207,17 @@ public class Conversacion {
 				System.out.println("El proximo tema a tratar es: "+this.temaActualDelWorkSpaceEspecifico.obtenerIdTema());
 				
 				// Activar en el contexto el tema
-				agente.activarTemaEnElContextoDeWatson(this.temaActualDelWorkSpaceEspecifico.obtenerIdTema());
+				agente.activarTemaEnElContextoDeWatsonEnWorkspaceEspecifico(this.temaActualDelWorkSpaceEspecifico.obtenerIdTema(), nombreDelWorkSpaseAUsar);
 				
 				// llamar a watson y ver que bloque se activo
-				respuesta = agente.inicializarTemaEnWatson(respuestaDelCliente);
+				respuesta = agente.inicializarTemaEnWatsonWorkspaceEspecifico(respuestaDelCliente, nombreDelWorkSpaseAUsar);
 				idFraseActivada = agente.obtenerNodoActivado(respuesta.messageResponse());
 				
 				System.out.println("Id de la frase a decir: "+idFraseActivada);
-				agente.borrarUnaVariableDelContexto(Constantes.NODO_ACTIVADO);
-				agente.borrarUnaVariableDelContexto(Constantes.ORACIONES_AFIRMATIVAS);
-				agente.borrarUnaVariableDelContexto(Constantes.TERMINO_EL_TEMA);
-				agente.borrarUnaVariableDelContexto(Constantes.ANYTHING_ELSE);
+				agente.borrarUnaVariableDelContextoEnUnWorkspace(Constantes.NODO_ACTIVADO, nombreDelWorkSpaseAUsar);
+				agente.borrarUnaVariableDelContextoEnUnWorkspace(Constantes.ORACIONES_AFIRMATIVAS, nombreDelWorkSpaseAUsar);
+				agente.borrarUnaVariableDelContextoEnUnWorkspace(Constantes.TERMINO_EL_TEMA, nombreDelWorkSpaseAUsar);
+				agente.borrarUnaVariableDelContextoEnUnWorkspace(Constantes.ANYTHING_ELSE, nombreDelWorkSpaseAUsar);
 				
 				extraerOracionesAfirmarivasYPreguntas(respuesta, idFraseActivada);
 			}
@@ -235,14 +233,6 @@ public class Conversacion {
 				}
 			}
 		}
-		
-		/*if(respuesta.seTerminoElTema()){
-			Tema miTema = this.temario.proximoTemaATratar(temaActual, hilo.verTemasYaTratadosYQueNoPuedoRepetir(), agente.obtenerNombreDelWorkspaceActual(), agente.obtenerNombreDeLaIntencionGeneralActiva());
-			if(miTema == null){ // TODO Ya no hay mas temas -  Que hago
-				this.temaActual = this.temario.buscarTema(Constantes.FRASE_SALUDO);
-				agente.borrarUnaVariableDelContexto(Constantes.TERMINO_EL_TEMA);
-			}
-		}*/
 		
 		return misSalidas;
 	}
