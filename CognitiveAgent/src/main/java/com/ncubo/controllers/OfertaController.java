@@ -93,13 +93,6 @@ public class OfertaController
 		return "tablaDeOfertas";
 	}
 	
-
-	@RequestMapping("/login")
-	public String login( Model model) throws ClassNotFoundException, SQLException
-	{
-		return "login";
-	}
-	
 	@GetMapping("/BackOffice/insertarOferta")
 	public String cargarInsertarOfertas(Oferta oferta, Model model) throws ClassNotFoundException, SQLException
 	{
@@ -234,5 +227,18 @@ public class OfertaController
 	public void initBinder(final WebDataBinder binder){
 	  final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
 	  binder.registerCustomEditor(java.sql.Date.class, new CustomDateEditor(dateFormat, true));
+	}
+	
+
+	@RequestMapping("/login")
+	public String login( Model model) throws ClassNotFoundException, SQLException
+	{
+		return "login";
+	}
+	
+	@RequestMapping("/logout")
+	public String logout( Model model) throws ClassNotFoundException, SQLException
+	{
+		return "login";
 	}
 }

@@ -1,68 +1,61 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <head>
-        <title>Ingreso al sistema</title>
-        <meta charset="UTF-8"/>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	<head>
+		<title>Ingreso al sistema</title>
+		<meta charset="UTF-8"/>
 	
 	<link rel="stylesheet" th:href="@{css/bootstrap.min.css}"/>
 	<link rel="stylesheet" th:href="@{css/bootstrap-theme.min.css}"/>
-    <style>
-    	body
-    	{
-    		background-color:rgb(237,32,36);
-    	}
-    	#form-login
-    	{
-    		padding-top: 25%;
-    	}
-    	#btn-enviar
-    	{
-    		margin-left: 35%;
-    	}
-    	img
-    	{
-    		width: 100%;
-    		height: 80%;
-    	}
-    	.form-control
-    	{
-    		border-radius: 0px;
-    	}
-    </style>   
-    </head>
-  
-    <body>
-    	<div class="container">
-    	<div class="col-xs-12 col-md-2"></div>
-    	<div class="col-xs-12 col-md-4 col-md-offset-2" id="form-login">
-    	
-	        <div th:if="${param.logout}">
-	            Has sido deslogueado del sistema.
-	        </div>
-	        <div id="image-container">
-	        	<img alt="Logo Banco Atlantida" src="imagenes/BA.png"/>
-	        </div>
-	        <div class="alert alert-warning" th:if="${param.error}" style="margin-top: 10%;">
-	           Usuario y/o contraseña incorrecta.
-	        </div>
-	        <form th:action="@{/login}" method="post" style="padding-top:10%;">
-	            <div class="form-group">
-	            	<input class="form-control" type="text" name="username" placeholder="Usuario"/>
-	            </div>
-	            <div class="form-group">
-	            	<input class="form-control"  type="password" name="password" placeholder="Contraseña"/>
-	            </div>
-	            <div>
-					<button id="btn-enviar" class="btn btn-default" type="submit" >Entrar</button>
-	            	
-	            </div>
-	        </form>
-    	</div>
-    	<div class="col-md-4"></div>
-	    	
-    	</div>
-        
-
-    </body>
+	<style>
+		body
+		{
+			background-color:rgb(237,32,36);
+		}
+		#form-login
+		{
+			padding-top: 25%;
+		}
+		#btn-enviar
+		{
+			margin-left: 35%;
+		}
+		img
+		{
+			width: 100%;
+			height: 80%;
+		}
+		.form-control
+		{
+			border-radius: 0px;
+		}
+	</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="col-xs-12 col-md-2"></div>
+				<div class="col-xs-12 col-md-4 col-md-offset-2" id="form-login">
+					<div id="image-container">
+						<img alt="Logo Banco Atlantida" src="imagenes/BA.png"/>
+					</div>
+					<div class="alert alert-warning" th:if="${param.error}" style="margin-top: 10%;">
+						Usuario y/o contraseña incorrecta.
+					</div>
+					<div class="alert alert-warning" th:if="${param.logout}" style="margin-top: 10%;">
+						Has salido del sistema.
+					</div>
+					<form th:action="@{/login}" method="post" style="padding-top:10%;">
+						<div class="form-group">
+							<input class="form-control" type="text" name="username" placeholder="Usuario"/>
+						</div>
+						<div class="form-group">
+							<input class="form-control"  type="password" name="password" placeholder="Contraseña"/>
+						</div>
+						<div>
+							<button id="btn-enviar" class="btn btn-default" type="submit" >Entrar</button>
+						</div>
+					</form>
+				</div>
+			<div class="col-md-4"></div>
+		</div>
+	</body>
 </html>

@@ -226,10 +226,11 @@ public class AgenteCognitivo
 			}
 			else if(texto.contains("%br"))
 			{
+				String textoParaReproducir = texto.replaceAll("%br", "");
 				texto = texto.replaceAll("%br", "<br/>");
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
-				jsonObject.put("audio",urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAudio));	
+				jsonObject.put("audio",urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir, pathAudio));	
 				
 				arrayList.put(jsonObject);
 			}
@@ -380,6 +381,26 @@ public class AgenteCognitivo
 			e.getStackTrace();
 		}
 		
+	}
+	
+	public String borrarUnaConversacion(String idSession){
+		return misConversaciones.borrarUnaConversacion(idSession);
+	}
+	
+	public String verTodasLasCoversacionesActivas(){
+		return misConversaciones.verTodasLasCoversacionesActivas();
+	}
+	
+	public String verTodosLosClientesActivos(){
+		return misConversaciones.verTodosLosClientesActivos();
+	}
+	
+	public String verLosIdsDeLasConversacionesActivasPorCliente(String idCliente){
+		return misConversaciones.verLosIdsDeLasConversacionesActivasPorCliente(idCliente);
+	}
+	
+	public String borrarTodasLasConversacionesDeUnCliente(String idCliente){
+		return misConversaciones.borrarTodasLasConversacionesDeUnCliente(idCliente);
 	}
 	
 	public String verMiTemario(){

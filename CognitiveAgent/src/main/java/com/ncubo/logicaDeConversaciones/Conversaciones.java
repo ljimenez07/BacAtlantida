@@ -1,6 +1,7 @@
 package com.ncubo.logicaDeConversaciones;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,16 +34,22 @@ public class Conversaciones {
 		if(usuario.getEstaLogueado()){
 			cliente = new Cliente(usuario.getUsuarioNombre(), usuario.getUsuarioId());
 			cliente.agregarIdsDeSesiones(usuario.getIdSesion());
-			misClientes.put(cliente.getMiId(), cliente);
 			
-			if(existeLaConversacion(usuario.getIdSesion())){
-				Conversacion coversacion = misConversaciones.get(usuario.getIdSesion());
-				coversacion.cambiarParticipante(cliente);
-				misConversaciones.put(usuario.getIdSesion(), coversacion);
-			}else{
-				Conversacion coversacion = new Conversacion(temarioDelBancoAtlantida, cliente);
-				misConversaciones.put(usuario.getIdSesion(), coversacion);
+			synchronized(misClientes){
+				misClientes.put(cliente.getMiId(), cliente);
 			}
+			
+			synchronized(misConversaciones){
+				if(existeLaConversacion(usuario.getIdSesion())){
+					Conversacion coversacion = misConversaciones.get(usuario.getIdSesion());
+					coversacion.cambiarParticipante(cliente);
+					misConversaciones.put(usuario.getIdSesion(), coversacion);
+				}else{
+					Conversacion coversacion = new Conversacion(temarioDelBancoAtlantida, cliente);
+					misConversaciones.put(usuario.getIdSesion(), coversacion);
+				}
+			}
+			
 			resultado = "La nueva conversacion se creo exitosamente.";
 			System.out.println(resultado);
 		}else{
@@ -50,7 +57,9 @@ public class Conversaciones {
 				if( ! existeLaConversacion(usuario.getIdSesion())){
 					cliente = new Cliente();
 					Conversacion coversacion = new Conversacion(temarioDelBancoAtlantida, cliente);
-					misConversaciones.put(usuario.getIdSesion(), coversacion);
+					synchronized(misConversaciones){
+						misConversaciones.put(usuario.getIdSesion(), coversacion);
+					}
 					resultado = "La nueva conversacion se creo exitosamente.";
 					System.out.println(resultado);
 				}
@@ -173,4 +182,71 @@ public class Conversaciones {
 		}
 	}
 
+	public String borrarUnaConversacion(String idSesion){
+		String resultado = "La conversación con id "+idSesion+" no existe.";
+		if(existeLaConversacion(idSesion)){
+			synchronized(misConversaciones){
+				misConversaciones.remove(idSesion);
+				resultado = "La conversación con id "+idSesion+" se borró exitosamente.";
+			}
+		}
+		System.out.println(resultado);
+		return resultado;
+	}
+	
+	public String verTodasLasCoversacionesActivas(){
+		String resultado = "";
+		
+		Enumeration<String> keys = misConversaciones.keys();
+		while(keys.hasMoreElements()){
+			String key = keys.nextElement();
+			resultado += " -> "+key+" \n";
+		}
+		
+		return resultado;
+	}
+	
+	public String verTodosLosClientesActivos(){
+		String resultado = "";
+		
+		Enumeration<String> keys = misClientes.keys();
+		while(keys.hasMoreElements()){
+			String key = keys.nextElement();
+			resultado += " -> "+key+" \n";
+		}
+		
+		return resultado;
+	}
+	
+	public String verLosIdsDeLasConversacionesActivasPorCliente(String idCliente){
+
+		String resultado = "El cliente con id "+idCliente+" no existe.";
+		if(existeElCliente(idCliente)){
+			resultado = "";
+			Cliente miCliente = misClientes.get(idCliente);
+			ArrayList<String> idsSeseiones = miCliente.getMisIdsDeSesiones();
+			for (String idSesion: idsSeseiones){
+				resultado += " -> "+idSesion+" \n";
+			}
+		}
+		
+		return resultado;
+	}
+	
+	public String borrarTodasLasConversacionesDeUnCliente(String idCliente){
+		String resultado = "El cliente con id "+idCliente+" no existe.";
+		if(existeElCliente(idCliente)){
+			synchronized(misConversaciones){
+				Cliente miCliente = misClientes.get(idCliente);
+				ArrayList<String> idsSeseiones = miCliente.getMisIdsDeSesiones();
+				for (String idSesion: idsSeseiones){
+					borrarUnaConversacion(idSesion);
+				}
+				miCliente.borrarTodosLosIdsDeSesiones();
+				resultado = "Las conversaciones del cliente "+idCliente+" se borraron exitosamente.";
+			}
+		}
+		return resultado;
+	}
+	
 }

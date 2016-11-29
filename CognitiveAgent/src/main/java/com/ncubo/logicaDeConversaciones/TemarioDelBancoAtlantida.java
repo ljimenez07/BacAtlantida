@@ -193,7 +193,7 @@ public class TemarioDelBancoAtlantida extends Temario
 		return resultado;
 	}
 	
-private Tema quiereAbrirCuenta()
+	private Tema quiereAbrirCuenta()
 	{
 		Tema resultado = new Tema
 		(
@@ -281,12 +281,34 @@ private Tema quiereAbrirCuenta()
 			frase("requisitosCuentaAhorrosDolares"),
 			frase("requisitosCuentaAhorrosKidsLempiras"),
 			frase("requisitosCuentaAhorrosKidsDolares"),
+			frase("requisitosAOL"),
+			frase("requisitosPrestamoPersonal"),
+			frase("requisitosPrestamoVivienda"),
+			frase("requisitosPrestamoVehiculo"),
+			frase("cualProductoPrestamo"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta")
 		);
 		return resultado;
 	}
+	
+	private Tema quiereReportarExtravio()
+	{
+		Tema resultado = new Tema
+		(
+			"quiereReportarExtravio",
+			"BAFAQ",
+			true,
+			"reportar_extravio",
+			frase("reportarExtravio"),
+			frase("preguntarPorOtraConsulta"),
+			frase("quiereHacerOtraConsulta"),
+			frase("noQuiereHacerOtraConsulta")
+		);
+		return resultado;
+	}
+	
 	@Override
 	protected void cargarTemario(Temas temasDelDiscurso){
 		
@@ -308,6 +330,8 @@ private Tema quiereAbrirCuenta()
 		temasDelDiscurso.add(preguntarPorFinesDeSemana());
 		temasDelDiscurso.add(despedidaConocerte());
 		
+		
+		temasDelDiscurso.add(quiereReportarExtravio());
 	}
 	
 	public void cargarIntenciones(List<Intenciones> intenciones)
