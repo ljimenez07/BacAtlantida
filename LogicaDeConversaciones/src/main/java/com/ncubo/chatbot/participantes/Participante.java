@@ -45,8 +45,6 @@ public class Participante{
 	private Manifestarse formaDeManifestarseOral = Manifestarse.EnFormaEscrita;
 	private Manifestarse formaDeManifestarseVisual = Manifestarse.EnFormaEscrita;
 	
-	private Contexto miContexto = new Contexto();
-	
 	public Participante(){}
 	
 	public void manifestarseEnFormaOral(){
@@ -118,10 +116,6 @@ public class Participante{
 		}
 		
 		return salida;
-	}
-	
-	public void agregarVariableDeContexto(String key, String valor){
-		miContexto.agregarAMiContexto(key, valor);
 	}
 	
 }

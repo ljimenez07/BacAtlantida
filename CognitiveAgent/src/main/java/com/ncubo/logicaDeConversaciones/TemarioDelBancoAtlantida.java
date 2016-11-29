@@ -101,7 +101,9 @@ public class TemarioDelBancoAtlantida extends Temario
 			"BATemas",
 			true,
 			"movimientos",
-			frase("movimientos"),
+			frase("quiereMovimiento"),
+			frase("movimientosTarjeta"),
+			frase("movimientosCuenta"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta")
@@ -191,7 +193,7 @@ public class TemarioDelBancoAtlantida extends Temario
 		return resultado;
 	}
 	
-private Tema quiereAbrirCuenta()
+	private Tema quiereAbrirCuenta()
 	{
 		Tema resultado = new Tema
 		(
@@ -306,6 +308,7 @@ private Tema quiereAbrirCuenta()
 		);
 		return resultado;
 	}
+	
 	@Override
 	protected void cargarTemario(Temas temasDelDiscurso){
 		

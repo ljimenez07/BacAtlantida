@@ -80,7 +80,6 @@ public class MovilController {
 		JSONObject object = new JSONObject();
 		object.put("usuarioEstaLogueado", usuario.getEstaLogueado());
 		
-		
 		session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 		
 		return object.toString();
@@ -151,6 +150,36 @@ public class MovilController {
 	@ResponseBody String generarAudioEstatico(@PathVariable("id") String id){
 		serverCognitivo.generarAudioEstatico(id);
 		return "Ok";
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/verTodasLasCoversacionesActivas", method = RequestMethod.GET)
+	@ResponseBody String verTodasLasCoversacionesActivas(){
+		return serverCognitivo.verTodasLasCoversacionesActivas();
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/verTodosLosClientesActivos", method = RequestMethod.GET)
+	@ResponseBody String verTodosLosClientesActivos(){
+		return serverCognitivo.verTodosLosClientesActivos();
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/verLosIdsDeLasConversacionesActivasPorCliente/{id}", method = RequestMethod.GET)
+	@ResponseBody String verLosIdsDeLasConversacionesActivasPorCliente(@PathVariable("id") String id){
+		return serverCognitivo.verLosIdsDeLasConversacionesActivasPorCliente(id);
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/borrarTodasLasConversacionesDeUnCliente/{id}", method = RequestMethod.GET)
+	@ResponseBody String borrarTodasLasConversacionesDeUnCliente(@PathVariable("id") String id){
+		return serverCognitivo.borrarTodasLasConversacionesDeUnCliente(id);
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/borrarUnaConversacion/{id}", method = RequestMethod.GET)
+	@ResponseBody String borrarUnaConversacion(@PathVariable("id") String id){
+		return serverCognitivo.borrarUnaConversacion(id);
 	}
 	
 	@CrossOrigin(origins = "*")

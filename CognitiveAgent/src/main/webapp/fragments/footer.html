@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 	<meta charset="UTF-8"></meta>
 </head>
 <style>
-	
 </style>
 <body>
-	<footer th:fragment="footer">
+	<footer th:fragment="footer" style="display:block;position:static; bottom:0px; left: 0px; margin-top: 10%;">
 		<div class="container">
 			<div class="col-md-12">
 				<img th:src="@{/img/footer.png}"></img>

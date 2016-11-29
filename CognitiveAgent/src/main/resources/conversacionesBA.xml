@@ -197,12 +197,32 @@
 		<vineta></vineta>
 	</conversacion>
 	
-	<conversacion id="movimientos">
+	<conversacion id="quiereMovimiento">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>¿Te refieres a tu tarjeta de crédito o tu cuenta corriente?</curioso>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="movimientosTarjeta">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Estos son los últimos movimientos registrados: $</frase>
+			<frase>Estos son los últimos movimientos registrados en tu tarjeta de crédito: $</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="movimientosCuenta">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Estos son los últimos movimientos registrados en tu cuenta corriente: $</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -293,7 +313,7 @@
 		<vineta></vineta>
 	</conversacion>
 	
-<conversacion id="cualProductoAhorro">
+	<conversacion id="cualProductoAhorro">
 		<tipo>pregunta</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
@@ -596,7 +616,7 @@
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
 		<workspace tipo="general" idIBM="ea7cc165-ac98-4349-92ed-8e04f1ab402e" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="acdff3cd-1deb-4300-8cce-d6e8b0018ec8" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible,ayuda_como">BATemas</workspace>
+		<workspace tipo="especifico" idIBM="e0ff922e-68f2-4cc3-bc69-ec624d07c36c" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible,ayuda_como">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="d4b0e759-9557-4f5e-9049-fcc3472e5ea2" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
 		<workspace tipo="especifico" idIBM="23314e4c-47ad-49c6-8d05-de4ddb1ccf86" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio">BAFAQ</workspace>
 	</workspaces>
