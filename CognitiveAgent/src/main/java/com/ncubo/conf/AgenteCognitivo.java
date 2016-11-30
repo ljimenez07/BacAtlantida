@@ -90,7 +90,7 @@ public class AgenteCognitivo
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	//	String contexto= usuario.getContextoDeWatson();
 		
-		JSONObject contenidoDelContexto ;
+		/*JSONObject contenidoDelContexto ;
 		if( esParaConocerte )
 		{
 			System.out.println("contexto de watson cuando entra "+ usuario.getContextoDeWatsonParaConocerte());
@@ -112,7 +112,7 @@ public class AgenteCognitivo
 		if(usuario.getUsuarioNombre() != null)
 			nombre = usuario.getUsuarioNombre().split(" ");
 		
-		myContext.put("nombre", nombre[0]);
+		myContext.put("nombre", nombre[0]);*/
 		
 		String[] textos = null;
 		ArrayList<Salida> salida = misConversaciones.conversarConElAgente(usuario, mensaje, false);

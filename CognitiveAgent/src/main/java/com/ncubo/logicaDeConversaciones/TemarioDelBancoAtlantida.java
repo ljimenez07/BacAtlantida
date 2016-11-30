@@ -162,7 +162,9 @@ public class TemarioDelBancoAtlantida extends Temario
 			false,
 			"conocerte",
 			frase("saludarConocerte"),
-			frase("preguntarPorTiempoLibre")
+			frase("preguntarPorTiempoLibre"),
+			frase("fueraContextoConocerteDelBanco"),
+			frase("fueraContextoConocerteGeneral")
 		);
 		return resultado;
 	}
@@ -175,7 +177,9 @@ public class TemarioDelBancoAtlantida extends Temario
 			"ConocerteGeneral",
 			false,
 			"conocerte",
-			frase("preguntarPorFinesDeSemana")
+			frase("preguntarPorFinesDeSemana"),
+			frase("fueraContextoConocerteDelBanco"),
+			frase("fueraContextoConocerteGeneral")
 		);
 		return resultado;
 	}
@@ -188,7 +192,9 @@ public class TemarioDelBancoAtlantida extends Temario
 			"ConocerteGeneral",
 			false,
 			"conocerte",
-			frase("preguntarPorRestaurantes")
+			frase("preguntarPorRestaurantes"),
+			frase("fueraContextoConocerteDelBanco"),
+			frase("fueraContextoConocerteGeneral")
 		);
 		return resultado;
 	}
@@ -201,7 +207,9 @@ public class TemarioDelBancoAtlantida extends Temario
 			"ConocerteGeneral",
 			false,
 			"conocerte",
-			frase("preguntarPorRestaurantesInternacionales")
+			frase("preguntarPorRestaurantesInternacionales"),
+			frase("fueraContextoConocerteDelBanco"),
+			frase("fueraContextoConocerteGeneral")
 		);
 		return resultado;
 	}
@@ -214,7 +222,9 @@ public class TemarioDelBancoAtlantida extends Temario
 			"ConocerteGeneral",
 			false,
 			"conocerte",
-			frase("despedidaConocerte")
+			frase("despedidaConocerte"),
+			frase("fueraContextoConocerteDelBanco"),
+			frase("fueraContextoConocerteGeneral")
 		);
 		return resultado;
 	}
