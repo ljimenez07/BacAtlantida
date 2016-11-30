@@ -391,7 +391,6 @@ public class AgenteCognitivo
 		}catch(Exception e){
 			e.getStackTrace();
 		}
-		
 	}
 	
 	public String borrarUnaConversacion(String idSession){
