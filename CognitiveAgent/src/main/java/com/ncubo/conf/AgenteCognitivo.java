@@ -257,9 +257,6 @@ public class AgenteCognitivo
 		{
 			consultaDao.insertar( new Consulta(temaActual, new Timestamp(new Date().getTime())) );
 		}
-			//System.out.println(tema);
-			//consultaDao.insertar(
-			//		new Consulta(Intencion.MOVIMIENTOS.toString(), new Timestamp(new Date().getTime()), Intencion.MOVIMIENTOS_DESCRIPCION.toString() , 1));
 		
 		respuesta.put("textos", arrayList);
 		System.out.println(respuesta.toString());

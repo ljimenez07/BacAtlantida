@@ -130,17 +130,8 @@ public class FTPServidor
 		ftpClient.login(usuario, password);
 		ftpClient.enterLocalPassiveMode();
 		ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-		
-		try
-		{
-			return ftpClient.retrieveFileStream(nombreArchivo);
-		}
-		finally
-		{
-			ftpClient.logout();
-			ftpClient.disconnect();
-		}
-		
+
+		return ftpClient.retrieveFileStream(nombreArchivo);
 	}
 	
 	private void ajustarRutaDeImagenesEnPlantillaHTML(File html, String rutaArchivoEnFTP) throws IOException
