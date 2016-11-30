@@ -116,7 +116,7 @@ public class TemarioDelBancoAtlantida extends Temario
 		Tema resultado = new Tema
 		(
 			"quiereAyudaComo",
-			"BATemas",
+			"BAFAQ",
 			true,
 			"ayuda_como",
 			frase("ayudaLogin"),
@@ -266,6 +266,13 @@ public class TemarioDelBancoAtlantida extends Temario
 			frase("cualProductoAhorro"),
 			frase("cualMonedaAhorros"),
 			frase("cualMonedaAhorrosKids"),
+			frase("cualAntecedentes"),
+			frase("cualTipoAntecedentesPenales"),
+			frase("precioAntecendentesPenalesTrabajo"),
+			frase("precioAntecendentesPenalesMatrimonio"),
+			frase("precioAntecendentesPenalesEstudio"),
+			frase("precioAntecendentesPenalesVarios"),
+			frase("precioAntecendentesPoliciales"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta")
