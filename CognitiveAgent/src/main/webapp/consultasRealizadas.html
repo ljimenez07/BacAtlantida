@@ -18,7 +18,14 @@
 	{
 		padding-top: 3%;
 	}
-	
+	#footer
+	{
+		bottom:0;
+		position:fixed;
+		left:0%;
+		width:100%;
+		
+	}
 
 </style>
 <script>
@@ -113,7 +120,7 @@
 		<br/>
 	</div>
 	
-	<div th:include="fragments/footer :: body"></div>
+	<div th:include="fragments/footer :: body" id="footer"></div>
 	
 </body>
 </html>

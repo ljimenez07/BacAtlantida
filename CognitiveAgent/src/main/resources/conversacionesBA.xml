@@ -27,7 +27,6 @@
 		<frases>
 			<frase>¡Hola!</frase>
 			<frase>¡Hola!, soy tu asesor del Banco Atlántida.</frase>
-			<frase>¡Hola! Estoy para ayudarte con la información que requieras de tus tarjetas de crédito y cuenta corriente, también con el tipo de cambio del dólar y el euro.</frase>
 		</frases>
 		<vineta></vineta>
 		<when>
@@ -42,7 +41,6 @@
 		<frases>
 			<curioso>¿Cómo te puedo ayudar hoy?</curioso>
 			<curioso>¿En qué puedo ayudarte?</curioso>
-			<impertinente>¿Cómo te puedo ayudar?. Estoy para brindarte la información que requieras de tus tarjetas de crédito y cuenta corriente, también con el tipo de cambio del dólar y el euro.</impertinente>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -125,7 +123,7 @@
 		<vineta></vineta>
 	</conversacion>
 	
-		<conversacion id="disponiblePuntos">
+	<conversacion id="disponiblePuntos">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>false</enVozAlta>
@@ -136,7 +134,7 @@
 		<vineta></vineta>
 	</conversacion>
 	
-		<conversacion id="disponibleMillas">
+	<conversacion id="disponibleMillas">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>false</enVozAlta>

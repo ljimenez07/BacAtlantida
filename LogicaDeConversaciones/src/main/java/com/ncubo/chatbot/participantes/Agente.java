@@ -37,7 +37,7 @@ public class Agente extends Participante{
 	private int numeroDeIntentosActualesEnRepetirUnaPregunta;
 	private int numeroDeIntentosActualesEnRepetirUnaPreguntaWSEspecifico;
 	private boolean cambiarDeTema = false;
-	private boolean cambiarDeTemaWSEspecifico = false;
+	private boolean cambiarDeTemaWSEspecifico = true;
 	private boolean abordarElTemaPorNOLoEntendi = false;
 	private boolean hayIntencionNoAsociadaANingunWorkspace;
 	
@@ -205,9 +205,8 @@ public class Agente extends Participante{
 	}
 
 	public Respuesta analizarRespuestaWSEspecifico(String respuestaDelClinete, Frase frase, String nombreWorkSpace){
-		Respuesta respuesta = null;
 		
-		respuesta = new Respuesta(frase, miWatsonConversacions.get(nombreWorkSpace), miContextos.get(nombreWorkSpace));
+		Respuesta respuesta = new Respuesta(frase, miWatsonConversacions.get(nombreWorkSpace), miContextos.get(nombreWorkSpace));
 		respuesta.llamarAWatson(respuestaDelClinete);
 		
 		noEntendiLaUltimaRespuestaWSEspecifico = (! (respuesta.entendiLaRespuesta() && ! respuesta.hayAlgunAnythingElse())) && 

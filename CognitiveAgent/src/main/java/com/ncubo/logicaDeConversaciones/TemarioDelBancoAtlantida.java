@@ -180,6 +180,32 @@ public class TemarioDelBancoAtlantida extends Temario
 		return resultado;
 	}
 	
+	private Tema preguntarPorRestaurantes()
+	{
+		Tema resultado = new Tema
+		(
+			"preguntarPorRestaurantes",
+			"ConocerteGeneral",
+			false,
+			"conocerte",
+			frase("preguntarPorRestaurantes")
+		);
+		return resultado;
+	}
+	
+	private Tema preguntarPorRestaurantesInternacionales()
+	{
+		Tema resultado = new Tema
+		(
+			"preguntarPorRestaurantesInternacionales",
+			"ConocerteGeneral",
+			false,
+			"conocerte",
+			frase("preguntarPorRestaurantesInternacionales")
+		);
+		return resultado;
+	}
+	
 	private Tema despedidaConocerte()
 	{
 		Tema resultado = new Tema
@@ -323,6 +349,13 @@ public class TemarioDelBancoAtlantida extends Temario
 	protected void cargarTemario(Temas temasDelDiscurso){
 		
 		System.out.println("Cargando temario ...");
+		// Conocerte
+		temasDelDiscurso.add(saludarConocerte());
+		temasDelDiscurso.add(preguntarPorFinesDeSemana());
+		temasDelDiscurso.add(preguntarPorRestaurantes());
+		temasDelDiscurso.add(preguntarPorRestaurantesInternacionales());
+		temasDelDiscurso.add(despedidaConocerte());
+		
 		temasDelDiscurso.add(saludo());
 		temasDelDiscurso.add(quiereSaldo());
 		temasDelDiscurso.add(quiereDisponible());
@@ -335,12 +368,6 @@ public class TemarioDelBancoAtlantida extends Temario
 		temasDelDiscurso.add(quiereMontoInicial());
 		temasDelDiscurso.add(quiereSaldoMinimo());
 		temasDelDiscurso.add(quiereRequisitos());
-		
-		temasDelDiscurso.add(saludarConocerte());
-		temasDelDiscurso.add(preguntarPorFinesDeSemana());
-		temasDelDiscurso.add(despedidaConocerte());
-		
-		
 		temasDelDiscurso.add(quiereReportarExtravio());
 	}
 	
@@ -367,8 +394,10 @@ public class TemarioDelBancoAtlantida extends Temario
 
 	@Override
 	protected void cargarDependencias(Temas temasDelDiscurso){
-		temasDelDiscurso.get(13).dependeDe(temasDelDiscurso.get(12));
-		temasDelDiscurso.get(14).dependeDe(temasDelDiscurso.get(13));
+		temasDelDiscurso.get(1).dependeDe(temasDelDiscurso.get(0));
+		temasDelDiscurso.get(2).dependeDe(temasDelDiscurso.get(0));
+		temasDelDiscurso.get(3).dependeDe(temasDelDiscurso.get(0));
+		temasDelDiscurso.get(4).dependeDe(temasDelDiscurso.get(1)).dependeDe(temasDelDiscurso.get(2)).dependeDe(temasDelDiscurso.get(3));
 	}
 	
 	public static void main(String argv[]) {

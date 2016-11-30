@@ -47,6 +47,7 @@
 	}
 	function verificarSiSeCargaronLasImagenes()
 	{
+
 		var logoComercio = document.getElementById("logo-comercio").value;
 		var imagenPublicidad = document.getElementById("imagen-publicidad").value;
 		if(logoComercio === '' || imagenPublicidad === '')
