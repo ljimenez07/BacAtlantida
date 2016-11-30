@@ -305,8 +305,10 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<curioso>Claro, ¿sobre cúal de nuestros productos necesitas información?</curioso>
-			<curioso>¿En cúal de nuestros productos estás interesado?</curioso>
+			<curioso>¿Podrías repertirme sobre cuál de nuestros productos necesitas información?</curioso>
+			<curioso>¿Podrías repertirme en qué deseas que te ayude?</curioso>
+			<curioso>¿En cuál de nuestros productos estás interesado?</curioso>
+			<curioso>¿Sobre cuál producto te puedo dar información?</curioso>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -316,7 +318,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<curioso>Te cuento que tenemos a tu disposición estos tipos de cuenta de ahorros: $%br Ahorros Atlántida $%br Ahorros Atlántida Kids $%br Virtual Atlántida "U" $%br ¿Sobre cúal de estos productos necesitas información?</curioso>
+			<curioso>Te cuento que tenemos a tu disposición estos tipos de cuenta de ahorros: $%br Ahorro Atlántida $%br Ahorro Atlántida Kids $%br Ahorro Atlántida "U" $%br Ahorro Remesas $%br Ahorro Virtual Remesas $%br $%br ¿Sobre cúal de estos productos necesitas información?</curioso>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -337,6 +339,16 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<curioso>¿Podrias indicar la moneda en la que quieres la cuenta de ahorros Atlántida Kids? Hay en Lempiras y Dólares. </curioso>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+		<conversacion id="cualMonedaAhorrosRemesas">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>¿Podrias indicar la moneda en la que quieres la cuenta de ahorro Remesas? Hay en Lempiras y Dólares. </curioso>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -391,6 +403,36 @@
 		<vineta></vineta>
 	</conversacion>
 	
+	<conversacion id="montoInicialCuentaAhorrosRemesasLempiras">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El monto inicial de una cuenta de ahorros es de 100 Lempiras.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="montoInicialCuentaAhorrosRemesasDolares">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El monto inicial de una cuenta de ahorros es de 50 Dólares.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="montoInicialCuentaAhorrosVirtualRemesasDolares">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El monto de apertura es de 120 Dólares de los cuales 20 Dólares se destinan para el envío y recibo de documentos.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
 	<conversacion id="saldoMinimoCuentaAhorrosLempiras">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
@@ -441,6 +483,35 @@
 		<vineta></vineta>
 	</conversacion>
 
+<conversacion id="saldoMinimoCuentaAhorrosRemesasLempiras">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Te cuento que el saldo mínimo para cuenta de ahorros es de 100 Lempiras, y no olvides que hay un cargo por 15 Lempiras en caso que no se cumpla ese mínimo.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="saldoMinimoCuentaAhorrosRemesasDolares">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Te cuento que el saldo mínimo para cuenta de ahorros es de 50 Dólares, y no olvides que hay un cargo por 1 Dólar en caso que no se cumpla ese mínimo.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="saldoMinimoCuentaAhorrosVirtualRemesasDolares">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Te cuento que el saldo mínimo para cuenta de ahorro Virtual Remesas es de 100 Dólares, y no olvides que hay un cargo por 1 Dólar en caso que no se cumpla ese mínimo.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
 	
 	<conversacion id="requisitosCuentaAhorrosLempiras">
 		<tipo>afirmativa</tipo>
@@ -488,6 +559,36 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<frase>Para abrir una cuenta de ahorro debes: $%br 1) Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia y/o pasaporte. $%br 2) Partida de nacimiento del niño. $%br 3) Completar la solicitud. $%br 4) Realizar el depósito inicial 30 Dólares. $%br Recuerda que el saldo mínimo para cuenta de ahorros Atlántida Kids es de 30 Dólares, en esta cuenta el cargo por saldo menor al mínimo no aplica.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="requisitosCuentaAhorrosRemesasLempiras">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para abrir una cuenta de ahorro debes:  $%br $%br Para Todos:  $%br 1) Completar la solicitud.  $%br 2) Contrato de autorización para crédito automático a cuenta, en caso que desees optar por este servicio.  $%br 4) Copia de un recibo de cobro reciente de Remesas Familiares (Máximo 6 meses). $%br 5) Monto de apertura de cuenta por 100 Lempiras. $%br $%br Para Hondureños:  $%br 1) Original y fotocopia de tarjeta de identidad.  $%br  $%br Para Extranjeros:  $%br 1) Original y fotocopia de carnet de residencia y/o pasaporte $%br Recuerda que el saldo mínimo para cuenta de ahorro Remesas es de 100 Lempiras, en esta cuenta el cargo por saldo menor al mínimo es de 15 Lempiras.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="requisitosCuentaAhorrosRemesasDolares">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para abrir una cuenta de ahorro debes:  $%br $%br Para Todos:  $%br 1) Completar la solicitud.  $%br 2) Contrato de autorización para crédito automático a cuenta, en caso que desees optar por este servicio.  $%br 4) Copia de un recibo de cobro reciente de Remesas Familiares (Máximo 6 meses). $%br 5) Monto de apertura de cuenta por 50 Dólares. $%br $%br Para Hondureños:  $%br 1) Original y fotocopia de tarjeta de identidad.  $%br  $%br Para Extranjeros:  $%br 1) Original y fotocopia de carnet de residencia y/o pasaporte $%br Recuerda que el saldo mínimo para cuenta de ahorro Remesas es de 50 Dólares, en esta cuenta el cargo por saldo menor al mínimo es de 1 Dólar.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="requisitosCuentaAhorrosVirtualRemesasDolares">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para abrir una cuenta de ahorro debes tener las siguientes consideraciones:  $%br $%br 1) Sólo para hondureños residentes en EUA. $%br 2) Presentar tu tarjeta de identidad hondureña o pasaporte junto con la contraseña. $%br 3) Se abre a través de una llamada a nuestro Call Center 1-877-898-8863.  $%br 4) Debes enviar una remesa como depósito inicial a través de los Agentes Atlántida USA, ubicados en las ciudades de Miami, Houston y Fort Lauderdale. $%br 5) No tiene libreta solo Tarjeta de débito en dólares. $%br 6) El monto de apertura es de 120 Dólares, de los cuales 20 Dólares se destinan para el envío y recibo de documentos. $%br 7) Los depósitos a la cuenta se hacen a través de envío de remesas con crédito a cuenta a través de los Agentes Atlántida USA y cuyo beneficiario es el dueño de la cuenta. $%br 8) La cuenta de ahorros y tarjeta de débito se activa una vez que se han recibido los documentos firmados por el cliente en Banco Atlántida.   $%br Recuerda que el saldo mínimo para cuenta de ahorro Virtual Remesas es de 100 Dólares, en esta cuenta el cargo por saldo menor al mínimo es de 1 Dólar.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -582,19 +683,60 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>Muy bien y dime,  ¿qué te gusta hacer fines de semana por la noche?</curioso>		
+			<curioso>Muy bien y dime, ¿qué te gusta hacer los fines de semana por la noche?</curioso>		
 		</frases>		
 		<vineta></vineta>		
 	</conversacion>		
-					
+	
+	<conversacion id="preguntarPorRestaurantes">		
+		<tipo>pregunta</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<curioso>Si tuvieras una noche libre que preferirías ¿invitar a algunos amigos a cenar en tu casa, o salir con ellos a un restaurante?</curioso>
+			<impertinente>Entonces, ¿qué preferirías comer afuera o en casa?</impertinente>			
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>
+	
+	<conversacion id="preguntarPorRestaurantesInternacionales">		
+		<tipo>pregunta</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<curioso>Te cuento que a mi personalmente me encanta comer en lugares diferentes, y el Sushi me vuelve loco.  En tu caso, ¿te gusta visitar restaurantes de comida internacional y probar cosas nuevas?</curioso>	
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>
+	
+	<conversacion id="fueraContextoConocerteDelBanco">		
+		<tipo>afirmativa</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<frase>Disculpa, pero esas preguntas no las puede responder en este chat de conocerte. Debes pasarse al chat general de consultas.</frase>				
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>
+	
+	<conversacion id="fueraContextoConocerteGeneral">		
+		<tipo>afirmativa</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<frase>Actualmente no estoy entrenado para responder ese tipo de preguntas.</frase>				
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>
+	
 	<conversacion id="despedidaConocerte">		
 		<tipo>afirmativa</tipo>		
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<frase>Genial, en base a tus respuestas te estaremos informando de beneficios que puedes aprovechar por ser cliente de Banco Atlantida</frase>		
-			<frase>Gracias por tus respuestas, te estaremos enviando información relevante para ti acerca de promociones y beneficios</frase>		
-			<frase>Muy bien, por ahora es todo lo que requiero conocer para evitar compartir información que no sea de tu interés y solo informarte de promociones y beneficios que te interese aprovechar</frase>		
+			<frase>Genial! gracias por compartirme tus respuestas, las usaremos para informarte de los beneficios que puedes aprovechar por ser cliente de Banco Atlántida.</frase>		
+			<frase>Gracias por tus respuestas, te estaremos enviando información relevante para ti acerca de promociones y beneficios.</frase>		
+			<frase>Muy bien! al iniciar sesión encontrarás información de promociones y beneficios que podrás aprovechar.</frase>		
 		</frases>		
 		<vineta></vineta>		
 	</conversacion>
@@ -614,9 +756,9 @@
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
 		<workspace tipo="general" idIBM="ea7cc165-ac98-4349-92ed-8e04f1ab402e" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="e0ff922e-68f2-4cc3-bc69-ec624d07c36c" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible,ayuda_como">BATemas</workspace>
+		<workspace tipo="especifico" idIBM="4fdd5668-6bb1-4b35-8f2c-784b7d1a1370" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible,ayuda_como">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="d4b0e759-9557-4f5e-9049-fcc3472e5ea2" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="23314e4c-47ad-49c6-8d05-de4ddb1ccf86" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="04abbcb3-cd11-4ff5-ab45-bdbbe8267f09" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>
