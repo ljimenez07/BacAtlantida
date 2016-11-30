@@ -39,6 +39,7 @@ public class MovilController {
 	
 	@Autowired
 	private AgenteCognitivo serverCognitivo;
+	
 	@Autowired
 	private ManejadorDeErrores manejadorDeErrores;
 	private ExtraerDatosWebService extraerDatos;

@@ -1,7 +1,16 @@
 <div class="row">
 	<div class="col-xs-12">
 		{{#if esHtml}}
-			<div class="html-de-oferta"></div>
+			<iframe class="html-de-oferta embed-responsive-item" frameBorder="0" scrolling="no" id="html-de-oferta-{{idOferta}}" src="http://192.168.0.101:8080/archivossubidos/{{imagenPublicidadPath}}"></iframe>
+			<script type="text/javascript">
+			var source = serverDomain + "/archivossubidos/{{imagenPublicidadPath}}";
+			var iframe = $('#oferta #html-de-oferta-{{idOferta}}');
+			iframe.attr("src", source);
+			iframe.ready(function() {
+				var newHeight = $(this).find("body")[0].offsetHeight + "px";
+				iframe.css({height: newHeight});
+			});
+			</script>
 		{{else}}
 			<img src="/archivossubidos/{{imagenPublicidadPath}}" class="imagen-de-oferta">
 		{{/if}}

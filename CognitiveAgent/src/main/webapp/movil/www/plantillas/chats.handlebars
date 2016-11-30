@@ -45,6 +45,11 @@ $(function(){
 					reproducirMensaje(value);
 				});
 			}
+			if(!debeReproducirElAudio)
+			{
+				audios = new Array();
+				audioEnReproduccion.pause();
+			}
 		});
 		
 		function reproducirMensaje(pathDelAudio)

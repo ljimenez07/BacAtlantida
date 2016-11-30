@@ -683,19 +683,60 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>Muy bien y dime,  ¿qué te gusta hacer fines de semana por la noche?</curioso>		
+			<curioso>Muy bien y dime, ¿qué te gusta hacer los fines de semana por la noche?</curioso>		
 		</frases>		
 		<vineta></vineta>		
 	</conversacion>		
-					
+	
+	<conversacion id="preguntarPorRestaurantes">		
+		<tipo>pregunta</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<curioso>Si tuvieras una noche libre que preferirías ¿invitar a algunos amigos a cenar en tu casa, o salir con ellos a un restaurante?</curioso>
+			<impertinente>Entonces, ¿qué preferirías comer afuera o en casa?</impertinente>			
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>
+	
+	<conversacion id="preguntarPorRestaurantesInternacionales">		
+		<tipo>pregunta</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<curioso>Te cuento que a mi personalmente me encanta comer en lugares diferentes, y el Sushi me vuelve loco.  En tu caso, ¿te gusta visitar restaurantes de comida internacional y probar cosas nuevas?</curioso>	
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>
+	
+	<conversacion id="fueraContextoConocerteDelBanco">		
+		<tipo>afirmativa</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<frase>Disculpa, pero esas preguntas no las puede responder en este chat de conocerte. Debes pasarse al chat general de consultas.</frase>				
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>
+	
+	<conversacion id="fueraContextoConocerteGeneral">		
+		<tipo>afirmativa</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<frase>Actualmente no estoy entrenado para responder ese tipo de preguntas.</frase>				
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>
+	
 	<conversacion id="despedidaConocerte">		
 		<tipo>afirmativa</tipo>		
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<frase>Genial, en base a tus respuestas te estaremos informando de beneficios que puedes aprovechar por ser cliente de Banco Atlantida</frase>		
-			<frase>Gracias por tus respuestas, te estaremos enviando información relevante para ti acerca de promociones y beneficios</frase>		
-			<frase>Muy bien, por ahora es todo lo que requiero conocer para evitar compartir información que no sea de tu interés y solo informarte de promociones y beneficios que te interese aprovechar</frase>		
+			<frase>Genial! gracias por compartirme tus respuestas, las usaremos para informarte de los beneficios que puedes aprovechar por ser cliente de Banco Atlántida.</frase>		
+			<frase>Gracias por tus respuestas, te estaremos enviando información relevante para ti acerca de promociones y beneficios.</frase>		
+			<frase>Muy bien! al iniciar sesión encontrarás información de promociones y beneficios que podrás aprovechar.</frase>		
 		</frases>		
 		<vineta></vineta>		
 	</conversacion>
@@ -715,8 +756,8 @@
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
 		<workspace tipo="general" idIBM="ea7cc165-ac98-4349-92ed-8e04f1ab402e" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="4fdd5668-6bb1-4b35-8f2c-784b7d1a1370" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible,ayuda_como">BATemas</workspace>
-		<workspace tipo="especifico" idIBM="d4b0e759-9557-4f5e-9049-fcc3472e5ea2" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
+		<workspace tipo="especifico" idIBM="92e1784d-f2e0-4873-8d8b-e24c9aef471d" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible,ayuda_como">BATemas</workspace>
+		<workspace tipo="especifico" idIBM="4364d63b-4218-46e4-a0e0-c61257aa18f9" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
 		<workspace tipo="especifico" idIBM="04abbcb3-cd11-4ff5-ab45-bdbbe8267f09" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio">BAFAQ</workspace>
 	</workspaces>
 	

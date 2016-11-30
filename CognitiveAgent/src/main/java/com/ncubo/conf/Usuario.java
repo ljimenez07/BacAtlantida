@@ -10,8 +10,8 @@ public class Usuario implements Serializable
 {
 	private static final long serialVersionUID = -3968177701312019004L;
 	public final static String LLAVE_EN_SESSION="user";
-	private String contextoDeWatsonParaChats = new JSONObject().toString();
-	private String contextoDeWatsonParaConocerte = new JSONObject().toString();
+/*	private String contextoDeWatsonParaChats = new JSONObject().toString();
+	private String contextoDeWatsonParaConocerte = new JSONObject().toString();*/
 	private String usuarioId = "";
 	private String usuarioNombre = "";
 	private String llaveSession = "";
@@ -27,7 +27,7 @@ public class Usuario implements Serializable
 		this.setIdSesion(idSesion);		
 	}
 
-	public String getContextoDeWatsonParaChats()
+	/*public String getContextoDeWatsonParaChats()
 	{
 		return contextoDeWatsonParaChats;
 	}
@@ -53,7 +53,7 @@ public class Usuario implements Serializable
 		return "Usuario [contextoDeWatsonParaChats=" + contextoDeWatsonParaChats + ", contextoDeWatsonParaConocerte="
 				+ contextoDeWatsonParaConocerte + ", usuarioId=" + usuarioId + ", usuarioNombre=" + usuarioNombre
 				+ ", llaveSession=" + llaveSession + ", estaLogueado=" + estaLogueado + "]";
-	}
+	}*/
 
 	public boolean getEstaLogueado()
 	{
