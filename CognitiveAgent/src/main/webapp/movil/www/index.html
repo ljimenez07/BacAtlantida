@@ -91,8 +91,11 @@
 	
 	<script>
 	var audios = new Array();
+	var audioEnReproduccion = null;
 	var estaReproduciendo = false;
 	var estaLogueado = false;
+	
+	var mensajesDeErrorEnAudio = ["", {"#1": "MEDIA_ERR_ABORTED"}, {"#2": "MEDIA_ERR_NETWORK"}, {"#3": "MEDIA_ERR_DECODE"}, {"#4": "MEDIA_ERR_SRC_NOT_SUPPORTED"}];
 	
 	function quitarModal()
 	{
@@ -226,6 +229,12 @@
 	function agregarAColaDeReproduccion(pathDelArchivo)
 	{
 		var audio = new Audio(serverDomain + pathDelArchivo);
+		audio.onerror = function(e){
+			console.log("Error de audio: " + audio.src);
+			console.log(mensajesDeErrorEnAudio[e.currentTarget.error.code]);
+			audios = new Array();
+		};
+		audio.onplay = function(){console.log("Reproduciendo: " + audio.src)};
 		audios.push(audio);
 		reproducirCola();
 	}
@@ -246,10 +255,11 @@
 	
 	function reproducir(audio, callback)
 	{
-		audio.play();
+		audioEnReproduccion = audio;
+		audioEnReproduccion.play();
 		if(callback)
 		{
-			audio.onended = callback;
+			audioEnReproduccion.onended = callback;
 		}
 	}
 	
@@ -265,6 +275,7 @@
 		})
 		.done(function(data) 
 		{
+			//console.log({ajax: param.url, params: param, respuesta: data});
 			if(data.usuarioEstaLogueado)
 			{
 				estaLogueado = true;

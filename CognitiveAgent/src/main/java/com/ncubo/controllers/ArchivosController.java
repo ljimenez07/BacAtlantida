@@ -50,12 +50,15 @@ public class ArchivosController
 		response.setContentType(mimetype);
 		OutputStream outStream = response.getOutputStream();
 
-		while ((bytesRead = inputStream.read(bytesArray)) != -1)
+		if(inputStream != null)
 		{
-			outStream.write(bytesArray, 0, bytesRead);
+			while ((bytesRead = inputStream.read(bytesArray)) != -1)
+			{
+				outStream.write(bytesArray, 0, bytesRead);
+			}
+			inputStream.close();
 		}
 
 		outStream.close();
-		inputStream.close();
 	}
 }

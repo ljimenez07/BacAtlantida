@@ -75,7 +75,7 @@ public class AgenteCognitivo
 	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
 	{
 	
-		return procesarMensaje(usuario,mensaje,date, workspaceDeChats, false);
+		return procesarMensaje(usuario, mensaje, date, workspaceDeChats, false);
 	}
 	
 	public String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
