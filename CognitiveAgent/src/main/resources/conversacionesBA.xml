@@ -756,8 +756,8 @@
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
 		<workspace tipo="general" idIBM="ea7cc165-ac98-4349-92ed-8e04f1ab402e" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="4fdd5668-6bb1-4b35-8f2c-784b7d1a1370" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible,ayuda_como">BATemas</workspace>
-		<workspace tipo="especifico" idIBM="d4b0e759-9557-4f5e-9049-fcc3472e5ea2" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
+		<workspace tipo="especifico" idIBM="92e1784d-f2e0-4873-8d8b-e24c9aef471d" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible,ayuda_como">BATemas</workspace>
+		<workspace tipo="especifico" idIBM="4364d63b-4218-46e4-a0e0-c61257aa18f9" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
 		<workspace tipo="especifico" idIBM="04abbcb3-cd11-4ff5-ab45-bdbbe8267f09" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio">BAFAQ</workspace>
 	</workspaces>
 	
