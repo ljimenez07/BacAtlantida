@@ -221,6 +221,11 @@ public class Oferta implements Comparable<Oferta>
 		this.imagenPublicidadPath = imagenPublicidadPath;
 	}
 	
+	public boolean getEsHtml()
+	{
+		return imagenPublicidadPath.endsWith(".html");
+	}
+	
 	public Timestamp getFechaHoraRegistro()
 	{
 		return fechaHoraRegistro;

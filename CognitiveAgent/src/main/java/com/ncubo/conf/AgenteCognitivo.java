@@ -79,7 +79,7 @@ public class AgenteCognitivo
 	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
 	{
 	
-		return procesarMensaje(usuario,mensaje,date, workspaceDeChats, false);
+		return procesarMensaje(usuario, mensaje, date, workspaceDeChats, false);
 	}
 	
 	public String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
@@ -261,9 +261,6 @@ public class AgenteCognitivo
 		{
 			consultaDao.insertar( new Consulta(temaActual, new Timestamp(new Date().getTime())) );
 		}
-			//System.out.println(tema);
-			//consultaDao.insertar(
-			//		new Consulta(Intencion.MOVIMIENTOS.toString(), new Timestamp(new Date().getTime()), Intencion.MOVIMIENTOS_DESCRIPCION.toString() , 1));
 		
 		respuesta.put("textos", arrayList);
 		System.out.println("Respuesta Chat"+ respuesta.toString());
