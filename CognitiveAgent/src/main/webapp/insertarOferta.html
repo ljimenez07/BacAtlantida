@@ -307,11 +307,48 @@ var imagenPublicidadStatus = false;
 	</div>
 	<script type='text/javascript'>
     /* attach a submit handler to the form */
-    $(".buttonMandarInfoALserver").click(function() {
-
-		verificarSiSeCargaronLasImagenes()	  	
-      
-	});
+    
+    	$("#limpiar-submit").click(
+    	function()
+    	{
+    		alert("clean");
+    		$("#accion").val($(this).val());
+    		$("#agregarOferta-form").submit();
+    	}
+    	);
+    
+       	  $("#ingresar-submit").click(function() {
+       	    	if(imagenPublicidadStatus == true )
+       		  	{
+       	    		if(imagenComercioStatus == true)
+       	    		{
+       	    			submit();
+       	    		}
+       		  		
+       		  	}
+       	    	else
+       	    	{
+       	    		if(imagenComercioStatus == true )
+           		  	{
+           	    		if(imagenPublicidadStatus == true)
+           	    		{
+           	    			submit();
+           	    		}
+           		  		
+           		  	}  	
+       	    	}
+       	      
+       		});
+    
+   function submit()
+   {
+		console.log("imagenes subidas");
+		$("#accion").val($("#ingresar-submit").val());
+		$("#agregarOferta-form").submit();
+		imagenComercioStatus = false;
+		imagenPublicidadStatus = false;
+   }
+  
 </script>
 	
 	<div th:include="fragments/footer :: body"></div>

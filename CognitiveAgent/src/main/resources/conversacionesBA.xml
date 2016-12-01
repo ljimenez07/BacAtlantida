@@ -484,7 +484,7 @@
 		<vineta></vineta>
 	</conversacion>
 
-	<conversacion id="saldoMinimoCuentaAhorrosRemesasLempiras">
+<conversacion id="saldoMinimoCuentaAhorrosRemesasLempiras">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
@@ -644,6 +644,78 @@
 		<vineta></vineta>		
 	</conversacion>	
 	
+	<conversacion id="cualAntecedentes">		
+		<tipo>pregunta</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<curioso>¿Quieres los antecedentes penales o policiales?</curioso>		
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>	
+	
+	<conversacion id="cualTipoAntecedentesPenales">		
+		<tipo>pregunta</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<curioso>¿Quieres la constancia de antecedentes penales para fines de trabajo, contraer matrimonio, para estudio o asuntos varios?</curioso>		
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>	
+	
+	<conversacion id="precioAntecendentesPenalesTrabajo">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Si eres menor de 25 años no tiene ningún costo. Sino debes cancelar 150 Lempiras. $%br Recuerda que luego de hacer el pago debes acudir a la oficina de Antecedentes Penales de tu localidad, no olvides llevar tu tarjeta de identidad.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="precioAntecendentesPenalesMatrimonio">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El costo es de 150 Lempiras. $%br Recuerda que luego de hacer el pago debes acudir a la oficina de Antecedentes Penales de tu localidad, no olvides llevar tu tarjeta de identidad.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="precioAntecendentesPenalesEstudio">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El costo es de 50 Lempiras. $%br Recuerda que luego de hacer el pago debes acudir a la oficina de Antecedentes Penales de tu localidad, no olvides llevar tu tarjeta de identidad.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="precioAntecendentesPenalesVarios">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El costo es de 200 Lempiras. $%br Recuerda que luego de hacer el pago debes acudir a la oficina de Antecedentes Penales de tu localidad, no olvides llevar tu tarjeta de identidad.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	
+	<conversacion id="precioAntecendentesPoliciales">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El costo es de 250 Lempiras. $%br Antes de hacer el pago debes ir a las oficinas de la policia  nacional por el formulario Recibo de Ingresos del Estado TGR -1, la cual debes traerla llena. No olvides llevar tu tarjeta de identidad.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	
 		<conversacion id="reportarExtravio">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
@@ -765,6 +837,18 @@
 		<vineta></vineta>		
 	</conversacion>
 	
+		<conversacion id="noEntendi">		
+	<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<frase>Lo siento, no entendí. ¿En qué te puedo ayudar?</frase>
+			<frase>Perdón, no entiendo. ¿Hay algo más con lo que te pueda ayudar?</frase>
+			<frase>Creo que no entendí. ¿En que te gustaría que te ayude?</frase>	
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>
+	
 	<conjunciones>
 		<conjuncion id="conjuncion1">Disculpame, pero no te entiendo.</conjuncion>
 		<conjuncion id="conjuncion2">No logro comprenderte.</conjuncion>
@@ -779,10 +863,10 @@
 	</variablesDeAmbiente>
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
-		<workspace tipo="general" idIBM="ea7cc165-ac98-4349-92ed-8e04f1ab402e" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="92e1784d-f2e0-4873-8d8b-e24c9aef471d" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible,ayuda_como">BATemas</workspace>
+		<workspace tipo="general" idIBM="af158b48-2a0e-4bc9-b3ba-e0fd71ff4c55" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="especifico" idIBM="47970e57-ae6b-4aae-b127-a2408ececef7" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="4678cce5-506a-49ce-8d3e-7b04160034ad" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="04abbcb3-cd11-4ff5-ab45-bdbbe8267f09" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="e29348d3-7a2a-4873-8c32-9afd99a9ad05" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>

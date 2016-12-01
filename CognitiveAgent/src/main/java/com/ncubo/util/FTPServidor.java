@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.SocketException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,8 +29,6 @@ public class FTPServidor
 	private String password;
 	private String host;
 	private int puerto;
-	
-	private final String charset = "ISO-8859-1";
 
 	private boolean subirUnArchivo(FTPClient ftpClient, String localFilePath, String remoteFilePath) throws IOException
 	{
@@ -136,8 +135,10 @@ public class FTPServidor
 	
 	private void ajustarRutaDeImagenesEnPlantillaHTML(File html, String rutaArchivoEnFTP) throws IOException
 	{
-		Document doc = Jsoup.parse(html, charset, "http://example.com/");
+		Document doc = Jsoup.parse(html, null);
 		Elements imgElementos = doc.getElementsByTag("img");
+		Charset charset = doc.charset();
+		
 		for(Element elemento : imgElementos)
 		{
 			String srcDeImg = elemento.attr("src");
@@ -146,7 +147,7 @@ public class FTPServidor
 			elemento.attr("src", srcModificado);
 		}
 		
-		PrintWriter writer = new PrintWriter(html, charset);
+		PrintWriter writer = new PrintWriter(html, charset.toString());
 		writer.write( doc.html() ) ;
 		writer.flush();
 		writer.close();

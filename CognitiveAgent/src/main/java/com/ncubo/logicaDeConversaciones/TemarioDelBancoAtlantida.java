@@ -116,7 +116,7 @@ public class TemarioDelBancoAtlantida extends Temario
 		Tema resultado = new Tema
 		(
 			"quiereAyudaComo",
-			"BATemas",
+			"BAFAQ",
 			true,
 			"ayuda_como",
 			frase("ayudaLogin"),
@@ -136,6 +136,19 @@ public class TemarioDelBancoAtlantida extends Temario
 			true,
 			"out_of_scope",
 			frase("fueraDeContextoGeneral")
+		);
+		return resultado;
+	}
+	
+	private Tema noEntendi()
+	{
+		Tema resultado = new Tema
+		(
+			"noEntendi",
+			"BAIntents",
+			true,
+			"out_of_scope",
+			frase("noEntendi")
 		);
 		return resultado;
 	}
@@ -281,7 +294,8 @@ public class TemarioDelBancoAtlantida extends Temario
 			frase("requisitosCuentaAhorrosVirtualRemesasDolares"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
-			frase("noQuiereHacerOtraConsulta")
+			frase("noQuiereHacerOtraConsulta"),
+			frase("noEntendi")
 		);
 		return resultado;
 	}
@@ -306,9 +320,17 @@ public class TemarioDelBancoAtlantida extends Temario
 			frase("cualProductoAhorro"),
 			frase("cualMonedaAhorros"),
 			frase("cualMonedaAhorrosKids"),
+			frase("cualAntecedentes"),
+			frase("cualTipoAntecedentesPenales"),
+			frase("precioAntecendentesPenalesTrabajo"),
+			frase("precioAntecendentesPenalesMatrimonio"),
+			frase("precioAntecendentesPenalesEstudio"),
+			frase("precioAntecendentesPenalesVarios"),
+			frase("precioAntecendentesPoliciales"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
-			frase("noQuiereHacerOtraConsulta")
+			frase("noQuiereHacerOtraConsulta"),
+			frase("noEntendi")
 		);
 		return resultado;
 	}
@@ -335,7 +357,8 @@ public class TemarioDelBancoAtlantida extends Temario
 			frase("cualMonedaAhorrosKids"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
-			frase("noQuiereHacerOtraConsulta")
+			frase("noQuiereHacerOtraConsulta"),
+			frase("noEntendi")
 		);
 		return resultado;
 	}
@@ -362,9 +385,17 @@ public class TemarioDelBancoAtlantida extends Temario
 			frase("requisitosPrestamoVivienda"),
 			frase("requisitosPrestamoVehiculo"),
 			frase("cualProductoPrestamo"),
+			frase("cualAntecedentes"),
+			frase("cualTipoAntecedentesPenales"),
+			frase("precioAntecendentesPenalesTrabajo"),
+			frase("precioAntecendentesPenalesMatrimonio"),
+			frase("precioAntecendentesPenalesEstudio"),
+			frase("precioAntecendentesPenalesVarios"),
+			frase("precioAntecendentesPoliciales"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
-			frase("noQuiereHacerOtraConsulta")
+			frase("noQuiereHacerOtraConsulta"),
+			frase("noEntendi")
 		);
 		return resultado;
 	}
@@ -380,7 +411,8 @@ public class TemarioDelBancoAtlantida extends Temario
 			frase("reportarExtravio"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
-			frase("noQuiereHacerOtraConsulta")
+			frase("noQuiereHacerOtraConsulta"),
+			frase("noEntendi")
 		);
 		return resultado;
 	}
@@ -411,6 +443,7 @@ public class TemarioDelBancoAtlantida extends Temario
 		temasDelDiscurso.add(quiereSaldoMinimo());
 		temasDelDiscurso.add(quiereRequisitos());
 		temasDelDiscurso.add(quiereReportarExtravio());
+		temasDelDiscurso.add(noEntendi());
 	}
 	
 	public void cargarIntenciones(List<Intenciones> intenciones)

@@ -65,14 +65,9 @@ public class MovilController {
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/conocerte/", method = RequestMethod.POST)
-	@ResponseBody String conocerte(@RequestBody String mensaje, HttpSession session, HttpServletRequest request) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ClassNotFoundException, SQLException, ParseException 
+	@ResponseBody String conocerte(@RequestBody String mensaje, HttpSession session) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ClassNotFoundException, SQLException, ParseException 
 	{
-		Usuario usuario = (Usuario)session.getAttribute(Usuario.LLAVE_EN_SESSION) ;
-		if( usuario  == null)
-		{
-			usuario = new Usuario(session.getId());
-			session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
-		}
+		Usuario usuario = obtenerUsuario(session);
 		
 		JSONObject object = new JSONObject(serverCognitivo.procesarMensajeConocerte(
 				usuario, 
@@ -119,6 +114,8 @@ public class MovilController {
 	@GetMapping("/movil/logout")
 	@ResponseBody String logout(HttpSession sesion) throws JSONException
 	{
+		Usuario usuario = obtenerUsuario(sesion);
+		borrarTodasLasConversacionesDeUnCliente(usuario.getUsuarioId());
 		sesion.setAttribute(Usuario.LLAVE_EN_SESSION, null);
 		return new JSONObject().put("usuarioEstaLogueado", false).toString();
 	}
