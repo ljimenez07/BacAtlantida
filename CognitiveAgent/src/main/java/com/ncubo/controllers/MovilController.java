@@ -42,6 +42,8 @@ public class MovilController {
 	
 	@Autowired
 	private ManejadorDeErrores manejadorDeErrores;
+	
+	@Autowired
 	private ExtraerDatosWebService extraerDatos;
 	
 	@CrossOrigin(origins = "*")
@@ -84,7 +86,6 @@ public class MovilController {
 	@RequestMapping(value="/movil/login", method = RequestMethod.POST)
 	@ResponseBody String login(@RequestBody String mensaje, HttpSession sesion, @RequestParam String name, @RequestParam String password) throws JSONException, JsonParseException, JsonMappingException, IOException 
 	{
-		extraerDatos = new ExtraerDatosWebService();
 		String[] responseLogin = extraerDatos.login(name , password);
 		if( responseLogin[0].equals("S") )
 		{

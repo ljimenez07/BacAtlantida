@@ -6,11 +6,13 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.validation.BindingResult;
 
 import com.ncubo.util.AtLeastToday;
 
@@ -28,8 +30,8 @@ public class Oferta implements Comparable<Oferta>
 	private String descripcion;
 	private String descripcionAnterior;
 	private String descripcionAudio;
-	
-	private CategoriaOferta categoria;
+		
+	private Categorias categorias = new Categorias();
 	
 	@NotEmpty(message = "*Campo requerido")
 	private String ciudad;
@@ -57,18 +59,15 @@ public class Oferta implements Comparable<Oferta>
 	private int dislikes;
 	private boolean esUnUsuarioConocido;
 	
-	public Oferta()
-	{
-		categoria = new CategoriaOferta();
-	}
 	
-	public Oferta(int idOferta, String tituloDeOferta, String comercio, String descripcion, CategoriaOferta categoria, String ciudad, boolean estado, String restricciones, Date vigenciaDesde, Date vigenciahasta, String imagenComercioPath, String imagenPublicidadPath, Timestamp fechaHoraRegistro, int likes, int dislikes)
+	public Oferta(){	}
+	
+	public Oferta(int idOferta, String tituloDeOferta, String comercio, String descripcion, String ciudad, boolean estado, String restricciones, Date vigenciaDesde, Date vigenciahasta, String imagenComercioPath, String imagenPublicidadPath, Timestamp fechaHoraRegistro, int likes, int dislikes)
 	{
 		this.idOferta = idOferta;
 		this.tituloDeOferta = tituloDeOferta;
 		this.comercio = comercio;
 		this.descripcion = descripcion;
-		this.categoria = categoria;
 		this.ciudad = ciudad;
 		this.estado = estado;
 		this.restricciones = restricciones;
@@ -121,16 +120,6 @@ public class Oferta implements Comparable<Oferta>
 	public void setDescripcion(String descripcion)
 	{
 		this.descripcion = descripcion;
-	}
-	
-	public CategoriaOferta getCategoria()
-	{
-		return categoria;
-	}
-	
-	public void setCategoria(CategoriaOferta categoria)
-	{
-		this.categoria = categoria;
 	}
 	
 	public String getCiudad()
@@ -345,4 +334,31 @@ public class Oferta implements Comparable<Oferta>
 	}
 	
 	
+	public BindingResult validarCampos(BindingResult bindingResult, Oferta oferta) throws ParseException
+	{
+		if( ! bindingResult.hasFieldErrors("vigenciaHasta") && ! bindingResult.hasFieldErrors("vigenciaDesde"))
+		{
+			if( ! oferta.fechaHastaMayorAFechaDesde())
+			{
+				bindingResult.rejectValue("vigenciaHasta", "1", "*Fechas incorrectas");
+			}
+		}
+		return bindingResult;
+	}
+
+	public Categorias getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias( Categorias categorias) {
+		this.categorias = categorias;
+	}
+	
+	public void agregarCategoria( CategoriaOferta  categoria )
+	{
+		categorias.add( categoria );
+	}
+	
+	
+		
 }

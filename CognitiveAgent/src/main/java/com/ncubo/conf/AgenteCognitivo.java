@@ -47,9 +47,6 @@ public class AgenteCognitivo
 	private String password;
 	private String workspaceDeChats;
 	private String workspaceDeConocerte;
-	private String wsTasaCambio;
-	private String wsSaldo;
-	private String wsMovimientos;
 	private String userTextToSpeech;
 	private String passwordTextToSpeech;
 	private String voiceTextToSpeech;
@@ -65,8 +62,8 @@ public class AgenteCognitivo
 	
 	private Conversaciones misConversaciones;
 	private HistoricosDeConversaciones historicoDeConversaciones;
-	
-	private ExtraerDatosWebService extraerDatos = new ExtraerDatosWebService();
+	@Autowired
+	private ExtraerDatosWebService extraerDatos;
 
 	@PostConstruct
     public void init(){
@@ -141,7 +138,7 @@ public class AgenteCognitivo
 			
 			if((idFrase.equals("saldoCredito") ||  idFrase.equals("disponibleCredito") ) && usuario.getEstaLogueado())
 			{
-				textos = extraerDatos.obtenerSaldoTarjetaCredito(wsSaldo, texto, usuario.getUsuarioId());
+				textos = extraerDatos.obtenerSaldoTarjetaCredito( texto, usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
 				{
 					JSONObject jsonObject = new JSONObject();
@@ -152,7 +149,7 @@ public class AgenteCognitivo
 			}
 			else if(idFrase.equals("saldoCuentaAhorros") && usuario.getEstaLogueado())
 			{
-				textos = extraerDatos.obtenerSaldoCuentaAhorros(wsSaldo, texto, usuario.getUsuarioId());
+				textos = extraerDatos.obtenerSaldoCuentaAhorros(texto, usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
 				{
 					JSONObject jsonObject = new JSONObject();
@@ -184,7 +181,7 @@ public class AgenteCognitivo
 			}
 			else if(idFrase.equals("tasaDolar")||idFrase.equals("tasaEuro")){
 				
-				texto = extraerDatos.obtenerTasaCambio(wsTasaCambio, texto);
+				texto = extraerDatos.obtenerTasaCambio(texto);
 				
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
@@ -193,7 +190,7 @@ public class AgenteCognitivo
 			}
 			else if(idFrase.equals("movimientosTarjeta") || idFrase.equals("movimientosCuenta") && usuario.getEstaLogueado())
 			{
-				textos = extraerDatos.obtenerMovimientos(wsMovimientos, texto, usuario.getUsuarioId(), "");
+				textos = extraerDatos.obtenerMovimientos(texto, usuario.getUsuarioId(), "");
 				
 				for(int j = 0; j < textos.length; j++)
 				{
@@ -205,7 +202,7 @@ public class AgenteCognitivo
 			}
 			else if(idFrase.equals("disponibleCuentaAhorros") && usuario.getEstaLogueado())
 			{
-				textos = extraerDatos.obtenerSaldoCuentaAhorros(wsSaldo, texto, usuario.getUsuarioId());
+				textos = extraerDatos.obtenerSaldoCuentaAhorros( texto, usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
 				{
 					JSONObject jsonObject = new JSONObject();
@@ -312,16 +309,6 @@ public class AgenteCognitivo
 		
 		return respuesta.toString();
 	}
-	
-	public String getWsMovimientos() {
-		return wsMovimientos;
-	}
-
-
-	public void setWsMovimientos(String wsMovimientos) {
-		this.wsMovimientos = wsMovimientos;
-	}
-
 
 	public String getIntent(MessageResponse response)
 	{
@@ -428,21 +415,6 @@ public class AgenteCognitivo
 		return historicoDeConversaciones.verElHistoricoDeUnaConversacion(idSesion);
 	}
 	
-	public String getWsTasaCambio() {
-		return wsTasaCambio;
-	}
-
-	public void setWsTasaCambio(String wsTasaCambio) {
-		this.wsTasaCambio = wsTasaCambio;
-	}
-
-	public String getWsSaldo() {
-		return wsSaldo;
-	}
-
-	public void setWsSaldo(String wsSaldo) {
-		this.wsSaldo = wsSaldo;
-	}
 
 	public String getUser() 
 	{

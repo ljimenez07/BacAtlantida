@@ -39,23 +39,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ncubo.conf.Usuario;
 import com.ncubo.dao.CategoriaDao;
-import com.ncubo.dao.OfertaDao;
 import com.ncubo.data.Oferta;
 import com.ncubo.exceptions.NoEmailException;
-import com.ncubo.logica.OfertaLogica;
+import com.ncubo.data.Ofertas;
+import com.ncubo.logica.OfertaService;
 import com.ncubo.util.GestorDeArchivos;
 
 @Controller
 public class OfertaController
 {
 	@Autowired
-	private OfertaDao ofertaDao;
-	@Autowired
 	private CategoriaDao categoriaDao;
+	
 	@Autowired
-	private GestorDeArchivos gestorDeArchivos;
+	private OfertaService ofertaService;
+	
 	@Autowired
-	private OfertaLogica ofertaLogica;
+	private Ofertas ofertasL;
 	
 	private final String ACTION_INSERTAR_OFERTA = "BackOffice/insertarOferta";
 	private final String ACTION_MODIFICAR_OFERTA = "BackOffice/modificarOferta";
@@ -69,11 +69,13 @@ public class OfertaController
 	private final String BOTON_SECUNDARIO_MODIFICAR_OFERTA = "imagen-cancelar";
 	private final String BOTON_SECUNDARIO_INSERTAR_OFERTA = "imagen-cancelar";
 	
+	@Autowired
+	GestorDeArchivos gestorDeArchivos;
 	
 	@RequestMapping("/BackOffice/gestionDeOfertas")
 	public String visualizarOfertas(Model model) throws ClassNotFoundException, SQLException
 	{
-		ArrayList<Oferta> ofertas = ofertaDao.obtener();
+		ArrayList<Oferta> ofertas = ofertasL.obtener();
 		if (ofertas.isEmpty())
 		{
 			return "redirect:insertarOferta";
@@ -86,7 +88,8 @@ public class OfertaController
 	public String filtrarOfertas(@RequestParam("busquedaComercio") String nombreComercio, Model model) throws ClassNotFoundException, SQLException
 	{
 		model.addAttribute("busquedaComercio", nombreComercio);
-		ArrayList<Oferta> ofertas = ofertaLogica.filtrarOferta(nombreComercio);
+		
+		ArrayList<Oferta> ofertas = ofertasL.filtrarOferta(nombreComercio);
 
 		if (ofertas.isEmpty())
 		{
@@ -110,15 +113,14 @@ public class OfertaController
 	@PostMapping(value = "/BackOffice/insertarOferta", params="accion=ingresar")
 	public String insertarOfertas(@Valid Oferta oferta, BindingResult bindingResult, Model model) throws ClassNotFoundException, SQLException, ParseException, IOException
 	{
-		bindingResult = ofertaLogica.validarCampos(bindingResult, oferta);
+		bindingResult = oferta.validarCampos(bindingResult, oferta);
 		
 		if (bindingResult.hasErrors())
 		{
 			return cargarInsertarOfertas(oferta, model);
 		}
 		oferta.setFechaHoraRegistro(new Timestamp(new Date().getTime()));
-		ofertaDao.insertar(oferta);
-		gestorDeArchivos.textoAAudio( ""+oferta.getIdOferta(), oferta.getDescripcion() );
+		ofertaService.insertar(oferta);
 		
 		return "redirect:gestionDeOfertas";
 	}
@@ -136,7 +138,7 @@ public class OfertaController
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
 		String idUsuario = usuario == null ? null : usuario.getEstaLogueado() ? usuario.getUsuarioId() : null;
 		int indiceInicial = (pagina - 1) * 10;
-		return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, idUsuario);
+		return ofertaService.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, idUsuario);
 	}
 	
 	@CrossOrigin(origins = "*")
@@ -145,7 +147,7 @@ public class OfertaController
 	{
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
 		String idUsuario = usuario == null ? null : usuario.getEstaLogueado() ? usuario.getUsuarioId() : null;
-		return ofertaDao.obtener(idOferta, idUsuario);
+		return ofertaService.obtener(idOferta, idUsuario);
 	}
 	
 	@CrossOrigin(origins = "*")
@@ -153,7 +155,7 @@ public class OfertaController
 	@ResponseBody public String cantidadDeOfertas(HttpSession sesion) throws ClassNotFoundException, SQLException, JSONException
 	{
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-		JSONObject respuesta = new JSONObject().put("cantidad", ofertaDao.obtenerCantidadDeOfertasParaMostrar());
+		JSONObject respuesta = new JSONObject().put("cantidad", ofertaService.obtenerCantidadDeOfertasParaMostrar());
 		respuesta.put("usuarioEstaLogueado", usuario == null ? false : usuario.getEstaLogueado());
 		
 		return respuesta.toString();
@@ -188,7 +190,7 @@ public class OfertaController
 	{
 		if(idOferta != 0)
 		{
-			oferta = ofertaDao.obtener(idOferta, idUsuario);
+			oferta = ofertaService.obtener(idOferta, idUsuario);
 		}
 		model.addAttribute("oferta", oferta);
 		model.addAttribute("categorias", categoriaDao.obtener());
@@ -202,20 +204,14 @@ public class OfertaController
 	@PostMapping(value = "/BackOffice/modificarOferta", params="accion=ingresar")
 	public String modificarOferta(@Valid Oferta oferta, BindingResult bindingResult, Model model, HttpServletRequest request, @RequestParam(value = "idUsuario", required = false) String idUsuario) throws ClassNotFoundException, SQLException, ParseException, IOException
 	{
-		bindingResult = ofertaLogica.validarCampos(bindingResult, oferta);
+		bindingResult = oferta.validarCampos(bindingResult, oferta);
 		
 		if (bindingResult.hasErrors())
 		{		
 			return modificarOferta(model, 0, oferta, idUsuario);
 		}
 		oferta.setFechaHoraRegistro(new Timestamp(new Date().getTime()));
-		ofertaDao.modificar(oferta);
-		
-		if( oferta.cambioLaDescripcion() )
-		{
-			System.err.println("Cambio");
-			gestorDeArchivos.textoAAudio( ""+oferta.getIdOferta(), oferta.getDescripcion() );
-		}
+		ofertaService.modificar( oferta );
 		
 		return "redirect:gestionDeOfertas";
 	}
@@ -229,7 +225,7 @@ public class OfertaController
 	@PostMapping("/BackOffice/eliminarOferta")
 	public String eliminarOferta(@RequestParam("idOfertaEliminar") int idOferta) throws ClassNotFoundException, SQLException
 	{
-		ofertaDao.eliminar(idOferta);
+		ofertaService.eliminar(idOferta);
 		return "redirect:gestionDeOfertas";
 	}
 	

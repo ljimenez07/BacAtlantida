@@ -1,5 +1,6 @@
 package com.ncubo.dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -18,18 +19,69 @@ import org.springframework.stereotype.Component;
 
 import com.ncubo.data.CategoriaOferta;
 import com.ncubo.data.Oferta;
+import com.ncubo.util.GestorDeArchivos;
 import com.ncubo.util.LevenshteinDistance;
 
 @Component
 public class OfertaDao
 {
 	private final String NOMBRE_TABLA = "oferta";
-	private final String NOMBRE_TABLA_CATEGORIA_OFERTA = "categoriaoferta";
+	//private final String NOMBRE_TABLA_CATEGORIA_OFERTA = "categoriaoferta";
+	private final String NOMBRE_TABLA_CATEGORIA_OFERTA1 = "categoria_con_oferta_y_peso";
+	private final String NOMBRE_TABLA_CATEGORIA_OFERTA222 = "categoriadeoferta";
 	private final String NOMBRE_TABLA_REACCION = "reaccion";
-	private final String LIMITE = "50";
-	private final String CAMPOS_PARA_SELECT = String.format("%s.%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, IF(%s = ?, IF(%s = 1, 1, NULL), NULL) AS %s, IF(%s = ?, IF(%s = 0, 1, NULL), NULL) AS %s", NOMBRE_TABLA, atributo.ID_OFERTA, atributo.TITULO_DE_OFERTA, atributo.COMERCIO, atributo.DESCRIPCION, atributo.CATEGORIA, atributo.NOMBRE_CATEGORIA, atributo.CIUDAD, atributo.ESTADO, atributo.RESTRICCIONES, atributo.VIGENCIA_DESDE, atributo.VIGENCIA_HASTA, atributo.IMAGEN_COMERCIO_PATH, atributo.IMAGEN_PUBLICIDAD_PATH, atributo.FECHA_HORA_REGISTRO, atributo.ID_USUARIO, atributo.REACCION, atributo.LIKES, atributo.ID_USUARIO, atributo.REACCION, atributo.DISLIKES);
+
+	private final String CAMPOS_PARA_SELECT = String.format("%s.%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, IF(%s = ?, IF(%s = 1, 1, NULL), NULL) AS %s, IF(%s = ?, IF(%s = 0, 1, NULL), NULL) AS %s", NOMBRE_TABLA, atributo.ID_OFERTA, atributo.TITULO_DE_OFERTA, atributo.COMERCIO, atributo.DESCRIPCION, atributo.NOMBRE_CATEGORIA, atributo.CIUDAD, atributo.ESTADO, atributo.RESTRICCIONES, atributo.VIGENCIA_DESDE, atributo.VIGENCIA_HASTA, atributo.IMAGEN_COMERCIO_PATH, atributo.IMAGEN_PUBLICIDAD_PATH, atributo.FECHA_HORA_REGISTRO, atributo.ID_USUARIO, atributo.REACCION, atributo.LIKES, atributo.ID_USUARIO, atributo.REACCION, atributo.DISLIKES);
 	@Autowired
 	private Persistencia dao;
+	
+	private String select = "SELECT " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + ", "
+			+ atributo.ID_CATEGORIA + ", "
+			+ atributo.NOMBRE_CATEGORIA + ", "
+			+ atributo.PESO + ", "
+			+ atributo.TITULO_DE_OFERTA + ", "
+			+ atributo.COMERCIO + ", "
+			+ atributo.DESCRIPCION + ", "
+			+ atributo.NOMBRE_CATEGORIA + ", "
+			+ atributo.CIUDAD + ", "
+			+ atributo.ESTADO + ", "
+			+ atributo.RESTRICCIONES + ", "
+			+ atributo.VIGENCIA_DESDE + ", "
+			+ atributo.VIGENCIA_HASTA + ", "
+			+ atributo.IMAGEN_COMERCIO_PATH + ", "
+			+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
+			+ atributo.FECHA_HORA_REGISTRO
+			+ ", SUM(IF(" + atributo.REACCION + " = 1, 1, 0)) AS " + atributo.LIKES
+			+ ", SUM(IF(" + atributo.REACCION + " = 0, 1, 0)) AS " + atributo.DISLIKES
+			+ " FROM " + NOMBRE_TABLA
+			+ " LEFT JOIN " + NOMBRE_TABLA_REACCION + " ON " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + NOMBRE_TABLA_REACCION + ".idOferta"
+			+ " LEFT JOIN " + NOMBRE_TABLA_CATEGORIA_OFERTA1 + " ON " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + NOMBRE_TABLA_CATEGORIA_OFERTA1 + ".idOferta"
+			+ " LEFT JOIN " + NOMBRE_TABLA_CATEGORIA_OFERTA222 + " ON " + NOMBRE_TABLA_CATEGORIA_OFERTA1 + ".idCategoria = " + NOMBRE_TABLA_CATEGORIA_OFERTA1 + ".id";
+
+	private String select2 = "SELECT " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + ", "
+			+ atributo.REACCION + ", "
+			+ atributo.ID_CATEGORIA + ", "
+			+ atributo.NOMBRE_CATEGORIA + ", "
+			+ atributo.PESO + ", "
+			+ atributo.TITULO_DE_OFERTA + ", "
+			+ atributo.COMERCIO + ", "
+			+ atributo.DESCRIPCION + ", "
+			+ atributo.NOMBRE_CATEGORIA + ", "
+			+ atributo.CIUDAD + ", "
+			+ atributo.ESTADO + ", "
+			+ atributo.RESTRICCIONES + ", "
+			+ atributo.VIGENCIA_DESDE + ", "
+			+ atributo.VIGENCIA_HASTA + ", "
+			+ atributo.IMAGEN_COMERCIO_PATH + ", "
+			+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
+			+ atributo.FECHA_HORA_REGISTRO
+			+ ", SUM(IF(" + atributo.REACCION + " = 1, 1, 0)) AS " + atributo.LIKES
+			+ ", SUM(IF(" + atributo.REACCION + " = 0, 1, 0)) AS " + atributo.DISLIKES
+			+ " FROM " + NOMBRE_TABLA
+			+ " LEFT JOIN " + NOMBRE_TABLA_REACCION + " ON " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + NOMBRE_TABLA_REACCION + ".idOferta"
+			+ " LEFT JOIN " + NOMBRE_TABLA_CATEGORIA_OFERTA1 + " ON " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + NOMBRE_TABLA_CATEGORIA_OFERTA1 + ".idOferta"
+			+ " LEFT JOIN " + NOMBRE_TABLA_CATEGORIA_OFERTA222 + " ON " + NOMBRE_TABLA_CATEGORIA_OFERTA1 + ".idCategoria = " + NOMBRE_TABLA_CATEGORIA_OFERTA1 + ".id"
+			+ " LEFT JOIN reaccion ON reaccion.idOferta = " + NOMBRE_TABLA_CATEGORIA_OFERTA1 + ".idOferta ";
 	
 	public enum atributo
 	{
@@ -37,10 +89,10 @@ public class OfertaDao
 		TITULO_DE_OFERTA("tituloDeOferta"),
 		COMERCIO("comercio"),
 		DESCRIPCION("descripcion"),
-		CATEGORIA("categoria"),
 		
-		ID_CATEGORIA("idCategoriaOferta"),
+		ID_CATEGORIA("idCategoria"),
 		NOMBRE_CATEGORIA("nombre"),
+		PESO("peso"),
 		
 		CIUDAD("ciudad"),
 		ESTADO("estado"),
@@ -70,44 +122,50 @@ public class OfertaDao
 		}
 	}
 	
-	public ArrayList<Oferta> obtener() throws ClassNotFoundException, SQLException
+	public ArrayList<Oferta> obtenerUltimas50Ofertas() throws ClassNotFoundException, SQLException
+	{
+		return obtener(50);
+	}
+	
+	private ArrayList<Oferta> obtener(int limite) throws ClassNotFoundException, SQLException
 	{
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
-		String query = "SELECT " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + ", "
-				+ atributo.TITULO_DE_OFERTA + ", "
-				+ atributo.COMERCIO + ", "
-				+ atributo.DESCRIPCION + ", "
-				+ atributo.CATEGORIA + ", "
-				+ atributo.NOMBRE_CATEGORIA + ", "
-				+ atributo.CIUDAD + ", "
-				+ atributo.ESTADO + ", "
-				+ atributo.RESTRICCIONES + ", "
-				+ atributo.VIGENCIA_DESDE + ", "
-				+ atributo.VIGENCIA_HASTA + ", "
-				+ atributo.IMAGEN_COMERCIO_PATH + ", "
-				+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
-				+ atributo.FECHA_HORA_REGISTRO
-				+ ", SUM(IF(" + atributo.REACCION + " = 1, 1, 0)) AS " + atributo.LIKES
-				+ ", SUM(IF(" + atributo.REACCION + " = 0, 1, 0)) AS " + atributo.DISLIKES
-				+ " FROM " + NOMBRE_TABLA_CATEGORIA_OFERTA + ", " + NOMBRE_TABLA
-				+ " LEFT JOIN " + NOMBRE_TABLA_REACCION + " ON " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + NOMBRE_TABLA_REACCION + ".idOferta"
+		String query = 
+				select
 				+ " WHERE " + atributo.ELIMINADA + " = 0"
-				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA
 				+ " GROUP BY " + NOMBRE_TABLA + "." + atributo.ID_OFERTA 
 				+ " ORDER BY " + atributo.FECHA_HORA_REGISTRO + " DESC "
-				+ " LIMIT " + LIMITE + ";";
+				+ " LIMIT " + limite + ";";//TODO aqui no va a servir lo de agregar categoria a oferta anterior
 
 		Connection con = dao.openConBD();
 		ResultSet rs = con.createStatement().executeQuery(query);
 		
+		procesarResulset( rs, ofertas);
+		
+		dao.closeConBD();
+		return ofertas;
+	}
+	
+	private void procesarResulset(ResultSet rs, ArrayList<Oferta> ofertas) throws SQLException
+	{
+		Oferta ultimaOfertProcesada = null;
+		
 		while (rs.next())
 		{
-			ofertas.add(new Oferta(
-					rs.getInt(atributo.ID_OFERTA.toString()),
+			int idDeOfertaActual = rs.getInt(atributo.ID_OFERTA.toString());
+			
+			if( ultimaOfertProcesada.getIdOferta() != idDeOfertaActual)
+			{
+				ultimaOfertProcesada = null;
+			}
+				
+			if( ultimaOfertProcesada == null )
+			{
+				ultimaOfertProcesada = new Oferta(
+					idDeOfertaActual,
 					rs.getString(atributo.TITULO_DE_OFERTA.toString()),
 					rs.getString(atributo.COMERCIO.toString()),
 					rs.getString(atributo.DESCRIPCION.toString()),
-					new CategoriaOferta(rs.getInt(atributo.CATEGORIA.toString()), rs.getString(atributo.NOMBRE_CATEGORIA.toString())),
 					rs.getString(atributo.CIUDAD.toString()),
 					rs.getBoolean(atributo.ESTADO.toString()),
 					rs.getString(atributo.RESTRICCIONES.toString()),
@@ -118,20 +176,29 @@ public class OfertaDao
 					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),
 					rs.getInt(atributo.LIKES.toString()),
 					rs.getInt(atributo.DISLIKES.toString())
-					));
+					);
+				ofertas.add( ultimaOfertProcesada );
 		}
 		
-		dao.closeConBD();
-		return ofertas;
+			if( ultimaOfertProcesada.getIdOferta() == idDeOfertaActual)
+			{
+				CategoriaOferta categoria = new CategoriaOferta(
+						rs.getInt(atributo.ID_CATEGORIA.toString()), 
+						rs.getString(atributo.NOMBRE_CATEGORIA.toString()),
+						rs.getInt(atributo.PESO.toString()));
+				ultimaOfertProcesada.agregarCategoria( categoria );
 	}
 	
-	public void insertar(Oferta oferta) throws ClassNotFoundException, SQLException
+
+		}
+	}
+	
+	public void insertar(Oferta oferta) throws ClassNotFoundException, SQLException, IOException
 	{
 		oferta.cambiarApostrofes();
 		String queryDatos = "'" + oferta.getTituloDeOferta()+ "'"
 							+ ",'" + oferta.getComercio() + "'"
 							+ ",'" + oferta.getDescripcion() + "'"
-							+ ",'" + oferta.getCategoria().getId() + "'"
 							+ ",'" + oferta.getCiudad() + "'"
 							+ "," + (oferta.getEstado() ? 1 : 0)
 							+ ",'" + oferta.getRestricciones() + "'"
@@ -144,7 +211,6 @@ public class OfertaDao
 					 + "(" + atributo.TITULO_DE_OFERTA + ","
 					 + atributo.COMERCIO + ","
 					 + atributo.DESCRIPCION + ","
-					 + atributo.CATEGORIA + ","
 					 + atributo.CIUDAD + ","
 					 + atributo.ESTADO + ","
 					 + atributo.RESTRICCIONES + ","
@@ -168,34 +234,22 @@ public class OfertaDao
 		dao.closeConBD();
 	}
 	
-	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(int indiceInicial, String idUsuario) throws ClassNotFoundException, SQLException
+	public ArrayList<Oferta> obtenerUltimas10Ofertas() throws ClassNotFoundException, SQLException
 	{
-		boolean esUnUsuarioConocido = true;
-		if(idUsuario == null)
-		{
-			idUsuario = "NULL";
-			esUnUsuarioConocido = false;
-		}
+		return obtener(10);
+	}
+
+	//TODO revisar que se suponia hacia esto
+	public List<Oferta> ultimasDiezOfertasDesde(int indiceInicial, String idUsuario) throws ClassNotFoundException, SQLException
+	{
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
 		Connection con = dao.openConBD();
-		String query = String.format("SELECT %s FROM %s, %s LEFT JOIN %s ON %s.%s = %s.%s WHERE %s = 0 AND %s = 1 AND %s = %s AND %s >= ? GROUP BY %s.%s ORDER BY %s DESC LIMIT ?, 10;",
-				CAMPOS_PARA_SELECT,
-				NOMBRE_TABLA_CATEGORIA_OFERTA,
-				NOMBRE_TABLA,
-				NOMBRE_TABLA_REACCION,
-				NOMBRE_TABLA,
-				atributo.ID_OFERTA,
-				NOMBRE_TABLA_REACCION,
-				atributo.ID_OFERTA,
-				atributo.ELIMINADA,
-				atributo.ESTADO,
-				atributo.CATEGORIA,
-				atributo.ID_CATEGORIA,
-				atributo.VIGENCIA_HASTA,
-				NOMBRE_TABLA,
-				atributo.ID_OFERTA,
-				atributo.FECHA_HORA_REGISTRO);
+		String query = 
+				select2+
 				
+				"  WHERE "+atributo.ELIMINADA+" = 0 AND "+atributo.ESTADO+" = 1 AND "+atributo.VIGENCIA_HASTA+" >= ? GROUP BY "+atributo.ID_OFERTA+" ORDER BY "+atributo.FECHA_HORA_REGISTRO+" DESC LIMIT ?, 10;";
+		
+		
 		PreparedStatement stmt = con.prepareStatement(query);
 		stmt.setString(1, idUsuario);
 		stmt.setString(2, idUsuario);
@@ -204,28 +258,7 @@ public class OfertaDao
 		
 		ResultSet rs = stmt.executeQuery();
 		
-		while (rs.next())
-		{
-			Oferta oferta = new Oferta(
-					rs.getInt(atributo.ID_OFERTA.toString()),
-					rs.getString(atributo.TITULO_DE_OFERTA.toString()),
-					rs.getString(atributo.COMERCIO.toString()),
-					rs.getString(atributo.DESCRIPCION.toString()),
-					new CategoriaOferta(rs.getInt(atributo.CATEGORIA.toString()), rs.getString(atributo.NOMBRE_CATEGORIA.toString())),
-					rs.getString(atributo.CIUDAD.toString()),
-					rs.getBoolean(atributo.ESTADO.toString()),
-					rs.getString(atributo.RESTRICCIONES.toString()),
-					rs.getDate(atributo.VIGENCIA_DESDE.toString()),
-					rs.getDate(atributo.VIGENCIA_HASTA.toString()),
-					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
-					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
-					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),
-					rs.getInt(atributo.LIKES.toString()),
-					rs.getInt(atributo.DISLIKES.toString())
-					);
-			oferta.setEsUnUsuarioConocido(esUnUsuarioConocido);
-			ofertas.add(oferta);
-		}
+		procesarResulset( rs, ofertas);
 
 		dao.closeConBD();
 		return ofertas;
@@ -239,9 +272,8 @@ public class OfertaDao
 			idUsuario = "NULL";
 			esUnUsuarioConocido = false;
 		}
-		String query = String.format("SELECT %s FROM %s, %s LEFT JOIN %s ON %s.%s = %s.%s WHERE %s.%s = ? AND %s = %s;",
+		String query = String.format("SELECT %s FROM %s LEFT JOIN %s ON %s.%s = %s.%s WHERE %s.%s = ?;",
 				CAMPOS_PARA_SELECT,
-				NOMBRE_TABLA_CATEGORIA_OFERTA,
 				NOMBRE_TABLA,
 				NOMBRE_TABLA_REACCION,
 				NOMBRE_TABLA,
@@ -249,10 +281,8 @@ public class OfertaDao
 				NOMBRE_TABLA_REACCION,
 				atributo.ID_OFERTA,
 				NOMBRE_TABLA,
-				atributo.ID_OFERTA,
-				atributo.CATEGORIA,
-				atributo.ID_CATEGORIA);
-		
+				atributo.ID_OFERTA);
+		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
 		Connection con = dao.openConBD();
 		PreparedStatement stmt = con.prepareStatement(query);
 		stmt.setString(1, idUsuario);
@@ -268,7 +298,6 @@ public class OfertaDao
 					rs.getString(atributo.TITULO_DE_OFERTA.toString()),
 					rs.getString(atributo.COMERCIO.toString()),
 					rs.getString(atributo.DESCRIPCION.toString()),
-					new CategoriaOferta(rs.getInt(atributo.CATEGORIA.toString()), rs.getString(atributo.NOMBRE_CATEGORIA.toString())),
 					rs.getString(atributo.CIUDAD.toString()),
 					rs.getBoolean(atributo.ESTADO.toString()),
 					rs.getString(atributo.RESTRICCIONES.toString()),
@@ -281,8 +310,7 @@ public class OfertaDao
 					rs.getInt(atributo.DISLIKES.toString())
 					);
 			oferta.setEsUnUsuarioConocido(esUnUsuarioConocido);
-			dao.closeConBD();
-			return oferta;
+			ofertas.add(oferta);
 		}
 		
 		dao.closeConBD();
@@ -308,13 +336,12 @@ public class OfertaDao
 		return cantidad;
 	}
 
-	public void modificar(Oferta oferta) throws ClassNotFoundException, SQLException
+	public void modificar(Oferta oferta) throws ClassNotFoundException, SQLException, IOException
 	{
 		oferta.cambiarApostrofes();
 		String queryDatos =  atributo.TITULO_DE_OFERTA + " = '" + oferta.getTituloDeOferta() + "' , "
 				 + atributo.COMERCIO + " = '" + oferta.getComercio() + "' , "
 				 + atributo.DESCRIPCION + " = '" + oferta.getDescripcion() + "' , "
-				 + atributo.CATEGORIA + " = '" + oferta.getCategoria().getId() + "' , "
 				 + atributo.CIUDAD + " = '" + oferta.getCiudad() + "' , "
 				 + atributo.ESTADO + " = " + (oferta.getEstado() ? 1 : 0) + ","
 				 + atributo.RESTRICCIONES + " = '" + oferta.getRestricciones() + "' , "
@@ -329,6 +356,7 @@ public class OfertaDao
 		Connection con = dao.openConBD();
 		con.createStatement().executeUpdate(query);
 		dao.closeConBD();
+		
 	}
 	
 	public void eliminar(int idOferta) throws ClassNotFoundException, SQLException
@@ -342,15 +370,18 @@ public class OfertaDao
 		dao.closeConBD();
 	}
 	
+
 	public ArrayList<Oferta> filtrarOfertasPorComercioYCategoria(String  nombreComercio) throws ClassNotFoundException, SQLException
 	{
-		ArrayList<Oferta> ultimasOfertas = obtener();
+		ArrayList<Oferta> ultimasOfertas = obtener(50);
 		Map<Integer, List<Oferta>> valoresSimilitud = new HashMap<Integer, List<Oferta>>();
 		
 		for(Oferta ofertaActual : ultimasOfertas)
 		{
 			int levenshteinDistance = LevenshteinDistance.distance( nombreComercio, ofertaActual.getComercio());
-			int levenshteinDistanceCategoria = LevenshteinDistance.distance( nombreComercio, ofertaActual.getCategoria().getNombre());
+			
+			//TODO revisar esto
+			//int levenshteinDistanceCategoria = LevenshteinDistance.distance( nombreComercio, ofertaActual.getCategoria().getNombre());
 			if ( levenshteinDistance < 6 )
 			{
 				if (valoresSimilitud.get(levenshteinDistance) == null)
@@ -366,7 +397,7 @@ public class OfertaDao
 			}
 			else
 			{
-				if( levenshteinDistanceCategoria < 3 )
+				/*if( levenshteinDistanceCategoria < 3 )
 				{
 					if (valoresSimilitud.get(levenshteinDistanceCategoria) == null)
 					{
@@ -378,7 +409,7 @@ public class OfertaDao
 					{
 						valoresSimilitud.get(levenshteinDistanceCategoria).add(ofertaActual);
 					}
-				}
+				}*/
 			}
 		}
 		
