@@ -11,12 +11,12 @@ import java.util.zip.ZipInputStream;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Descomprimir
+public class Descompresor
 {
 	private String urlDeRepo = "";
 	private String nombreDeCarpetaGenerado = "";
 	
-	public Descomprimir(String urlRepo) 
+	public Descompresor(String urlRepo) 
 	{
 		this.urlDeRepo = urlRepo;
 	}

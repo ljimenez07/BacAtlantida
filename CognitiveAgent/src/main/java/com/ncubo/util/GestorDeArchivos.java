@@ -63,12 +63,12 @@ public class GestorDeArchivos
 		String extension = FilenameUtils.getExtension(nombreArchivo);
 		boolean esUnArchivoComprimido = Arrays.asList(extensionesDeArchivosComprimidos).contains(extension.toLowerCase()); 
 		boolean esUnaImagen = Arrays.asList(formatoDeImagenes).contains(extension.toUpperCase());
-		new Descomprimir("").crearCarpetaDeArchivos(archivoDestino);
+		new Descompresor("").crearCarpetaDeArchivos(archivoDestino);
 		
 		if(esUnArchivoComprimido)
 		{
 			String urlDeAlmacenamiento = path + "/" + UUIDGenerado + nombreArchivo;
-			Descomprimir descomprimir = new Descomprimir(urlDeAlmacenamiento);
+			Descompresor descomprimir = new Descompresor(urlDeAlmacenamiento);
 			
 			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
 			stream.write(uploadfile.getBytes());
