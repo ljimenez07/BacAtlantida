@@ -21,13 +21,13 @@ templates['listaDeOfertas'] = template({"1":function(container,depth0,helpers,pa
 },"2":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "								<div class=\"html-de-oferta\" id=\"html-de-oferta-"
+  return "								<iframe class=\"html-de-oferta embed-responsive-item\" frameBorder=\"0\" scrolling=\"no\" id=\"html-de-oferta-"
     + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
-    + "\"></div>\r\n								<script type=\"text/javascript\">\r\n								$.get(\""
+    + "\"></iframe>\r\n								<script type=\"text/javascript\">\r\n								var source = serverDomain + \"/archivossubidos/"
     + alias4(((helper = (helper = helpers.imagenPublicidadPath || (depth0 != null ? depth0.imagenPublicidadPath : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"imagenPublicidadPath","hash":{},"data":data}) : helper)))
-    + "\", function(data) {\r\n									$(\"#html-de-oferta-"
+    + "\";\r\n								var iframe = $('#ofertas #html-de-oferta-"
     + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
-    + "\").html(data);\r\n								});\r\n								</script>\r\n";
+    + "');\r\n								iframe.attr(\"src\", source);\r\n								iframe.ready(function() {\r\n									var newHeight = $(this).find(\"body\")[0].offsetHeight + \"px\";\r\n									iframe.css({height: newHeight});\r\n								});\r\n								</script>\r\n";
 },"4":function(container,depth0,helpers,partials,data) {
     var helper;
 

@@ -124,19 +124,15 @@ public class FTPCliente
 		FTPClient ftpClient = new FTPClient();
 		ftpClient.connect(host, puerto);
 		ftpClient.login(usuario, password);
-		ftpClient.enterLocalPassiveMode();
+		//ftpClient.enterLocalPassiveMode();
 		ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 		
-		try
-		{
-			return ftpClient.retrieveFileStream(nombreArchivo);
-		}
-		finally
-		{
-			ftpClient.logout();
-			ftpClient.disconnect();
-		}
+		InputStream stream = ftpClient.retrieveFileStream(nombreArchivo);
+
+		ftpClient.logout();
+		ftpClient.disconnect();
 		
+		return stream;
 	}
 	
 	public String getUsuario()

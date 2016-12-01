@@ -162,7 +162,9 @@ public class TemarioDelBancoAtlantida extends Temario
 			false,
 			"conocerte",
 			frase("saludarConocerte"),
-			frase("preguntarPorTiempoLibre")
+			frase("preguntarPorTiempoLibre"),
+			frase("fueraContextoConocerteDelBanco"),
+			frase("fueraContextoConocerteGeneral")
 		);
 		return resultado;
 	}
@@ -175,7 +177,69 @@ public class TemarioDelBancoAtlantida extends Temario
 			"ConocerteGeneral",
 			false,
 			"conocerte",
-			frase("preguntarPorFinesDeSemana")
+			frase("preguntarPorFinesDeSemana"),
+			frase("fueraContextoConocerteDelBanco"),
+			frase("fueraContextoConocerteGeneral")
+		);
+		return resultado;
+	}
+	
+	private Tema preguntarPorRestaurantes()
+	{
+		Tema resultado = new Tema
+		(
+			"preguntarPorRestaurantes",
+			"ConocerteGeneral",
+			false,
+			"conocerte",
+			frase("preguntarPorRestaurantes"),
+			frase("fueraContextoConocerteDelBanco"),
+			frase("fueraContextoConocerteGeneral")
+		);
+		return resultado;
+	}
+	
+	private Tema preguntarPorRestaurantesInternacionales()
+	{
+		Tema resultado = new Tema
+		(
+			"preguntarPorRestaurantesInternacionales",
+			"ConocerteGeneral",
+			false,
+			"conocerte",
+			frase("preguntarPorRestaurantesInternacionales"),
+			frase("fueraContextoConocerteDelBanco"),
+			frase("fueraContextoConocerteGeneral")
+		);
+		return resultado;
+	}
+	
+	private Tema preguntarPorHospedaje()
+	{
+		Tema resultado = new Tema
+		(
+			"preguntarPorHospedaje",
+			"ConocerteGeneral",
+			false,
+			"conocerte",
+			frase("preguntarPorHospedaje"),
+			frase("fueraContextoConocerteDelBanco"),
+			frase("fueraContextoConocerteGeneral")
+		);
+		return resultado;
+	}
+	
+	private Tema preguntarPorBelleza()
+	{
+		Tema resultado = new Tema
+		(
+			"preguntarPorBelleza",
+			"ConocerteGeneral",
+			false,
+			"conocerte",
+			frase("preguntarPorBelleza"),
+			frase("fueraContextoConocerteDelBanco"),
+			frase("fueraContextoConocerteGeneral")
 		);
 		return resultado;
 	}
@@ -188,7 +252,9 @@ public class TemarioDelBancoAtlantida extends Temario
 			"ConocerteGeneral",
 			false,
 			"conocerte",
-			frase("despedidaConocerte")
+			frase("despedidaConocerte"),
+			frase("fueraContextoConocerteDelBanco"),
+			frase("fueraContextoConocerteGeneral")
 		);
 		return resultado;
 	}
@@ -209,6 +275,10 @@ public class TemarioDelBancoAtlantida extends Temario
 			frase("requisitosCuentaAhorrosDolares"),
 			frase("requisitosCuentaAhorrosKidsLempiras"),
 			frase("requisitosCuentaAhorrosKidsDolares"),
+			frase("cualMonedaAhorrosRemesas"),
+			frase("requisitosCuentaAhorrosRemesasLempiras"),
+			frase("requisitosCuentaAhorrosRemesasDolares"),
+			frase("requisitosCuentaAhorrosVirtualRemesasDolares"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta")
@@ -229,6 +299,9 @@ public class TemarioDelBancoAtlantida extends Temario
 			frase("montoInicialCuentaAhorrosEuros"),
 			frase("montoInicialCuentaAhorrosKidsLempiras"),
 			frase("montoInicialCuentaAhorrosKidsDolares"),
+			frase("montoInicialCuentaAhorrosRemesasLempiras"),
+			frase("montoInicialCuentaAhorrosRemesasDolares"),
+			frase("montoInicialCuentaAhorrosVirtualRemesasDolares"),
 			frase("cualProducto"),
 			frase("cualProductoAhorro"),
 			frase("cualMonedaAhorros"),
@@ -253,6 +326,9 @@ public class TemarioDelBancoAtlantida extends Temario
 			frase("saldoMinimoCuentaAhorrosEuros"),
 			frase("saldoMinimoCuentaAhorrosKidsLempiras"),
 			frase("saldoMinimoCuentaAhorrosKidsDolares"),
+			frase("saldoMinimoCuentaAhorrosRemesasLempiras"),
+			frase("saldoMinimoCuentaAhorrosRemesasDolares"),
+			frase("saldoMinimoCuentaAhorrosVirtualRemesasDolares"),
 			frase("cualProducto"),
 			frase("cualProductoAhorro"),
 			frase("cualMonedaAhorros"),
@@ -313,6 +389,15 @@ public class TemarioDelBancoAtlantida extends Temario
 	protected void cargarTemario(Temas temasDelDiscurso){
 		
 		System.out.println("Cargando temario ...");
+		// Conocerte
+		temasDelDiscurso.add(saludarConocerte());
+		temasDelDiscurso.add(preguntarPorFinesDeSemana());
+		temasDelDiscurso.add(preguntarPorRestaurantes());
+		temasDelDiscurso.add(preguntarPorRestaurantesInternacionales());
+		temasDelDiscurso.add(preguntarPorHospedaje());
+		temasDelDiscurso.add(preguntarPorBelleza());
+		temasDelDiscurso.add(despedidaConocerte());
+		
 		temasDelDiscurso.add(saludo());
 		temasDelDiscurso.add(quiereSaldo());
 		temasDelDiscurso.add(quiereDisponible());
@@ -325,12 +410,6 @@ public class TemarioDelBancoAtlantida extends Temario
 		temasDelDiscurso.add(quiereMontoInicial());
 		temasDelDiscurso.add(quiereSaldoMinimo());
 		temasDelDiscurso.add(quiereRequisitos());
-		
-		temasDelDiscurso.add(saludarConocerte());
-		temasDelDiscurso.add(preguntarPorFinesDeSemana());
-		temasDelDiscurso.add(despedidaConocerte());
-		
-		
 		temasDelDiscurso.add(quiereReportarExtravio());
 	}
 	
@@ -357,8 +436,13 @@ public class TemarioDelBancoAtlantida extends Temario
 
 	@Override
 	protected void cargarDependencias(Temas temasDelDiscurso){
-		temasDelDiscurso.get(13).dependeDe(temasDelDiscurso.get(12));
-		temasDelDiscurso.get(14).dependeDe(temasDelDiscurso.get(13));
+		temasDelDiscurso.get(1).dependeDe(temasDelDiscurso.get(0));
+		temasDelDiscurso.get(2).dependeDe(temasDelDiscurso.get(0));
+		temasDelDiscurso.get(3).dependeDe(temasDelDiscurso.get(0));
+		temasDelDiscurso.get(4).dependeDe(temasDelDiscurso.get(0));
+		temasDelDiscurso.get(5).dependeDe(temasDelDiscurso.get(0));
+		temasDelDiscurso.get(6).dependeDe(temasDelDiscurso.get(1)).dependeDe(temasDelDiscurso.get(2)).dependeDe(temasDelDiscurso.get(3)).
+						dependeDe(temasDelDiscurso.get(4)).dependeDe(temasDelDiscurso.get(5));
 	}
 	
 	public static void main(String argv[]) {

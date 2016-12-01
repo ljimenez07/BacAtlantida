@@ -39,6 +39,7 @@ public class MovilController {
 	
 	@Autowired
 	private AgenteCognitivo serverCognitivo;
+	
 	@Autowired
 	private ManejadorDeErrores manejadorDeErrores;
 	
@@ -75,13 +76,12 @@ public class MovilController {
 			session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 		}
 		
-		/*JSONObject object = new JSONObject(serverCognitivo.procesarMensajeConocerte(
+		JSONObject object = new JSONObject(serverCognitivo.procesarMensajeConocerte(
 				usuario, 
 				mensaje, 
-				new Date()));*/
-		JSONObject object = new JSONObject();
+				new Date()));
+		//JSONObject object = new JSONObject();
 		object.put("usuarioEstaLogueado", usuario.getEstaLogueado());
-		
 		session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 		
 		return object.toString();
@@ -187,6 +187,12 @@ public class MovilController {
 	@RequestMapping(value="/conversacion/verMiTemario", method = RequestMethod.GET)
 	@ResponseBody String verMiTemario(){
 		return serverCognitivo.verMiTemario();
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/verElHistoricoDeLaConversacion/{id}", method = RequestMethod.GET)
+	@ResponseBody String verElHistoricoDeLaConversacion(@PathVariable("id") String id){
+		return serverCognitivo.verElHistoricoDeLaConversacion(id);
 	}
 	
 	@ExceptionHandler(Throwable.class)
