@@ -11,9 +11,9 @@ handlebars $2/www/plantillas/login.handlebars -f $2/www/js/login.handlebars.js
 
 if [ ${#3} -gt 0 ]; then
 	rm -rf platforms
-	cordova platform add ios
-	cordova platform add android
+	cordova platform add $3
 	cordova plugin add cordova-plugin-queries-schemes
+	cordova plugin add cordova-plugin-media
 	cordova build $3
 fi
 echo "fin"
