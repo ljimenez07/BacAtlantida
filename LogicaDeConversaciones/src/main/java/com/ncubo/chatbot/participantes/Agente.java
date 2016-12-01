@@ -116,7 +116,7 @@ public class Agente extends Participante{
 				try{
 					String intencionDelCliente = respuesta.obtenerLaIntencionDeConfianzaDeLaRespuesta().getNombre();
 					WorkSpace workspace = extraerUnWorkspaceConLaIntencion(intencionDelCliente);
-					if( (nombreDeWorkspaceActual.equals(nombreDelWorkSpaceGeneral)) && workspace != null){
+					if( (nombreDeWorkspaceActual.equals(nombreDelWorkSpaceGeneral)) && workspace != null && ! intencionDelCliente.equals("")){
 						nombreDeWorkspaceActual = workspace.getNombre();
 						nombreDeLaIntencionGeneralActiva = intencionDelCliente;
 						System.out.println(String.format("Cambiando al workspace %s e intencion %s", nombreDeWorkspaceActual, nombreDeLaIntencionGeneralActiva));
@@ -127,13 +127,17 @@ public class Agente extends Participante{
 						this.hayIntencionNoAsociadaANingunWorkspace = false;
 					}else{
 						System.out.println("Intencion no asociada a ningun workspace");
-						nombreDeLaIntencionGeneralActiva = intencionDelCliente;
+						if (! intencionDelCliente.equals("")){
+							nombreDeLaIntencionGeneralActiva = intencionDelCliente;	
+						}else{
+							nombreDeLaIntencionGeneralActiva = Constantes.INTENCION_NO_ENTIENDO;
+						}
 						nombreDeLaIntencionEspecificaActiva = "";
 						hayIntencionNoAsociadaANingunWorkspace = true;
 					}
 				}catch(Exception e){
 					System.out.println("No hay ninguna intencion real o de confianza");
-					nombreDeLaIntencionGeneralActiva = Constantes.INTENCION_FUERA_DE_CONTEXTO;
+					nombreDeLaIntencionGeneralActiva = Constantes.INTENCION_NO_ENTIENDO;
 					nombreDeLaIntencionEspecificaActiva = "";
 					hayIntencionNoAsociadaANingunWorkspace = true;
 				}
@@ -186,10 +190,12 @@ public class Agente extends Participante{
 				// Analizar si tengo que cambiar de workspace
 				cambiarDeTema = respuesta.seTerminoElTema() || respuesta.quiereCambiarIntencion();
 				if(cambiarDeTema){
-					borrarUnaVariableDelContexto(Constantes.ID_TEMA); // Solo se borra el id cuando el tema termina
-					
-					nombreDeLaIntencionEspecificaActiva = respuesta.obtenerLaIntencionDeConfianzaDeLaRespuesta().getNombre();
-					seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActualConRespaldo();
+					String laIntencion = respuesta.obtenerLaIntencionDeConfianzaDeLaRespuesta().getNombre();
+					if( ! laIntencion.equals("")){
+						borrarUnaVariableDelContexto(Constantes.ID_TEMA); // Solo se borra el id cuando el tema termina
+						nombreDeLaIntencionEspecificaActiva = laIntencion;
+						seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActualConRespaldo();
+					}
 				}
 			}
 			numeroDeIntentosActualesEnRepetirUnaPregunta = 1;

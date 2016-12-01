@@ -236,6 +236,14 @@ public class Conversacion {
 				misSalidas.add(agente.decir(fueraDeContexto, respuesta, temaActual));
 				fraseActual = fueraDeContexto;
 				ponerComoYaTratado(fueraDeContexto);
+			}else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals(Constantes.INTENCION_NO_ENTIENDO)){
+				System.out.println("No entendi bien ...");
+				this.temaActual = this.temario.buscarTema(Constantes.INTENCION_NO_ENTIENDO);
+				
+				Afirmacion fueraDeContexto = (Afirmacion) this.temaActual.buscarUnaFrase(Constantes.INTENCION_NO_ENTIENDO);
+				misSalidas.add(agente.decir(fueraDeContexto, respuesta, temaActual));
+				fraseActual = fueraDeContexto;
+				ponerComoYaTratado(fueraDeContexto);
 			}
 			return true;
 		}else{
