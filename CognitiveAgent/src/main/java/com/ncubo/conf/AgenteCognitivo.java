@@ -264,7 +264,11 @@ public class AgenteCognitivo
 		
 		respuesta.put("textos", arrayList);
 		System.out.println("Respuesta Chat"+ respuesta.toString());
-		historicoDeConversaciones.agregarHistorialALaConversacion(usuario.getIdSesion(), salida.get(0).obtenerLaRespuestaDeIBM().loQueElClienteDijoFue(), respuesta.toString());
+		try {
+			historicoDeConversaciones.agregarHistorialALaConversacion(usuario.getIdSesion(), salida.get(0).obtenerLaRespuestaDeIBM().loQueElClienteDijoFue(), respuesta.toString());
+		}catch(Exception e){
+			
+		}
 		
 		return respuesta.toString();
 		
