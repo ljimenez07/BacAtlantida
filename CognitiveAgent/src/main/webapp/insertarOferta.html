@@ -286,7 +286,7 @@ var imagenPublicidadStatus = false;
 				<div class="row agregar-padding-top" align="center">
 					<div class="col-md-12">
 						<div class="form-group">
-							<button id="limpiar-submit" type="button" onclick="submit()" class="btn btn-default agregar-padding-left buttonMandarInfoALserver" name="accion" value="limpiar">
+							<button id="limpiar-submit" type="button" class="btn btn-default agregar-padding-left buttonMandarInfoALserver" name="accion" value="limpiar">
 								<span class="texto-junto-imagen">Cancelar</span>
 								<span th:class="${imagenBotonSecundario}"></span>
 							</button>
@@ -308,9 +308,16 @@ var imagenPublicidadStatus = false;
 	<script type='text/javascript'>
     /* attach a submit handler to the form */
     
-    	 
+    	$("#limpiar-submit").click(
+    	function()
+    	{
+    		alert("clean");
+    		$("#accion").val($(this).val());
+    		$("#agregarOferta-form").submit();
+    	}
+    	);
+    
        	  $("#ingresar-submit").click(function() {
-       		alert("submit");
        	    	if(imagenPublicidadStatus == true )
        		  	{
        	    		if(imagenComercioStatus == true)
