@@ -194,6 +194,12 @@ public class MovilController {
 		return serverCognitivo.verElHistoricoDeLaConversacion(id);
 	}
 	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/verElHistoricoDeUnaConversacionEspecifica/{id}", method = RequestMethod.GET)
+	@ResponseBody String verElHistoricoDeUnaConversacionEspecifica(@PathVariable("id") String id){
+		return serverCognitivo.verElHistoricoDeUnaConversacionEspecifica(id);
+	}
+	
 	@ExceptionHandler(Throwable.class)
 	public @ResponseBody String handleAllException(final HttpServletRequest req, HttpServletResponse response, final Exception ex) throws MessagingException 
 	{

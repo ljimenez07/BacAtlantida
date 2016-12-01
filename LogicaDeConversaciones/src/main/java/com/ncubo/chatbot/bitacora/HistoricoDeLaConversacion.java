@@ -13,7 +13,10 @@ public class HistoricoDeLaConversacion {
 	public void agregarHistorico(String loQueDijoElCliente, String loQueDijoElAgente){
 		try {
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("Cliente", loQueDijoElCliente);
+			JSONArray clienteDijo = new JSONArray();
+			clienteDijo.put(loQueDijoElCliente);
+			
+			jsonObject.put("Cliente", clienteDijo);
 			jsonObject.put("Agente", loQueDijoElAgente);
 			misHistorico.put(jsonObject);
 

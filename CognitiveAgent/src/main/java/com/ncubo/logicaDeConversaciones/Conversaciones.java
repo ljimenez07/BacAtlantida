@@ -249,4 +249,14 @@ public class Conversaciones {
 		return resultado;
 	}
 	
+	public ArrayList<String> obtenerLosIdsDeSesionDeUnCliente(String idCliente){
+		ArrayList<String> resultado = null;
+		if(existeElCliente(idCliente)){
+			Cliente miCliente = misClientes.get(idCliente);
+			resultado = miCliente.getMisIdsDeSesiones();
+		}
+		
+		return resultado;
+	}
+	
 }
