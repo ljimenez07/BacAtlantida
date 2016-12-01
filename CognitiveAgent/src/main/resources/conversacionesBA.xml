@@ -484,7 +484,7 @@
 		<vineta></vineta>
 	</conversacion>
 
-<conversacion id="saldoMinimoCuentaAhorrosRemesasLempiras">
+	<conversacion id="saldoMinimoCuentaAhorrosRemesasLempiras">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
@@ -704,7 +704,6 @@
 		<vineta></vineta>
 	</conversacion>
 	
-	
 	<conversacion id="precioAntecendentesPoliciales">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
@@ -715,8 +714,7 @@
 		<vineta></vineta>
 	</conversacion>
 	
-	
-		<conversacion id="reportarExtravio">
+	<conversacion id="reportarExtravio">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
@@ -740,26 +738,6 @@
 			<condition operador="and" tipo="intencion">saludos</condition>		
 		</when>		
 	</conversacion>		
-			
-	<conversacion id="preguntarPorTiempoLibre">		
-		<tipo>pregunta</tipo>		
-		<mandatoria>true</mandatoria>		
-		<enVozAlta>true</enVozAlta>		
-		<frases>		
-			<curioso>¿Qué te gusta hacer en tu tiempo libre?</curioso>		
-		</frases>		
-		<vineta></vineta>		
-	</conversacion>		
-			
-	<conversacion id="preguntarPorFinesDeSemana">		
-		<tipo>pregunta</tipo>		
-		<mandatoria>true</mandatoria>		
-		<enVozAlta>true</enVozAlta>		
-		<frases>		
-			<curioso>Muy bien y dime, ¿qué te gusta hacer los fines de semana por la noche?</curioso>		
-		</frases>		
-		<vineta></vineta>		
-	</conversacion>		
 	
 	<conversacion id="preguntarPorRestaurantes">		
 		<tipo>pregunta</tipo>		
@@ -769,16 +747,6 @@
 			<curioso>¡Sabes!  A mí me encanta todo tipo de comidas y regularmente salgo a cenar a restaurantes.  Si tuvieras la oportunidad, ¿te gustaría salir a cenar o prefieres quedarte en casa?.</curioso>
 			<curioso>Si tuvieras una noche libre que preferirías ¿invitar a algunos amigos a cenar en tu casa, o salir con ellos a un restaurante?.</curioso>
 			<impertinente>Ocupo confirmar, ¿qué preferirías comer afuera o en casa?</impertinente>			
-		</frases>		
-		<vineta></vineta>		
-	</conversacion>
-	
-	<conversacion id="preguntarPorRestaurantesInternacionales">		
-		<tipo>pregunta</tipo>		
-		<mandatoria>true</mandatoria>		
-		<enVozAlta>true</enVozAlta>		
-		<frases>		
-			<curioso>Te cuento que a mi personalmente me encanta comer en lugares diferentes, y el Sushi me vuelve loco.  En tu caso, ¿te gusta visitar restaurantes de comida internacional y probar cosas nuevas?.</curioso>	
 		</frases>		
 		<vineta></vineta>		
 	</conversacion>
@@ -837,8 +805,8 @@
 		<vineta></vineta>		
 	</conversacion>
 	
-		<conversacion id="noEntendi">		
-	<tipo>afirmativa</tipo>
+	<conversacion id="noEntendi">		
+		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
@@ -865,7 +833,7 @@
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
 		<workspace tipo="general" idIBM="af158b48-2a0e-4bc9-b3ba-e0fd71ff4c55" intencionesParaSeReferenciado="">BAIntents</workspace>
 		<workspace tipo="especifico" idIBM="47970e57-ae6b-4aae-b127-a2408ececef7" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
-		<workspace tipo="especifico" idIBM="4678cce5-506a-49ce-8d3e-7b04160034ad" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
+		<workspace tipo="especifico" idIBM="647c33d0-1b77-433f-9bcd-1809b5d037b6" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
 		<workspace tipo="especifico" idIBM="e29348d3-7a2a-4873-8c32-9afd99a9ad05" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como">BAFAQ</workspace>
 	</workspaces>
 	
