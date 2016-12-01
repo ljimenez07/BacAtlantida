@@ -3,7 +3,7 @@
 templates['chats'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"container contenedor-campo-de-entrada\">\r\n	<div id=\"chat-id-container-"
+  return "<div class=\"row\" style=\"height: 54px\" />\r\n<div class=\"container contenedor-campo-de-entrada\">\r\n	<div id=\"chat-id-container-"
     + alias4(((helper = (helper = helpers.pathDelServidor || (depth0 != null ? depth0.pathDelServidor : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"pathDelServidor","hash":{},"data":data}) : helper)))
     + "\" class=\"row\">\r\n		<div class=\"col-xs-10\">\r\n			<input placeholder=\"Escribe aquí\" type=\"text\" id=\"campoDeEntrada\" class=\"form-control\" >\r\n		</div>\r\n		<div class=\"col-xs-2\">\r\n			<button id=\"enviar\" class=\"btn btn-default\"></button>\r\n		</div>\r\n	</div>\r\n</div>\r\n<style>\r\n	.panel-body\r\n	{\r\n		height: 100%;\r\n		overflow: scroll\r\n	}\r\n</style>\r\n\r\n<script>\r\n\r\n$(function(){\r\n	function initChats"
     + alias4(((helper = (helper = helpers.pathDelServidor || (depth0 != null ? depth0.pathDelServidor : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"pathDelServidor","hash":{},"data":data}) : helper)))

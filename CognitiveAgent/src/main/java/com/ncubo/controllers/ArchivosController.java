@@ -17,6 +17,8 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,20 +29,23 @@ import com.ncubo.librerias.LRUCache;
 import com.ncubo.util.FTPServidor;
 
 @Controller
+@Component
+@ConfigurationProperties("cache")
 public class ArchivosController
 {
 	@Autowired
 	private FTPServidor ftp;
-	private final int capacidadDeCache = 30;
+	private int capacidadDeAudios;
 	
-	private LRUCache cacheDeAudios = new LRUCache(capacidadDeCache);
+	private static LRUCache cacheDeAudios;
 
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/archivossubidos/{nombre:.*}", method = RequestMethod.GET)
 	void archivossubidos(HttpSession session, HttpServletRequest request, HttpServletResponse response, @PathVariable String nombre) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ClassNotFoundException, SQLException 
 	{
+		getCacheDeAudios();
 		String remoteFile2 = nombre.replace("-", "/");
-		InputStream streamPorDevolver = null ;
+		InputStream streamPorDevolver = null;
 		
 		if (remoteFile2.startsWith("audio"))
 		{
@@ -81,4 +86,24 @@ public class ArchivosController
 		outStream.close();
 		streamPorDevolver.close();
 	}
+
+	public int getCapacidadDeAudios()
+	{
+		return capacidadDeAudios;
+	}
+
+	public void setCapacidadDeAudios(int capacidadDeAudios)
+	{
+		this.capacidadDeAudios = capacidadDeAudios;
+	}
+
+	public LRUCache getCacheDeAudios()
+	{
+		if (cacheDeAudios == null)
+		{
+			cacheDeAudios = new LRUCache(capacidadDeAudios);
+		}
+		return cacheDeAudios;
+	}
+
 }

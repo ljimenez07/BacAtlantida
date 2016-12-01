@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!DOCTYPE xml>
 <conversacions>
 	<conversacion id="saludoGeneral">
 		<tipo>saludo</tipo>
@@ -730,9 +731,9 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<frase>¡Hola!, para poder conocer lo que más te gusta, te haré algunas preguntas.</frase>		
-			<frase>¡Hola!, quiero darte información que sea relevante para ti, por eso te haré algunas consultas, así sabré que te interesa conocer</frase>		
-			<frase>¡Buenas!. Te haré algunas preguntas para poder conocer lo que te gusta y poder recomendarte promociones y beneficios especiales que sean de tu interés</frase>			
+			<frase>¡Hola! Para poder conocer lo que más te gusta, te haré algunas preguntas.</frase>		
+			<frase>¡Me alegro que hayas aceptado responder algunas preguntas!, tus respuestas me ayudarán a conocer tus preferencias, y así recomendarte sólo las ofertas y beneficios 	que son de tu interés.</frase>		
+			<frase>¡Buenas! Te haré algunas preguntas para poder conocer lo que te gusta y así recomendarte promociones y beneficios especiales que sean de tu interés.</frase>			
 		</frases>		
 		<vineta></vineta>		
 		<when>		
@@ -765,8 +766,9 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>Si tuvieras una noche libre que preferirías ¿invitar a algunos amigos a cenar en tu casa, o salir con ellos a un restaurante?</curioso>
-			<impertinente>Entonces, ¿qué preferirías comer afuera o en casa?</impertinente>			
+			<curioso>¡Sabes!  A mí me encanta todo tipo de comidas y regularmente salgo a cenar a restaurantes.  Si tuvieras la oportunidad, ¿te gustaría salir a cenar o prefieres quedarte en casa?.</curioso>
+			<curioso>Si tuvieras una noche libre que preferirías ¿invitar a algunos amigos a cenar en tu casa, o salir con ellos a un restaurante?.</curioso>
+			<impertinente>Ocupo confirmar, ¿qué preferirías comer afuera o en casa?</impertinente>			
 		</frases>		
 		<vineta></vineta>		
 	</conversacion>
@@ -776,7 +778,29 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>Te cuento que a mi personalmente me encanta comer en lugares diferentes, y el Sushi me vuelve loco.  En tu caso, ¿te gusta visitar restaurantes de comida internacional y probar cosas nuevas?</curioso>	
+			<curioso>Te cuento que a mi personalmente me encanta comer en lugares diferentes, y el Sushi me vuelve loco.  En tu caso, ¿te gusta visitar restaurantes de comida internacional y probar cosas nuevas?.</curioso>	
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>
+	
+	<conversacion id="preguntarPorHospedaje">		
+		<tipo>pregunta</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<curioso>Personalmente creo que lo más importante es compartir mi tiempo libre con familiares y amigos, por eso cuando tengo la oportunidad me escapo a vacacionar a algún nuevo hotel.  Cuéntame, ¿cuándo vas de vacaciones te hospedas en un hotel o prefieres acampar?.</curioso>	
+			<impertinente>Necesito estar seguro, utiliza los hoteles o prefiere acampar?</impertinente>
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>
+	
+	<conversacion id="preguntarPorBelleza">		
+		<tipo>pregunta</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<curioso>Te cuento que cuando voy a un hotel me encanta ir a relajarme al SPA y contratar un buen masaje.  Creo que es una experiencia súper relajante!. En tu caso, si tuvieras la oportunidad, cuando estés muy estresado o cansado, ¿harías lo mismo?.</curioso>	
+			<impertinente>Para verificar, te gustaría visitar el SPA? Sí o No?</impertinente>
 		</frases>		
 		<vineta></vineta>		
 	</conversacion>
@@ -841,7 +865,7 @@
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
 		<workspace tipo="general" idIBM="af158b48-2a0e-4bc9-b3ba-e0fd71ff4c55" intencionesParaSeReferenciado="">BAIntents</workspace>
 		<workspace tipo="especifico" idIBM="47970e57-ae6b-4aae-b127-a2408ececef7" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
-		<workspace tipo="especifico" idIBM="4364d63b-4218-46e4-a0e0-c61257aa18f9" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
+		<workspace tipo="especifico" idIBM="4678cce5-506a-49ce-8d3e-7b04160034ad" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
 		<workspace tipo="especifico" idIBM="e29348d3-7a2a-4873-8c32-9afd99a9ad05" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como">BAFAQ</workspace>
 	</workspaces>
 	

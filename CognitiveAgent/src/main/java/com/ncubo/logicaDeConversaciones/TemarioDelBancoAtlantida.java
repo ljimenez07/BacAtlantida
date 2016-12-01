@@ -227,6 +227,36 @@ public class TemarioDelBancoAtlantida extends Temario
 		return resultado;
 	}
 	
+	private Tema preguntarPorHospedaje()
+	{
+		Tema resultado = new Tema
+		(
+			"preguntarPorHospedaje",
+			"ConocerteGeneral",
+			false,
+			"conocerte",
+			frase("preguntarPorHospedaje"),
+			frase("fueraContextoConocerteDelBanco"),
+			frase("fueraContextoConocerteGeneral")
+		);
+		return resultado;
+	}
+	
+	private Tema preguntarPorBelleza()
+	{
+		Tema resultado = new Tema
+		(
+			"preguntarPorBelleza",
+			"ConocerteGeneral",
+			false,
+			"conocerte",
+			frase("preguntarPorBelleza"),
+			frase("fueraContextoConocerteDelBanco"),
+			frase("fueraContextoConocerteGeneral")
+		);
+		return resultado;
+	}
+	
 	private Tema despedidaConocerte()
 	{
 		Tema resultado = new Tema
@@ -396,6 +426,8 @@ public class TemarioDelBancoAtlantida extends Temario
 		temasDelDiscurso.add(preguntarPorFinesDeSemana());
 		temasDelDiscurso.add(preguntarPorRestaurantes());
 		temasDelDiscurso.add(preguntarPorRestaurantesInternacionales());
+		temasDelDiscurso.add(preguntarPorHospedaje());
+		temasDelDiscurso.add(preguntarPorBelleza());
 		temasDelDiscurso.add(despedidaConocerte());
 		
 		temasDelDiscurso.add(saludo());
@@ -440,7 +472,10 @@ public class TemarioDelBancoAtlantida extends Temario
 		temasDelDiscurso.get(1).dependeDe(temasDelDiscurso.get(0));
 		temasDelDiscurso.get(2).dependeDe(temasDelDiscurso.get(0));
 		temasDelDiscurso.get(3).dependeDe(temasDelDiscurso.get(0));
-		temasDelDiscurso.get(4).dependeDe(temasDelDiscurso.get(1)).dependeDe(temasDelDiscurso.get(2)).dependeDe(temasDelDiscurso.get(3));
+		temasDelDiscurso.get(4).dependeDe(temasDelDiscurso.get(0));
+		temasDelDiscurso.get(5).dependeDe(temasDelDiscurso.get(0));
+		temasDelDiscurso.get(6).dependeDe(temasDelDiscurso.get(1)).dependeDe(temasDelDiscurso.get(2)).dependeDe(temasDelDiscurso.get(3)).
+						dependeDe(temasDelDiscurso.get(4)).dependeDe(temasDelDiscurso.get(5));
 	}
 	
 	public static void main(String argv[]) {

@@ -111,7 +111,7 @@ input
 	position: fixed;
 	background: white;
 	width: 100%;
-	top: 72px;
+/*	top: 72px;*/
 	padding: 15px 0;
 }
 
@@ -174,7 +174,7 @@ input
 
 .botonDeIngresar {
 	color: white;
-	margin-top: 11px;
+	margin-top: 4px;
 	font-size: 10pt;
 	font-weight: bold;
 }

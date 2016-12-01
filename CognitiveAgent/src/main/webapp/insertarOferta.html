@@ -6,8 +6,10 @@
 
 
 <script>
-var logoEstatus;
-var imagenNegocio;
+
+var activeAjaxConnections = 0;
+var imagenComercioStatus = false;
+var imagenPublicidadStatus = false;
 	$(document).ready(function()
 	{	
 		
@@ -37,45 +39,11 @@ var imagenNegocio;
 	
 	function subirImagenPublicidad()
 	{
-		var progressBarPublicidad = document.getElementById("progress-publicidad");
-		var progreso = document.getElementById("progreso");
-		if(progreso.style.visibility == 'hidden')
-		{
-			progreso.style.visibility = 'visible';
-			
-		}
-		else if(progreso.style.visibility == 'visible')
-		{
-			$('#progress-publicidad').css('width', '0%').attr('aria-valuenow', 0);
-		}
+	
+		
 		$.ajax(
 		{
-			xhr: function() {
-		
-	        var xhr = new window.XMLHttpRequest();
-
-	        // Upload progress
-	        xhr.upload.addEventListener("progress", function(evt){
-	            if (evt.lengthComputable) {
-	                var percentComplete = evt.loaded / evt.total;
-	                percentComplete = percentComplete * 100;
-
-	                progressBarPublicidad.setAttribute("aria-valuenow",percentComplete);
-	                progressBarPublicidad.style.width = percentComplete +'%';
-	            }
-	       }, false);
-
-	       // Download progress
-	       xhr.addEventListener("progress", function(evt){
-	           if (evt.lengthComputable) {
-	               var percentComplete = evt.loaded / evt.total;
-	               // Do something with download progress
-	               console.log(percentComplete);
-	           }
-	       }, false);
-
-	       return xhr;
-	    },
+			
 			url: "subirImagenPublicidad",
 			type: "POST",
 			data: new FormData($("#agregarOferta-form")[0]),
@@ -83,6 +51,10 @@ var imagenNegocio;
 			processData: false,
 			contentType: false,
 			cache: false,
+			beforeSend: function(xhr)
+			{
+				activeAjaxConnections = activeAjaxConnections+1;
+			},
 			success: function (data)
 			{
 				if(data == '')
@@ -93,54 +65,25 @@ var imagenNegocio;
 				{
 					$("#imagen-publicidad").val(data);
 				}
+			},
+			error: function (xhr, errDesc, exception)
+			{
+				console.log(xhr.responseJSON.localizedMessage);
+
+			},
+			complete( data)
+			{
+				imagenPublicidadStatus = true;
+				activeAjaxConnections = activeAjaxConnections-1;
 			}
 		});
 	}
 		
 	function subirImagenComercio()
 	{
-		var divBarraDeProgreso = document.getElementById("div-progress-bar");
-		var progressBar = document.getElementById("progress-bar-logo");
-		if(divBarraDeProgreso.style.visibility == 'hidden')
-		{
-			divBarraDeProgreso.style.visibility = 'visible';
-			
-		}
-		else if(divBarraDeProgreso.style.visibility == 'visible')
-		{
-			progressBar.removeAttribute('aria-valuenow');
-			progressBar.style.width =  '0%';
-		}
 		$.ajax(
 		{
-			xhr: function() {
-				
-		        var xhr = new window.XMLHttpRequest();
-
-		        // Upload progress
-		        xhr.upload.addEventListener("progress", function(evt){
-		            if (evt.lengthComputable) {
-		                var percentComplete = evt.loaded / evt.total;
-		                percentComplete = percentComplete * 100;
-
-		                progressBar.setAttribute("aria-valuenow",percentComplete);
-		                progressBar.style.width = percentComplete +'%';
-		            }
-		       }, false);
-
-		       // Download progress
-		       xhr.addEventListener("progress", function(evt){
-		           if (evt.lengthComputable) {
-		               var percentComplete = evt.loaded / evt.total;
-		               // Do something with download progress
-		               console.log(percentComplete);
-		           }
-		       }, false);
-
-		       return xhr;
-		    },
-			
-			
+		
 			url: "subirImagenComercio",
 			type: "POST",
 			data: new FormData($("#agregarOferta-form")[0]),
@@ -148,6 +91,10 @@ var imagenNegocio;
 			processData: false,
 			contentType: false,
 			cache: false,
+			beforeSend: function(xhr, opts)
+			{
+				activeAjaxConnections = activeAjaxConnections+1;
+			},
 			success: function (data)
 			{
 				if(data == '')
@@ -158,6 +105,11 @@ var imagenNegocio;
 				{
 					$("#logo-comercio").val(data);
 				}
+			},
+			complete( data)
+			{
+				imagenComercioStatus = true;
+				activeAjaxConnections = activeAjaxConnections-1;
 			}
 		});
 	}
@@ -198,7 +150,7 @@ var imagenNegocio;
 	<div th:include="fragments/backoffice :: body(paginaActual='insertarOferta')"></div>
 	
 	<div class="container agregar-padding-bottom">
-		<form onsubmit="verificarSiSeCargaronLasImagenes()" id="agregarOferta-form" method="POST" th:action="@{/__${action}__}" th:object="${oferta}" action="#">
+		<form id="agregarOferta-form" method="POST" th:action="@{/__${action}__}" th:object="${oferta}" action="#">
 		<input type="hidden" id="id-comercio" th:field="*{idOferta}"/>
 			<div id="agregarOferta">
 				<div class="row">
@@ -314,44 +266,31 @@ var imagenNegocio;
 								<label for="logo-label-lbl" class="titulo-ca"><span class="asterisco">*</span>Logo del comercio</label>
 								<input id="logo-comercio-input" type="file" name="logo-comercio-input" accept="image/*"/>
 								<p class="campo-requerido" th:if="${#fields.hasErrors('imagenComercioPath')}" th:errors="*{imagenComercioPath}"  id="validador-imagen-comercio"/>
-							</div>
-							<div class="col-md-6">
-								<div class="progress" id="div-progress-bar" style="visibility:hidden;">
-										  <div id="progress-bar-logo" class="progress-bar progress-bar-success" role="progressbar"  aria-valuemin="0" aria-valuemax="100" >
-										 </div>
-									</div>
-							</div>
-							
+							</div>		
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="publicidad-label-lbl" class="titulo-ca"><span class="asterisco">*</span>Imagen de publicidad</label> 
 								<input id="imagen-publicidad-input" type="file" name="imagen-publicidad-input" 
 								accept=".zip,image/*"/>
-								
 								<p class="campo-requerido" th:if="${#fields.hasErrors('imagenPublicidadPath')}" th:errors="*{imagenPublicidadPath}"/>
 							</div>
-							<div class="col-md-6">
-									<div class="progress" id="progreso" style="visibility:hidden;">
-									  <div id="progress-publicidad" class="progress-bar progress-bar-success" role="progressbar"  aria-valuemin="0" aria-valuemax="100" >
-									 </div>
-								</div>
-								</div>
 						</div>
 					</div>
 				</div>
 				
 				<input type="hidden" id="logo-comercio" th:field="*{imagenComercioPath}"/>
 				<input type="hidden" id="imagen-publicidad" th:field="*{imagenPublicidadPath}"/>
+				<input type="hidden" name="accion" id="accion"/>
 				
 				<div class="row agregar-padding-top" align="center">
 					<div class="col-md-12">
 						<div class="form-group">
-							<button id="limpiar-submit" type="submit" class="btn btn-default agregar-padding-left" name="accion" value="limpiar">
+							<button id="limpiar-submit" type="button" class="btn btn-default agregar-padding-left buttonMandarInfoALserver" name="accion" value="limpiar">
 								<span class="texto-junto-imagen">Cancelar</span>
 								<span th:class="${imagenBotonSecundario}"></span>
 							</button>
-							<button id="ingresar-submit" type="submit" class="btn btn-default agregar-padding-left" name="accion" value="ingresar">
+							<button id="ingresar-submit" type="button" class="btn btn-default agregar-padding-left buttonMandarInfoALserver" name="accion" value="ingresar">
 								<span class="texto-junto-imagen" th:text="${nombreBotonPrincipal}"></span>
 								<span th:class="${imagenBotonPrincipal}"></span>
 							</button>
@@ -366,6 +305,51 @@ var imagenNegocio;
 	</div>
 	<br/>
 	</div>
+	<script type='text/javascript'>
+    /* attach a submit handler to the form */
+    
+    	$("#limpiar-submit").click(
+    	function()
+    	{
+    		alert("clean");
+    		$("#accion").val($(this).val());
+    		$("#agregarOferta-form").submit();
+    	}
+    	);
+    
+       	  $("#ingresar-submit").click(function() {
+       	    	if(imagenPublicidadStatus == true )
+       		  	{
+       	    		if(imagenComercioStatus == true)
+       	    		{
+       	    			submit();
+       	    		}
+       		  		
+       		  	}
+       	    	else
+       	    	{
+       	    		if(imagenComercioStatus == true )
+           		  	{
+           	    		if(imagenPublicidadStatus == true)
+           	    		{
+           	    			submit();
+           	    		}
+           		  		
+           		  	}  	
+       	    	}
+       	      
+       		});
+    
+   function submit()
+   {
+		console.log("imagenes subidas");
+		$("#accion").val($("#ingresar-submit").val());
+		$("#agregarOferta-form").submit();
+		imagenComercioStatus = false;
+		imagenPublicidadStatus = false;
+   }
+  
+</script>
 	
 	<div th:include="fragments/footer :: body"></div>
 </body>

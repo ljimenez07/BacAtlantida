@@ -47,14 +47,12 @@
 	}
 	function verificarSiSeCargaronLasImagenes()
 	{
-
-		var logoComercio = document.getElementById("logo-comercio").value;
-		var imagenPublicidad = document.getElementById("imagen-publicidad").value;
-		if(logoComercio === '' || imagenPublicidad === '')
-		{
-			console.log('Las imagenes no se han terminado de cargar. ');
-			return false;
-		}
-		else
-			return true;
+		if(imagenPublicidadStatus == true && imagenComercioStatus == true)
+	  	{
+	  		console.log("imagenes subidas");
+	  		$("#accion").val($(this).val());
+		    $("#agregarOferta-form").submit();
+		    imagenComercioStatus = false;
+		    imagenPublicidadStatus = false;
+	  	}
 	}

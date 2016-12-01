@@ -29,6 +29,7 @@ import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Entity;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Intent;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
+import com.ncubo.chatbot.bitacora.HistoricosDeConversaciones;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.chatbot.watson.TextToSpeechWatson;
 import com.ncubo.chatbot.partesDeLaConversacion.Tema;
@@ -63,6 +64,8 @@ public class AgenteCognitivo
 	private FTPServidor ftp;
 	
 	private Conversaciones misConversaciones;
+	private HistoricosDeConversaciones historicoDeConversaciones;
+	
 	private ExtraerDatosWebService extraerDatos = new ExtraerDatosWebService();
 
 	@PostConstruct
@@ -70,6 +73,7 @@ public class AgenteCognitivo
         // start your monitoring in here
 		misConversaciones = new Conversaciones(getPathXML());
 		inicializarGeneradorDeAudiosSingleton();
+		historicoDeConversaciones = new HistoricosDeConversaciones();
     }
 	
 	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
@@ -259,7 +263,13 @@ public class AgenteCognitivo
 		}
 		
 		respuesta.put("textos", arrayList);
-		System.out.println(respuesta.toString());
+		System.out.println("Respuesta Chat"+ respuesta.toString());
+		try {
+			historicoDeConversaciones.agregarHistorialALaConversacion(usuario.getIdSesion(), salida.get(0).obtenerLaRespuestaDeIBM().loQueElClienteDijoFue(), respuesta.toString());
+		}catch(Exception e){
+			
+		}
+		
 		return respuesta.toString();
 		
 	}
@@ -298,7 +308,7 @@ public class AgenteCognitivo
 		}*/
 		
 		respuesta.put("textos", arrayList);
-		System.out.println(respuesta.toString());
+		System.out.println("Respuesta Conocerte"+ respuesta.toString());
 		
 		return respuesta.toString();
 	}
@@ -412,6 +422,10 @@ public class AgenteCognitivo
 	
 	public String verMiTemario(){
 		return misConversaciones.verMiTemario();
+	}
+	
+	public String verElHistoricoDeLaConversacion(String idSesion){
+		return historicoDeConversaciones.verElHistoricoDeUnaConversacion(idSesion);
 	}
 	
 	public String getWsTasaCambio() {
