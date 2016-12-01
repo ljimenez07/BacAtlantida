@@ -1,28 +1,20 @@
 package com.ncubo.data;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 
-import com.ncubo.dao.OfertaDao;
 import com.ncubo.util.AtLeastToday;
-import com.ncubo.util.GestorDeArchivos;
 
 public class Oferta implements Comparable<Oferta>
 {
@@ -38,8 +30,8 @@ public class Oferta implements Comparable<Oferta>
 	private String descripcion;
 	private String descripcionAnterior;
 	private String descripcionAudio;
-	
-	private CategoriaOferta categoria;
+		
+	private Categorias categorias = new Categorias();
 	
 	@NotEmpty(message = "*Campo requerido")
 	private String ciudad;
@@ -68,18 +60,14 @@ public class Oferta implements Comparable<Oferta>
 	private boolean esUnUsuarioConocido;
 	
 	
-	public Oferta()
-	{
-		categoria = new CategoriaOferta();
-	}
+	public Oferta(){	}
 	
-	public Oferta(int idOferta, String tituloDeOferta, String comercio, String descripcion, CategoriaOferta categoria, String ciudad, boolean estado, String restricciones, Date vigenciaDesde, Date vigenciahasta, String imagenComercioPath, String imagenPublicidadPath, Timestamp fechaHoraRegistro, int likes, int dislikes)
+	public Oferta(int idOferta, String tituloDeOferta, String comercio, String descripcion, String ciudad, boolean estado, String restricciones, Date vigenciaDesde, Date vigenciahasta, String imagenComercioPath, String imagenPublicidadPath, Timestamp fechaHoraRegistro, int likes, int dislikes)
 	{
 		this.idOferta = idOferta;
 		this.tituloDeOferta = tituloDeOferta;
 		this.comercio = comercio;
 		this.descripcion = descripcion;
-		this.categoria = categoria;
 		this.ciudad = ciudad;
 		this.estado = estado;
 		this.restricciones = restricciones;
@@ -132,16 +120,6 @@ public class Oferta implements Comparable<Oferta>
 	public void setDescripcion(String descripcion)
 	{
 		this.descripcion = descripcion;
-	}
-	
-	public CategoriaOferta getCategoria()
-	{
-		return categoria;
-	}
-	
-	public void setCategoria(CategoriaOferta categoria)
-	{
-		this.categoria = categoria;
 	}
 	
 	public String getCiudad()
@@ -362,5 +340,20 @@ public class Oferta implements Comparable<Oferta>
 		}
 		return bindingResult;
 	}
+
+	public Categorias getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias( Categorias categorias) {
+		this.categorias = categorias;
+	}
+	
+	public void agregarCategoria( CategoriaOferta  categoria )
+	{
+		categorias.add( categoria );
+	}
+	
+	
 		
 }

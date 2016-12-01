@@ -13,13 +13,13 @@ import com.ncubo.data.CategoriaOferta;
 @Component
 public class CategoriaDao
 {
-	private final String CATEGORIA_OFERTA_TABLA = "categoriaoferta";
+	private final String CATEGORIA_OFERTA_TABLA = "categoriadeoferta";
 	@Autowired
 	private Persistencia dao;
 	
 	public enum atributo
 	{
-		ID_CATEGORIA("idCategoriaOferta"),
+		ID_CATEGORIA("id"),
 		NOMBRE_CATEGORIA("nombre");
 		
 		private String nombre;
