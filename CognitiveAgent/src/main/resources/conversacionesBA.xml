@@ -231,7 +231,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>En la parte superior derecha, se encuentra la leyenda "Ingresar", al presionar sobre ella te aparecerá los campos para que digites tu usuario y contraseña de Banco Atlántida.</frase>
+			<frase>En la parte superior derecha, se encuentra la leyenda "Iniciar Sesión", al presionar sobre ella te aparecerán los campos para que digites tu usuario y contraseña de Banco Atlántida.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
