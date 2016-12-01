@@ -168,59 +168,7 @@ public class OfertaDao
 		dao.closeConBD();
 	}
 	
-	public ArrayList<Oferta> ultimasOfertas() throws ClassNotFoundException, SQLException
-	{
-		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
-		String query = "SELECT " + atributo.ID_OFERTA + ", "
-				+ atributo.TITULO_DE_OFERTA + ", "
-				+ atributo.COMERCIO + ", "
-				+ atributo.DESCRIPCION + ", "
-				+ atributo.CATEGORIA + ", "
-				+ atributo.NOMBRE_CATEGORIA + ", "
-				+ atributo.CIUDAD + ", "
-				+ atributo.ESTADO + ", "
-				+ atributo.RESTRICCIONES + ", "
-				+ atributo.VIGENCIA_DESDE + ", "
-				+ atributo.VIGENCIA_HASTA + ", "
-				+ atributo.IMAGEN_COMERCIO_PATH + ", "
-				+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
-				+ atributo.FECHA_HORA_REGISTRO
-				+ " FROM " + NOMBRE_TABLA + ", " + NOMBRE_TABLA_CATEGORIA_OFERTA 
-				+ " WHERE " + atributo.ELIMINADA + " = 0"
-				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA
-				+ " AND " + atributo.VIGENCIA_HASTA + " >= '" + new Date(Calendar.getInstance().getTimeInMillis()) + "'"
-				+ " ORDER BY " + atributo.FECHA_HORA_REGISTRO + " DESC"
-				+ " LIMIT 10;";
-		
-		Connection con = dao.openConBD();
-		ResultSet rs = con.createStatement().executeQuery(query);
-		
-		while (rs.next())
-		{
-			ofertas.add(new Oferta(
-					rs.getInt(atributo.ID_OFERTA.toString()),
-					rs.getString(atributo.TITULO_DE_OFERTA.toString()),
-					rs.getString(atributo.COMERCIO.toString()),
-					rs.getString(atributo.DESCRIPCION.toString()),
-					new CategoriaOferta(rs.getInt(atributo.CATEGORIA.toString()), rs.getString(atributo.NOMBRE_CATEGORIA.toString())),
-					rs.getString(atributo.CIUDAD.toString()),
-					rs.getBoolean(atributo.ESTADO.toString()),
-					rs.getString(atributo.RESTRICCIONES.toString()),
-					rs.getDate(atributo.VIGENCIA_DESDE.toString()),
-					rs.getDate(atributo.VIGENCIA_HASTA.toString()),
-					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
-					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
-					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),
-					rs.getInt(atributo.LIKES.toString()),
-					rs.getInt(atributo.DISLIKES.toString())
-					));
-		}
-		
-		dao.closeConBD();
-		return ofertas;
-	}
-
-	public List<Oferta> ultimasDiezOfertasDesde(int indiceInicial, String idUsuario) throws ClassNotFoundException, SQLException
+	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(int indiceInicial, String idUsuario) throws ClassNotFoundException, SQLException
 	{
 		boolean esUnUsuarioConocido = true;
 		if(idUsuario == null)
@@ -341,24 +289,23 @@ public class OfertaDao
 		return null;
 	}
 
-	public int cantidad() throws ClassNotFoundException, SQLException
+	public int obtenerCantidadDeOfertasParaMostrar() throws ClassNotFoundException, SQLException
 	{
-		String query = "SELECT COUNT(*) AS cantidad"
-				+ " FROM " + NOMBRE_TABLA
-				+ " WHERE " + atributo.ELIMINADA + " = 0;";
+		String query = String.format("SELECT COUNT(*) AS cantidad FROM %s WHERE %s = 0 AND %s >= ? AND %s = 1;",
+				NOMBRE_TABLA,
+				atributo.ELIMINADA,
+				atributo.VIGENCIA_HASTA,
+				atributo.ESTADO);
 		
 		Connection con = dao.openConBD();
-		ResultSet rs = con.createStatement().executeQuery(query);
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setDate(1, new Date(Calendar.getInstance().getTimeInMillis()));
+		ResultSet rs = stmt.executeQuery();
 		
-		if(rs.next())
-		{
-			int cantidad = rs.getInt("cantidad");
-			dao.closeConBD();
-			return cantidad;
-		}
-		
+		rs.next();
+		int cantidad = rs.getInt("cantidad");
 		dao.closeConBD();
-		return 0;
+		return cantidad;
 	}
 
 	public void modificar(Oferta oferta) throws ClassNotFoundException, SQLException
