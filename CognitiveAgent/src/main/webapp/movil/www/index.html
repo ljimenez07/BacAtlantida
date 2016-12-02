@@ -75,6 +75,7 @@
 		<div id="conocerte" class="hide"></div>
 		<div id="login" class="hide"></div>
 	</div>
+	<script type="text/javascript" src="cordova.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
 	<script type="text/javascript" src="js/angular.min.js"></script>
 	<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
@@ -143,8 +144,8 @@
 	}
 	
 	var pantallas = new Object();
-	$(function(){
-
+	$(function()
+	{
 		pantallas["login"] = {title: "LOGIN", body: Handlebars.templates.login(), DebajoDelPanel: ""};
 		var chat = {"pathDelServidor":"chat"};
 		pantallas["chat"] = {title: "CHAT", body: '<div id="chat-id-'+chat.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(chat)};
@@ -232,7 +233,7 @@
 		audio.onerror = function(e){
 			console.log("Error de audio: " + audio.src);
 			console.log(mensajesDeErrorEnAudio[e.currentTarget.error.code]);
-			alert(mensajesDeErrorEnAudio[e.currentTarget.error.code].message);
+			estaReproduciendo = false;
 			audios = new Array();
 		};
 		audio.onplay = function(){console.log("Reproduciendo: " + audio.src)};
@@ -276,7 +277,7 @@
 		})
 		.done(function(data) 
 		{
-			//console.log({ajax: param.url, params: param, respuesta: data});
+			console.log({ajax: param.url, params: param, respuesta: data});
 			if(data.usuarioEstaLogueado)
 			{
 				estaLogueado = true;

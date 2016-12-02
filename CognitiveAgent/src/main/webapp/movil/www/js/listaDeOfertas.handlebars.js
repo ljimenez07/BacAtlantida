@@ -15,7 +15,7 @@ templates['listaDeOfertas'] = template({"1":function(container,depth0,helpers,pa
     + alias4(((helper = (helper = helpers.tiempoTranscurrido || (depth0 != null ? depth0.tiempoTranscurrido : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"tiempoTranscurrido","hash":{},"data":data}) : helper)))
     + "</div>\r\n				</div>\r\n				<div class=\"col-xs-6\">\r\n					<div class=\"row\">\r\n"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.esUnUsuarioConocido : depth0),{"name":"if","hash":{},"fn":container.program(6, data, 0),"inverse":container.program(8, data, 0),"data":data})) != null ? stack1 : "")
-    + "						<div class=\"col-xs-3\"><div data-audio=\""
+    + "						<div class=\"col-xs-3\"><div data-audio=\"/archivossubidos"
     + alias4(((helper = (helper = helpers.descripcionAudio || (depth0 != null ? depth0.descripcionAudio : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"descripcionAudio","hash":{},"data":data}) : helper)))
     + "\" class=\"boton-escuchar\"></div></div>\r\n						<div class=\"col-xs-3\"><div class=\"boton-compartir\"></div></div>\r\n					</div>\r\n				</div>\r\n			</div>\r\n		</div>\r\n	</div>\r\n";
 },"2":function(container,depth0,helpers,partials,data) {

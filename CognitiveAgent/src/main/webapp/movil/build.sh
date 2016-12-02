@@ -13,7 +13,7 @@ if [ ${#3} -gt 0 ]; then
 	rm -rf platforms
 	cordova platform add $3
 	cordova plugin add cordova-plugin-queries-schemes
-	cordova plugin add cordova-plugin-media
+	cordova plugin add cordova-plugin-x-socialsharing
 	cordova build $3
 fi
 echo "fin"

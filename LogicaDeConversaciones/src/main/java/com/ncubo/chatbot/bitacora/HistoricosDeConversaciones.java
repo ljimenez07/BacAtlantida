@@ -1,5 +1,6 @@
 package com.ncubo.chatbot.bitacora;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class HistoricosDeConversaciones {
@@ -9,9 +10,8 @@ public class HistoricosDeConversaciones {
 	
 	public HistoricosDeConversaciones(){}
 	
-	
 	private boolean existeElHistoricoDeLaConversacion(String idSesion){
-		return historicoDeMisConversaciones.contains(idSesion);
+		return historicoDeMisConversaciones.containsKey(idSesion);
 	}
 	
 	private void agregarUnHistoricoALaConversacion(String idSesion){
@@ -31,6 +31,61 @@ public class HistoricosDeConversaciones {
 		String resultado = "El historico para la conversacion "+idSesion+" no existe";
 		if(existeElHistoricoDeLaConversacion(idSesion)){
 			resultado = historicoDeMisConversaciones.get(idSesion).verMiHistorico();
+		}
+		return resultado;
+	}
+	
+	private String borrarElHistoricoDeUnaConversacionGeneral(String idSesion){
+		String resultado = "El historico para la conversacion "+idSesion+" no existe";
+		if(existeElHistoricoDeLaConversacion(idSesion)){
+			synchronized(historicoDeMisConversaciones){
+				historicoDeMisConversaciones.remove(idSesion);
+				resultado = "Se borro exitosamente el historico de la conversacion: "+idSesion;
+			}
+		}
+		return resultado;
+	}
+	
+	public void borrarElHistoricoDeUnaConversacion(ArrayList<String> idsSeseiones){
+		for (String idSesion: idsSeseiones){
+			borrarElHistoricoDeUnaConversacionEspecifica(idSesion);
+			borrarElHistoricoDeUnaConversacionGeneral(idSesion);
+		}
+	}
+	
+	// Conversacion Especifica
+	private boolean existeElHistoricoDeLaConversacionEspecifica(String idSesion){
+		return historicoDeMisConversacionesEspecificas.containsKey(idSesion);
+	}
+	
+	private void agregarUnHistoricoALaConversacionEspecifica(String idSesion){
+		synchronized(historicoDeMisConversacionesEspecificas){
+			historicoDeMisConversacionesEspecificas.put(idSesion, new HistoricoDeLaConversacion());
+		}
+	}
+	
+	public void agregarHistorialALaConversacionEspecifica(String idSesion, String loQueDijoElCliente, String loQueDijoElAgente){
+		if(! existeElHistoricoDeLaConversacionEspecifica(idSesion)){
+			agregarUnHistoricoALaConversacionEspecifica(idSesion);
+		}
+		historicoDeMisConversacionesEspecificas.get(idSesion).agregarHistorico(loQueDijoElCliente, loQueDijoElAgente);
+	}
+	
+	public String verElHistoricoDeUnaConversacionEspecifica(String idSesion){
+		String resultado = "El historico para la conversacion especifica "+idSesion+" no existe";
+		if(existeElHistoricoDeLaConversacionEspecifica(idSesion)){
+			resultado = historicoDeMisConversacionesEspecificas.get(idSesion).verMiHistorico();
+		}
+		return resultado;
+	}
+	
+	private String borrarElHistoricoDeUnaConversacionEspecifica(String idSesion){
+		String resultado = "El historico para la conversacion especifica "+idSesion+" no existe";
+		if(existeElHistoricoDeLaConversacionEspecifica(idSesion)){
+			synchronized(historicoDeMisConversacionesEspecificas){
+				historicoDeMisConversacionesEspecificas.remove(idSesion);
+				resultado = "Se borro exitosamente el historico de la conversacion especifica: "+idSesion;
+			}
 		}
 		return resultado;
 	}

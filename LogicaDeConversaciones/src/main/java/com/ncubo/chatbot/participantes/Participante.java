@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+import com.ncubo.chatbot.configuracion.Constantes;
 import com.ncubo.chatbot.partesDeLaConversacion.Frase;
 import com.ncubo.chatbot.partesDeLaConversacion.Respuesta;
 
@@ -73,6 +74,15 @@ public class Participante{
 			//Vineta vineta = frase.vineta();
 			//salida.escribir(vineta, respuesta, tema, frase);
 		}
+		
+		try{
+			if(respuesta.obtenerLaIntencionDeConfianzaDeLaRespuesta().getNombre().equals(Constantes.INTENCION_DESPEDIDA)){
+				salida.cambiarSeTerminoElChat(true);
+			}
+		}catch(Exception e){
+			
+		}
+		
 		return salida;
 	}
 	

@@ -6,11 +6,13 @@
 	<title th:text="${title}">Page Title</title>
 	
 	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/parsley.min.js}"></script>
 	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"></link>
 	<link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}"></link>
 	<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
 	<link rel="stylesheet" th:href="@{/fonts/roboto.css}"></link>
 	<link rel="stylesheet" th:href="@{/css/jquery-ui.css}"></link>
+	<link rel="stylesheet" th:href="@{/css/parsley.css}"></link>
 	<script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
 	<script type="text/javascript" th:src="@{/js/jquery.maskedinput.js}"></script>
 	<script type="text/javascript" th:src="@{/js/Validaciones.js}"></script>
@@ -285,7 +287,7 @@
 		}
 		
 		.relleno-blanco {
-			background-image: url("../img/relleno-blanco.png");
+			background-image: url([[@{/img/relleno-blanco.png}]]);
 			background-repeat: repeat-x;
 			height: 61px;
 			width: 400px;

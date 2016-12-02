@@ -20,7 +20,6 @@ public class Conversaciones {
 	private final static Hashtable<String, Cliente> misClientes = new Hashtable<String, Cliente>();
 	private static Temario temarioDelBancoAtlantida;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final static String URL_DE_LOS_AUDIOS = "/archivossubidos/audios-";
 	
 	public Conversaciones(String pathXML){
 		System.out.println("El path xml es: "+pathXML);
@@ -137,15 +136,15 @@ public class Conversaciones {
 		return resultado;
 	}
 	
-	public void generarAudiosEstaticos(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP){
-		HiloParaGenerarAudiosEstaticos hilo = new HiloParaGenerarAudiosEstaticos(usuarioTTS, contrasenaTTS, vozTTS, pathAGuardar, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP);
+	public void generarAudiosEstaticos(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, String url){
+		HiloParaGenerarAudiosEstaticos hilo = new HiloParaGenerarAudiosEstaticos(usuarioTTS, contrasenaTTS, vozTTS, pathAGuardar, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, url);
 		hilo.start();
 	}
 	
-	public void generarAudiosEstaticosDeUnTema(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, int index){
+	public void generarAudiosEstaticosDeUnTema(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, int index, String url){
 		TextToSpeechWatson.getInstance(usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAGuardar);
-		System.out.println(String.format("El path a guardar los audios es %s y la url publica es %s", pathAGuardar, URL_DE_LOS_AUDIOS));
-		temarioDelBancoAtlantida.generarAudioEstaticosDeUnTema(pathAGuardar, URL_DE_LOS_AUDIOS, index);
+		System.out.println(String.format("El path a guardar los audios es %s y la url publica es %s", pathAGuardar, url));
+		temarioDelBancoAtlantida.generarAudioEstaticosDeUnTema(pathAGuardar, url, index);
 		System.out.println("Se termino de generar audios estaticos.");
 	}
 	
@@ -162,8 +161,9 @@ public class Conversaciones {
 		private String contrasenaFTP;
 		private String hostFTP;
 		private int puetoFTP;
+		private String urlAReproducir;
 		
-		public HiloParaGenerarAudiosEstaticos(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP){
+		public HiloParaGenerarAudiosEstaticos(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, String url){
 			this.usuarioTTS = usuarioTTS;
 			this.contrasenaTTS = contrasenaTTS;
 			this.vozTTS = vozTTS;
@@ -172,12 +172,13 @@ public class Conversaciones {
 			this.contrasenaFTP = contrasenaFTP;
 			this.hostFTP = hostFTP;
 			this.puetoFTP = puetoFTP;
+			this.urlAReproducir = url;
 		}
 		
 		public void run(){
 			TextToSpeechWatson.getInstance(usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAGuardar);
-			System.out.println(String.format("El path a guardar los audios es %s y la url publica es %s", pathAGuardar, URL_DE_LOS_AUDIOS));
-			temarioDelBancoAtlantida.generarAudioEstaticosDeTodasLasFrases(pathAGuardar, URL_DE_LOS_AUDIOS);
+			System.out.println(String.format("El path a guardar los audios es %s y la url publica es %s", pathAGuardar, urlAReproducir));
+			temarioDelBancoAtlantida.generarAudioEstaticosDeTodasLasFrases(pathAGuardar, urlAReproducir);
 			System.out.println("Se termino de generar audios estaticos.");
 		}
 	}
@@ -246,6 +247,16 @@ public class Conversaciones {
 				resultado = "Las conversaciones del cliente "+idCliente+" se borraron exitosamente.";
 			}
 		}
+		return resultado;
+	}
+	
+	public ArrayList<String> obtenerLosIdsDeSesionDeUnCliente(String idCliente){
+		ArrayList<String> resultado = null;
+		if(existeElCliente(idCliente)){
+			Cliente miCliente = misClientes.get(idCliente);
+			resultado = miCliente.getMisIdsDeSesiones();
+		}
+		
 		return resultado;
 	}
 	
