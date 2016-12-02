@@ -87,6 +87,8 @@ input
 
 .panel-heading {
 	padding-top: 0;
+	z-index: 1;
+	width: 100%;
 }
 
 .panel-default {
@@ -108,8 +110,9 @@ input
 
 .contenedor-boton-escuchar-mensajes
 {
+	z-index: 2;
 	position: fixed;
-	background: white;
+	background: rgba(54, 25, 25, 0);
 	width: 100%;
 /*	top: 72px;*/
 	padding: 15px 0;
@@ -120,6 +123,7 @@ input
 	width: 38px;
 	height: 39px;
 	background: url(../img/iconos-rojos-38x38.png) -51px 0;
+	margin-top:3px;
 	border: 0px;
 }
 
@@ -127,12 +131,15 @@ input
 {
 	width: 38px;
 	height: 39px;
+	margin-top: -12px;
 	background: url(../img/iconos-rojos-38x38.png) 38px 0;
+	margin-top:3px;
 	border: 0px;
 }
 
 .panel-heading
 {
+	position:fixed;
 	font-family: "Arial Bold";
 	font-size: 14pt;
 }
@@ -434,6 +441,7 @@ input
 
 .contenedor-de-mensaje-bienvenida
 {
+	margin-top: 20%;
 	border-bottom: 2px solid rgba(0,0,0,0.1);
 }
 
@@ -519,6 +527,7 @@ red
 }
 
 .boton-escuchar {
+	z-index: 1;
 	width: 25px;
 	height: 25px;
 	cursor: pointer;
@@ -528,4 +537,8 @@ red
 #mostrar-mas {
 	color: dodgerblue;
 	cursor: pointer;
+}
+#formLogin
+{
+	margin-top: 55%;
 }
