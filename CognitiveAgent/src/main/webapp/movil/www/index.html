@@ -96,6 +96,8 @@
 	var estaReproduciendo = false;
 	var estaLogueado = false;
 	
+	var mensajesDeErrorEnAudio = ["", {code: 1, "message": "MEDIA_ERR_ABORTED"}, {code: 2, "message": "MEDIA_ERR_NETWORK"}, {code: 3, "message": "MEDIA_ERR_DECODE"}, {code: 4, "message": "MEDIA_ERR_SRC_NOT_SUPPORTED"}];
+	
 	function quitarModal()
 	{
 		setCookie('mostrarpopupdeconocerte', true, 100);
@@ -227,22 +229,14 @@
 	
 	function agregarAColaDeReproduccion(pathDelArchivo)
 	{
-		var audio = new Media(serverDomain + pathDelArchivo,
-				function()
-				{
-					console.log("Reproducido exitosamente");
-					estaReproduciendo = false;
-					reproducirCola();
-				},
-				function(err)
-				{
-					console.log("Error de audio");
-					console.log(err);
-					alert("Error de audio: " + err.code);
-					estaReproduciendo = false;
-					audios = new Array();
-				}
-		);
+		var audio = new Audio(serverDomain + pathDelArchivo);
+		audio.onerror = function(e){
+			console.log("Error de audio: " + audio.src);
+			console.log(mensajesDeErrorEnAudio[e.currentTarget.error.code]);
+			estaReproduciendo = false;
+			audios = new Array();
+		};
+		audio.onplay = function(){console.log("Reproduciendo: " + audio.src)};
 		audios.push(audio);
 		reproducirCola();
 	}
@@ -253,7 +247,11 @@
 		{
 			estaReproduciendo = true;
 			var audio = audios.shift();
-			reproducir(audio);
+			reproducir(audio, function()
+			{
+				estaReproduciendo = false;
+				reproducirCola();
+			});
 		}
 	}
 	
@@ -261,6 +259,10 @@
 	{
 		audioEnReproduccion = audio;
 		audioEnReproduccion.play();
+		if(callback)
+		{
+			audioEnReproduccion.onended = callback;
+		}
 	}
 	
 	function ajax(param)
