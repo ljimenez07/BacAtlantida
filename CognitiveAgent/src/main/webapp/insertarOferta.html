@@ -154,32 +154,34 @@ var imagenPublicidadStatus = false;
 		<input type="hidden" id="id-comercio" th:field="*{idOferta}"/>
 			<div id="agregarOferta">
 				<div class="row">
-					<div class="col-xs-6">
+					<div class="col-md-6">
 						<div class="form-group">
 							<label for="tituloOferta-lbl" class="titulo-ca"><span class="asterisco">*</span>Título de oferta</label>
 							<input id="asd" type="text" class="form-control" th:field="*{tituloDeOferta}" th:classappend="${#fields.hasErrors('tituloDeOferta')} ? 'sobresaltar-field'"/>
 							<p class="campo-requerido" th:if="${#fields.hasErrors('tituloDeOferta')}" th:errors="*{tituloDeOferta}"/>
 						</div>
 					</div>
-					<div class="col-xs-6 quitar-padding-left">
+					<div class="col-md-6 quitar-padding-left">
+						<div class="col-md-12">
 							<div class="form-group">
 								<label for="ciudad-lbl" class="titulo-ca"><span class="asterisco">*</span>Ciudad</label>
 								<input type="text" class="form-control" th:field="*{ciudad}" th:classappend="${#fields.hasErrors('ciudad')} ? 'sobresaltar-field'"/>
 								<p class="campo-requerido" th:if="${#fields.hasErrors('ciudad')}" th:errors="*{ciudad}"/>
 							</div>
 						</div>
-							</div>
+					</div>
+				</div>
 				<div class="row">
 				
-					<div class="col-xs-6">
+					<div class="col-md-6">
 						<div class="form-group">
 							<label for="nombreComercio-lbl" class="titulo-ca"><span class="asterisco">*</span>Nombre del comercio</label>
 							<input type="text" class="form-control" th:field="*{comercio}" th:classappend="${#fields.hasErrors('comercio')} ? 'sobresaltar-field'"/>
 							<p class="campo-requerido" th:if="${#fields.hasErrors('comercio')}" th:errors="*{comercio}"/>
 						</div>
 					</div>
-					<div class="col-xs-6 quitar-padding-left">
-						<div class="col-xs-5">
+					<div class="col-md-6 quitar-padding-left">
+						<div class="col-md-5">
 							<div class="form-group">
 								<label for="estado-lbl" class="titulo-ca">Estado</label><br/>
 								<select class="form-control" th:field="*{estado}" style="width: 100%">
@@ -188,7 +190,7 @@ var imagenPublicidadStatus = false;
 								</select>
 							</div>
 						</div>
-						<div class="col-xs-7 agregar-padding-top">
+						<div class="col-md-7 agregar-padding-top">
 							<div>
 								<p class="notas-ca">Solo las ofertas con estado "activa" serán mostradas en la aplicación.</p>
 							</div>
@@ -197,7 +199,7 @@ var imagenPublicidadStatus = false;
 				</div>
 				
 				<div class="row">
-					<div class="col-xs-6">
+					<div class="col-md-6">
 						<div class="form-group">
 							<label for="descripcion-lbl" class="titulo-ca"><span class="asterisco">*</span>Descripción</label>
 							<textarea class="form-control" rows="4" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')} ? 'sobresaltar-field'"></textarea>
@@ -205,7 +207,7 @@ var imagenPublicidadStatus = false;
 							<p class="campo-requerido" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"/>
 						</div>
 					</div>
-					<div class="col-xs-6">
+					<div class="col-md-6">
 						<div class="form-group">
 							<label for="restricciones-lbl" class="titulo-ca"><span class="asterisco">*</span>Restricciones</label>
 							<textarea class="form-control" rows="4" th:field="*{restricciones}" th:classappend="${#fields.hasErrors('restricciones')} ? 'sobresaltar-field'"></textarea>
@@ -215,7 +217,7 @@ var imagenPublicidadStatus = false;
 				</div>
 				
 				<div class="row">
-					<div class="col-xs-6">
+					<div class="col-md-6">
 						<div>
 							<p class="notas-ca">El usuario podrá escuchar esta descripción si presiona el botón de audio, pero no se despliega como texto en la pantalla.</p>
 						</div>
@@ -223,8 +225,8 @@ var imagenPublicidadStatus = false;
 				</div>
 				
 				<div class="row">
-					<div class="col-xs-5 quitar-padding-left" >
-						<div class="col-xs-6 ">
+					<div class="col-md-5 quitar-padding-left" >
+						<div class="col-md-6 ">
 							<div class="form-group">
 								<label for="vigenciaDesde-lbl" class="titulo-ca"><span class="asterisco">*</span>Vigencia desde</label>
 								<div class="inner-addon right-addon">
@@ -236,7 +238,7 @@ var imagenPublicidadStatus = false;
 								</div>
 							</div>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="form-group">
 								<label for="vigenciaHasta-lbl" class="titulo-ca"><span class="asterisco">*</span>Hasta</label>
 								<div class="inner-addon right-addon">
@@ -249,32 +251,21 @@ var imagenPublicidadStatus = false;
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-7">
-						<div class="col-xs-6">
+					<div class="col-md-7">
+						<div class="col-md-6">
 							<div class="form-group">
 								<label for="logo-label-lbl" class="titulo-ca"><span class="asterisco">*</span>Logo del comercio</label>
 								<input id="logo-comercio-input" type="file" name="logo-comercio-input" accept="image/*"/>
 								<p class="campo-requerido" th:if="${#fields.hasErrors('imagenComercioPath')}" th:errors="*{imagenComercioPath}"  id="validador-imagen-comercio"/>
 							</div>		
 						</div>
-							<div class="col-xs-6">
-								<div class="progress" id="div-progress-bar" style="visibility:hidden;">
-										  <div id="progress-bar-logo" class="progress-bar progress-bar-success" role="progressbar"  aria-valuemin="0" aria-valuemax="100" >
-										 </div>
-									</div>
-							</div>
-							
-						</div>
-						<div class="col-xs-6">
+						<div class="col-md-6">
 							<div class="form-group">
 								<label for="publicidad-label-lbl" class="titulo-ca"><span class="asterisco">*</span>Imagen de publicidad</label> 
 								<input id="imagen-publicidad-input" type="file" name="imagen-publicidad-input" 
 								accept=".zip,image/*"/>
 								<p class="campo-requerido" th:if="${#fields.hasErrors('imagenPublicidadPath')}" th:errors="*{imagenPublicidadPath}"/>
 							</div>
-							<div class="col-xs-6">
-									<div class="progress" id="progreso" style="visibility:hidden;">
-									  <div id="progress-publicidad" class="progress-bar progress-bar-success" role="progressbar"  aria-valuemin="0" aria-valuemax="100" >
 						</div>
 					</div>
 				</div>
@@ -282,7 +273,7 @@ var imagenPublicidadStatus = false;
 					<div class="col-xs-12">
 						<div class="form-group">
 							<label for="categoria-lbl" class="titulo-ca">A cúales categorías pertenece esta oferta:</label><br/>	
-							<div th:each="categoria, categoriaStat : ${categorias}" class="row">
+							<div th:each="categoria, categoriaStat : *{categorias}" class="row">
 								<div class="col-xs-3"> 
 									<div th:text="${categorias[__${categoriaStat.index}__].nombre}"  />
 								</div>
@@ -298,13 +289,12 @@ var imagenPublicidadStatus = false;
 						</div>
 					</div>
 				</div>
-				
 				<input type="hidden" id="logo-comercio" th:field="*{imagenComercioPath}"/>
 				<input type="hidden" id="imagen-publicidad" th:field="*{imagenPublicidadPath}"/>
 				<input type="hidden" name="accion" id="accion"/>
 				
 				<div class="row agregar-padding-top" align="center">
-					<div class="col-xs-12">
+					<div class="col-md-12">
 						<div class="form-group">
 							<button id="limpiar-submit" type="button" class="btn btn-default agregar-padding-left buttonMandarInfoALserver" name="accion" value="limpiar">
 								<span class="texto-junto-imagen">Cancelar</span>
@@ -329,7 +319,7 @@ var imagenPublicidadStatus = false;
     /* attach a submit handler to the form */
     $(".buttonMandarInfoALserver").click(function() {
 
-		verificarSiSeCargaronLasImagenes()	  	
+		verificarSiSeCargaronLasImagenes($(this))	  	
       
 	});
 </script>

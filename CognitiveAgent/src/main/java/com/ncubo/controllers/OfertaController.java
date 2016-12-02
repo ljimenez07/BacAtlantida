@@ -9,13 +9,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.apache.tomcat.util.http.fileupload.FileUploadBase.FileSizeLimitExceededException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +22,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,14 +30,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ncubo.conf.Usuario;
 import com.ncubo.dao.CategoriaDao;
+import com.ncubo.dao.OfertaDao;
 import com.ncubo.data.Oferta;
-import com.ncubo.exceptions.NoEmailException;
-import com.ncubo.data.Ofertas;
 import com.ncubo.logica.OfertaService;
 import com.ncubo.util.GestorDeArchivos;
 
@@ -53,9 +47,8 @@ public class OfertaController
 	
 	@Autowired
 	private OfertaService ofertaService;
-	
 	@Autowired
-	private Ofertas ofertasL;
+	private OfertaDao ofertaDao;
 	
 	private final String ACTION_INSERTAR_OFERTA = "BackOffice/insertarOferta";
 	private final String ACTION_MODIFICAR_OFERTA = "BackOffice/modificarOferta";
@@ -75,7 +68,7 @@ public class OfertaController
 	@RequestMapping("/BackOffice/gestionDeOfertas")
 	public String visualizarOfertas(Model model) throws ClassNotFoundException, SQLException
 	{
-		ArrayList<Oferta> ofertas = ofertasL.obtener();
+		ArrayList<Oferta> ofertas = ofertaDao.obtener();
 		if (ofertas.isEmpty())
 		{
 			return "redirect:insertarOferta";
@@ -89,7 +82,7 @@ public class OfertaController
 	{
 		model.addAttribute("busquedaComercio", nombreComercio);
 		
-		ArrayList<Oferta> ofertas = ofertasL.filtrarOferta(nombreComercio);
+		ArrayList<Oferta> ofertas = ofertaService.filtrarOferta(nombreComercio);
 
 		if (ofertas.isEmpty())
 		{
@@ -138,7 +131,7 @@ public class OfertaController
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
 		String idUsuario = usuario == null ? null : usuario.getEstaLogueado() ? usuario.getUsuarioId() : null;
 		int indiceInicial = (pagina - 1) * 10;
-		return ofertaService.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, idUsuario);
+		return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, idUsuario);
 	}
 	
 	@CrossOrigin(origins = "*")
@@ -147,7 +140,7 @@ public class OfertaController
 	{
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
 		String idUsuario = usuario == null ? null : usuario.getEstaLogueado() ? usuario.getUsuarioId() : null;
-		return ofertaService.obtener(idOferta, idUsuario);
+		return ofertaDao.obtener(idOferta, idUsuario);
 	}
 	
 	@CrossOrigin(origins = "*")
@@ -155,7 +148,7 @@ public class OfertaController
 	@ResponseBody public String cantidadDeOfertas(HttpSession sesion) throws ClassNotFoundException, SQLException, JSONException
 	{
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-		JSONObject respuesta = new JSONObject().put("cantidad", ofertaService.obtenerCantidadDeOfertasParaMostrar());
+		JSONObject respuesta = new JSONObject().put("cantidad", ofertaDao.obtenerCantidadDeOfertasParaMostrar());
 		respuesta.put("usuarioEstaLogueado", usuario == null ? false : usuario.getEstaLogueado());
 		
 		return respuesta.toString();
@@ -190,7 +183,7 @@ public class OfertaController
 	{
 		if(idOferta != 0)
 		{
-			oferta = ofertaService.obtener(idOferta, idUsuario);
+			oferta = ofertaDao.obtener(idOferta, idUsuario);
 		}
 		model.addAttribute("oferta", oferta);
 		model.addAttribute("categorias", categoriaDao.obtener());
@@ -211,7 +204,7 @@ public class OfertaController
 			return modificarOferta(model, 0, oferta, idUsuario);
 		}
 		oferta.setFechaHoraRegistro(new Timestamp(new Date().getTime()));
-		ofertaService.modificar( oferta );
+		ofertaDao.modificar( oferta );
 		
 		return "redirect:gestionDeOfertas";
 	}
@@ -225,7 +218,7 @@ public class OfertaController
 	@PostMapping("/BackOffice/eliminarOferta")
 	public String eliminarOferta(@RequestParam("idOfertaEliminar") int idOferta) throws ClassNotFoundException, SQLException
 	{
-		ofertaService.eliminar(idOferta);
+		ofertaDao.eliminar(idOferta);
 		return "redirect:gestionDeOfertas";
 	}
 	

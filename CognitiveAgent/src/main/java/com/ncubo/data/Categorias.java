@@ -13,4 +13,20 @@ public class Categorias  extends ArrayList<CategoriaOferta>{
 		this.add(new CategoriaOferta(3, "Hoteles",0));
 		
 	}
+
+	public void agregar(CategoriaOferta categoria)
+	{
+		int indice = this.indexOf( categoria );
+		if ( indice == -1 )
+		{
+			this.add( categoria );
+		}
+		else
+		{
+			this.get( indice ).setPeso( categoria.getPeso() );
+		}
+		
+	}
+	
+	
 }

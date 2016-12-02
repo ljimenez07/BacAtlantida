@@ -45,14 +45,15 @@
 		fecha = date.getFullYear() +"-"+ (date.getMonth() +1) +"-"+ date.getDate();
 		return fecha;
 	}
-	function verificarSiSeCargaronLasImagenes()
+	function verificarSiSeCargaronLasImagenes(objt)
 	{
 		if(imagenPublicidadStatus == true && imagenComercioStatus == true)
 	  	{
 	  		console.log("imagenes subidas");
-	  		$("#accion").val($(this).val());
-		    $("#agregarOferta-form").submit();
+	  		$("#accion").val(objt.val());
 		    imagenComercioStatus = false;
 		    imagenPublicidadStatus = false;
+		    $("#agregarOferta-form").submit();
+
 	  	}
 	}

@@ -60,7 +60,6 @@
 							<th class="text-center titulo-tabla-ca">Título de Oferta</th>
 							<th class="text-center titulo-tabla-ca">Comercio</th>
 							<th class="text-center titulo-tabla-ca">Descripción</th>
-							<th class="text-center titulo-tabla-ca">Categoría</th>
 							<th class="text-center titulo-tabla-ca">Ciudad</th>
 							<th class="text-center titulo-tabla-ca">Estado</th>
 							<th class="text-center titulo-tabla-ca" colspan="2">Acciones</th>
@@ -73,7 +72,6 @@
 								<td class="texto-normal-ca" th:id=" ${ 'tituloOferta' + oferta.idOferta}" th:text="${oferta.tituloDeOferta}"/>
 								<td class="texto-normal-ca" th:text="${oferta.comercio}"/>
 								<td class="texto-normal-ca" th:text="${oferta.descripcion}"/>
-								<td class="texto-normal-ca" th:text="${oferta.categoria.nombre}"/>
 								<td class="texto-normal-ca" th:text="${oferta.ciudad}"/>
 								<td class="texto-normal-ca" th:if="${oferta.estado}" th:text="Activa"/>
 								<td class="texto-normal-ca" th:unless="${oferta.estado}" th:text="Inactiva"/>

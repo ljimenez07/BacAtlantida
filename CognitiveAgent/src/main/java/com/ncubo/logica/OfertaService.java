@@ -1,69 +1,52 @@
 package com.ncubo.logica;
 
-import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.List;
+import java.text.ParseException;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
 
 import com.ncubo.dao.OfertaDao;
 import com.ncubo.data.Oferta;
-import com.ncubo.util.GestorDeArchivos;
 
-@Service
+@Component
 public class OfertaService
 {
-	
 	@Autowired
 	private OfertaDao ofertaDao;
 	
-	@Autowired
-	GestorDeArchivos gestorDeArchivos;
+	public BindingResult validarCampos(BindingResult bindingResult, Oferta oferta) throws ParseException
+	{
+		if( ! bindingResult.hasFieldErrors("vigenciaHasta") && ! bindingResult.hasFieldErrors("vigenciaDesde"))
+		{
+			if( ! oferta.fechaHastaMayorAFechaDesde())
+			{
+				bindingResult.rejectValue("vigenciaHasta", "1", "*Fechas incorrectas");
+			}
+		}
+		return bindingResult;
+	}
 	
-	
-	
-	public void insertar(Oferta oferta) throws ClassNotFoundException, SQLException, IOException 
+	public ArrayList<Oferta> filtrarOferta(String nombreComercio) throws ClassNotFoundException, SQLException
+	{
+		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+		if(nombreComercio.equals(""))
+		{
+			ofertas = ofertaDao.obtener();
+		}
+		else
+		{
+			ofertas = ofertaDao.filtrarOfertasPorComercioYCategoria(nombreComercio);
+		}
+		return ofertas;
+	}
+
+	public void insertar(Oferta oferta) throws ClassNotFoundException, SQLException 
 	{
 		ofertaDao.insertar(oferta);
-		gestorDeArchivos.textoAAudio( ""+oferta.getIdOferta(), oferta.getDescripcion() );
+		ofertaDao.insertarCategorias(oferta.getIdOferta(), oferta.getCategorias());
 	}
 
-	public List<Oferta> ultimasDiezOfertasDesde(int indiceInicial, String idUsuario) throws ClassNotFoundException, SQLException {
-		return ofertaDao.ultimasDiezOfertasDesde(indiceInicial, idUsuario);
-	}
-
-	public Oferta obtener(int idOferta2, String idUsuario) throws ClassNotFoundException, SQLException
-	{
-		return ofertaDao.obtener(idOferta2, idUsuario);
-	}
-
-	public int consultarCantidadDeOfertasNOEliminadas() throws ClassNotFoundException, SQLException 
-	{
-		return ofertaDao.obtenerCantidadDeOfertasParaMostrar();
-	}
-
-	public void modificar(Oferta oferta) throws ClassNotFoundException, SQLException, IOException 
-	{
-		ofertaDao.modificar(oferta);
-		if( oferta.cambioLaDescripcion() )
-		{
-			gestorDeArchivos.textoAAudio( ""+oferta.getIdOferta(),oferta. getDescripcion() );
-		}
-	}
-
-	public void eliminar(int idOferta) throws ClassNotFoundException, SQLException 
-	{
-		ofertaDao.eliminar(idOferta);
-	}
-
-	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(int indiceInicial, String idUsuario) throws ClassNotFoundException, SQLException {
-		return ofertaDao.ultimasDiezOfertasDesde( indiceInicial, idUsuario);
-	}
-
-	public int obtenerCantidadDeOfertasParaMostrar() throws ClassNotFoundException, SQLException {
-		return ofertaDao.obtenerCantidadDeOfertasParaMostrar();
-	}
-	
 }

@@ -132,14 +132,16 @@ CREATE TABLE `cognitiveagent`.`categoria_con_oferta_y_peso` (
   INDEX `fk_oferta_idx` (`idOferta` ASC),
   CONSTRAINT `fk_categoria`
     FOREIGN KEY (`idCategoria`)
-    REFERENCES `cognitiveagent2`.`categoriadeoferta` (`id`)
+    REFERENCES `cognitiveagent`.`categoriadeoferta` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_oferta`
     FOREIGN KEY (`idOferta`)
-    REFERENCES `cognitiveagent2`.`oferta` (`idOferta`)
+    REFERENCES `cognitiveagent`.`oferta` (`idOferta`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
 
+ALTER TABLE `cognitiveagent`.`categoria_con_oferta_y_peso` 
+CHANGE COLUMN `peso` `peso` DOUBLE NOT NULL ;
 

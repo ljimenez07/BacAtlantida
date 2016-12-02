@@ -356,7 +356,7 @@ public class Oferta implements Comparable<Oferta>
 	
 	public void agregarCategoria( CategoriaOferta  categoria )
 	{
-		categorias.add( categoria );
+		categorias.agregar( categoria );
 	}
 	
 	

@@ -4,15 +4,15 @@ public class CategoriaOferta
 {
 	private int id;
 	private String nombre;
-	private int peso;
+	private double peso;
 	
 	public CategoriaOferta(){ }
 	
-	public CategoriaOferta(int id, String nombre, int peso)
+	public CategoriaOferta(int id, String nombre, double d)
 	{
 		this.id = id;
 		this.nombre = nombre;
-		this.peso = peso;
+		this.peso = d;
 	}
 	
 	public int getId()
@@ -35,12 +35,34 @@ public class CategoriaOferta
 		this.nombre = nombre;
 	}
 
-	public int getPeso() {
+	public double getPeso() {
 		return peso;
 	}
 
-	public void setPeso(int peso) {
+	public void setPeso(double peso) {
 		this.peso = peso;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CategoriaOferta other = (CategoriaOferta) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 	
 	
