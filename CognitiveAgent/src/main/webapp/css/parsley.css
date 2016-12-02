@@ -16,6 +16,7 @@ textarea.parsley-error {
 }
 
 .parsley-errors-list {
+color: #3e61ac;
   margin: 2px 0 3px;
   padding: 0;
   list-style-type: none;
@@ -30,5 +31,16 @@ textarea.parsley-error {
 }
 
 .parsley-errors-list.filled {
+	color: #3e61ac;
   opacity: 1;
+}
+.parsley-required
+{
+	  color: #f00;
+  font-weight: 400;
+  font-size: 11px;
+  color: gray;
+  font-weight: 400;
+  font-size: 11px;
+  display: block;
 }

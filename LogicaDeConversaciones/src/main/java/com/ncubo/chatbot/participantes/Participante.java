@@ -75,8 +75,12 @@ public class Participante{
 			//salida.escribir(vineta, respuesta, tema, frase);
 		}
 		
-		if(respuesta.obtenerLaIntencionDeConfianzaDeLaRespuesta().getNombre().equals(Constantes.INTENCION_DESPEDIDA)){
-			salida.cambiarSeTerminoElChat(true);
+		try{
+			if(respuesta.obtenerLaIntencionDeConfianzaDeLaRespuesta().getNombre().equals(Constantes.INTENCION_DESPEDIDA)){
+				salida.cambiarSeTerminoElChat(true);
+			}
+		}catch(Exception e){
+			
 		}
 		
 		return salida;
