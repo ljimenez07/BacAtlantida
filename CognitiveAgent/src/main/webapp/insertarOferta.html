@@ -10,8 +10,29 @@
 var activeAjaxConnections = 0;
 var imagenComercioStatus = false;
 var imagenPublicidadStatus = false;
+var estaEsPaginaEditar = false;
 	$(document).ready(function()
 	{	
+		 $('agregarOferta-form').parsley({
+	            successClass: 'success',
+	            errorClass: 'error',
+	            errors: {
+	                classHandler: function(el) {
+	                    return $(el).closest('.control-group');
+	                }
+	            }
+	        });
+		
+		if(esPaginaEditar()) // Entonces las imagenes ya estan cargadas.
+		{
+			estaEsPaginaEditar = true;
+			$("#logo-comercio-input").removeAttr("data-parsley-required");
+			$("#logo-comercio-input").removeAttr("data-parsley-error-message");
+			
+			$("#imagen-publicidad-input").removeAttr("data-parsley-required");
+			$("#imagen-publicidad-input").removeAttr("data-parsley-error-message");
+			
+		}
 		
 		$("#imagen-publicidad-input").on("change", subirImagenPublicidad);
 		$("#logo-comercio-input").on("change", subirImagenComercio);
@@ -57,6 +78,11 @@ var imagenPublicidadStatus = false;
 			},
 			success: function (data)
 			{
+				if(data == 'No es una extension valida')
+				{
+					$("#mensaje-error-imagen").text("Error!! " + data);
+					$("#contenedor-mensaje-error").css("visibility","visible");
+				}
 				if(data == '')
 				{
 					$("#imagen-publicidad").val("");
@@ -68,7 +94,9 @@ var imagenPublicidadStatus = false;
 			},
 			error: function (xhr, errDesc, exception)
 			{
-				console.log(xhr.responseJSON.localizedMessage);
+
+				$("#mensaje-error-imagen").text("Error!! " + xhr.responseJSON.localizedMessage);
+				$("#contenedor-mensaje-error").css("visibility","visible");
 
 			},
 			complete( data)
@@ -97,6 +125,12 @@ var imagenPublicidadStatus = false;
 			},
 			success: function (data)
 			{
+				if(data == 'No es una extension valida')
+				{
+					$("#mensaje-error-imagen").text("Error!! " + data);
+					$("#contenedor-mensaje-error").css("visibility","visible");
+				}
+				
 				if(data == '')
 				{
 					$("#logo-comercio").val("");
@@ -105,6 +139,12 @@ var imagenPublicidadStatus = false;
 				{
 					$("#logo-comercio").val(data);
 				}
+			},
+			error: function (xhr, errDesc, exception)
+			{
+				
+				$("#mensaje-error-imagen").text("Error!! " + xhr.responseJSON.localizedMessage);
+				$("#contenedor-mensaje-error").css("visibility","visible");
 			},
 			complete( data)
 			{
@@ -115,7 +155,6 @@ var imagenPublicidadStatus = false;
 	}
 </script>
 <style>
-	
 	.quitar-padding-left
 	{
 		padding-left: 0;
@@ -150,14 +189,14 @@ var imagenPublicidadStatus = false;
 	<div th:include="fragments/backoffice :: body(paginaActual='insertarOferta')"></div>
 	
 	<div class="container agregar-padding-bottom">
-		<form id="agregarOferta-form" method="POST" th:action="@{/__${action}__}" th:object="${oferta}" action="#">
+		<form data-parsley-validate="true" id="agregarOferta-form" method="POST" th:action="@{/__${action}__}" th:object="${oferta}" action="#">
 		<input type="hidden" id="id-comercio" th:field="*{idOferta}"/>
 			<div id="agregarOferta">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="tituloOferta-lbl" class="titulo-ca"><span class="asterisco">*</span>Título de oferta</label>
-							<input id="asd" type="text" class="form-control" th:field="*{tituloDeOferta}" th:classappend="${#fields.hasErrors('tituloDeOferta')} ? 'sobresaltar-field'"/>
+							<input data-parsley-error-message= "Campo es requerido." data-parsley-required="true" id="asd" type="text" class="form-control" th:field="*{tituloDeOferta}" th:classappend="${#fields.hasErrors('tituloDeOferta')} ? 'sobresaltar-field'"/>
 							<p class="campo-requerido" th:if="${#fields.hasErrors('tituloDeOferta')}" th:errors="*{tituloDeOferta}"/>
 						</div>
 					</div>
@@ -165,7 +204,7 @@ var imagenPublicidadStatus = false;
 						<div class="col-md-5">
 							<div class="form-group">
 								<label for="ciudad-lbl" class="titulo-ca"><span class="asterisco">*</span>Ciudad</label>
-								<input type="text" class="form-control" th:field="*{ciudad}" th:classappend="${#fields.hasErrors('ciudad')} ? 'sobresaltar-field'"/>
+								<input data-parsley-error-message= "Campo es requerido." data-parsley-required="true" type="text" class="form-control" th:field="*{ciudad}" th:classappend="${#fields.hasErrors('ciudad')} ? 'sobresaltar-field'"/>
 								<p class="campo-requerido" th:if="${#fields.hasErrors('ciudad')}" th:errors="*{ciudad}"/>
 							</div>
 						</div>
@@ -185,7 +224,7 @@ var imagenPublicidadStatus = false;
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="nombreComercio-lbl" class="titulo-ca"><span class="asterisco">*</span>Nombre del comercio</label>
-							<input type="text" class="form-control" th:field="*{comercio}" th:classappend="${#fields.hasErrors('comercio')} ? 'sobresaltar-field'"/>
+							<input data-parsley-error-message= "Campo es requerido." data-parsley-required="true" type="text" class="form-control" th:field="*{comercio}" th:classappend="${#fields.hasErrors('comercio')} ? 'sobresaltar-field'"/>
 							<p class="campo-requerido" th:if="${#fields.hasErrors('comercio')}" th:errors="*{comercio}"/>
 						</div>
 					</div>
@@ -211,7 +250,7 @@ var imagenPublicidadStatus = false;
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="descripcion-lbl" class="titulo-ca"><span class="asterisco">*</span>Descripción</label>
-							<textarea class="form-control" rows="4" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')} ? 'sobresaltar-field'"></textarea>
+							<textarea data-parsley-error-message= "Campo es requerido." data-parsley-required="true"  class="form-control" rows="4" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')} ? 'sobresaltar-field'"></textarea>
 							<textarea style="display:none;" rows="4" th:field="*{descripcionAnterior}"></textarea>
 							<p class="campo-requerido" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"/>
 						</div>
@@ -219,7 +258,7 @@ var imagenPublicidadStatus = false;
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="restricciones-lbl" class="titulo-ca"><span class="asterisco">*</span>Restricciones</label>
-							<textarea class="form-control" rows="4" th:field="*{restricciones}" th:classappend="${#fields.hasErrors('restricciones')} ? 'sobresaltar-field'"></textarea>
+							<textarea data-parsley-error-message= "Campo es requerido." data-parsley-required="true" class="form-control" rows="4" th:field="*{restricciones}" th:classappend="${#fields.hasErrors('restricciones')} ? 'sobresaltar-field'"></textarea>
 							<p class="campo-requerido" th:if="${#fields.hasErrors('restricciones')}" th:errors="*{restricciones}"/>
 						</div>
 					</div>
@@ -239,7 +278,7 @@ var imagenPublicidadStatus = false;
 							<div class="form-group">
 								<label for="vigenciaDesde-lbl" class="titulo-ca"><span class="asterisco">*</span>Vigencia desde</label>
 								<div class="inner-addon right-addon">
-									<input type="text" class="form-control fechaInput" th:field="*{vigenciaDesde}" id="vigenciaDesde-input"
+									<input data-parsley-error-message= "Campo es requerido." data-parsley-required="true" type="text" class="form-control fechaInput" th:field="*{vigenciaDesde}" id="vigenciaDesde-input"
 									th:classappend="${#fields.hasErrors('vigenciaDesde')} ? 'sobresaltar-field'" 
 									/>
 									<p class="campo-requerido" th:if="${#fields.hasErrors('vigenciaDesde')}" th:errors="*{vigenciaDesde}"/>
@@ -251,7 +290,7 @@ var imagenPublicidadStatus = false;
 							<div class="form-group">
 								<label for="vigenciaHasta-lbl" class="titulo-ca"><span class="asterisco">*</span>Hasta</label>
 								<div class="inner-addon right-addon">
-									<input type="text" class="form-control fechaInput" th:field="*{vigenciaHasta}" id="vigenciaHasta-input"
+									<input data-parsley-error-message= "Campo es requerido." data-parsley-required="true" type="text" class="form-control fechaInput" th:field="*{vigenciaHasta}" id="vigenciaHasta-input"
 									th:classappend="${#fields.hasErrors('vigenciaHasta')} ? 'sobresaltar-field'"
 									/>
 									<p class="campo-requerido" th:if="${#fields.hasErrors('vigenciaHasta')}" th:errors="*{vigenciaHasta}"/>
@@ -264,14 +303,14 @@ var imagenPublicidadStatus = false;
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="logo-label-lbl" class="titulo-ca"><span class="asterisco">*</span>Logo del comercio</label>
-								<input id="logo-comercio-input" type="file" name="logo-comercio-input" accept="image/*"/>
+								<input data-parsley-error-message= "Campo es requerido." data-parsley-required="true" id="logo-comercio-input" type="file" name="logo-comercio-input" accept="image/*"/>
 								<p class="campo-requerido" th:if="${#fields.hasErrors('imagenComercioPath')}" th:errors="*{imagenComercioPath}"  id="validador-imagen-comercio"/>
 							</div>		
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="publicidad-label-lbl" class="titulo-ca"><span class="asterisco">*</span>Imagen de publicidad</label> 
-								<input id="imagen-publicidad-input" type="file" name="imagen-publicidad-input" 
+								<input data-parsley-error-message= "Campo es requerido." data-parsley-required="true" id="imagen-publicidad-input" type="file" name="imagen-publicidad-input" 
 								accept=".zip,image/*"/>
 								<p class="campo-requerido" th:if="${#fields.hasErrors('imagenPublicidadPath')}" th:errors="*{imagenPublicidadPath}"/>
 							</div>
@@ -281,8 +320,19 @@ var imagenPublicidadStatus = false;
 				
 				<input type="hidden" id="logo-comercio" th:field="*{imagenComercioPath}"/>
 				<input type="hidden" id="imagen-publicidad" th:field="*{imagenPublicidadPath}"/>
-				<input type="hidden" name="accion" id="accion"/>
 				
+				<input type="hidden" name="accion" id="accion"/>
+				<div class="row" id="contenedor-mensaje-error" style="visibility: hidden;">
+					    <div class="alert alert-danger" >
+					            <div class="row" >
+					            	<div class="col-md-3 offset-md-2"></div>
+					                <div class="col-md-1">
+					                  <span class="glyphicon glyphicon-remove" onclick="esconderEsteMensaje()" style="cursor:pointer;"></span>
+					                </div>
+					                <div class="col-md-6" id="error-message"><p id="mensaje-error-imagen"></p></div>
+					            </div>
+					       </div>
+				</div>
 				<div class="row agregar-padding-top" align="center">
 					<div class="col-md-12">
 						<div class="form-group">
@@ -311,33 +361,20 @@ var imagenPublicidadStatus = false;
     	$("#limpiar-submit").click(
     	function()
     	{
-    		alert("clean");
-    		$("#accion").val($(this).val());
-    		$("#agregarOferta-form").submit();
+    		window.location.href = '/BackOffice/gestionDeOfertas'
     	}
     	);
     
-       	  $("#ingresar-submit").click(function() {
-       	    	if(imagenPublicidadStatus == true )
+       	  $("#ingresar-submit").click(function() 
+       		{
+       		  	if(estaEsPaginaEditar)
        		  	{
-       	    		if(imagenComercioStatus == true)
-       	    		{
-       	    			submit();
-       	    		}
-       		  		
+       		  		submit();
        		  	}
-       	    	else
-       	    	{
-       	    		if(imagenComercioStatus == true )
-           		  	{
-           	    		if(imagenPublicidadStatus == true)
-           	    		{
-           	    			submit();
-           	    		}
-           		  		
-           		  	}  	
-       	    	}
-       	      
+       		  	else 
+       		  	{
+       		  		submit();
+       		  	}
        		});
     
    function submit()
@@ -347,6 +384,10 @@ var imagenPublicidadStatus = false;
 		$("#agregarOferta-form").submit();
 		imagenComercioStatus = false;
 		imagenPublicidadStatus = false;
+   }
+   function esconderEsteMensaje()
+   {
+	   $("#contenedor-mensaje-error").css("visibility","hidden");
    }
   
 </script>

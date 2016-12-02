@@ -166,7 +166,7 @@ public class OfertaController
 		System.out.println("Imagen publicidad");
 		if( ! gestorDeArchivos.esUnaImagen(uploadfile) && ! gestorDeArchivos.esUnArchivoComprimido(uploadfile))
 		{
-			return "";
+			return "No es una extension valida";
 		}
 		return gestorDeArchivos.subirArchivo(uploadfile);
 	}
@@ -178,7 +178,7 @@ public class OfertaController
 		System.out.println("Imagen Comercio");
 		if( ! gestorDeArchivos.esUnaImagen(uploadfile))
 		{
-			return "";
+			return "No es una extension valida";
 		}
 		return gestorDeArchivos.subirArchivo(uploadfile);
 	}
