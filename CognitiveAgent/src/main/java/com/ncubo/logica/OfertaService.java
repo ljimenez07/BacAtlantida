@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
 import com.ncubo.dao.OfertaDao;
@@ -43,6 +44,7 @@ public class OfertaService
 		return ofertas;
 	}
 
+	@Transactional
 	public void insertar(Oferta oferta) throws ClassNotFoundException, SQLException 
 	{
 		ofertaDao.insertar(oferta);

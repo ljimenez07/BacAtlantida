@@ -78,13 +78,15 @@ public class ArchivosController
 		response.setContentType(mimetype);
 		OutputStream outStream = response.getOutputStream();
 
-		while ((bytesRead = streamPorDevolver.read(bytesArray)) != -1)
+		if(streamPorDevolver != null)
 		{
-			outStream.write(bytesArray, 0, bytesRead);
+			while ((bytesRead = streamPorDevolver.read(bytesArray)) != -1)
+			{
+				outStream.write(bytesArray, 0, bytesRead);
+			}
+			outStream.close();
+			streamPorDevolver.close();
 		}
-
-		outStream.close();
-		streamPorDevolver.close();
 	}
 
 	public int getCapacidadDeAudios()

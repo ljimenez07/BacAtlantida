@@ -5,8 +5,6 @@ templates['oferta'] = template({"1":function(container,depth0,helpers,partials,d
 
   return "			<iframe class=\"html-de-oferta embed-responsive-item\" frameBorder=\"0\" scrolling=\"no\" id=\"html-de-oferta-"
     + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
-    + "\" src=\"http://192.168.0.101:8080/archivossubidos/"
-    + alias4(((helper = (helper = helpers.imagenPublicidadPath || (depth0 != null ? depth0.imagenPublicidadPath : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"imagenPublicidadPath","hash":{},"data":data}) : helper)))
     + "\"></iframe>\r\n			<script type=\"text/javascript\">\r\n			var source = serverDomain + \"/archivossubidos/"
     + alias4(((helper = (helper = helpers.imagenPublicidadPath || (depth0 != null ? depth0.imagenPublicidadPath : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"imagenPublicidadPath","hash":{},"data":data}) : helper)))
     + "\";\r\n			var iframe = $('#oferta #html-de-oferta-"
@@ -37,7 +35,7 @@ templates['oferta'] = template({"1":function(container,depth0,helpers,partials,d
     + alias4(((helper = (helper = helpers.tituloDeOferta || (depth0 != null ? depth0.tituloDeOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"tituloDeOferta","hash":{},"data":data}) : helper)))
     + "</span>\r\n			</div>\r\n		</div>\r\n		<div class=\"row contenedor-de-botones\">\r\n			<div class=\"col-xs-12\">\r\n				<div class=\"tiempo-transcurrido\">Hace "
     + alias4(((helper = (helper = helpers.tiempoTranscurrido || (depth0 != null ? depth0.tiempoTranscurrido : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"tiempoTranscurrido","hash":{},"data":data}) : helper)))
-    + "</div>\r\n			</div>\r\n		</div>\r\n		<div class=\"row\">\r\n			<div class=\"col-xs-12 text-center boton-escuchar-oferta\" data-audio=\""
+    + "</div>\r\n			</div>\r\n		</div>\r\n		<div class=\"row\">\r\n			<div class=\"col-xs-12 text-center boton-escuchar-oferta\" data-audio=\"/archivossubidos"
     + alias4(((helper = (helper = helpers.descripcionAudio || (depth0 != null ? depth0.descripcionAudio : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"descripcionAudio","hash":{},"data":data}) : helper)))
     + "\">\r\n				<img src=\"./img/icono-94x91.png\">\r\n			</div>\r\n		</div>\r\n		<div class=\"row contenedor-de-botones\">\r\n			<div class=\"col-xs-6\">\r\n				<div class=\"row\">\r\n"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.esUnUsuarioConocido : depth0),{"name":"if","hash":{},"fn":container.program(5, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")

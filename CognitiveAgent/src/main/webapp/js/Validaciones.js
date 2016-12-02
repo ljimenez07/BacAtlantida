@@ -45,15 +45,25 @@
 		fecha = date.getFullYear() +"-"+ (date.getMonth() +1) +"-"+ date.getDate();
 		return fecha;
 	}
-	function verificarSiSeCargaronLasImagenes(objt)
+	function esPaginaEditar()
+	{
+		// Dado que ingresar y editar son la misma vista.
+		// Se efectua una verificacion de campos para ver si las imagenes estan cargas, en tal caso la vista corresponde a EDITAR.
+		imagenComercio = $("#logo-comercio").val();
+		imagenPublicidad = $("#imagen-publicidad").val();
+		
+		if(imagenComercio === '' && imagenPublicidad === '')
+		{
+			return false;
+		}		
+		else
+		{
+			return true;
+	  	}
+	}
+	
+	function lasImagenesSeTerminaronDeSubir()
 	{
 		if(imagenPublicidadStatus == true && imagenComercioStatus == true)
-	  	{
-	  		console.log("imagenes subidas");
-	  		$("#accion").val(objt.val());
-		    imagenComercioStatus = false;
-		    imagenPublicidadStatus = false;
-		    $("#agregarOferta-form").submit();
-
-	  	}
+			return true;
 	}

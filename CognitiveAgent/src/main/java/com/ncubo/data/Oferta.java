@@ -1,6 +1,5 @@
 package com.ncubo.data;
 
-import java.io.File;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -78,7 +77,7 @@ public class Oferta implements Comparable<Oferta>
 		this.fechaHoraRegistro = fechaHoraRegistro;
 		this.likes = likes;
 		this.setDislikes(dislikes);
-		this.descripcionAudio = File.separator+idOferta+"-descripcion.wav";
+		this.descripcionAudio = "/"+idOferta+"-descripcion.wav";
 		this.descripcionAnterior = descripcion;
 	}
 	

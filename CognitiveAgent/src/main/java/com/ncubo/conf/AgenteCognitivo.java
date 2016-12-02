@@ -261,11 +261,13 @@ public class AgenteCognitivo
 		
 		respuesta.put("textos", arrayList);
 		System.out.println("Respuesta Chat"+ respuesta.toString());
+		String loQueElClienteDijo = "";
 		try {
-			historicoDeConversaciones.agregarHistorialALaConversacion(usuario.getIdSesion(), salida.get(0).obtenerLaRespuestaDeIBM().loQueElClienteDijoFue(), respuesta.toString());
+			loQueElClienteDijo = salida.get(0).obtenerLaRespuestaDeIBM().loQueElClienteDijoFue();
 		}catch(Exception e){
-			
+			loQueElClienteDijo = "Hola!";
 		}
+		historicoDeConversaciones.agregarHistorialALaConversacion(usuario.getIdSesion(), loQueElClienteDijo, respuesta.toString());
 		
 		return respuesta.toString();
 		
@@ -276,8 +278,9 @@ public class AgenteCognitivo
 		JSONObject respuesta = new JSONObject();
 		String texto = "";
 		JSONArray arrayList = new JSONArray(); 
-		
-		ArrayList<Salida> salida = misConversaciones.conversarConElAgente(usuario, mensaje, true);
+		ArrayList<Salida> salida = null;
+		if(usuario.getEstaLogueado()){
+			salida = misConversaciones.conversarConElAgente(usuario, mensaje, true);
 		
 		for(int i = 0; i < salida.size(); i++){	
 			texto = salida.get(i).getMiTexto();
@@ -286,26 +289,20 @@ public class AgenteCognitivo
 			jsonObject.put("audio", salida.get(i).getMiSonido().url());
 			arrayList.put(jsonObject);
 		}
-		
-		/*if(usuario.estaLogueado()){
-			ArrayList<Salida> salida = miConversaciones.conversarConElAgente(usuario, mensaje, true);
-			
-			for(int i = 0; i < salida.size(); i++){	
-				texto = salida.get(i).getMiTexto();
-				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", texto);
-				jsonObject.put("audio", salida.get(i).getMiSonido().url());
-				arrayList.put(jsonObject);
 			}
-		}else{
-			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("texto", "Debe iniciar sesión.");
-			jsonObject.put("audio", "");
-			arrayList.put(jsonObject);
-		}*/
 		
 		respuesta.put("textos", arrayList);
 		System.out.println("Respuesta Conocerte"+ respuesta.toString());
+		
+		if(usuario.getEstaLogueado()){
+			String loQueElClienteDijo = "";
+			try {
+				loQueElClienteDijo = salida.get(0).obtenerLaRespuestaDeIBM().loQueElClienteDijoFue();
+			}catch(Exception e){
+				loQueElClienteDijo = "Hola!";
+			}
+			historicoDeConversaciones.agregarHistorialALaConversacionEspecifica(usuario.getIdSesion(), loQueElClienteDijo, respuesta.toString());
+		}
 		
 		return respuesta.toString();
 	}
@@ -404,6 +401,7 @@ public class AgenteCognitivo
 	}
 	
 	public String borrarTodasLasConversacionesDeUnCliente(String idCliente){
+		historicoDeConversaciones.borrarElHistoricoDeUnaConversacion(misConversaciones.obtenerLosIdsDeSesionDeUnCliente(idCliente));
 		return misConversaciones.borrarTodasLasConversacionesDeUnCliente(idCliente);
 	}
 	
@@ -415,6 +413,9 @@ public class AgenteCognitivo
 		return historicoDeConversaciones.verElHistoricoDeUnaConversacion(idSesion);
 	}
 	
+	public String verElHistoricoDeUnaConversacionEspecifica(String idSesion){
+		return historicoDeConversaciones.verElHistoricoDeUnaConversacionEspecifica(idSesion);
+	}
 
 	public String getUser() 
 	{

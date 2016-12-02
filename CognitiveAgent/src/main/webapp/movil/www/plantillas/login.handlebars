@@ -37,9 +37,7 @@ $(function(){
 				{
 					console.log("Ya se mandaron a pedir ofertas");
 					setCookie('mostrarpopupdeconocerte', false, 0);
-					cargarOfertas();
-					//location.reload();
-					cambiarVista("chat");
+					location.reload();
 				},
 				fail: function(XMLHttpRequest, textStatus, textStatus) 
 				{
