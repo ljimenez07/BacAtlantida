@@ -60,13 +60,17 @@ public class OfertaService
 	
 	public Oferta obtener(int idOferta, Usuario usuario) throws ClassNotFoundException, SQLException
 	{
-		if( usuario.getEstaLogueado() )
+		Gustos gusto = serverCognitivo.obtenerGustosDelCliente( usuario.getUsuarioId() );
+		
+		boolean tieneAlMenosUnaCategoriaEspecificadaEnSusGustos = 0 < gusto.getLeGustaComerAfuera() + gusto.getLeGustaLosHoteles() + gusto.getLeGustaComerAfuera();
+		
+		if( usuario.getEstaLogueado() && tieneAlMenosUnaCategoriaEspecificadaEnSusGustos)
 		{
-			Gustos gusto = serverCognitivo.obtenerGustosDelCliente( usuario.getUsuarioId() );
+			
 			
 		}
 		
-	//	return ofertaDao.obtener(idOferta, idUsuario);
+		return ofertaDao.obtener(idOferta, idUsuario);
 	}
 
 }

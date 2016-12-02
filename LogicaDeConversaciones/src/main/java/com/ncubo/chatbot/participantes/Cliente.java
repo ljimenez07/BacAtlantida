@@ -1,6 +1,7 @@
 package com.ncubo.chatbot.participantes;
 
 import java.util.ArrayList;
+
 import com.ncubo.chatbot.contexto.AdministradorDeVariablesDeContexto;
 
 public class Cliente extends Participante{
@@ -81,6 +82,11 @@ public class Cliente extends Participante{
 	public String obtenerValorDeGustosDeHoteles() throws Exception
 	{
 		return administradorDeVariablesDeContexto.obtenerVariable("leGustaLosHoteles");
+	}
+
+	public Gustos obtenerMisGustos() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 
