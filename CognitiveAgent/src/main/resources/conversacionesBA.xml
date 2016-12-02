@@ -319,7 +319,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<curioso>Te cuento que tenemos a tu disposición estos tipos de cuenta de ahorros: $%br Ahorro Atlántida $%br Ahorro Atlántida Kids $%br Ahorro Atlántida "U" $%br Ahorro Remesas $%br Ahorro Virtual Remesas $%br $%br ¿Sobre cúal de estos productos necesitas información?</curioso>
+			<curioso>Tenemos a tu disposición estos tipos de cuenta de ahorros: $%br 1) Ahorro Atlántida $%br 2) Ahorro Atlántida Kids $%br 3) Ahorro Atlántida "U" $%br 4) Ahorro Remesas $%br 5) Ahorro Virtual Remesas $%br $%br ¿Sobre cúal de estos productos necesitas información?</curioso>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -719,10 +719,115 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Lamento lo sucedido, si necesitas reportar el extravío de tus tarjetas de crédito y débito puedes llamar a: $%br  $%br En Honduras: $%br 2280-1010 /2580-1010/ 2480-1010 $%br  $%br En el Extranjero:  $%br $%br VISA: $%br USA y Canadá: 1-800-847-2911 $%br En otros países: (410)-581-0120 $%br $%br MASTERCARD: $%br USA y Canadá: 1-800-307-7309 $%br En otros países: 1- 636-722-7111  $%br $%br Recuerda que este servicio está disponible las 24 horas, los 7 días de la semana</frase>
+			<frase>$%decir Lamento lo sucedido, si necesitas reportar el extravío de tus tarjetas de crédito y débito puedes llamar a: $%terminaDecir $%br  $%br En Honduras: $%br 2280-1010 / 2580-1010 / 2480-1010 $%br $%br En el Extranjero:  $%br $%br VISA: $%br USA y Canadá: 1-800-847-2911 $%br En otros países: (410)-581-0120 $%br $%br MASTERCARD: $%br USA y Canadá: 1-800-307-7309 $%br En otros países: 1-636-722-7111  $%br $%br $%despedida Recuerda que este servicio está disponible las 24 horas, los 7 días de la semana. $%terminaDespedida</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
+	
+	<conversacion id="requisitosMensajitos">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para disfrutar del servicio Mensajitos Atlántida debes: $%br 1) Poseer algun producto con el banco( cuentas de ahorro , cheques, tarjeta de credito,etc) o recibir remesas.  $%br 2) Llenar contrato de afiliación para clientes de Mensajitos Atlántida.  $%br 3) Fotocopia de la tarjeta de identidad para hondureños, carné de residente o pasaporte para extranjeros.  $%br 3) Poseer un telefono celular de TIGO , Claro.  $%br El servicio es gratis, pero el costo del mensajito lo determina la empresa de celular.  $%br Puedes solicitarlo en cualquier agencia del país.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="requisitosTarjetaDebito">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para obtener una tarjeta de débito debes: $%br 1) Poseer una cuenta de ahorros o cheques en lempiras con el Banco. $%br 2) Ser mayor de 18 años. $%br 3) Llenar la solicitud. </frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	
+	<conversacion id="requisitosTarjetaCredito">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para adquirir una de nuestras tarjetas de crédito debes: $%br$%br Para empleados:  $%br 1) Llenar la solicitud. $%br 2) Presentar constancia de trabajo (sueldo, antigüedad y cargo). $%br 3) Fotocopia de la tarjeta de identidad. $%br 4) Tiempo de laborar: en empresa privada 1 año y empresa pública 2 años. $%br 5) Fotocopia del último recibo de un servicio público. $%br 6) RTN. $%br 7) Ingresos desde 10 000 Lempiras. $%br$%br Para comerciantes Individuales: $%br 1) Llenar la solicitud. $%br 2) Fotocopia de la tarjeta de identidad. $%br 3) Estados financieros recientes. $%br 4) Fotocopia del permiso de operación del negocio. $%br 5) Fotocopia del último recibo de un servicio público. $%br 6) RTN.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="cualTarjeta">		
+		<tipo>pregunta</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<curioso>¿Quieres información sobre tarjeta de débito o tarjeta de crédito?</curioso>		
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>	
+	
+	<conversacion id="requisitosChequesPersona">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para adquirir una cuenta de cheques para persona natural debes presentar: $%br 1) Original y copia de tarjeta de identidad. $%br 2) Original y copia de carnet de residencia o pasaporte (para extranjeros). $%br 3) Completar la solicitud única de productos. $%br 4) Dos referencias bancarias, comerciales o personales (por escrito). $%br 5) Se apertura con 2 500 Lempiras o 1 000 Dólares. $%br 6) Copia de RTN.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	
+	<conversacion id="requisitosChequesEmpresas">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para adquirir una cuenta de cheques para Empresas debes presentar: $%br 1) Copia de la escritura constitución de la empresa. $%br 2) Copia del permiso de operación. $%br 3) Copia de R.T.N. $%br 4) Si es S.A. necesitas una carta informando sobre los socios principales de la empresa. $%br 5) Referencias bancarias, comerciales, de proveedores o clientes. $%br 6) Copia de tarjeta de identidad de cada uno de las personas que van a firmar en la cuenta. $%br 7) Llenar la solicitud unica de productos. $%br 8) Se apertura con 2 500 Lempiras o 1 000 Dólares.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	
+	<conversacion id="requisitosChequesGubernamentales">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para adquirir una cuenta de cheques para Instituciones Gubernamentales debes presentar: $%br 1) Nombramiento del poder ejecutivo o ministro en su caso. $%br 2) Solicitud de apertura de la cuenta por escrito, firmada por la persona nombrada en el poder. Debe incluir los nombres de personas que firmaran en la cuenta. $%br 3) Los firmantes deberán presentar toda la documentación para la apertura de cuentas personales. $%br 4) Llenar la solicitud. $%br 5) Se apertura con 2 500 Lempiras o 1 000 Dólares.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	
+	<conversacion id="requisitosChequesNoGubernamentales">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para adquirir una cuenta de cheques para Instituciones No Gubernamentales debes presentar: $%br 1) Original y copia de personería jurídica y que incluyan los estatutos. $%br 2) Fotocopia del punto del acta donde se nombra a los miembros de la Asamblea o Junta Directiva. $%br 3) Las personas firmantes deberan presentar toda la documentacion para la apertura de cuentas personales. $%br 4) Llenar la solicitud. $%br 5) Se apertura con 2 500 Lempiras o 1 000 Dólares.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	
+	<conversacion id="cualCheques">		
+		<tipo>pregunta</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<curioso>¿Quieres información sobre cuentas de cheques para Persona Natural, Empresas, Instituciones Gubernamentales o Instituciones No Gubernamentales?</curioso>		
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>	
+	
+		<conversacion id="cualCuenta">		
+		<tipo>pregunta</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<curioso>¿Quieres información sobre cuenta de ahorros o cuenta de cheques?</curioso>		
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>	
 	
 	<conversacion id="saludarConocerte">		
 		<tipo>afirmativa</tipo>		
@@ -834,10 +939,10 @@
 	</variablesDeAmbiente>
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
-		<workspace tipo="general" idIBM="af158b48-2a0e-4bc9-b3ba-e0fd71ff4c55" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="general" idIBM="e757904e-0ad3-4ac2-bac7-ff01a434ddb4" intencionesParaSeReferenciado="">BAIntents</workspace>
 		<workspace tipo="especifico" idIBM="47970e57-ae6b-4aae-b127-a2408ececef7" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
-		<workspace tipo="especifico" idIBM="647c33d0-1b77-433f-9bcd-1809b5d037b6" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="e29348d3-7a2a-4873-8c32-9afd99a9ad05" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="327702f8-0c70-4ed5-82c6-9139a89ef8f0" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
+		<workspace tipo="especifico" idIBM="86bd16ff-9beb-4827-8312-9877e881a051" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>
