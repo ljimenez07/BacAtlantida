@@ -63,4 +63,6 @@ public class Constantes {
 	// Intenciones
 	public static String INTENCION_FUERA_DE_CONTEXTO = "out_of_scope";
 	public static String INTENCION_NO_ENTIENDO = "noEntendi";
+	public static String INTENCION_DESPEDIDA = "despedidas";
+	public static String INTENCION_SALUDAR = "saludos";
 }

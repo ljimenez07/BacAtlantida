@@ -8,6 +8,7 @@ public class Salida {
 	private Respuesta miRespuesta;
 	private Tema temaActual;
 	private Frase fraseActual;
+	private boolean seTerminoElChat;
 	
 	public Salida(){
 		miTexto = "";
@@ -15,6 +16,7 @@ public class Salida {
 		miVineta = null;
 		miRespuesta = null;
 		temaActual = null;
+		seTerminoElChat = false;
 	}
 	
 	public void escribir(String texto, Respuesta respuesta, Tema tema, Frase frase){
@@ -83,6 +85,14 @@ public class Salida {
 
 	public Frase getFraseActual() {
 		return fraseActual;
+	}
+	
+	public void cambiarSeTerminoElChat(boolean seTermino){
+		seTerminoElChat = seTermino;
+	}
+	
+	public boolean seTerminoElChat(){
+		return seTerminoElChat;
 	}
 	
 }

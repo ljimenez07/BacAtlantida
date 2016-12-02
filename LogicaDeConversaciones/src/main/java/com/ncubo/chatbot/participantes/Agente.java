@@ -6,7 +6,6 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,7 +16,6 @@ import com.ncubo.chatbot.exceptiones.ChatException;
 import com.ncubo.chatbot.partesDeLaConversacion.Frase;
 import com.ncubo.chatbot.partesDeLaConversacion.Respuesta;
 import com.ncubo.chatbot.watson.ConversationWatson;
-import com.ncubo.chatbot.watson.Intencion;
 import com.ncubo.chatbot.watson.WorkSpace;
 
 // Es como el watson de Ncubo

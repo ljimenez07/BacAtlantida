@@ -11,8 +11,7 @@ import com.ncubo.chatbot.watson.Entidades;
 import com.ncubo.chatbot.watson.Intenciones;
 
 //TODO: aunque ya veo 1/2 claro... me huele mal que parezca plantilla.
-public class TemarioDelBancoAtlantida extends Temario
-{
+public class TemarioDelBancoAtlantida extends Temario{
 	
 	protected TemarioDelBancoAtlantida(String pathXML) {
 		super(pathXML);
