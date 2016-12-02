@@ -171,6 +171,8 @@ $(function(){
 		
 		function moverScrollParaAbajoEnFuncionDelUltimoMensaje(callback)
 		{
+			console.log("moverScrollParaAbajoEnFuncionDelUltimoMensajel");
+			console.log(callback);
 			chat.parent().parent().scrollTop(chat.parent().parent()[0].scrollHeight);
 			if(callback != undefined)
 			{

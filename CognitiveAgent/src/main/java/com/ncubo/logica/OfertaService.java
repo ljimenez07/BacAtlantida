@@ -47,6 +47,7 @@ public class OfertaService
 	@Transactional
 	public void insertar(Oferta oferta) throws ClassNotFoundException, SQLException 
 	{
+		//TODO transacciones
 		ofertaDao.insertar(oferta);
 		ofertaDao.insertarCategorias(oferta.getIdOferta(), oferta.getCategorias());
 	}

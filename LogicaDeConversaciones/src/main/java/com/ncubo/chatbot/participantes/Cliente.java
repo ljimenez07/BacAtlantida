@@ -2,19 +2,19 @@ package com.ncubo.chatbot.participantes;
 
 import java.util.ArrayList;
 
-import com.ncubo.evaluador.main.Evaluador;
+import com.ncubo.chatbot.contexto.AdministradorDeVariablesDeContexto;
 
 public class Cliente extends Participante{
 
 	private String miNombre;
 	private String miId;
 	private ArrayList<String> misIdsDeSesiones = new ArrayList<String>();
-	private Evaluador misVariablesDeContexto;
+	private AdministradorDeVariablesDeContexto administradorDeVariablesDeContexto;
 	
 	public Cliente(){
 		miNombre = "";
 		miId = "";
-		misVariablesDeContexto = new Evaluador();
+		administradorDeVariablesDeContexto = new AdministradorDeVariablesDeContexto();
 	}
 	
 	public Cliente(String nombre, String id){
@@ -61,25 +61,15 @@ public class Cliente extends Participante{
 	}
 	
 	public void agregarVariableDeContexto(String nombreDeLaVariable, String valorDeLaVariable) throws Exception{
-		if( ! nombreDeLaVariable.equals("") && ! valorDeLaVariable.equals("")){
-			String comando = nombreDeLaVariable+"="+valorDeLaVariable+";";
-			misVariablesDeContexto.crearContexto(comando);
-		}
+		administradorDeVariablesDeContexto.agregarVariableDeContexto(nombreDeLaVariable, valorDeLaVariable);
 	}
 	
 	public void agregarVariablesAlContexto(String comando) throws Exception{
-		if( ! comando.equals("")){
-			misVariablesDeContexto.crearContexto(comando);
-		}
+		administradorDeVariablesDeContexto.agregarVariablesAlContexto(comando);
 	}
 	
 	public String obtenerElValorDeUnaVariable(String nombreDeLaVariable) throws Exception{
-		String resultado = "";
-		if( ! nombreDeLaVariable.equals("")){
-			String comando = "show "+nombreDeLaVariable+";";
-			resultado = misVariablesDeContexto.ejecutaComando(comando);
-		}
-		return resultado;
+		return administradorDeVariablesDeContexto.obtenerElValorDeUnaVariable(nombreDeLaVariable);
 	}
 	
 }
