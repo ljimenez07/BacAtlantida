@@ -4,20 +4,15 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -25,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Entity;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Intent;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
@@ -78,7 +72,6 @@ public class AgenteCognitivo
 	
 	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
 	{
-	
 		return procesarMensaje(usuario, mensaje, date, workspaceDeChats, false);
 	}
 	
@@ -90,11 +83,11 @@ public class AgenteCognitivo
 	private String procesarMensaje(Usuario usuario, String mensaje, Date date, String workspace, boolean esParaConocerte) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
 	{
 		JSONObject respuesta = new JSONObject();
-		ObjectMapper mapper = new ObjectMapper();
+		/*ObjectMapper mapper = new ObjectMapper();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	//	String contexto= usuario.getContextoDeWatson();
 		
-		/*JSONObject contenidoDelContexto ;
+		JSONObject contenidoDelContexto ;
 		if( esParaConocerte )
 		{
 			System.out.println("contexto de watson cuando entra "+ usuario.getContextoDeWatsonParaConocerte());
@@ -128,6 +121,7 @@ public class AgenteCognitivo
 		boolean estaditicaSeDebeGuardar = true;
 		Tema tema = null;
 		ArrayList<Tema> temasTratados = new ArrayList<>();
+		boolean seTerminoElChat = false;
 		
 		for(int i = 0; i < salida.size(); i++){
 			
@@ -213,7 +207,6 @@ public class AgenteCognitivo
 					jsonObject.put("audio", "");	
 					arrayList.put(jsonObject);
 				}
-				
 			}
 			else if(idFrase.equals("disponiblePuntos") && usuario.getEstaLogueado())	
 			{			
@@ -245,7 +238,6 @@ public class AgenteCognitivo
 				jsonObject.put("texto", texto);
 				jsonObject.put("audio", salida.get(i).getMiSonido().url());	
 				arrayList.put(jsonObject);
-				
 				estaditicaSeDebeGuardar = false;
 			}
 			
@@ -255,6 +247,9 @@ public class AgenteCognitivo
 				temasTratados.add(tema);
 				System.out.println(tema);
 			}
+			
+			if(salida.get(i).seTerminoElChat())
+				seTerminoElChat = true;
 		}
 		
 		for(Tema temaActual : temasTratados)
@@ -263,7 +258,8 @@ public class AgenteCognitivo
 		}
 		
 		respuesta.put("textos", arrayList);
-		System.out.println("Respuesta Chat"+ respuesta.toString());
+		respuesta.put("seTerminoElChat", seTerminoElChat);
+		System.out.println("Respuesta Chat: "+ respuesta.toString());
 		String loQueElClienteDijo = "";
 		try {
 			loQueElClienteDijo = salida.get(0).obtenerLaRespuestaDeIBM().loQueElClienteDijoFue();
@@ -282,20 +278,29 @@ public class AgenteCognitivo
 		String texto = "";
 		JSONArray arrayList = new JSONArray(); 
 		ArrayList<Salida> salida = null;
+		boolean seTerminoElChat = false;
+		
 		if(usuario.getEstaLogueado()){
 			salida = misConversaciones.conversarConElAgente(usuario, mensaje, true);
 			
-			for(int i = 0; i < salida.size(); i++){	
+			for(int i = 0; i < salida.size(); i++){
 				texto = salida.get(i).getMiTexto();
+				String idFrase = salida.get(i).getFraseActual().getIdFrase();
+				
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
 				jsonObject.put("audio", salida.get(i).getMiSonido().url());
 				arrayList.put(jsonObject);
+				
+				if(idFrase.equals("despedidaConocerte")){
+					seTerminoElChat = true;
+				}
 			}
 		}
 		
 		respuesta.put("textos", arrayList);
-		System.out.println("Respuesta Conocerte"+ respuesta.toString());
+		respuesta.put("seTerminoElChat", seTerminoElChat);
+		System.out.println("Respuesta Conocerte: "+ respuesta.toString());
 		
 		if(usuario.getEstaLogueado()){
 			String loQueElClienteDijo = "";
@@ -314,11 +319,9 @@ public class AgenteCognitivo
 		return wsMovimientos;
 	}
 
-
 	public void setWsMovimientos(String wsMovimientos) {
 		this.wsMovimientos = wsMovimientos;
 	}
-
 
 	public String getIntent(MessageResponse response)
 	{
@@ -336,7 +339,6 @@ public class AgenteCognitivo
 		}
 		return intent;
 	}
-	
 
 	public String getText(MessageResponse response)
 	{
@@ -382,7 +384,7 @@ public class AgenteCognitivo
 	public void generarTodosLosAudiosEstaticos(){
 		System.out.println("El path xml es: "+getPathXML());
 		misConversaciones.generarAudiosEstaticos(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
-				this.getPathAudio(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto());
+				this.getPathAudio(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), this.geturlPublicaAudios());
 	}
 	
 	public void generarAudioEstatico(String id){
@@ -391,7 +393,7 @@ public class AgenteCognitivo
 		try{
 			index = Integer.parseInt(id);
 			misConversaciones.generarAudiosEstaticosDeUnTema(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
-					this.getPathAudio(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), index);
+					this.getPathAudio(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), index, this.geturlPublicaAudios());
 		}catch(Exception e){
 			e.getStackTrace();
 		}

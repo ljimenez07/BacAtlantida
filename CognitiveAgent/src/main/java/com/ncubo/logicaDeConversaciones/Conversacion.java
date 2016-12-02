@@ -205,7 +205,7 @@ public class Conversacion {
 	
 	private boolean verificarIntencionNoAsociadaANingunWorkspace(ArrayList<Salida> misSalidas, Respuesta respuesta){
 		if(agente.hayIntencionNoAsociadaANingunWorkspace()){
-			if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals("saludos")){
+			if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals(Constantes.INTENCION_SALUDAR)){
 				System.out.println("Quiere saludar ...");
 				this.temaActual = this.temario.buscarTema(Constantes.FRASE_SALUDO);
 
@@ -218,7 +218,7 @@ public class Conversacion {
 				fraseActual = queQuiere;
 				ponerComoYaTratado(queQuiere);
 				
-			}else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals("despedidas")){
+			}else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals(Constantes.INTENCION_DESPEDIDA)){
 				System.out.println("Quiere despedirce ...");
 				this.temaActual = this.temario.buscarTema(Constantes.FRASE_DESPEDIDA);
 				
@@ -235,6 +235,7 @@ public class Conversacion {
 				misSalidas.add(agente.decir(fueraDeContexto, respuesta, temaActual));
 				fraseActual = fueraDeContexto;
 				ponerComoYaTratado(fueraDeContexto);
+				
 			}else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals(Constantes.INTENCION_NO_ENTIENDO)){
 				System.out.println("No entendi bien ...");
 				this.temaActual = this.temario.buscarTema(Constantes.INTENCION_NO_ENTIENDO);

@@ -68,7 +68,7 @@ public class LRUCache
 		}
 	}
 
-	public void establecer(String key, byte[] value)
+	public void agregar(String key, byte[] value)
 	{
 		if (map.containsKey(key))
 		{

@@ -51,6 +51,21 @@
 			</div>
 			
 			<div id="tabla-ofertas">
+			<form th:action="@{/BackOffice/insertarOferta}" method="GET">
+			<div class="row">
+				<div class="row" align="right">
+					<div class="col-md-12">
+						<div class="form-group">
+							<button id="mostrar-ingresar-oferta-submit" type="submit"
+								class="btn btn-default">
+									<span class="texto-junto-imagen">Ingresar nueva oferta</span>
+									<span class="imagen-siguiente"></span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			</form>
 			<form th:action="@{/BackOffice/modificarOferta}" th:method="get">
 			<div class="row">
 				<div class="table-responsive">
@@ -95,21 +110,7 @@
 				</div>
 			</div>
 			</form>
-			<form th:action="@{/BackOffice/insertarOferta}" method="GET">
-			<div class="row">
-				<div class="row" align="right">
-					<div class="col-md-12">
-						<div class="form-group">
-							<button id="mostrar-ingresar-oferta-submit" type="submit"
-								class="btn btn-default">
-									<span class="texto-junto-imagen">Ingresar nueva oferta</span>
-									<span class="imagen-siguiente"></span>
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			</form>
+			
 		</div>
 	</div>
 		<br/>
