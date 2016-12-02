@@ -196,7 +196,7 @@ var estaEsPaginaEditar = false;
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="tituloOferta-lbl" class="titulo-ca"><span class="asterisco">*</span>Título de oferta</label>
-							<input data-parsley-error-message= "Campo es requerido." data-parsley-required="true" id="asd" type="text" class="form-control" th:field="*{tituloDeOferta}" th:classappend="${#fields.hasErrors('tituloDeOferta')} ? 'sobresaltar-field'"/>
+							<input data-parsley-error-message= "Titulo de la oferta es requerido." data-parsley-required="true" id="asd" type="text" class="form-control" th:field="*{tituloDeOferta}" th:classappend="${#fields.hasErrors('tituloDeOferta')} ? 'sobresaltar-field'"/>
 							<p class="campo-requerido" th:if="${#fields.hasErrors('tituloDeOferta')}" th:errors="*{tituloDeOferta}"/>
 						</div>
 					</div>
@@ -204,7 +204,7 @@ var estaEsPaginaEditar = false;
 						<div class="col-md-5">
 							<div class="form-group">
 								<label for="ciudad-lbl" class="titulo-ca"><span class="asterisco">*</span>Ciudad</label>
-								<input data-parsley-error-message= "Campo es requerido." data-parsley-required="true" type="text" class="form-control" th:field="*{ciudad}" th:classappend="${#fields.hasErrors('ciudad')} ? 'sobresaltar-field'"/>
+								<input data-parsley-error-message= "Ciudad es requerida." data-parsley-required="true" type="text" class="form-control" th:field="*{ciudad}" th:classappend="${#fields.hasErrors('ciudad')} ? 'sobresaltar-field'"/>
 								<p class="campo-requerido" th:if="${#fields.hasErrors('ciudad')}" th:errors="*{ciudad}"/>
 							</div>
 						</div>
@@ -224,7 +224,7 @@ var estaEsPaginaEditar = false;
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="nombreComercio-lbl" class="titulo-ca"><span class="asterisco">*</span>Nombre del comercio</label>
-							<input data-parsley-error-message= "Campo es requerido." data-parsley-required="true" type="text" class="form-control" th:field="*{comercio}" th:classappend="${#fields.hasErrors('comercio')} ? 'sobresaltar-field'"/>
+							<input data-parsley-error-message= "Nombre del comercio es requerido." data-parsley-required="true" type="text" class="form-control" th:field="*{comercio}" th:classappend="${#fields.hasErrors('comercio')} ? 'sobresaltar-field'"/>
 							<p class="campo-requerido" th:if="${#fields.hasErrors('comercio')}" th:errors="*{comercio}"/>
 						</div>
 					</div>
@@ -250,7 +250,7 @@ var estaEsPaginaEditar = false;
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="descripcion-lbl" class="titulo-ca"><span class="asterisco">*</span>Descripción</label>
-							<textarea data-parsley-error-message= "Campo es requerido." data-parsley-required="true"  class="form-control" rows="4" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')} ? 'sobresaltar-field'"></textarea>
+							<textarea data-parsley-error-message= "Descripcion es requerida." data-parsley-required="true"  class="form-control" rows="4" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')} ? 'sobresaltar-field'"></textarea>
 							<textarea style="display:none;" rows="4" th:field="*{descripcionAnterior}"></textarea>
 							<p class="campo-requerido" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"/>
 						</div>
@@ -258,7 +258,7 @@ var estaEsPaginaEditar = false;
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="restricciones-lbl" class="titulo-ca"><span class="asterisco">*</span>Restricciones</label>
-							<textarea data-parsley-error-message= "Campo es requerido." data-parsley-required="true" class="form-control" rows="4" th:field="*{restricciones}" th:classappend="${#fields.hasErrors('restricciones')} ? 'sobresaltar-field'"></textarea>
+							<textarea data-parsley-error-message= "Restricciones son requeridas." data-parsley-required="true" class="form-control" rows="4" th:field="*{restricciones}" th:classappend="${#fields.hasErrors('restricciones')} ? 'sobresaltar-field'"></textarea>
 							<p class="campo-requerido" th:if="${#fields.hasErrors('restricciones')}" th:errors="*{restricciones}"/>
 						</div>
 					</div>
@@ -278,7 +278,7 @@ var estaEsPaginaEditar = false;
 							<div class="form-group">
 								<label for="vigenciaDesde-lbl" class="titulo-ca"><span class="asterisco">*</span>Vigencia desde</label>
 								<div class="inner-addon right-addon">
-									<input data-parsley-error-message= "Campo es requerido." data-parsley-required="true" type="text" class="form-control fechaInput" th:field="*{vigenciaDesde}" id="vigenciaDesde-input"
+									<input data-parsley-error-message= "Vigencia desde es requerida." data-parsley-required="true" type="text" class="form-control fechaInput" th:field="*{vigenciaDesde}" id="vigenciaDesde-input"
 									th:classappend="${#fields.hasErrors('vigenciaDesde')} ? 'sobresaltar-field'" 
 									/>
 									<p class="campo-requerido" th:if="${#fields.hasErrors('vigenciaDesde')}" th:errors="*{vigenciaDesde}"/>
@@ -290,7 +290,7 @@ var estaEsPaginaEditar = false;
 							<div class="form-group">
 								<label for="vigenciaHasta-lbl" class="titulo-ca"><span class="asterisco">*</span>Hasta</label>
 								<div class="inner-addon right-addon">
-									<input data-parsley-error-message= "Campo es requerido." data-parsley-required="true" type="text" class="form-control fechaInput" th:field="*{vigenciaHasta}" id="vigenciaHasta-input"
+									<input data-parsley-error-message= "Vigencia hasta es requerida." data-parsley-required="true" type="text" class="form-control fechaInput" th:field="*{vigenciaHasta}" id="vigenciaHasta-input"
 									th:classappend="${#fields.hasErrors('vigenciaHasta')} ? 'sobresaltar-field'"
 									/>
 									<p class="campo-requerido" th:if="${#fields.hasErrors('vigenciaHasta')}" th:errors="*{vigenciaHasta}"/>
@@ -303,14 +303,14 @@ var estaEsPaginaEditar = false;
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="logo-label-lbl" class="titulo-ca"><span class="asterisco">*</span>Logo del comercio</label>
-								<input data-parsley-error-message= "Campo es requerido." data-parsley-required="true" id="logo-comercio-input" type="file" name="logo-comercio-input" accept="image/*"/>
+								<input data-parsley-error-message= "Logo comercio es requerido." data-parsley-required="true" id="logo-comercio-input" type="file" name="logo-comercio-input" accept="image/*"/>
 								<p class="campo-requerido" th:if="${#fields.hasErrors('imagenComercioPath')}" th:errors="*{imagenComercioPath}"  id="validador-imagen-comercio"/>
 							</div>		
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="publicidad-label-lbl" class="titulo-ca"><span class="asterisco">*</span>Imagen de publicidad</label> 
-								<input data-parsley-error-message= "Campo es requerido." data-parsley-required="true" id="imagen-publicidad-input" type="file" name="imagen-publicidad-input" 
+								<input data-parsley-error-message= "Imagen de publicada es requerida." data-parsley-required="true" id="imagen-publicidad-input" type="file" name="imagen-publicidad-input" 
 								accept=".zip,image/*"/>
 								<p class="campo-requerido" th:if="${#fields.hasErrors('imagenPublicidadPath')}" th:errors="*{imagenPublicidadPath}"/>
 							</div>
@@ -361,7 +361,7 @@ var estaEsPaginaEditar = false;
     	$("#limpiar-submit").click(
     	function()
     	{
-    		window.location.href = '/BackOffice/gestionDeOfertas'
+    		window.location.href = '/CognitiveAgent/BackOffice/gestionDeOfertas'
     	}
     	);
     
