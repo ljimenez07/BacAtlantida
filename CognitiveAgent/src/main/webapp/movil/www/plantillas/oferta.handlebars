@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-xs-12">
 		{{#if esHtml}}
-			<iframe class="html-de-oferta embed-responsive-item" frameBorder="0" scrolling="no" id="html-de-oferta-{{idOferta}}" src="http://192.168.0.101:8080/archivossubidos/{{imagenPublicidadPath}}"></iframe>
+			<iframe class="html-de-oferta embed-responsive-item" frameBorder="0" scrolling="no" id="html-de-oferta-{{idOferta}}"></iframe>
 			<script type="text/javascript">
 			var source = serverDomain + "/archivossubidos/{{imagenPublicidadPath}}";
 			var iframe = $('#oferta #html-de-oferta-{{idOferta}}');
@@ -30,7 +30,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-xs-12 text-center boton-escuchar-oferta" data-audio="{{descripcionAudio}}">
+			<div class="col-xs-12 text-center boton-escuchar-oferta" data-audio="/archivossubidos{{descripcionAudio}}">
 				<img src="./img/icono-94x91.png">
 			</div>
 		</div>

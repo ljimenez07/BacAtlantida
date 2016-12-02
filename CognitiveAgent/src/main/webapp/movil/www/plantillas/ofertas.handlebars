@@ -103,12 +103,12 @@ function bindAcciones()
 	
 	$("#ofertas .boton-escuchar").off("click").on("click", function()
 	{
-		agregarAColaDeReproduccion("/archivossubidos" + $(this).data("audio"));
+		agregarAColaDeReproduccion($(this).data("audio"));
 	});
 	
 	$("#ofertas .boton-compartir").off("click").on("click", function()
 	{
-		agregarAColaDeReproduccion("/imagenes/beep-01a.wav");
+		agregarAColaDeReproduccion("/archivos/beep.wav");
 	});
 }
 
