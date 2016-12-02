@@ -8,24 +8,24 @@ import com.ncubo.evaluador.main.Evaluador;
 public class AdministradorDeVariablesDeContexto {
 
 	private final Evaluador miEvaluador;
-	private VariablesDeContexto misVariablesDeContexto;
 	
 	public AdministradorDeVariablesDeContexto(){
 		miEvaluador = new Evaluador();
-		misVariablesDeContexto = new VariablesDeContexto();
 		inicializarVariables();
 	}
 	
 	private void inicializarVariables(){
 		System.out.println("Inicializar variables del cliente ...");
-		//TODO sergio ir a recuperalos de DB o usar los por defecto del xml
-		Hashtable<String, Variable> variables = misVariablesDeContexto.obtenerTodasLasVariablesDeMiContexto();
+		
+		Hashtable<String, Variable> variables = VariablesDeContexto.getInstance().obtenerTodasLasVariablesDeMiContexto();
 		Enumeration<String> keys = variables.keys();
 		while(keys.hasMoreElements()){
 			String key = keys.nextElement();
 			Variable variable = variables.get(key);
 			if( ! variable.getValorDeLaVariable().equals("") && ! variable.getTipoValor().equals("hora")){
 				agregarVariableDeContexto(variable.getNombre(), variable.getValorDeLaVariable());
+			}else if(variable.getValorDeLaVariable().equals("")){
+				agregarVariableDeContexto(variable.getNombre(), "\"vacio\"");
 			}
 		}
 	}
@@ -33,7 +33,7 @@ public class AdministradorDeVariablesDeContexto {
 	private void agregarVariableDeContexto(String nombreDeLaVariable, String valorDeLaVariable){
 		if( ! nombreDeLaVariable.equals("") && ! valorDeLaVariable.equals("")){
 			String comando = nombreDeLaVariable+"="+valorDeLaVariable+";";
-			System.out.println("Ejecutar el comando: "+comando);
+			System.out.println("Agregado variable con el comando: "+comando);
 			miEvaluador.crearContexto(comando);
 		}
 	}
@@ -48,6 +48,7 @@ public class AdministradorDeVariablesDeContexto {
 	}
 
 	public void ejecutar(String comando) throws Exception {
+		System.out.println("Ejecutando el comando: "+comando);
 		miEvaluador.ejecutaComando(comando);
 	}
 	

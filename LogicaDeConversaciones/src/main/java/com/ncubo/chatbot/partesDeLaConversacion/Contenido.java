@@ -31,11 +31,9 @@ public abstract class Contenido
 	//private ArrayList<Intencion> intenciones = new ArrayList<Intencion>();
 	private ArrayList<WorkSpace> miWorkSpaces = new ArrayList<WorkSpace>();
 	private String pathFileXML;
-	private VariablesDeContexto misVariables; 
 	
 	protected Contenido(String path){
 		pathFileXML = path;
-		misVariables = new VariablesDeContexto();
 		File archivoDeConfiguracion = archivoDeConfiguracion(path);
 		// TODO Ver que el archivo existe, sino return error
 		cargarPreguntasYRespuestasDelArchivoDeConfiguracion(archivoDeConfiguracion);
@@ -180,7 +178,7 @@ public abstract class Contenido
 					String tipoValor = eElement.getAttribute("tipo");
 					String valorPorDefecto = nNode.getTextContent();
 					System.out.println("ValorDeAmbiente: "+nombre);
-					misVariables.agregarVariableAMiContexto(new Variable(nombre, valorPorDefecto, tipoValor));
+					VariablesDeContexto.getInstance().agregarVariableAMiContexto(new Variable(nombre, valorPorDefecto, tipoValor));
 				}
 			}catch(Exception e){
 				throw new ChatException("Error cargando las conjunciones "+e.getMessage());

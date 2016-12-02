@@ -50,17 +50,13 @@ public class Cliente extends Participante{
 	}
 	
 	public void agregarIdsDeSesiones(String idDeSesion) {
-		this.misIdsDeSesiones.add(idDeSesion);
+		if( ! contieneElIdSesion(idDeSesion)){
+			this.misIdsDeSesiones.add(idDeSesion);
+		}
 	}
 	
 	private boolean contieneElIdSesion(String idSesion){
 		return misIdsDeSesiones.contains(idSesion);
-	}
-	
-	public void verificarSiExisteElIdSesion(String idSesion){
-		if( ! contieneElIdSesion(idSesion)){
-			agregarIdsDeSesiones(idSesion);
-		}
 	}
 	
 	// Hoteles
@@ -74,14 +70,14 @@ public class Cliente extends Participante{
 		administradorDeVariablesDeContexto.ejecutar("leGustaLosHoteles = (leGustaLosHoteles - 1.1) / 2;");
 	}
 	
-	public void actualizarGustosDeHoteles() throws Exception
+	public void actualizarGustosDeHoteles(String valor) throws Exception
 	{
-		administradorDeVariablesDeContexto.ejecutar("leGustaLosHoteles = (leGustaLosHoteles + 1) / 2;");
+		administradorDeVariablesDeContexto.ejecutar(String.format("leGustaLosHoteles = %s; show leGustaLosHoteles;", valor));
 	}
 	
-	public String obtenerValorDeGustosDeHoteles() throws Exception
+	public double obtenerValorDeGustosDeHoteles() throws Exception
 	{
-		return administradorDeVariablesDeContexto.obtenerVariable("leGustaLosHoteles");
+		return Double.parseDouble(administradorDeVariablesDeContexto.obtenerVariable("leGustaLosHoteles"));
 	}
 	
 	// Restaurantes
@@ -95,14 +91,14 @@ public class Cliente extends Participante{
 		administradorDeVariablesDeContexto.ejecutar("leGustaComerAfuera = (leGustaComerAfuera - 1.1) / 2;");
 	}
 	
-	public void actualizarGustosDeRestaurantes() throws Exception
+	public void actualizarGustosDeRestaurantes(String valor) throws Exception
 	{
-		administradorDeVariablesDeContexto.ejecutar("leGustaComerAfuera = (leGustaComerAfuera + 1) / 2;");
+		administradorDeVariablesDeContexto.ejecutar(String.format("leGustaComerAfuera = %s; show leGustaComerAfuera;", valor));
 	}
 	
-	public String obtenerValorDeGustosDeRestaurantes() throws Exception
+	public double obtenerValorDeGustosDeRestaurantes() throws Exception
 	{
-		return administradorDeVariablesDeContexto.obtenerVariable("leGustaComerAfuera");
+		return Double.parseDouble(administradorDeVariablesDeContexto.obtenerVariable("leGustaComerAfuera"));
 	}
 	
 	// Belleza
@@ -116,14 +112,14 @@ public class Cliente extends Participante{
 		administradorDeVariablesDeContexto.ejecutar("sePreocupaPorLaSalud = (sePreocupaPorLaSalud - 1.1) / 2;");
 	}
 	
-	public void actualizarGustosDeBelleza() throws Exception
+	public void actualizarGustosDeBelleza(String valor) throws Exception
 	{
-		administradorDeVariablesDeContexto.ejecutar("sePreocupaPorLaSalud = (sePreocupaPorLaSalud + 1) / 2;");
+		administradorDeVariablesDeContexto.ejecutar(String.format("sePreocupaPorLaSalud = %s; show sePreocupaPorLaSalud;", valor));
 	}
 	
-	public String obtenerValorDeGustosDeBelleza() throws Exception
+	public double obtenerValorDeGustosDeBelleza() throws Exception
 	{
-		return administradorDeVariablesDeContexto.obtenerVariable("sePreocupaPorLaSalud");
+		return Double.parseDouble(administradorDeVariablesDeContexto.obtenerVariable("sePreocupaPorLaSalud"));
 	}
 }
 

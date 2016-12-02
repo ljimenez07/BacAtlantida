@@ -43,7 +43,7 @@ public class Consola {
 		return input;
 	}
 	
-	public static void main(String argv[]) {
+	public static void main(String argv[]) throws Exception {
 		
 		Consola consola = new Consola();
 		

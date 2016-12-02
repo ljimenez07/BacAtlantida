@@ -48,7 +48,7 @@ public class MovilController {
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/chat/", method = RequestMethod.POST)
-	@ResponseBody String chat(@RequestBody String mensaje, HttpSession session) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ClassNotFoundException, SQLException, ParseException 
+	@ResponseBody String chat(@RequestBody String mensaje, HttpSession session) throws Exception 
 	{
 		Usuario usuario = obtenerUsuario(session);
 		
@@ -67,7 +67,7 @@ public class MovilController {
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/conocerte/", method = RequestMethod.POST)
-	@ResponseBody String conocerte(@RequestBody String mensaje, HttpSession session) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ClassNotFoundException, SQLException, ParseException 
+	@ResponseBody String conocerte(@RequestBody String mensaje, HttpSession session) throws Exception 
 	{
 		Usuario usuario = obtenerUsuario(session);
 		
@@ -196,6 +196,12 @@ public class MovilController {
 	@RequestMapping(value="/conversacion/verElHistoricoDeUnaConversacionEspecifica/{id}", method = RequestMethod.GET)
 	@ResponseBody String verElHistoricoDeUnaConversacionEspecifica(@PathVariable("id") String id){
 		return serverCognitivo.verElHistoricoDeUnaConversacionEspecifica(id);
+	}
+	
+	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/obtenerValorDeGustosDeHoteles/{id}", method = RequestMethod.GET)
+	@ResponseBody String obtenerValorDeGustosDeHoteles(@PathVariable("id") String id) throws Exception{
+		return ""+serverCognitivo.obtenerValorDeGustosDeHoteles(id);
 	}
 	
 	@ExceptionHandler(Throwable.class)

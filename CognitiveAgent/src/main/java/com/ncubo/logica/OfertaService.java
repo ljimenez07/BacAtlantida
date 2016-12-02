@@ -60,7 +60,7 @@ public class OfertaService
 	{
 		if( usuario.getEstaLogueado() )
 		{
-			String gustoDeHoteles = serverCognitivo.obtenerValorDeGustosDeHoteles( usuario.getUsuarioId() );
+			double gustoDeHoteles = serverCognitivo.obtenerValorDeGustosDeHoteles( usuario.getUsuarioId() );
 			
 		}
 		return null;
