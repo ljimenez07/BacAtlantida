@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.ncubo.librerias.LRUCache;
+import com.ncubo.caches.CacheDeAudios;
 import com.ncubo.util.FTPServidor;
 
 @Controller
@@ -35,27 +36,32 @@ public class ArchivosController
 {
 	@Autowired
 	private FTPServidor ftp;
-	private int capacidadDeAudios;
+	private int capacidadDeAudiosLivianos;
+	private int capacidadDeAudiosPesados;
+	private int limiteTamanioAudiosLivianos;
 	
-	private static LRUCache cacheDeAudios;
+	@PostConstruct
+	public void init()
+	{
+		CacheDeAudios.inicializar(capacidadDeAudiosLivianos, capacidadDeAudiosPesados, limiteTamanioAudiosLivianos);
+	}
 
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/archivossubidos/{nombre:.*}", method = RequestMethod.GET)
 	void archivossubidos(HttpSession session, HttpServletRequest request, HttpServletResponse response, @PathVariable String nombre) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ClassNotFoundException, SQLException 
 	{
-		getCacheDeAudios();
 		String remoteFile2 = nombre.replace("-", "/");
 		InputStream streamPorDevolver = null;
 		
 		if (remoteFile2.startsWith("audio"))
 		{
-			byte[] bytesStreamPorDevolver = cacheDeAudios.obtener(remoteFile2);
+			byte[] bytesStreamPorDevolver = CacheDeAudios.obtener(remoteFile2);
+			
 			if(bytesStreamPorDevolver == null)
 			{
 				streamPorDevolver = ftp.descargarArchivo(remoteFile2);
 				bytesStreamPorDevolver = IOUtils.toByteArray(streamPorDevolver);
-				cacheDeAudios.establecer(remoteFile2, bytesStreamPorDevolver);
-				
+				CacheDeAudios.agregar(remoteFile2, bytesStreamPorDevolver);
 			}
 			streamPorDevolver= new ByteArrayInputStream(bytesStreamPorDevolver);
 		}
@@ -89,23 +95,34 @@ public class ArchivosController
 		}
 	}
 
-	public int getCapacidadDeAudios()
+	public int getCapacidadDeAudiosLivianos()
 	{
-		return capacidadDeAudios;
+		return capacidadDeAudiosLivianos;
 	}
 
-	public void setCapacidadDeAudios(int capacidadDeAudios)
+	public void setCapacidadDeAudiosLivianos(int capacidadDeAudiosLivianos)
 	{
-		this.capacidadDeAudios = capacidadDeAudios;
+		this.capacidadDeAudiosLivianos = capacidadDeAudiosLivianos;
 	}
 
-	public LRUCache getCacheDeAudios()
+	public int getCapacidadDeAudiosPesados()
 	{
-		if (cacheDeAudios == null)
-		{
-			cacheDeAudios = new LRUCache(capacidadDeAudios);
-		}
-		return cacheDeAudios;
+		return capacidadDeAudiosPesados;
 	}
+
+	public void setCapacidadDeAudiosPesados(int capacidadDeAudiosPesados)
+	{
+		this.capacidadDeAudiosPesados = capacidadDeAudiosPesados;
+	}
+
+	public int getLimiteTamanioAudiosLivianos() {
+		return limiteTamanioAudiosLivianos;
+	}
+
+	public void setLimiteTamanioAudiosLivianos(int limiteTamanioAudiosLivianos) {
+		this.limiteTamanioAudiosLivianos = limiteTamanioAudiosLivianos;
+	}
+	
+	
 
 }
