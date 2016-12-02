@@ -260,4 +260,9 @@ public class Conversaciones {
 		return resultado;
 	}
 	
+	public Cliente obtenerCliente(String idCliente)
+	{
+		return misClientes.get(idCliente);
+	}
+	
 }

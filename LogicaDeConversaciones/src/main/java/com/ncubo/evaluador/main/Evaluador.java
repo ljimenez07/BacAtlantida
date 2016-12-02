@@ -13,7 +13,7 @@ public class Evaluador {
 	private final TablaDeSimbolos tablaDeSimbolos = new TablaDeSimbolos();
 	private final Salida salida = new Salida();
 	
-	public void crearContexto(String contexto) throws Exception
+	public void crearContexto(String contexto)
 	{
 		Programa programa = null;
 		this.parser = new Parser(tablaDeSimbolos, salida, contexto);
@@ -39,8 +39,8 @@ public class Evaluador {
 	public static void main(String[] args) throws Exception
     {
 		Evaluador evaluador = new Evaluador();
-		evaluador.crearContexto("a=10;b=5;f=23/11/2016;");
-		System.out.println(evaluador.ejecutaComando("show a+b;"));
+		evaluador.crearContexto("a = 10;b = 5;f = 23/11/2016;");
+		System.out.println(evaluador.ejecutaComando("a = (a+1)/2; show a;").trim());
 		//System.out.println(evaluador.ejecutaComando("show f.getDia();"));
     }
 }

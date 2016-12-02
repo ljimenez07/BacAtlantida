@@ -27,10 +27,13 @@ import com.ncubo.chatbot.bitacora.HistoricosDeConversaciones;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.chatbot.watson.TextToSpeechWatson;
 import com.ncubo.chatbot.partesDeLaConversacion.Tema;
+import com.ncubo.chatbot.participantes.Gustos;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.data.Consulta;
 import com.ncubo.logicaDeConversaciones.Conversaciones;
 import com.ncubo.util.FTPServidor;
+
+import groovyjarjarantlr.debug.GuessingEvent;
 
 @Component
 @ConfigurationProperties("servercognitivo")
@@ -506,4 +509,10 @@ public class AgenteCognitivo
 	public void setPathXML(String pathXML) {
 		this.pathXML = pathXML;
 	}
+	
+	public Gustos obtenerGustosDelCliente(String idCliente)
+	{
+		return misConversaciones.obtenerCliente(idCliente).obtenerMisGustos();
+	}
+
 }

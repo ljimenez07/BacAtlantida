@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
+import com.ncubo.chatbot.participantes.Gustos;
+import com.ncubo.conf.AgenteCognitivo;
+import com.ncubo.conf.Usuario;
 import com.ncubo.dao.OfertaDao;
 import com.ncubo.data.Oferta;
 
@@ -17,6 +20,9 @@ public class OfertaService
 {
 	@Autowired
 	private OfertaDao ofertaDao;
+	
+	@Autowired
+	private AgenteCognitivo serverCognitivo;
 	
 	public BindingResult validarCampos(BindingResult bindingResult, Oferta oferta) throws ParseException
 	{
@@ -50,6 +56,17 @@ public class OfertaService
 		//TODO transacciones
 		ofertaDao.insertar(oferta);
 		ofertaDao.insertarCategorias(oferta.getIdOferta(), oferta.getCategorias());
+	}
+	
+	public Oferta obtener(int idOferta, Usuario usuario) throws ClassNotFoundException, SQLException
+	{
+		if( usuario.getEstaLogueado() )
+		{
+			Gustos gusto = serverCognitivo.obtenerGustosDelCliente( usuario.getUsuarioId() );
+			
+		}
+		
+	//	return ofertaDao.obtener(idOferta, idUsuario);
 	}
 
 }

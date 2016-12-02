@@ -1,7 +1,6 @@
 package com.ncubo.chatbot.participantes;
 
 import java.util.ArrayList;
-
 import com.ncubo.chatbot.contexto.AdministradorDeVariablesDeContexto;
 
 public class Cliente extends Participante{
@@ -14,7 +13,11 @@ public class Cliente extends Participante{
 	public Cliente(){
 		miNombre = "";
 		miId = "";
+		//TODO sergio ir a recuperalos DB o usar los por defecto del xml
 		administradorDeVariablesDeContexto = new AdministradorDeVariablesDeContexto();
+		administradorDeVariablesDeContexto.agregarVariableDeContexto("leGustaLosHoteles", "0");
+		administradorDeVariablesDeContexto.agregarVariableDeContexto("leGustaComerAfuera", "0");
+		administradorDeVariablesDeContexto.agregarVariableDeContexto("sePreocupaPorLaSalud", "0");
 	}
 	
 	public Cliente(String nombre, String id){
@@ -60,16 +63,24 @@ public class Cliente extends Participante{
 		}
 	}
 	
-	public void agregarVariableDeContexto(String nombreDeLaVariable, String valorDeLaVariable) throws Exception{
-		administradorDeVariablesDeContexto.agregarVariableDeContexto(nombreDeLaVariable, valorDeLaVariable);
+	public void presionarLikeDeHoteles() throws Exception
+	{
+		administradorDeVariablesDeContexto.ejecutar("leGustaLosHoteles = (leGustaLosHoteles + 1.1) / 2;");
 	}
 	
-	public void agregarVariablesAlContexto(String comando) throws Exception{
-		administradorDeVariablesDeContexto.agregarVariablesAlContexto(comando);
+	public void presionarDisLikeDeHoteles() throws Exception
+	{
+		administradorDeVariablesDeContexto.ejecutar("leGustaLosHoteles = (leGustaLosHoteles - 1.1) / 2;");
 	}
 	
-	public String obtenerElValorDeUnaVariable(String nombreDeLaVariable) throws Exception{
-		return administradorDeVariablesDeContexto.obtenerElValorDeUnaVariable(nombreDeLaVariable);
+	public void actualizarGustosDeHoteles() throws Exception
+	{
+		administradorDeVariablesDeContexto.ejecutar("leGustaLosHoteles = (leGustaLosHoteles + 1) / 2;");
 	}
 	
+	public String obtenerValorDeGustosDeHoteles() throws Exception
+	{
+		return administradorDeVariablesDeContexto.obtenerVariable("leGustaLosHoteles");
+	}
 }
+

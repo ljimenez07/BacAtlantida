@@ -12,26 +12,27 @@ public class AdministradorDeVariablesDeContexto {
 		misVariablesDeContexto = new VariablesDeContexto();
 	}
 	
-	public void agregarVariableDeContexto(String nombreDeLaVariable, String valorDeLaVariable) throws Exception{
+	public void agregarVariableDeContexto(String nombreDeLaVariable, String valorDeLaVariable){
 		if( ! nombreDeLaVariable.equals("") && ! valorDeLaVariable.equals("")){
 			String comando = nombreDeLaVariable+"="+valorDeLaVariable+";";
 			miEvaluador.crearContexto(comando);
 		}
 	}
 	
-	public void agregarVariablesAlContexto(String comando) throws Exception{
-		if( ! comando.equals("")){
-			miEvaluador.crearContexto(comando);
-		}
-	}
-	
-	public String obtenerElValorDeUnaVariable(String nombreDeLaVariable) throws Exception{
+	private String obtenerElValorDeUnaVariable(String nombreDeLaVariable) throws Exception{
 		String resultado = "";
 		if( ! nombreDeLaVariable.equals("")){
 			String comando = "show "+nombreDeLaVariable+";";
-			resultado = miEvaluador.ejecutaComando(comando);
+			resultado = miEvaluador.ejecutaComando(comando).trim();
 		}
 		return resultado;
 	}
+
+	public void ejecutar(String comando) throws Exception {
+		miEvaluador.ejecutaComando(comando);
+	}
 	
+	public String obtenerVariable(String nombreDeLaVariable) throws Exception{
+		return obtenerElValorDeUnaVariable(nombreDeLaVariable);
+	}
 }
