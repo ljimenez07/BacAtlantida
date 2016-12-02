@@ -4,12 +4,12 @@ import java.util.Hashtable;
 
 public class VariablesDeContexto {
 
-	private final static Hashtable<String, String> misVariables = new Hashtable<String, String>();
+	private final static Hashtable<String, Variable> misVariables = new Hashtable<String, Variable>();
 	
 	public VariablesDeContexto(){}
 	
-	public void agregarVariableAMiContexto(String variable, String valor){
-		misVariables.put(variable, valor);
+	public void agregarVariableAMiContexto(Variable variable){
+		misVariables.put(variable.getNombre(), variable);
 	}
 	
 	public boolean verificarSiUnaVariableDeContextoExiste(String variable){
@@ -18,12 +18,12 @@ public class VariablesDeContexto {
 	
 	public String obtenerUnaVariableDeMiContexto(String variable){
 		if (verificarSiUnaVariableDeContextoExiste(variable))
-			return misVariables.get(variable);
+			return misVariables.get(variable).getValorDeLaVariable();
 		else
 			return "";
 	}
 	
-	public Hashtable<String, String> obtenerTodasLasVariablesDeMiContexto(){
+	public Hashtable<String, Variable> obtenerTodasLasVariablesDeMiContexto(){
 		return misVariables;
 	}
 }

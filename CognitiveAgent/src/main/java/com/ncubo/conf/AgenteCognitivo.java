@@ -27,7 +27,6 @@ import com.ncubo.chatbot.bitacora.HistoricosDeConversaciones;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.chatbot.watson.TextToSpeechWatson;
 import com.ncubo.chatbot.partesDeLaConversacion.Tema;
-import com.ncubo.chatbot.participantes.Gustos;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.data.Consulta;
 import com.ncubo.logicaDeConversaciones.Conversaciones;
@@ -510,9 +509,19 @@ public class AgenteCognitivo
 		this.pathXML = pathXML;
 	}
 	
-	public Gustos obtenerGustosDelCliente(String idCliente)
+	public String obtenerValorDeGustosDeHoteles(String idCliente) throws Exception
 	{
-		return misConversaciones.obtenerCliente(idCliente).obtenerMisGustos();
+		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeHoteles();
 	}
 
+	public String obtenerValorDeGustosDeRestaurantes(String idCliente) throws Exception
+	{
+		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeRestaurantes();
+	}
+	
+	public String obtenerValorDeGustosDeBelleza(String idCliente) throws Exception
+	{
+		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeBelleza();
+	}
+	
 }

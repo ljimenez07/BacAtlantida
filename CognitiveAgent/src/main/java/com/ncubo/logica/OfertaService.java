@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
-
-import com.ncubo.chatbot.participantes.Gustos;
 import com.ncubo.conf.AgenteCognitivo;
 import com.ncubo.conf.Usuario;
 import com.ncubo.dao.OfertaDao;
@@ -58,14 +56,14 @@ public class OfertaService
 		ofertaDao.insertarCategorias(oferta.getIdOferta(), oferta.getCategorias());
 	}
 	
-	public Oferta obtener(int idOferta, Usuario usuario) throws ClassNotFoundException, SQLException
+	public Oferta obtener(int idOferta, Usuario usuario) throws Exception
 	{
 		if( usuario.getEstaLogueado() )
 		{
-			Gustos gusto = serverCognitivo.obtenerGustosDelCliente( usuario.getUsuarioId() );
+			String gustoDeHoteles = serverCognitivo.obtenerValorDeGustosDeHoteles( usuario.getUsuarioId() );
 			
 		}
-		
+		return null;
 	//	return ofertaDao.obtener(idOferta, idUsuario);
 	}
 
