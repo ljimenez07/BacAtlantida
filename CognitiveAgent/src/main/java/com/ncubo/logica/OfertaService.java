@@ -72,9 +72,9 @@ public class OfertaService
 		}
 		
 		List<Oferta> ofertasFinales = new ArrayList<Oferta>();
-		double hoteles = Double.parseDouble( serverCognitivo.obtenerValorDeGustosDeHoteles( usuario.getUsuarioId() ));
-		double belleza = Double.parseDouble( serverCognitivo.obtenerValorDeGustosDeBelleza( usuario.getUsuarioId() ));
-		double restaurantes = Double.parseDouble( serverCognitivo.obtenerValorDeGustosDeRestaurantes( usuario.getUsuarioId() ));
+		double hoteles =  serverCognitivo.obtenerValorDeGustosDeHoteles( usuario.getUsuarioId() );
+		double belleza = serverCognitivo.obtenerValorDeGustosDeBelleza( usuario.getUsuarioId() );
+		double restaurantes = serverCognitivo.obtenerValorDeGustosDeRestaurantes( usuario.getUsuarioId() );
 		
 		List<Oferta> ofertas =  ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario.getUsuarioId());
 		

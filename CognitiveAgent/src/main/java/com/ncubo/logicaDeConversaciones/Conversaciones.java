@@ -31,12 +31,15 @@ public class Conversaciones {
 		Cliente cliente = null;
 		
 		if(usuario.getEstaLogueado()){
-			cliente = new Cliente(usuario.getUsuarioNombre(), usuario.getUsuarioId());
-			cliente.agregarIdsDeSesiones(usuario.getIdSesion());
-			
-			synchronized(misClientes){
-				misClientes.put(cliente.getMiId(), cliente);
+			if(existeElCliente(usuario.getUsuarioId())){
+				cliente = misClientes.get(usuario.getUsuarioId());
+			}else{
+				cliente = new Cliente(usuario.getUsuarioNombre(), usuario.getUsuarioId());
+				synchronized(misClientes){
+					misClientes.put(cliente.getMiId(), cliente);
+				}
 			}
+			cliente.agregarIdsDeSesiones(usuario.getIdSesion());
 			
 			synchronized(misConversaciones){
 				if(existeLaConversacion(usuario.getIdSesion())){
@@ -54,8 +57,7 @@ public class Conversaciones {
 		}else{
 			if (! usuario.getIdSesion().equals("")){
 				if( ! existeLaConversacion(usuario.getIdSesion())){
-					cliente = new Cliente();
-					Conversacion coversacion = new Conversacion(temarioDelBancoAtlantida, cliente);
+					Conversacion coversacion = new Conversacion(temarioDelBancoAtlantida);
 					synchronized(misConversaciones){
 						misConversaciones.put(usuario.getIdSesion(), coversacion);
 					}
@@ -71,7 +73,7 @@ public class Conversaciones {
 		return resultado;
 	}
 	
-	public ArrayList<Salida> conversarConElAgente(Usuario cliente, String textoDelCliente, boolean esConocerte){
+	public ArrayList<Salida> conversarConElAgente(Usuario cliente, String textoDelCliente, boolean esConocerte) throws Exception{
 		ArrayList<Salida> resultado = null;
 		logger.debug("Conversar ..........");
 		System.out.println("Coversar con "+cliente.getIdSesion());
@@ -84,10 +86,14 @@ public class Conversaciones {
 			// Verificar si ya el usuario existe
 			if(existeElCliente(cliente.getUsuarioId()) && existeLaConversacion(cliente.getIdSesion())){
 				// TODO Verificar si cambio el id de sesion, si es asi agregarla al cliente y hacerlo saber a conversacion
-				misClientes.get(cliente.getUsuarioId()).verificarSiExisteElIdSesion(cliente.getIdSesion());
-				misConversaciones.get(cliente.getIdSesion()).cambiarParticipante(misClientes.get(cliente.getUsuarioId())); // Actualizar cliente
+				misClientes.get(cliente.getUsuarioId()).agregarIdsDeSesiones(cliente.getIdSesion());
+				misConversaciones.get(cliente.getIdSesion()).cambiarParticipante(misClientes.get(cliente.getUsuarioId())); // Actualizar cliente en la conversacion
 				resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
-			}else{ // Crear un nuevo Cliente
+				
+				synchronized (misClientes) {
+					misClientes.put(cliente.getUsuarioId(), misConversaciones.get(cliente.getIdSesion()).obtenerElParticipante());
+				}
+			}else{ // Crear un nuevo Cliente y asociarle una conversacion
 				crearUnaNuevoConversacion(cliente);
 				resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
 				/*if(existeLaConversacion(cliente.getIdSesion())){ // Es porque ya se cliente esta conversando y no se habia logueado, eso quiere decir que se tiene que mantener el contexto y NO saludar de nuevo
@@ -124,15 +130,13 @@ public class Conversaciones {
 		return misConversaciones.get(idDelCliente).inicializarLaConversacion();
 	}
 	
-	public ArrayList<Salida> hablarConElAjente(Usuario cliente, String textoDelCliente, boolean esConocerte){
+	public ArrayList<Salida> hablarConElAjente(Usuario cliente, String textoDelCliente, boolean esConocerte) throws Exception{
 		ArrayList<Salida> resultado = null;
-		
 		if(esConocerte){
 			resultado = misConversaciones.get(cliente.getIdSesion()).analizarLaRespuestaConWatsonEnUnWorkspaceEspecifico(textoDelCliente, "ConocerteGeneral", "conocerte");
 		}else{
 			resultado = misConversaciones.get(cliente.getIdSesion()).analizarLaRespuestaConWatson(textoDelCliente);
 		}
-		
 		return resultado;
 	}
 	

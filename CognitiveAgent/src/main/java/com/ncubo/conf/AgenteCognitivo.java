@@ -73,7 +73,7 @@ public class AgenteCognitivo
 		historicoDeConversaciones = new HistoricosDeConversaciones();
     }
 	
-	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
+	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws Exception
 	{
 		return procesarMensaje(usuario, mensaje, date, workspaceDeChats, false);
 	}
@@ -83,7 +83,7 @@ public class AgenteCognitivo
 		return procesarMensajeConocerte(usuario, mensaje, date, workspaceDeConocerte);
 	}
 	
-	private String procesarMensaje(Usuario usuario, String mensaje, Date date, String workspace, boolean esParaConocerte) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
+	private String procesarMensaje(Usuario usuario, String mensaje, Date date, String workspace, boolean esParaConocerte) throws Exception
 	{
 		JSONObject respuesta = new JSONObject();
 		/*ObjectMapper mapper = new ObjectMapper();
@@ -275,7 +275,7 @@ public class AgenteCognitivo
 		
 	}
 
-	private String 	 procesarMensajeConocerte(Usuario usuario, String mensaje, Date date, String workspace) throws Exception
+	private String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date, String workspace) throws Exception
 	{
 		JSONObject respuesta = new JSONObject();
 		String texto = "";
@@ -300,9 +300,9 @@ public class AgenteCognitivo
 					seTerminoElChat = true;
 					
 					Categorias categorias = new Categorias(
-							Double.parseDouble(obtenerValorDeGustosDeRestaurantes(usuario.getUsuarioId())),
-							Double.parseDouble(obtenerValorDeGustosDeBelleza(usuario.getUsuarioId())),
-							Double.parseDouble(obtenerValorDeGustosDeHoteles(usuario.getUsuarioId()))
+							obtenerValorDeGustosDeRestaurantes(usuario.getUsuarioId()),
+							obtenerValorDeGustosDeBelleza(usuario.getUsuarioId()),
+							obtenerValorDeGustosDeHoteles(usuario.getUsuarioId())
 							);
 					
 					usuarioDao.insertar(usuario.getUsuarioId(), categorias);;
@@ -523,17 +523,17 @@ public class AgenteCognitivo
 		this.pathXML = pathXML;
 	}
 	
-	public String obtenerValorDeGustosDeHoteles(String idCliente) throws Exception
+	public double obtenerValorDeGustosDeHoteles(String idCliente) throws Exception
 	{
 		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeHoteles();
 	}
 
-	public String obtenerValorDeGustosDeRestaurantes(String idCliente) throws Exception
+	public double obtenerValorDeGustosDeRestaurantes(String idCliente) throws Exception
 	{
 		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeRestaurantes();
 	}
 	
-	public String obtenerValorDeGustosDeBelleza(String idCliente) throws Exception
+	public double obtenerValorDeGustosDeBelleza(String idCliente) throws Exception
 	{
 		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeBelleza();
 	}

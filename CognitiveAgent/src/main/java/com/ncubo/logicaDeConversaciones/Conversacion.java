@@ -31,6 +31,17 @@ public class Conversacion {
 	private Frase fraseActualDelWorkSpaceEspecifico = null;
 	private boolean hayUnWorkspaceEspecifico = false;
 	
+	public Conversacion(Temario temario){
+		// Hacer lamdaba para agregar los participantes
+		//this.participantes = new Participantes();
+		this.agente = new Agente(temario.contenido().getMiWorkSpaces());
+		this.agente.manifestarseEnFormaOral();
+		
+		this.hilo = new HiloDeLaConversacion();
+		//this.participantes.agregar(agente).agregar(participante);
+		this.temario = temario;
+	}
+	
 	public Conversacion(Temario temario, Cliente participante){
 		// Hacer lamdaba para agregar los participantes
 		//this.participantes = new Participantes();
@@ -45,6 +56,10 @@ public class Conversacion {
 	
 	public void cambiarParticipante(Cliente participante){
 		this.participante = participante;
+	}
+	
+	public Cliente obtenerElParticipante(){
+		return this.participante;
 	}
 	
 	public ArrayList<Salida> inicializarLaConversacion(){
@@ -140,7 +155,7 @@ public class Conversacion {
 		return misSalidas;
 	}
 	
-	public ArrayList<Salida> analizarLaRespuestaConWatsonEnUnWorkspaceEspecifico(String respuestaDelCliente, String nombreDelWorkSpaseAUsar, String nombreDeLaIntencion){
+	public ArrayList<Salida> analizarLaRespuestaConWatsonEnUnWorkspaceEspecifico(String respuestaDelCliente, String nombreDelWorkSpaseAUsar, String nombreDeLaIntencion) throws Exception{
 		
 		ArrayList<Salida> misSalidas = new ArrayList<Salida>();
 		Respuesta respuesta = null;
@@ -199,6 +214,14 @@ public class Conversacion {
 				}
 			}
 		}
+		
+		String leGustaLosHoteles = respuesta.messageResponse().getContext().get("leGustaLosHoteles").toString();
+		String leGustaComerAfuera = respuesta.messageResponse().getContext().get("leGustaComerAfuera").toString();
+		String sePreocupaPorLaSalud = respuesta.messageResponse().getContext().get("sePreocupaPorLaSalud").toString();
+		
+		participante.actualizarGustosDeHoteles(leGustaLosHoteles);
+		participante.actualizarGustosDeRestaurantes(leGustaComerAfuera);
+		participante.actualizarGustosDeBelleza(sePreocupaPorLaSalud);
 		
 		return misSalidas;
 	}

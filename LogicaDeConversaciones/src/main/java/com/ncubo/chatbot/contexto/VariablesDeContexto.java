@@ -5,8 +5,16 @@ import java.util.Hashtable;
 public class VariablesDeContexto {
 
 	private final static Hashtable<String, Variable> misVariables = new Hashtable<String, Variable>();
+	private static VariablesDeContexto variablesDeContexto = null;
 	
-	public VariablesDeContexto(){}
+	private VariablesDeContexto(){}
+	
+	public static VariablesDeContexto getInstance(){
+		if(variablesDeContexto == null){
+			variablesDeContexto = new VariablesDeContexto();
+		}
+		return variablesDeContexto;
+	}
 	
 	public void agregarVariableAMiContexto(Variable variable){
 		misVariables.put(variable.getNombre(), variable);
