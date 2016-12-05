@@ -8,9 +8,17 @@ public class Categorias  extends ArrayList<CategoriaOferta>{
 
 	public Categorias()
 	{
-		this.add(new CategoriaOferta(1, "Restaurate",0));
-		this.add(new CategoriaOferta(2, "Belleza",0));
-		this.add(new CategoriaOferta(3, "Hoteles",0));
+		this.add(new Restaurate(0));
+		this.add(new Belleza(0));
+		this.add(new Hotel(0));
+		
+	}
+	
+	public Categorias(double pesoRestaurante, double pesoBelleza, double pesoHoteles)
+	{
+		this.add(new CategoriaOferta(1, "Restaurate", pesoRestaurante));
+		this.add(new CategoriaOferta(2, "Belleza", pesoBelleza));
+		this.add(new CategoriaOferta(3, "Hoteles",pesoHoteles));
 		
 	}
 

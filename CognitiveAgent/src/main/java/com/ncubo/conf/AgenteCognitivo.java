@@ -27,8 +27,9 @@ import com.ncubo.chatbot.bitacora.HistoricosDeConversaciones;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.chatbot.watson.TextToSpeechWatson;
 import com.ncubo.chatbot.partesDeLaConversacion.Tema;
-import com.ncubo.chatbot.participantes.Gustos;
 import com.ncubo.dao.ConsultaDao;
+import com.ncubo.dao.UsuarioDao;
+import com.ncubo.data.Categorias;
 import com.ncubo.data.Consulta;
 import com.ncubo.logicaDeConversaciones.Conversaciones;
 import com.ncubo.util.FTPServidor;
@@ -37,7 +38,6 @@ import groovyjarjarantlr.debug.GuessingEvent;
 
 @Component
 @ConfigurationProperties("servercognitivo")
-
 public class AgenteCognitivo 
 {
 	private String user;
@@ -53,6 +53,9 @@ public class AgenteCognitivo
 
 	@Autowired
 	private ConsultaDao consultaDao;
+	
+	@Autowired
+	private UsuarioDao usuarioDao;
 
 	@Autowired
 	private FTPServidor ftp;
@@ -75,7 +78,7 @@ public class AgenteCognitivo
 		return procesarMensaje(usuario, mensaje, date, workspaceDeChats, false);
 	}
 	
-	public String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
+	public String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date) throws Exception
 	{
 		return procesarMensajeConocerte(usuario, mensaje, date, workspaceDeConocerte);
 	}
@@ -272,7 +275,7 @@ public class AgenteCognitivo
 		
 	}
 
-	private String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date, String workspace) throws JSONException
+	private String 	 procesarMensajeConocerte(Usuario usuario, String mensaje, Date date, String workspace) throws Exception
 	{
 		JSONObject respuesta = new JSONObject();
 		String texto = "";
@@ -292,8 +295,18 @@ public class AgenteCognitivo
 				jsonObject.put("audio", salida.get(i).getMiSonido().url());
 				arrayList.put(jsonObject);
 				
-				if(idFrase.equals("despedidaConocerte")){
+				if(idFrase.equals("despedidaConocerte"))
+				{
 					seTerminoElChat = true;
+					
+					Categorias categorias = new Categorias(
+							Double.parseDouble(obtenerValorDeGustosDeRestaurantes(usuario.getUsuarioId())),
+							Double.parseDouble(obtenerValorDeGustosDeBelleza(usuario.getUsuarioId())),
+							Double.parseDouble(obtenerValorDeGustosDeHoteles(usuario.getUsuarioId()))
+							);
+					
+					usuarioDao.insertar(usuario.getUsuarioId(), categorias);;
+					
 				}
 			}
 		}
@@ -510,9 +523,19 @@ public class AgenteCognitivo
 		this.pathXML = pathXML;
 	}
 	
-	public Gustos obtenerGustosDelCliente(String idCliente)
+	public String obtenerValorDeGustosDeHoteles(String idCliente) throws Exception
 	{
-		return misConversaciones.obtenerCliente(idCliente).obtenerMisGustos();
+		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeHoteles();
 	}
 
+	public String obtenerValorDeGustosDeRestaurantes(String idCliente) throws Exception
+	{
+		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeRestaurantes();
+	}
+	
+	public String obtenerValorDeGustosDeBelleza(String idCliente) throws Exception
+	{
+		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeBelleza();
+	}
+	
 }

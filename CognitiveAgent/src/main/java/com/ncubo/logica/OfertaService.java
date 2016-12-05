@@ -3,19 +3,23 @@ package com.ncubo.logica;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
-
-import com.ncubo.chatbot.participantes.Gustos;
 import com.ncubo.conf.AgenteCognitivo;
 import com.ncubo.conf.Usuario;
 import com.ncubo.dao.OfertaDao;
+import com.ncubo.data.Belleza;
+import com.ncubo.data.Hotel;
 import com.ncubo.data.Oferta;
+import com.ncubo.data.Restaurate;
 
 @Component
+@ConfigurationProperties("categorias")
 public class OfertaService
 {
 	@Autowired
@@ -23,6 +27,8 @@ public class OfertaService
 	
 	@Autowired
 	private AgenteCognitivo serverCognitivo;
+	
+	private double distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas;
 	
 	public BindingResult validarCampos(BindingResult bindingResult, Oferta oferta) throws ParseException
 	{
@@ -58,19 +64,46 @@ public class OfertaService
 		ofertaDao.insertarCategorias(oferta.getIdOferta(), oferta.getCategorias());
 	}
 	
-	public Oferta obtener(int idOferta, Usuario usuario) throws ClassNotFoundException, SQLException
+	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(int indiceInicial, Usuario usuario) throws Exception
 	{
-		Gustos gusto = serverCognitivo.obtenerGustosDelCliente( usuario.getUsuarioId() );
-		
-		boolean tieneAlMenosUnaCategoriaEspecificadaEnSusGustos = 0 < gusto.getLeGustaComerAfuera() + gusto.getLeGustaLosHoteles() + gusto.getLeGustaComerAfuera();
-		
-		if( usuario.getEstaLogueado() && tieneAlMenosUnaCategoriaEspecificadaEnSusGustos)
+		if( ! usuario.getEstaLogueado() )
 		{
-			
-			
+			return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario.getUsuarioId());
 		}
 		
-		return ofertaDao.obtener(idOferta, idUsuario);
+		List<Oferta> ofertasFinales = new ArrayList<Oferta>();
+		double hoteles = Double.parseDouble( serverCognitivo.obtenerValorDeGustosDeHoteles( usuario.getUsuarioId() ));
+		double belleza = Double.parseDouble( serverCognitivo.obtenerValorDeGustosDeBelleza( usuario.getUsuarioId() ));
+		double restaurantes = Double.parseDouble( serverCognitivo.obtenerValorDeGustosDeRestaurantes( usuario.getUsuarioId() ));
+		
+		List<Oferta> ofertas =  ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario.getUsuarioId());
+		
+		for( Oferta oferta : ofertas )
+		{
+			double distanciaActualEntreAmbasCategorias = oferta.distanciaEuclidianaDeCategoria(
+				new Belleza(belleza), 
+				new Hotel(hoteles),
+				new Restaurate(restaurantes));
+			 
+			if( distanciaActualEntreAmbasCategorias <= distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas )
+			{
+				ofertasFinales.add( oferta );
+			}
+			//TODO que hago si no hay ofertas
+			//TODO que hago si hay menos de diez ofertas
+		}
+		return ofertasFinales;
+		
 	}
 
+	public double getDistanciaMaximaEntreLasCategoriasDeUsuarioyOfertas()
+	{
+		return distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas;
+	}
+
+	public void setDistanciaMaximaEntreLasCategoriasDeUsuarioyOfertas( double distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas)
+	{
+		this.distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas = distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas;
+	}
+	
 }

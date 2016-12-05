@@ -145,3 +145,15 @@ CREATE TABLE `cognitiveagent`.`categoria_con_oferta_y_peso` (
 ALTER TABLE `cognitiveagent`.`categoria_con_oferta_y_peso` 
 CHANGE COLUMN `peso` `peso` DOUBLE NOT NULL ;
 
+CREATE TABLE `cognitiveagent`.`categoria_usuario_peso` (
+  `idUsuarioenBA` VARCHAR(45) NOT NULL,
+  `idCategoria` INT NOT NULL,
+  `peso` DOUBLE NOT NULL,
+  INDEX `fk_cat_usu_idx` (`idCategoria` ASC),
+  CONSTRAINT `fk_cat_usu`
+    FOREIGN KEY (`idCategoria`)
+    REFERENCES `cognitiveagent`.`categoriadeoferta` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+

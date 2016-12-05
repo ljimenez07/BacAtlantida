@@ -1,7 +1,6 @@
 package com.ncubo.chatbot.participantes;
 
 import java.util.ArrayList;
-
 import com.ncubo.chatbot.contexto.AdministradorDeVariablesDeContexto;
 
 public class Cliente extends Participante{
@@ -14,16 +13,16 @@ public class Cliente extends Participante{
 	public Cliente(){
 		miNombre = "";
 		miId = "";
-		//TODO sergio ir a recuperalos DB o usar los por defecto del xml
-		administradorDeVariablesDeContexto = new AdministradorDeVariablesDeContexto();
-		administradorDeVariablesDeContexto.agregarVariableDeContexto("leGustaLosHoteles", "0");
+		//administradorDeVariablesDeContexto = new AdministradorDeVariablesDeContexto();
+		/*administradorDeVariablesDeContexto.agregarVariableDeContexto("leGustaLosHoteles", "0");
 		administradorDeVariablesDeContexto.agregarVariableDeContexto("leGustaComerAfuera", "0");
-		administradorDeVariablesDeContexto.agregarVariableDeContexto("sePreocupaPorLaSalud", "0");
+		administradorDeVariablesDeContexto.agregarVariableDeContexto("sePreocupaPorLaSalud", "0");*/
 	}
 	
 	public Cliente(String nombre, String id){
 		miNombre = nombre;
 		miId = id;
+		administradorDeVariablesDeContexto = new AdministradorDeVariablesDeContexto();
 	}
 	
 	public String getMiNombre() {
@@ -54,7 +53,7 @@ public class Cliente extends Participante{
 		this.misIdsDeSesiones.add(idDeSesion);
 	}
 	
-	public boolean contieneElIdSesion(String idSesion){
+	private boolean contieneElIdSesion(String idSesion){
 		return misIdsDeSesiones.contains(idSesion);
 	}
 	
@@ -64,6 +63,7 @@ public class Cliente extends Participante{
 		}
 	}
 	
+	// Hoteles
 	public void presionarLikeDeHoteles() throws Exception
 	{
 		administradorDeVariablesDeContexto.ejecutar("leGustaLosHoteles = (leGustaLosHoteles + 1.1) / 2;");
@@ -83,10 +83,47 @@ public class Cliente extends Participante{
 	{
 		return administradorDeVariablesDeContexto.obtenerVariable("leGustaLosHoteles");
 	}
-
-	public Gustos obtenerMisGustos() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	// Restaurantes
+	public void presionarLikeDeRestaurantes() throws Exception
+	{
+		administradorDeVariablesDeContexto.ejecutar("leGustaComerAfuera = (leGustaComerAfuera + 1.1) / 2;");
+	}
+	
+	public void presionarDisLikeDeRestaurantes() throws Exception
+	{
+		administradorDeVariablesDeContexto.ejecutar("leGustaComerAfuera = (leGustaComerAfuera - 1.1) / 2;");
+	}
+	
+	public void actualizarGustosDeRestaurantes() throws Exception
+	{
+		administradorDeVariablesDeContexto.ejecutar("leGustaComerAfuera = (leGustaComerAfuera + 1) / 2;");
+	}
+	
+	public String obtenerValorDeGustosDeRestaurantes() throws Exception
+	{
+		return administradorDeVariablesDeContexto.obtenerVariable("leGustaComerAfuera");
+	}
+	
+	// Belleza
+	public void presionarLikeDeBelleza() throws Exception
+	{
+		administradorDeVariablesDeContexto.ejecutar("sePreocupaPorLaSalud = (sePreocupaPorLaSalud + 1.1) / 2;");
+	}
+	
+	public void presionarDisLikeDeBelleza() throws Exception
+	{
+		administradorDeVariablesDeContexto.ejecutar("sePreocupaPorLaSalud = (sePreocupaPorLaSalud - 1.1) / 2;");
+	}
+	
+	public void actualizarGustosDeBelleza() throws Exception
+	{
+		administradorDeVariablesDeContexto.ejecutar("sePreocupaPorLaSalud = (sePreocupaPorLaSalud + 1) / 2;");
+	}
+	
+	public String obtenerValorDeGustosDeBelleza() throws Exception
+	{
+		return administradorDeVariablesDeContexto.obtenerVariable("sePreocupaPorLaSalud");
 	}
 }
 

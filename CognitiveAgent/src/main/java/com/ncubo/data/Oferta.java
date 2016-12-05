@@ -349,13 +349,34 @@ public class Oferta implements Comparable<Oferta>
 		return categorias;
 	}
 
-	public void setCategorias( Categorias categorias) {
+	public void setCategorias( Categorias categorias) 
+	{
 		this.categorias = categorias;
 	}
 	
 	public void agregarCategoria( CategoriaOferta  categoria )
 	{
 		categorias.agregar( categoria );
+	}
+
+	public double distanciaEuclidianaDeCategoria(Belleza bellezaArg, Hotel hotelArg, Restaurate restaurateArg) 
+	{
+		int index = categorias.indexOf( bellezaArg );
+		CategoriaOferta belleza = categorias.get( index );
+		
+		index = categorias.indexOf( hotelArg );
+		CategoriaOferta hotel = categorias.get( index );
+		
+		index = categorias.indexOf( restaurateArg );
+		CategoriaOferta restaurate = categorias.get( index );
+		
+		double  distancia = Math.sqrt(
+			Math.pow(bellezaArg.getPeso() - belleza.getPeso(), 2 ) +
+			Math.pow(hotelArg.getPeso() - hotel.getPeso(), 2 ) +
+			Math.pow(restaurateArg.getPeso() - restaurate.getPeso(), 2 ) 
+		);
+		
+		return distancia;
 	}
 	
 	

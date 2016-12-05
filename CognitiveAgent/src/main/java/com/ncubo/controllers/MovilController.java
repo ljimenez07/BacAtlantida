@@ -67,7 +67,7 @@ public class MovilController {
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/conocerte/", method = RequestMethod.POST)
-	@ResponseBody String conocerte(@RequestBody String mensaje, HttpSession session) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ClassNotFoundException, SQLException, ParseException 
+	@ResponseBody String conocerte(@RequestBody String mensaje, HttpSession session) throws Exception 
 	{
 		Usuario usuario = obtenerUsuario(session);
 		
