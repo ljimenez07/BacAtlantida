@@ -227,7 +227,21 @@ public class AgenteCognitivo
 			}
 			else if(texto.contains("%br"))
 			{
-				String textoParaReproducir = texto.replaceAll("%br", "");
+				
+				String textoParaReproducir = "";
+				
+				if (idFrase.endsWith("reportarExtravio"))
+				{
+					
+					textoParaReproducir = texto.substring(texto.indexOf("%decir")+6, texto.indexOf("%terminaDecir"))+texto.substring(texto.indexOf("%despedida")+10, texto.indexOf("%terminaDespedida"));
+					System.out.println(textoParaReproducir);
+					texto = texto.replace("%decir", "");
+					texto = texto.replace("%terminaDecir", "");
+					texto = texto.replace("%despedida", "");
+					texto = texto.replace("%terminaDespedida", "");
+				}
+					
+				textoParaReproducir = texto.replaceAll("%br", "");
 				texto = texto.replaceAll("%br", "<br/>");
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
