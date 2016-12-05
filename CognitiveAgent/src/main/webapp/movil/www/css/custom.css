@@ -441,7 +441,7 @@ input
 
 .contenedor-de-mensaje-bienvenida
 {
-	margin-top: 20%;
+	margin-top: 75px;
 	border-bottom: 2px solid rgba(0,0,0,0.1);
 }
 
@@ -538,7 +538,32 @@ red
 	color: dodgerblue;
 	cursor: pointer;
 }
+
+
+/*Login*/
+
 #formLogin
 {
-	margin-top: 55%;
+	margin-top: 25%;
+	overflow: hidden;
+}
+
+#login .panel-body
+{
+	background-color: #E92531;
+	overflow: hidden;
+}
+
+#login .btn 
+{
+	background-color: #F5F5F5;
+	color: #88898C;
+	font-weight: bold;
+	width: 200px;
+}
+
+#login .image-container img
+{
+	margin: 0 auto;
+}
 }

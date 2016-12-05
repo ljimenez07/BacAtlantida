@@ -86,10 +86,10 @@ public class Conversaciones {
 				// TODO Verificar si cambio el id de sesion, si es asi agregarla al cliente y hacerlo saber a conversacion
 				misClientes.get(cliente.getUsuarioId()).verificarSiExisteElIdSesion(cliente.getIdSesion());
 				misConversaciones.get(cliente.getIdSesion()).cambiarParticipante(misClientes.get(cliente.getUsuarioId())); // Actualizar cliente
-				resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
+				resultado = hablarConElAgente(cliente, textoDelCliente, esConocerte);
 			}else{ // Crear un nuevo Cliente
 				crearUnaNuevoConversacion(cliente);
-				resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
+				resultado = hablarConElAgente(cliente, textoDelCliente, esConocerte);
 				/*if(existeLaConversacion(cliente.getIdSesion())){ // Es porque ya se cliente esta conversando y no se habia logueado, eso quiere decir que se tiene que mantener el contexto y NO saludar de nuevo
 					resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
 				}else{
@@ -99,7 +99,7 @@ public class Conversaciones {
 		}else{
 			if(! cliente.getIdSesion().equals("")){
 				if(existeLaConversacion(cliente.getIdSesion())){
-					resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
+					resultado = hablarConElAgente(cliente, textoDelCliente, esConocerte);
 				}else{ // Crear una nueva conversacion
 					crearUnaNuevoConversacion(cliente);
 					resultado = inicializarConversacionConElAgente(cliente.getIdSesion());
@@ -124,7 +124,7 @@ public class Conversaciones {
 		return misConversaciones.get(idDelCliente).inicializarLaConversacion();
 	}
 	
-	public ArrayList<Salida> hablarConElAjente(Usuario cliente, String textoDelCliente, boolean esConocerte){
+	public ArrayList<Salida> hablarConElAgente(Usuario cliente, String textoDelCliente, boolean esConocerte){
 		ArrayList<Salida> resultado = null;
 		
 		if(esConocerte){

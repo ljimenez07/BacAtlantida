@@ -32,6 +32,10 @@ function evaluarVerMas()
 			{
 				$("#contenedor-mostrar-mas").show();
 			}
+			else
+			{
+				$("#contenedor-mostrar-mas").remove();
+			}
 		}
 	});
 }
@@ -116,8 +120,13 @@ function agregarDominioAImagenes()
 {
 	$("#ofertas .imagen-de-oferta").each(function()
 	{
-		var path = serverDomain + $(this).attr("src");
-		$(this).attr("src", path);
+		var source = $(this).attr("src");
+		var noTieneDominio = source.indexOf(serverDomain) < 0;
+		if(noTieneDominio)
+		{
+			var path = serverDomain + source;
+			$(this).attr("src", path);
+		}
 	});
 }
 
