@@ -875,26 +875,7 @@
 			<condition operador="and" tipo="intencion">saludos</condition>		
 		</when>		
 	</conversacion>		
-			
-	<conversacion id="preguntarPorTiempoLibre">		
-		<tipo>pregunta</tipo>		
-		<mandatoria>true</mandatoria>		
-		<enVozAlta>true</enVozAlta>		
-		<frases>		
-			<curioso>¿Qué te gusta hacer en tu tiempo libre?</curioso>		
-		</frases>		
-		<vineta></vineta>		
-	</conversacion>		
-			
-	<conversacion id="preguntarPorFinesDeSemana">		
-		<tipo>pregunta</tipo>		
-		<mandatoria>true</mandatoria>		
-		<enVozAlta>true</enVozAlta>		
-		<frases>		
-			<curioso>Muy bien y dime, ¿qué te gusta hacer los fines de semana por la noche?</curioso>		
-		</frases>		
-		<vineta></vineta>		
-	</conversacion>		
+	
 	
 	<conversacion id="preguntarPorRestaurantes">		
 		<tipo>pregunta</tipo>		
@@ -907,17 +888,6 @@
 		</frases>		
 		<vineta></vineta>		
 	</conversacion>
-	
-	<conversacion id="preguntarPorRestaurantesInternacionales">		
-		<tipo>pregunta</tipo>		
-		<mandatoria>true</mandatoria>		
-		<enVozAlta>true</enVozAlta>		
-		<frases>		
-			<curioso>Te cuento que a mi personalmente me encanta comer en lugares diferentes, y el Sushi me vuelve loco.  En tu caso, ¿te gusta visitar restaurantes de comida internacional y probar cosas nuevas?.</curioso>	
-		</frases>		
-		<vineta></vineta>		
-	</conversacion>
-	
 	<conversacion id="preguntarPorHospedaje">		
 		<tipo>pregunta</tipo>		
 		<mandatoria>true</mandatoria>		
