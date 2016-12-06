@@ -59,17 +59,19 @@ public class Cliente extends Participante{
 		return misIdsDeSesiones.contains(idSesion);
 	}
 	
+	public void actualizarValoresDeConocerte(String leGustaLosHoteles, String leGustaComerAfuera, String sePreocupaPorLaSalud) throws Exception{
+		double valoresDeHoteles = (obtenerValorDeGustosDeHoteles() + Double.parseDouble(leGustaLosHoteles)) / 2;
+		actualizarGustosDeHoteles(valoresDeHoteles+"");
+		
+		double valoresDeRestaurantes = (obtenerValorDeGustosDeRestaurantes() + Double.parseDouble(leGustaComerAfuera)) / 2;
+		actualizarGustosDeRestaurantes(valoresDeRestaurantes+"");
+		
+		double valoresDeBelleza = (obtenerValorDeGustosDeBelleza() + Double.parseDouble(sePreocupaPorLaSalud)) / 2;
+		actualizarGustosDeBelleza(valoresDeBelleza+"");
+		
+	}
+	
 	// Hoteles
-	public void presionarLikeDeHoteles() throws Exception
-	{
-		administradorDeVariablesDeContexto.ejecutar("leGustaLosHoteles = (leGustaLosHoteles + 1.1) / 2;");
-	}
-	
-	public void presionarDisLikeDeHoteles() throws Exception
-	{
-		administradorDeVariablesDeContexto.ejecutar("leGustaLosHoteles = (leGustaLosHoteles - 1.1) / 2;");
-	}
-	
 	public void actualizarGustosDeHoteles(String valor) throws Exception
 	{
 		administradorDeVariablesDeContexto.ejecutar(String.format("leGustaLosHoteles = %s; show leGustaLosHoteles;", valor));
@@ -81,16 +83,6 @@ public class Cliente extends Participante{
 	}
 	
 	// Restaurantes
-	public void presionarLikeDeRestaurantes() throws Exception
-	{
-		administradorDeVariablesDeContexto.ejecutar("leGustaComerAfuera = (leGustaComerAfuera + 1.1) / 2;");
-	}
-	
-	public void presionarDisLikeDeRestaurantes() throws Exception
-	{
-		administradorDeVariablesDeContexto.ejecutar("leGustaComerAfuera = (leGustaComerAfuera - 1.1) / 2;");
-	}
-	
 	public void actualizarGustosDeRestaurantes(String valor) throws Exception
 	{
 		administradorDeVariablesDeContexto.ejecutar(String.format("leGustaComerAfuera = %s; show leGustaComerAfuera;", valor));
@@ -101,17 +93,7 @@ public class Cliente extends Participante{
 		return Double.parseDouble(administradorDeVariablesDeContexto.obtenerVariable("leGustaComerAfuera"));
 	}
 	
-	// Belleza
-	public void presionarLikeDeBelleza() throws Exception
-	{
-		administradorDeVariablesDeContexto.ejecutar("sePreocupaPorLaSalud = (sePreocupaPorLaSalud + 1.1) / 2;");
-	}
-	
-	public void presionarDisLikeDeBelleza() throws Exception
-	{
-		administradorDeVariablesDeContexto.ejecutar("sePreocupaPorLaSalud = (sePreocupaPorLaSalud - 1.1) / 2;");
-	}
-	
+	// Belleza	
 	public void actualizarGustosDeBelleza(String valor) throws Exception
 	{
 		administradorDeVariablesDeContexto.ejecutar(String.format("sePreocupaPorLaSalud = %s; show sePreocupaPorLaSalud;", valor));

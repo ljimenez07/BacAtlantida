@@ -155,7 +155,7 @@ public class Conversacion {
 		
 		return misSalidas;
 	}
-	
+
 	public ArrayList<Salida> analizarLaRespuestaConWatsonEnUnWorkspaceEspecifico(String respuestaDelCliente, String nombreDelWorkSpaseAUsar, String nombreDeLaIntencion) throws Exception{
 		
 		ArrayList<Salida> misSalidas = new ArrayList<Salida>();
@@ -166,6 +166,13 @@ public class Conversacion {
 		}else{
 			respuesta = agente.analizarRespuestaWSEspecifico(respuestaDelCliente, fraseActualDelWorkSpaceEspecifico, nombreDelWorkSpaseAUsar);
 			this.hilo.agregarUnaRespuesta(respuesta);
+			
+			String leGustaLosHoteles = respuesta.messageResponse().getContext().get("leGustaLosHoteles").toString();
+			String leGustaComerAfuera = respuesta.messageResponse().getContext().get("leGustaComerAfuera").toString();
+			String sePreocupaPorLaSalud = respuesta.messageResponse().getContext().get("sePreocupaPorLaSalud").toString();
+			
+			participante.actualizarValoresDeConocerte(leGustaLosHoteles, leGustaComerAfuera, sePreocupaPorLaSalud);
+			
 		}
 		
 		if(agente.hayQueCambiarDeTemaWSEspecifico()){
@@ -181,6 +188,7 @@ public class Conversacion {
 			
 			this.temaActualDelWorkSpaceEspecifico = this.temario.proximoTemaATratar(temaActualDelWorkSpaceEspecifico, hilo.verTemasYaTratadosYQueNoPuedoRepetir(), nombreDelWorkSpaseAUsar, nombreDeLaIntencion);
 			agente.yaNoCambiarDeTemaWSEspecifico();
+			agregarVariablesDeContextoEspecificoDelClienteAWatson(temaActualDelWorkSpaceEspecifico, nombreDelWorkSpaseAUsar);
 			if(this.temaActualDelWorkSpaceEspecifico == null){ // Ya no hay mas temas	
 				this.temaActualDelWorkSpaceEspecifico = this.temario.buscarTema("saludarConocerte");
 				//agente.cambiarAWorkspaceGeneral();
@@ -216,14 +224,6 @@ public class Conversacion {
 			}
 		}
 		
-		String leGustaLosHoteles = respuesta.messageResponse().getContext().get("leGustaLosHoteles").toString();
-		String leGustaComerAfuera = respuesta.messageResponse().getContext().get("leGustaComerAfuera").toString();
-		String sePreocupaPorLaSalud = respuesta.messageResponse().getContext().get("sePreocupaPorLaSalud").toString();
-		
-		participante.actualizarGustosDeHoteles(leGustaLosHoteles);
-		participante.actualizarGustosDeRestaurantes(leGustaComerAfuera);
-		participante.actualizarGustosDeBelleza(sePreocupaPorLaSalud);
-		
 		return misSalidas;
 	}
 	
@@ -245,6 +245,38 @@ public class Conversacion {
 						}
 					}else{
 						agente.activarValiableEnElContextoDeWatson("estaLogueado", "false");
+					}
+					
+				}
+			}
+		}
+	}
+	
+	private void agregarVariablesDeContextoEspecificoDelClienteAWatson(Tema tema, String nombreWorkspace){
+		if(tema == null){
+			return;
+		}
+		List<String> misVariables = tema.obtenerVariablesDeContextoQueElTemaOcupa();
+		if(! misVariables.isEmpty()){
+			for (String variable: misVariables){
+				if(variable.equals("leGustaLosHoteles") || variable.equals("leGustaComerAfuera") || variable.equals("sePreocupaPorLaSalud")){
+					if (participante != null){
+						try {
+							double valor = 0;
+							if(variable.equals("leGustaLosHoteles"))
+								valor = this.participante.obtenerValorDeGustosDeHoteles();
+							else if(variable.equals("leGustaComerAfuera"))
+								valor = this.participante.obtenerValorDeGustosDeRestaurantes();
+							else if(variable.equals("sePreocupaPorLaSalud"))
+								valor = this.participante.obtenerValorDeGustosDeBelleza();
+							
+							agente.activarValiableEnElContextoDeWatson(variable, valor, nombreWorkspace);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							System.out.println("Error al activar contexto en Watson: "+e.getMessage());
+						}
+					}else{
+						agente.activarValiableEnElContextoDeWatson(variable, "0", nombreWorkspace);
 					}
 					
 				}

@@ -184,12 +184,18 @@ public class TemarioDelBancoAtlantida extends Temario{
 	
 	private Tema saludarConocerte()
 	{
+		List<String> variables = new ArrayList<>();
+		variables.add("leGustaLosHoteles");
+		variables.add("leGustaComerAfuera");
+		variables.add("sePreocupaPorLaSalud");
+		
 		Tema resultado = new Tema
 		(
 			"saludarConocerte",
 			"ConocerteGeneral",
 			false,
 			"conocerte",
+			variables,
 			frase("saludarConocerte"),
 			frase("preguntarPorRestaurantes"),
 			frase("fueraContextoConocerteDelBanco"),
@@ -200,12 +206,18 @@ public class TemarioDelBancoAtlantida extends Temario{
 	
 	private Tema preguntarPorHospedaje()
 	{
+		List<String> variables = new ArrayList<>();
+		variables.add("leGustaLosHoteles");
+		variables.add("leGustaComerAfuera");
+		variables.add("sePreocupaPorLaSalud");
+		
 		Tema resultado = new Tema
 		(
 			"preguntarPorHospedaje",
 			"ConocerteGeneral",
 			false,
 			"conocerte",
+			variables,
 			frase("preguntarPorHospedaje"),
 			frase("fueraContextoConocerteDelBanco"),
 			frase("fueraContextoConocerteGeneral")
@@ -215,12 +227,18 @@ public class TemarioDelBancoAtlantida extends Temario{
 	
 	private Tema preguntarPorBelleza()
 	{
+		List<String> variables = new ArrayList<>();
+		variables.add("leGustaLosHoteles");
+		variables.add("leGustaComerAfuera");
+		variables.add("sePreocupaPorLaSalud");
+		
 		Tema resultado = new Tema
 		(
 			"preguntarPorBelleza",
 			"ConocerteGeneral",
 			false,
 			"conocerte",
+			variables,
 			frase("preguntarPorBelleza"),
 			frase("fueraContextoConocerteDelBanco"),
 			frase("fueraContextoConocerteGeneral")
@@ -230,12 +248,18 @@ public class TemarioDelBancoAtlantida extends Temario{
 	
 	private Tema despedidaConocerte()
 	{
+		List<String> variables = new ArrayList<>();
+		variables.add("leGustaLosHoteles");
+		variables.add("leGustaComerAfuera");
+		variables.add("sePreocupaPorLaSalud");
+		
 		Tema resultado = new Tema
 		(
 			"despedidaConocerte",
 			"ConocerteGeneral",
 			false,
 			"conocerte",
+			variables,
 			frase("despedidaConocerte"),
 			frase("fueraContextoConocerteDelBanco"),
 			frase("fueraContextoConocerteGeneral")

@@ -298,7 +298,7 @@ public class AgenteCognitivo
 							obtenerValorDeGustosDeHoteles(usuario.getUsuarioId())
 							);
 					
-					usuarioDao.insertar(usuario.getUsuarioId(), categorias);;
+					usuarioDao.insertar(usuario.getUsuarioId(), categorias);
 					
 				}
 			}

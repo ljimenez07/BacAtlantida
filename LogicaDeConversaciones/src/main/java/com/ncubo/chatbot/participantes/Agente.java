@@ -410,6 +410,20 @@ public class Agente extends Participante{
 		miContextos.put(nombreWorkspace, obj.toString());
 	}
 	
+	public void activarValiableEnElContextoDeWatson(String nombre, double valor, String nombreWorkspace){
+		String context = miContextos.get(nombreWorkspace);
+		System.out.println(context);
+		JSONObject obj = null;
+		try {
+			obj = new JSONObject(context);
+			obj.put(nombre, valor);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		miContextos.put(nombreWorkspace, obj.toString());
+	}
+	
 	public void borrarUnaVariableDelContexto(String nombreDeLaVariable){
 		borrarUnaVariableDelContextoEnUnWorkspace(nombreDeLaVariable, nombreDeWorkspaceActual);
 	}
