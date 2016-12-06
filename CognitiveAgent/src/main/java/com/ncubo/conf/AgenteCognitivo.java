@@ -158,8 +158,8 @@ public class AgenteCognitivo
 			else if((idFrase.equals("saldoCuentaAhorros") || idFrase.equals("saldoCredito")|| idFrase.equals("quiereSaldoTarjetaCredito")) && ! usuario.getEstaLogueado())
 			{
 				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión!.");
-				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAudio));	
+				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.");
+				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL("Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.", pathAudio));	
 				arrayList.put(jsonObject);
 			}
 			else if((idFrase.equals("disponibleCredito") || idFrase.equals("disponibleCuentaAhorros")|| idFrase.equals("disponiblePuntos") || idFrase.equals("quiereDisponibleTarjetaCredito")) && ! usuario.getEstaLogueado())
@@ -226,7 +226,7 @@ public class AgenteCognitivo
 			{
 				
 				String textoParaReproducir = "";
-				
+				textoParaReproducir = texto.replaceAll("%br", "");
 				if (idFrase.endsWith("reportarExtravio"))
 				{
 					
@@ -237,8 +237,6 @@ public class AgenteCognitivo
 					texto = texto.replace("%despedida", "");
 					texto = texto.replace("%terminaDespedida", "");
 				}
-					
-				textoParaReproducir = texto.replaceAll("%br", "");
 				texto = texto.replaceAll("%br", "<br/>");
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);

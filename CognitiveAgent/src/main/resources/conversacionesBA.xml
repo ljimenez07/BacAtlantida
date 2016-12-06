@@ -719,7 +719,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>$%decir Lamento lo sucedido, si necesitas reportar el extravío de tus tarjetas de crédito y débito puedes llamar a: $%terminaDecir $%br  $%br En Honduras: $%br 2280-1010 / 2580-1010 / 2480-1010 $%br $%br En el Extranjero:  $%br $%br VISA: $%br USA y Canadá: 1-800-847-2911 $%br En otros países: (410)-581-0120 $%br $%br MASTERCARD: $%br USA y Canadá: 1-800-307-7309 $%br En otros países: 1-636-722-7111  $%br $%br $%despedida Recuerda que este servicio está disponible las 24 horas, los 7 días de la semana. $%terminaDespedida</frase>
+			<frase>$%decir Lamento lo sucedido, si necesitas reportar el extravío de tus tarjetas de crédito y débito puedes llamar a los siguientes números telefónicos: $%terminaDecir $%br  $%br En Honduras: $%br 2280-1010 / 2580-1010 / 2480-1010 $%br $%br En el Extranjero:  $%br $%br VISA: $%br USA y Canadá: 1-800-847-2911 $%br En otros países: (410)-581-0120 $%br $%br MASTERCARD: $%br USA y Canadá: 1-800-307-7309 $%br En otros países: 1-636-722-7111  $%br $%br $%despedida Recuerda que este servicio está disponible las 24 horas, los 7 días de la semana. $%terminaDespedida</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -829,6 +829,38 @@
 		<vineta></vineta>		
 	</conversacion>	
 	
+	
+	<conversacion id="requisitosEmbajada">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Los pasos que debes seguir para pagar la tasa consular o cita de la embajada son los siguientes: $%br $%br 1) Debes ingresar a la página web:  www.ustraveldocs.com/hn  y definir un perfil para poder completar el formulario de la hoja de depósito. $%br 2) Es importante que en opciones de pago hayas seleccionado Banco Atlántida.  $%br 3) Cuando imprimas la Boleta de Depósito de Banco Atlántida, contiene el número de referencia CGI, puedes presentarla en cualquier punto de servicio para realizar el pago de la Tasa Consular. $%br 4) Para realizar el pago le brindamos las opciones de Ventanilla, Atlántida Online, Kioscos y Agentes. $%br 5) El monto a cancelar dependerá de la hoja de depósito y la tasa de cambio que estableció el CGI. $%br 6) Luego de realizado el pago recibirás un comprobante con el número de recibo, el cual le servirá para continuar el proceso en la página www.ustraveldocs.com/hn  y poder agendar la cita.</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+	<conversacion id="requisitosPasaporte">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>En Banco Atlántida le recibimos el pago de la cita para solicitar la emisión del pasaporte electrónico en las oficinas de migración a nivel nacional.  $%br El costo va a depender del tiempo de vigencia, por ejemplo, por 5 años el costo es de 35 dólares, pero por 10 años el costo es de 50 dólares. Cuando eres menor de edad el pasaporte sólo se autoriza por 5 años.  $%br Si deseas el pasaporte el mismo día debes cancelar 20 dólares adicionales al monto que pagas por la vigencia, pero antes de ir al banco tiene que presentarse a las oficinas de pasaporte ubicadas  en Tegucigalpa, San Pedro Sula o La Ceiba y solicitar una cita express.  $%br  $%br Recuerda que:  $%br 1) Si es la primera vez que solicitas pasaporte o el que tienes ya está vencido debes presentar la tarjeta de identidad original. Pero si tu pasaporte está vigente entonces debes presentar ese documento.  $%br 2) Si eres mayor de 21 años, debes presentar en el Banco la tarjeta de identidad. Pero si tu edad está entre 18 y 21 entonces uno de tus padres, el tutor, representante o apoderado legal, debidamente identificado, debe presentar tu tarjeta de identidad.  En caso que seas menor de 18 años esa persona deberá presentar tu partida de nacimiento.  $%br $%br Información adicional y detallada está disponible en el sitio: http://inm.gob.hn/pasaporte </frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
+		
+	<conversacion id="precioPasaporte">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>En Banco Atlántida le recibimos el pago de la cita para solicitar la emisión del pasaporte electrónico en las oficinas de migración a nivel nacional.  $%br El costo va a depender del tiempo de vigencia, por ejemplo, por 5 años el costo es de 35 dólares, pero por 10 años el costo es de 50 dólares. Cuando eres menor de edad el pasaporte sólo se autoriza por 5 años.  $%br Si deseas el pasaporte el mismo día debes cancelar 20 dólares adicionales al monto que pagas por la vigencia, pero antes de ir al banco tiene que presentarse a las oficinas de pasaporte ubicadas  en Tegucigalpa, San Pedro Sula o La Ceiba y solicitar una cita express.  $%br $%br Información adicional y detallada está disponible en el sitio: http://inm.gob.hn/pasaporte</frase>
+		</frases>
+		<vineta></vineta>
+	</conversacion>
+	
 	<conversacion id="saludarConocerte">		
 		<tipo>afirmativa</tipo>		
 		<mandatoria>true</mandatoria>		
@@ -843,6 +875,26 @@
 			<condition operador="and" tipo="intencion">saludos</condition>		
 		</when>		
 	</conversacion>		
+			
+	<conversacion id="preguntarPorTiempoLibre">		
+		<tipo>pregunta</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<curioso>¿Qué te gusta hacer en tu tiempo libre?</curioso>		
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>		
+			
+	<conversacion id="preguntarPorFinesDeSemana">		
+		<tipo>pregunta</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<curioso>Muy bien y dime, ¿qué te gusta hacer los fines de semana por la noche?</curioso>		
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>		
 	
 	<conversacion id="preguntarPorRestaurantes">		
 		<tipo>pregunta</tipo>		
@@ -856,13 +908,23 @@
 		<vineta></vineta>		
 	</conversacion>
 	
+	<conversacion id="preguntarPorRestaurantesInternacionales">		
+		<tipo>pregunta</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<curioso>Te cuento que a mi personalmente me encanta comer en lugares diferentes, y el Sushi me vuelve loco.  En tu caso, ¿te gusta visitar restaurantes de comida internacional y probar cosas nuevas?.</curioso>	
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>
+	
 	<conversacion id="preguntarPorHospedaje">		
 		<tipo>pregunta</tipo>		
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
 			<curioso>Personalmente creo que lo más importante es compartir mi tiempo libre con familiares y amigos, por eso cuando tengo la oportunidad me escapo a vacacionar a algún nuevo hotel.  Cuéntame, ¿cuándo vas de vacaciones te hospedas en un hotel o prefieres acampar?.</curioso>	
-			<impertinente>Necesito estar seguro, utiliza los hoteles o prefiere acampar?</impertinente>
+			<impertinente>Necesito estar seguro, ¿utilizas los hoteles o prefieres acampar?</impertinente>
 		</frases>		
 		<vineta></vineta>		
 	</conversacion>
@@ -872,8 +934,8 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>Te cuento que cuando voy a un hotel me encanta ir a relajarme al SPA y contratar un buen masaje.  Creo que es una experiencia súper relajante!. En tu caso, si tuvieras la oportunidad, cuando estés muy estresado o cansado, ¿harías lo mismo?.</curioso>	
-			<impertinente>Para verificar, te gustaría visitar el SPA? Sí o No?</impertinente>
+			<curioso>Te cuento que cuando voy a un hotel me encanta ir a relajarme al SPA y contratar un buen masaje. Creo que es una experiencia súper relajante. En tu caso, si tuvieras la oportunidad, cuando estés muy estresado o cansado, ¿harías lo mismo?.</curioso>	
+			<impertinente>Para verificar, te gustaría visitar el SPA ¿Sí o No?</impertinente>
 		</frases>		
 		<vineta></vineta>		
 	</conversacion>
@@ -903,9 +965,9 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<frase>Genial! gracias por compartirme tus respuestas, las usaremos para informarte de los beneficios que puedes aprovechar por ser cliente de Banco Atlántida.</frase>		
+			<frase>¡Genial! gracias por compartirme tus respuestas, las usaremos para informarte de los beneficios que puedes aprovechar por ser cliente de Banco Atlántida.</frase>		
 			<frase>Gracias por tus respuestas, te estaremos enviando información relevante para ti acerca de promociones y beneficios.</frase>		
-			<frase>Muy bien! al iniciar sesión encontrarás información de promociones y beneficios que podrás aprovechar.</frase>		
+			<frase>¡Muy bien! al iniciar sesión encontrarás información de promociones y beneficios que podrás aprovechar.</frase>		
 		</frases>		
 		<vineta></vineta>		
 	</conversacion>
@@ -939,10 +1001,10 @@
 	</variablesDeAmbiente>
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
-		<workspace tipo="general" idIBM="e757904e-0ad3-4ac2-bac7-ff01a434ddb4" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="general" idIBM="dd2db83c-ba0f-4fd8-acae-c2f557f5a5a0" intencionesParaSeReferenciado="">BAIntents</workspace>
 		<workspace tipo="especifico" idIBM="47970e57-ae6b-4aae-b127-a2408ececef7" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="327702f8-0c70-4ed5-82c6-9139a89ef8f0" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="86bd16ff-9beb-4827-8312-9877e881a051" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="c5aa891d-b826-414f-8c97-f2b36d0dc462" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>
