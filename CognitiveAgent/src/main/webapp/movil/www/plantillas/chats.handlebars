@@ -88,7 +88,7 @@ $(function(){
 		{
 			resizeDiv(true, function(){
 				moverScrollParaAbajoEnFuncionDelUltimoMensaje(function(){
-					$("html, body").animate({scrollTop: 0}, "fast");
+					$("html, body").animate({scrollTop: chat.parent().parent()[0].scrollHeight * -1}, "fast");// Scrollea hacia abajo
 				});
 			});
 		});
@@ -146,6 +146,7 @@ $(function(){
 							respuesta.find(".msg p").html(textos[i].texto);
 							respuesta.find("time").html(hora);
 							conversation.append(respuesta);
+							
 							if(textos[i].audio != "")
 							{
 								reproducirMensaje(textos[i].audio);
@@ -159,7 +160,6 @@ $(function(){
 							url: serverDomain + "/conversacion/borrarUnaConversacion/" + textos.idSesion
 						});
 					}
-					
 					moverScrollParaAbajoEnFuncionDelUltimoMensaje();
 				},
 				fail: function(XMLHttpRequest, textStatus, textStatus) 
@@ -178,11 +178,12 @@ $(function(){
 		
 		function moverScrollParaAbajoEnFuncionDelUltimoMensaje(callback)
 		{
-			chat.parent().parent().scrollTop(chat.parent().parent()[0].scrollHeight);
+			window.scrollTo(0,chat.parent().parent()[0].scrollHeight);
 			if(callback != undefined)
 			{
 				callback();
 			}
+			
 		}
 		
 		this.reenviarUltimoMensajeSinImprimirlo = function()
