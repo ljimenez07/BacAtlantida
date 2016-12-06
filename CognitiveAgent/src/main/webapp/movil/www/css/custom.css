@@ -22,7 +22,8 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
-	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	font-family: 'NeoSan';
+	letter-spacing: 1px;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -50,6 +51,21 @@ table {
 strong {
 	font-weight: bold;
 }
+
+@font-face {
+	font-family: 'NeoSan';
+	src: url('../fonts/NeoSan.ttf') format('truetype');
+	font-weigth: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'NeoSanMed';
+	src: url('../fonts/NeoSanMed.ttf') format('truetype');
+	font-weigth: normal;
+	font-style: normal;
+}
+
 /* Agente Cognitivo */
 
 .hide
@@ -562,7 +578,7 @@ red
 	width: 200px;
 }
 
-#login .image-container img
+#login #image-container img
 {
 	margin: 0 auto;
 }

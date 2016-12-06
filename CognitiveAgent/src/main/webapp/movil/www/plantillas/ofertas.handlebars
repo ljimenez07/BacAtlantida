@@ -63,7 +63,7 @@ function bindAcciones()
 	
 				$("#oferta .boton-escuchar-oferta").off("click").on("click", function()
 				{
-					agregarAColaDeReproduccion("/archivossubidos" + $(this).data("audio"));
+					agregarAColaDeReproduccion($(this).data("audio"));
 				});
 				$("#oferta .imagen-de-oferta").each(function()
 				{

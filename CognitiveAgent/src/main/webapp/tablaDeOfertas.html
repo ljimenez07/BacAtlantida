@@ -84,7 +84,6 @@
 					<tbody>
 						<th:block th:each="oferta : ${listaDeOfertas}">
 							<tr>
-								
 								<td class="texto-normal-ca" th:id=" ${ 'tituloOferta' + oferta.idOferta}" th:text="${oferta.tituloDeOferta}"/>
 								<td class="texto-normal-ca" th:text="${oferta.comercio}"/>
 								<td class="texto-normal-ca" th:text="${oferta.descripcion}"/>
@@ -95,13 +94,10 @@
 								<td class="text-center"> <button id="modificar-oferta-btn" type="submit" class="boton-editar"
 									th:name="idOferta" th:value="${oferta.idOferta}"></button></td>
 								<td class="text-center">
-									<!-- <input type="hidden" id="idOfertaAEliminar" th:name="${oferta.idOferta}" th:value="${oferta.tituloDeOferta}"></input> -->
 									<button id="eliminar-oferta-btn" type="button" class="boton-eliminar" 
 										th:onclick="'eliminarOferta(\'' + ${oferta.idOferta} + '\');'"
 										name="eliminar">
 									</button>
-									<!--  th:onclick="'eliminarOferta(\'' + ${oferta.idOferta} + '\', \'' + ${oferta.tituloDeOferta} + '\');'" -->	
-										
 								</td>
 							</tr>
 						</th:block>
@@ -110,7 +106,23 @@
 				</div>
 			</div>
 			</form>
-			
+			<th:block th:if="${cantidadDePaginacion} != null">
+				<ul class="pagination pagination-sm">
+					<th:block th:each=" i : ${#numbers.sequence( 1, cantidadDePaginacion)}">
+						<li><a th:href="@{/BackOffice/gestionDeOfertas/{pagina}(pagina=${i})}" th:text="${i}"></a></li>
+					</th:block>
+				</ul>
+			</th:block>
+			<th:block th:if="${cantidadDePaginacionFiltro} != null">
+				<ul class="pagination pagination-sm">
+					<li th:if="${cantidadDePaginacionFiltroAtras} != null">
+						<a th:href="@{/BackOffice/filtrarOfertas/{busquedaComercio}/{desde}(desde=${cantidadDePaginacionFiltroAtras}, busquedaComercio=${busquedaComercio})}">Anterior</a>
+					</li>
+					<li th:if="${cantidadDePaginacionFiltroSiguiente} != null">
+						<a th:href="@{/BackOffice/filtrarOfertas/{busquedaComercio}/{desde}(desde=${cantidadDePaginacionFiltroSiguiente}, busquedaComercio=${busquedaComercio})}">Siguiente</a>
+					</li>
+				</ul>
+			</th:block>
 		</div>
 	</div>
 		<br/>

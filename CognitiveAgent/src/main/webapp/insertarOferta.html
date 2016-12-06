@@ -355,13 +355,13 @@ var estaEsPaginaEditar = false;
 	</div>
 	<br/>
 	</div>
-	<script type='text/javascript'>
+	<script th:inline="javascript">
     /* attach a submit handler to the form */
     
     	$("#limpiar-submit").click(
     	function()
     	{
-    		window.location.href = '/CognitiveAgent/BackOffice/gestionDeOfertas'
+    		window.location.href = [[@{'/BackOffice/gestionDeOfertas'}]] ;
     	}
     	);
     
