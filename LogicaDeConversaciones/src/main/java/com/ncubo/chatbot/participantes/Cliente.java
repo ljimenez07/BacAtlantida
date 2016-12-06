@@ -121,5 +121,16 @@ public class Cliente extends Participante{
 	{
 		return Double.parseDouble(administradorDeVariablesDeContexto.obtenerVariable("sePreocupaPorLaSalud"));
 	}
+	
+	// Esta logueado
+	public void cambiarEstadoDeLogeo(boolean estado) throws Exception{
+		administradorDeVariablesDeContexto.ejecutar(String.format("estaLogueado = %s; show estaLogueado;", String.valueOf(estado)));
+	}
+	
+	public boolean obtenerEstadoDeLogeo() throws Exception
+	{
+		return Boolean.parseBoolean(administradorDeVariablesDeContexto.obtenerVariable("estaLogueado").toString().trim().replace("\"", ""));
+	}
+	
 }
 

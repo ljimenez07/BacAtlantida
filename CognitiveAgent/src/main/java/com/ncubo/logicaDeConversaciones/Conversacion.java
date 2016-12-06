@@ -110,6 +110,7 @@ public class Conversacion {
 					
 					this.temaActual = this.temario.proximoTemaATratar(temaActual, hilo.verTemasYaTratadosYQueNoPuedoRepetir(), agente.obtenerNombreDelWorkspaceActual(), agente.obtenernombreDeLaIntencionEspecificaActiva());
 					agente.yaNoCambiarDeTema();
+					agregarVariablesDeContextoDelClienteAWatson(temaActual);
 					if(this.temaActual == null){ // Ya no hay mas temas	
 						this.temaActual = this.temario.buscarTema(Constantes.FRASE_SALUDO);
 						agente.cambiarAWorkspaceGeneral();
@@ -224,6 +225,31 @@ public class Conversacion {
 		participante.actualizarGustosDeBelleza(sePreocupaPorLaSalud);
 		
 		return misSalidas;
+	}
+	
+	private void agregarVariablesDeContextoDelClienteAWatson(Tema tema){
+		if(tema == null){
+			return;
+		}
+		List<String> misValiables = tema.obtenerVariablesDeContextoQueElTemaOcupa();
+		if(! misValiables.isEmpty()){
+			for (String variable: misValiables){
+				if(variable.equals("estaLogueado")){
+					if (participante != null){
+						try {
+							boolean estaLogueado = this.participante.obtenerEstadoDeLogeo();
+							agente.activarValiableEnElContextoDeWatson("estaLogueado", String.valueOf(estaLogueado));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							System.out.println("Error al activar contexto en Watson: "+e.getMessage());
+						}
+					}else{
+						agente.activarValiableEnElContextoDeWatson("estaLogueado", "false");
+					}
+					
+				}
+			}
+		}
 	}
 	
 	private boolean verificarIntencionNoAsociadaANingunWorkspace(ArrayList<Salida> misSalidas, Respuesta respuesta){

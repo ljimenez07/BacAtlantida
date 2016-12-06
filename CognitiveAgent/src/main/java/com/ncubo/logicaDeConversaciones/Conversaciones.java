@@ -26,7 +26,7 @@ public class Conversaciones {
 		temarioDelBancoAtlantida = new TemarioDelBancoAtlantida(pathXML);
 	}
 	
-	private String crearUnaNuevoConversacion(Usuario usuario){
+	private String crearUnaNuevoConversacion(Usuario usuario) throws Exception{
 		String resultado = "";
 		Cliente cliente = null;
 		
@@ -40,6 +40,7 @@ public class Conversaciones {
 				}
 			}
 			cliente.agregarIdsDeSesiones(usuario.getIdSesion());
+			cliente.cambiarEstadoDeLogeo(usuario.getEstaLogueado());
 			
 			synchronized(misConversaciones){
 				if(existeLaConversacion(usuario.getIdSesion())){
@@ -87,6 +88,7 @@ public class Conversaciones {
 			if(existeElCliente(cliente.getUsuarioId()) && existeLaConversacion(cliente.getIdSesion())){
 				// TODO Verificar si cambio el id de sesion, si es asi agregarla al cliente y hacerlo saber a conversacion
 				misClientes.get(cliente.getUsuarioId()).agregarIdsDeSesiones(cliente.getIdSesion());
+				misClientes.get(cliente.getUsuarioId()).cambiarEstadoDeLogeo(cliente.getEstaLogueado());
 				misConversaciones.get(cliente.getIdSesion()).cambiarParticipante(misClientes.get(cliente.getUsuarioId())); // Actualizar cliente en la conversacion
 				resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
 				

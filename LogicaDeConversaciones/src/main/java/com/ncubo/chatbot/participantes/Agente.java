@@ -286,7 +286,7 @@ public class Agente extends Participante{
 		Iterator<?> json_keys = jsonObj.keys();
 		while( json_keys.hasNext() ){
 			String json_key = (String) json_keys.next();
-			if( ! json_key.equals("system") && ! json_key.equals("conversation_id")){
+			if( ! json_key.equals("system") && ! json_key.equals("conversation_id") && ! json_key.equals("estaLogueado")){
 				try {
 					System.out.println("Respaldando: "+json_key);
 					misVariables.put(json_key, jsonObj.getString(json_key));
