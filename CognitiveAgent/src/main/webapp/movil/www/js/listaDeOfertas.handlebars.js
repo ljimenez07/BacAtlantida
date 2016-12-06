@@ -5,7 +5,7 @@ templates['listaDeOfertas'] = template({"1":function(container,depth0,helpers,pa
 
   return "	<div class=\"row\">\r\n		<div class=\"col-xs-12\">\r\n			<div class=\"row datos-de-oferta\" id=\""
     + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
-    + "\">\r\n				<div class=\"col-xs-12\">\r\n					<div class=\"row\">\r\n						<div class=\"col-xs-12\">\r\n"
+    + "\">\r\n				<div class=\"col-xs-12\">\r\n					<div class=\"row\">\r\n						<div class=\"col-xs-12 embed-responsive embed-responsive-4by3\">\r\n"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.esHtml : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.program(4, data, 0),"data":data})) != null ? stack1 : "")
     + "						</div>\r\n					</div>\r\n					<div class=\"row nombre-del-comercio\">\r\n						<div class=\"col-xs-12\">\r\n							<strong>"
     + alias4(((helper = (helper = helpers.comercio || (depth0 != null ? depth0.comercio : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"comercio","hash":{},"data":data}) : helper)))

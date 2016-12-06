@@ -79,22 +79,22 @@ public class Agente extends Participante{
 		return miWatsonConversacions.get(nombreWorkspace).enviarAWatson(mensaje, miContextos.get(nombreWorkspace));
 	}
 	
-	public Respuesta enviarRespuestaAWatson(String respuestaDelClinete, Frase frase){
+	public Respuesta enviarRespuestaAWatson(String respuestaDelCliente, Frase frase){
 		Respuesta respuesta = null;
 		if(estaEnElWorkspaceGeneral){
-			respuesta = analizarRespuestaGeneral(respuestaDelClinete, frase);
+			respuesta = analizarRespuestaGeneral(respuestaDelCliente, frase);
 		}else{
-			respuesta = analizarRespuesta(respuestaDelClinete, frase);
+			respuesta = analizarRespuesta(respuestaDelCliente, frase);
 		}
 		
 		return respuesta;
 	}
 	
-	public Respuesta analizarRespuestaGeneral(String respuestaDelClinete, Frase frase){
+	public Respuesta analizarRespuestaGeneral(String respuestaDelCliente, Frase frase){
 		Respuesta respuesta = null;
 		
 		respuesta = new Respuesta(frase, miWatsonConversacions.get(nombreDeWorkspaceActual), miContextos.get(nombreDeWorkspaceActual));
-		respuesta.llamarAWatson(respuestaDelClinete);
+		respuesta.llamarAWatson(respuestaDelCliente);
 		
 		noEntendiLaUltimaRespuesta = (! respuesta.entendiLaRespuesta()) && (frase.esMandatorio()) && 
 				(numeroDeIntentosActualesEnRepetirUnaPregunta != MAXIMO_DE_INTENTOS_OPCIONALES);
@@ -119,7 +119,7 @@ public class Agente extends Participante{
 						nombreDeLaIntencionGeneralActiva = intencionDelCliente;
 						System.out.println(String.format("Cambiando al workspace %s e intencion %s", nombreDeWorkspaceActual, nombreDeLaIntencionGeneralActiva));
 						cambiarDeTema = true; // Buscar otro tema
-						nombreDeLaIntencionEspecificaActiva = determinarLaIntencionDeConfianzaEnUnWorkspace(respuestaDelClinete, nombreDeWorkspaceActual).getIntent();
+						nombreDeLaIntencionEspecificaActiva = determinarLaIntencionDeConfianzaEnUnWorkspace(respuestaDelCliente, nombreDeWorkspaceActual).getIntent();
 						abordarElTemaPorNOLoEntendi = false;
 						estaEnElWorkspaceGeneral = false;
 						this.hayIntencionNoAsociadaANingunWorkspace = false;
@@ -147,24 +147,24 @@ public class Agente extends Participante{
 		return respuesta;
 	}
 	
-	public Respuesta analizarRespuesta(String respuestaDelClinete, Frase frase){
+	public Respuesta analizarRespuesta(String respuestaDelCliente, Frase frase){
 		Respuesta respuesta = null;
 		
 		respuesta = new Respuesta(frase, miWatsonConversacions.get(nombreDeWorkspaceActual), miContextos.get(nombreDeWorkspaceActual));
-		respuesta.llamarAWatson(respuestaDelClinete);
+		respuesta.llamarAWatson(respuestaDelCliente);
 		
 		noEntendiLaUltimaRespuesta = (! (respuesta.entendiLaRespuesta() && ! respuesta.hayAlgunAnythingElse())) && 
 				(numeroDeIntentosActualesEnRepetirUnaPregunta != MAXIMO_DE_INTENTOS_OPCIONALES);
 		if(noEntendiLaUltimaRespuesta){
 			System.out.println("No entendi la respuesta ...");
 			// Validar si es que el usuario cambio de intencion general
-			Intent miIntencion = this.determinarLaIntencionGeneral(respuestaDelClinete);
+			Intent miIntencion = this.determinarLaIntencionGeneral(respuestaDelCliente);
 			if(elClienteQuiereCambiarDeIntencionGeneral(miIntencion)){
 				if(! miIntencion.getIntent().equals(nombreDeLaIntencionGeneralActiva)){
 					System.out.println("Se requiere cambiar a WROKSPACE GENERAL ...");
 					this.seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActualConRespaldo();;
 					cambiarAWorkspaceGeneral();
-					respuesta = enviarRespuestaAWatson(respuestaDelClinete, frase); // General
+					respuesta = enviarRespuestaAWatson(respuestaDelCliente, frase); // General
 					//respuesta = enviarRespuestaAWatson(respuestaDelClinete, frase); // Especifico
 				}else{
 					this.seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActualConRespaldo();
@@ -208,10 +208,10 @@ public class Agente extends Participante{
 		return respuesta;
 	}
 
-	public Respuesta analizarRespuestaWSEspecifico(String respuestaDelClinete, Frase frase, String nombreWorkSpace){
+	public Respuesta analizarRespuestaWSEspecifico(String respuestaDelCliente, Frase frase, String nombreWorkSpace){
 		
 		Respuesta respuesta = new Respuesta(frase, miWatsonConversacions.get(nombreWorkSpace), miContextos.get(nombreWorkSpace));
-		respuesta.llamarAWatson(respuestaDelClinete);
+		respuesta.llamarAWatson(respuestaDelCliente);
 		
 		noEntendiLaUltimaRespuestaWSEspecifico = (! (respuesta.entendiLaRespuesta() && ! respuesta.hayAlgunAnythingElse())) && 
 				(numeroDeIntentosActualesEnRepetirUnaPreguntaWSEspecifico != MAXIMO_DE_INTENTOS_OPCIONALES);

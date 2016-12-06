@@ -9,7 +9,7 @@
 	<style>
 		body
 		{
-			background-color:rgb(237,32,36);
+			background-color: #E92531;
 		}
 		#form-login
 		{
@@ -35,7 +35,7 @@
 			<div class="col-xs-12 col-md-2"></div>
 				<div class="col-xs-12 col-md-4 col-md-offset-2" id="form-login">
 					<div id="image-container">
-						<img alt="Logo Banco Atlantida" src="imagenes/BA.png"/>
+						<img alt="Logo Banco Atlantida" th:src="@{/img/logo-BA-rojo.png}"/>
 					</div>
 					<div class="alert alert-warning" th:if="${param.error}" style="margin-top: 10%;">
 						Usuario y/o contraseña incorrecta.
