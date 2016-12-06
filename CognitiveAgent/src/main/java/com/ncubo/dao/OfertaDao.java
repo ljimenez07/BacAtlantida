@@ -26,7 +26,8 @@ public class OfertaDao
 	private final String NOMBRE_TABLA = "oferta";
 	private final String NOMBRE_TABLA_CATEGORIA_OFERTA = "categoriaoferta";
 	private final String NOMBRE_TABLA_REACCION = "reaccion";
-	private final String LIMITE = "50";
+	private final int LIMITE = 50;
+	private final int CANTIDAD_PAGINACION = 20;
 	private final String CAMPOS_PARA_SELECT = String.format("%s.%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, IF(%s = ?, IF(%s = 1, 1, NULL), NULL) AS %s, IF(%s = ?, IF(%s = 0, 1, NULL), NULL) AS %s", NOMBRE_TABLA, atributo.ID_OFERTA, atributo.TITULO_DE_OFERTA, atributo.COMERCIO, atributo.DESCRIPCION, atributo.CATEGORIA, atributo.NOMBRE_CATEGORIA, atributo.CIUDAD, atributo.ESTADO, atributo.RESTRICCIONES, atributo.VIGENCIA_DESDE, atributo.VIGENCIA_HASTA, atributo.IMAGEN_COMERCIO_PATH, atributo.IMAGEN_PUBLICIDAD_PATH, atributo.FECHA_HORA_REGISTRO, atributo.ID_USUARIO, atributo.REACCION, atributo.LIKES, atributo.ID_USUARIO, atributo.REACCION, atributo.DISLIKES);
 	@Autowired
 	private Persistencia dao;
@@ -70,7 +71,12 @@ public class OfertaDao
 		}
 	}
 	
-	public ArrayList<Oferta> obtener() throws ClassNotFoundException, SQLException
+	public ArrayList<Oferta> obtener(int indicaInicial) throws ClassNotFoundException, SQLException
+	{
+		return obtener(indicaInicial, CANTIDAD_PAGINACION);
+	}
+	
+	public ArrayList<Oferta> obtener(int indicaInicial, int hasta) throws ClassNotFoundException, SQLException
 	{
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
 		String query = "SELECT " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + ", "
@@ -95,10 +101,11 @@ public class OfertaDao
 				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA
 				+ " GROUP BY " + NOMBRE_TABLA + "." + atributo.ID_OFERTA 
 				+ " ORDER BY " + atributo.FECHA_HORA_REGISTRO + " DESC "
-				+ " LIMIT " + LIMITE + ";";
+				+ " LIMIT " + indicaInicial + ", " + hasta + ";";
 
 		Connection con = dao.openConBD();
-		ResultSet rs = con.createStatement().executeQuery(query);
+		Statement statement = con.createStatement();
+		ResultSet rs = statement.executeQuery(query);
 		
 		while (rs.next())
 		{
@@ -344,41 +351,70 @@ public class OfertaDao
 	
 	public ArrayList<Oferta> filtrarOfertasPorComercioYCategoria(String  nombreComercio) throws ClassNotFoundException, SQLException
 	{
-		ArrayList<Oferta> ultimasOfertas = obtener();
+		return filtrarOfertasPorComercioYCategoria(nombreComercio, 0);
+	}
+	
+	public ArrayList<Oferta> filtrarOfertasPorComercioYCategoria(String nombreComercio, int desde) throws ClassNotFoundException, SQLException
+	{
+		ArrayList<Oferta> ultimasOfertas = obtener(0, LIMITE);
 		Map<Integer, List<Oferta>> valoresSimilitud = new HashMap<Integer, List<Oferta>>();
+		int cantidadDeResultados = 0;
+		int cantidadQueLleva = 0;
 		
 		for(Oferta ofertaActual : ultimasOfertas)
 		{
 			int levenshteinDistance = LevenshteinDistance.distance( nombreComercio, ofertaActual.getComercio());
 			int levenshteinDistanceCategoria = LevenshteinDistance.distance( nombreComercio, ofertaActual.getCategoria().getNombre());
+			
 			if ( levenshteinDistance < 6 )
 			{
-				if (valoresSimilitud.get(levenshteinDistance) == null)
+				if(cantidadQueLleva >= desde)
 				{
-					ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
-					ofertas.add(ofertaActual);
-					valoresSimilitud.put(levenshteinDistance, ofertas);
+					if (valoresSimilitud.get(levenshteinDistance) == null)
+					{
+						ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+						ofertas.add(ofertaActual);
+						valoresSimilitud.put(levenshteinDistance, ofertas);
+					}
+					else
+					{
+						valoresSimilitud.get(levenshteinDistance).add(ofertaActual);
+					}
+					cantidadDeResultados++;
 				}
 				else
 				{
-					valoresSimilitud.get(levenshteinDistance).add(ofertaActual);
+					cantidadQueLleva++;
 				}
 			}
 			else
 			{
 				if( levenshteinDistanceCategoria < 3 )
 				{
-					if (valoresSimilitud.get(levenshteinDistanceCategoria) == null)
+					if(cantidadQueLleva >= desde)
 					{
-						ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
-						ofertas.add(ofertaActual);
-						valoresSimilitud.put(levenshteinDistanceCategoria, ofertas);
+						if (valoresSimilitud.get(levenshteinDistanceCategoria) == null)
+						{
+							ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+							ofertas.add(ofertaActual);
+							valoresSimilitud.put(levenshteinDistanceCategoria, ofertas);
+						}
+						else
+						{
+							valoresSimilitud.get(levenshteinDistanceCategoria).add(ofertaActual);
+						}
+						cantidadDeResultados++;
 					}
 					else
 					{
-						valoresSimilitud.get(levenshteinDistanceCategoria).add(ofertaActual);
+						cantidadQueLleva++;
 					}
 				}
+			}
+			
+			if(cantidadDeResultados == CANTIDAD_PAGINACION)
+			{
+				break;
 			}
 		}
 		
@@ -392,6 +428,32 @@ public class OfertaDao
 
 		return ofertasFiltradas;
 	}
+
+	public int cantidadPaginas() throws ClassNotFoundException, SQLException
+	{
+		int cantidadDeofertas = obtenerCantidadDeOfertasParaMostrar();
+		int cantidadDePaginas = cantidadDeofertas / CANTIDAD_PAGINACION;
+		
+		if(cantidadDeofertas % CANTIDAD_PAGINACION != 0)
+		{
+			cantidadDePaginas++;
+		}
+		return cantidadDePaginas;
+	}
 	
+	public int cantidadPaginas(int resultados) throws ClassNotFoundException, SQLException
+	{
+		int cantidadDePaginas = resultados / CANTIDAD_PAGINACION;
+		
+		if(resultados % CANTIDAD_PAGINACION != 0)
+		{
+			cantidadDePaginas++;
+		}
+		return cantidadDePaginas;
+	}
 	
+	public int getCantidadPaginacion()
+	{
+		return CANTIDAD_PAGINACION;
+	}
 }
