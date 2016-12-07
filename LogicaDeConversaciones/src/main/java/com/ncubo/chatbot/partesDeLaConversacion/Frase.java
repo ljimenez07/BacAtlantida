@@ -163,6 +163,7 @@ public abstract class Frase
 			if(esEstatica()){
 				for(int index = 0; index < textosDeLaFrase.length; index ++){
 					String texto = textosDeLaFrase[index];
+					
 					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAGuardar);
 					String path = pathAGuardar+File.separator+nombreDelArchivo;
 					String miIp = ipPublica+nombreDelArchivo;
