@@ -46,6 +46,16 @@
 		<vineta></vineta>
 	</conversacion>
 	
+	<conversacion id="necesitaLogin">		
+		<tipo>afirmativa</tipo>		
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<frase>Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.</frase>		
+		</frases>		
+		<vineta></vineta>		
+	</conversacion>
+	
 	<conversacion id="quiereSaldoTarjetaCredito">
 		<tipo>pregunta</tipo>
 		<mandatoria>true</mandatoria>

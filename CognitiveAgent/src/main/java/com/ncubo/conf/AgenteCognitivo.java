@@ -260,7 +260,7 @@ public class AgenteCognitivo
 				System.out.println(tema);
 			}
 			
-			if(salida.get(i).seTerminoElChat())
+			if(salida.get(i).seTerminoElChat() || idFrase.equals("despedida") || idFrase.equals("noQuiereHacerOtraConsulta"))
 				seTerminoElChat = true;
 		}
 		
