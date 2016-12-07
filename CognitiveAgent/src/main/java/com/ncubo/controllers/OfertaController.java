@@ -200,6 +200,16 @@ public class OfertaController
 		return respuesta.toString();
 	}
 	
+	@CrossOrigin(origins = "*")
+	@GetMapping(value = "/ofertas/compartida/{id}")
+	public String ofertaCompartida(@PathVariable("id") int id, HttpServletRequest request) throws ClassNotFoundException, SQLException, JSONException
+	{
+		request.setAttribute("oferta", ofertaDao.obtener(id, null));
+		request.setAttribute("url", request.getRequestURL());
+		request.setAttribute("baseURL", request.getRequestURL().toString().replace(request.getRequestURI(), "") + request.getContextPath());
+		return "ofertaCompartida";
+	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/BackOffice/subirImagenPublicidad", method = RequestMethod.POST)
 	public String subirImagenPublicidad(@RequestParam("imagen-publicidad-input") MultipartFile uploadfile) throws IOException

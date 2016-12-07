@@ -555,6 +555,11 @@ red
 	cursor: pointer;
 }
 
+#oferta .detalle-de-oferta
+{
+	margin-top: 75px;
+}
+
 
 /*Login*/
 
@@ -581,5 +586,4 @@ red
 #login #image-container img
 {
 	margin: 0 auto;
-}
 }

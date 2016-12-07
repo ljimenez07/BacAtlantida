@@ -1,12 +1,12 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <!-- You can use Open Graph tags to customize link previews.
-    Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
-	<meta property="og:url"           th:content="${'http://190.141.120.200:8080/ofertas/compartida/' + oferta.idOferta}" />
+	<!-- You can use Open Graph tags to customize link previews.
+	Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
+	<meta property="og:url"           th:content="${url}" />
 	<meta property="og:type"          content="website" />
 	<meta property="og:title"         content="Ofertas - Banco Atl&aacute;ntida" />
 	<meta property="og:description"   th:content="${oferta.tituloDeOferta}" />
-	<meta property="og:image"         th:content="${'archivossubidos/' + oferta.imagenPublicidadPath}" />
+	<meta property="og:image"         th:content="${baseURL + '/archivossubidos/' + oferta.imagenPublicidadPath}" />
 	<title>Banco Atl&aacute;ntida</title>
 </head>
 <body>
@@ -14,19 +14,18 @@
 	<!-- Load Facebook SDK for JavaScript -->
 	<div id="fb-root"></div>
 	<script>(function(d, s, id) {
-	  var js, fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) return;
-	  js = d.createElement(s); js.id = id;
-	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
-	  fjs.parentNode.insertBefore(js, fjs);
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
+		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));</script>
 	
-	<br />
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 text-center">
 				<div th:if="${oferta.esHtml}">
-					<div>html</div>
+					<iframe class="html-de-oferta" frameBorder="0" scrolling="no" seamless="seamless" th:id="${'html-de-oferta-' + oferta.idOferta}" style="display:block; width:100%; height:100vh;" th:src="@{/archivossubidos/} + ${oferta.imagenPublicidadPath}"></iframe>
 				</div>
 				<div th:unless="${oferta.esHtml}">
 					<img th:src="@{/archivossubidos/} + ${oferta.imagenPublicidadPath}"></img>
@@ -38,7 +37,7 @@
 	
 	<!-- Your share button code -->
 	<div class="fb-share-button" 
-		th:data-href="${'http://190.141.120.200:8080/ofertas/compartida/' + oferta.idOferta}" 
+		th:attr="data-href=${url}" 
 		data-layout="button">
 	</div>
 	
