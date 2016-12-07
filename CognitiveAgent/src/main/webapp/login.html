@@ -4,6 +4,7 @@
 		<title>Ingreso al sistema</title>
 		<meta charset="UTF-8"/>
 	
+	<link rel="stylesheet" th:href="@{css/custom.css}"/>
 	<link rel="stylesheet" th:href="@{css/bootstrap.min.css}"/>
 	<link rel="stylesheet" th:href="@{css/bootstrap-theme.min.css}"/>
 	<style>
@@ -15,15 +16,6 @@
 		{
 			padding-top: 25%;
 		}
-		#btn-enviar
-		{
-			margin-left: 35%;
-		}
-		img
-		{
-			width: 100%;
-			height: 80%;
-		}
 		.form-control
 		{
 			border-radius: 0px;
@@ -34,7 +26,7 @@
 		<div class="container">
 			<div class="col-xs-12 col-md-2"></div>
 				<div class="col-xs-12 col-md-4 col-md-offset-2" id="form-login">
-					<div id="image-container">
+					<div id="image-container" class="img-responsive text-center">
 						<img alt="Logo Banco Atlantida" th:src="@{/img/logo-BA-rojo.png}"/>
 					</div>
 					<div class="alert alert-warning" th:if="${param.error}" style="margin-top: 10%;">
@@ -50,7 +42,7 @@
 						<div class="form-group">
 							<input class="form-control"  type="password" name="password" placeholder="Contraseña"/>
 						</div>
-						<div>
+						<div class="form-group text-center">
 							<button id="btn-enviar" class="btn btn-default" type="submit" >Entrar</button>
 						</div>
 					</form>
