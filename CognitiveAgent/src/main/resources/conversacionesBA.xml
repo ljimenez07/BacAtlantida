@@ -275,7 +275,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Fue un placer ayudarte, ¡qué pases un feliz día!.</frase>
+			<frase>Fue un placer ayudarte, ¡que pases un feliz día!.</frase>
 			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día.</frase>
 		</frases>
 		<vineta></vineta>
@@ -286,7 +286,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Fue un placer ayudarte, ¡qué pases un feliz día!.</frase>
+			<frase>Fue un placer ayudarte, ¡que pases un feliz día!.</frase>
 			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día.</frase>
 			<frase>Es un placcer servirle y recuerde que le atendemos las 24 horas del día.</frase>
 			<frase>Hasta luego, fue un gusto atenderte.</frase>
@@ -1016,7 +1016,7 @@
 		<workspace tipo="general" idIBM="f9018d05-2799-404c-b7d2-e4e12b4e54ba" intencionesParaSeReferenciado="">BAIntents</workspace>
 		<workspace tipo="especifico" idIBM="47970e57-ae6b-4aae-b127-a2408ececef7" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="327702f8-0c70-4ed5-82c6-9139a89ef8f0" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="8a03122e-c298-4181-898e-c5dc39f594bb" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="0d101bad-0c6e-407d-b2e6-12451ec0bd25" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>
