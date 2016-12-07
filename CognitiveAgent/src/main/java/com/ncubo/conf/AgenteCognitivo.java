@@ -321,6 +321,7 @@ public class AgenteCognitivo
 					
 					usuarioDao.insertar(usuario.getUsuarioId(), categorias);;
 					
+					usuario.setCategorias(categorias);
 				}
 			}
 		}

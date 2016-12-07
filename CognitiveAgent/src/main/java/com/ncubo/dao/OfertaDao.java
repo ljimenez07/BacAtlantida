@@ -202,7 +202,7 @@ public class OfertaDao
 	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(int indiceInicial, String idUsuario) throws ClassNotFoundException, SQLException
 	{
 		boolean esUnUsuarioConocido = true;
-		if(idUsuario == null)
+		if(idUsuario == null || idUsuario.isEmpty())
 		{
 			idUsuario = "NULL";
 			esUnUsuarioConocido = false;
@@ -287,7 +287,7 @@ public class OfertaDao
 	public Oferta obtener(int idOferta, String idUsuario) throws ClassNotFoundException, SQLException
 	{
 		boolean esUnUsuarioConocido = true;
-		if(idUsuario == null)
+		if(idUsuario == null || idUsuario.isEmpty())
 		{
 			idUsuario = "NULL";
 			esUnUsuarioConocido = false;

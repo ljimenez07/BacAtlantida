@@ -156,4 +156,8 @@ CREATE TABLE `cognitiveagent`.`categoria_usuario_peso` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+    
+    ALTER TABLE `cognitiveagent`.`categoria_usuario_peso` 
+ADD PRIMARY KEY (`idUsuarioenBA`, `idCategoria`);
+
 
