@@ -67,3 +67,12 @@
 		if(imagenPublicidadStatus == true && imagenComercioStatus == true)
 			return true;
 	}
+	// Esta funcion se requiere en caso de que la fecha del dia sea de un solo digito.
+	function devuelveFechaEnCasoDeQueSoloTengaUnaCifra(fecha)
+	{
+		if(fecha < 10)
+		{
+			return "0" + fecha;
+		}
+		else return fecha;
+	}
