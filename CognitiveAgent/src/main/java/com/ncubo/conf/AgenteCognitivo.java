@@ -222,11 +222,11 @@ public class AgenteCognitivo
 				jsonObject.put("audio", salida.get(i).getMiSonido().url());	
 				arrayList.put(jsonObject);
 			}
-			else if(texto.contains("%br"))
+			else if (idFrase.equals("reportarExtravio"))
 			{
 				
 				String textoParaReproducir = "";
-				textoParaReproducir = texto.replaceAll("%br", "");
+				textoParaReproducir = texto.replaceAll("<br/>", "");
 				if (idFrase.endsWith("reportarExtravio"))
 				{
 					
@@ -237,7 +237,13 @@ public class AgenteCognitivo
 					texto = texto.replace("%despedida", "");
 					texto = texto.replace("%terminaDespedida", "");
 				}
-				texto = texto.replaceAll("%br", "<br/>");
+				
+				String textoTag = ""; 
+				while(texto.contains("@@"))
+				{
+					textoTag = texto.substring(texto.indexOf("@@")+2, texto.indexOf("@@@"));
+					texto = texto.replaceFirst("@@"+textoTag+"@@@", "<"+textoTag+">");
+				}
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
 				jsonObject.put("audio",urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir, pathAudio));	

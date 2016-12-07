@@ -163,11 +163,20 @@ public abstract class Frase
 			if(esEstatica()){
 				for(int index = 0; index < textosDeLaFrase.length; index ++){
 					String texto = textosDeLaFrase[index];
-					
-					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAGuardar);
+					String textoParaReproducir = texto;
+					String textoTag = ""; 
+					while(texto.contains("@@"))
+					{
+						textoTag = texto.substring(texto.indexOf("@@")+2, texto.indexOf("@@@"));
+						  textoParaReproducir = textoParaReproducir.replaceFirst("@@"+textoTag+"@@@", "");
+						  texto = texto.replaceFirst("@@"+textoTag+"@@@", "<"+textoTag+">");
+					}
+					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir, pathAGuardar);
 					String path = pathAGuardar+File.separator+nombreDelArchivo;
 					String miIp = ipPublica+nombreDelArchivo;
 					sonidosDeLosTextosDeLaFrase.add(new Sonido(miIp, path));
+					
+					textosDeLaFrase[index] = texto;
 				}
 			}
 			

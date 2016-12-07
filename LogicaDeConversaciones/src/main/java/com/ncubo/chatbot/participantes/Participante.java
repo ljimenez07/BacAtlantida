@@ -108,7 +108,7 @@ public class Participante{
 					try{
 						String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, pregunta.getPathAGuardarLosAudiosTTS());
 						String path = pregunta.getPathAGuardarLosAudiosTTS()+File.separator+nombreDelArchivo;
-						String miIp = pregunta.getIpPublicaAMostrarLosAudioTTS()+File.separator+nombreDelArchivo;
+						String miIp = pregunta.getIpPublicaAMostrarLosAudioTTS()+nombreDelArchivo;
 						sonido = new Sonido(miIp, path);
 					}catch(Exception e){
 						
