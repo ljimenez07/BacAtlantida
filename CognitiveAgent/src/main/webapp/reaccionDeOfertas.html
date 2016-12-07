@@ -215,13 +215,17 @@
 			{
 				var RANGO_MAXIMO_DE_DIAS = 7;
 				var fecha = new Date();
-				var fechaFinal = fecha.getFullYear() +"-"+ (fecha.getMonth() +1) +"-"+ fecha.getDate();
+				var dia = devuelveFechaEnCasoDeQueSoloTengaUnaCifra(fecha.getDate());
+				var mes = devuelveFechaEnCasoDeQueSoloTengaUnaCifra((fecha.getMonth() + 1));
+				var fechaFinal = fecha.getFullYear() +"-"+ mes +"-"+ dia;
 				
 				fecha.setDate(fecha.getDate() - RANGO_MAXIMO_DE_DIAS); 
-				var fechaInicial = fecha.getFullYear() +"-"+ (fecha.getMonth() +1) +"-"+ fecha.getDate();
+				dia = devuelveFechaEnCasoDeQueSoloTengaUnaCifra(fecha.getDate());
+				var mes = devuelveFechaEnCasoDeQueSoloTengaUnaCifra((fecha.getMonth() + 1));
+				var fechaInicial = fecha.getFullYear() +"-"+ mes +"-"+ dia;
 				
-				var desde = document.getElementById("fecha-desde").value = fechaInicial;
-				var hasta = document.getElementById("fecha-hasta").value = fechaFinal;
+				$("#fecha-desde").val(fechaInicial);
+				$("#fecha-hasta").val(fechaFinal);
 				fechaFinal = sumarUnDiaAlaFechaDada(fechaFinal); //Por defecto la fecha se toma hasta 00 del dia anterior.
 				crearGraficos(fechaInicial,fechaFinal);
 			}
