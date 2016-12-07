@@ -16,9 +16,9 @@ public class Categorias  extends ArrayList<CategoriaOferta>{
 	
 	public Categorias(double pesoRestaurante, double pesoBelleza, double pesoHoteles)
 	{
-		this.add(new CategoriaOferta(1, "Restaurate", pesoRestaurante));
-		this.add(new CategoriaOferta(2, "Belleza", pesoBelleza));
-		this.add(new CategoriaOferta(3, "Hoteles",pesoHoteles));
+		this.add(new Restaurate(pesoRestaurante));
+		this.add(new Belleza(pesoBelleza));
+		this.add(new Hotel(pesoHoteles));
 		
 	}
 

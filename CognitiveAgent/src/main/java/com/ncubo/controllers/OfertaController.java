@@ -126,12 +126,12 @@ public class OfertaController
 	
 	@CrossOrigin(origins = "*")
 	@GetMapping(value = "/ofertas", produces = "application/json")
-	@ResponseBody public List<Oferta> ofertas(@RequestParam("pagina") int pagina, HttpSession sesion) throws ClassNotFoundException, SQLException
+	@ResponseBody public List<Oferta> ofertas(@RequestParam("pagina") int pagina, HttpSession sesion) throws Exception
 	{
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
 		String idUsuario = usuario == null ? null : usuario.getEstaLogueado() ? usuario.getUsuarioId() : null;
 		int indiceInicial = (pagina - 1) * 10;
-		return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, idUsuario);
+		return ofertaService.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario);
 	}
 	
 	@CrossOrigin(origins = "*")

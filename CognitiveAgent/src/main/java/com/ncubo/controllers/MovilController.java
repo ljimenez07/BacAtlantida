@@ -31,6 +31,8 @@ import com.ncubo.conf.AgenteCognitivo;
 import com.ncubo.conf.ExtraerDatosWebService;
 import com.ncubo.conf.ManejadorDeErrores;
 import com.ncubo.conf.Usuario;
+import com.ncubo.dao.UsuarioDao;
+import com.ncubo.data.Categorias;
 import com.ncubo.exceptions.CredencialesInvalidosException;
 import com.ncubo.exceptions.NoEmailException;
 
@@ -45,6 +47,9 @@ public class MovilController {
 	
 	@Autowired
 	private ExtraerDatosWebService extraerDatos;
+	
+	@Autowired
+	private UsuarioDao usuarioDao;
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/chat/", method = RequestMethod.POST)
@@ -84,18 +89,20 @@ public class MovilController {
 	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/movil/login", method = RequestMethod.POST)
-	@ResponseBody String login(@RequestBody String mensaje, HttpSession sesion, @RequestParam String name, @RequestParam String password) throws JSONException, JsonParseException, JsonMappingException, IOException 
+	@ResponseBody String login(@RequestBody String mensaje, HttpSession sesion, @RequestParam String name, @RequestParam String password) throws JSONException, JsonParseException, JsonMappingException, IOException, ClassNotFoundException, SQLException 
 	{
 		String[] responseLogin = extraerDatos.login(name , password);
 		if( responseLogin[0].equals("S") )
 		{
 			Usuario usuario = obtenerUsuario(sesion);
+			Categorias categorias = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
 			
 			usuario.setLlaveSession(responseLogin[1]);
 			usuario.setUsuarioId(responseLogin[2]);
 			usuario.setUsuarioNombre(responseLogin[3]);
-			
 			usuario.hizologinExitosaMente();
+			usuario.setCategorias( categorias );
+			
 			sesion.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 			JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.getEstaLogueado());
 			
@@ -204,7 +211,7 @@ public class MovilController {
 		return ""+serverCognitivo.obtenerValorDeGustosDeHoteles(id);
 	}
 	
-	@ExceptionHandler(Throwable.class)
+	/*@ExceptionHandler(Throwable.class)
 	public @ResponseBody String handleAllException(final HttpServletRequest req, HttpServletResponse response, final Exception ex) throws MessagingException 
 	{
 		
@@ -218,5 +225,5 @@ public class MovilController {
 		manejadorDeErrores.enviarCorreo(ex);
 		
 		return ex.toString();
-	}
+	}*/
 }

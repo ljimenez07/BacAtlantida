@@ -361,6 +361,7 @@ public class Oferta implements Comparable<Oferta>
 
 	public double distanciaEuclidianaDeCategoria(Belleza bellezaArg, Hotel hotelArg, Restaurate restaurateArg) 
 	{
+		//TODO debe sacarse la distancia por el mismo tipo de categoria
 		int index = categorias.indexOf( bellezaArg );
 		CategoriaOferta belleza = categorias.get( index );
 		

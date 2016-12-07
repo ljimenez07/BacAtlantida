@@ -1,6 +1,8 @@
 package com.ncubo.data;
 
-public class CategoriaOferta
+import java.io.Serializable;
+
+public class CategoriaOferta implements Serializable
 {
 	private int id;
 	private String nombre;
@@ -57,7 +59,7 @@ public class CategoriaOferta
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (! (obj instanceof CategoriaOferta) )
 			return false;
 		CategoriaOferta other = (CategoriaOferta) obj;
 		if (id != other.id)

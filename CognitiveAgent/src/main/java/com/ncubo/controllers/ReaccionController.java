@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ncubo.conf.Usuario;
-import com.ncubo.dao.ReaccionDao;
 import com.ncubo.data.Reaccion;
+import com.ncubo.logica.ReaccionService;
 
 @Controller
 public class ReaccionController
 {
 	@Autowired
-	private ReaccionDao reaccionDao;
+	private ReaccionService reaccionService;
 	
 	@CrossOrigin(origins = "*")
 	@PostMapping(value = "/reaccion/oferta", produces = "application/json")
@@ -36,13 +36,13 @@ public class ReaccionController
 			if(reaccion == null)
 			{
 				Reaccion objReaccion = new Reaccion(idOferta, idUsuario);
-				reaccionDao.eliminar(objReaccion);
+				reaccionService.eliminar(objReaccion, usuario);
 				respuesta = new JSONObject(objReaccion);
 			}
 			else
 			{
 				Reaccion objReaccion = new Reaccion(idOferta, idUsuario, reaccion);
-				reaccionDao.guardar(objReaccion);
+				reaccionService.guardar(objReaccion, usuario);
 				respuesta = new JSONObject(objReaccion);
 			}
 			respuesta.put("usuarioEstaLogueado", usuario.getEstaLogueado());
