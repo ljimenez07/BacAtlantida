@@ -158,27 +158,6 @@ public class AgenteCognitivo
 					arrayList.put(jsonObject);
 				}
 			}
-			else if((idFrase.equals("saldoCuentaAhorros") || idFrase.equals("saldoCredito")|| idFrase.equals("quiereSaldoTarjetaCredito")) && ! usuario.getEstaLogueado())
-			{
-				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión!.");
-				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAudio));	
-				arrayList.put(jsonObject);
-			}
-			else if((idFrase.equals("disponibleCredito") || idFrase.equals("disponibleCuentaAhorros")|| idFrase.equals("disponiblePuntos") || idFrase.equals("quiereDisponibleTarjetaCredito")) && ! usuario.getEstaLogueado())
-			{
-				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.");
-				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL("Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.", pathAudio));	
-				arrayList.put(jsonObject);
-			}
-			else if((idFrase.equals("quiereMovimiento") || idFrase.equals("movimientosCuenta") || idFrase.equals("movimientosCuenta")) && ! usuario.getEstaLogueado())
-			{
-				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.");
-				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL("Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.", pathAudio));	
-				arrayList.put(jsonObject);
-			}
 			else if(idFrase.equals("tasaDolar")||idFrase.equals("tasaEuro")){
 				
 				texto = extraerDatos.obtenerTasaCambio(texto);
@@ -319,7 +298,7 @@ public class AgenteCognitivo
 							obtenerValorDeGustosDeHoteles(usuario.getUsuarioId())
 							);
 					
-					usuarioDao.insertar(usuario.getUsuarioId(), categorias);;
+					usuarioDao.insertar(usuario.getUsuarioId(), categorias);
 					
 					usuario.setCategorias(categorias);
 				}
