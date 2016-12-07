@@ -13,7 +13,7 @@
 	.panel-body
 	{
 		height: 100%;
-		overflow: scroll
+		overflow: scroll;
 	}
 </style>
 
@@ -87,9 +87,15 @@ $(function(){
 		$('input').bind('focus', function()
 		{
 			resizeDiv(true, function(){
-				moverScrollParaAbajoEnFuncionDelUltimoMensaje(function(){
-					$("html, body").animate({scrollTop: chat.parent().parent()[0].scrollHeight * -1}, "fast");// Scrollea hacia abajo
-				});
+				moverScrollParaAbajoEnFuncionDelUltimoMensaje(function()
+					{
+						var tamanioEnPxDelScroll = chat.parent().parent()[0].scrollHeight;
+						if(tamanioEnPxDelScroll > 0) // evita que el scroll retorne arriba por culpa del callback.
+						{
+							$("html, body").animate({scrollTop: tamanioEnPxDelScroll}, "fast");
+						}
+					
+					});
 			});
 		});
 		
