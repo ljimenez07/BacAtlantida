@@ -28,19 +28,21 @@ public class TextToSpeechWatson {
 	private static String vozTTS = Constantes.WATSON_VOICE_TEXT_SPEECH;
 	private static FTPCliente ftp;
 	private static String pathAudios;
+	private static String urlPublicaAudios;
 	
-	private TextToSpeechWatson(String usuario, String contrasena, String voz, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, String path){
-		usuarioTTS = usuario;
-		contrasenaTTS = contrasena;
-		vozTTS = voz;
-		textService = new TextToSpeech();
-		textService.setUsernameAndPassword(usuario, contrasena);
-		voice = voz;
-		pathAudios = path;
-		ftp = new FTPCliente(usuarioFTP, contrasenaFTP, hostFTP, puetoFTP);
+	private TextToSpeechWatson(String usuario, String contrasena, String voz, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, String path, String urlPublicaAudios){
+		this.usuarioTTS = usuario;
+		this.contrasenaTTS = contrasena;
+		this.vozTTS = voz;
+		this.textService = new TextToSpeech();
+		this.textService.setUsernameAndPassword(usuario, contrasena);
+		this.voice = voz;
+		this.pathAudios = path;
+		this.urlPublicaAudios = urlPublicaAudios;
+		this.ftp = new FTPCliente(usuarioFTP, contrasenaFTP, hostFTP, puetoFTP);
 		
 		try {
-			FileUtils.deleteDirectory(new File(pathAudios));
+			FileUtils.deleteDirectory(new File(this.pathAudios));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,9 +51,9 @@ public class TextToSpeechWatson {
 		System.out.println(String.format("Los datos del TTS  son: %s / %s / %s. Y los datos del FTP son: %s / %s / %s / %s", usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP));
 	}
 	
-	public static TextToSpeechWatson getInstance(String usuario, String contrasena, String voz, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, String pathAudios){
+	public static TextToSpeechWatson getInstance(String usuario, String contrasena, String voz, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, String pathAudios, String urlPublicaAudios){
 		if(textToSpeechWatson == null){
-			textToSpeechWatson = new TextToSpeechWatson(usuario, contrasena, voz, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAudios);
+			textToSpeechWatson = new TextToSpeechWatson(usuario, contrasena, voz, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAudios, urlPublicaAudios);
 		}
 		return textToSpeechWatson;
 	}
@@ -74,15 +76,15 @@ public class TextToSpeechWatson {
 		return in;
 	}
 	
-	public String getAudioToURL(String text, String pathAGuardar){
+	public String getAudioToURL(String text){
 		
 		UUID idOne = UUID.randomUUID();
 		String nombreDelArchivo = idOne+".wav";
 		nombreDelArchivo = nombreDelArchivo.replace("-", "");
-		String path = pathAGuardar+File.separator+nombreDelArchivo;
+		String path = pathAudios+File.separator+nombreDelArchivo;
 
 		InputStream in = null;
-		File directory = new File(pathAGuardar);
+		File directory = new File(pathAudios);
         directory.mkdirs();
         
 		File file = null;
@@ -110,8 +112,8 @@ public class TextToSpeechWatson {
 		    close(in);
 		}
 		try {
-			ftp.subirArchivo(pathAGuardar);
-			borrarDirectorio(pathAGuardar);
+			ftp.subirArchivo(pathAudios);
+			borrarDirectorio(pathAudios);
 		} catch (SocketException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -124,6 +126,10 @@ public class TextToSpeechWatson {
 	
 	public void borrarDirectorio(String direccionABorrar) throws IOException{
 		FileUtils.forceDelete(new File(direccionABorrar));
+	}
+	
+	public String obtenerUrlPublicaDeAudios(){
+		return urlPublicaAudios;
 	}
 	
 	private void close(Closeable closeable) {

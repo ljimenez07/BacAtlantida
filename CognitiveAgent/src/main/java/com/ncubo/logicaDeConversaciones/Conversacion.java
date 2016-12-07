@@ -82,7 +82,7 @@ public class Conversacion {
 		return misSalidas;
 	}
 	
-	public ArrayList<Salida> analizarLaRespuestaConWatson(String respuestaDelCliente){
+	public ArrayList<Salida> analizarLaRespuestaConWatson(String respuestaDelCliente) throws Exception{
 		ArrayList<Salida> misSalidas = new ArrayList<Salida>();
 		
 		Respuesta respuesta = agente.enviarRespuestaAWatson(respuestaDelCliente, fraseActual);
@@ -284,14 +284,22 @@ public class Conversacion {
 		}
 	}
 	
-	private boolean verificarIntencionNoAsociadaANingunWorkspace(ArrayList<Salida> misSalidas, Respuesta respuesta){
+	private boolean verificarIntencionNoAsociadaANingunWorkspace(ArrayList<Salida> misSalidas, Respuesta respuesta) throws Exception{
 		if(agente.hayIntencionNoAsociadaANingunWorkspace()){
 			if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals(Constantes.INTENCION_SALUDAR)){
 				System.out.println("Quiere saludar ...");
 				this.temaActual = this.temario.buscarTema(Constantes.FRASE_SALUDO);
 
-				Afirmacion saludar = (Afirmacion) this.temaActual.buscarUnaFrase("saludar");
-				misSalidas.add(agente.decir(saludar, respuesta, temaActual));
+				Afirmacion saludar = null;
+				if(participante.obtenerEstadoDeLogeo()){
+					saludar = (Afirmacion) this.temaActual.buscarUnaFrase("saludarConNombre");
+					String[] nombres = participante.obtenerNombreDelCliente().replace("\"", "").split(" ");
+					misSalidas.add(agente.decirUnaFraseDinamica(saludar, respuesta, temaActual, nombres[0]));
+				}else{
+					saludar = (Afirmacion) this.temaActual.buscarUnaFrase("saludar");
+					misSalidas.add(agente.decir(saludar, respuesta, temaActual));
+				}
+				
 				ponerComoYaTratado(saludar);
 				
 				Pregunta queQuiere = (Pregunta) this.temario.extraerFraseDeSaludoInicial(CaracteristicaDeLaFrase.esUnaPregunta);

@@ -19,10 +19,11 @@ public class Cliente extends Participante{
 		administradorDeVariablesDeContexto.agregarVariableDeContexto("sePreocupaPorLaSalud", "0");*/
 	}
 	
-	public Cliente(String nombre, String id){
+	public Cliente(String nombre, String id) throws Exception{
 		miNombre = nombre;
 		miId = id;
 		administradorDeVariablesDeContexto = new AdministradorDeVariablesDeContexto();
+		guardarNombreDelCliente(nombre);
 	}
 	
 	public String getMiNombre() {
@@ -112,6 +113,15 @@ public class Cliente extends Participante{
 	public boolean obtenerEstadoDeLogeo() throws Exception
 	{
 		return Boolean.parseBoolean(administradorDeVariablesDeContexto.obtenerVariable("estaLogueado").toString().trim().replace("\"", ""));
+	}
+	
+	// Nombre del cliente
+	public void guardarNombreDelCliente(String nombre) throws Exception{
+		administradorDeVariablesDeContexto.ejecutar(String.format("nombreCliente = '%s'; show nombreCliente;", nombre));
+	}
+	
+	public String obtenerNombreDelCliente() throws Exception{
+		return administradorDeVariablesDeContexto.obtenerVariable("nombreCliente").toString();
 	}
 	
 }

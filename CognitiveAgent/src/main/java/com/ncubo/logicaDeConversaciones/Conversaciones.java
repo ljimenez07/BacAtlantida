@@ -13,6 +13,8 @@ import com.ncubo.chatbot.participantes.Cliente;
 import com.ncubo.chatbot.watson.TextToSpeechWatson;
 import com.ncubo.conf.Usuario;
 
+import java.util.concurrent.Semaphore;
+
 public class Conversaciones {
 
 	// key puede ser el id del usuario o el id de la seccion
@@ -20,6 +22,7 @@ public class Conversaciones {
 	private final static Hashtable<String, Cliente> misClientes = new Hashtable<String, Cliente>();
 	private static Temario temarioDelBancoAtlantida;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final Semaphore semaphore = new Semaphore(1);
 	
 	public Conversaciones(String pathXML){
 		System.out.println("El path xml es: "+pathXML);
@@ -27,6 +30,7 @@ public class Conversaciones {
 	}
 	
 	private String crearUnaNuevoConversacion(Usuario usuario) throws Exception{
+		
 		String resultado = "";
 		Cliente cliente = null;
 		
@@ -96,7 +100,11 @@ public class Conversaciones {
 					misClientes.put(cliente.getUsuarioId(), misConversaciones.get(cliente.getIdSesion()).obtenerElParticipante());
 				}
 			}else{ // Crear un nuevo Cliente y asociarle una conversacion
+
+				semaphore.acquire(); //Sección crítica a proteger
 				crearUnaNuevoConversacion(cliente);
+				semaphore.release();
+				
 				resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
 				/*if(existeLaConversacion(cliente.getIdSesion())){ // Es porque ya se cliente esta conversando y no se habia logueado, eso quiere decir que se tiene que mantener el contexto y NO saludar de nuevo
 					resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
@@ -120,7 +128,7 @@ public class Conversaciones {
 		return resultado;
 	}
 	
-	private boolean existeElCliente(String idDelCliente){
+	public boolean existeElCliente(String idDelCliente){
 		return misClientes.containsKey(idDelCliente);
 	}
 	
@@ -148,7 +156,7 @@ public class Conversaciones {
 	}
 	
 	public void generarAudiosEstaticosDeUnTema(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, int index, String url){
-		TextToSpeechWatson.getInstance(usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAGuardar);
+		TextToSpeechWatson.getInstance(usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAGuardar, url);
 		System.out.println(String.format("El path a guardar los audios es %s y la url publica es %s", pathAGuardar, url));
 		temarioDelBancoAtlantida.generarAudioEstaticosDeUnTema(pathAGuardar, url, index);
 		System.out.println("Se termino de generar audios estaticos.");
@@ -182,7 +190,7 @@ public class Conversaciones {
 		}
 		
 		public void run(){
-			TextToSpeechWatson.getInstance(usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAGuardar);
+			TextToSpeechWatson.getInstance(usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAGuardar, urlAReproducir);
 			System.out.println(String.format("El path a guardar los audios es %s y la url publica es %s", pathAGuardar, urlAReproducir));
 			temarioDelBancoAtlantida.generarAudioEstaticosDeTodasLasFrases(pathAGuardar, urlAReproducir);
 			System.out.println("Se termino de generar audios estaticos.");

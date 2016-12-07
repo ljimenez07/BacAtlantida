@@ -164,7 +164,7 @@ public class AgenteCognitivo
 				
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
-				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAudio));	
+				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(texto));	
 				arrayList.put(jsonObject);
 			}
 			else if(idFrase.equals("movimientosTarjeta") || idFrase.equals("movimientosCuenta") && usuario.getEstaLogueado())
@@ -224,7 +224,7 @@ public class AgenteCognitivo
 				texto = texto.replaceAll("%br", "<br/>");
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
-				jsonObject.put("audio",urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir, pathAudio));	
+				jsonObject.put("audio",urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir));	
 				
 				arrayList.put(jsonObject);
 			}
@@ -377,7 +377,7 @@ public class AgenteCognitivo
 
 	private void inicializarGeneradorDeAudiosSingleton(){
 		TextToSpeechWatson.getInstance(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), 
-				this.getVoiceTextToSpeech(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), this.getPathAudio());
+				this.getVoiceTextToSpeech(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), this.getPathAudio(), this.geturlPublicaAudios());
 	}
 	
 	public void generarTodosLosAudiosEstaticos(){
@@ -519,16 +519,25 @@ public class AgenteCognitivo
 	
 	public double obtenerValorDeGustosDeHoteles(String idCliente) throws Exception
 	{
+		if( ! misConversaciones.existeElCliente(idCliente))
+			Thread.sleep(4000);
+		
 		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeHoteles();
 	}
 
 	public double obtenerValorDeGustosDeRestaurantes(String idCliente) throws Exception
 	{
+		if( ! misConversaciones.existeElCliente(idCliente))
+			Thread.sleep(4000);
+		
 		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeRestaurantes();
 	}
 	
 	public double obtenerValorDeGustosDeBelleza(String idCliente) throws Exception
 	{
+		if( ! misConversaciones.existeElCliente(idCliente))
+			Thread.sleep(4000);
+		
 		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeBelleza();
 	}
 	

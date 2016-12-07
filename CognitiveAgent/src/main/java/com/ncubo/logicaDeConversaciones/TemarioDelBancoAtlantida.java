@@ -29,6 +29,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 			"BAIntents",
 			frase("saludoGeneral"),
 			frase("saludar"),
+			frase("saludarConNombre"),
 			frase("saludoPreguntar")
 		);
 		return resultado;
@@ -198,6 +199,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 			variables,
 			frase("saludarConocerte"),
 			frase("preguntarPorRestaurantes"),
+			frase("preguntarPorRestaurantesSiNo"),
 			frase("fueraContextoConocerteDelBanco"),
 			frase("fueraContextoConocerteGeneral")
 		);
@@ -219,6 +221,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 			"conocerte",
 			variables,
 			frase("preguntarPorHospedaje"),
+			frase("preguntarPorHospedajeSiNo"),
 			frase("fueraContextoConocerteDelBanco"),
 			frase("fueraContextoConocerteGeneral")
 		);
