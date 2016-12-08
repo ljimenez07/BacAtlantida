@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ncubo.data.CategoriaOferta;
+import com.ncubo.data.Indice;
 import com.ncubo.data.Oferta;
 import com.ncubo.util.LevenshteinDistance;
 
@@ -83,7 +84,8 @@ public class OfertaDao
 				+ "LEFT JOIN categoria_con_oferta_y_peso ON oferta.idOferta = categoria_con_oferta_y_peso.idOferta "
 				+ "LEFT JOIN categoriadeoferta ON categoriadeoferta.id = categoria_con_oferta_y_peso.idCategoria "
 				+ "WHERE eliminada = 0 "
-				+ "GROUP BY oferta.idOferta ORDER BY fechaHoraRegistro DESC LIMIT 50;";
+				+ "ORDER BY fechaHoraRegistro "
+				+ "DESC LIMIT 150;"; //El 150 es porque cada oferta sale 3 veces.
 
 		Connection con = dao.openConBD();
 		Statement statement = con.createStatement();
@@ -201,7 +203,7 @@ public class OfertaDao
 		dao.closeConBD();
 	}
 	
-	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(int indiceInicial, String idUsuario) throws ClassNotFoundException, SQLException
+	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(Indice indiceInicial, String idUsuario) throws ClassNotFoundException, SQLException
 	{
 		boolean esUnUsuarioConocido = true;
 		if(idUsuario == null || idUsuario.isEmpty())
@@ -226,15 +228,14 @@ public class OfertaDao
 			+ "WHERE eliminada = 0 "
 			+ "AND estado = 1 "
 			+ "AND vigenciaHasta >= ? "
-			+ "GROUP BY oferta.idOferta "
 			+ "ORDER BY fechaHoraRegistro "
-			+ "DESC LIMIT ?, 10;";
+			+ "DESC LIMIT ?, 30;"; //El 30 es por que cada oferta sale 3 veces
 				
 		PreparedStatement stmt = con.prepareStatement(query);
 		stmt.setString(1, idUsuario);
 		stmt.setString(2, idUsuario);
 		stmt.setDate(3, new Date(Calendar.getInstance().getTimeInMillis()));
-		stmt.setInt(4, indiceInicial);
+		stmt.setInt(4, indiceInicial.valorEntero());
 		
 		ResultSet rs = stmt.executeQuery();
 		
@@ -416,26 +417,25 @@ public class OfertaDao
 		for(Oferta ofertaActual : ultimasOfertas)
 		{
 			int levenshteinDistance = LevenshteinDistance.distance( nombreComercio, ofertaActual.getComercio());
-			//int levenshteinDistanceCategoria = LevenshteinDistance.distance( nombreComercio, ofertaActual.getCategoria().getNombre());
 			
 			if ( levenshteinDistance < 6 )
 			{
 				if(cantidadQueLleva >= desde)
 				{
-					if (valoresSimilitud.get(levenshteinDistance) == null)
-					{
-						ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
-						ofertas.add(ofertaActual);
-						valoresSimilitud.put(levenshteinDistance, ofertas);
-					}
-					else
-					{
-						valoresSimilitud.get(levenshteinDistance).add(ofertaActual);
-					}
-					cantidadDeResultados++;
+				if (valoresSimilitud.get(levenshteinDistance) == null)
+				{
+					ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+					ofertas.add(ofertaActual);
+					valoresSimilitud.put(levenshteinDistance, ofertas);
 				}
 				else
 				{
+					valoresSimilitud.get(levenshteinDistance).add(ofertaActual);
+				}
+					cantidadDeResultados++;
+			}
+			else
+			{
 					cantidadQueLleva++;
 				}
 			}
@@ -445,16 +445,16 @@ public class OfertaDao
 				{
 					if(cantidadQueLleva >= desde)
 					{
-						if (valoresSimilitud.get(levenshteinDistanceCategoria) == null)
-						{
-							ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
-							ofertas.add(ofertaActual);
-							valoresSimilitud.put(levenshteinDistanceCategoria, ofertas);
-						}
-						else
-						{
-							valoresSimilitud.get(levenshteinDistanceCategoria).add(ofertaActual);
-						}
+					if (valoresSimilitud.get(levenshteinDistanceCategoria) == null)
+					{
+						ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+						ofertas.add(ofertaActual);
+						valoresSimilitud.put(levenshteinDistanceCategoria, ofertas);
+					}
+					else
+					{
+						valoresSimilitud.get(levenshteinDistanceCategoria).add(ofertaActual);
+					}
 						cantidadDeResultados++;
 					}
 					else
@@ -467,7 +467,7 @@ public class OfertaDao
 			if(cantidadDeResultados == CANTIDAD_PAGINACION)
 			{
 				break;
-			}
+		}
 		}
 		
 		Map<Integer, List<Oferta>> mapaOrdenado = new TreeMap<Integer, List<Oferta>>(valoresSimilitud);
@@ -485,7 +485,7 @@ public class OfertaDao
 	{
 		int cantidadDeofertas = obtenerCantidadDeOfertasParaMostrar();
 		int cantidadDePaginas = cantidadDeofertas / CANTIDAD_PAGINACION;
-		
+	
 		if(cantidadDeofertas % CANTIDAD_PAGINACION != 0)
 		{
 			cantidadDePaginas++;

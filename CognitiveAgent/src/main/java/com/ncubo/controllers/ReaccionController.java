@@ -51,7 +51,7 @@ public class ReaccionController
 		{
 			respuesta.put("usuarioEstaLogueado", false);
 		}
-
+		sesion.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 		return respuesta.toString();
 	}
 }
