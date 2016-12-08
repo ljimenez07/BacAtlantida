@@ -81,45 +81,19 @@ public class TextToSpeechWatson {
 		UUID idOne = UUID.randomUUID();
 		String nombreDelArchivo = idOne+".wav";
 		nombreDelArchivo = nombreDelArchivo.replace("-", "");
-		String path = pathAudios+File.separator+nombreDelArchivo;
 
+		String pathFinal = this.pathAudios + File.separator + nombreDelArchivo;
+		
 		InputStream in = null;
-		File directory = new File(pathAudios);
-        directory.mkdirs();
-        
-		File file = null;
-		file = new File(path);
 
-		BufferedOutputStream stream = null;
 		try {
-			stream = new BufferedOutputStream(new FileOutputStream(file));
-			try {
 				in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.WAV).execute();
-		        byte[] buffer = new byte[2048];
-		        int read;
-		        while ((read = in.read(buffer)) != -1) {
-		        	stream.write(buffer, 0, read);
-		        }
-		        stream.close();
-			} catch (Exception e) {
-				throw new ChatException(String.format("Error debido a: %s", e.getMessage()));
-			}
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
+			ftp.subirUnArchivo(in, pathFinal);
+		} catch (Exception e1) {
 			throw new ChatException(String.format("Error debido a: %s", e1.getMessage()));
 		}
 		finally {
 		    close(in);
-		}
-		try {
-			ftp.subirArchivo(pathAudios);
-			borrarDirectorio(pathAudios);
-		} catch (SocketException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return nombreDelArchivo;
 	}
@@ -137,9 +111,9 @@ public class TextToSpeechWatson {
 	        try {
 	            closeable.close();
 	        } catch (IOException e) {
-	        	//logger.info("Got error: " + e.getMessage());
+				// logger.info("Got error: " + e.getMessage());
 	        }
-	    }	      	   
+	}
 	}
 	
 	public static void main (String[] args) throws IOException{

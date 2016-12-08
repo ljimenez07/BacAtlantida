@@ -69,7 +69,11 @@
 		</frases>
 		<vineta></vineta>
 	</conversacion>
+<<<<<<< .mine
 	
+=======
+
+>>>>>>> .theirs
 	<conversacion id="quiereSaldoTarjetaCredito">
 		<tipo>pregunta</tipo>
 		<mandatoria>true</mandatoria>
@@ -908,6 +912,7 @@
 		<vineta></vineta>
 	</conversacion>
 	
+	
 	<conversacion id="saludarConocerte">		
 		<tipo>afirmativa</tipo>		
 		<mandatoria>true</mandatoria>		
@@ -923,14 +928,38 @@
 		</when>		
 	</conversacion>		
 	
+	 <conversacion id="saludarConocerte">       
+        <tipo>afirmativa</tipo>    
+        <mandatoria>true</mandatoria>      
+        <enVozAlta>true</enVozAlta>    
+        <frases>       
+            <frase>¡Hola! Para poder conocer lo que más te gusta, te haré algunas preguntas.</frase>    
+            <frase>¡Me alegro que hayas aceptado responder algunas preguntas!, tus respuestas me ayudarán a conocer tus preferencias, y así recomendarte sólo las ofertas y beneficios  que son de tu interés.</frase>    
+            <frase>¡Buenas! Te haré algunas preguntas para poder conocer lo que te gusta y así recomendarte promociones y beneficios especiales que sean de tu interés.</frase>        
+        </frases>      
+        <vineta></vineta>      
+        <when>     
+            <condition operador="and" tipo="intencion">saludos</condition>     
+        </when>    
+    </conversacion>    
+   
 	<conversacion id="preguntarPorRestaurantes">		
 		<tipo>pregunta</tipo>		
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
+<<<<<<< .mine
 			<curioso>¡Sabes!  A mí me encanta todo tipo de comidas y regularmente salgo a cenar a restaurantes. Si tuvieras la oportunidad, ¿te gustaría salir a cenar o prefieres quedarte en casa?.</curioso>
+=======
+            <curioso>¡Sabes!  A mí me encanta todo tipo de comidas y regularmente salgo a cenar a restaurantes. Si tuvieras la oportunidad, ¿te gustaría salir a cenar o prefieres quedarte en casa?.</curioso>
+>>>>>>> .theirs
+<<<<<<< .mine
 			<curioso>Durante un fin de semana qué prefieres, ¿quedarte en casa y cocinar; o salir a cenar a un restaurante?.</curioso>
 			<impertinente>No entendí tu respuesta. ¿Te gusta ir a restaurantes o quedarte en casa?</impertinente>			
+=======
+            <curioso>Durante un fin de semana qué prefieres, ¿quedarte en casa y cocinar; o salir a cenar a un restaurante?.</curioso>
+            <impertinente>No entendí tu respuesta. ¿Te gusta ir a restaurantes o quedarte en casa?</impertinente>        
+>>>>>>> .theirs
 		</frases>		
 		<vineta></vineta>		
 	</conversacion>
@@ -951,8 +980,13 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
+<<<<<<< .mine
 			<curioso>Personalmente creo que lo más importante es compartir mi tiempo libre con familiares y amigos, por eso cuando tengo la oportunidad me escapo a vacacionar a algún nuevo hotel. Cuéntame, ¿cuándo vas de vacaciones te hospedas en un hotel o prefieres acampar?.</curioso>	
 			<curioso>A mí me gusta vacacionar y por eso busco hoteles que me brinden alojamiento junto con muchas comodidades y tipos de esparcimiento.  En tu caso, cuando vas de vacaciones, ¿prefieres un hotel o prefieres acampar?.</curioso>
+=======
+            <curioso>Personalmente creo que lo más importante es compartir mi tiempo libre con familiares y amigos, por eso cuando tengo la oportunidad me escapo a vacacionar a algún nuevo hotel. Cuéntame, ¿cuándo vas de vacaciones te hospedas en un hotel o prefieres acampar?.</curioso>   
+            <curioso>A mí me gusta vacacionar y por eso busco hoteles que me brinden alojamiento junto con muchas comodidades y tipos de esparcimiento.  En tu caso, cuando vas de vacaciones, ¿prefieres un hotel o prefieres acampar?.</curioso>
+>>>>>>> .theirs
 			<impertinente>Necesito estar seguro, ¿utilizas los hoteles o prefieres acampar?</impertinente>
 		</frases>		
 		<vineta></vineta>		
@@ -974,10 +1008,17 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
+<<<<<<< .mine
 			<curioso>Te cuento que cuando voy a un hotel me encanta ir a relajarme al Spa y contratar un buen masaje. Creo que es una experiencia súper relajante! En tu caso, si tuvieras la oportunidad, cuando estés muy estresado o cansado, ¿harías lo mismo?.</curioso>
 			<curioso>¡La sociedad y los gustos han cambiado mucho! La tendencia actual es que tanto hombres como mujeres cuiden más de su apariencia y, por eso, acostumbro visitar salones de belleza para verme y sentirme mejor. Cuéntame, ¿también vas a esos lugares para que te consientan y lucir mucho mejor?.</curioso>
 			<curioso>Para mí es súper gratificante recibir un masaje y que además me hagan una limpieza facial porque luego te sientes como nuevo y además luzco muy bien. Cuéntame, ¿te gustaría darte este tipo de gustos?.</curioso>
 			<impertinente>Perdona pero no comprendí lo que me respondiste. ¿Vas a salones de belleza, Spas o lugares de relajación?.</impertinente>
+=======
+            <curioso>Te cuento que cuando voy a un hotel me encanta ir a relajarme al Spa y contratar un buen masaje. Creo que es una experiencia súper relajante! En tu caso, si tuvieras la oportunidad, cuando estés muy estresado o cansado, ¿harías lo mismo?.</curioso>
+            <curioso>¡La sociedad y los gustos han cambiado mucho! La tendencia actual es que tanto hombres como mujeres cuiden más de su apariencia y, por eso, acostumbro visitar salones de belleza para verme y sentirme mejor. Cuéntame, ¿también vas a esos lugares para que te consientan y lucir mucho mejor?.</curioso>
+            <curioso>Para mí es súper gratificante recibir un masaje y que además me hagan una limpieza facial porque luego te sientes como nuevo y además luzco muy bien. Cuéntame, ¿te gustaría darte este tipo de gustos?.</curioso>
+            <impertinente>Perdona pero no comprendí lo que me respondiste. ¿Vas a salones de belleza, Spas o lugares de relajación?.</impertinente>
+>>>>>>> .theirs
 		</frases>		
 		<vineta></vineta>		
 	</conversacion>
@@ -1007,9 +1048,17 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
+<<<<<<< .mine
 			<frase>Genial! gracias por compartirme tus respuestas, las usaremos para informarte de los beneficios que puedes aprovechar por ser cliente de Banco Atlántida.</frase>		
+=======
+            <frase>Genial! gracias por compartirme tus respuestas, las usaremos para informarte de los beneficios que puedes aprovechar por ser cliente de Banco Atlántida.</frase>       
+>>>>>>> .theirs
 			<frase>Gracias por tus respuestas, te estaremos enviando información relevante para ti acerca de promociones y beneficios.</frase>		
+<<<<<<< .mine
 			<frase>Muy bien! al iniciar sesión encontrarás información de promociones y beneficios que podrás aprovechar.</frase>		
+=======
+            <frase>Muy bien! al iniciar sesión encontrarás información de promociones y beneficios que podrás aprovechar.</frase>      
+>>>>>>> .theirs
 		</frases>		
 		<vineta></vineta>		
 	</conversacion>
@@ -1043,10 +1092,17 @@
 	</variablesDeAmbiente>
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
+<<<<<<< .mine
 		<workspace tipo="general" idIBM="278be472-dac0-4793-91e2-3220790b5f9f" intencionesParaSeReferenciado="">BAIntents</workspace>
 		<workspace tipo="especifico" idIBM="e0ff922e-68f2-4cc3-bc69-ec624d07c36c" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="d4b0e759-9557-4f5e-9049-fcc3472e5ea2" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
 		<workspace tipo="especifico" idIBM="48d8ca55-386e-40f4-ae51-dbf57c26508e" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como">BAFAQ</workspace>
+=======
+		<workspace tipo="general" idIBM="9dd863b1-8b71-4fbe-a883-5ebb76ee80de" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="especifico" idIBM="47970e57-ae6b-4aae-b127-a2408ececef7" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
+		<workspace tipo="especifico" idIBM="327702f8-0c70-4ed5-82c6-9139a89ef8f0" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
+		<workspace tipo="especifico" idIBM="fe33d974-a2e1-49dc-bc87-ed723b2f1c5f" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como">BAFAQ</workspace>
+>>>>>>> .theirs
 	</workspaces>
 	
 </conversacions>

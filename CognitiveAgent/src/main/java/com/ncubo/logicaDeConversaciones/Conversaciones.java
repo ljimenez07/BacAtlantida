@@ -1,10 +1,13 @@
 package com.ncubo.logicaDeConversaciones;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.ncubo.chatbot.exceptiones.ChatException;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
@@ -12,9 +15,11 @@ import com.ncubo.chatbot.partesDeLaConversacion.Temario;
 import com.ncubo.chatbot.participantes.Cliente;
 import com.ncubo.chatbot.watson.TextToSpeechWatson;
 import com.ncubo.conf.Usuario;
+import com.ncubo.dao.ConsultaDao;
 
 import java.util.concurrent.Semaphore;
 
+@Component
 public class Conversaciones {
 
 	// key puede ser el id del usuario o el id de la seccion
@@ -23,10 +28,9 @@ public class Conversaciones {
 	private static Temario temarioDelBancoAtlantida;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final Semaphore semaphore = new Semaphore(1);
-	
-	public Conversaciones(String pathXML){
-		System.out.println("El path xml es: "+pathXML);
-		temarioDelBancoAtlantida = new TemarioDelBancoAtlantida(pathXML);
+	private ConsultaDao consultaDao;
+
+	public Conversaciones(){
 	}
 	
 	private String crearUnaNuevoConversacion(Usuario usuario) throws Exception{
@@ -52,7 +56,7 @@ public class Conversaciones {
 					coversacion.cambiarParticipante(cliente);
 					misConversaciones.put(usuario.getIdSesion(), coversacion);
 				}else{
-					Conversacion coversacion = new Conversacion(temarioDelBancoAtlantida, cliente);
+					Conversacion coversacion = new Conversacion(temarioDelBancoAtlantida, cliente, consultaDao);
 					misConversaciones.put(usuario.getIdSesion(), coversacion);
 				}
 			}
@@ -62,7 +66,8 @@ public class Conversaciones {
 		}else{
 			if (! usuario.getIdSesion().equals("")){
 				if( ! existeLaConversacion(usuario.getIdSesion())){
-					Conversacion coversacion = new Conversacion(temarioDelBancoAtlantida);
+					cliente = new Cliente();
+					Conversacion coversacion = new Conversacion(temarioDelBancoAtlantida, cliente, consultaDao);
 					synchronized(misConversaciones){
 						misConversaciones.put(usuario.getIdSesion(), coversacion);
 					}
@@ -200,6 +205,11 @@ public class Conversaciones {
 	public String borrarUnaConversacion(String idSesion){
 		String resultado = "La conversación con id "+idSesion+" no existe.";
 		if(existeLaConversacion(idSesion)){
+			try {
+				misConversaciones.get(idSesion).guardarEstadiscitas();
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
 			synchronized(misConversaciones){
 				misConversaciones.remove(idSesion);
 				resultado = "La conversación con id "+idSesion+" se borró exitosamente.";
@@ -272,6 +282,12 @@ public class Conversaciones {
 		}
 		
 		return resultado;
+	}
+
+	public void inicializar(String pathXML, ConsultaDao consultaDao) {
+		System.out.println("El path xml es: "+pathXML);
+		temarioDelBancoAtlantida = new TemarioDelBancoAtlantida(pathXML);
+		this.consultaDao = consultaDao;
 	}
 	
 	public Cliente obtenerCliente(String idCliente)

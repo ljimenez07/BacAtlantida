@@ -125,20 +125,20 @@ function bindAcciones()
 function compartir(id, pathImagen)
 {
 	var options = {
-	  message: 'share this', // not supported on some apps (Facebook, Instagram)
-	  subject: 'the subject', // fi. for email
-	  files: [serverDomain + "/archivossubidos/" + pathImagen], // an array of filenames either locally or remotely
-	  url: serverDomain + "/ofertas/compartida/" + id,
-	  chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
+		message: 'share this', // not supported on some apps (Facebook, Instagram)
+		subject: 'the subject', // fi. for email
+		files: [serverDomain + "/archivossubidos/" + pathImagen], // an array of filenames either locally or remotely
+		url: serverDomain + "/ofertas/compartida/" + id,
+		chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
 	}
 	
 	var onSuccess = function(result) {
-	  console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
-	  console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
+		console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
+		console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
 	}
 	
 	var onError = function(msg) {
-	  console.log("Sharing failed with message: " + msg);
+		console.log("Sharing failed with message: " + msg);
 	}
 	
 	window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);

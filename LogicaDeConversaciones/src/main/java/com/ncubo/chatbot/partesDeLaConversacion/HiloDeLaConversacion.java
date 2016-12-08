@@ -1,13 +1,6 @@
 package com.ncubo.chatbot.partesDeLaConversacion;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
-import com.ncubo.chatbot.watson.Entidad;
-import com.ncubo.chatbot.watson.Intenciones;
 
 // Hilo de la converzacion actual - Se puede borrar cuando la seccion caduca
 public class HiloDeLaConversacion {
@@ -47,5 +40,10 @@ public class HiloDeLaConversacion {
 	
 	public void agregarSalidaAlHilo(Salida salida){
 		misSalidas.add(salida);
+	}
+	
+	public boolean existeTema(Tema tema)
+	{
+		return temasYaDichos.contains(tema);
 	}
 }

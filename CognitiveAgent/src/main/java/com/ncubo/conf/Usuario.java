@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import org.json.JSONObject;
-
 import com.ncubo.data.Categorias;
 
 public class Usuario implements Serializable

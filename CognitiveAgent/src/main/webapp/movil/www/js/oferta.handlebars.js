@@ -5,11 +5,11 @@ templates['oferta'] = template({"1":function(container,depth0,helpers,partials,d
 
   return "			<iframe class=\"html-de-oferta embed-responsive-item\" frameBorder=\"0\" scrolling=\"no\" id=\"html-de-oferta-"
     + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
-    + "\"></iframe>\r\n			<script type=\"text/javascript\">\r\n			var source = serverDomain + \"/archivossubidos/"
+    + "\" style=\"display:block; width:100%; height:100vh;\"></iframe>\r\n			<script type=\"text/javascript\">\r\n			var source = serverDomain + \"/archivossubidos/"
     + alias4(((helper = (helper = helpers.imagenPublicidadPath || (depth0 != null ? depth0.imagenPublicidadPath : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"imagenPublicidadPath","hash":{},"data":data}) : helper)))
     + "\";\r\n			var iframe = $('#oferta #html-de-oferta-"
     + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
-    + "');\r\n			iframe.attr(\"src\", source);\r\n			iframe.ready(function() {\r\n				var newHeight = $(this).find(\"body\")[0].offsetHeight + \"px\";\r\n				iframe.css({height: newHeight});\r\n			});\r\n			</script>\r\n";
+    + "');\r\n			iframe.attr(\"src\", source);\r\n			/*iframe.ready(function() {\r\n				var newHeight = $(this).find(\"body\")[0].offsetHeight + \"px\";\r\n				iframe.css({height: newHeight});\r\n			});*/\r\n			</script>\r\n";
 },"3":function(container,depth0,helpers,partials,data) {
     var helper;
 
@@ -27,7 +27,7 @@ templates['oferta'] = template({"1":function(container,depth0,helpers,partials,d
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"row\">\r\n	<div class=\"col-xs-12\">\r\n"
+  return "<div class=\"row detalle-de-oferta\">\r\n	<div class=\"col-xs-12\">\r\n"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.esHtml : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")
     + "		<div class=\"row nombre-del-comercio\">\r\n			<div class=\"col-xs-12\">\r\n				<strong>"
     + alias4(((helper = (helper = helpers.comercio || (depth0 != null ? depth0.comercio : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"comercio","hash":{},"data":data}) : helper)))
