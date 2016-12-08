@@ -215,7 +215,7 @@ public class AgenteCognitivo
 				jsonObject.put("audio", salida.get(i).getMiSonido().url());	
 				arrayList.put(jsonObject);
 			}
-			else if (idFrase.equals("reportarExtravio"))
+			/*else if (idFrase.equals("reportarExtravio"))
 			{
 				
 				String textoParaReproducir = "";
@@ -242,7 +242,7 @@ public class AgenteCognitivo
 				jsonObject.put("audio",urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir, pathAudio));	
 				
 				arrayList.put(jsonObject);
-			}
+			}*/
 			else
 			{
 				JSONObject jsonObject = new JSONObject();
