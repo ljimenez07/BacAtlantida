@@ -29,6 +29,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 			"BAIntents",
 			frase("saludoGeneral"),
 			frase("saludar"),
+			frase("saludarConNombre"),
 			frase("saludoPreguntar")
 		);
 		return resultado;
@@ -136,6 +137,9 @@ public class TemarioDelBancoAtlantida extends Temario{
 			"ayuda_como",
 			frase("ayudaLogin"),
 			frase("requisitosMensajitos"),
+			frase("requisitosEmbajada"),
+			frase("requisitosPasaporte"),
+			frase("requisitosLicencia"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta")
@@ -198,6 +202,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 			variables,
 			frase("saludarConocerte"),
 			frase("preguntarPorRestaurantes"),
+			frase("preguntarPorRestaurantesSiNo"),
 			frase("fueraContextoConocerteDelBanco"),
 			frase("fueraContextoConocerteGeneral")
 		);
@@ -219,6 +224,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 			"conocerte",
 			variables,
 			frase("preguntarPorHospedaje"),
+			frase("preguntarPorHospedajeSiNo"),
 			frase("fueraContextoConocerteDelBanco"),
 			frase("fueraContextoConocerteGeneral")
 		);
@@ -328,6 +334,9 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("precioAntecendentesPenalesEstudio"),
 			frase("precioAntecendentesPenalesVarios"),
 			frase("precioAntecendentesPoliciales"),
+			frase("precioPasaporte"),
+			frase("precioLicencia"),
+			frase("precioEmbajada"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
@@ -403,6 +412,9 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("cualCheques"),
 			frase("cualCuenta"),
 			frase("cualTarjeta"),
+			frase("requisitosEmbajada"),
+			frase("requisitosPasaporte"),
+			frase("requisitosLicencia"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),

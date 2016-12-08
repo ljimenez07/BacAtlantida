@@ -44,7 +44,7 @@ public class Evaluador {
 		//System.out.println(evaluador.ejecutaComando("show f.getDia();"));
 		
 		evaluador.crearContexto("leGustaLosHoteles = 0.0;");
-		System.out.println(evaluador.ejecutaComando("leGustaLosHoteles = 1.0 ; show leGustaLosHoteles;").trim());
+		System.out.println(evaluador.ejecutaComando("leGustaLosHoteles = 'Oscar Orlando Pagoaca Argueta'; show leGustaLosHoteles;").trim());
 		
     }
 }
