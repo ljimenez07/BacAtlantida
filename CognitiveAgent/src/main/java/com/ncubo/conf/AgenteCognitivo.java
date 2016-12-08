@@ -3,7 +3,6 @@ package com.ncubo.conf;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,9 +12,9 @@ import javax.annotation.PostConstruct;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -26,9 +25,7 @@ import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 import com.ncubo.chatbot.bitacora.HistoricosDeConversaciones;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.chatbot.watson.TextToSpeechWatson;
-import com.ncubo.chatbot.partesDeLaConversacion.Tema;
 import com.ncubo.dao.ConsultaDao;
-import com.ncubo.data.Consulta;
 import com.ncubo.logicaDeConversaciones.Conversaciones;
 import com.ncubo.util.FTPServidor;
 
@@ -56,19 +53,18 @@ public class AgenteCognitivo
 
 	@Autowired
 	private FTPServidor ftp;
-	
+	@Autowired
 	private Conversaciones misConversaciones;
 	private HistoricosDeConversaciones historicoDeConversaciones;
 	
 	private ExtraerDatosWebService extraerDatos = new ExtraerDatosWebService();
 
 	@PostConstruct
-    public void init(){
-        // start your monitoring in here
-		misConversaciones = new Conversaciones(getPathXML());
+	public void init(){
+		misConversaciones.inicializar(getPathXML(), consultaDao);
 		inicializarGeneradorDeAudiosSingleton();
 		historicoDeConversaciones = new HistoricosDeConversaciones();
-    }
+	}
 	
 	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
 	{
@@ -118,9 +114,6 @@ public class AgenteCognitivo
 		JSONArray arrayList = new JSONArray(); 
 		
 		System.out.println(salida.size());
-		boolean estaditicaSeDebeGuardar = true;
-		Tema tema = null;
-		ArrayList<Tema> temasTratados = new ArrayList<>();
 		boolean seTerminoElChat = false;
 		
 		for(int i = 0; i < salida.size(); i++){
@@ -256,23 +249,9 @@ public class AgenteCognitivo
 				jsonObject.put("texto", texto);
 				jsonObject.put("audio", salida.get(i).getMiSonido().url());	
 				arrayList.put(jsonObject);
-				estaditicaSeDebeGuardar = false;
 			}
-			
-			tema = salida.get(i).getTemaActual();
-			if ( estaditicaSeDebeGuardar && ! temasTratados.contains(tema) )
-			{
-				temasTratados.add(tema);
-				System.out.println(tema);
-			}
-			
 			if(salida.get(i).seTerminoElChat() || idFrase.equals("despedida") || idFrase.equals("noQuiereHacerOtraConsulta"))
 				seTerminoElChat = true;
-		}
-		
-		for(Tema temaActual : temasTratados)
-		{
-			consultaDao.insertar( new Consulta(temaActual, new Timestamp(new Date().getTime())) );
 		}
 		
 		respuesta.put("textos", arrayList);
@@ -518,14 +497,6 @@ public class AgenteCognitivo
 
 	public void setVoiceTextToSpeech(String voiceTextToSpeech) {
 		this.voiceTextToSpeech = voiceTextToSpeech;
-	}
-
-	public ConsultaDao getConsultaDao() {
-		return consultaDao;
-	}
-
-	public void setConsultaDao(ConsultaDao consultaDao) {
-		this.consultaDao = consultaDao;
 	}
 	
 	public String getPathAudio(){

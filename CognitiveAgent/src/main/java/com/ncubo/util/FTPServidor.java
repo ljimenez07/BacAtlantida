@@ -133,6 +133,22 @@ public class FTPServidor
 		return ftpClient.retrieveFileStream(nombreArchivo);
 	}
 	
+	public void subirUnArchivo(InputStream archivo, String pathDondeGuardar) throws IOException
+	{
+		FTPClient ftpClient = new FTPClient();
+		ftpClient.connect(host, puerto);
+		ftpClient.login(usuario, password);
+		try
+		{
+			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+			ftpClient.storeFile(pathDondeGuardar, archivo);
+		} 
+		finally
+		{
+			archivo.close();
+		}
+	}
+	
 	private void ajustarRutaDeImagenesEnPlantillaHTML(File html, String rutaArchivoEnFTP) throws IOException
 	{
 		Document doc = Jsoup.parse(html, null);

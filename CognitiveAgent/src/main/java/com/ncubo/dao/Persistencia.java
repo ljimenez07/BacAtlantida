@@ -4,12 +4,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.mysql.jdbc.Connection;
 import com.ncubo.data.Configuracion;
 
 @Component
+@Scope("prototype")
 public class Persistencia
 {
 	@Autowired

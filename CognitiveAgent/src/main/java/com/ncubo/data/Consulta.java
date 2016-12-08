@@ -22,6 +22,13 @@ public class Consulta
 		this.vecesConsultado = 1;
 	}
 	
+	public Consulta(Tema tema, Timestamp fecha, int vecesConsultado)
+	{
+		this.tema = tema;
+		this.fecha = fecha;
+		this.vecesConsultado = vecesConsultado;
+	}
+	
 	public Consulta(Tema tema, Timestamp fecha, String descripcion, int vecesConsultado)
 	{
 		this.tema = tema;
