@@ -310,16 +310,16 @@ var estaEsPaginaEditar = false;
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="form-group">
-							<label for="categoria-lbl" class="titulo-ca">A cúales categorías pertenece esta oferta:</label><br/>	
+							<label for="categoria-lbl" class="titulo-ca">A cuáles categorías pertenece esta oferta:</label><br/>	
 							<div th:each="categoria, categoriaStat : *{categorias}" class="row">
 								<div class="col-xs-3"> 
 									<div th:text="${categorias[__${categoriaStat.index}__].nombre}"  />
 								</div>
 								<div class="col-xs-3">
 									<select class="form-control" th:field="*{categorias[__${categoriaStat.index}__].peso}">
-										<option value="0">Para nada</option>
-										<option value="1">Una parte</option>
-										<option value="2">Completamente</option>
+										<option value="0">Poco</option>
+										<option value="1">Moderado</option>
+										<option value="2">Mucho</option>
 									</select>
 								</div>
 								<div class="col-xs-3"></div>
