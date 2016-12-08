@@ -107,25 +107,38 @@ public class Conversacion {
 					
 					idFraseActivada = respuesta.obtenerFraseActivada();
 					extraerOracionesAfirmarivasYPreguntas(misSalidas, respuesta, idFraseActivada);
+					String laIntencion = agente.obtenernombreDeLaIntencionEspecificaActiva();
 					
-					this.temaActual = this.temario.proximoTemaATratar(temaActual, hilo.verTemasYaTratadosYQueNoPuedoRepetir(), agente.obtenerNombreDelWorkspaceActual(), agente.obtenernombreDeLaIntencionEspecificaActiva());
+					this.temaActual = this.temario.proximoTemaATratar(temaActual, hilo.verTemasYaTratadosYQueNoPuedoRepetir(), agente.obtenerNombreDelWorkspaceActual(), laIntencion);
 					agente.yaNoCambiarDeTema();
 					agregarVariablesDeContextoDelClienteAWatson(temaActual);
 					if(this.temaActual == null){ // Ya no hay mas temas	
 						this.temaActual = this.temario.buscarTema(Constantes.FRASE_SALUDO);
-						agente.cambiarAWorkspaceGeneral();
+						
+						if(this.temario.buscarTema(agente.obtenerNombreDelWorkspaceActual(), laIntencion) == null && ! laIntencion.equals("afirmacion") && ! laIntencion.equals("negacion")){
+							agente.cambiarAWorkspaceGeneral();
+							System.out.println("No entendi bien ...");
+							this.temaActual = this.temario.buscarTema(Constantes.INTENCION_NO_ENTIENDO);
+							
+							Afirmacion fueraDeContexto = (Afirmacion) this.temaActual.buscarUnaFrase(Constantes.INTENCION_NO_ENTIENDO);
+							misSalidas.add(agente.decir(fueraDeContexto, respuesta, temaActual));
+							fraseActual = fueraDeContexto;
+							ponerComoYaTratado(fueraDeContexto);
+						}
 					}else{
-						System.out.println("El proximo tema a tratar es: "+this.temaActual.obtenerIdTema());
-						
-						// Activar en el contexto el tema
-						agente.activarTemaEnElContextoDeWatson(this.temaActual.obtenerIdTema());
-						
-						// llamar a watson y ver que bloque se activo
-						respuesta = agente.inicializarTemaEnWatson(respuestaDelCliente);
-						idFraseActivada = agente.obtenerNodoActivado(respuesta.messageResponse());
-						
-						System.out.println("Id de la frase a decir: "+idFraseActivada);
-						extraerOracionesAfirmarivasYPreguntas(misSalidas, respuesta, idFraseActivada);
+						if (idFraseActivada.equals("")){ // Quiere decir que no hay ninguna pregunta en la salida
+							System.out.println("El proximo tema a tratar es: "+this.temaActual.obtenerIdTema());
+							
+							// Activar en el contexto el tema
+							agente.activarTemaEnElContextoDeWatson(this.temaActual.obtenerIdTema());
+							
+							// llamar a watson y ver que bloque se activo
+							respuesta = agente.inicializarTemaEnWatson(respuestaDelCliente);
+							idFraseActivada = agente.obtenerNodoActivado(respuesta.messageResponse());
+							
+							System.out.println("Id de la frase a decir: "+idFraseActivada);
+							extraerOracionesAfirmarivasYPreguntas(misSalidas, respuesta, idFraseActivada);
+						}
 					}
 				}else{
 					if (agente.entendiLaUltimaPregunta()){

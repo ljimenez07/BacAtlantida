@@ -67,6 +67,15 @@ public abstract class Temario
 		return null;
 	}
 	
+	public Tema buscarTema(String nombreDelWorkspace, String nombreIntencionGeneral){
+		for(Tema tema: temasDelDiscurso){
+			if(tema.obtenerElNombreDelWorkspaceAlQuePertenece().equals(nombreDelWorkspace) && tema.obtenerIntencionGeneralAlQuePertenece().equals(nombreIntencionGeneral)){
+				return tema;
+			}
+		}
+		return null;
+	}
+	
 	public Frase extraerFraseDeSaludoInicial(CaracteristicaDeLaFrase caracteristica){
 		Tema miSaludo = buscarTema(Constantes.FRASE_SALUDO);
 		return miSaludo.buscarUnaFraseCon(caracteristica);
@@ -108,23 +117,6 @@ public abstract class Temario
 		}
 		if(temaActual.obtenerElNombreDelWorkspaceAlQuePertenece().equals(nombreDelWorkspace) && temaActual.obtenerIntencionGeneralAlQuePertenece().equals(nombreIntencionGeneral))
 			return temaActual;
-		else
-			return null;
-	}
-	
-	private Tema buscarUnUnicoTemaQueCumplaLaCondicion(String nombreDelWorkspace, String nombreIntencionGeneral){
-		int contador = 0;
-		Tema respuesta = null;
-		
-		for(Tema tema: temasDelDiscurso){
-			if(tema.obtenerElNombreDelWorkspaceAlQuePertenece().equals(nombreDelWorkspace) && tema.obtenerIntencionGeneralAlQuePertenece().equals(nombreIntencionGeneral)){
-				respuesta = tema;
-				contador ++;
-			}
-		}
-		
-		if (contador == 1)
-			return respuesta;
 		else
 			return null;
 	}

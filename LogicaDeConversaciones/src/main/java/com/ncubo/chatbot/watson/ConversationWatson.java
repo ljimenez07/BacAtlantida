@@ -160,17 +160,13 @@ public class ConversationWatson {
 			response = service.message(idConversacion, newMessage).execute();
 			System.out.println("CONTEXTO recibido de Watson: "+response.getContext());
 		} catch (IllegalArgumentException e) {
-		  // Missing or invalid parameter
-			//logger.info("Error1: "+e.getMessage()+" al enviar text");
+			System.out.println("Error1: "+e.getMessage()+" al enviar text (Missing or invalid parameter)");
 		} catch (BadRequestException e) {
-		  // Missing or invalid parameter
-			//logger.info("Error2: "+e.getMessage()+" al enviar text");
+			System.out.println("Error2: "+e.getMessage()+" al enviar text (Missing or invalid parameter)");
 		} catch (UnauthorizedException e) {
-		  // Access is denied due to invalid credentials
-			//logger.info("Error3: "+e.getMessage()+" al enviar text");
+			System.out.println("Error3: "+e.getMessage()+" al enviar text (Access is denied due to invalid credentials)");
 		} catch (InternalServerErrorException e) {
-		  // Internal Server Error
-			//logger.info("Error4: "+e.getMessage()+" al enviar text");
+			System.out.println("Error2: "+e.getMessage()+" al enviar text (Internal Server Error)");
 		}
 		
 		return response;

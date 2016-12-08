@@ -191,7 +191,10 @@ public class Agente extends Participante{
 					String laIntencion = respuesta.obtenerLaIntencionDeConfianzaDeLaRespuesta().getNombre();
 					if( ! laIntencion.equals("")){
 						borrarUnaVariableDelContexto(Constantes.ID_TEMA); // Solo se borra el id cuando el tema termina
-						nombreDeLaIntencionEspecificaActiva = laIntencion;
+						if(! laIntencion.equals("afirmacion")) // TODO Esto no deberia ir aca
+						{
+							nombreDeLaIntencionEspecificaActiva = laIntencion;
+						}
 						seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActualConRespaldo();
 					}
 				}
@@ -324,7 +327,7 @@ public class Agente extends Participante{
 				intencion = intenciones.get(index);
 			}
 		}
-		System.out.println("La intencion general es: "+intencion.getIntent());
+		System.out.println("La intencion general en "+nombreDelWorkSpace+" es: "+intencion.getIntent());
 		return intencion;
 	}
 	
