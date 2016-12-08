@@ -74,21 +74,68 @@ public class OfertaController
 			return "redirect:insertarOferta";
 		}
 		model.addAttribute("listaDeOfertas", ofertas);
+		model.addAttribute("cantidadDePaginacion", ofertaDao.cantidadPaginas());
+		return "tablaDeOfertas";
+	}
+	
+	@RequestMapping("/BackOffice/gestionDeOfertas/{pagina}")
+	public String visualizarOfertasPaginacion(Model model, @PathVariable int pagina) throws ClassNotFoundException, SQLException
+	{
+		int idDesde = ofertaDao.getCantidadPaginacion() * (pagina -1);
+		ArrayList<Oferta> ofertas = ofertaDao.obtener();
+		if (ofertas.isEmpty())
+		{
+			visualizarOfertas(model);
+		}
+		model.addAttribute("listaDeOfertas", ofertas);
+		model.addAttribute("cantidadDePaginacion", ofertaDao.cantidadPaginas());
 		return "tablaDeOfertas";
 	}
 	
 	@RequestMapping("/BackOffice/filtrarOfertas")
 	public String filtrarOfertas(@RequestParam("busquedaComercio") String nombreComercio, Model model) throws ClassNotFoundException, SQLException
 	{
+		return filtrarOfertas(nombreComercio, 0, model);
+	}
+	
+	@RequestMapping("/BackOffice/filtrarOfertas/{busquedaComercio}/{desde}")
+	public String filtrarOfertasDesde(@PathVariable("busquedaComercio") String nombreComercio, @PathVariable("desde") int desde, Model model) throws ClassNotFoundException, SQLException
+	{
+		return filtrarOfertas(nombreComercio, desde, model);
+	}
+	
+	private String filtrarOfertas(String nombreComercio, int desde, Model model) throws ClassNotFoundException, SQLException
+	{
+		int desdeSiguiente = desde + ofertaDao.getCantidadPaginacion();
+		int desdeAtras = desde - ofertaDao.getCantidadPaginacion();
+		
 		model.addAttribute("busquedaComercio", nombreComercio);
 		
-		ArrayList<Oferta> ofertas = ofertaService.filtrarOferta(nombreComercio);
+		ArrayList<Oferta> ofertas = ofertaService.filtrarOferta(nombreComercio, desde);
 
+		if (ofertas == null)
+		{
+			return visualizarOfertas(model);
+		}
+		if(desde != 0 && ofertas.isEmpty())
+		{
+			return filtrarOfertas(nombreComercio, 0, model);
+		}
 		if (ofertas.isEmpty())
 		{
 			return "redirect:insertarOferta";
 		}
+		if (ofertas.size() == ofertaDao.getCantidadPaginacion())
+		{
+			model.addAttribute("cantidadDePaginacionFiltroSiguiente", desdeSiguiente);
+		}
+		if (desdeAtras >= 0)
+		{
+			model.addAttribute("cantidadDePaginacionFiltroAtras", desdeAtras);
+		}
+		
 		model.addAttribute("listaDeOfertas", ofertas);
+		model.addAttribute("cantidadDePaginacionFiltro", desde);
 		return "tablaDeOfertas";
 	}
 	
@@ -223,24 +270,10 @@ public class OfertaController
 	}
 	
 	@InitBinder
-	public void initBinder(final WebDataBinder binder){
-	  final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
-	  binder.registerCustomEditor(java.sql.Date.class, new CustomDateEditor(dateFormat, true));
-	}
-	
-
-	@RequestMapping("/login")
-	public String login( Model model) throws ClassNotFoundException, SQLException
+	public void initBinder(final WebDataBinder binder)
 	{
-		return "login";
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
+		binder.registerCustomEditor(java.sql.Date.class, new CustomDateEditor(dateFormat, true));
 	}
-	
-	@RequestMapping("/logout")
-	public String logout( Model model) throws ClassNotFoundException, SQLException
-	{
-		return "login";
-	}
-	
-
 
 }

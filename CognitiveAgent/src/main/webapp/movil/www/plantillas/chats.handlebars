@@ -1,4 +1,4 @@
-<div class="row" style="height: 54px" />
+<div style="height: 54px" />
 <div class="container contenedor-campo-de-entrada">
 	<div id="chat-id-container-{{pathDelServidor}}" class="row">
 		<div class="col-xs-10">
@@ -13,7 +13,7 @@
 	.panel-body
 	{
 		height: 100%;
-		overflow: scroll
+		overflow: scroll;
 	}
 </style>
 
@@ -33,7 +33,7 @@ $(function(){
 		var guardarCola = true;
 		var colaDeReproduccion = new Array();
 		
-		$("#chat-id-{{pathDelServidor}}").prepend('<div class="row contenedor-boton-escuchar-mensajes"><div class="col-xs-6"><div class="boton-escuchar-mensajes desactivado" /></div></div><div class="row" style="height: 54px" />');
+		$("#chat-id-{{pathDelServidor}}").prepend('<div class="row contenedor-boton-escuchar-mensajes"><div class="col-xs-6"><div class="boton-escuchar-mensajes desactivado" /></div></div><div style="height: 54px" />');
 		$("#chat-id-{{pathDelServidor}} .boton-escuchar-mensajes").click(function()
 		{
 			$(this).toggleClass("activado").toggleClass("desactivado");
@@ -87,9 +87,15 @@ $(function(){
 		$('input').bind('focus', function()
 		{
 			resizeDiv(true, function(){
-				moverScrollParaAbajoEnFuncionDelUltimoMensaje(function(){
-					$("html, body").animate({scrollTop: 0}, "fast");
-				});
+				moverScrollParaAbajoEnFuncionDelUltimoMensaje(function()
+					{
+						var tamanioEnPxDelScroll = chat.parent().parent()[0].scrollHeight;
+						if(tamanioEnPxDelScroll > 0) // evita que el scroll retorne arriba por culpa del callback.
+						{
+							$("html, body").animate({scrollTop: tamanioEnPxDelScroll}, "fast");
+						}
+					
+					});
 			});
 		});
 		
@@ -146,6 +152,7 @@ $(function(){
 							respuesta.find(".msg p").html(textos[i].texto);
 							respuesta.find("time").html(hora);
 							conversation.append(respuesta);
+							
 							if(textos[i].audio != "")
 							{
 								reproducirMensaje(textos[i].audio);
@@ -153,6 +160,12 @@ $(function(){
 						}
 					}
 					
+					if(textos.seTerminoElChat == true)
+					{
+						ajax({
+							url: serverDomain + "/conversacion/borrarUnaConversacion/" + textos.idSesion
+						});
+					}
 					moverScrollParaAbajoEnFuncionDelUltimoMensaje();
 				},
 				fail: function(XMLHttpRequest, textStatus, textStatus) 
@@ -171,13 +184,12 @@ $(function(){
 		
 		function moverScrollParaAbajoEnFuncionDelUltimoMensaje(callback)
 		{
-			console.log("moverScrollParaAbajoEnFuncionDelUltimoMensajel");
-			console.log(callback);
-			chat.parent().parent().scrollTop(chat.parent().parent()[0].scrollHeight);
+			window.scrollTo(0,chat.parent().parent()[0].scrollHeight);
 			if(callback != undefined)
 			{
 				callback();
 			}
+			
 		}
 		
 		this.reenviarUltimoMensajeSinImprimirlo = function()

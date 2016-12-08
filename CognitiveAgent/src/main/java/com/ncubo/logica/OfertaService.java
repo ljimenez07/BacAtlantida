@@ -42,7 +42,7 @@ public class OfertaService
 		return bindingResult;
 	}
 	
-	public ArrayList<Oferta> filtrarOferta(String nombreComercio) throws ClassNotFoundException, SQLException
+	public ArrayList<Oferta> filtrarOferta(String nombreComercio, int desde) throws ClassNotFoundException, SQLException
 	{
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
 		if(nombreComercio.equals(""))
@@ -51,7 +51,7 @@ public class OfertaService
 		}
 		else
 		{
-			ofertas = ofertaDao.filtrarOfertasPorComercioYCategoria(nombreComercio);
+			ofertas = ofertaDao.filtrarOfertasPorComercioYCategoria(nombreComercio, desde);
 		}
 		return ofertas;
 	}

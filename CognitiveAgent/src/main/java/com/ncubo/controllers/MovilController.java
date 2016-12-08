@@ -64,6 +64,7 @@ public class MovilController {
 				new Date()));
 		
 		object.put("usuarioEstaLogueado", usuario.getEstaLogueado());
+		object.put("idSesion", usuario.getIdSesion());
 		
 		session.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 		

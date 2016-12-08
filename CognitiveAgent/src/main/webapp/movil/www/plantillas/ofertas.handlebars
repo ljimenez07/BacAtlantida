@@ -32,6 +32,10 @@ function evaluarVerMas()
 			{
 				$("#contenedor-mostrar-mas").show();
 			}
+			else
+			{
+				$("#contenedor-mostrar-mas").remove();
+			}
 		}
 	});
 }
@@ -59,8 +63,14 @@ function bindAcciones()
 	
 				$("#oferta .boton-escuchar-oferta").off("click").on("click", function()
 				{
-					agregarAColaDeReproduccion("/archivossubidos" + $(this).data("audio"));
+					agregarAColaDeReproduccion($(this).data("audio"));
 				});
+	
+				$("#oferta .boton-compartir").off("click").on("click", function()
+				{
+					compartir($(this).data("id"), $(this).data("path"));
+				});
+				
 				$("#oferta .imagen-de-oferta").each(function()
 				{
 					var path = serverDomain + $(this).attr("src");
@@ -108,16 +118,43 @@ function bindAcciones()
 	
 	$("#ofertas .boton-compartir").off("click").on("click", function()
 	{
-		agregarAColaDeReproduccion("/archivos/beep.wav");
+		compartir($(this).data("id"), $(this).data("path"));
 	});
+}
+
+function compartir(id, pathImagen)
+{
+	var options = {
+	  message: 'share this', // not supported on some apps (Facebook, Instagram)
+	  subject: 'the subject', // fi. for email
+	  files: [serverDomain + "/archivossubidos/" + pathImagen], // an array of filenames either locally or remotely
+	  url: serverDomain + "/ofertas/compartida/" + id,
+	  chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
+	}
+	
+	var onSuccess = function(result) {
+	  console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
+	  console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
+	}
+	
+	var onError = function(msg) {
+	  console.log("Sharing failed with message: " + msg);
+	}
+	
+	window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
 }
 
 function agregarDominioAImagenes()
 {
 	$("#ofertas .imagen-de-oferta").each(function()
 	{
-		var path = serverDomain + $(this).attr("src");
-		$(this).attr("src", path);
+		var source = $(this).attr("src");
+		var noTieneDominio = source.indexOf(serverDomain) < 0;
+		if(noTieneDominio)
+		{
+			var path = serverDomain + source;
+			$(this).attr("src", path);
+		}
 	});
 }
 
