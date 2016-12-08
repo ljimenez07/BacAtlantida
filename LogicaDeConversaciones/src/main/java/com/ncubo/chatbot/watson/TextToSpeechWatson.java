@@ -79,45 +79,19 @@ public class TextToSpeechWatson {
 		UUID idOne = UUID.randomUUID();
 		String nombreDelArchivo = idOne+".wav";
 		nombreDelArchivo = nombreDelArchivo.replace("-", "");
-		String path = pathAGuardar+File.separator+nombreDelArchivo;
 
+		String pathFinal = pathAGuardar + File.separator + nombreDelArchivo;
+		
 		InputStream in = null;
-		File directory = new File(pathAGuardar);
-        directory.mkdirs();
-        
-		File file = null;
-		file = new File(path);
 
-		BufferedOutputStream stream = null;
 		try {
-			stream = new BufferedOutputStream(new FileOutputStream(file));
-			try {
-				in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.WAV).execute();
-		        byte[] buffer = new byte[2048];
-		        int read;
-		        while ((read = in.read(buffer)) != -1) {
-		        	stream.write(buffer, 0, read);
-		        }
-		        stream.close();
-			} catch (Exception e) {
-				throw new ChatException(String.format("Error debido a: %s", e.getMessage()));
-			}
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
+			in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.WAV).execute();
+			ftp.subirUnArchivo(in, pathFinal);
+		} catch (Exception e1) {
 			throw new ChatException(String.format("Error debido a: %s", e1.getMessage()));
 		}
 		finally {
-		    close(in);
-		}
-		try {
-			ftp.subirArchivo(pathAGuardar);
-			borrarDirectorio(pathAGuardar);
-		} catch (SocketException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			close(in);
 		}
 		return nombreDelArchivo;
 	}
@@ -127,13 +101,13 @@ public class TextToSpeechWatson {
 	}
 	
 	private void close(Closeable closeable) {
-	    if (closeable != null) {
-	        try {
-	            closeable.close();
-	        } catch (IOException e) {
-	        	//logger.info("Got error: " + e.getMessage());
-	        }
-	    }	      	   
+		if (closeable != null) {
+			try {
+				closeable.close();
+			} catch (IOException e) {
+				// logger.info("Got error: " + e.getMessage());
+			}
+		}
 	}
 	
 	public static void main (String[] args) throws IOException{

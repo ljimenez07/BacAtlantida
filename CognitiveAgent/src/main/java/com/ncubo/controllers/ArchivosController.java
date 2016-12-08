@@ -83,8 +83,6 @@ public class ArchivosController
 		
 		response.setContentType(mimetype);
 		OutputStream outStream = response.getOutputStream();
-		
-		//ftp.subirUnArchivo(streamPorDevolver, "audios/a");
 
 		if(streamPorDevolver != null)
 		{
