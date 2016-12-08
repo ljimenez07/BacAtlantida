@@ -9,7 +9,6 @@ import com.ncubo.chatbot.configuracion.Constantes;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.chatbot.partesDeLaConversacion.Temario;
 import com.ncubo.chatbot.participantes.Cliente;
-import com.ncubo.realestate.TemarioDeRealEstate;
 
 public class Consola {
 
@@ -49,7 +48,7 @@ public class Consola {
 		
 		Temario temarioDelBancoAtlantida = new TemarioDelBancoAtlantida(Constantes.PATH_ARCHIVO_DE_CONFIGURACION_BA);
 		Cliente cliente = new Cliente("Ricky", "123456");
-		Conversacion miConversacion = new Conversacion(temarioDelBancoAtlantida, cliente);
+		Conversacion miConversacion = new Conversacion(temarioDelBancoAtlantida, cliente, null);
 		String respuesta = "";
 		
 		ArrayList<Salida> salidasParaElCliente = miConversacion.analizarLaRespuestaConWatsonEnUnWorkspaceEspecifico("Hola!", "ConocerteGeneral", "conocerte");

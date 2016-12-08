@@ -1,5 +1,6 @@
 package com.ncubo.logicaDeConversaciones;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import com.ncubo.chatbot.partesDeLaConversacion.Tema;
 import com.ncubo.chatbot.partesDeLaConversacion.Temario;
 import com.ncubo.chatbot.participantes.Agente;
 import com.ncubo.chatbot.participantes.Cliente;
+import com.ncubo.dao.ConsultaDao;
 
 public class Conversacion {
 
@@ -31,7 +33,9 @@ public class Conversacion {
 	private Frase fraseActualDelWorkSpaceEspecifico = null;
 	private boolean hayUnWorkspaceEspecifico = false;
 	
-	public Conversacion(Temario temario, Cliente participante){
+	private Estadisticas estadisticasTemasTratados;
+	
+	public Conversacion(Temario temario, Cliente participante, ConsultaDao consultaDao){
 		// Hacer lamdaba para agregar los participantes
 		//this.participantes = new Participantes();
 		this.participante = participante;
@@ -41,6 +45,7 @@ public class Conversacion {
 		this.hilo = new HiloDeLaConversacion();
 		//this.participantes.agregar(agente).agregar(participante);
 		this.temario = temario;
+		estadisticasTemasTratados = new Estadisticas(consultaDao);
 	}
 	
 	public void cambiarParticipante(Cliente participante){
@@ -85,10 +90,6 @@ public class Conversacion {
 				extraerOracionesAfirmarivasYPreguntas(respuesta, idFraseActivada);*/
 			}else{
 				if(agente.hayQueCambiarDeTema()){
-					if(this.temaActual != null){
-						if( (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_SALUDO)) && (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_DESPEDIDA)) )
-							ponerComoYaTratado(this.temaActual);
-					}
 					
 					idFraseActivada = respuesta.obtenerFraseActivada();
 					extraerOracionesAfirmarivasYPreguntas(misSalidas, respuesta, idFraseActivada);
@@ -111,6 +112,12 @@ public class Conversacion {
 						System.out.println("Id de la frase a decir: "+idFraseActivada);
 						extraerOracionesAfirmarivasYPreguntas(misSalidas, respuesta, idFraseActivada);
 					}
+					
+					if(this.temaActual != null){
+						if( (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_SALUDO)) && (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_DESPEDIDA)) )
+							ponerComoYaTratado(this.temaActual);
+					}
+					
 				}else{
 					if (agente.entendiLaUltimaPregunta()){
 						
@@ -348,12 +355,21 @@ public class Conversacion {
 		hilo.ponerComoDichoEsta(frase);
 	}
 	
-	private void ponerComoYaTratado(Tema tema){
+	private void ponerComoYaTratado(Tema tema)
+	{
+		//if ( ! hilo.existeTema(temaActual)){ //si quiere que solo lo cuente una vez
+			estadisticasTemasTratados.darSeguimiento(temaActual);
+		//}
 		if(tema.sePuedeRepetir()){
 			hilo.ponerComoDichoEste(tema);
 		}else{
 			hilo.noPuedoRepetir(tema);
 		}
+	}
+	
+	public void guardarEstadiscitas() throws ClassNotFoundException, SQLException
+	{
+		estadisticasTemasTratados.guardarEstadiscitasEnBaseDeDatos();
 	}
 	
 }

@@ -1,10 +1,12 @@
 package com.ncubo.data;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties("db")
+@Scope("prototype")
 public class Configuracion 
 {
 	private String url;

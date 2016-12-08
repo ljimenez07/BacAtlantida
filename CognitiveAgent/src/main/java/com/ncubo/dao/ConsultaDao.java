@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import com.ncubo.chatbot.partesDeLaConversacion.Tema;
 import com.ncubo.data.Consulta;
 
-@Component
+@Component("consultaDao")
 public class ConsultaDao
 {
 	@Autowired
@@ -79,7 +79,7 @@ public class ConsultaDao
 				 + atributo.FECHA + ","
 				 + atributo.VECES_CONSULTADO + ")"
 				 + " VALUES (" + queryDatos + ") "
-				 + " ON DUPLICATE KEY UPDATE " + atributo.VECES_CONSULTADO + " = " +atributo.VECES_CONSULTADO + " + 1";
+				 + " ON DUPLICATE KEY UPDATE " + atributo.VECES_CONSULTADO + " = " +atributo.VECES_CONSULTADO + " + " + consulta.getVecesConsultado();
 		
 		Connection con = dao.openConBD();
 		con.createStatement().execute(query);

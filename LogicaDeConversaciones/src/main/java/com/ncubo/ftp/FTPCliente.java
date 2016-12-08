@@ -119,6 +119,22 @@ public class FTPCliente
 		return pathArchivoGuardado.replaceAll("-", "_").replaceAll("/", "-");
 	}
 	
+	public void subirUnArchivo(InputStream archivo, String pathDondeGuardar) throws IOException
+	{
+		FTPClient ftpClient = new FTPClient();
+		ftpClient.connect(host, puerto);
+		ftpClient.login(usuario, password);
+		try
+		{
+			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+			ftpClient.storeFile(pathDondeGuardar, archivo);
+		} 
+		finally
+		{
+			archivo.close();
+		}
+	}
+	
 	public InputStream descargarArchivo(String nombreArchivo) throws SocketException, IOException
 	{
 		FTPClient ftpClient = new FTPClient();
