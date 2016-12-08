@@ -28,6 +28,7 @@ public class Respuesta {
 	private List<String> idsDeOracionesAfirmativas;
 	private boolean hayOracionesAfirmativas;
 	private String loQueElClienteDijo;
+	private boolean hayProblemasEnLaComunicacionConWatson;
 	
 	public Respuesta(Frase frase, ConversationWatson conversacion, String context){
 		this.terminoElTema = false;
@@ -42,6 +43,7 @@ public class Respuesta {
 		this.idsDeOracionesAfirmativas = null;
 		this.hayOracionesAfirmativas = false;
 		this.watsonRespuesta = null;
+		this.hayProblemasEnLaComunicacionConWatson = false;
 	}
 	
 	public Respuesta(ConversationWatson conversacion, String context){
@@ -56,6 +58,7 @@ public class Respuesta {
 		this.misIntenciones = new Intenciones();
 		this.idsDeOracionesAfirmativas = null;
 		this.hayOracionesAfirmativas = false;
+		this.hayProblemasEnLaComunicacionConWatson = false;
 	}
 	
 	public void llamarAWatson(String texto){
@@ -64,6 +67,15 @@ public class Respuesta {
 		// Si la respuesta fue pobre o de baja confianza hay que confirmar
 		this.loQueElClienteDijo = texto;
 		watsonRespuesta = this.miConversacion.enviarAWatson(texto, this.miContexto);
+		if (watsonRespuesta == null){
+			System.out.println("ERROR EN LA COMUNICACION CON WATSON");
+			watsonRespuesta = this.miConversacion.enviarAWatson(texto, this.miContexto);
+			if (watsonRespuesta == null){
+				System.out.println("ERROR EN LA COMUNICACION CON WATSON");
+				hayProblemasEnLaComunicacionConWatson = true;
+			}
+		}
+		
 		procesarLaRespuestaDeWatson(this.miConversacion, watsonRespuesta);
 	}
 	
@@ -176,4 +188,7 @@ public class Respuesta {
 		return this.fraseActivada;
 	}
 	
+	public boolean hayProblemasEnLaComunicacionConWatson(){
+		return this.hayProblemasEnLaComunicacionConWatson;
+	}
 }

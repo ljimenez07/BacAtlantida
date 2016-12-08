@@ -1075,6 +1075,16 @@
 		<vineta></vineta>		
 	</conversacion>
 	
+	<conversacion id="errorDeComunicacionConWatson">				
+		<tipo>afirmativa</tipo>		
+		<mandatoria>true</mandatoria>				
+		<enVozAlta>true</enVozAlta>				
+		<frases>				
+			<frase>Disculpame, pero en este momento no puedo responderte, por favor intentalo más tarde.</frase>		
+		</frases>				
+		<vineta></vineta>				
+	</conversacion>
+	
 	<conjunciones>
 		<conjuncion id="conjuncion1">Disculpame, pero no te entiendo.</conjuncion>
 		<conjuncion id="conjuncion2">No logro comprenderte.</conjuncion>
