@@ -15,11 +15,11 @@ public class CustomErrorController extends ResponseEntityExceptionHandler  {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public @ResponseBody Exception exception(Exception e) 
 	{
-	   if( e instanceof MultipartException)
-	   {
-		   return new RuntimeException("Su archivo supera el tamaño máximo permitido");
-	   }
-	   
+		e.printStackTrace();
+		if( e instanceof MultipartException)
+		{
+			return new RuntimeException("Su archivo supera el tamaño máximo permitido");
+		}
 		return e;
 	}
 	

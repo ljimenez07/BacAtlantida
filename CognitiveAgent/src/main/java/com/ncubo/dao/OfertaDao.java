@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ncubo.data.CategoriaOferta;
+import com.ncubo.data.Indice;
 import com.ncubo.data.Oferta;
 import com.ncubo.util.LevenshteinDistance;
 
@@ -24,7 +26,7 @@ import com.ncubo.util.LevenshteinDistance;
 public class OfertaDao
 {
 	private final String NOMBRE_TABLA = "oferta";
-	private final String NOMBRE_TABLA_CATEGORIA_OFERTA = "categoriaoferta";
+	private final String NOMBRE_TABLA_CATEGORIA_OFERTA = "categoriadeoferta";
 	private final String NOMBRE_TABLA_REACCION = "reaccion";
 	private final int LIMITE = 50;
 	private final int CANTIDAD_PAGINACION = 20;
@@ -71,50 +73,37 @@ public class OfertaDao
 		}
 	}
 	
-	public ArrayList<Oferta> obtener(int indicaInicial) throws ClassNotFoundException, SQLException
+	public ArrayList<Oferta> obtener() throws ClassNotFoundException, SQLException
 	{
-		return obtener(indicaInicial, CANTIDAD_PAGINACION);
-	}
-	
-	public ArrayList<Oferta> obtener(int indicaInicial, int hasta) throws ClassNotFoundException, SQLException
-	{
-		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
-		String query = "SELECT " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + ", "
-				+ atributo.TITULO_DE_OFERTA + ", "
-				+ atributo.COMERCIO + ", "
-				+ atributo.DESCRIPCION + ", "
-				+ atributo.CATEGORIA + ", "
-				+ atributo.NOMBRE_CATEGORIA + ", "
-				+ atributo.CIUDAD + ", "
-				+ atributo.ESTADO + ", "
-				+ atributo.RESTRICCIONES + ", "
-				+ atributo.VIGENCIA_DESDE + ", "
-				+ atributo.VIGENCIA_HASTA + ", "
-				+ atributo.IMAGEN_COMERCIO_PATH + ", "
-				+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
-				+ atributo.FECHA_HORA_REGISTRO
-				+ ", SUM(IF(" + atributo.REACCION + " = 1, 1, 0)) AS " + atributo.LIKES
-				+ ", SUM(IF(" + atributo.REACCION + " = 0, 1, 0)) AS " + atributo.DISLIKES
-				+ " FROM " + NOMBRE_TABLA_CATEGORIA_OFERTA + ", " + NOMBRE_TABLA
-				+ " LEFT JOIN " + NOMBRE_TABLA_REACCION + " ON " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + NOMBRE_TABLA_REACCION + ".idOferta"
-				+ " WHERE " + atributo.ELIMINADA + " = 0"
-				+ " AND " + atributo.CATEGORIA + " = " + atributo.ID_CATEGORIA
-				+ " GROUP BY " + NOMBRE_TABLA + "." + atributo.ID_OFERTA 
-				+ " ORDER BY " + atributo.FECHA_HORA_REGISTRO + " DESC "
-				+ " LIMIT " + indicaInicial + ", " + hasta + ";";
+		String query = "SELECT oferta.idOferta, tituloDeOferta, comercio, descripcion, "
+				+ "idCategoria, peso, nombre, ciudad, estado, restricciones, vigenciaDesde, vigenciaHasta, imagenComercioPath, "
+				+ "imagenPublicidadPath, fechaHoraRegistro "
+				+ "FROM oferta "
+				+ "LEFT JOIN reaccion ON oferta.idOferta = reaccion.idOferta "
+				+ "LEFT JOIN categoria_con_oferta_y_peso ON oferta.idOferta = categoria_con_oferta_y_peso.idOferta "
+				+ "LEFT JOIN categoriadeoferta ON categoriadeoferta.id = categoria_con_oferta_y_peso.idCategoria "
+				+ "WHERE eliminada = 0 "
+				+ "ORDER BY fechaHoraRegistro "
+				+ "DESC LIMIT 150;"; //El 150 es porque cada oferta sale 3 veces.
 
 		Connection con = dao.openConBD();
 		Statement statement = con.createStatement();
 		ResultSet rs = statement.executeQuery(query);
 		
+		HashMap<String, Oferta> ofertasMap = new HashMap<String, Oferta>();
+		
 		while (rs.next())
 		{
-			ofertas.add(new Oferta(
+			String id = rs.getString(atributo.ID_OFERTA.toString());
+			String idCategoria = rs.getString("idCategoria");
+			
+			if ( !ofertasMap.containsKey( id ) )
+			{
+				ofertasMap.put(id,new Oferta(
 					rs.getInt(atributo.ID_OFERTA.toString()),
 					rs.getString(atributo.TITULO_DE_OFERTA.toString()),
 					rs.getString(atributo.COMERCIO.toString()),
 					rs.getString(atributo.DESCRIPCION.toString()),
-					new CategoriaOferta(rs.getInt(atributo.CATEGORIA.toString()), rs.getString(atributo.NOMBRE_CATEGORIA.toString())),
 					rs.getString(atributo.CIUDAD.toString()),
 					rs.getBoolean(atributo.ESTADO.toString()),
 					rs.getString(atributo.RESTRICCIONES.toString()),
@@ -123,13 +112,27 @@ public class OfertaDao
 					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
 					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
 					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),
-					rs.getInt(atributo.LIKES.toString()),
-					rs.getInt(atributo.DISLIKES.toString())
+					0,
+					0
 					));
+				
+				if( idCategoria != null )
+				{
+					CategoriaOferta categoria = new CategoriaOferta(
+							rs.getInt("idCategoria"),
+							rs.getString("nombre"),
+							rs.getDouble("peso"));
+					ofertasMap.get( id ).agregarCategoria(categoria);
+				}
+			}
+					
 		}
 		
+		Collection<Oferta> values = ofertasMap.values();
+		ArrayList<Oferta> listaDeOfertas = new ArrayList<Oferta>(values);
+		
 		dao.closeConBD();
-		return ofertas;
+		return listaDeOfertas;
 	}
 	
 	public void insertar(Oferta oferta) throws ClassNotFoundException, SQLException
@@ -138,7 +141,7 @@ public class OfertaDao
 		String queryDatos = "'" + oferta.getTituloDeOferta()+ "'"
 							+ ",'" + oferta.getComercio() + "'"
 							+ ",'" + oferta.getDescripcion() + "'"
-							+ ",'" + oferta.getCategoria().getId() + "'"
+						//	+ ",'" + oferta.getCategoria().getId() + "'"
 							+ ",'" + oferta.getCiudad() + "'"
 							+ "," + (oferta.getEstado() ? 1 : 0)
 							+ ",'" + oferta.getRestricciones() + "'"
@@ -151,7 +154,6 @@ public class OfertaDao
 					 + "(" + atributo.TITULO_DE_OFERTA + ","
 					 + atributo.COMERCIO + ","
 					 + atributo.DESCRIPCION + ","
-					 + atributo.CATEGORIA + ","
 					 + atributo.CIUDAD + ","
 					 + atributo.ESTADO + ","
 					 + atributo.RESTRICCIONES + ","
@@ -175,50 +177,81 @@ public class OfertaDao
 		dao.closeConBD();
 	}
 	
-	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(int indiceInicial, String idUsuario) throws ClassNotFoundException, SQLException
+	public void insertarCategorias(int idOferta, ArrayList< CategoriaOferta> categorias) throws ClassNotFoundException, SQLException
+	{
+		String query = "INSERT INTO categoria_con_oferta_y_peso"
+					 + "(idCategoria, idOferta, peso) VALUES ";
+
+		int cantidad = categorias.size();
+		for( CategoriaOferta categoria : categorias)
+		{
+			query+= "("+categoria.getId()+", "+idOferta+","+categoria.getPeso()+")";
+			
+			if( cantidad > 1)
+			{
+				query+= ", ";
+				cantidad = cantidad-1;
+			}
+		}
+		
+
+		Connection con = dao.openConBD();
+		PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+		preparedStatement.executeUpdate();
+		
+		dao.closeConBD();
+	}
+	
+	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(Indice indiceInicial, String idUsuario) throws ClassNotFoundException, SQLException
 	{
 		boolean esUnUsuarioConocido = true;
-		if(idUsuario == null)
+		if(idUsuario == null || idUsuario.isEmpty())
 		{
 			idUsuario = "NULL";
 			esUnUsuarioConocido = false;
 		}
-		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+		
+		HashMap<String, Oferta> ofertasMap = new HashMap<String, Oferta>();
+		
 		Connection con = dao.openConBD();
-		String query = String.format("SELECT %s FROM %s, %s LEFT JOIN %s ON %s.%s = %s.%s WHERE %s = 0 AND %s = 1 AND %s = %s AND %s >= ? GROUP BY %s.%s ORDER BY %s DESC LIMIT ?, 10;",
-				CAMPOS_PARA_SELECT,
-				NOMBRE_TABLA_CATEGORIA_OFERTA,
-				NOMBRE_TABLA,
-				NOMBRE_TABLA_REACCION,
-				NOMBRE_TABLA,
-				atributo.ID_OFERTA,
-				NOMBRE_TABLA_REACCION,
-				atributo.ID_OFERTA,
-				atributo.ELIMINADA,
-				atributo.ESTADO,
-				atributo.CATEGORIA,
-				atributo.ID_CATEGORIA,
-				atributo.VIGENCIA_HASTA,
-				NOMBRE_TABLA,
-				atributo.ID_OFERTA,
-				atributo.FECHA_HORA_REGISTRO);
+		String query = 
+			"SELECT oferta.idOferta, tituloDeOferta, comercio, descripcion, "
+			+ "idCategoria, peso, nombre, ciudad, estado, restricciones, vigenciaDesde, "
+			+ "vigenciaHasta, imagenComercioPath, imagenPublicidadPath, fechaHoraRegistro, "
+			+ "IF(idUsuario = ?, IF(reaccion = 1, 1, NULL), NULL) AS likes, "
+			+ "IF(idUsuario = ?, IF(reaccion = 0, 1, NULL), NULL) AS dislikes "
+			+ "FROM oferta "
+			+ "LEFT JOIN reaccion ON oferta.idOferta = reaccion.idOferta "
+			+ "LEFT JOIN categoria_con_oferta_y_peso ON oferta.idOferta = categoria_con_oferta_y_peso.idOferta "
+			+ "LEFT JOIN categoriadeoferta ON categoriadeoferta.id = categoria_con_oferta_y_peso.idCategoria "
+			+ "WHERE eliminada = 0 "
+			+ "AND estado = 1 "
+			+ "AND vigenciaHasta >= ? "
+			+ "ORDER BY fechaHoraRegistro "
+			+ "DESC LIMIT ?, 30;"; //El 30 es por que cada oferta sale 3 veces
 				
 		PreparedStatement stmt = con.prepareStatement(query);
 		stmt.setString(1, idUsuario);
 		stmt.setString(2, idUsuario);
 		stmt.setDate(3, new Date(Calendar.getInstance().getTimeInMillis()));
-		stmt.setInt(4, indiceInicial);
+		stmt.setInt(4, indiceInicial.valorEntero());
 		
 		ResultSet rs = stmt.executeQuery();
 		
+		
 		while (rs.next())
 		{
-			Oferta oferta = new Oferta(
+			String id = rs.getString(atributo.ID_OFERTA.toString());
+			String idCategoria = rs.getString("idCategoria");
+			
+			if ( !ofertasMap.containsKey( id ) )
+			{
+				Oferta oferta = new Oferta(
 					rs.getInt(atributo.ID_OFERTA.toString()),
 					rs.getString(atributo.TITULO_DE_OFERTA.toString()),
 					rs.getString(atributo.COMERCIO.toString()),
 					rs.getString(atributo.DESCRIPCION.toString()),
-					new CategoriaOferta(rs.getInt(atributo.CATEGORIA.toString()), rs.getString(atributo.NOMBRE_CATEGORIA.toString())),
+					//new CategoriaOferta(rs.getInt(atributo.CATEGORIA.toString()), rs.getString(atributo.NOMBRE_CATEGORIA.toString())),
 					rs.getString(atributo.CIUDAD.toString()),
 					rs.getBoolean(atributo.ESTADO.toString()),
 					rs.getString(atributo.RESTRICCIONES.toString()),
@@ -230,35 +263,48 @@ public class OfertaDao
 					rs.getInt(atributo.LIKES.toString()),
 					rs.getInt(atributo.DISLIKES.toString())
 					);
-			oferta.setEsUnUsuarioConocido(esUnUsuarioConocido);
-			ofertas.add(oferta);
+				oferta.setEsUnUsuarioConocido(esUnUsuarioConocido);
+				ofertasMap.put(id, oferta);
+			}
+			
+			if( idCategoria != null )
+			{
+				CategoriaOferta categoria = new CategoriaOferta(
+						rs.getInt("idCategoria"),
+						rs.getString("nombre"),
+						rs.getDouble("peso"));
+				ofertasMap.get( id ).agregarCategoria(categoria);
+			}
+			
+
 		}
+		
+		Collection<Oferta> values = ofertasMap.values();
+		ArrayList<Oferta> listaDeOfertas = new ArrayList<Oferta>(values);
 
 		dao.closeConBD();
-		return ofertas;
+		return listaDeOfertas;
 	}
 	
 	public Oferta obtener(int idOferta, String idUsuario) throws ClassNotFoundException, SQLException
 	{
 		boolean esUnUsuarioConocido = true;
-		if(idUsuario == null)
+		if(idUsuario == null || idUsuario.isEmpty())
 		{
 			idUsuario = "NULL";
 			esUnUsuarioConocido = false;
 		}
-		String query = String.format("SELECT %s FROM %s, %s LEFT JOIN %s ON %s.%s = %s.%s WHERE %s.%s = ? AND %s = %s;",
-				CAMPOS_PARA_SELECT,
-				NOMBRE_TABLA_CATEGORIA_OFERTA,
-				NOMBRE_TABLA,
-				NOMBRE_TABLA_REACCION,
-				NOMBRE_TABLA,
-				atributo.ID_OFERTA,
-				NOMBRE_TABLA_REACCION,
-				atributo.ID_OFERTA,
-				NOMBRE_TABLA,
-				atributo.ID_OFERTA,
-				atributo.CATEGORIA,
-				atributo.ID_CATEGORIA);
+		String query = 
+				"SELECT oferta.idOferta, tituloDeOferta, comercio, descripcion, idCategoria, peso, nombre, ciudad, estado, restricciones, vigenciaDesde, "
+				+ "vigenciaHasta, imagenComercioPath, imagenPublicidadPath, fechaHoraRegistro, "
+				+ "IF(idUsuario = ?, IF(reaccion = 1, 1, NULL), NULL) AS likes, IF(idUsuario = ?, "
+				+ "IF(reaccion = 0, 1, NULL), NULL) AS dislikes "
+				+ "FROM oferta "
+				+ "LEFT JOIN reaccion ON oferta.idOferta = reaccion.idOferta "
+				+ "LEFT JOIN categoria_con_oferta_y_peso ON oferta.idOferta = categoria_con_oferta_y_peso.idOferta "
+				+ "LEFT JOIN categoriadeoferta ON categoriadeoferta.id = categoria_con_oferta_y_peso.idCategoria "
+				+ "WHERE oferta.idOferta = ? "
+				+ "ORDER BY oferta.idOferta";
 		
 		Connection con = dao.openConBD();
 		PreparedStatement stmt = con.prepareStatement(query);
@@ -267,15 +313,20 @@ public class OfertaDao
 		stmt.setInt(3, idOferta);
 		
 		ResultSet rs = stmt.executeQuery();
-		
+		Oferta oferta = null;
 		while (rs.next())
 		{
-			Oferta oferta = new Oferta(
+			String id = rs.getString(atributo.ID_OFERTA.toString());
+			String idCategoria = rs.getString("idCategoria");
+			
+			if( oferta == null)
+			{
+				oferta = new Oferta(
 					rs.getInt(atributo.ID_OFERTA.toString()),
 					rs.getString(atributo.TITULO_DE_OFERTA.toString()),
 					rs.getString(atributo.COMERCIO.toString()),
 					rs.getString(atributo.DESCRIPCION.toString()),
-					new CategoriaOferta(rs.getInt(atributo.CATEGORIA.toString()), rs.getString(atributo.NOMBRE_CATEGORIA.toString())),
+					//new CategoriaOferta(rs.getInt(atributo.CATEGORIA.toString()), rs.getString(atributo.NOMBRE_CATEGORIA.toString())),
 					rs.getString(atributo.CIUDAD.toString()),
 					rs.getBoolean(atributo.ESTADO.toString()),
 					rs.getString(atributo.RESTRICCIONES.toString()),
@@ -287,22 +338,28 @@ public class OfertaDao
 					rs.getInt(atributo.LIKES.toString()),
 					rs.getInt(atributo.DISLIKES.toString())
 					);
-			oferta.setEsUnUsuarioConocido(esUnUsuarioConocido);
-			dao.closeConBD();
-			return oferta;
+				oferta.setEsUnUsuarioConocido(esUnUsuarioConocido);
+			}
+			
+			if( idCategoria != null )
+			{
+				CategoriaOferta categoria = new CategoriaOferta(
+						rs.getInt("idCategoria"),
+						rs.getString("nombre"),
+						rs.getDouble("peso"));
+				oferta.agregarCategoria(categoria);
+			}
+			
+
 		}
 		
 		dao.closeConBD();
-		return null;
+		return oferta;
 	}
 
 	public int obtenerCantidadDeOfertasParaMostrar() throws ClassNotFoundException, SQLException
 	{
-		String query = String.format("SELECT COUNT(*) AS cantidad FROM %s WHERE %s = 0 AND %s >= ? AND %s = 1;",
-				NOMBRE_TABLA,
-				atributo.ELIMINADA,
-				atributo.VIGENCIA_HASTA,
-				atributo.ESTADO);
+		String query = "SELECT COUNT(oferta.idOferta) AS cantidad FROM oferta WHERE eliminada = 0 AND vigenciaHasta >= ? AND estado = 1;";
 		
 		Connection con = dao.openConBD();
 		PreparedStatement stmt = con.prepareStatement(query);
@@ -321,7 +378,7 @@ public class OfertaDao
 		String queryDatos =  atributo.TITULO_DE_OFERTA + " = '" + oferta.getTituloDeOferta() + "' , "
 				 + atributo.COMERCIO + " = '" + oferta.getComercio() + "' , "
 				 + atributo.DESCRIPCION + " = '" + oferta.getDescripcion() + "' , "
-				 + atributo.CATEGORIA + " = '" + oferta.getCategoria().getId() + "' , "
+				// + atributo.CATEGORIA + " = '" + oferta.getCategoria().getId() + "' , "
 				 + atributo.CIUDAD + " = '" + oferta.getCiudad() + "' , "
 				 + atributo.ESTADO + " = " + (oferta.getEstado() ? 1 : 0) + ","
 				 + atributo.RESTRICCIONES + " = '" + oferta.getRestricciones() + "' , "
@@ -349,14 +406,9 @@ public class OfertaDao
 		dao.closeConBD();
 	}
 	
-	public ArrayList<Oferta> filtrarOfertasPorComercioYCategoria(String  nombreComercio) throws ClassNotFoundException, SQLException
-	{
-		return filtrarOfertasPorComercioYCategoria(nombreComercio, 0);
-	}
-	
 	public ArrayList<Oferta> filtrarOfertasPorComercioYCategoria(String nombreComercio, int desde) throws ClassNotFoundException, SQLException
 	{
-		ArrayList<Oferta> ultimasOfertas = obtener(0, LIMITE);
+		ArrayList<Oferta> ultimasOfertas = obtener();
 		Map<Integer, List<Oferta>> valoresSimilitud = new HashMap<Integer, List<Oferta>>();
 		int cantidadDeResultados = 0;
 		int cantidadQueLleva = 0;
@@ -364,58 +416,33 @@ public class OfertaDao
 		for(Oferta ofertaActual : ultimasOfertas)
 		{
 			int levenshteinDistance = LevenshteinDistance.distance( nombreComercio, ofertaActual.getComercio());
-			int levenshteinDistanceCategoria = LevenshteinDistance.distance( nombreComercio, ofertaActual.getCategoria().getNombre());
 			
 			if ( levenshteinDistance < 6 )
 			{
 				if(cantidadQueLleva >= desde)
 				{
-					if (valoresSimilitud.get(levenshteinDistance) == null)
-					{
-						ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
-						ofertas.add(ofertaActual);
-						valoresSimilitud.put(levenshteinDistance, ofertas);
-					}
-					else
-					{
-						valoresSimilitud.get(levenshteinDistance).add(ofertaActual);
-					}
-					cantidadDeResultados++;
+				if (valoresSimilitud.get(levenshteinDistance) == null)
+				{
+					ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+					ofertas.add(ofertaActual);
+					valoresSimilitud.put(levenshteinDistance, ofertas);
 				}
 				else
 				{
-					cantidadQueLleva++;
+					valoresSimilitud.get(levenshteinDistance).add(ofertaActual);
 				}
+					cantidadDeResultados++;
 			}
 			else
 			{
-				if( levenshteinDistanceCategoria < 3 )
-				{
-					if(cantidadQueLleva >= desde)
-					{
-						if (valoresSimilitud.get(levenshteinDistanceCategoria) == null)
-						{
-							ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
-							ofertas.add(ofertaActual);
-							valoresSimilitud.put(levenshteinDistanceCategoria, ofertas);
-						}
-						else
-						{
-							valoresSimilitud.get(levenshteinDistanceCategoria).add(ofertaActual);
-						}
-						cantidadDeResultados++;
-					}
-					else
-					{
-						cantidadQueLleva++;
-					}
+					cantidadQueLleva++;
 				}
 			}
 			
 			if(cantidadDeResultados == CANTIDAD_PAGINACION)
 			{
 				break;
-			}
+		}
 		}
 		
 		Map<Integer, List<Oferta>> mapaOrdenado = new TreeMap<Integer, List<Oferta>>(valoresSimilitud);
@@ -433,7 +460,7 @@ public class OfertaDao
 	{
 		int cantidadDeofertas = obtenerCantidadDeOfertasParaMostrar();
 		int cantidadDePaginas = cantidadDeofertas / CANTIDAD_PAGINACION;
-		
+	
 		if(cantidadDeofertas % CANTIDAD_PAGINACION != 0)
 		{
 			cantidadDePaginas++;

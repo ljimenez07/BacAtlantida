@@ -59,6 +59,7 @@ public class Constantes {
 	public static String FRASE_SALUDO = "saludo";
 	public static String FRASE_DESPEDIDA = "despedida";
 	public static String FRASE_FUERA_DE_CONTEXTO = "fueraDeContexto";
+	public static String FRASE_ERROR_CON_WATSON = "errorDeComunicacionConWatson";
 	
 	// Intenciones
 	public static String INTENCION_FUERA_DE_CONTEXTO = "out_of_scope";

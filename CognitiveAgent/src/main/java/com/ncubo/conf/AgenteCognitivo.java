@@ -26,21 +26,22 @@ import com.ncubo.chatbot.bitacora.HistoricosDeConversaciones;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.chatbot.watson.TextToSpeechWatson;
 import com.ncubo.dao.ConsultaDao;
+import com.ncubo.dao.UsuarioDao;
+import com.ncubo.data.Categorias;
+import com.ncubo.data.Consulta;
 import com.ncubo.logicaDeConversaciones.Conversaciones;
 import com.ncubo.util.FTPServidor;
 
+import groovyjarjarantlr.debug.GuessingEvent;
+
 @Component
 @ConfigurationProperties("servercognitivo")
-
 public class AgenteCognitivo 
 {
 	private String user;
 	private String password;
 	private String workspaceDeChats;
 	private String workspaceDeConocerte;
-	private String wsTasaCambio;
-	private String wsSaldo;
-	private String wsMovimientos;
 	private String userTextToSpeech;
 	private String passwordTextToSpeech;
 	private String voiceTextToSpeech;
@@ -50,33 +51,36 @@ public class AgenteCognitivo
 
 	@Autowired
 	private ConsultaDao consultaDao;
+	
+	@Autowired
+	private UsuarioDao usuarioDao;
 
 	@Autowired
 	private FTPServidor ftp;
 	@Autowired
 	private Conversaciones misConversaciones;
 	private HistoricosDeConversaciones historicoDeConversaciones;
-	
-	private ExtraerDatosWebService extraerDatos = new ExtraerDatosWebService();
+	@Autowired
+	private ExtraerDatosWebService extraerDatos;
 
 	@PostConstruct
-	public void init(){
+    public void init(){
 		misConversaciones.inicializar(getPathXML(), consultaDao);
 		inicializarGeneradorDeAudiosSingleton();
 		historicoDeConversaciones = new HistoricosDeConversaciones();
-	}
+    }
 	
-	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
+	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws Exception
 	{
 		return procesarMensaje(usuario, mensaje, date, workspaceDeChats, false);
 	}
 	
-	public String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
+	public String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date) throws Exception
 	{
 		return procesarMensajeConocerte(usuario, mensaje, date, workspaceDeConocerte);
 	}
 	
-	private String procesarMensaje(Usuario usuario, String mensaje, Date date, String workspace, boolean esParaConocerte) throws JsonParseException, JsonMappingException, IOException, JSONException, URISyntaxException, ClassNotFoundException, SQLException, ParseException
+	private String procesarMensaje(Usuario usuario, String mensaje, Date date, String workspace, boolean esParaConocerte) throws Exception
 	{
 		JSONObject respuesta = new JSONObject();
 		/*ObjectMapper mapper = new ObjectMapper();
@@ -128,7 +132,7 @@ public class AgenteCognitivo
 			
 			if((idFrase.equals("saldoCredito") ||  idFrase.equals("disponibleCredito") ) && usuario.getEstaLogueado())
 			{
-				textos = extraerDatos.obtenerSaldoTarjetaCredito(wsSaldo, texto, usuario.getUsuarioId());
+				textos = extraerDatos.obtenerSaldoTarjetaCredito( texto, usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
 				{
 					JSONObject jsonObject = new JSONObject();
@@ -139,7 +143,7 @@ public class AgenteCognitivo
 			}
 			else if(idFrase.equals("saldoCuentaAhorros") && usuario.getEstaLogueado())
 			{
-				textos = extraerDatos.obtenerSaldoCuentaAhorros(wsSaldo, texto, usuario.getUsuarioId());
+				textos = extraerDatos.obtenerSaldoCuentaAhorros(texto, usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
 				{
 					JSONObject jsonObject = new JSONObject();
@@ -148,39 +152,18 @@ public class AgenteCognitivo
 					arrayList.put(jsonObject);
 				}
 			}
-			else if((idFrase.equals("saldoCuentaAhorros") || idFrase.equals("saldoCredito")|| idFrase.equals("quiereSaldoTarjetaCredito")) && ! usuario.getEstaLogueado())
-			{
-				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.");
-				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL("Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.", pathAudio));	
-				arrayList.put(jsonObject);
-			}
-			else if((idFrase.equals("disponibleCredito") || idFrase.equals("disponibleCuentaAhorros")|| idFrase.equals("disponiblePuntos") || idFrase.equals("quiereDisponibleTarjetaCredito")) && ! usuario.getEstaLogueado())
-			{
-				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.");
-				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL("Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.", pathAudio));	
-				arrayList.put(jsonObject);
-			}
-			else if((idFrase.equals("quiereMovimiento") || idFrase.equals("movimientosCuenta") || idFrase.equals("movimientosCuenta")) && ! usuario.getEstaLogueado())
-			{
-				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", "Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.");
-				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL("Disculpa, no puedo mostrarte esa información a menos que inicies una sesión.", pathAudio));	
-				arrayList.put(jsonObject);
-			}
 			else if(idFrase.equals("tasaDolar")||idFrase.equals("tasaEuro")){
 				
-				texto = extraerDatos.obtenerTasaCambio(wsTasaCambio, texto);
+				texto = extraerDatos.obtenerTasaCambio(texto);
 				
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
-				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAudio));	
+				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(texto));	
 				arrayList.put(jsonObject);
 			}
 			else if(idFrase.equals("movimientosTarjeta") || idFrase.equals("movimientosCuenta") && usuario.getEstaLogueado())
 			{
-				textos = extraerDatos.obtenerMovimientos(wsMovimientos, texto, usuario.getUsuarioId(), "");
+				textos = extraerDatos.obtenerMovimientos(texto, usuario.getUsuarioId(), "");
 				
 				for(int j = 0; j < textos.length; j++)
 				{
@@ -192,7 +175,7 @@ public class AgenteCognitivo
 			}
 			else if(idFrase.equals("disponibleCuentaAhorros") && usuario.getEstaLogueado())
 			{
-				textos = extraerDatos.obtenerSaldoCuentaAhorros(wsSaldo, texto, usuario.getUsuarioId());
+				textos = extraerDatos.obtenerSaldoCuentaAhorros( texto, usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
 				{
 					JSONObject jsonObject = new JSONObject();
@@ -239,7 +222,7 @@ public class AgenteCognitivo
 				}
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("texto", texto);
-				jsonObject.put("audio",urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir, pathAudio));	
+				jsonObject.put("audio",urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir));	
 				
 				arrayList.put(jsonObject);
 			}*/
@@ -269,7 +252,7 @@ public class AgenteCognitivo
 		
 	}
 
-	private String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date, String workspace) throws JSONException
+	private String procesarMensajeConocerte(Usuario usuario, String mensaje, Date date, String workspace) throws Exception
 	{
 		JSONObject respuesta = new JSONObject();
 		String texto = "";
@@ -279,7 +262,7 @@ public class AgenteCognitivo
 		
 		if(usuario.getEstaLogueado()){
 			salida = misConversaciones.conversarConElAgente(usuario, mensaje, true);
-			
+		
 			for(int i = 0; i < salida.size(); i++){
 				texto = salida.get(i).getMiTexto();
 				String idFrase = salida.get(i).getFraseActual().getIdFrase();
@@ -289,8 +272,19 @@ public class AgenteCognitivo
 				jsonObject.put("audio", salida.get(i).getMiSonido().url());
 				arrayList.put(jsonObject);
 				
-				if(idFrase.equals("despedidaConocerte")){
+				if(idFrase.equals("despedidaConocerte"))
+				{
 					seTerminoElChat = true;
+					
+					Categorias categorias = new Categorias(
+							obtenerValorDeGustosDeRestaurantes(usuario.getUsuarioId()),
+							obtenerValorDeGustosDeBelleza(usuario.getUsuarioId()),
+							obtenerValorDeGustosDeHoteles(usuario.getUsuarioId())
+							);
+					
+					usuarioDao.insertar(usuario.getUsuarioId(), categorias);
+					
+					usuario.setCategorias(categorias);
 				}
 			}
 		}
@@ -310,14 +304,6 @@ public class AgenteCognitivo
 		}
 		
 		return respuesta.toString();
-	}
-	
-	public String getWsMovimientos() {
-		return wsMovimientos;
-	}
-
-	public void setWsMovimientos(String wsMovimientos) {
-		this.wsMovimientos = wsMovimientos;
 	}
 
 	public String getIntent(MessageResponse response)
@@ -375,7 +361,7 @@ public class AgenteCognitivo
 
 	private void inicializarGeneradorDeAudiosSingleton(){
 		TextToSpeechWatson.getInstance(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), 
-				this.getVoiceTextToSpeech(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), this.getPathAudio());
+				this.getVoiceTextToSpeech(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), this.getPathAudio(), this.geturlPublicaAudios());
 	}
 	
 	public void generarTodosLosAudiosEstaticos(){
@@ -427,22 +413,6 @@ public class AgenteCognitivo
 	
 	public String verElHistoricoDeUnaConversacionEspecifica(String idSesion){
 		return historicoDeConversaciones.verElHistoricoDeUnaConversacionEspecifica(idSesion);
-	}
-	
-	public String getWsTasaCambio() {
-		return wsTasaCambio;
-	}
-
-	public void setWsTasaCambio(String wsTasaCambio) {
-		this.wsTasaCambio = wsTasaCambio;
-	}
-
-	public String getWsSaldo() {
-		return wsSaldo;
-	}
-
-	public void setWsSaldo(String wsSaldo) {
-		this.wsSaldo = wsSaldo;
 	}
 
 	public String getUser() 
@@ -522,4 +492,29 @@ public class AgenteCognitivo
 	public void setPathXML(String pathXML) {
 		this.pathXML = pathXML;
 	}
+	
+	public double obtenerValorDeGustosDeHoteles(String idCliente) throws Exception
+	{
+		if( ! misConversaciones.existeElCliente(idCliente))
+			Thread.sleep(4000);
+		
+		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeHoteles();
+	}
+
+	public double obtenerValorDeGustosDeRestaurantes(String idCliente) throws Exception
+	{
+		if( ! misConversaciones.existeElCliente(idCliente))
+			Thread.sleep(4000);
+		
+		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeRestaurantes();
+	}
+	
+	public double obtenerValorDeGustosDeBelleza(String idCliente) throws Exception
+	{
+		if( ! misConversaciones.existeElCliente(idCliente))
+			Thread.sleep(4000);
+		
+		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeBelleza();
+	}
+	
 }

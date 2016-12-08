@@ -168,10 +168,12 @@ function cargarOfertas()
 		},
 		done: function(data)
 		{
-			$("#ofertas .contenedor-de-ofertas").append(Handlebars.templates.listaDeOfertas({ofertas: data}));
+			console.log(data.resultados.length);
+			$("#ofertas .contenedor-de-ofertas").append(Handlebars.templates.listaDeOfertas({ofertas: data.resultados}));
 			bindAcciones();
 			bindClickeable();
 			agregarDominioAImagenes();
+			pagina = data.pagina;
 		}
 	});
 }

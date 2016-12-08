@@ -2,6 +2,8 @@ package com.ncubo.chatbot.partesDeLaConversacion;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
+
 import com.ncubo.chatbot.exceptiones.ChatException;
 import com.ncubo.chatbot.watson.TextToSpeechWatson;
 
@@ -11,11 +13,9 @@ public abstract class Frase
 	
 	private String[] textosDeLaFrase;
 	private ArrayList<Sonido> sonidosDeLosTextosDeLaFrase = new ArrayList<Sonido>();
-	private int idDelSonidoAUsar = -1;
 	
 	private String[] textosImpertinetesDeLaFrase;
 	private ArrayList<Sonido> sonidosDeLosTextosImpertinentesDeLaFrase = new ArrayList<Sonido>();
-	private int idDelSonidoImpertineteAUsar = -1;
 	
 	private final CaracteristicaDeLaFrase[] caracteristicas;
 	//private Intencion intencion;
@@ -76,13 +76,17 @@ public abstract class Frase
 		return idFrase;
 	}
 	
-	public String texto(){
+	public List<String> texto(){
+		List<String> resultado = new ArrayList<>();
+		
 		int unIndiceAlAzar = (int)Math.floor(Math.random()*textosDeLaFrase.length);
-		idDelSonidoAUsar = unIndiceAlAzar;
-		return textosDeLaFrase[unIndiceAlAzar];
+		resultado.add(unIndiceAlAzar+"");
+		resultado.add(textosDeLaFrase[unIndiceAlAzar]);
+		
+		return resultado;
 	}
 	
-	public Sonido obtenerSonidoAUsar(){
+	public Sonido obtenerSonidoAUsar(int idDelSonidoAUsar){
 		Sonido resultado = null;
 		if(esEstatica() && sonidosDeLosTextosDeLaFrase.size() > 0){
 			if (idDelSonidoAUsar == -1){
@@ -90,28 +94,28 @@ public abstract class Frase
 			}
 			resultado = sonidosDeLosTextosDeLaFrase.get(idDelSonidoAUsar);
 		}
-		idDelSonidoAUsar = -1;
 		return resultado;
 	}
 	
-	public String textoImpertinete(){
+	public List<String> textoImpertinete(){
+		List<String> resultado = new ArrayList<>();
 		if(textosImpertinetesDeLaFrase.length > 0){
 			int unIndiceAlAzar = (int)Math.floor(Math.random()*textosImpertinetesDeLaFrase.length);
-			idDelSonidoImpertineteAUsar = unIndiceAlAzar;
-			return textosImpertinetesDeLaFrase[unIndiceAlAzar];
+			resultado.add(unIndiceAlAzar+"");
+			resultado.add(textosImpertinetesDeLaFrase[unIndiceAlAzar]);
+			return resultado;
 		}else{
 			return texto();
 		}
 	}
 	
-	public Sonido obtenerSonidoImpertienteAUsar(){
+	public Sonido obtenerSonidoImpertienteAUsar(int idDelSonidoImpertineteAUsar){
 		Sonido resultado = null;
 		if(hayTextosImpertinetes() && sonidosDeLosTextosImpertinentesDeLaFrase.size() > 0){
 			if (idDelSonidoImpertineteAUsar == -1){
 				idDelSonidoImpertineteAUsar = (int)Math.floor(Math.random()*sonidosDeLosTextosImpertinentesDeLaFrase.size());
 			}resultado = sonidosDeLosTextosImpertinentesDeLaFrase.get(idDelSonidoImpertineteAUsar);
 		}
-		idDelSonidoImpertineteAUsar = -1;
 		return resultado;
 	}
 	
@@ -182,7 +186,7 @@ public abstract class Frase
 
 						}
 					}
-					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir, pathAGuardar);
+					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir);
 					String path = pathAGuardar+File.separator+nombreDelArchivo;
 					String miIp = ipPublica+nombreDelArchivo;
 					sonidosDeLosTextosDeLaFrase.add(new Sonido(miIp, path));
@@ -194,7 +198,7 @@ public abstract class Frase
 			if(hayTextosImpertinetes()){
 				for(int index = 0; index < textosImpertinetesDeLaFrase.length; index ++){
 					String texto = textosImpertinetesDeLaFrase[index];
-					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, pathAGuardar);
+					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto);
 					String path = pathAGuardar+File.separator+nombreDelArchivo;
 					String miIp = ipPublica+nombreDelArchivo;
 					sonidosDeLosTextosImpertinentesDeLaFrase.add(new Sonido(miIp, path));
@@ -235,7 +239,7 @@ public abstract class Frase
 		return textosDeLaFrase;
 	}
 
-	public String conjuncionParaRepreguntar(){
+	public List<String> conjuncionParaRepreguntar(){
 		/*String muletillas[] = new String[]{"I'm sorry, i didn't undertand.", "I didn't catch that."};
 		
 		int unIndiceAlAzar = (int)Math.floor(Math.random()*muletillas.length);

@@ -17,6 +17,8 @@ import com.ncubo.chatbot.watson.TextToSpeechWatson;
 import com.ncubo.conf.Usuario;
 import com.ncubo.dao.ConsultaDao;
 
+import java.util.concurrent.Semaphore;
+
 @Component
 public class Conversaciones {
 
@@ -25,22 +27,28 @@ public class Conversaciones {
 	private final static Hashtable<String, Cliente> misClientes = new Hashtable<String, Cliente>();
 	private static Temario temarioDelBancoAtlantida;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final Semaphore semaphore = new Semaphore(1);
 	private ConsultaDao consultaDao;
-	
+
 	public Conversaciones(){
 	}
 	
-	private String crearUnaNuevoConversacion(Usuario usuario){
+	private String crearUnaNuevoConversacion(Usuario usuario) throws Exception{
+		
 		String resultado = "";
 		Cliente cliente = null;
 		
 		if(usuario.getEstaLogueado()){
-			cliente = new Cliente(usuario.getUsuarioNombre(), usuario.getUsuarioId());
-			cliente.agregarIdsDeSesiones(usuario.getIdSesion());
-			
-			synchronized(misClientes){
-				misClientes.put(cliente.getMiId(), cliente);
+			if(existeElCliente(usuario.getUsuarioId())){
+				cliente = misClientes.get(usuario.getUsuarioId());
+			}else{
+				cliente = new Cliente(usuario.getUsuarioNombre(), usuario.getUsuarioId());
+				synchronized(misClientes){
+					misClientes.put(cliente.getMiId(), cliente);
+				}
 			}
+			cliente.agregarIdsDeSesiones(usuario.getIdSesion());
+			cliente.cambiarEstadoDeLogeo(usuario.getEstaLogueado());
 			
 			synchronized(misConversaciones){
 				if(existeLaConversacion(usuario.getIdSesion())){
@@ -75,7 +83,7 @@ public class Conversaciones {
 		return resultado;
 	}
 	
-	public ArrayList<Salida> conversarConElAgente(Usuario cliente, String textoDelCliente, boolean esConocerte){
+	public ArrayList<Salida> conversarConElAgente(Usuario cliente, String textoDelCliente, boolean esConocerte) throws Exception{
 		ArrayList<Salida> resultado = null;
 		logger.debug("Conversar ..........");
 		System.out.println("Coversar con "+cliente.getIdSesion());
@@ -88,12 +96,21 @@ public class Conversaciones {
 			// Verificar si ya el usuario existe
 			if(existeElCliente(cliente.getUsuarioId()) && existeLaConversacion(cliente.getIdSesion())){
 				// TODO Verificar si cambio el id de sesion, si es asi agregarla al cliente y hacerlo saber a conversacion
-				misClientes.get(cliente.getUsuarioId()).verificarSiExisteElIdSesion(cliente.getIdSesion());
-				misConversaciones.get(cliente.getIdSesion()).cambiarParticipante(misClientes.get(cliente.getUsuarioId())); // Actualizar cliente
-				resultado = hablarConElAgente(cliente, textoDelCliente, esConocerte);
-			}else{ // Crear un nuevo Cliente
+				misClientes.get(cliente.getUsuarioId()).agregarIdsDeSesiones(cliente.getIdSesion());
+				misClientes.get(cliente.getUsuarioId()).cambiarEstadoDeLogeo(cliente.getEstaLogueado());
+				misConversaciones.get(cliente.getIdSesion()).cambiarParticipante(misClientes.get(cliente.getUsuarioId())); // Actualizar cliente en la conversacion
+				resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
+				
+				synchronized (misClientes) {
+					misClientes.put(cliente.getUsuarioId(), misConversaciones.get(cliente.getIdSesion()).obtenerElParticipante());
+				}
+			}else{ // Crear un nuevo Cliente y asociarle una conversacion
+
+				semaphore.acquire(); //Sección crítica a proteger
 				crearUnaNuevoConversacion(cliente);
-				resultado = hablarConElAgente(cliente, textoDelCliente, esConocerte);
+				semaphore.release();
+				
+				resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
 				/*if(existeLaConversacion(cliente.getIdSesion())){ // Es porque ya se cliente esta conversando y no se habia logueado, eso quiere decir que se tiene que mantener el contexto y NO saludar de nuevo
 					resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
 				}else{
@@ -103,7 +120,7 @@ public class Conversaciones {
 		}else{
 			if(! cliente.getIdSesion().equals("")){
 				if(existeLaConversacion(cliente.getIdSesion())){
-					resultado = hablarConElAgente(cliente, textoDelCliente, esConocerte);
+					resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
 				}else{ // Crear una nueva conversacion
 					crearUnaNuevoConversacion(cliente);
 					resultado = inicializarConversacionConElAgente(cliente.getIdSesion());
@@ -116,7 +133,7 @@ public class Conversaciones {
 		return resultado;
 	}
 	
-	private boolean existeElCliente(String idDelCliente){
+	public boolean existeElCliente(String idDelCliente){
 		return misClientes.containsKey(idDelCliente);
 	}
 	
@@ -128,15 +145,13 @@ public class Conversaciones {
 		return misConversaciones.get(idDelCliente).inicializarLaConversacion();
 	}
 	
-	public ArrayList<Salida> hablarConElAgente(Usuario cliente, String textoDelCliente, boolean esConocerte){
+	public ArrayList<Salida> hablarConElAjente(Usuario cliente, String textoDelCliente, boolean esConocerte) throws Exception{
 		ArrayList<Salida> resultado = null;
-		
 		if(esConocerte){
 			resultado = misConversaciones.get(cliente.getIdSesion()).analizarLaRespuestaConWatsonEnUnWorkspaceEspecifico(textoDelCliente, "ConocerteGeneral", "conocerte");
 		}else{
 			resultado = misConversaciones.get(cliente.getIdSesion()).analizarLaRespuestaConWatson(textoDelCliente);
 		}
-		
 		return resultado;
 	}
 	
@@ -146,7 +161,7 @@ public class Conversaciones {
 	}
 	
 	public void generarAudiosEstaticosDeUnTema(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, int index, String url){
-		TextToSpeechWatson.getInstance(usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAGuardar);
+		TextToSpeechWatson.getInstance(usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAGuardar, url);
 		System.out.println(String.format("El path a guardar los audios es %s y la url publica es %s", pathAGuardar, url));
 		temarioDelBancoAtlantida.generarAudioEstaticosDeUnTema(pathAGuardar, url, index);
 		System.out.println("Se termino de generar audios estaticos.");
@@ -180,7 +195,7 @@ public class Conversaciones {
 		}
 		
 		public void run(){
-			TextToSpeechWatson.getInstance(usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAGuardar);
+			TextToSpeechWatson.getInstance(usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAGuardar, urlAReproducir);
 			System.out.println(String.format("El path a guardar los audios es %s y la url publica es %s", pathAGuardar, urlAReproducir));
 			temarioDelBancoAtlantida.generarAudioEstaticosDeTodasLasFrases(pathAGuardar, urlAReproducir);
 			System.out.println("Se termino de generar audios estaticos.");
@@ -273,6 +288,11 @@ public class Conversaciones {
 		System.out.println("El path xml es: "+pathXML);
 		temarioDelBancoAtlantida = new TemarioDelBancoAtlantida(pathXML);
 		this.consultaDao = consultaDao;
+	}
+	
+	public Cliente obtenerCliente(String idCliente)
+	{
+		return misClientes.get(idCliente);
 	}
 	
 }

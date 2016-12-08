@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import com.ncubo.data.Categorias;
+
 public class Usuario implements Serializable
 {
 	private static final long serialVersionUID = -3968177701312019004L;
@@ -17,6 +19,7 @@ public class Usuario implements Serializable
 	private static ArrayList<Usuario> usuariosLogueados = new ArrayList<Usuario>();
 	private String idSesion = "";
 	private Hashtable<String, String> variablesDeContexto = new Hashtable<String, String>();
+	private Categorias categorias = new Categorias();
 	
 	protected Usuario(){}
 	
@@ -104,6 +107,14 @@ public class Usuario implements Serializable
 
 	public String getVariablesDeContexto(String variable){
 		return variablesDeContexto.get(variable);
+	}
+
+	public Categorias getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(Categorias categorias) {
+		this.categorias = categorias;
 	}
 	
 	

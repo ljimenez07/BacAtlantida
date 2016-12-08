@@ -26,16 +26,17 @@ public class ReaccionesDao
 												+ "AND oferta.vigenciaHasta >= ? "
 												+ "GROUP BY oferta.tituloDeOferta;";
 	
-	private final String QUERY_LIKES_POR_CATEGORIA = "SELECT categoriaoferta.nombre "
-													+ "AS tituloLabel, count(*) AS meGusta FROM categoriaoferta "
-													+ "JOIN oferta,reaccion WHERE categoriaoferta.idCategoriaOferta = oferta.categoria "
+	private final String QUERY_LIKES_POR_CATEGORIA = "SELECT categoriadeoferta.nombre "
+													+ "AS tituloLabel, count(*) AS meGusta "
+													+ "FROM reaccion JOIN oferta on oferta.idOferta = reaccion.idOferta "
+													+ "JOIN  categoria_con_oferta_y_peso on categoria_con_oferta_y_peso.idOferta = oferta.idOferta "
+													+ "JOIN  categoriadeoferta on categoriadeoferta.id = categoria_con_oferta_y_peso.idCategoria "
 													+ "AND reaccion='1' "
 													+ "AND oferta.estado=1 "
 													+ "AND oferta.eliminada=0 "
-													+ "AND oferta.idOferta = reaccion.idOferta "
 													+ "AND fecha BETWEEN ? AND ? "
 													+ "AND oferta.vigenciaHasta >= ? "
-													+ "GROUP BY categoriaoferta.nombre;";
+													+ "GROUP BY categoriadeoferta.nombre;";
 	
 	private final String QUERY_DISLIKES_POR_OFERTA = "SELECT  oferta.tituloDeOferta "
 													+ "AS tituloLabelDislike, count(*) as noMegusta FROM oferta "
@@ -47,16 +48,17 @@ public class ReaccionesDao
 													+ "AND oferta.vigenciaHasta >= ? "
 													+ "GROUP BY oferta.tituloDeOferta;";
 	
-	private String QUERY_DISLIKES_POR_CATEGORIA = "SELECT categoriaoferta.nombre "
-													+ "AS tituloLabelDislike, count(*) AS noMegusta FROM categoriaoferta "
-													+ "JOIN oferta,reaccion WHERE categoriaoferta.idCategoriaOferta = oferta.categoria "
+	private String QUERY_DISLIKES_POR_CATEGORIA = "SELECT categoriadeoferta.nombre "
+													+ "AS tituloLabelDislike, count(*) AS noMegusta "
+													+ "FROM reaccion JOIN oferta on oferta.idOferta = reaccion.idOferta "
+													+ "JOIN  categoria_con_oferta_y_peso on categoria_con_oferta_y_peso.idOferta = oferta.idOferta "
+													+ "JOIN  categoriadeoferta on categoriadeoferta.id = categoria_con_oferta_y_peso.idCategoria "
 													+ "AND reaccion='0' "
 													+ "AND oferta.estado=1 "
 													+ "AND oferta.eliminada = 0 "
-													+ "AND oferta.idOferta = reaccion.idOferta "
 													+ "AND fecha BETWEEN ? AND ? "
 													+ "AND oferta.vigenciaHasta >= ? "
-													+ "GROUP BY categoriaoferta.nombre;";
+													+ "GROUP BY categoriadeoferta.nombre;";
 	
 	@Autowired
 	private Persistencia dao;

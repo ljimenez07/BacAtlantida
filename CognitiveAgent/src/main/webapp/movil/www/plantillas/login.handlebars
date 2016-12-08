@@ -44,7 +44,7 @@ $(function(){
 				data: $(this).serialize(),
 				done: function( data ) 
 				{
-				
+					console.log("Ya se mandaron a pedir ofertas");
 					setCookie('mostrarpopupdeconocerte', false, 0);
 					location.reload();
 				},

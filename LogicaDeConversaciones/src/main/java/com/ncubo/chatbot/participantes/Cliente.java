@@ -1,7 +1,6 @@
 package com.ncubo.chatbot.participantes;
 
 import java.util.ArrayList;
-
 import com.ncubo.chatbot.contexto.AdministradorDeVariablesDeContexto;
 
 public class Cliente extends Participante{
@@ -14,12 +13,17 @@ public class Cliente extends Participante{
 	public Cliente(){
 		miNombre = "";
 		miId = "";
-		administradorDeVariablesDeContexto = new AdministradorDeVariablesDeContexto();
+		//administradorDeVariablesDeContexto = new AdministradorDeVariablesDeContexto();
+		/*administradorDeVariablesDeContexto.agregarVariableDeContexto("leGustaLosHoteles", "0");
+		administradorDeVariablesDeContexto.agregarVariableDeContexto("leGustaComerAfuera", "0");
+		administradorDeVariablesDeContexto.agregarVariableDeContexto("sePreocupaPorLaSalud", "0");*/
 	}
 	
-	public Cliente(String nombre, String id){
+	public Cliente(String nombre, String id) throws Exception{
 		miNombre = nombre;
 		miId = id;
+		administradorDeVariablesDeContexto = new AdministradorDeVariablesDeContexto();
+		guardarNombreDelCliente(nombre);
 	}
 	
 	public String getMiNombre() {
@@ -47,29 +51,78 @@ public class Cliente extends Participante{
 	}
 	
 	public void agregarIdsDeSesiones(String idDeSesion) {
-		this.misIdsDeSesiones.add(idDeSesion);
-	}
-	
-	public boolean contieneElIdSesion(String idSesion){
-		return misIdsDeSesiones.contains(idSesion);
-	}
-	
-	public void verificarSiExisteElIdSesion(String idSesion){
-		if( ! contieneElIdSesion(idSesion)){
-			agregarIdsDeSesiones(idSesion);
+		if( ! contieneElIdSesion(idDeSesion)){
+			this.misIdsDeSesiones.add(idDeSesion);
 		}
 	}
 	
-	public void agregarVariableDeContexto(String nombreDeLaVariable, String valorDeLaVariable) throws Exception{
-		administradorDeVariablesDeContexto.agregarVariableDeContexto(nombreDeLaVariable, valorDeLaVariable);
+	private boolean contieneElIdSesion(String idSesion){
+		return misIdsDeSesiones.contains(idSesion);
 	}
 	
-	public void agregarVariablesAlContexto(String comando) throws Exception{
-		administradorDeVariablesDeContexto.agregarVariablesAlContexto(comando);
+	public void actualizarValoresDeConocerte(String leGustaLosHoteles, String leGustaComerAfuera, String sePreocupaPorLaSalud) throws Exception{
+		double valoresDeHoteles = (obtenerValorDeGustosDeHoteles() + Double.parseDouble(leGustaLosHoteles)) / 2;
+		actualizarGustosDeHoteles(valoresDeHoteles+"");
+		
+		double valoresDeRestaurantes = (obtenerValorDeGustosDeRestaurantes() + Double.parseDouble(leGustaComerAfuera)) / 2;
+		actualizarGustosDeRestaurantes(valoresDeRestaurantes+"");
+		
+		double valoresDeBelleza = (obtenerValorDeGustosDeBelleza() + Double.parseDouble(sePreocupaPorLaSalud)) / 2;
+		actualizarGustosDeBelleza(valoresDeBelleza+"");
+		
 	}
 	
-	public String obtenerElValorDeUnaVariable(String nombreDeLaVariable) throws Exception{
-		return administradorDeVariablesDeContexto.obtenerElValorDeUnaVariable(nombreDeLaVariable);
+	// Hoteles
+	public void actualizarGustosDeHoteles(String valor) throws Exception
+	{
+		administradorDeVariablesDeContexto.ejecutar(String.format("leGustaLosHoteles = %s; show leGustaLosHoteles;", valor));
+	}
+	
+	public double obtenerValorDeGustosDeHoteles() throws Exception
+	{
+		return Double.parseDouble(administradorDeVariablesDeContexto.obtenerVariable("leGustaLosHoteles"));
+	}
+	
+	// Restaurantes
+	public void actualizarGustosDeRestaurantes(String valor) throws Exception
+	{
+		administradorDeVariablesDeContexto.ejecutar(String.format("leGustaComerAfuera = %s; show leGustaComerAfuera;", valor));
+	}
+	
+	public double obtenerValorDeGustosDeRestaurantes() throws Exception
+	{
+		return Double.parseDouble(administradorDeVariablesDeContexto.obtenerVariable("leGustaComerAfuera"));
+	}
+	
+	// Belleza	
+	public void actualizarGustosDeBelleza(String valor) throws Exception
+	{
+		administradorDeVariablesDeContexto.ejecutar(String.format("sePreocupaPorLaSalud = %s; show sePreocupaPorLaSalud;", valor));
+	}
+	
+	public double obtenerValorDeGustosDeBelleza() throws Exception
+	{
+		return Double.parseDouble(administradorDeVariablesDeContexto.obtenerVariable("sePreocupaPorLaSalud"));
+	}
+	
+	// Esta logueado
+	public void cambiarEstadoDeLogeo(boolean estado) throws Exception{
+		administradorDeVariablesDeContexto.ejecutar(String.format("estaLogueado = %s; show estaLogueado;", String.valueOf(estado)));
+	}
+	
+	public boolean obtenerEstadoDeLogeo() throws Exception
+	{
+		return Boolean.parseBoolean(administradorDeVariablesDeContexto.obtenerVariable("estaLogueado").toString().trim().replace("\"", ""));
+	}
+	
+	// Nombre del cliente
+	public void guardarNombreDelCliente(String nombre) throws Exception{
+		administradorDeVariablesDeContexto.ejecutar(String.format("nombreCliente = '%s'; show nombreCliente;", nombre));
+	}
+	
+	public String obtenerNombreDelCliente() throws Exception{
+		return administradorDeVariablesDeContexto.obtenerVariable("nombreCliente").toString();
 	}
 	
 }
+

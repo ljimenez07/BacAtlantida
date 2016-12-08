@@ -59,7 +59,7 @@
 		else
 		{
 			return true;
-		}
+	  	}
 	}
 	
 	function lasImagenesSeTerminaronDeSubir()

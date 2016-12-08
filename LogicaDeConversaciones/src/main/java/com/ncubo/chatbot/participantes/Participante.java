@@ -9,6 +9,7 @@ import com.ncubo.chatbot.watson.TextToSpeechWatson;
 import java.io.File;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.List;
 
 import com.ncubo.chatbot.configuracion.Constantes;
 import com.ncubo.chatbot.partesDeLaConversacion.Frase;
@@ -58,14 +59,54 @@ public class Participante{
 	
 	public Salida decir(Frase frase, Respuesta respuesta, Tema tema){
 		Salida salida = new Salida();
+		int idDelSonidoAUsar = -1;
 		
 		if (formaDeManifestarseEscrita.esEnFormaEscrita()){
-			String texto = frase.texto();
+			List<String> texto = frase.texto();
+			idDelSonidoAUsar = Integer.valueOf(texto.get(0));
+			salida.escribir(texto.get(1), respuesta, tema, frase);
+		}
+		
+		if (formaDeManifestarseOral.esEnFormaOral()){
+			Sonido sonido = frase.obtenerSonidoAUsar(idDelSonidoAUsar);
+			if (sonido != null)
+				salida.escribir(sonido, respuesta, tema, frase);
+		}
+		
+		if (formaDeManifestarseVisual.esFormaVisual()){
+			//Vineta vineta = frase.vineta();
+			//salida.escribir(vineta, respuesta, tema, frase);
+		}
+		
+		try{
+			if(respuesta.obtenerLaIntencionDeConfianzaDeLaRespuesta().getNombre().equals(Constantes.INTENCION_DESPEDIDA)){
+				salida.cambiarSeTerminoElChat(true);
+			}
+		}catch(Exception e){
+			
+		}
+		
+		return salida;
+	}
+	
+	public Salida decirUnaFraseDinamica(Frase frase, Respuesta respuesta, Tema tema, String datoAActualizar){
+		Salida salida = new Salida();
+		String texto = "";
+		
+		if (formaDeManifestarseEscrita.esEnFormaEscrita()){
+			List<String> resultado = frase.texto();
+			texto = resultado.get(1).replace("$", datoAActualizar);
 			salida.escribir(texto, respuesta, tema, frase);
 		}
 		
 		if (formaDeManifestarseOral.esEnFormaOral()){
-			Sonido sonido = frase.obtenerSonidoAUsar();
+			Sonido sonido = null;
+			
+			String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto);
+			String path = frase.getPathAGuardarLosAudiosTTS()+File.separator+nombreDelArchivo;
+			String miIp = TextToSpeechWatson.getInstance().obtenerUrlPublicaDeAudios()+nombreDelArchivo;
+			sonido = new Sonido(miIp, path);
+			
 			if (sonido != null)
 				salida.escribir(sonido, respuesta, tema, frase);
 		}
@@ -89,12 +130,17 @@ public class Participante{
 	public Salida volverAPreguntar(Frase pregunta, Respuesta respuesta, Tema tema){
 		
 		Salida salida = new Salida();
+		List<String> resultado = null;
 		String texto = "";
+		int idDelSonidoImpertineteAUsar = -1;
 		if (formaDeManifestarseEscrita.esEnFormaEscrita()){
 			if(pregunta.hayTextosImpertinetes()){
-				texto = pregunta.textoImpertinete();
+				resultado = pregunta.textoImpertinete();
+				texto = resultado.get(1);
+				idDelSonidoImpertineteAUsar = Integer.valueOf(resultado.get(0));
 			}else{
-				texto = pregunta.conjuncionParaRepreguntar()+" "+pregunta.texto();
+				resultado = pregunta.texto();
+				texto = pregunta.conjuncionParaRepreguntar().get(1)+" "+resultado.get(1);
 			}		
 			salida.escribir(texto, respuesta, tema, pregunta);
 		}
@@ -102,16 +148,16 @@ public class Participante{
 		if (formaDeManifestarseOral.esEnFormaOral()){
 			Sonido sonido = null;
 			if(pregunta.hayTextosImpertinetes()){
-				sonido = pregunta.obtenerSonidoImpertienteAUsar();
+				sonido = pregunta.obtenerSonidoImpertienteAUsar(idDelSonidoImpertineteAUsar);
 			}else{
 				if(! texto.equals("")){
 					try{
-						String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, pregunta.getPathAGuardarLosAudiosTTS());
+						String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto);
 						String path = pregunta.getPathAGuardarLosAudiosTTS()+File.separator+nombreDelArchivo;
-						String miIp = pregunta.getIpPublicaAMostrarLosAudioTTS()+nombreDelArchivo;
+						String miIp = TextToSpeechWatson.getInstance().obtenerUrlPublicaDeAudios()+nombreDelArchivo;
 						sonido = new Sonido(miIp, path);
 					}catch(Exception e){
-						
+						System.out.println("Error al generar el audio dinamico de: "+texto);
 					}
 					
 				}

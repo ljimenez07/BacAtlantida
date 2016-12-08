@@ -16,7 +16,7 @@ public class Persistencia
 {
 	@Autowired
 	private Configuracion config;
-	private Connection conector;
+	Connection conector;
 	
 	public Connection openConBD() throws SQLException, ClassNotFoundException
 	{

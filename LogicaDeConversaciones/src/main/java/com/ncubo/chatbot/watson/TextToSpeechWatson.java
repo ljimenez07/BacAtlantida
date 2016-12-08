@@ -28,19 +28,21 @@ public class TextToSpeechWatson {
 	private static String vozTTS = Constantes.WATSON_VOICE_TEXT_SPEECH;
 	private static FTPCliente ftp;
 	private static String pathAudios;
+	private static String urlPublicaAudios;
 	
-	private TextToSpeechWatson(String usuario, String contrasena, String voz, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, String path){
-		usuarioTTS = usuario;
-		contrasenaTTS = contrasena;
-		vozTTS = voz;
-		textService = new TextToSpeech();
-		textService.setUsernameAndPassword(usuario, contrasena);
-		voice = voz;
-		pathAudios = path;
-		ftp = new FTPCliente(usuarioFTP, contrasenaFTP, hostFTP, puetoFTP);
+	private TextToSpeechWatson(String usuario, String contrasena, String voz, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, String path, String urlPublicaAudios){
+		this.usuarioTTS = usuario;
+		this.contrasenaTTS = contrasena;
+		this.vozTTS = voz;
+		this.textService = new TextToSpeech();
+		this.textService.setUsernameAndPassword(usuario, contrasena);
+		this.voice = voz;
+		this.pathAudios = path;
+		this.urlPublicaAudios = urlPublicaAudios;
+		this.ftp = new FTPCliente(usuarioFTP, contrasenaFTP, hostFTP, puetoFTP);
 		
 		try {
-			FileUtils.deleteDirectory(new File(pathAudios));
+			FileUtils.deleteDirectory(new File(this.pathAudios));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,9 +51,9 @@ public class TextToSpeechWatson {
 		System.out.println(String.format("Los datos del TTS  son: %s / %s / %s. Y los datos del FTP son: %s / %s / %s / %s", usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP));
 	}
 	
-	public static TextToSpeechWatson getInstance(String usuario, String contrasena, String voz, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, String pathAudios){
+	public static TextToSpeechWatson getInstance(String usuario, String contrasena, String voz, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, String pathAudios, String urlPublicaAudios){
 		if(textToSpeechWatson == null){
-			textToSpeechWatson = new TextToSpeechWatson(usuario, contrasena, voz, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAudios);
+			textToSpeechWatson = new TextToSpeechWatson(usuario, contrasena, voz, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAudios, urlPublicaAudios);
 		}
 		return textToSpeechWatson;
 	}
@@ -74,50 +76,24 @@ public class TextToSpeechWatson {
 		return in;
 	}
 	
-	public String getAudioToURL(String text, String pathAGuardar){
+	public String getAudioToURL(String text){
 		
 		UUID idOne = UUID.randomUUID();
 		String nombreDelArchivo = idOne+".wav";
 		nombreDelArchivo = nombreDelArchivo.replace("-", "");
-		String path = pathAGuardar+File.separator+nombreDelArchivo;
 
+		String pathFinal = this.pathAudios + File.separator + nombreDelArchivo;
+		
 		InputStream in = null;
-		File directory = new File(pathAGuardar);
-        directory.mkdirs();
-        
-		File file = null;
-		file = new File(path);
 
-		BufferedOutputStream stream = null;
 		try {
-			stream = new BufferedOutputStream(new FileOutputStream(file));
-			try {
 				in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.WAV).execute();
-		        byte[] buffer = new byte[2048];
-		        int read;
-		        while ((read = in.read(buffer)) != -1) {
-		        	stream.write(buffer, 0, read);
-		        }
-		        stream.close();
-			} catch (Exception e) {
-				throw new ChatException(String.format("Error debido a: %s", e.getMessage()));
-			}
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
+			ftp.subirUnArchivo(in, pathFinal);
+		} catch (Exception e1) {
 			throw new ChatException(String.format("Error debido a: %s", e1.getMessage()));
 		}
 		finally {
 		    close(in);
-		}
-		try {
-			ftp.subirArchivo(pathAGuardar);
-			borrarDirectorio(pathAGuardar);
-		} catch (SocketException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return nombreDelArchivo;
 	}
@@ -126,14 +102,18 @@ public class TextToSpeechWatson {
 		FileUtils.forceDelete(new File(direccionABorrar));
 	}
 	
+	public String obtenerUrlPublicaDeAudios(){
+		return urlPublicaAudios;
+	}
+	
 	private void close(Closeable closeable) {
 	    if (closeable != null) {
 	        try {
 	            closeable.close();
 	        } catch (IOException e) {
-	        	//logger.info("Got error: " + e.getMessage());
+				// logger.info("Got error: " + e.getMessage());
 	        }
-	    }	      	   
+	}
 	}
 	
 	public static void main (String[] args) throws IOException{

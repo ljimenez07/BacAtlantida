@@ -200,24 +200,15 @@ var estaEsPaginaEditar = false;
 						</div>
 					</div>
 					<div class="col-md-6 quitar-padding-left">
-						<div class="col-md-5">
+						<div class="col-md-12">
 							<div class="form-group">
 								<label for="ciudad-lbl" class="titulo-ca"><span class="asterisco">*</span>Ciudad</label>
 								<input data-parsley-error-message= "Ciudad es requerida." data-parsley-required="true" type="text" class="form-control" th:field="*{ciudad}" th:classappend="${#fields.hasErrors('ciudad')} ? 'sobresaltar-field'"/>
 								<p class="campo-requerido" th:if="${#fields.hasErrors('ciudad')}" th:errors="*{ciudad}"/>
 							</div>
 						</div>
-						<div class="col-md-5">
-							<div class="form-group">
-								<label for="categoria-lbl" class="titulo-ca">Categoría</label><br/>
-								<select class="form-control" th:field="*{categoria.id}">
-									<option th:each="categoriaActual : ${categorias}" th:value="${categoriaActual.id}" th:text="${categoriaActual.nombre}"></option>
-								</select>
-							</div>
-						</div>
 					</div>
 				</div>
-				
 				<div class="row">
 				
 					<div class="col-md-6">
@@ -316,7 +307,26 @@ var estaEsPaginaEditar = false;
 						</div>
 					</div>
 				</div>
-				
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label for="categoria-lbl" class="titulo-ca">A cúales categorías pertenece esta oferta:</label><br/>	
+							<div th:each="categoria, categoriaStat : *{categorias}" class="row">
+								<div class="col-xs-3"> 
+									<div th:text="${categorias[__${categoriaStat.index}__].nombre}"  />
+								</div>
+								<div class="col-xs-3">
+									<select class="form-control" th:field="*{categorias[__${categoriaStat.index}__].peso}">
+										<option value="0">Para nada</option>
+										<option value="1">Una parte</option>
+										<option value="2">Completamente</option>
+									</select>
+								</div>
+								<div class="col-xs-3"></div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<input type="hidden" id="logo-comercio" th:field="*{imagenComercioPath}"/>
 				<input type="hidden" id="imagen-publicidad" th:field="*{imagenPublicidadPath}"/>
 				
@@ -356,7 +366,7 @@ var estaEsPaginaEditar = false;
 	</div>
 	<script th:inline="javascript">
     /* attach a submit handler to the form */
-    
+      
     	$("#limpiar-submit").click(
     	function()
     	{
@@ -374,7 +384,7 @@ var estaEsPaginaEditar = false;
        		  	{
        		  		submit();
        		  	}
-       		});
+	});
     
    function submit()
    {

@@ -1,5 +1,6 @@
 package com.ncubo.logicaDeConversaciones;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ncubo.chatbot.configuracion.Constantes;
@@ -28,6 +29,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 			"BAIntents",
 			frase("saludoGeneral"),
 			frase("saludar"),
+			frase("saludarConNombre"),
 			frase("saludoPreguntar")
 		);
 		return resultado;
@@ -35,31 +37,40 @@ public class TemarioDelBancoAtlantida extends Temario{
 	
 	private Tema quiereSaldo()
 	{
+		List<String> variables = new ArrayList<>();
+		variables.add("estaLogueado");
+		
 		Tema resultado = new Tema
 		(
 			"quiereSaldo",
 			"BATemas",
 			true,
 			"saldo",
+			variables,
 			frase("quiereSaldoTarjetaCredito"),
 			frase("saldoCredito"),
 			frase("saldoCuentaAhorros"),
 			frase("noTengoSaldo"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
-			frase("noQuiereHacerOtraConsulta")
+			frase("noQuiereHacerOtraConsulta"),
+			frase("necesitaLogin")
 		);
 		return resultado;
 	}
 	
 	private Tema quiereDisponible()
 	{
+		List<String> variables = new ArrayList<>();
+		variables.add("estaLogueado");
+		
 		Tema resultado = new Tema
 		(
 			"quiereDisponible",
 			"BATemas",
 			true,
 			"disponible",
+			variables,
 			frase("quiereDisponibleTarjetaCredito"),
 			frase("disponibleCredito"),
 			frase("disponibleCuentaAhorros"),
@@ -68,7 +79,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("noTengoDisponible"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
-			frase("noQuiereHacerOtraConsulta")
+			frase("noQuiereHacerOtraConsulta"),
+			frase("necesitaLogin")
 		);
 		return resultado;
 	}
@@ -94,18 +106,23 @@ public class TemarioDelBancoAtlantida extends Temario{
 	
 	private Tema quiereMovimientos()
 	{
+		List<String> variables = new ArrayList<>();
+		variables.add("estaLogueado");
+		
 		Tema resultado = new Tema
 		(
 			"quiereMovimientos",
 			"BATemas",
 			true,
 			"movimientos",
+			variables,
 			frase("quiereMovimiento"),
 			frase("movimientosTarjeta"),
 			frase("movimientosCuenta"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
-			frase("noQuiereHacerOtraConsulta")
+			frase("noQuiereHacerOtraConsulta"),
+			frase("necesitaLogin")
 		);
 		return resultado;
 	}
@@ -202,14 +219,21 @@ public class TemarioDelBancoAtlantida extends Temario{
 	
 	private Tema saludarConocerte()
 	{
+		List<String> variables = new ArrayList<>();
+		variables.add("leGustaLosHoteles");
+		variables.add("leGustaComerAfuera");
+		variables.add("sePreocupaPorLaSalud");
+		
 		Tema resultado = new Tema
 		(
 			"saludarConocerte",
 			"ConocerteGeneral",
 			false,
 			"conocerte",
+			variables,
 			frase("saludarConocerte"),
 			frase("preguntarPorRestaurantes"),
+			frase("preguntarPorRestaurantesSiNo"),
 			frase("fueraContextoConocerteDelBanco"),
 			frase("fueraContextoConocerteGeneral")
 		);
@@ -218,13 +242,20 @@ public class TemarioDelBancoAtlantida extends Temario{
 	
 	private Tema preguntarPorHospedaje()
 	{
+		List<String> variables = new ArrayList<>();
+		variables.add("leGustaLosHoteles");
+		variables.add("leGustaComerAfuera");
+		variables.add("sePreocupaPorLaSalud");
+		
 		Tema resultado = new Tema
 		(
 			"preguntarPorHospedaje",
 			"ConocerteGeneral",
 			false,
 			"conocerte",
+			variables,
 			frase("preguntarPorHospedaje"),
+			frase("preguntarPorHospedajeSiNo"),
 			frase("fueraContextoConocerteDelBanco"),
 			frase("fueraContextoConocerteGeneral")
 		);
@@ -233,12 +264,18 @@ public class TemarioDelBancoAtlantida extends Temario{
 	
 	private Tema preguntarPorBelleza()
 	{
+		List<String> variables = new ArrayList<>();
+		variables.add("leGustaLosHoteles");
+		variables.add("leGustaComerAfuera");
+		variables.add("sePreocupaPorLaSalud");
+		
 		Tema resultado = new Tema
 		(
 			"preguntarPorBelleza",
 			"ConocerteGeneral",
 			false,
 			"conocerte",
+			variables,
 			frase("preguntarPorBelleza"),
 			frase("fueraContextoConocerteDelBanco"),
 			frase("fueraContextoConocerteGeneral")
@@ -248,12 +285,18 @@ public class TemarioDelBancoAtlantida extends Temario{
 	
 	private Tema despedidaConocerte()
 	{
+		List<String> variables = new ArrayList<>();
+		variables.add("leGustaLosHoteles");
+		variables.add("leGustaComerAfuera");
+		variables.add("sePreocupaPorLaSalud");
+		
 		Tema resultado = new Tema
 		(
 			"despedidaConocerte",
 			"ConocerteGeneral",
 			false,
 			"conocerte",
+			variables,
 			frase("despedidaConocerte"),
 			frase("fueraContextoConocerteDelBanco"),
 			frase("fueraContextoConocerteGeneral")

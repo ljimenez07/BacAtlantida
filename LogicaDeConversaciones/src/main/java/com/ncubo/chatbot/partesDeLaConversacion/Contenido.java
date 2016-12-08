@@ -10,6 +10,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 import com.ncubo.chatbot.configuracion.Constantes;
+import com.ncubo.chatbot.contexto.Variable;
+import com.ncubo.chatbot.contexto.VariablesDeContexto;
 import com.ncubo.chatbot.exceptiones.ChatException;
 import com.ncubo.chatbot.parser.Operador;
 import com.ncubo.chatbot.parser.Operador.TipoDeOperador;
@@ -162,6 +164,26 @@ public abstract class Contenido
 				throw new ChatException("Error cargando las conjunciones "+e.getMessage());
 			}
 			
+			// Conjunciones
+			try{
+				System.out.println("\nCargando las variablesDeAmbiente ...\n");
+				NodeList variables = doc.getElementsByTagName("variablesDeAmbiente");
+				Node variablesNode = variables.item(0);
+				Element variablesElement = (Element) variablesNode;
+				NodeList variable = variablesElement.getElementsByTagName("variable");
+				for (int temp = 0; temp < variable.getLength(); temp++) {
+					Node nNode = variable.item(temp);
+					Element eElement = (Element) nNode;
+					String nombre = eElement.getAttribute("nombre");
+					String tipoValor = eElement.getAttribute("tipo");
+					String valorPorDefecto = nNode.getTextContent();
+					System.out.println("ValorDeAmbiente: "+nombre);
+					VariablesDeContexto.getInstance().agregarVariableAMiContexto(new Variable(nombre, valorPorDefecto, tipoValor));
+				}
+			}catch(Exception e){
+				throw new ChatException("Error cargando las conjunciones "+e.getMessage());
+			}
+						
 			//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 			NodeList conversaciones = doc.getElementsByTagName("conversacion");
 			System.out.println("\nCargando las frases ...\n");

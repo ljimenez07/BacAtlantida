@@ -191,7 +191,10 @@ public class Agente extends Participante{
 					String laIntencion = respuesta.obtenerLaIntencionDeConfianzaDeLaRespuesta().getNombre();
 					if( ! laIntencion.equals("")){
 						borrarUnaVariableDelContexto(Constantes.ID_TEMA); // Solo se borra el id cuando el tema termina
-						nombreDeLaIntencionEspecificaActiva = laIntencion;
+						if(! laIntencion.equals("afirmacion")) // TODO Esto no deberia ir aca
+						{
+							nombreDeLaIntencionEspecificaActiva = laIntencion;
+						}
 						seTieneQueGenerarUnNuevoContextoParaWatsonEnElWorkspaceActualConRespaldo();
 					}
 				}
@@ -286,7 +289,7 @@ public class Agente extends Participante{
 		Iterator<?> json_keys = jsonObj.keys();
 		while( json_keys.hasNext() ){
 			String json_key = (String) json_keys.next();
-			if( ! json_key.equals("system") && ! json_key.equals("conversation_id")){
+			if( ! json_key.equals("system") && ! json_key.equals("conversation_id") && ! json_key.equals("estaLogueado")){
 				try {
 					System.out.println("Respaldando: "+json_key);
 					misVariables.put(json_key, jsonObj.getString(json_key));
@@ -397,6 +400,20 @@ public class Agente extends Participante{
 	}
 	
 	public void activarValiableEnElContextoDeWatson(String nombre, String valor, String nombreWorkspace){
+		String context = miContextos.get(nombreWorkspace);
+		System.out.println(context);
+		JSONObject obj = null;
+		try {
+			obj = new JSONObject(context);
+			obj.put(nombre, valor);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		miContextos.put(nombreWorkspace, obj.toString());
+	}
+	
+	public void activarValiableEnElContextoDeWatson(String nombre, double valor, String nombreWorkspace){
 		String context = miContextos.get(nombreWorkspace);
 		System.out.println(context);
 		JSONObject obj = null;
