@@ -15,6 +15,7 @@ import com.ncubo.conf.Usuario;
 import com.ncubo.dao.OfertaDao;
 import com.ncubo.data.Belleza;
 import com.ncubo.data.Hotel;
+import com.ncubo.data.Indice;
 import com.ncubo.data.Oferta;
 import com.ncubo.data.Restaurate;
 
@@ -64,9 +65,9 @@ public class OfertaService
 		ofertaDao.insertarCategorias(oferta.getIdOferta(), oferta.getCategorias());
 	}
 	
-	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(int indiceInicial, Usuario usuario) throws Exception
+	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(Indice indiceInicial, Usuario usuario) throws Exception
 	{
-		if( ! usuario.getEstaLogueado() )
+		if( usuario == null || ! usuario.getEstaLogueado() )
 		{
 			return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario.getUsuarioId());
 		}
@@ -76,24 +77,42 @@ public class OfertaService
 		double belleza = serverCognitivo.obtenerValorDeGustosDeBelleza( usuario.getUsuarioId() );
 		double restaurantes = serverCognitivo.obtenerValorDeGustosDeRestaurantes( usuario.getUsuarioId() );
 		
+		obtenerUltimasDiezOfertasParaMostrarDesde( 
+				ofertasFinales, 
+				indiceInicial, 
+				usuario, 
+				new Belleza(belleza), 
+				new Hotel(hoteles), 
+				new Restaurate(restaurantes) 
+				);
+		
+		return ofertasFinales;
+		
+	}
+	
+	private void obtenerUltimasDiezOfertasParaMostrarDesde(List<Oferta> ofertasFinales, Indice indiceInicial, Usuario usuario, Belleza belleza, Hotel hoteles, Restaurate restaurante) throws Exception
+	{
 		List<Oferta> ofertas =  ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario.getUsuarioId());
+		
+		if( ofertas.size() == 0)
+		{
+			return;
+		}
 		
 		for( Oferta oferta : ofertas )
 		{
 			double distanciaActualEntreAmbasCategorias = oferta.distanciaEuclidianaDeCategoria(
-				new Belleza(belleza), 
-				new Hotel(hoteles),
-				new Restaurate(restaurantes));
+				belleza, 
+				hoteles,
+				restaurante );
 			 
 			if( distanciaActualEntreAmbasCategorias <= distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas )
 			{
 				ofertasFinales.add( oferta );
 			}
-			//TODO que hago si no hay ofertas
-			//TODO que hago si hay menos de diez ofertas
-		}
-		return ofertasFinales;
-		
+			indiceInicial.agregarleDiez();
+			obtenerUltimasDiezOfertasParaMostrarDesde( ofertasFinales, indiceInicial, usuario,  belleza, hoteles, restaurante);
+		}		
 	}
 
 	public double getDistanciaMaximaEntreLasCategoriasDeUsuarioyOfertas()
