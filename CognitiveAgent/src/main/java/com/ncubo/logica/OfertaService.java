@@ -65,6 +65,12 @@ public class OfertaService
 		ofertaDao.insertarCategorias(oferta.getIdOferta(), oferta.getCategorias());
 	}
 	
+	public void modificar(Oferta oferta) throws ClassNotFoundException, SQLException
+	{
+		//TODO transacciones
+		ofertaDao.modificar(oferta);
+		ofertaDao.insertarCategorias(oferta.getIdOferta(), oferta.getCategorias());
+	}
 	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(Indice indiceInicial, Usuario usuario) throws Exception
 	{
 		if( usuario == null || ! usuario.getEstaLogueado() )

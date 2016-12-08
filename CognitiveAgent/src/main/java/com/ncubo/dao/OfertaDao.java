@@ -26,7 +26,7 @@ import com.ncubo.util.LevenshteinDistance;
 public class OfertaDao
 {
 	private final String NOMBRE_TABLA = "oferta";
-	private final String NOMBRE_TABLA_CATEGORIA_OFERTA = "categoriaoferta";
+	private final String NOMBRE_TABLA_CATEGORIA_OFERTA = "categoriadeoferta";
 	private final String NOMBRE_TABLA_REACCION = "reaccion";
 	private final int LIMITE = 50;
 	private final int CANTIDAD_PAGINACION = 20;
@@ -77,8 +77,7 @@ public class OfertaDao
 	{
 		String query = "SELECT oferta.idOferta, tituloDeOferta, comercio, descripcion, "
 				+ "idCategoria, peso, nombre, ciudad, estado, restricciones, vigenciaDesde, vigenciaHasta, imagenComercioPath, "
-				+ "imagenPublicidadPath, fechaHoraRegistro, "
-				+ "SUM(IF(reaccion = 1, 1, 0)) AS likes, SUM(IF(reaccion = 0, 1, 0)) AS dislikes "
+				+ "imagenPublicidadPath, fechaHoraRegistro "
 				+ "FROM oferta "
 				+ "LEFT JOIN reaccion ON oferta.idOferta = reaccion.idOferta "
 				+ "LEFT JOIN categoria_con_oferta_y_peso ON oferta.idOferta = categoria_con_oferta_y_peso.idOferta "
@@ -113,8 +112,8 @@ public class OfertaDao
 					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
 					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
 					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),
-					rs.getInt(atributo.LIKES.toString()),
-					rs.getInt(atributo.DISLIKES.toString())
+					0,
+					0
 					));
 				
 				if( idCategoria != null )
@@ -438,30 +437,6 @@ public class OfertaDao
 			{
 					cantidadQueLleva++;
 				}
-			}
-			else
-			{
-				/*if( levenshteinDistanceCategoria < 3 )
-				{
-					if(cantidadQueLleva >= desde)
-					{
-					if (valoresSimilitud.get(levenshteinDistanceCategoria) == null)
-					{
-						ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
-						ofertas.add(ofertaActual);
-						valoresSimilitud.put(levenshteinDistanceCategoria, ofertas);
-					}
-					else
-					{
-						valoresSimilitud.get(levenshteinDistanceCategoria).add(ofertaActual);
-					}
-						cantidadDeResultados++;
-					}
-					else
-					{
-						cantidadQueLleva++;
-					}
-				}*/
 			}
 			
 			if(cantidadDeResultados == CANTIDAD_PAGINACION)

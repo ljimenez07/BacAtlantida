@@ -262,7 +262,7 @@ public class OfertaController
 			return modificarOferta(model, 0, oferta, idUsuario);
 		}
 		oferta.setFechaHoraRegistro(new Timestamp(new Date().getTime()));
-		ofertaDao.modificar( oferta );
+		ofertaService.modificar( oferta );
 		
 		return "redirect:gestionDeOfertas";
 	}
