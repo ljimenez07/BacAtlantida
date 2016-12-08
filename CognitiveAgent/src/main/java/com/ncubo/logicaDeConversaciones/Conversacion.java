@@ -80,11 +80,7 @@ public class Conversacion {
 		
 		Respuesta respuesta = agente.enviarRespuestaAWatson(respuestaDelCliente, fraseActual);
 		this.hilo.agregarUnaRespuesta(respuesta);
-<<<<<<< .mine
 
-=======
-		
->>>>>>> .theirs
 		if (respuesta.hayProblemasEnLaComunicacionConWatson()){
 			Afirmacion errorDeComunicacionConWatson = (Afirmacion) this.temario.contenido().frase(Constantes.FRASE_ERROR_CON_WATSON);
 			misSalidas.add(agente.decir(errorDeComunicacionConWatson, respuesta, temaActual));
