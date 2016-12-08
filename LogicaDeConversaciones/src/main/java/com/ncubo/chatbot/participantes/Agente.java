@@ -324,7 +324,7 @@ public class Agente extends Participante{
 				intencion = intenciones.get(index);
 			}
 		}
-		System.out.println("La intencion general es: "+intencion.getIntent());
+		System.out.println("La intencion general en "+nombreDelWorkSpace+" es: "+intencion.getIntent());
 		return intencion;
 	}
 	
