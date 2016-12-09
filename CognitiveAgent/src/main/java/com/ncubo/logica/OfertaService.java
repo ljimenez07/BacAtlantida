@@ -40,8 +40,6 @@ public class OfertaService
 	private GestorDeArchivos gestorDeArchivos;
 	
 	private double distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas;
-	@Autowired
-	private GestorDeArchivos gestorDeArchivos;
 	
 	
 	public BindingResult validarCampos(BindingResult bindingResult, Oferta oferta) throws ParseException
