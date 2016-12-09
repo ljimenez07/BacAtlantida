@@ -313,7 +313,8 @@ var estaEsPaginaEditar = false;
 							<label for="categoria-lbl" class="titulo-ca">A cuáles categorías pertenece esta oferta:</label><br/>	
 							<div th:each="categoria, categoriaStat : *{categorias}" class="row">
 								<div class="col-xs-3"> 
-									<div th:text="${categorias[__${categoriaStat.index}__].nombre}"  />
+									<div th:text="${categorias[__${categoriaStat.index}__].nombre}">
+									</div>
 								</div>
 								<div class="col-xs-3">
 									<select class="form-control" th:field="*{categorias[__${categoriaStat.index}__].peso}">

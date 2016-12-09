@@ -30,7 +30,7 @@ public class OfertaDao
 	private final String NOMBRE_TABLA_CATEGORIA_OFERTA = "categoriadeoferta";
 	private final String NOMBRE_TABLA_REACCION = "reaccion";
 	private final int LIMITE = 50;
-	private final int CANTIDAD_PAGINACION = 20;
+	private final int CANTIDAD_PAGINACION_BO = 1;
 	private final String CAMPOS_PARA_SELECT = String.format("%s.%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, IF(%s = ?, IF(%s = 1, 1, NULL), NULL) AS %s, IF(%s = ?, IF(%s = 0, 1, NULL), NULL) AS %s", NOMBRE_TABLA, atributo.ID_OFERTA, atributo.TITULO_DE_OFERTA, atributo.COMERCIO, atributo.DESCRIPCION, atributo.CATEGORIA, atributo.NOMBRE_CATEGORIA, atributo.CIUDAD, atributo.ESTADO, atributo.RESTRICCIONES, atributo.VIGENCIA_DESDE, atributo.VIGENCIA_HASTA, atributo.IMAGEN_COMERCIO_PATH, atributo.IMAGEN_PUBLICIDAD_PATH, atributo.FECHA_HORA_REGISTRO, atributo.ID_USUARIO, atributo.REACCION, atributo.LIKES, atributo.ID_USUARIO, atributo.REACCION, atributo.DISLIKES);
 	@Autowired
 	private Persistencia dao;
@@ -73,6 +73,11 @@ public class OfertaDao
 			return this.nombre;
 		}
 	}
+	
+	/*public ArrayList<Oferta> obtener(int indicaInicial) throws ClassNotFoundException, SQLException
+	{
+		return obtener(indicaInicial, CANTIDAD_PAGINACION_BO);
+	}*/
 	
 	public ArrayList<Oferta> obtener() throws ClassNotFoundException, SQLException
 	{
@@ -446,7 +451,7 @@ public class OfertaDao
 				}
 			}
 			
-			if(cantidadDeResultados == CANTIDAD_PAGINACION)
+			if(cantidadDeResultados == CANTIDAD_PAGINACION_BO)
 			{
 				break;
 		}
@@ -466,9 +471,9 @@ public class OfertaDao
 	public int cantidadPaginas() throws ClassNotFoundException, SQLException
 	{
 		int cantidadDeofertas = obtenerCantidadDeOfertasParaMostrar();
-		int cantidadDePaginas = cantidadDeofertas / CANTIDAD_PAGINACION;
+		int cantidadDePaginas = cantidadDeofertas / CANTIDAD_PAGINACION_BO;
 	
-		if(cantidadDeofertas % CANTIDAD_PAGINACION != 0)
+		if(cantidadDeofertas % CANTIDAD_PAGINACION_BO != 0)
 		{
 			cantidadDePaginas++;
 		}
@@ -477,9 +482,9 @@ public class OfertaDao
 	
 	public int cantidadPaginas(int resultados) throws ClassNotFoundException, SQLException
 	{
-		int cantidadDePaginas = resultados / CANTIDAD_PAGINACION;
+		int cantidadDePaginas = resultados / CANTIDAD_PAGINACION_BO;
 		
-		if(resultados % CANTIDAD_PAGINACION != 0)
+		if(resultados % CANTIDAD_PAGINACION_BO != 0)
 		{
 			cantidadDePaginas++;
 		}
@@ -488,6 +493,6 @@ public class OfertaDao
 	
 	public int getCantidadPaginacion()
 	{
-		return CANTIDAD_PAGINACION;
+		return CANTIDAD_PAGINACION_BO;
 	}
 }
