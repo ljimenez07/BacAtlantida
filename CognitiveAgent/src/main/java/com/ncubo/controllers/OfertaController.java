@@ -70,7 +70,7 @@ public class OfertaController
 	@RequestMapping("/BackOffice/gestionDeOfertas")
 	public String visualizarOfertas(Model model) throws ClassNotFoundException, SQLException
 	{
-		ArrayList<Oferta> ofertas = ofertaDao.obtener();
+		ArrayList<Oferta> ofertas = ofertaDao.obtener(0);
 		if (ofertas.isEmpty())
 		{
 			return "redirect:insertarOferta";
@@ -84,7 +84,7 @@ public class OfertaController
 	public String visualizarOfertasPaginacion(Model model, @PathVariable int pagina) throws ClassNotFoundException, SQLException
 	{
 		int idDesde = ofertaDao.getCantidadPaginacion() * (pagina -1);
-		ArrayList<Oferta> ofertas = ofertaDao.obtener();
+		ArrayList<Oferta> ofertas = ofertaDao.obtener(idDesde);
 		if (ofertas.isEmpty())
 		{
 			visualizarOfertas(model);
