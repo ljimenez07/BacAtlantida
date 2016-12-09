@@ -1,6 +1,7 @@
 package com.ncubo.chatbot.watson;
 
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,9 +11,12 @@ import java.io.InputStream;
 import java.net.SocketException;
 import java.util.UUID;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+
 import com.ibm.watson.developer_cloud.text_to_speech.v1.TextToSpeech;
 import com.ibm.watson.developer_cloud.text_to_speech.v1.model.AudioFormat;
 import com.ibm.watson.developer_cloud.text_to_speech.v1.model.Voice;
+import com.ncubo.caches.CacheDeAudios;
 import com.ncubo.chatbot.configuracion.Constantes;
 import com.ncubo.chatbot.exceptiones.ChatException;
 import com.ncubo.ftp.FTPCliente;
@@ -76,24 +80,29 @@ public class TextToSpeechWatson {
 		return in;
 	}
 	
-	public String getAudioToURL(String text){
+	public String getAudioToURL(String text, boolean esAudioDinamico){
 		
 		UUID idOne = UUID.randomUUID();
 		String nombreDelArchivo = idOne+".wav";
 		nombreDelArchivo = nombreDelArchivo.replace("-", "");
 
-		String pathFinal = this.pathAudios + File.separator + nombreDelArchivo;
+		String pathFinal = this.pathAudios + "/" + nombreDelArchivo;
 		
 		InputStream in = null;
 
 		try {
 				in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.WAV).execute();
-			ftp.subirUnArchivo(in, pathFinal);
+			if(esAudioDinamico){
+				CacheDeAudios.agregar(pathFinal, IOUtils.toByteArray(in));
+				ftp.subirUnArchivoPorHilo(in, pathFinal);
+			}
+			else{
+				ftp.subirUnArchivo(in, pathFinal);
+				close(in);
+			}
+			
 		} catch (Exception e1) {
 			throw new ChatException(String.format("Error debido a: %s", e1.getMessage()));
-		}
-		finally {
-		    close(in);
 		}
 		return nombreDelArchivo;
 	}

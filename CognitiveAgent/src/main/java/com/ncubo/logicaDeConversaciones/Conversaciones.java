@@ -205,12 +205,12 @@ public class Conversaciones {
 	public String borrarUnaConversacion(String idSesion){
 		String resultado = "La conversación con id "+idSesion+" no existe.";
 		if(existeLaConversacion(idSesion)){
-			try {
-				misConversaciones.get(idSesion).guardarEstadiscitas();
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
 			synchronized(misConversaciones){
+				try {
+					misConversaciones.get(idSesion).guardarEstadiscitas();
+				} catch (ClassNotFoundException | SQLException e) {
+					e.printStackTrace();
+				}
 				misConversaciones.remove(idSesion);
 				resultado = "La conversación con id "+idSesion+" se borró exitosamente.";
 			}

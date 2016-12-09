@@ -13,6 +13,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
+import com.ncubo.chatbot.watson.TextToSpeechWatson;
+
 public class FTPCliente
 {
 	private String usuario;
@@ -132,6 +134,50 @@ public class FTPCliente
 		finally
 		{
 			archivo.close();
+		}
+		
+	}
+	
+	public void subirUnArchivoPorHilo(InputStream archivo, String pathDondeGuardar)
+	{
+		HiloParaSubirArchivosAlFTP hilo = new HiloParaSubirArchivosAlFTP(archivo, pathDondeGuardar);
+		hilo.start();
+	}
+	
+	private class HiloParaSubirArchivosAlFTP extends Thread{
+		
+		private InputStream archivo;
+		private String pathDondeGuardar;
+		
+		public HiloParaSubirArchivosAlFTP(InputStream archivo, String pathDondeGuardar){
+			this.archivo = archivo;
+			this.pathDondeGuardar = pathDondeGuardar;
+		}
+		
+		public void run(){
+			FTPClient ftpClient = new FTPClient();
+			
+			try
+			{
+				ftpClient.connect(host, puerto);
+				ftpClient.login(usuario, password);
+				ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+				ftpClient.storeFile(pathDondeGuardar, archivo);
+				archivo.close();
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+			finally
+			{
+				try {
+					archivo.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			System.out.println("Terminé de subir");
 		}
 	}
 	
