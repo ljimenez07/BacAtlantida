@@ -32,17 +32,10 @@ public class OfertaService
 	
 	@Autowired
 	private UsuarioDao usuarioDao;
-	
-	
-	@Autowired
-	private AgenteCognitivo serverCognitivo;
-	@Autowired
-	private GestorDeArchivos gestorDeArchivos;
-	
 	private double distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas;
+	
 	@Autowired
 	private GestorDeArchivos gestorDeArchivos;
-	
 	
 	public BindingResult validarCampos(BindingResult bindingResult, Oferta oferta) throws ParseException
 	{
