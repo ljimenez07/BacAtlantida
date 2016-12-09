@@ -97,36 +97,13 @@ public class GestorDeArchivos
 	{
 		TextToSpeech textService = new TextToSpeech();
 		textService.setUsernameAndPassword(agenteCognitivo.getUserTextToSpeech(), agenteCognitivo.getPasswordTextToSpeech());
-		
-		String absolutePath= path+File.separator+subPath;
-		
-		InputStream in = null;
-		File directory = new File(absolutePath);
-		directory.mkdirs();
-		String pathArchivo = absolutePath;
 
-		absolutePath += File.separator+"descripcion.wav";
-		
-		File file = null;
-		file = new File(absolutePath);
-		
-		BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(file));
+		String pathArchivo = subPath + "/" + "descripcion.wav";
 
 		String voice = agenteCognitivo.getVoiceTextToSpeech();
-		in = textService.synthesize(mensaje, new Voice(voice, null, null), AudioFormat.WAV).execute();
-
-		byte[] buffer = new byte[2048];
-		int read;
-		while ((read = in.read(buffer)) != -1) 
-		{
-			stream.write(buffer, 0, read);
-		}
-
-		stream.close();
+		InputStream in = textService.synthesize(mensaje, new Voice(voice, null, null), AudioFormat.WAV).execute();
 		
-		ftp.subirArchivo(pathArchivo);
-		borrarDirectorio(pathArchivo);
-
+		ftp.subirUnArchivo(in, pathArchivo);
 		return path;
 	}
 	

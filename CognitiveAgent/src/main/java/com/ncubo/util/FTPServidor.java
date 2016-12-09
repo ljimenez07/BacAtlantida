@@ -29,13 +29,15 @@ public class FTPServidor
 	private String password;
 	private String host;
 	private int puerto;
-
+	private String carpeta;
+	
 	private boolean subirUnArchivo(FTPClient ftpClient, String localFilePath, String remoteFilePath) throws IOException
 	{
 		Path path = Paths.get(localFilePath);
 		String finalPath = remoteFilePath.equals("") ? path.getFileName().toString() : remoteFilePath;
 
 		InputStream inputStream = new FileInputStream(localFilePath);
+		
 		try
 		{
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
@@ -106,6 +108,14 @@ public class FTPServidor
 		
 		Path file = new File(path).toPath();
 		
+		ftpClient.changeWorkingDirectory(carpeta);
+		int returnCode = ftpClient.getReplyCode();
+		if (returnCode == 550)
+		{
+			ftpClient.makeDirectory(carpeta);
+			ftpClient.changeWorkingDirectory(carpeta);
+		}
+		
 		if(Files.isRegularFile(file))
 		{
 			subirUnArchivo(ftpClient, path, "");
@@ -119,6 +129,7 @@ public class FTPServidor
 		
 		ftpClient.logout();
 		ftpClient.disconnect();
+		
 		return pathArchivoGuardado.replaceAll("-", "_").replaceAll("/", "-");
 	}
 	
@@ -129,6 +140,7 @@ public class FTPServidor
 		ftpClient.login(usuario, password);
 		ftpClient.enterLocalPassiveMode();
 		ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+		ftpClient.changeWorkingDirectory(carpeta);
 
 		return ftpClient.retrieveFileStream(nombreArchivo);
 	}
@@ -138,10 +150,26 @@ public class FTPServidor
 		FTPClient ftpClient = new FTPClient();
 		ftpClient.connect(host, puerto);
 		ftpClient.login(usuario, password);
+		ftpClient.changeWorkingDirectory(carpeta);
+		
+		String[] directorio = pathDondeGuardar.split("/");
+		String nombreArchivo = directorio[directorio.length-1];
+		
+		for(int i = 0 ; i < directorio.length - 1 ; i++)
+		{
+			ftpClient.changeWorkingDirectory(directorio[i]);
+			int returnCode = ftpClient.getReplyCode();
+			if (returnCode == 550)
+			{
+				ftpClient.makeDirectory(directorio[i]);
+				ftpClient.changeWorkingDirectory(directorio[i]);
+			}
+		}
+		
 		try
 		{
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-			ftpClient.storeFile(pathDondeGuardar, archivo);
+			ftpClient.storeFile(nombreArchivo, archivo);
 		} 
 		finally
 		{
@@ -159,7 +187,8 @@ public class FTPServidor
 		{
 			String srcDeImg = elemento.attr("src");
 			String[] imagenPath = srcDeImg.split("/");
-			String srcModificado = ( rutaArchivoEnFTP + imagenPath[ imagenPath.length-1 ] ).replaceAll("-", ".").replaceAll("/", "-");
+			
+			String srcModificado = (rutaArchivoEnFTP + imagenPath[ imagenPath.length-1 ] ).replaceAll("-", ".").replaceAll("/", "-");
 			elemento.attr("src", srcModificado);
 		}
 		
@@ -209,4 +238,14 @@ public class FTPServidor
 		this.puerto = puerto;
 	}
 
+	public String getCarpeta()
+	{
+		return carpeta;
+	}
+
+	public void setCarpeta(String carpeta)
+	{
+		this.carpeta = carpeta;
+	}
+	
 }
