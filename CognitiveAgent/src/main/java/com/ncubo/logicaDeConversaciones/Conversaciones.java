@@ -88,7 +88,7 @@ public class Conversaciones {
 		logger.debug("Conversar ..........");
 		System.out.println("Coversar con "+cliente.getIdSesion());
 		
-		if( cliente.getUsuarioId().equals("") && cliente.getIdSesion().equals("") || (cliente.getUsuarioId().equals("") && cliente.getEstaLogueado())){ // Esta logueado
+		if( cliente.getUsuarioId().isEmpty() && cliente.getIdSesion().isEmpty() || (cliente.getUsuarioId().isEmpty() && cliente.getEstaLogueado())){ // Esta logueado
 			throw new ChatException("No se puede chatear porque no existe usuario ni id de sesion");
 		}
 		

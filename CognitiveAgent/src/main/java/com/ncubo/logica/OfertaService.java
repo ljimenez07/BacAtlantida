@@ -75,6 +75,33 @@ public class OfertaService
 		ofertaDao.insertar(oferta);
 		ofertaDao.insertarCategorias(oferta.getIdOferta(), oferta.getCategorias());
 		gestorDeArchivos.textoAAudio( ""+oferta.getIdOferta(), oferta.getDescripcion() );
+		
+		ArrayList<Usuario>usuarios = usuarioDao.usuarios();
+		for(Usuario usuario : usuarios)
+		{
+			double distanciaActualEntreAmbasCategorias = oferta.distanciaEuclidianaDeCategoria(
+					usuario.getCategorias().obtenerCategoriaDeBelleza(), 
+					usuario.getCategorias().obtenerCategoriaDeHotel(), 
+					usuario.getCategorias().obtenerCategoriaDeRestaurante() );
+			
+			System.out.println(
+				String.format("El usuario %s tiene una distancia %s.",
+				usuario.getIdSesion(),
+				distanciaActualEntreAmbasCategorias)
+			);
+			
+			if( distanciaActualEntreAmbasCategorias <= distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas )
+			{
+				System.out.println(
+					String.format("El usuario %s tendrá una notificación por la oferta %s.",
+					usuario.getIdSesion(),
+					oferta.getIdOferta())
+				);
+				
+				usuarioDao.marcarComoNoVistoElPopupDeNuevasOfertas( usuario.getIdSesion() );
+			}
+		}
+		
 	}
 	
 	public void modificar(Oferta oferta) throws ClassNotFoundException, SQLException, IOException
@@ -133,9 +160,13 @@ public class OfertaService
 			{
 				ofertasFinales.add( oferta );
 			}
+		}	
+		
+		if( ofertasFinales.size() < 10)
+		{
 			indiceInicial.agregarleDiez();
 			obtenerUltimasDiezOfertasParaMostrarDesde( ofertasFinales, indiceInicial, usuario,  belleza, hoteles, restaurante);
-		}		
+		}
 	}
 
 	public double getDistanciaMaximaEntreLasCategoriasDeUsuarioyOfertas()

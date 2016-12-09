@@ -36,6 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ncubo.conf.Usuario;
 import com.ncubo.dao.CategoriaDao;
 import com.ncubo.dao.OfertaDao;
+import com.ncubo.dao.UsuarioDao;
 import com.ncubo.data.Indice;
 import com.ncubo.data.Oferta;
 import com.ncubo.logica.OfertaService;
@@ -51,6 +52,9 @@ public class OfertaController
 	private OfertaService ofertaService;
 	@Autowired
 	private OfertaDao ofertaDao;
+	
+	@Autowired
+	private UsuarioDao usuarioDao;
 	
 	private final String ACTION_INSERTAR_OFERTA = "BackOffice/insertarOferta";
 	private final String ACTION_MODIFICAR_OFERTA = "BackOffice/modificarOferta";
@@ -178,16 +182,27 @@ public class OfertaController
 	@ResponseBody public String ofertas(@RequestParam("pagina") int pagina, HttpSession sesion) throws Exception
 	{
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
+		if( usuario == null )
+		{
+			usuario = new Usuario(sesion.getId());
+		}
 		Indice indiceInicial = new Indice( pagina );
 				
 		ObjectMapper mapper = new ObjectMapper();
 		JSONArray array = new JSONArray(mapper.writeValueAsString((ofertaService.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario))));
 
+		boolean puedeVerElpopupDeNuevasOfertas = usuarioDao.puedeVerElpopupDeNuevasOfertas( usuario );
+		
 		
 		JSONObject respuesta = new JSONObject();
 		respuesta.put("indice", new JSONObject(mapper.writeValueAsString(indiceInicial)));
 		respuesta.put("resultados", array);
+		respuesta.put("mostrarPopupdeOfertasNuevas", puedeVerElpopupDeNuevasOfertas);
 		
+		if( puedeVerElpopupDeNuevasOfertas )
+		{
+			usuarioDao.marcarComoVistoElPopupDeNuevasOfertas( usuario.getUsuarioId() );
+		}
 		
 		return respuesta.toString();
 	}
