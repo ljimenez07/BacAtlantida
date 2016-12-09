@@ -51,7 +51,7 @@ public abstract class Frase
 		if (vinetasDeLaFrase != null){
 			for(int index = 0; index < vinetasDeLaFrase.length; index ++){
 				String vineta = vinetasDeLaFrase[index];
-				vineta = vineta.replace("@@", "<").replace("/<@", "/>");
+				vineta = vineta.replace("@@", "<").replace("##", ">");
 				vinetasDeLosTextosDeLaFrase.add(new Vineta(vineta));
 			}
 		}
