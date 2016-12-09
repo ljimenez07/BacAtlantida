@@ -1,5 +1,9 @@
 package com.ncubo.chatbot.bitacora;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +22,11 @@ public class HistoricoDeLaConversacion {
 			
 			jsonObject.put("Cliente", clienteDijo);
 			jsonObject.put("Agente", loQueDijoElAgente);
+			
+			DateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+			Date date = new Date();
+			jsonObject.put("FechaHora", dateFormat.format(date));
+			
 			misHistorico.put(jsonObject);
 
 		} catch (JSONException e) {

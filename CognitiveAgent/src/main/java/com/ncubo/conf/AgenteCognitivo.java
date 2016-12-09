@@ -48,9 +48,11 @@ public class AgenteCognitivo
 
 	@Autowired
 	private FTPServidor ftp;
+	
 	@Autowired
 	private Conversaciones misConversaciones;
 	private HistoricosDeConversaciones historicoDeConversaciones;
+	
 	@Autowired
 	private ExtraerDatosWebService extraerDatos;
 
@@ -431,25 +433,16 @@ public class AgenteCognitivo
 	
 	public double obtenerValorDeGustosDeHoteles(String idCliente) throws Exception
 	{
-		/*if( ! misConversaciones.existeElCliente(idCliente))
-			Thread.sleep(4000);*/
-		
 		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeHoteles();
 	}
 
 	public double obtenerValorDeGustosDeRestaurantes(String idCliente) throws Exception
 	{
-		/*if( ! misConversaciones.existeElCliente(idCliente))
-			Thread.sleep(4000);*/
-		
 		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeRestaurantes();
 	}
 	
 	public double obtenerValorDeGustosDeBelleza(String idCliente) throws Exception
 	{
-		/*if( ! misConversaciones.existeElCliente(idCliente))
-			Thread.sleep(4000);*/
-		
 		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeBelleza();
 	}
 	
