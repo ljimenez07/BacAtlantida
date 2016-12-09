@@ -179,10 +179,10 @@ public class OfertaController
 	@ResponseBody public String ofertas(@RequestParam("pagina") int pagina, HttpSession sesion) throws Exception
 	{
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-		String idUsuario = usuario == null ? null : usuario.getEstaLogueado() ? usuario.getUsuarioId() : null;
 		Indice indiceInicial = new Indice( pagina );
 				
 		JSONArray array = new JSONArray( new Gson().toJson(ofertaService.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario)) );
+
 		
 		JSONObject respuesta = new JSONObject();
 		respuesta.put("indice",new Gson().toJson( indiceInicial));
