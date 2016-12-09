@@ -189,7 +189,7 @@ public abstract class Frase
 
 						}
 					}
-					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir);
+					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir, false);
 					String path = pathAGuardar+File.separator+nombreDelArchivo;
 					String miIp = ipPublica+nombreDelArchivo;
 					sonidosDeLosTextosDeLaFrase.add(new Sonido(miIp, path));
@@ -201,7 +201,7 @@ public abstract class Frase
 			if(hayTextosImpertinetes()){
 				for(int index = 0; index < textosImpertinetesDeLaFrase.length; index ++){
 					String texto = textosImpertinetesDeLaFrase[index];
-					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto);
+					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, false);
 					String path = pathAGuardar+File.separator+nombreDelArchivo;
 					String miIp = ipPublica+nombreDelArchivo;
 					sonidosDeLosTextosImpertinentesDeLaFrase.add(new Sonido(miIp, path));
