@@ -330,8 +330,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<curioso>¿Podrías repertirme sobre cuál de nuestros productos necesitas información?</curioso>
-			<curioso>¿Podrías repertirme en qué deseas que te ayude?</curioso>
+			<curioso>¿Podrías repetirme sobre cuál de nuestros productos necesitas información?</curioso>
+			<curioso>¿Podrías repetirme en qué deseas que te ayude?</curioso>
 			<curioso>¿En cuál de nuestros productos estás interesado?</curioso>
 			<curioso>¿Sobre cuál producto te puedo dar información?</curioso>
 		</frases>
@@ -1053,9 +1053,9 @@
 	</variablesDeAmbiente>
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
-		<workspace tipo="general" idIBM="9dd863b1-8b71-4fbe-a883-5ebb76ee80de" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="47970e57-ae6b-4aae-b127-a2408ececef7" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
-		<workspace tipo="especifico" idIBM="327702f8-0c70-4ed5-82c6-9139a89ef8f0" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
+		<workspace tipo="general" idIBM="c2aea9a5-8f76-4cbd-bf8e-4f3c7264a5a9" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="especifico" idIBM="3c90d4ee-517d-47d7-a7c5-1e40d3f11f4b" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
+		<workspace tipo="especifico" idIBM="f6a14d08-2634-4f9c-9fd1-a083b0cb2b48" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
 		<workspace tipo="especifico" idIBM="fe33d974-a2e1-49dc-bc87-ed723b2f1c5f" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como">BAFAQ</workspace>
 	</workspaces>
 	

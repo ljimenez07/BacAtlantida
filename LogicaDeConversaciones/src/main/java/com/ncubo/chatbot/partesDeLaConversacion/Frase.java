@@ -172,12 +172,15 @@ public abstract class Frase
 					String textoTag = ""; 
 					while(texto.contains("@@"))
 					{
+						
 						textoTag = texto.substring(texto.indexOf("@@")+2, texto.indexOf("@@@"));
+						System.out.println(textoTag);
 						if(textoTag.contains("#"))
 						{
 							textoNumerosTelefonicos = texto.substring(texto.indexOf("@@#@@@")+6, texto.indexOf("@@#/@@@"));
 							textoParaReproducir = textoParaReproducir.replaceFirst("@@#@@@"+textoNumerosTelefonicos+"@@#/@@@", "");
-							texto = texto.replaceFirst("@@"+textoTag+"@@@", "");
+							texto = texto.replaceFirst("@@#@@@", "");
+							texto = texto.replaceFirst("@@#/@@@", "");
 						}
 						else
 						{
