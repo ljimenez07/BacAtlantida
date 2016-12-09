@@ -6,7 +6,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>¡Hola!, soy tu asesor del Banco Atlántida.</frase>
+			<frase>¡Hola!, soy tu asesora del Banco Atlántida.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -16,7 +16,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>¡Buenos días!, soy tu asesor del Banco Atlántida.</frase>
+			<frase>¡Buenos días!, soy tu asesora del Banco Atlántida.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -27,7 +27,7 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<frase>¡Hola!</frase>
-			<frase>¡Hola!, soy tu asesor del Banco Atlántida.</frase>
+			<frase>¡Hola!, soy tu asesora del Banco Atlántida.</frase>
 		</frases>
 		<vineta></vineta>
 		<when>
@@ -41,7 +41,7 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<frase>¡Hola $!</frase>
-			<frase>¡Hola $!, soy tu asesor del Banco Atlántida.</frase>
+			<frase>¡Hola $!, soy tu asesora del Banco Atlántida.</frase>
 		</frases>
 		<vineta></vineta>
 		<when>
@@ -316,13 +316,23 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Por el momento solo puedo responder tus consultas sobre el saldo de tus tarjetas, tus movimientos recientes y la tipo de cambio del dólar y el euro.</frase>
-			<frase>Ahora mismo te puedo ayudar con tus consultas acerca de el saldo de tus tarjetas, tus movimientos recientes y las tasas de cambio del dólar y el euro, para consultas adicionales te puedes comunicar con nuestro call center al 800-2220-0404.</frase>
+			<frase>Puedo responder tus consultas sobre requisitos y costos de algunos de nuestros productos tales como: @@br/@@@ @@br/@@@ 1. Cuentas de ahorro. @@br/@@@ 2. Cuentas de cheques. @@br/@@@ 3. Préstamos. @@br/@@@ 4. Tarjetas de débito y crédito. @@br/@@@ 5. Mensajitos. @@br/@@@ 6. Atlántida Online. @@br/@@@ @@br/@@@ También puedo proporcionarte información sobre costos de citas para: @@br/@@@ @@br/@@@ 1. Licencia para conducir. @@br/@@@ 2. Pasaporte. @@br/@@@ 3. Embajada. @@br/@@@ @@br/@@@ Adicionalmente, te puedo ayudar con: @@br/@@@ @@br/@@@ 1. Costos de la hoja de antecedentes penales. @@br/@@@ 2. Números telefónicos de nuestras agencias. @@br/@@@ 3. Reporte de extravió o robo de tarjeta. @@br/@@@ 4. Tipo de cambio. @@br/@@@ @@br/@@@ Si has iniciado sesión también podré darte el saldo, disponible o últimos movimientos de tus cuentas o tarjetas de crédito.</frase>
 		</frases>
 		<vineta></vineta>
 		<when>
 			<condition operador="and" tipo="intencion">out_of_scope</condition>
 		</when>
+	</conversacion>
+	
+	<conversacion id="responderAgradecimiento">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Es un placer ayudarte.</frase>
+			<frase>Es un placer servirte.</frase>
+		</frases>
+		<vineta></vineta>
 	</conversacion>
 	
 	<conversacion id="cualProducto">
@@ -727,13 +737,13 @@
 		</frases>
 		<vineta></vineta>
 	</conversacion>
-	
+
 	<conversacion id="precioAntecendentesPoliciales">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>El costo es de 250 Lempiras. @@br/@@@ @@br/@@@ Antes de hacer el pago debes ir a las oficinas de la policia  nacional por el formulario Recibo de Ingresos del Estado TGR-1, la cual debes traerla llena. No olvides llevar tu tarjeta de identidad.</frase>
+			<frase>El costo es de 250 Lempiras. @@br/@@@ @@br/@@@ Antes de hacer el pago debes ir a las oficinas de la policía  nacional por el formulario Recibo de Ingresos del Estado TGR-1, la cual debes traerla llena. No olvides llevar tu tarjeta de identidad.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -974,7 +984,7 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>Te cuento que cuando voy a un hotel me encanta ir a relajarme al Spa y contratar un buen masaje. Creo que es una experiencia súper relajante! En tu caso, si tuvieras la oportunidad, cuando estés muy estresado o cansado, ¿harías lo mismo?.</curioso>
+			<curioso>Te cuento que cuando voy a un hotel me encanta ir a relajarme al spa y contratar un buen masaje. Creo que es una experiencia súper relajante! En tu caso, si tuvieras la oportunidad, cuando estés muy estresado o cansado, ¿harías lo mismo?.</curioso>
 			<curioso>¡La sociedad y los gustos han cambiado mucho! La tendencia actual es que tanto hombres como mujeres cuiden más de su apariencia y, por eso, acostumbro visitar salones de belleza para verme y sentirme mejor. Cuéntame, ¿también vas a esos lugares para que te consientan y lucir mucho mejor?.</curioso>
 			<curioso>Para mí es súper gratificante recibir un masaje y que además me hagan una limpieza facial porque luego te sientes como nuevo y además luzco muy bien. Cuéntame, ¿te gustaría darte este tipo de gustos?.</curioso>
 			<impertinente>Perdona pero no comprendí lo que me respondiste. ¿Vas a salones de belleza, Spas o lugares de relajación?.</impertinente>
