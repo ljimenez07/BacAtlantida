@@ -169,6 +169,7 @@ $(function(){
 						setTimeout(function()
 						{
 							$(".app #{{pathDelServidor}}").html(Handlebars.templates.layout(pantallas["{{pathDelServidor}}"]));
+							bindClickeable();
 							cambiarVista("ofertas");
 						}, 5000);
 					}
