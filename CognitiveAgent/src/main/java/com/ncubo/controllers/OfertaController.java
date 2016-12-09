@@ -178,10 +178,11 @@ public class OfertaController
 	@ResponseBody public String ofertas(@RequestParam("pagina") int pagina, HttpSession sesion) throws Exception
 	{
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-		Indice indiceInicial = new Indice(pagina);
-		
+		Indice indiceInicial = new Indice( pagina );
+				
 		ObjectMapper mapper = new ObjectMapper();
 		JSONArray array = new JSONArray(mapper.writeValueAsString((ofertaService.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario))));
+
 		
 		JSONObject respuesta = new JSONObject();
 		respuesta.put("indice", new JSONObject(mapper.writeValueAsString(indiceInicial)));

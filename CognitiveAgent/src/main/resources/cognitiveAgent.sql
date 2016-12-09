@@ -161,3 +161,7 @@ CREATE TABLE `cognitiveagent`.`categoria_usuario_peso` (
 ADD PRIMARY KEY (`idUsuarioenBA`, `idCategoria`);
 
 
+CREATE TABLE `cognitiveagent`.`popups_vistos_por_usuario` (
+  `usuario` VARCHAR(45) NOT NULL,
+  `nuevasOfertas` TINYINT NULL,
+  PRIMARY KEY (`usuario`));

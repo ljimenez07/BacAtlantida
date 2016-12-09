@@ -14,7 +14,9 @@ import org.springframework.validation.BindingResult;
 import com.ncubo.conf.AgenteCognitivo;
 import com.ncubo.conf.Usuario;
 import com.ncubo.dao.OfertaDao;
+import com.ncubo.dao.UsuarioDao;
 import com.ncubo.data.Belleza;
+import com.ncubo.data.Categorias;
 import com.ncubo.data.Hotel;
 import com.ncubo.data.Indice;
 import com.ncubo.data.Oferta;
@@ -29,11 +31,18 @@ public class OfertaService
 	private OfertaDao ofertaDao;
 	
 	@Autowired
+	private UsuarioDao usuarioDao;
+	
+	
+	@Autowired
 	private AgenteCognitivo serverCognitivo;
 	@Autowired
 	private GestorDeArchivos gestorDeArchivos;
 	
 	private double distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas;
+	@Autowired
+	private GestorDeArchivos gestorDeArchivos;
+	
 	
 	public BindingResult validarCampos(BindingResult bindingResult, Oferta oferta) throws ParseException
 	{
@@ -82,23 +91,24 @@ public class OfertaService
 	}
 	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(Indice indiceInicial, Usuario usuario) throws Exception
 	{
+
 		if( usuario == null || ! usuario.getEstaLogueado() )
 		{
 			return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario);
 		}
 		
-		List<Oferta> ofertasFinales = new ArrayList<Oferta>();
-		double hoteles =  serverCognitivo.obtenerValorDeGustosDeHoteles( usuario.getUsuarioId() );
-		double belleza = serverCognitivo.obtenerValorDeGustosDeBelleza( usuario.getUsuarioId() );
-		double restaurantes = serverCognitivo.obtenerValorDeGustosDeRestaurantes( usuario.getUsuarioId() );
+		Categorias  categoriasDelUsuario = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
+		usuario.setCategorias(categoriasDelUsuario);
 		
+		List<Oferta> ofertasFinales = new ArrayList<Oferta>();
+				
 		obtenerUltimasDiezOfertasParaMostrarDesde( 
 				ofertasFinales, 
 				indiceInicial, 
 				usuario, 
-				new Belleza(belleza), 
-				new Hotel(hoteles), 
-				new Restaurate(restaurantes) 
+				categoriasDelUsuario.obtenerCategoriaDeBelleza(), 
+				categoriasDelUsuario.obtenerCategoriaDeHotel(), 
+				categoriasDelUsuario.obtenerCategoriaDeRestaurante()
 				);
 		
 		return ofertasFinales;

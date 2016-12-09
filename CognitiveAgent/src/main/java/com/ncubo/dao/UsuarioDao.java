@@ -38,6 +38,42 @@ public class UsuarioDao {
 		
 		dao.closeConBD();
 	}
+	
+	public void marcarComoVistoElPopupDeNuevasOfertas( String idUsuarioenBA) throws ClassNotFoundException, SQLException
+	{
+		String query = "INSERT INTO "
+				+ "popups_vistos_por_usuario (usuario, nuevasOfertas) "
+				+ "VALUES (?,?) ON DUPLICATE KEY UPDATE nuevasOfertas = ?";
+		
+		Connection con = dao.openConBD();
+		
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setString(1, idUsuarioenBA);
+		stmt.setBoolean(2, true);
+		stmt.setBoolean(3, true);
+		
+		stmt.executeUpdate();
+		
+		dao.closeConBD();
+	}
+	
+	public void marcarComoNoVistoElPopupDeNuevasOfertas( String idUsuarioenBA) throws ClassNotFoundException, SQLException
+	{
+		String query = "INSERT INTO "
+				+ "popups_vistos_por_usuario (usuario, nuevasOfertas) "
+				+ "VALUES (?,?) ON DUPLICATE KEY UPDATE nuevasOfertas = ?";
+		
+		Connection con = dao.openConBD();
+		
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setString(1, idUsuarioenBA);
+		stmt.setBoolean(2, false);
+		stmt.setBoolean(3, false);
+		
+		stmt.executeUpdate();
+		
+		dao.closeConBD();
+	}
 
 	
 	public Categorias obtenerLasCategoriasDeUnUsuario(Usuario usuario) throws ClassNotFoundException, SQLException
