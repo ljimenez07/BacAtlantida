@@ -105,10 +105,7 @@ public class Conversacion {
 					
 				}else{
 					if(agente.hayQueCambiarDeTema()){
-						if(this.temaActual != null){
-							if( (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_SALUDO)) && (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_DESPEDIDA)) )
-								ponerComoYaTratado(this.temaActual);
-						}
+						
 						
 						idFraseActivada = respuesta.obtenerFraseActivada();
 						extraerOracionesAfirmarivasYPreguntas(misSalidas, respuesta, idFraseActivada);
@@ -144,6 +141,10 @@ public class Conversacion {
 								System.out.println("Id de la frase a decir: "+idFraseActivada);
 								extraerOracionesAfirmarivasYPreguntas(misSalidas, respuesta, idFraseActivada);
 							}
+						}
+						if(this.temaActual != null){
+							if( (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_SALUDO)) && (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_DESPEDIDA)) )
+								ponerComoYaTratado(this.temaActual);
 						}
 					}else{
 						if (agente.entendiLaUltimaPregunta()){
