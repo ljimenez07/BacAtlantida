@@ -23,6 +23,7 @@ public class ExtraerDatosWebService {
 	private String tipoCambio;
 	private String saldo;
 	private String movimientos;
+	private String login;
 	private String usuario;
 	private String password;
 	
@@ -597,7 +598,7 @@ public class ExtraerDatosWebService {
 				auth().
 				basic(usuario, password).
 				body(requestBody).
-				post("http://localhost:8080/Ecommerce/login/").
+				post(login).
 				andReturn().
 				asString();
 		
@@ -645,6 +646,15 @@ public class ExtraerDatosWebService {
 		this.movimientos = movimientos;
 	}
 
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	
 	public String getUsuario() {
 		return usuario;
 	}
