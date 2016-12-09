@@ -34,7 +34,7 @@ public class TextToSpeechWatson {
 	private static String pathAudios;
 	private static String urlPublicaAudios;
 	
-	private TextToSpeechWatson(String usuario, String contrasena, String voz, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, String path, String urlPublicaAudios){
+	private TextToSpeechWatson(String usuario, String contrasena, String voz, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, String carpeta, String path, String urlPublicaAudios){
 		this.usuarioTTS = usuario;
 		this.contrasenaTTS = contrasena;
 		this.vozTTS = voz;
@@ -43,7 +43,7 @@ public class TextToSpeechWatson {
 		this.voice = voz;
 		this.pathAudios = path;
 		this.urlPublicaAudios = urlPublicaAudios;
-		this.ftp = new FTPCliente(usuarioFTP, contrasenaFTP, hostFTP, puetoFTP);
+		this.ftp = new FTPCliente(usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, carpeta);
 		
 		try {
 			FileUtils.deleteDirectory(new File(this.pathAudios));
@@ -55,9 +55,9 @@ public class TextToSpeechWatson {
 		System.out.println(String.format("Los datos del TTS  son: %s / %s / %s. Y los datos del FTP son: %s / %s / %s / %s", usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP));
 	}
 	
-	public static TextToSpeechWatson getInstance(String usuario, String contrasena, String voz, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, String pathAudios, String urlPublicaAudios){
+	public static TextToSpeechWatson getInstance(String usuario, String contrasena, String voz, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, String carpeta, String pathAudios, String urlPublicaAudios){
 		if(textToSpeechWatson == null){
-			textToSpeechWatson = new TextToSpeechWatson(usuario, contrasena, voz, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, pathAudios, urlPublicaAudios);
+			textToSpeechWatson = new TextToSpeechWatson(usuario, contrasena, voz, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, carpeta, pathAudios, urlPublicaAudios);
 		}
 		return textToSpeechWatson;
 	}

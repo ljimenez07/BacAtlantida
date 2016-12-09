@@ -105,7 +105,8 @@ public class MovilController {
 			usuario.setCategorias( categorias );
 			
 			sesion.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
-			JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.getEstaLogueado());
+			JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.getEstaLogueado())
+					.put("usuarioNombre", usuario.getEstaLogueado() ? usuario.getUsuarioNombre() : "");
 			
 			String[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);
 			
