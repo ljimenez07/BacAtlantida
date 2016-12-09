@@ -17,6 +17,7 @@ import java.util.TreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ncubo.conf.Usuario;
 import com.ncubo.data.CategoriaOferta;
 import com.ncubo.data.Indice;
 import com.ncubo.data.Oferta;
@@ -202,13 +203,19 @@ public class OfertaDao
 		dao.closeConBD();
 	}
 	
-	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(Indice indiceInicial, String idUsuario) throws ClassNotFoundException, SQLException
+	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(Indice indiceInicial, Usuario usuario) throws ClassNotFoundException, SQLException
 	{
 		boolean esUnUsuarioConocido = true;
-		if(idUsuario == null || idUsuario.isEmpty())
+		String idUsuario;
+		
+		if(usuario == null || usuario.getUsuarioId() == null || usuario.getUsuarioId().isEmpty())
 		{
 			idUsuario = "NULL";
 			esUnUsuarioConocido = false;
+		}
+		else
+		{
+			idUsuario =  usuario.getUsuarioId();
 		}
 		
 		HashMap<String, Oferta> ofertasMap = new HashMap<String, Oferta>();
