@@ -172,28 +172,17 @@ public class OfertaDao
 		dao.closeConBD();
 	}
 	
-	public void insertarCategorias(int idOferta, ArrayList< CategoriaOferta> categorias) throws ClassNotFoundException, SQLException
+	public void insertarCategorias(int idOferta, ArrayList<CategoriaOferta> categorias) throws ClassNotFoundException, SQLException
 	{
-		String query = "INSERT INTO categoria_con_oferta_y_peso"
-					 + "(idCategoria, idOferta, peso) VALUES ";
-
-		int cantidad = categorias.size();
-		for( CategoriaOferta categoria : categorias)
-		{
-			query+= "("+categoria.getId()+", "+idOferta+","+categoria.getPeso()+")";
-			
-			if( cantidad > 1)
-			{
-				query+= ", ";
-				cantidad = cantidad-1;
-			}
-		}
-		
-
 		Connection con = dao.openConBD();
-		PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-		preparedStatement.executeUpdate();
-		
+		for (CategoriaOferta categoria : categorias)
+		{
+			String query = "INSERT INTO categoria_con_oferta_y_peso (idCategoria, idOferta, peso) VALUES ";
+			query += "(" + categoria.getId() + ", " + idOferta + "," + categoria.getPeso() + ") ";
+			query += "ON DUPLICATE KEY UPDATE peso = " + categoria.getPeso() + " ; ";
+			con.createStatement().execute(query);
+		}
+
 		dao.closeConBD();
 	}
 	
