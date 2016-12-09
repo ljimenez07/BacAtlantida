@@ -14,7 +14,6 @@ import com.jayway.restassured.internal.path.xml.NodeChildrenImpl;
 import com.jayway.restassured.internal.path.xml.NodeImpl;
 import com.jayway.restassured.path.xml.XmlPath;
 import com.jayway.restassured.path.xml.element.Node;
-import com.ncubo.controllers.Stub;
 
 @Component
 @ConfigurationProperties("webservicesBancoAtlantida")

@@ -1,14 +1,9 @@
 package com.ncubo.controllers;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.Date;
 
-import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.JsonParseException;
@@ -18,7 +13,6 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,7 +28,6 @@ import com.ncubo.conf.Usuario;
 import com.ncubo.dao.UsuarioDao;
 import com.ncubo.data.Categorias;
 import com.ncubo.exceptions.CredencialesInvalidosException;
-import com.ncubo.exceptions.NoEmailException;
 
 @Controller
 public class MovilController {
@@ -93,7 +86,7 @@ public class MovilController {
 	@ResponseBody String login(@RequestBody String mensaje, HttpSession sesion, @RequestParam String name, @RequestParam String password) throws JSONException, JsonParseException, JsonMappingException, IOException, ClassNotFoundException, SQLException 
 	{
 		String[] responseLogin = extraerDatos.login(name , password);
-		if( responseLogin[0].equals("S") )
+		if(responseLogin[0].equals("S"))
 		{
 			Usuario usuario = obtenerUsuario(sesion);
 			Categorias categorias = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
