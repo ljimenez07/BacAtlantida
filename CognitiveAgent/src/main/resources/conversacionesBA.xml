@@ -950,7 +950,7 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>Es muy cansado tener que pensar qué hacer para la cena, ir de compras y llegar a casa a prepararla. ¿Verdad que es preferible salir a cenar a un restaurante?.</curioso>
+			<curioso>Muy bien, te cuento que para mí es muy cansado tener que pensar qué hacer para la cena, ir de compras y llegar a casa a prepararla. ¿Verdad que es preferible salir a cenar a un restaurante?.</curioso>
 			<impertinente>No entendí tu respuesta. ¿Te gusta ir a restaurantes o no?</impertinente>			
 		</frases>		
 		<vinetas></vinetas>		
@@ -974,7 +974,7 @@
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
 			<curioso>¡Sabes! Yo trabajo mucho y me gusta ir a los hoteles porque no tengo que cocinar y descanso bastante.  Me imagino que por estas razones y, otras más, también te gustaría alojarte en hoteles, ¿Verdad que sí?.</curioso>
-			<impertinente>Perdona pero no entendí tu respuesta. ¿Te gusta ir a hoteles?, sí o no!</impertinente>
+			<impertinente>Perdona pero no entendí tu respuesta. ¿Te gusta ir a hoteles, o no?</impertinente>
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>
