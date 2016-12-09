@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import javax.validation.constraints.NotNull;
@@ -214,6 +213,11 @@ public class Oferta implements Comparable<Oferta>
 		return imagenPublicidadPath.endsWith(".html");
 	}
 	
+	public String getImagenParaMostrar()
+	{
+		return getEsHtml() ? getImagenComercioPath() : getImagenPublicidadPath();
+	}
+	
 	public Timestamp getFechaHoraRegistro()
 	{
 		return fechaHoraRegistro;
@@ -331,7 +335,6 @@ public class Oferta implements Comparable<Oferta>
 	public void setDescripcionAudio(String descripcionAudio) {
 		this.descripcionAudio = descripcionAudio;
 	}
-	
 	
 	public BindingResult validarCampos(BindingResult bindingResult, Oferta oferta) throws ParseException
 	{

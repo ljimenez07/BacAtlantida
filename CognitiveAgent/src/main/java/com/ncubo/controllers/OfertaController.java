@@ -7,12 +7,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.Gson;
 import com.ncubo.conf.Usuario;
 import com.ncubo.dao.CategoriaDao;
 import com.ncubo.dao.OfertaDao;
@@ -181,12 +180,13 @@ public class OfertaController
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
 		Indice indiceInicial = new Indice( pagina );
 				
-		JSONArray array = new JSONArray( new Gson().toJson(ofertaService.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario)) );
+		ObjectMapper mapper = new ObjectMapper();
+		JSONArray array = new JSONArray(mapper.writeValueAsString((ofertaService.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario))));
 
 		
 		JSONObject respuesta = new JSONObject();
-		respuesta.put("indice",new Gson().toJson( indiceInicial));
-		respuesta.put("resultados",array );
+		respuesta.put("indice", new JSONObject(mapper.writeValueAsString(indiceInicial)));
+		respuesta.put("resultados", array);
 		
 		
 		return respuesta.toString();
