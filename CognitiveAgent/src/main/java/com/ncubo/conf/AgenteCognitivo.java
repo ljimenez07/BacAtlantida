@@ -1,17 +1,11 @@
 package com.ncubo.conf;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,11 +22,8 @@ import com.ncubo.chatbot.watson.TextToSpeechWatson;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.dao.UsuarioDao;
 import com.ncubo.data.Categorias;
-import com.ncubo.data.Consulta;
 import com.ncubo.logicaDeConversaciones.Conversaciones;
 import com.ncubo.util.FTPServidor;
-
-import groovyjarjarantlr.debug.GuessingEvent;
 
 @Component
 @ConfigurationProperties("servercognitivo")
@@ -83,33 +74,6 @@ public class AgenteCognitivo
 	private String procesarMensaje(Usuario usuario, String mensaje, Date date, String workspace, boolean esParaConocerte) throws Exception
 	{
 		JSONObject respuesta = new JSONObject();
-		/*ObjectMapper mapper = new ObjectMapper();
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	//	String contexto= usuario.getContextoDeWatson();
-		
-		JSONObject contenidoDelContexto ;
-		if( esParaConocerte )
-		{
-			System.out.println("contexto de watson cuando entra "+ usuario.getContextoDeWatsonParaConocerte());
-			contenidoDelContexto = new JSONObject(usuario.getContextoDeWatsonParaConocerte());
-		}
-		else
-		{
-			System.out.println("contexto de watson cuando entra "+ usuario.getContextoDeWatsonParaChats());
-			contenidoDelContexto = new JSONObject(usuario.getContextoDeWatsonParaChats());
-		}
-		
-		Map<String, Object> myContext = mapper.readValue(contenidoDelContexto.toString(), new TypeReference<Map<String, Object>>(){});
-		ConversationService service = new ConversationService(dateFormat.format(date));
-		service.setUsernameAndPassword(user, password);
-		
-		myContext.put("logueado", usuario.getEstaLogueado());
-		
-		String[] nombre = new String[4];
-		if(usuario.getUsuarioNombre() != null)
-			nombre = usuario.getUsuarioNombre().split(" ");
-		
-		myContext.put("nombre", nombre[0]);*/
 		
 		String[] textos = null;
 		ArrayList<Salida> salida = misConversaciones.conversarConElAgente(usuario, mensaje, false);
