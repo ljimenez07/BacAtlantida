@@ -50,7 +50,9 @@ public abstract class Frase
 	private void cargarVinetas(String[] vinetasDeLaFrase){
 		if (vinetasDeLaFrase != null){
 			for(int index = 0; index < vinetasDeLaFrase.length; index ++){
-				vinetasDeLosTextosDeLaFrase.add(new Vineta(vinetasDeLaFrase[index].replace("@@", "<").replace("@@@", ">")));
+				String vineta = vinetasDeLaFrase[index];
+				vineta = vineta.replace("@@", "<").replace("/<@", "/>");
+				vinetasDeLosTextosDeLaFrase.add(new Vineta(vineta));
 			}
 		}
 	}
@@ -79,21 +81,27 @@ public abstract class Frase
 	}
 	
 	public List<String> texto(){
-		List<String> resultado = new ArrayList<>();
+		List<String> resultado = null;
 		
-		int unIndiceAlAzar = (int)Math.floor(Math.random()*textosDeLaFrase.length);
-		resultado.add(unIndiceAlAzar+"");
-		resultado.add(textosDeLaFrase[unIndiceAlAzar]);
+		if(textosDeLaFrase.length > 0){
+			resultado = new ArrayList<>();
+			int unIndiceAlAzar = (int)Math.floor(Math.random()*textosDeLaFrase.length);
+			resultado.add(unIndiceAlAzar+"");
+			resultado.add(textosDeLaFrase[unIndiceAlAzar]);
+		}
 		
 		return resultado;
 	}
 	
 	public List<String> vineta(){
-		List<String> resultado = new ArrayList<>();
+		List<String> resultado = null;
 		
-		int unIndiceAlAzar = (int)Math.floor(Math.random()*vinetasDeLosTextosDeLaFrase.size());
-		resultado.add(unIndiceAlAzar+"");
-		resultado.add(vinetasDeLosTextosDeLaFrase.get(unIndiceAlAzar).url());
+		if(vinetasDeLosTextosDeLaFrase.size() > 0){
+			resultado = new ArrayList<>();
+			int unIndiceAlAzar = (int)Math.floor(Math.random()*vinetasDeLosTextosDeLaFrase.size());
+			resultado.add(unIndiceAlAzar+"");
+			resultado.add(vinetasDeLosTextosDeLaFrase.get(unIndiceAlAzar).url());
+		}
 		
 		return resultado;
 	}

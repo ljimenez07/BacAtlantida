@@ -40,6 +40,7 @@ public class Conversacion {
 		this.participante = participante;
 		this.agente = new Agente(temario.contenido().getMiWorkSpaces());
 		this.agente.manifestarseEnFormaOral();
+		this.agente.manifestarseEnFormaVisual();
 		
 		this.hilo = new HiloDeLaConversacion();
 		//this.participantes.agregar(agente).agregar(participante);
