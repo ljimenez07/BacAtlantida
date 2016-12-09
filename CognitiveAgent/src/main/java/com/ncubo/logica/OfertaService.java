@@ -75,7 +75,7 @@ public class OfertaService
 	{
 		if( usuario == null || ! usuario.getEstaLogueado() )
 		{
-			return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario.getUsuarioId());
+			return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario);
 		}
 		
 		List<Oferta> ofertasFinales = new ArrayList<Oferta>();
