@@ -164,7 +164,7 @@ public abstract class Contenido
 				throw new ChatException("Error cargando las conjunciones "+e.getMessage());
 			}
 			
-			// Conjunciones
+			// Variables de contexto
 			try{
 				System.out.println("\nCargando las variablesDeAmbiente ...\n");
 				NodeList variables = doc.getElementsByTagName("variablesDeAmbiente");
@@ -229,21 +229,24 @@ public abstract class Contenido
 					
 					String[] textosDeLaFrase = obtenerFrasesPorTipo(frases, tipoDeFraseACargar);
 					
+					Element vinetas = (Element) eElement.getElementsByTagName("vinetas").item(0);
+					String[] vinetasDeLaFrase = obtenerFrasesPorTipo(vinetas, "vineta");
+					
 					if(elTipoEs.equals("saludo")){
 						caracteristicasDeLaFrase[2] = CaracteristicaDeLaFrase.esUnSaludo;
-						miFrase = new Saludo(idDeLaFrase, textosDeLaFrase, caracteristicasDeLaFrase);
+						miFrase = new Saludo(idDeLaFrase, textosDeLaFrase, vinetasDeLaFrase, caracteristicasDeLaFrase);
 					}else if(elTipoEs.equals("pregunta")){
 						caracteristicasDeLaFrase[2] = CaracteristicaDeLaFrase.esUnaPregunta;
-						miFrase = new Pregunta(idDeLaFrase, textosDeLaFrase, obtenerFrasesPorTipo(frases, "impertinente"), 
+						miFrase = new Pregunta(idDeLaFrase, textosDeLaFrase, obtenerFrasesPorTipo(frases, "impertinente"), vinetasDeLaFrase,
 								caracteristicasDeLaFrase, 
 								obtenerEntidades((Element) eElement.getElementsByTagName("when").item(0)), 
 								obtenerIntenciones((Element) eElement.getElementsByTagName("when").item(0)));
 					}else if(elTipoEs.equals("afirmativa")){
 						caracteristicasDeLaFrase[2] = CaracteristicaDeLaFrase.esUnaOracionAfirmativa;
-						miFrase = new Afirmacion(idDeLaFrase, textosDeLaFrase, caracteristicasDeLaFrase);
+						miFrase = new Afirmacion(idDeLaFrase, textosDeLaFrase, vinetasDeLaFrase, caracteristicasDeLaFrase);
 					}else if(elTipoEs.equals("despedida")){
 						caracteristicasDeLaFrase[2] = CaracteristicaDeLaFrase.esUnaDespedida;
-						miFrase = new Despedida(idDeLaFrase, textosDeLaFrase, caracteristicasDeLaFrase);
+						miFrase = new Despedida(idDeLaFrase, textosDeLaFrase, vinetasDeLaFrase, caracteristicasDeLaFrase);
 					}
 					agregarFrase(miFrase);
 				}

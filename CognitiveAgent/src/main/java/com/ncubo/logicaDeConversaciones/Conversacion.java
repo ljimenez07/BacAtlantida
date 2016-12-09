@@ -353,6 +353,14 @@ public class Conversacion {
 				misSalidas.add(agente.decir(fueraDeContexto, respuesta, temaActual));
 				fraseActual = fueraDeContexto;
 				ponerComoYaTratado(fueraDeContexto);
+			} else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals(Constantes.INTENCION_DESPISTADOR)){
+				System.out.println("Quiere despistar  ...");
+
+				Afirmacion despistar = (Afirmacion)  this.temario.frase(Constantes.INTENCION_DESPISTADOR);
+				misSalidas.add(agente.decir(despistar, respuesta, temaActual));
+				fraseActual = despistar;
+				ponerComoYaTratado(despistar);
+				
 			}
 			return true;
 		}else{
