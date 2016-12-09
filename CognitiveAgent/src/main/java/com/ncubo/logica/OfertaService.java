@@ -1,5 +1,6 @@
 package com.ncubo.logica;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import com.ncubo.data.Hotel;
 import com.ncubo.data.Indice;
 import com.ncubo.data.Oferta;
 import com.ncubo.data.Restaurate;
+import com.ncubo.util.GestorDeArchivos;
 
 @Component
 @ConfigurationProperties("categorias")
@@ -28,6 +30,8 @@ public class OfertaService
 	
 	@Autowired
 	private AgenteCognitivo serverCognitivo;
+	@Autowired
+	private GestorDeArchivos gestorDeArchivos;
 	
 	private double distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas;
 	
@@ -58,18 +62,23 @@ public class OfertaService
 	}
 
 	@Transactional
-	public void insertar(Oferta oferta) throws ClassNotFoundException, SQLException 
+	public void insertar(Oferta oferta) throws ClassNotFoundException, SQLException, IOException 
 	{
 		//TODO transacciones
 		ofertaDao.insertar(oferta);
 		ofertaDao.insertarCategorias(oferta.getIdOferta(), oferta.getCategorias());
+		gestorDeArchivos.textoAAudio( ""+oferta.getIdOferta(), oferta.getDescripcion() );
 	}
 	
-	public void modificar(Oferta oferta) throws ClassNotFoundException, SQLException
+	public void modificar(Oferta oferta) throws ClassNotFoundException, SQLException, IOException
 	{
 		//TODO transacciones
 		ofertaDao.modificar(oferta);
 		ofertaDao.insertarCategorias(oferta.getIdOferta(), oferta.getCategorias());
+		if( oferta.cambioLaDescripcion() )
+		{
+			gestorDeArchivos.textoAAudio( ""+oferta.getIdOferta(), oferta.getDescripcion() );
+		}
 	}
 	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(Indice indiceInicial, Usuario usuario) throws Exception
 	{
