@@ -96,6 +96,7 @@
 	var audioEnReproduccion = null;
 	var estaReproduciendo = false;
 	var estaLogueado = false;
+	var ventanaActual = "ofertas";
 	
 	var mensajesDeErrorEnAudio = ["", {code: 1, "message": "MEDIA_ERR_ABORTED"}, {code: 2, "message": "MEDIA_ERR_NETWORK"}, {code: 3, "message": "MEDIA_ERR_DECODE"}, {code: 4, "message": "MEDIA_ERR_SRC_NOT_SUPPORTED"}];
 	
@@ -108,7 +109,7 @@
 	function quitarModalSesion()
 	{
 		$("#sesion-expirada").modal('hide');
-		location.reload();
+		inicializarPantallas();
 	}
 	
 	function cambiarVista(href)
@@ -136,6 +137,7 @@
 		else
 		{
 			$("body").css({"overflow": "scroll"});
+			ventanaActual = href;
 		}
 	}
 	
@@ -165,14 +167,7 @@
 		pantallas["ofertas"] = {title: "INICIO", body: Handlebars.templates.ofertas(), DebajoDelPanel: ""};
 		pantallas["oferta"] = {title: "DETALLE DE LA OFERTA", body: "", DebajoDelPanel: ""};
 		
-		$(".app #ofertas").html(Handlebars.templates.layout(pantallas["ofertas"]));
-		$(".app #oferta").html(Handlebars.templates.layout(pantallas["oferta"]));
-		$("#modales").append(Handlebars.templates.popupconocerte(pantallas["popupconocerte"]));
-		$(".app #chat").html(Handlebars.templates.layout(pantallas["chat"]));
-		$(".app #conocerte").html(Handlebars.templates.layout(pantallas["conocerte"]));
-		$(".app #login").html(Handlebars.templates.layout(pantallas["login"]));
-		
-		bindClickeable();
+		inicializarPantallas();
 		
 		if(getCookie("mostrarpopupdeconocerte") == "")
 		{
@@ -183,15 +178,31 @@
 			url: serverDomain + "/movil/usuario",
 			done: function(data)
 			{
-				if(data.estaLogueado)
-				{
-					cambiarVista("chat");
-					$("#ofertas .contenedor-de-mensaje-bienvenida").html("<p><strong>¡Hola " + data.usuarioNombre + "!</strong></p><br><p><strong>¡Perfecto!</strong> Has acumulado <red>200 puntos</red></p><br>");
-					$("#ofertas .contenedor-de-ofertas").prepend('<div class="row"><div class="col-xs-12 text-center"><div class="top10">TOP 10</div><div class="beneficios">Sus mejores beneficios y ofertas</div><br></div</div>')
-				}
+				establecerBienvenida(data.estaLogueado, data.usuarioNombre);
 			}
 		});
 	});
+	
+	function inicializarPantallas()
+	{
+		$(".app #ofertas").html(Handlebars.templates.layout(pantallas["ofertas"]));
+		$(".app #oferta").html(Handlebars.templates.layout(pantallas["oferta"]));
+		$("#modales").append(Handlebars.templates.popupconocerte(pantallas["popupconocerte"]));
+		$(".app #chat").html(Handlebars.templates.layout(pantallas["chat"]));
+		$(".app #conocerte").html(Handlebars.templates.layout(pantallas["conocerte"]));
+		$(".app #login").html(Handlebars.templates.layout(pantallas["login"]));
+		
+		bindClickeable();
+	}
+	
+	function establecerBienvenida(estaLogueado, nombreUsuario)
+	{
+		if(estaLogueado)
+		{
+			$("#ofertas .contenedor-de-mensaje-bienvenida").html("<p><strong>¡Hola " + nombreUsuario + "!</strong></p><br>");
+			$("#ofertas .contenedor-de-ofertas").prepend('<div class="row"><div class="col-xs-12 text-center"><div class="top10">TOP 10</div><div class="beneficios">Sus mejores beneficios y ofertas</div><br></div</div>')
+		}
+	}
 
 	function bindClickeable()
 	{
@@ -222,9 +233,14 @@
 				{
 					ajax({
 						url: serverDomain + "/movil/logout",
+						debeEvaluarSesion: false,
 						done: function(data)
 						{
-							location.reload();
+							$("#menu-item-conocerte").hide();
+							$("#menu-item-salir").hide();
+							estaLogueado = false;
+							inicializarPantallas();
+							cambiarVista("ofertas");
 						}
 					});
 				}
@@ -301,8 +317,9 @@
 					param.done(data);
 				}
 			}
-			else if(data.usuarioEstaLogueado != undefined && estaLogueado && param.url.indexOf("logout") < 0)
+			else if(data.usuarioEstaLogueado != undefined && estaLogueado && param.debeEvaluarSesion == undefined)
 			{
+				console.log(param.debeEvaluarSesion);
 				$("#sesion-expirada").modal('show');
 			}
 			else if(param.done != undefined)
