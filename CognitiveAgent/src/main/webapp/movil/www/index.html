@@ -236,6 +236,8 @@
 						debeEvaluarSesion: false,
 						done: function(data)
 						{
+							$("#menu-item-conocerte").hide();
+							$("#menu-item-salir").hide();
 							estaLogueado = false;
 							inicializarPantallas();
 							cambiarVista("ofertas");
