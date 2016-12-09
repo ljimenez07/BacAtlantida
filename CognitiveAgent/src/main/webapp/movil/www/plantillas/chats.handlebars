@@ -160,11 +160,18 @@ $(function(){
 						}
 					}
 					
-					if(textos.seTerminoElChat == true)
+					if(data.seTerminoElChat == true)
 					{
 						ajax({
-							url: serverDomain + "/conversacion/borrarUnaConversacion/" + textos.idSesion
+							url: serverDomain + "/conversacion/borrarUnaConversacion/" + data.idSesion
 						});
+						
+						setTimeout(function()
+						{
+							$(".app #{{pathDelServidor}}").html(Handlebars.templates.layout(pantallas["{{pathDelServidor}}"]));
+							bindClickeable();
+							cambiarVista("ofertas");
+						}, 5000);
 					}
 					moverScrollParaAbajoEnFuncionDelUltimoMensaje();
 				},

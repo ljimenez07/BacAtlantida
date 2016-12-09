@@ -471,6 +471,23 @@ public class TemarioDelBancoAtlantida extends Temario{
 		return resultado;
 	}
 	
+	private Tema quiereAgradecer()
+	{
+		Tema resultado = new Tema
+		(
+			"quiereAgradecer",
+			"BAFAQ",
+			true,
+			"agradecimiento",
+			frase("responderAgradecimiento"),
+			frase("preguntarPorOtraConsulta"),
+			frase("quiereHacerOtraConsulta"),
+			frase("noQuiereHacerOtraConsulta"),
+			frase("noEntendi")
+		);
+		return resultado;
+	}
+	
 	@Override
 	protected void cargarTemario(Temas temasDelDiscurso){
 		
@@ -495,6 +512,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		temasDelDiscurso.add(quiereRequisitos());
 		temasDelDiscurso.add(quiereReportarExtravio());
 		temasDelDiscurso.add(noEntendi());
+		temasDelDiscurso.add(quiereAgradecer());
 	}
 	
 	public void cargarIntenciones(List<Intenciones> intenciones)

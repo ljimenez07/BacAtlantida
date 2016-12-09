@@ -91,7 +91,7 @@ public class MovilController {
 	@ResponseBody String login(@RequestBody String mensaje, HttpSession sesion, @RequestParam String name, @RequestParam String password) throws JSONException, JsonParseException, JsonMappingException, IOException, ClassNotFoundException, SQLException 
 	{
 		String[] responseLogin = extraerDatos.login(name , password);
-		if( responseLogin[0].equals("S") )
+		if(responseLogin[0].equals("S"))
 		{
 			Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
 			Categorias categorias = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
@@ -103,7 +103,8 @@ public class MovilController {
 			usuario.setCategorias( categorias );
 			
 			sesion.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
-			JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.getEstaLogueado());
+			JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.getEstaLogueado())
+					.put("usuarioNombre", usuario.getEstaLogueado() ? usuario.getUsuarioNombre() : "");
 			
 			String[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);
 			

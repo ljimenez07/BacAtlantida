@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
-import com.ncubo.conf.AgenteCognitivo;
+
 import com.ncubo.conf.Usuario;
 import com.ncubo.dao.OfertaDao;
 import com.ncubo.dao.UsuarioDao;
@@ -32,15 +32,10 @@ public class OfertaService
 	
 	@Autowired
 	private UsuarioDao usuarioDao;
-	
-	
-	@Autowired
-	private AgenteCognitivo serverCognitivo;
-	
 	private double distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas;
+	
 	@Autowired
 	private GestorDeArchivos gestorDeArchivos;
-	
 	
 	public BindingResult validarCampos(BindingResult bindingResult, Oferta oferta) throws ParseException
 	{
@@ -59,7 +54,7 @@ public class OfertaService
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
 		if(nombreComercio.equals(""))
 		{
-			ofertas = ofertaDao.obtener();
+			return null;
 		}
 		else
 		{

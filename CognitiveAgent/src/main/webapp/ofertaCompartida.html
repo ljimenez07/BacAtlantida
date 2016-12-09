@@ -1,5 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
 	<!-- You can use Open Graph tags to customize link previews.
 	Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
 	<meta property="og:url"           th:content="${url}" />
@@ -28,7 +29,7 @@
 					<iframe class="html-de-oferta" frameBorder="0" scrolling="no" seamless="seamless" th:id="${'html-de-oferta-' + oferta.idOferta}" style="display:block; width:100%; height:100vh;" th:src="@{/archivossubidos/} + ${oferta.imagenPublicidadPath}"></iframe>
 				</div>
 				<div th:unless="${oferta.esHtml}">
-					<img th:src="@{/archivossubidos/} + ${oferta.imagenPublicidadPath}"></img>
+					<img th:src="@{/archivossubidos/} + ${oferta.imagenPublicidadPath}" style="max-width: 100%;"></img>
 				</div>
 			</div>
 		</div>

@@ -32,16 +32,17 @@ public class ConversationWatson {
 	private String usuario;
 	private String contrasena;
 	private String idConversacion;
+	private final static String FECHA_VERSION_WATSON = "2016-09-20";
 	
 	public ConversationWatson(String usuario, String contrasena, String idConversacion) {
 		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		//get current date time with Date()
+		/*DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
-		this.service = new ConversationService(dateFormat.format(date));
-		this.service.setUsernameAndPassword(usuario, contrasena);
+		this.service = new ConversationService(dateFormat.format(date));*/
+		this.service = new ConversationService(FECHA_VERSION_WATSON);
 		this.usuario = usuario;
 		this.contrasena = contrasena;
+		this.service.setUsernameAndPassword(this.usuario, this.contrasena);
 		this.idConversacion = idConversacion;
 	}
 	
@@ -185,7 +186,7 @@ public class ConversationWatson {
 		return obj.toString();
 	}
 	
-	public static void main(String[] args) throws Exception {
+	/*public static void main(String[] args) throws Exception {
 
 		ConversationWatson myConversation = new ConversationWatson(Constantes.WATSON_CONVERSATION_USER, 
 				Constantes.WATSON_CONVERSATION_PASS, Constantes.WATSON_CONVERSATION_ID);
@@ -205,5 +206,5 @@ public class ConversationWatson {
 		//result = myConversation.enviarMSG("Estoy buscondo un lote", null);
 		//result = myConversation.getMSJ(result);
 		//System.out.println(result);
-	}
+	}*/
 }

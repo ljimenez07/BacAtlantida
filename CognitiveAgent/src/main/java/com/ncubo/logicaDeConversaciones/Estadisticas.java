@@ -41,6 +41,7 @@ public class Estadisticas
 		{
 			consultaDao.insertar( new Consulta(estadistica.getKey(), new Timestamp(new Date().getTime()), estadistica.getValue()) );
 		}
+		detalles = new Hashtable<>();
 	}
 
 }

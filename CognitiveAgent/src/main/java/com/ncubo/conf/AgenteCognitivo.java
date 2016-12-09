@@ -48,9 +48,11 @@ public class AgenteCognitivo
 
 	@Autowired
 	private FTPServidor ftp;
+	
 	@Autowired
 	private Conversaciones misConversaciones;
 	private HistoricosDeConversaciones historicoDeConversaciones;
+	
 	@Autowired
 	private ExtraerDatosWebService extraerDatos;
 
@@ -297,13 +299,13 @@ public class AgenteCognitivo
 
 	private void inicializarGeneradorDeAudiosSingleton(){
 		TextToSpeechWatson.getInstance(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), 
-				this.getVoiceTextToSpeech(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), this.getPathAudio(), this.geturlPublicaAudios());
+				this.getVoiceTextToSpeech(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), ftp.getCarpeta(), this.getPathAudio(), this.geturlPublicaAudios());
 	}
 	
 	public void generarTodosLosAudiosEstaticos(){
 		System.out.println("El path xml es: "+getPathXML());
 		misConversaciones.generarAudiosEstaticos(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
-				this.getPathAudio(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), this.geturlPublicaAudios());
+				this.getPathAudio(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), ftp.getCarpeta(), this.geturlPublicaAudios());
 	}
 	
 	public void generarAudioEstatico(String id){
@@ -312,7 +314,7 @@ public class AgenteCognitivo
 		try{
 			index = Integer.parseInt(id);
 			misConversaciones.generarAudiosEstaticosDeUnTema(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
-					this.getPathAudio(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), index, this.geturlPublicaAudios());
+					this.getPathAudio(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), ftp.getCarpeta(), index, this.geturlPublicaAudios());
 		}catch(Exception e){
 			e.getStackTrace();
 		}
@@ -431,25 +433,16 @@ public class AgenteCognitivo
 	
 	public double obtenerValorDeGustosDeHoteles(String idCliente) throws Exception
 	{
-		if( ! misConversaciones.existeElCliente(idCliente))
-			Thread.sleep(4000);
-		
 		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeHoteles();
 	}
 
 	public double obtenerValorDeGustosDeRestaurantes(String idCliente) throws Exception
 	{
-		if( ! misConversaciones.existeElCliente(idCliente))
-			Thread.sleep(4000);
-		
 		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeRestaurantes();
 	}
 	
 	public double obtenerValorDeGustosDeBelleza(String idCliente) throws Exception
 	{
-		if( ! misConversaciones.existeElCliente(idCliente))
-			Thread.sleep(4000);
-		
 		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeBelleza();
 	}
 	

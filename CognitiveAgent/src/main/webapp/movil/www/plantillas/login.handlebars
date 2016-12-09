@@ -42,11 +42,14 @@ $(function(){
 				type: "POST",
 				url: serverDomain + "/movil/login",
 				data: $(this).serialize(),
-				done: function( data ) 
+				done: function(data) 
 				{
-					console.log("Ya se mandaron a pedir ofertas");
 					setCookie('mostrarpopupdeconocerte', false, 0);
-					location.reload();
+					$(".app #ofertas").html(Handlebars.templates.layout(pantallas["ofertas"]));
+					establecerBienvenida(data.usuarioEstaLogueado, data.usuarioNombre);
+					bindClickeable();
+					estaLogueado = true;
+					cambiarVista(ventanaActual);
 				},
 				fail: function(XMLHttpRequest, textStatus, textStatus) 
 				{

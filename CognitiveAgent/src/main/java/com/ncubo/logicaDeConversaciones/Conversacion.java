@@ -40,6 +40,7 @@ public class Conversacion {
 		this.participante = participante;
 		this.agente = new Agente(temario.contenido().getMiWorkSpaces());
 		this.agente.manifestarseEnFormaOral();
+		this.agente.manifestarseEnFormaVisual();
 		
 		this.hilo = new HiloDeLaConversacion();
 		//this.participantes.agregar(agente).agregar(participante);
@@ -105,10 +106,7 @@ public class Conversacion {
 					
 				}else{
 					if(agente.hayQueCambiarDeTema()){
-						if(this.temaActual != null){
-							if( (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_SALUDO)) && (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_DESPEDIDA)) )
-								ponerComoYaTratado(this.temaActual);
-						}
+						
 						
 						idFraseActivada = respuesta.obtenerFraseActivada();
 						extraerOracionesAfirmarivasYPreguntas(misSalidas, respuesta, idFraseActivada);
@@ -144,6 +142,10 @@ public class Conversacion {
 								System.out.println("Id de la frase a decir: "+idFraseActivada);
 								extraerOracionesAfirmarivasYPreguntas(misSalidas, respuesta, idFraseActivada);
 							}
+						}
+						if(this.temaActual != null){
+							if( (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_SALUDO)) && (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_DESPEDIDA)) )
+								ponerComoYaTratado(this.temaActual);
 						}
 					}else{
 						if (agente.entendiLaUltimaPregunta()){
@@ -353,6 +355,14 @@ public class Conversacion {
 				misSalidas.add(agente.decir(fueraDeContexto, respuesta, temaActual));
 				fraseActual = fueraDeContexto;
 				ponerComoYaTratado(fueraDeContexto);
+			} else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals(Constantes.INTENCION_DESPISTADOR)){
+				System.out.println("Quiere despistar  ...");
+
+				Afirmacion despistar = (Afirmacion)  this.temario.frase(Constantes.INTENCION_DESPISTADOR);
+				misSalidas.add(agente.decir(despistar, respuesta, temaActual));
+				fraseActual = despistar;
+				ponerComoYaTratado(despistar);
+				
 			}
 			return true;
 		}else{
