@@ -109,7 +109,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Por ahora solo puedo proporcionar el saldo de su tarjeta de crédito y de la cuenta de ahorros.</frase>
+			<frase>Por ahora solo puedo proporcionar el saldo de su tarjeta de crédito y de la cuenta de ahorros. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -174,7 +174,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Por ahora solo puedo proporcionar el disponible de tarjeta de crédito y cuenta de ahorros.</frase>
+			<frase>Por ahora solo puedo proporcionar el disponible de tarjeta de crédito y cuenta de ahorros. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -225,7 +225,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<curioso>¿Te refieres a tu tarjeta de crédito o tu cuenta corriente?</curioso>
+			<curioso>¿Te refieres a tu tarjeta de crédito o tu cuenta de ahorro?</curioso>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -245,7 +245,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Estos son los últimos movimientos registrados en tu cuenta corriente: $</frase>
+			<frase>Estos son los últimos movimientos registrados en tu cuenta de ahorro: $</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -289,8 +289,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Fue un placer ayudarte, ¡que pases un feliz día!.</frase>
-			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día.</frase>
+			<frase>Fue un placer ayudarte, ¡que pases un feliz día!. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
+			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -300,10 +300,10 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Fue un placer ayudarte, ¡que pases un feliz día!.</frase>
-			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día.</frase>
-			<frase>Es un placcer servirle y recuerde que le atendemos las 24 horas del día.</frase>
-			<frase>Hasta luego, fue un gusto atenderte.</frase>
+			<frase>Fue un placer ayudarte, ¡que pases un feliz día!. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
+			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
+			<frase>Es un placcer servirle y recuerde que le atendemos las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
+			<frase>Hasta luego, fue un gusto atenderte. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
 		</frases>
 		<vineta></vineta>
 		<when>
@@ -743,7 +743,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>$%decir Lamento lo sucedido, si necesitas reportar el extravío de tus tarjetas de crédito y débito puedes llamar a los siguientes números telefónicos: $%terminaDecir @@br/@@@  @@br/@@@ En Honduras: @@br/@@@ 2280-1010 / 2580-1010 / 2480-1010 @@br/@@@ @@br/@@@ En el Extranjero:  @@br/@@@ @@br/@@@ VISA: @@br/@@@ USA y Canadá: 1-800-847-2911 @@br/@@@ En otros países: (410)-581-0120 @@br/@@@ @@br/@@@ MASTERCARD: @@br/@@@ USA y Canadá: 1-800-307-7309 @@br/@@@ En otros países: 1-636-722-7111  @@br/@@@ @@br/@@@ $%despedida Recuerda que este servicio está disponible las 24 horas, los 7 días de la semana. $%terminaDespedida</frase>
+			<frase>Lamento lo sucedido, si necesitas reportar el extravío de tus tarjetas de crédito y débito puedes llamar a los siguientes números telefónicos: @@#@@@ @@br/@@@  @@br/@@@ En Honduras: @@br/@@@ 2280-1010 / 2580-1010 / 2480-1010 @@br/@@@ @@br/@@@ En el Extranjero:  @@br/@@@ @@br/@@@ VISA: @@br/@@@ USA y Canadá: 1-800-847-2911 @@br/@@@ En otros países: (410)-581-0120 @@br/@@@ @@br/@@@ MASTERCARD: @@br/@@@ USA y Canadá: 1-800-307-7309 @@br/@@@ En otros países: 1-636-722-7111 @@#/@@@ @@br/@@@ @@br/@@@  Recuerda que este servicio está disponible las 24 horas, los 7 días de la semana.</frase>
 		</frases>
 		<vineta></vineta>
 	</conversacion>
@@ -1054,9 +1054,9 @@
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
 		<workspace tipo="general" idIBM="c2aea9a5-8f76-4cbd-bf8e-4f3c7264a5a9" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="3c90d4ee-517d-47d7-a7c5-1e40d3f11f4b" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
+		<workspace tipo="especifico" idIBM="3ec5ca5c-6a5b-4d94-8417-28caeb9168df" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="f6a14d08-2634-4f9c-9fd1-a083b0cb2b48" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="fe33d974-a2e1-49dc-bc87-ed723b2f1c5f" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="5bc3c2f0-443d-41a9-8988-b76cf6bc970f" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>
