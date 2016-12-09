@@ -17,6 +17,7 @@ public class Cliente extends Participante{
 		/*administradorDeVariablesDeContexto.agregarVariableDeContexto("leGustaLosHoteles", "0");
 		administradorDeVariablesDeContexto.agregarVariableDeContexto("leGustaComerAfuera", "0");
 		administradorDeVariablesDeContexto.agregarVariableDeContexto("sePreocupaPorLaSalud", "0");*/
+		administradorDeVariablesDeContexto = new AdministradorDeVariablesDeContexto();
 	}
 	
 	public Cliente(String nombre, String id) throws Exception{

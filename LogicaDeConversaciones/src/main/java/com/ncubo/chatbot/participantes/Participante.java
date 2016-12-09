@@ -102,7 +102,7 @@ public class Participante{
 		if (formaDeManifestarseOral.esEnFormaOral()){
 			Sonido sonido = null;
 			
-			String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto);
+			String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, false);
 			String path = frase.getPathAGuardarLosAudiosTTS()+File.separator+nombreDelArchivo;
 			String miIp = TextToSpeechWatson.getInstance().obtenerUrlPublicaDeAudios()+nombreDelArchivo;
 			sonido = new Sonido(miIp, path);
@@ -152,7 +152,7 @@ public class Participante{
 			}else{
 				if(! texto.equals("")){
 					try{
-						String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto);
+						String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, true);
 						String path = pregunta.getPathAGuardarLosAudiosTTS()+File.separator+nombreDelArchivo;
 						String miIp = TextToSpeechWatson.getInstance().obtenerUrlPublicaDeAudios()+nombreDelArchivo;
 						sonido = new Sonido(miIp, path);
