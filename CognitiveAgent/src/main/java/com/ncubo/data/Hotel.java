@@ -4,6 +4,6 @@ public class Hotel extends CategoriaOferta {
 
 	public Hotel( double peso)
 	{
-		super(3, "Hotel", peso);
+		super(2, "Hotel", peso);
 	}
 }
