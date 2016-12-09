@@ -213,6 +213,11 @@ public class Oferta implements Comparable<Oferta>
 		return imagenPublicidadPath.endsWith(".html");
 	}
 	
+	public String getImagenParaMostrar()
+	{
+		return getEsHtml() ? getImagenComercioPath() : getImagenPublicidadPath();
+	}
+	
 	public Timestamp getFechaHoraRegistro()
 	{
 		return fechaHoraRegistro;
@@ -330,7 +335,6 @@ public class Oferta implements Comparable<Oferta>
 	public void setDescripcionAudio(String descripcionAudio) {
 		this.descripcionAudio = descripcionAudio;
 	}
-	
 	
 	public BindingResult validarCampos(BindingResult bindingResult, Oferta oferta) throws ParseException
 	{

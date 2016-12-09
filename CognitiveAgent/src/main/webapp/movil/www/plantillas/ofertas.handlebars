@@ -68,7 +68,7 @@ function bindAcciones()
 	
 				$("#oferta .boton-compartir").off("click").on("click", function()
 				{
-					compartir($(this).data("id"), $(this).data("path"));
+					compartir($(this).data("id"), $(this).data("path"), $(this).data("titulo"));
 				});
 				
 				$("#oferta .imagen-de-oferta").each(function()
@@ -118,18 +118,18 @@ function bindAcciones()
 	
 	$("#ofertas .boton-compartir").off("click").on("click", function()
 	{
-		compartir($(this).data("id"), $(this).data("path"));
+		compartir($(this).data("id"), $(this).data("path"), $(this).data("titulo"));
 	});
 }
 
-function compartir(id, pathImagen)
+function compartir(id, pathImagen, titulo)
 {
 	var options = {
-		message: 'share this', // not supported on some apps (Facebook, Instagram)
-		subject: 'the subject', // fi. for email
+		message: titulo, // not supported on some apps (Facebook, Instagram)
+		subject: titulo, // fi. for email
 		files: [serverDomain + "/archivossubidos/" + pathImagen], // an array of filenames either locally or remotely
 		url: serverDomain + "/ofertas/compartida/" + id,
-		chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
+		chooserTitle: 'Seleccione una aplicación' // Android only, you can override the default share sheet title
 	}
 	
 	var onSuccess = function(result) {
