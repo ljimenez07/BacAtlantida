@@ -168,12 +168,26 @@ public abstract class Frase
 				for(int index = 0; index < textosDeLaFrase.length; index ++){
 					String texto = textosDeLaFrase[index];
 					String textoParaReproducir = texto;
+					String textoNumerosTelefonicos = "";
 					String textoTag = ""; 
 					while(texto.contains("@@"))
 					{
+						
 						textoTag = texto.substring(texto.indexOf("@@")+2, texto.indexOf("@@@"));
-						  textoParaReproducir = textoParaReproducir.replaceFirst("@@"+textoTag+"@@@", "");
-						  texto = texto.replaceFirst("@@"+textoTag+"@@@", "<"+textoTag+">");
+						System.out.println(textoTag);
+						if(textoTag.contains("#"))
+						{
+							textoNumerosTelefonicos = texto.substring(texto.indexOf("@@#@@@")+6, texto.indexOf("@@#/@@@"));
+							textoParaReproducir = textoParaReproducir.replaceFirst("@@#@@@"+textoNumerosTelefonicos+"@@#/@@@", "");
+							texto = texto.replaceFirst("@@#@@@", "");
+							texto = texto.replaceFirst("@@#/@@@", "");
+						}
+						else
+						{
+							textoParaReproducir = textoParaReproducir.replaceFirst("@@"+textoTag+"@@@", "");
+							texto = texto.replaceFirst("@@"+textoTag+"@@@", "<"+textoTag+">");
+
+						}
 					}
 					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir, false);
 					String path = pathAGuardar+File.separator+nombreDelArchivo;
