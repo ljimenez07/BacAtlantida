@@ -177,4 +177,27 @@ public class UsuarioDao {
 		return resultado;
 	}
 	
+	public boolean yaContestoElConocerteAlmenosUnaVez(Usuario usuario) throws ClassNotFoundException, SQLException
+	{
+		Connection con = dao.openConBD();
+		String query = 
+			"SELECT peso "
+			+ "FROM categoria_usuario_peso "
+			+ "WHERE idUsuarioenBA = ? ";
+				
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setString(1, usuario.getUsuarioId()  );
+		
+		boolean resultado = false;
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		if( rs.next() )
+		{
+			resultado = true;
+		}
+
+		return resultado;
+	}
+	
 }

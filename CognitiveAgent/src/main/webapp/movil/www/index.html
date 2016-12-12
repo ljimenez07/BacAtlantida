@@ -323,7 +323,11 @@
 		})
 		.done(function(data) 
 		{
-			console.log({ajax: param.url, params: param, respuesta: data});
+			if(data.mostrarPopupdeOfertasNuevas)
+			{
+				$("#nuevasOfertas").modal('show');
+			}
+			
 			if(data.usuarioEstaLogueado)
 			{
 				estaLogueado = true;
@@ -332,14 +336,12 @@
 				$(".header-chat-icon.no-logueado").hide();
 				$("#menu-item-conocerte").show();
 				$("#menu-item-salir").show();
+				
 				if(param.done != undefined)
 				{
 					param.done(data);
 				}
-				if(data.mostrarPopupdeOfertasNuevas || data.mostrarPopupdeOfertasNuevas == 'true')
-				{
-					$("#nuevasOfertas").modal('show');
-				}
+
 			}
 			else if(data.usuarioEstaLogueado != undefined && estaLogueado && param.debeEvaluarSesion == undefined)
 			{

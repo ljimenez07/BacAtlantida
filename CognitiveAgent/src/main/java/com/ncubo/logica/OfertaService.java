@@ -113,7 +113,9 @@ public class OfertaService
 	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(Indice indiceInicial, Usuario usuario) throws Exception
 	{
 
-		if( usuario == null || ! usuario.getEstaLogueado() )
+		if( usuario == null || 
+			! usuario.getEstaLogueado() || 
+			! usuarioDao.yaContestoElConocerteAlmenosUnaVez(usuario) )
 		{
 			return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario);
 		}
