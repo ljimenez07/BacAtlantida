@@ -512,6 +512,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"quiereSaberTelefonos",
+			"Conocer números telefónicos",
 			"BAFAQ",
 			true,
 			"saber_numeros",
