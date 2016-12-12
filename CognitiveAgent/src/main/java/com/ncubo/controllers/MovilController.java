@@ -104,7 +104,8 @@ public class MovilController {
 			
 			sesion.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 			JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.getEstaLogueado())
-					.put("usuarioNombre", usuario.getEstaLogueado() ? usuario.getUsuarioNombre() : "");
+					.put("usuarioNombre", usuario.getEstaLogueado() ? usuario.getUsuarioNombre() : "")
+					.put("idUsuario", usuario.getEstaLogueado() ? usuario.getUsuarioId() : "");
 			
 			Boolean[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);
 			
@@ -137,11 +138,13 @@ public class MovilController {
 			Usuario usuario = ( Usuario ) objeto;
 			
 			respuesta.put("usuarioNombre", usuario.getUsuarioNombre());
+			respuesta.put("idUsuario", usuario.getUsuarioId());
 			respuesta.put("estaLogueado", usuario.getEstaLogueado());
 		}
 		else
 		{
 			respuesta.put("usuarioNombre", "");
+			respuesta.put("idUsuario", "");
 			respuesta.put("estaLogueado", false);
 		}
 		

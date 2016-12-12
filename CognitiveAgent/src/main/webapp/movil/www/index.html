@@ -126,7 +126,8 @@
 	var audioEnReproduccion = null;
 	var estaReproduciendo = false;
 	var estaLogueado = false;
-	var ventanaActual = "ofertas";
+	var vistaActual = "ofertas";
+	var idUsuario = "";
 	
 	var mensajesDeErrorEnAudio = ["", {code: 1, "message": "MEDIA_ERR_ABORTED"}, {code: 2, "message": "MEDIA_ERR_NETWORK"}, {code: 3, "message": "MEDIA_ERR_DECODE"}, {code: 4, "message": "MEDIA_ERR_SRC_NOT_SUPPORTED"}];
 	
@@ -144,7 +145,10 @@
 	function quitarModalSesion()
 	{
 		$("#sesion-expirada").modal('hide');
-		inicializarPantallas();
+		ajax({
+			url: serverDomain + "/conversacion/borrarTodasLasConversacionesDeUnCliente/" + idUsuario
+		});
+		recargarVistasSinLoguear();
 	}
 	
 	function cambiarVista(href, guardarVistaEnHistorial)
@@ -153,11 +157,11 @@
 		var app = $(".app");
 		
 		app.find(".show").hide();
-		app.find("#"+href).show();
+		app.find("#" + href).show();
 		
 		app.find(".show").removeClass("show");
-		app.find("#"+href).removeClass("hide");
-		app.find("#"+href).addClass("show");
+		app.find("#" + href).removeClass("hide");
+		app.find("#" + href).addClass("show");
 		
 		var botonEscucharMensajes = $("#chat-id-" + href + " .boton-escuchar-mensajes");
 		if(botonEscucharMensajes.hasClass("desactivado"))
@@ -172,7 +176,7 @@
 		else
 		{
 			$("body").css({"overflow": "scroll"});
-			ventanaActual = href;
+			vistaActual = href;
 		}
 		
 		if( guardarVistaEnHistorial != undefined && guardarVistaEnHistorial)
@@ -209,7 +213,7 @@
 		
 		inicializarPantallas();
 		
-		if(getCookie("mostrarpopupdeconocerte") == "")
+		if(getCookie("mostrarpopupdeconocerte") == "" && estaLogueado)
 		{
 			$("#popupconocerte").modal('show');
 		}	
@@ -219,6 +223,7 @@
 			done: function(data)
 			{
 				establecerBienvenida(data.estaLogueado, data.usuarioNombre);
+				idUsuario = data.idUsuario;
 			}
 		});
 	});
@@ -276,11 +281,7 @@
 						debeEvaluarSesion: false,
 						done: function(data)
 						{
-							$("#menu-item-conocerte").hide();
-							$("#menu-item-salir").hide();
-							estaLogueado = false;
-							inicializarPantallas();
-							cambiarVista("ofertas", true);
+							recargarVistasSinLoguear();
 						}
 					});
 				}
@@ -291,6 +292,16 @@
 				eval(after);
 			}
 		});	
+	}
+	
+	function recargarVistasSinLoguear()
+	{
+		$("#menu-item-conocerte").hide();
+		$("#menu-item-salir").hide();
+		estaLogueado = false;
+		idUsuario = "";
+		inicializarPantallas();
+		cambiarVista("ofertas", true);
 	}
 	
 	function agregarAColaDeReproduccion(pathDelArchivo)
