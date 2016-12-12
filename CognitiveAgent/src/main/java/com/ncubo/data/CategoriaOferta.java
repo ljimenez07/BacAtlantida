@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class CategoriaOferta implements Serializable
 {
+	private static final long serialVersionUID = -5422419463205949561L;
 	private int id;
 	private String nombre;
 	private double peso;
