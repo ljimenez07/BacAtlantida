@@ -173,7 +173,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
-			frase("noEntendi")
+			frase("noEntendi"),
+			frase("noHayIntencion")
 		);
 		return resultado;
 	}
@@ -333,7 +334,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
-			frase("noEntendi")
+			frase("noEntendi"),
+			frase("noHayIntencion")
 		);
 		return resultado;
 	}
@@ -371,7 +373,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
-			frase("noEntendi")
+			frase("noEntendi"),
+			frase("noHayIntencion")
 		);
 		return resultado;
 	}
@@ -399,7 +402,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
-			frase("noEntendi")
+			frase("noEntendi"),
+			frase("noHayIntencion")
 		);
 		return resultado;
 	}
@@ -449,7 +453,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
-			frase("noEntendi")
+			frase("noEntendi"),
+			frase("noHayIntencion")
 		);
 		return resultado;
 	}
@@ -466,7 +471,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
-			frase("noEntendi")
+			frase("noEntendi"),
+			frase("noHayIntencion")
 		);
 		return resultado;
 	}
