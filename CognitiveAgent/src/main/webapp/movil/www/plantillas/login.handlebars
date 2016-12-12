@@ -49,7 +49,7 @@ $(function(){
 					establecerBienvenida(data.usuarioEstaLogueado, data.usuarioNombre);
 					bindClickeable();
 					estaLogueado = true;
-					cambiarVista(ventanaActual);
+					cambiarVista(ventanaActual, true);
 				},
 				fail: function(XMLHttpRequest, textStatus, textStatus) 
 				{

@@ -17,7 +17,7 @@
 	<script type="text/javascript" src="js/globals.js"></script>
 	<title>Agente Cognitivo</title>
 </head>
-<body>
+<body onload="onLoad()">
 	<!-- Google Tag Manager (noscript) -->
 	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPXB6S"
 	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -107,6 +107,21 @@
 	<script type="text/javascript" src="js/login.handlebars.js"></script>
 	
 	<script  type="text/javascript">
+	
+	function onLoad() {
+		document.addEventListener("deviceready", onDeviceReady, false);
+	}
+	
+	document.addEventListener("backbutton", onBackKeyDown, false);
+
+	function onBackKeyDown(e) {
+		e.preventDefault();
+		var page = ordenDelasVistas.pop();
+		cambiarVista(page, false);
+	}
+	
+	
+	var ordenDelasVistas = new Array();
 	var audios = new Array();
 	var audioEnReproduccion = null;
 	var estaReproduciendo = false;
@@ -132,7 +147,7 @@
 		inicializarPantallas();
 	}
 	
-	function cambiarVista(href)
+	function cambiarVista(href, guardarVistaEnHistorial)
 	{
 		audios = new Array();
 		var app = $(".app");
@@ -159,6 +174,11 @@
 			$("body").css({"overflow": "scroll"});
 			ventanaActual = href;
 		}
+		
+		if( guardarVistaEnHistorial != undefined && guardarVistaEnHistorial)
+		{
+			ordenDelasVistas.push( href );	
+		}		
 	}
 	
 	function menu(accion)
@@ -240,7 +260,7 @@
 			
 			if(href != undefined )
 			{
-				cambiarVista( href );
+				cambiarVista( href, true );
 			}
 			
 			if(accion != undefined)
@@ -260,7 +280,7 @@
 							$("#menu-item-salir").hide();
 							estaLogueado = false;
 							inicializarPantallas();
-							cambiarVista("ofertas");
+							cambiarVista("ofertas", true);
 						}
 					});
 				}
