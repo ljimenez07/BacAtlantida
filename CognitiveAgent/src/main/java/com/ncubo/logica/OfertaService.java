@@ -80,9 +80,10 @@ public class OfertaService
 					usuario.getCategorias().obtenerCategoriaDeRestaurante() );
 			
 			System.out.println(
-				String.format("El usuario %s tiene una distancia %s.",
+				String.format("El usuario %s tiene una distancia %s, con recpecto a la oferta %s.",
 				usuario.getIdSesion(),
-				distanciaActualEntreAmbasCategorias)
+				distanciaActualEntreAmbasCategorias,
+				oferta.getIdOferta())
 			);
 			
 			if( distanciaActualEntreAmbasCategorias <= distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas )

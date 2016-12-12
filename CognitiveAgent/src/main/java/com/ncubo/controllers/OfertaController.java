@@ -191,15 +191,14 @@ public class OfertaController
 		ObjectMapper mapper = new ObjectMapper();
 		JSONArray array = new JSONArray(mapper.writeValueAsString((ofertaService.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario))));
 
-		boolean puedeVerElpopupDeNuevasOfertas = usuarioDao.puedeVerElpopupDeNuevasOfertas( usuario );
-		
+		boolean puedeVerElpopupDeNuevasOfertas = usuario.getEstaLogueado() && usuarioDao.puedeVerElpopupDeNuevasOfertas( usuario );
 		
 		JSONObject respuesta = new JSONObject();
 		respuesta.put("indice", new JSONObject(mapper.writeValueAsString(indiceInicial)));
 		respuesta.put("resultados", array);
 		respuesta.put("mostrarPopupdeOfertasNuevas", puedeVerElpopupDeNuevasOfertas);
 		
-		if( puedeVerElpopupDeNuevasOfertas )
+		if(  puedeVerElpopupDeNuevasOfertas )
 		{
 			usuarioDao.marcarComoVistoElPopupDeNuevasOfertas( usuario.getUsuarioId() );
 		}

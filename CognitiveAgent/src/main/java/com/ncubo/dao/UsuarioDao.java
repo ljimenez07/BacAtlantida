@@ -117,9 +117,9 @@ public class UsuarioDao {
 		
 		Connection con = dao.openConBD();
 		String query = 
-			"SELECT usuario, nuevasOfertas, peso, nombre, id "+
-			"FROM popups_vistos_por_usuario "+
-			"LEFT OUTER JOIN categoria_usuario_peso on idUsuarioenBA =  usuario "+
+			"SELECT idUsuarioenBA, nuevasOfertas, peso, nombre, id, idCategoria "+
+			"FROM categoria_usuario_peso "+
+			"LEFT OUTER JOIN popups_vistos_por_usuario  on idUsuarioenBA =  usuario "+
 			"LEFT OUTER JOIN categoriadeoferta on categoriadeoferta.id =  categoria_usuario_peso.idCategoria ";
 				
 		PreparedStatement stmt = con.prepareStatement(query);
@@ -130,7 +130,7 @@ public class UsuarioDao {
 		
 		while (rs.next())
 		{
-			String id = rs.getString( "usuario" );
+			String id = rs.getString( "idUsuarioenBA" );
 			String idCategoria = rs.getString("idCategoria");
 			
 			if( ! usuriosMap.containsKey(id) )
@@ -167,7 +167,7 @@ public class UsuarioDao {
 			+ "WHERE usuario = ? ";
 				
 		PreparedStatement stmt = con.prepareStatement(query);
-		stmt.setString(1, usuario.getIdSesion() );
+		stmt.setString(1, usuario.getUsuarioId()  );
 		
 		boolean resultado = false;
 		
