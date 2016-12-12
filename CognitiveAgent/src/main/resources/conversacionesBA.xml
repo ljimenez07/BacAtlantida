@@ -1053,9 +1053,9 @@
 		<frases>				
 		</frases>				
 		<vinetas>
-			<vineta> @@img src="http://emojipedia-us.s3.amazonaws.com/cache/45/43/4543202f731f729d056cb94052db7810.png" /## </vineta>
-			<vineta> @@img src="https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/like-128.png" /## </vineta>
-			<vineta> @@img src="http://emojipedia-us.s3.amazonaws.com/cache/75/e6/75e67ae041ac8091914d2dfb7eb338e1.png" /## </vineta>
+			<vineta> @@img src="http://emojipedia-us.s3.amazonaws.com/cache/45/43/4543202f731f729d056cb94052db7810.png" class="imagen-del-chat" /## </vineta>
+			<vineta> @@img src="https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/like-128.png" class="imagen-del-chat" /## </vineta>
+			<vineta> @@img src="http://emojipedia-us.s3.amazonaws.com/cache/75/e6/75e67ae041ac8091914d2dfb7eb338e1.png" class="imagen-del-chat" /## </vineta>
 		</vinetas>				
 	</conversacion>
 	
