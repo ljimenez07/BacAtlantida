@@ -485,7 +485,11 @@ public class TemarioDelBancoAtlantida extends Temario{
 			"BAFAQ",
 			true,
 			"agradecimiento",
-			frase("responderAgradecimiento")
+			frase("responderAgradecimiento"),
+			frase("preguntarPorOtraConsulta"),
+			frase("quiereHacerOtraConsulta"),
+			frase("noQuiereHacerOtraConsulta"),
+			frase("noEntendi")
 		);
 		return resultado;
 	}

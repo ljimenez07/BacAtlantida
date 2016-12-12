@@ -63,8 +63,10 @@ public class Participante{
 		
 		if (formaDeManifestarseEscrita.esEnFormaEscrita()){
 			List<String> texto = frase.texto();
-			idDelSonidoAUsar = Integer.valueOf(texto.get(0));
-			salida.escribir(texto.get(1), respuesta, tema, frase);
+			if (texto != null){
+				idDelSonidoAUsar = Integer.valueOf(texto.get(0));
+				salida.escribir(texto.get(1), respuesta, tema, frase);
+			}
 		}
 		
 		if (formaDeManifestarseOral.esEnFormaOral()){
@@ -74,8 +76,9 @@ public class Participante{
 		}
 		
 		if (formaDeManifestarseVisual.esFormaVisual()){
-			//Vineta vineta = frase.vineta();
-			//salida.escribir(vineta, respuesta, tema, frase);
+			List<String> vineta = frase.vineta();
+			if(vineta != null)
+				salida.escribir(vineta.get(1), respuesta, tema, frase);
 		}
 		
 		try{

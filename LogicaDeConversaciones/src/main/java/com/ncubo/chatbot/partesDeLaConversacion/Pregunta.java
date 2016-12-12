@@ -11,10 +11,10 @@ public class Pregunta extends Frase
 	private Entidades misEntidades;
 	private Intenciones misIntenciones;
 	
-	protected Pregunta(String idFrase, String[] textosDeLaFrase, String[] textosImpertinetesDeLaFrase, 
+	protected Pregunta(String idFrase, String[] textosDeLaFrase, String[] textosImpertinetesDeLaFrase, String[] vinetasDeLaFrase,
 			CaracteristicaDeLaFrase[] caracteristicas, Entidades entidades, Intenciones intenciones)
 	{
-		super (idFrase, textosDeLaFrase, textosImpertinetesDeLaFrase, caracteristicas);
+		super (idFrase, textosDeLaFrase, textosImpertinetesDeLaFrase, vinetasDeLaFrase, caracteristicas);
 		this.misEntidades = entidades;
 		this.misIntenciones = intenciones;
 	}

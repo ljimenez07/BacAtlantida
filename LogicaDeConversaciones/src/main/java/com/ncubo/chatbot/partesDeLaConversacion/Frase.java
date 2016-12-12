@@ -13,6 +13,7 @@ public abstract class Frase
 	
 	private String[] textosDeLaFrase;
 	private ArrayList<Sonido> sonidosDeLosTextosDeLaFrase = new ArrayList<Sonido>();
+	private ArrayList<Vineta> vinetasDeLosTextosDeLaFrase = new ArrayList<Vineta>();
 	
 	private String[] textosImpertinetesDeLaFrase;
 	private ArrayList<Sonido> sonidosDeLosTextosImpertinentesDeLaFrase = new ArrayList<Sonido>();
@@ -25,7 +26,7 @@ public abstract class Frase
 	private String pathAGuardarLosAudiosTTS;
 	private String ipPublicaAMostrarLosAudioTTS;
 	
-	protected Frase (String idFrase, String[] textosDeLaFrase, String[] textosImpertinetesDeLaFrase, 
+	protected Frase (String idFrase, String[] textosDeLaFrase, String[] textosImpertinetesDeLaFrase, String[] vinetasDeLaFrase,
 			CaracteristicaDeLaFrase... caracteristicas)
 	{
 		//this.contenido = contenido;
@@ -34,6 +35,7 @@ public abstract class Frase
 		this.textosDeLaFrase = textosDeLaFrase;
 		this.textosImpertinetesDeLaFrase = textosImpertinetesDeLaFrase;
 		cargarLaFrase();
+		cargarVinetas(vinetasDeLaFrase);
 		if(esEstatica()){
 			System.out.println("Es estaticaaaaaaaa");
 			// verificar el archivo de audio exite o devolver un ChatException
@@ -43,6 +45,16 @@ public abstract class Frase
 			System.out.println("Es dinamicaaaaa");
 		}
 		
+	}
+	
+	private void cargarVinetas(String[] vinetasDeLaFrase){
+		if (vinetasDeLaFrase != null){
+			for(int index = 0; index < vinetasDeLaFrase.length; index ++){
+				String vineta = vinetasDeLaFrase[index];
+				vineta = vineta.replace("@@", "<").replace("##", ">");
+				vinetasDeLosTextosDeLaFrase.add(new Vineta(vineta));
+			}
+		}
 	}
 	
 	public void agregarSonido(int index, Sonido sonido){
@@ -64,24 +76,32 @@ public abstract class Frase
 		esEstatica = ! tieneUnoOVariosPlaceHolders;
 	}
 	
-/*	public Sonido sonido(){
-		return new Sonido("");
-	}
-	
-	public Vineta vineta(){
-		return new Vineta("");
-	}*/
-	
 	public String getIdFrase() {
 		return idFrase;
 	}
 	
 	public List<String> texto(){
-		List<String> resultado = new ArrayList<>();
+		List<String> resultado = null;
 		
-		int unIndiceAlAzar = (int)Math.floor(Math.random()*textosDeLaFrase.length);
-		resultado.add(unIndiceAlAzar+"");
-		resultado.add(textosDeLaFrase[unIndiceAlAzar]);
+		if(textosDeLaFrase.length > 0){
+			resultado = new ArrayList<>();
+			int unIndiceAlAzar = (int)Math.floor(Math.random()*textosDeLaFrase.length);
+			resultado.add(unIndiceAlAzar+"");
+			resultado.add(textosDeLaFrase[unIndiceAlAzar]);
+		}
+		
+		return resultado;
+	}
+	
+	public List<String> vineta(){
+		List<String> resultado = null;
+		
+		if(vinetasDeLosTextosDeLaFrase.size() > 0){
+			resultado = new ArrayList<>();
+			int unIndiceAlAzar = (int)Math.floor(Math.random()*vinetasDeLosTextosDeLaFrase.size());
+			resultado.add(unIndiceAlAzar+"");
+			resultado.add(vinetasDeLosTextosDeLaFrase.get(unIndiceAlAzar).url());
+		}
 		
 		return resultado;
 	}
