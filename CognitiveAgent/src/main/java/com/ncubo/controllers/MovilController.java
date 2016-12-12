@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ncubo.conf.AgenteCognitivo;
 import com.ncubo.conf.ExtraerDatosWebService;
-import com.ncubo.conf.ManejadorDeErrores;
 import com.ncubo.conf.Usuario;
 import com.ncubo.dao.UsuarioDao;
 import com.ncubo.data.Categorias;
@@ -36,9 +35,6 @@ public class MovilController {
 	private AgenteCognitivo serverCognitivo;
 	
 	@Autowired
-	private ManejadorDeErrores manejadorDeErrores;
-	
-	@Autowired
 	private ExtraerDatosWebService extraerDatos;
 	
 	@Autowired
@@ -48,7 +44,11 @@ public class MovilController {
 	@RequestMapping(value="/conversacion/chat/", method = RequestMethod.POST)
 	@ResponseBody String chat(@RequestBody String mensaje, HttpSession session) throws Exception 
 	{
-		Usuario usuario = obtenerUsuario(session);
+		Usuario usuario = (Usuario)session.getAttribute(Usuario.LLAVE_EN_SESSION);
+		if( usuario == null)
+		{
+			usuario = new Usuario(session.getId());
+		}
 		
 		System.out.println("valor "+session.getAttribute(Usuario.LLAVE_EN_SESSION));
 		JSONObject object = new JSONObject(serverCognitivo.procesarMensajeChat(
@@ -68,7 +68,12 @@ public class MovilController {
 	@RequestMapping(value="/conversacion/conocerte/", method = RequestMethod.POST)
 	@ResponseBody String conocerte(@RequestBody String mensaje, HttpSession session) throws Exception 
 	{
-		Usuario usuario = obtenerUsuario(session);
+		Usuario usuario = (Usuario)session.getAttribute(Usuario.LLAVE_EN_SESSION);
+		if( usuario == null)
+		{
+			usuario = new Usuario(session.getId());
+		}
+		
 		
 		JSONObject object = new JSONObject(serverCognitivo.procesarMensajeConocerte(
 				usuario, 
@@ -88,7 +93,7 @@ public class MovilController {
 		String[] responseLogin = extraerDatos.login(name , password);
 		if(responseLogin[0].equals("S"))
 		{
-			Usuario usuario = obtenerUsuario(sesion);
+			Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
 			Categorias categorias = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
 			
 			usuario.setLlaveSession(responseLogin[1]);
@@ -117,7 +122,7 @@ public class MovilController {
 	@GetMapping("/movil/logout")
 	@ResponseBody String logout(HttpSession sesion) throws JSONException
 	{
-		Usuario usuario = obtenerUsuario(sesion);
+		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
 		borrarTodasLasConversacionesDeUnCliente(usuario.getUsuarioId());
 		sesion.setAttribute(Usuario.LLAVE_EN_SESSION, null);
 		return new JSONObject().put("usuarioEstaLogueado", false).toString();
@@ -125,17 +130,24 @@ public class MovilController {
 
 	@CrossOrigin(origins = "*")
 	@GetMapping("/movil/usuario")
-	@ResponseBody Usuario obtenerUsuario(HttpSession sesion) throws JSONException
+	@ResponseBody String obtenerUsuario(HttpSession sesion) throws JSONException, ClassNotFoundException, SQLException
 	{
 		Object objeto = sesion.getAttribute(Usuario.LLAVE_EN_SESSION) ;
-		if(objeto == null)
+		JSONObject respuesta = new JSONObject();
+		if(objeto != null)
 		{
-			return new Usuario( sesion.getId() );
+			Usuario usuario = ( Usuario ) objeto;
+			
+			respuesta.put("usuarioNombre", usuario.getUsuarioNombre());
+			respuesta.put("estaLogueado", usuario.getEstaLogueado());
 		}
 		else
 		{
-			return (Usuario)objeto;
+			respuesta.put("usuarioNombre", "");
+			respuesta.put("estaLogueado", false);
 		}
+		
+	return respuesta.toString();
 	}
 
 	@CrossOrigin(origins = "*")
@@ -205,20 +217,5 @@ public class MovilController {
 	@ResponseBody String obtenerValorDeGustosDeHoteles(@PathVariable("id") String id) throws Exception{
 		return ""+serverCognitivo.obtenerValorDeGustosDeHoteles(id);
 	}
-	
-	/*@ExceptionHandler(Throwable.class)
-	public @ResponseBody String handleAllException(final HttpServletRequest req, HttpServletResponse response, final Exception ex) throws MessagingException 
-	{
-		
-		System.err.println("Error: "+ex.toString());
-		
-		if( ! (ex instanceof NoEmailException) )
-		{
-			response.setStatus(500);
-		}
-		
-		manejadorDeErrores.enviarCorreo(ex);
-		
-		return ex.toString();
-	}*/
+
 }
