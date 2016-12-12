@@ -290,6 +290,7 @@ public class Conversaciones {
 		System.out.println("El path xml es: "+pathXML);
 		temarioDelBancoAtlantida = new TemarioDelBancoAtlantida(pathXML);
 		this.consultaDao = consultaDao;
+		consultaDao.establecerTemario(temarioDelBancoAtlantida);
 	}
 	
 	public Cliente obtenerCliente(String idCliente)

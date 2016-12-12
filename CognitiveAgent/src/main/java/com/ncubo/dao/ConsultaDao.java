@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ncubo.chatbot.partesDeLaConversacion.Tema;
+import com.ncubo.chatbot.partesDeLaConversacion.Temario;
 import com.ncubo.data.Consulta;
 
 @Component("consultaDao")
@@ -17,7 +17,7 @@ public class ConsultaDao
 	@Autowired
 	private Persistencia dao;
 	private final String NOMBRE_TABLA = "estadistica_tema";
-	private final String NOMBRE_TABLA_TEMA = "tema";
+	private Temario temario;
 	
 	private enum atributo
 	{
@@ -44,13 +44,10 @@ public class ConsultaDao
 		ArrayList<Consulta> consultas = new ArrayList<Consulta>();
 		String query = "SELECT " 
 				+ NOMBRE_TABLA + "." + atributo.ID_TEMA + ", "
-				+ NOMBRE_TABLA_TEMA + "." + atributo.TEMA + ", "
 				+ "SUM(" + atributo.VECES_CONSULTADO + ") as '" + atributo.TOTAL_CONSULTADO + "'"
-				+ " FROM " + NOMBRE_TABLA + ", " + NOMBRE_TABLA_TEMA
-				+ " WHERE " + atributo.FECHA + " BETWEEN '" + fechaDesde + "' AND '" + fechaHasta +"'" 
-					+ " AND " + NOMBRE_TABLA + "." + atributo.ID_TEMA + " = " + NOMBRE_TABLA_TEMA + "." + atributo.ID_TEMA
-				+ " group by " + atributo.ID_TEMA + " , "
-				+ NOMBRE_TABLA_TEMA + "." + atributo.TEMA + " ;";
+				+ " FROM " + NOMBRE_TABLA
+				+ " WHERE " + atributo.FECHA + " BETWEEN '" + fechaDesde + "' AND '" + fechaHasta + "'" 
+				+ " group by " + atributo.ID_TEMA + " ;";
 
 		Connection con = dao.openConBD();
 		ResultSet rs = con.createStatement().executeQuery(query);
@@ -58,9 +55,8 @@ public class ConsultaDao
 		while (rs.next())
 		{
 			consultas.add(new Consulta(
-					new Tema( rs.getString(atributo.ID_TEMA.toString()) ,null , true, null),
+					temario.buscarTema(rs.getString(atributo.ID_TEMA.toString())),
 					null,
-					rs.getString(atributo.TEMA.toString()),
 					rs.getInt(atributo.TOTAL_CONSULTADO.toString())
 				));
 		}
@@ -86,4 +82,8 @@ public class ConsultaDao
 		dao.closeConBD();
 	}
 
+	public void establecerTemario(Temario temario) {
+		this.temario = temario;
+	}
+	
 }
