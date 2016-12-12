@@ -342,7 +342,6 @@
 		<vinetas></vinetas>
 	</conversacion>
 	
-	
 	<conversacion id="fueraDeContextoGeneral">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
@@ -410,7 +409,7 @@
 		<vinetas></vinetas>
 	</conversacion>
 	
-		<conversacion id="cualMonedaAhorrosRemesas">
+	<conversacion id="cualMonedaAhorrosRemesas">
 		<tipo>pregunta</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
@@ -780,7 +779,6 @@
 		<vinetas></vinetas>
 	</conversacion>
 	
-	
 	<conversacion id="reportarExtravio">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
@@ -1065,6 +1063,7 @@
 			<frase>Lo siento, no entendí. ¿En qué te puedo ayudar?</frase>
 			<frase>Perdón, no entiendo. ¿Hay algo más con lo que te pueda ayudar?</frase>
 			<frase>Creo que no entendí. ¿En que te gustaría que te ayude?</frase>	
+			<meRindo>Lo siento, no entendí. Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</meRindo>
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>

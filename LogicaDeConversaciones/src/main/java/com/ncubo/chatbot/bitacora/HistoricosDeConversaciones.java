@@ -53,10 +53,9 @@ public class HistoricosDeConversaciones {
 		return resultado;
 	}
 	
-	public void borrarElHistoricoDeUnaConversacionPorCliente(ArrayList<String> idsSesiones){
+	public void borrarElHistoricoDeUnaConversacionPorCliente(ArrayList<String> idsSesiones, String idCliente){
 		for (String idSesion: idsSesiones){
-			borrarElHistoricoDeUnaConversacionEspecifica(idSesion);
-			borrarElHistoricoDeUnaConversacionGeneral(idSesion);
+			borrarElHistoricoDeUnaConversacion(idSesion, idCliente);
 		}
 	}
 	

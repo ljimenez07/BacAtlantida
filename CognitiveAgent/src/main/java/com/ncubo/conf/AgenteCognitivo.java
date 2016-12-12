@@ -336,7 +336,7 @@ public class AgenteCognitivo
 	}
 	
 	public String borrarTodasLasConversacionesDeUnCliente(String idCliente){
-		historicoDeConversaciones.borrarElHistoricoDeUnaConversacionPorCliente(misConversaciones.obtenerLosIdsDeSesionDeUnCliente(idCliente));
+		historicoDeConversaciones.borrarElHistoricoDeUnaConversacionPorCliente(misConversaciones.obtenerLosIdsDeSesionDeUnCliente(idCliente), idCliente);
 		return misConversaciones.borrarTodasLasConversacionesDeUnCliente(idCliente);
 	}
 	
