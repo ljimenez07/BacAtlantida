@@ -1076,10 +1076,10 @@
 	</variablesDeAmbiente>
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
-		<workspace tipo="general" idIBM="c2aea9a5-8f76-4cbd-bf8e-4f3c7264a5a9" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="3ec5ca5c-6a5b-4d94-8417-28caeb9168df" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
+		<workspace tipo="general" idIBM="622af975-3a46-408a-9c3a-b72328c307d6" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="especifico" idIBM="e7d6fefc-adba-4814-b5dc-0164ade4a38b" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="f6a14d08-2634-4f9c-9fd1-a083b0cb2b48" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="5bc3c2f0-443d-41a9-8988-b76cf6bc970f" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="39900977-8977-4204-bad0-3f35e9b6a0dc" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>
