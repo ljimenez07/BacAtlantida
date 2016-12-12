@@ -311,6 +311,37 @@
 		</when>
 	</conversacion>
 	
+	<conversacion id="numerosCallCenter">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Nuestros números telefónicos son los siguientes: @@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
+	<conversacion id="numerosAgencias">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>En estos momentos no tengo los números telefónicos de nuestras agencias.</frase>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
+	<conversacion id="cualTelefono">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>¿Cuáles son los números telefónicos que necesitas, de Call Center o de alguna de nuestras agencias?</curioso>
+			<curioso>¿Necesitas los números de teléfono de Call Center o de alguna de nuestras agencias?</curioso>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
 	<conversacion id="fueraDeContextoGeneral">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
@@ -378,7 +409,7 @@
 		<vinetas></vinetas>
 	</conversacion>
 	
-		<conversacion id="cualMonedaAhorrosRemesas">
+	<conversacion id="cualMonedaAhorrosRemesas">
 		<tipo>pregunta</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
@@ -663,7 +694,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para solicitar un préstamo de vivienda en el caso que seas asalariado debes presentar: @@br/@@@ @@br/@@@ 1) Fotocopia de tarjeta de Identidad. @@br/@@@ 2) Fotocopia de RTN. @@br/@@@ 3) Constancia de Trabajo con Deducciones y Detalle de Antigüedad (1 año de laborar en empresa privada y 2 en sector público) exceptuando empleados bajo convenio. @@br/@@@ 4) Escritura del Inmueble que otorgará en garantía más Promesa de venta. @@br/@@@ 5) Documentos del vendedor (Fotocopia de Id y RTN). @@br/@@@ 6) Constancia de no poseer Bienes Inmuebles (Fondos Banhprovi). @@br/@@@ 7) Si es construcción o mejoras presentar presupuesto de construcción y el plano de construcción. @@br/@@@ @@br/@@@ Si eres comerciante individual debes presentar: @@br/@@@ @@br/@@@ 1) Fotocopia de Tarjeta de Identidad. @@br/@@@ 2) Estados Financieros de los 2 últimos años. @@br/@@@ 3) Escritura de comerciante individual. @@br/@@@ 4) Permiso de operación vigente o carnet de colegiación o permiso de explotación. @@br/@@@ 5) Escritura del inmueble que otorgara en garantía. @@br/@@@ 6) Promesa de venta. @@br/@@@ 7) Documentos del vendedor (Fotocopia de Id y RTN). @@br/@@@ 8) Constancia de no poseer Bienes Inmuebles (Fondos Banhprovi). @@br/@@@ 9) Si es construcción o mejoras presentar presupuesto de construcción y el plano de construcción.</frase>
+			<frase>Para solicitar un préstamo de vivienda en el caso que seas asalariado debes presentar: @@br/@@@ @@br/@@@ 1) Fotocopia de tarjeta de Identidad. @@br/@@@ 2) Fotocopia de RTN. @@br/@@@ 3) Constancia de Trabajo con Deducciones y Detalle de Antigüedad (1 año de laborar en empresa privada y 2 en sector público) exceptuando empleados bajo convenio. @@br/@@@ 4) Escritura del Inmueble que otorgará en garantía más Promesa de venta. @@br/@@@ 5) Documentos del vendedor (Fotocopia de Id y RTN). @@br/@@@ 6) Constancia de no poseer Bienes Inmuebles (Fondos Banhprovi). @@br/@@@ 7) Si es construcción o mejoras presentar presupuesto de construcción y el plano de construcción. @@br/@@@ @@br/@@@ Si eres comerciante individual debes presentar: @@br/@@@ @@br/@@@ 1) Fotocopia de Tarjeta de Identidad. @@br/@@@ 2) Estados Financieros de los 2 últimos años. @@br/@@@ 3) Escritura de comerciante individual. @@br/@@@ 4) Permiso de operación vigente o carnet de colegiación o permiso de explotación. @@br/@@@ 5) Escritura del inmueble que otorgará en garantía. @@br/@@@ 6) Promesa de venta. @@br/@@@ 7) Documentos del vendedor (Fotocopia de Id y RTN). @@br/@@@ 8) Constancia de no poseer Bienes Inmuebles (Fondos Banhprovi). @@br/@@@ 9) Si es construcción o mejoras presentar presupuesto de construcción y el plano de construcción.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -753,7 +784,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Lamento lo sucedido, si necesitas reportar el extravío de tus tarjetas de crédito y débito puedes llamar a los siguientes números telefónicos: @@#@@@ @@br/@@@  @@br/@@@ En Honduras: @@br/@@@ 2280-1010 / 2580-1010 / 2480-1010 @@br/@@@ @@br/@@@ En el Extranjero:  @@br/@@@ @@br/@@@ VISA: @@br/@@@ USA y Canadá: 1-800-847-2911 @@br/@@@ En otros países: (410)-581-0120 @@br/@@@ @@br/@@@ MASTERCARD: @@br/@@@ USA y Canadá: 1-800-307-7309 @@br/@@@ En otros países: 1-636-722-7111 @@#/@@@ @@br/@@@ @@br/@@@  Recuerda que este servicio está disponible las 24 horas, los 7 días de la semana.</frase>
+			<frase>Lamento lo sucedido, si necesitas reportar el extravío de tus tarjetas de crédito y débito puedes llamar a los siguientes números telefónicos: @@#@@@ @@br/@@@  @@br/@@@ En Honduras: @@br/@@@ 2280-1010 / 2580-1010 / 2480-1010 @@br/@@@ @@br/@@@ En el Extranjero:  @@br/@@@ @@br/@@@ VISA: @@br/@@@ USA y Canadá: 1-800-847-2911 @@br/@@@ En otros países: (410)-581-0120 @@br/@@@ @@br/@@@ MASTERCARD: @@br/@@@ USA y Canadá: 1-800-307-7309 @@br/@@@ En otros países: 1-636-722-7111 @@br/@@@ @@br/@@@ @@#/@@@ Recuerda que este servicio está disponible las 24 horas, los 7 días de la semana.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -1032,6 +1063,18 @@
 			<frase>Lo siento, no entendí. ¿En qué te puedo ayudar?</frase>
 			<frase>Perdón, no entiendo. ¿Hay algo más con lo que te pueda ayudar?</frase>
 			<frase>Creo que no entendí. ¿En que te gustaría que te ayude?</frase>	
+			<meRindo>Lo siento, no entendí. Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</meRindo>
+		</frases>		
+		<vinetas></vinetas>		
+	</conversacion>
+	
+	<conversacion id="noEntendiCallCenter">		
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>
+			<frase>Perdón, no entiendo. @@br/@@@ @@br/@@@ Si gustas puedes llamar a para mayor ayuda: @@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@ @@br/@@@ @@br/@@@ ¿Hay algo más con lo que te pueda ayudar?</frase>
+			<frase>Creo que no entendí. @@br/@@@ @@br/@@@ Si necesitas más información puedes llamar a los siguientes números telefónicos: @@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@ @@br/@@@ @@br/@@@ ¿Te gustaría que te ayude en algo más?</frase>	
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>
@@ -1076,10 +1119,10 @@
 	</variablesDeAmbiente>
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
-		<workspace tipo="general" idIBM="622af975-3a46-408a-9c3a-b72328c307d6" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="general" idIBM="0ec78686-a61d-4bd7-b207-7b9a6a5e8e28" intencionesParaSeReferenciado="">BAIntents</workspace>
 		<workspace tipo="especifico" idIBM="e7d6fefc-adba-4814-b5dc-0164ade4a38b" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="f6a14d08-2634-4f9c-9fd1-a083b0cb2b48" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="39900977-8977-4204-bad0-3f35e9b6a0dc" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="8d867007-67e0-45e2-b038-976ba4c11abd" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>

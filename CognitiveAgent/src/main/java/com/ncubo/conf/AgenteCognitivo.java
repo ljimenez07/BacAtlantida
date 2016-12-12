@@ -1,5 +1,6 @@
 package com.ncubo.conf;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,9 @@ import com.ncubo.chatbot.watson.TextToSpeechWatson;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.dao.UsuarioDao;
 import com.ncubo.data.Categorias;
+import com.ncubo.data.Configuracion;
+import com.ncubo.db.BitacoraDao;
+import com.ncubo.db.ConexionALaDB;
 import com.ncubo.logicaDeConversaciones.Conversaciones;
 import com.ncubo.util.FTPServidor;
 
@@ -45,7 +49,7 @@ public class AgenteCognitivo
 	
 	@Autowired
 	private UsuarioDao usuarioDao;
-
+	
 	@Autowired
 	private FTPServidor ftp;
 	
@@ -56,10 +60,14 @@ public class AgenteCognitivo
 	@Autowired
 	private ExtraerDatosWebService extraerDatos;
 
+	@Autowired
+	private Configuracion config;
+	
 	@PostConstruct
     public void init(){
 		misConversaciones.inicializar(getPathXML(), consultaDao);
 		inicializarGeneradorDeAudiosSingleton();
+		inicializadorDeLaBD();
 		historicoDeConversaciones = new HistoricosDeConversaciones();
     }
 	
@@ -96,7 +104,7 @@ public class AgenteCognitivo
 			String idFrase = salida.get(i).getFraseActual().getIdFrase();
 			texto = texto.replace("$", "");
 			
-			if((idFrase.equals("saldoCredito") ||  idFrase.equals("disponibleCredito") ) && usuario.getEstaLogueado())
+			if(idFrase.equals("saldoCredito") && usuario.getEstaLogueado())
 			{
 				textos = extraerDatos.obtenerSaldoTarjetaCredito( texto, usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
@@ -107,7 +115,18 @@ public class AgenteCognitivo
 					arrayList.put(jsonObject);
 				}
 			}
-			else if(idFrase.equals("saldoCuentaAhorros") && usuario.getEstaLogueado())
+			else if(idFrase.equals("disponibleCredito") && usuario.getEstaLogueado())
+			{
+				textos = extraerDatos.obtenerDisponibleTarjetaCredito(texto, usuario.getUsuarioId());
+				for(int j = 0; j < textos.length; j++)
+				{
+					JSONObject jsonObject = new JSONObject();
+					jsonObject.put("texto", textos[j]);
+					jsonObject.put("audio", "");	
+					arrayList.put(jsonObject);
+				}
+			}
+			else if((idFrase.equals("saldoCuentaAhorros") || idFrase.equals("disponibleCuentaAhorros")) && usuario.getEstaLogueado())
 			{
 				textos = extraerDatos.obtenerSaldoCuentaAhorros(texto, usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
@@ -138,31 +157,6 @@ public class AgenteCognitivo
 					jsonObject.put("audio", "");	
 					arrayList.put(jsonObject);
 				}
-			}
-			else if(idFrase.equals("disponibleCuentaAhorros") && usuario.getEstaLogueado())
-			{
-				textos = extraerDatos.obtenerSaldoCuentaAhorros( texto, usuario.getUsuarioId());
-				for(int j = 0; j < textos.length; j++)
-				{
-					JSONObject jsonObject = new JSONObject();
-					jsonObject.put("texto", textos[j]);
-					jsonObject.put("audio", "");	
-					arrayList.put(jsonObject);
-				}
-			}
-			else if(idFrase.equals("disponiblePuntos") && usuario.getEstaLogueado())	
-			{			
-				texto = texto.replaceAll("%pp", "200");
-					JSONObject jsonObject = new JSONObject();
-					jsonObject.put("texto", texto);
-					jsonObject.put("audio", "");	
-					arrayList.put(jsonObject);
-			}
-			else if(idFrase.equals("disponibleMillas")){
-				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", texto);
-				jsonObject.put("audio", salida.get(i).getMiSonido().url());	
-				arrayList.put(jsonObject);
 			}
 			else
 			{
@@ -302,6 +296,10 @@ public class AgenteCognitivo
 				this.getVoiceTextToSpeech(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), ftp.getCarpeta(), this.getPathAudio(), this.geturlPublicaAudios());
 	}
 	
+	private void inicializadorDeLaBD(){
+		ConexionALaDB.getInstance(config.getUrl(), config.getNombreBase(), config.getUsuario(), config.getClave());
+	}
+	
 	public void generarTodosLosAudiosEstaticos(){
 		System.out.println("El path xml es: "+getPathXML());
 		misConversaciones.generarAudiosEstaticos(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
@@ -320,8 +318,9 @@ public class AgenteCognitivo
 		}
 	}
 	
-	public String borrarUnaConversacion(String idSession){
-		return misConversaciones.borrarUnaConversacion(idSession);
+	public String borrarUnaConversacion(String idSesion){
+		historicoDeConversaciones.borrarElHistoricoDeUnaConversacion(idSesion, misConversaciones.buscarUnClienteApartirDeLaSesion(idSesion));
+		return misConversaciones.borrarUnaConversacion(idSesion);
 	}
 	
 	public String verTodasLasCoversacionesActivas(){
@@ -337,7 +336,7 @@ public class AgenteCognitivo
 	}
 	
 	public String borrarTodasLasConversacionesDeUnCliente(String idCliente){
-		historicoDeConversaciones.borrarElHistoricoDeUnaConversacion(misConversaciones.obtenerLosIdsDeSesionDeUnCliente(idCliente));
+		historicoDeConversaciones.borrarElHistoricoDeUnaConversacionPorCliente(misConversaciones.obtenerLosIdsDeSesionDeUnCliente(idCliente), idCliente);
 		return misConversaciones.borrarTodasLasConversacionesDeUnCliente(idCliente);
 	}
 	
