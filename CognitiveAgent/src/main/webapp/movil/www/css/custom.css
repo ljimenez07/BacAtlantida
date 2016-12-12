@@ -449,6 +449,12 @@ input
 	padding: 15px
 }
 
+.imagen-del-chat
+{
+	max-width: 50px;
+	max-height: 50px;
+}
+
 
 
 

@@ -10,13 +10,15 @@ public class Tema
 	private final Frase frases[];
 	private final Temas dependencias;
 	private final String idDelTema;
+	private final String nombre;
 	private final String nombreDelWorkspaceAlQuePertenece;
 	private final String intencionGeneralAlQuePertenece;
 	private final boolean sePuedeRepetir;
 	private final List<String> variablesDeContextoQueElTemaOcupa;
 	
-	public Tema (String idDelTema, String nombreWorkspace, boolean sePuedeRepetir, String idDeLaIntencionGeneral, Frase... frases){
+	public Tema (String idDelTema, String nombre, String nombreWorkspace, boolean sePuedeRepetir, String idDeLaIntencionGeneral, Frase... frases){
 		this.idDelTema = idDelTema;
+		this.nombre = nombre;
 		this.nombreDelWorkspaceAlQuePertenece = nombreWorkspace;
 		this.sePuedeRepetir = sePuedeRepetir;
 		this.intencionGeneralAlQuePertenece = idDeLaIntencionGeneral;
@@ -25,8 +27,9 @@ public class Tema
 		this.variablesDeContextoQueElTemaOcupa = new ArrayList<>();
 	}
 	
-	public Tema (String idDelTema, String nombreWorkspace, boolean sePuedeRepetir, String idDeLaIntencionGeneral, List<String> variables, Frase... frases){
+	public Tema (String idDelTema, String nombre,String nombreWorkspace, boolean sePuedeRepetir, String idDeLaIntencionGeneral, List<String> variables, Frase... frases){
 		this.idDelTema = idDelTema;
+		this.nombre = nombre;
 		this.nombreDelWorkspaceAlQuePertenece = nombreWorkspace;
 		this.sePuedeRepetir = sePuedeRepetir;
 		this.intencionGeneralAlQuePertenece = idDeLaIntencionGeneral;
@@ -47,6 +50,10 @@ public class Tema
 
 	public String obtenerIdTema(){
 		return idDelTema;
+	}
+	
+	public String obtenerNombre(){
+		return nombre;
 	}
 	
 	public String obtenerElNombreDelWorkspaceAlQuePertenece(){

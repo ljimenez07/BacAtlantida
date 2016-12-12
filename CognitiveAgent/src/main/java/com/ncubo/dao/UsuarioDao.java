@@ -12,10 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ncubo.conf.Usuario;
-import com.ncubo.dao.OfertaDao.atributo;
 import com.ncubo.data.CategoriaOferta;
 import com.ncubo.data.Categorias;
-import com.ncubo.data.Oferta;
 
 @Component
 public class UsuarioDao {
@@ -113,8 +111,6 @@ public class UsuarioDao {
 	
 	public ArrayList<Usuario> usuarios() throws ClassNotFoundException, SQLException
 	{
-		Categorias result = new Categorias();
-		
 		Connection con = dao.openConBD();
 		String query = 
 			"SELECT idUsuarioenBA, nuevasOfertas, peso, nombre, id, idCategoria "+

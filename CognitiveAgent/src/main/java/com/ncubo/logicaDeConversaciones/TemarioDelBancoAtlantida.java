@@ -24,6 +24,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"saludo",
+			"Saludo",
 			"BAIntents",
 			true,
 			"BAIntents",
@@ -43,6 +44,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"quiereSaldo",
+			"Saldo",
 			"BATemas",
 			true,
 			"saldo",
@@ -67,6 +69,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"quiereDisponible",
+			"Disponible",
 			"BATemas",
 			true,
 			"disponible",
@@ -90,6 +93,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"quiereTasaDeCambio",
+			"Tasa de cambio",
 			"BATemas",
 			true,
 			"tasa_cambio",
@@ -112,6 +116,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"quiereMovimientos",
+			"Movimientos",
 			"BATemas",
 			true,
 			"movimientos",
@@ -132,6 +137,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"quiereAyudaComo",
+			"Ayuda",
 			"BAFAQ",
 			true,
 			"ayuda_como",
@@ -183,6 +189,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"fueraDeContexto",
+			"Fuera de contexto",
 			"BAIntents",
 			true,
 			"out_of_scope",
@@ -196,6 +203,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"noEntendi",
+			"No entiendo",
 			"BAIntents",
 			true,
 			"out_of_scope",
@@ -209,6 +217,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"despedida",
+			"Despedida",
 			"BAIntents",
 			true,
 			"despedidas",
@@ -227,6 +236,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"saludarConocerte",
+			"Conocerte",
 			"ConocerteGeneral",
 			false,
 			"conocerte",
@@ -250,6 +260,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"preguntarPorHospedaje",
+			"Hospedaje",
 			"ConocerteGeneral",
 			false,
 			"conocerte",
@@ -272,6 +283,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"preguntarPorBelleza",
+			"Belleza",
 			"ConocerteGeneral",
 			false,
 			"conocerte",
@@ -293,6 +305,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"despedidaConocerte",
+			"Despedida del conocerte",
 			"ConocerteGeneral",
 			false,
 			"conocerte",
@@ -309,6 +322,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"quiereAbrirCuenta",
+			"Abrir cuenta",
 			"BAFAQ",
 			true,
 			"abrir_cuenta",			
@@ -343,6 +357,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"quiereMontoInicial",
+			"Precio/costo de productos",
 			"BAFAQ",
 			true,
 			"precio",
@@ -381,6 +396,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"quiereSaldoMinimo",
+			"Saldo mínimo en cuentas",
 			"BAFAQ",
 			true,
 			"saldo_minimo",
@@ -409,6 +425,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"quiereRequisitos",
+			"Requisitos",
 			"BAFAQ",
 			true,
 			"requisitos",
@@ -459,6 +476,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"quiereReportarExtravio",
+			"Reportar extravío",
 			"BAFAQ",
 			true,
 			"reportar_extravio",
@@ -476,6 +494,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		Tema resultado = new Tema
 		(
 			"quiereAgradecer",
+			"Agradecer",
 			"BAFAQ",
 			true,
 			"agradecimiento",
@@ -514,6 +533,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 		temasDelDiscurso.add(noEntendi());
 		temasDelDiscurso.add(quiereAgradecer());
 	}
+	
+	
 	
 	public void cargarIntenciones(List<Intenciones> intenciones)
 	{

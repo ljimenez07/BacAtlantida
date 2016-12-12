@@ -30,7 +30,6 @@ public class OfertaDao
 	private final String NOMBRE_TABLA_REACCION = "reaccion";
 	private final int LIMITE = 50;
 	private final int CANTIDAD_PAGINACION_BO = 20;
-	private final String CAMPOS_PARA_SELECT = String.format("%s.%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, IF(%s = ?, IF(%s = 1, 1, NULL), NULL) AS %s, IF(%s = ?, IF(%s = 0, 1, NULL), NULL) AS %s", NOMBRE_TABLA, atributo.ID_OFERTA, atributo.TITULO_DE_OFERTA, atributo.COMERCIO, atributo.DESCRIPCION, atributo.CATEGORIA, atributo.NOMBRE_CATEGORIA, atributo.CIUDAD, atributo.ESTADO, atributo.RESTRICCIONES, atributo.VIGENCIA_DESDE, atributo.VIGENCIA_HASTA, atributo.IMAGEN_COMERCIO_PATH, atributo.IMAGEN_PUBLICIDAD_PATH, atributo.FECHA_HORA_REGISTRO, atributo.ID_USUARIO, atributo.REACCION, atributo.LIKES, atributo.ID_USUARIO, atributo.REACCION, atributo.DISLIKES);
 	@Autowired
 	private Persistencia dao;
 	
@@ -174,7 +173,6 @@ public class OfertaDao
 	
 	public void insertarCategorias(int idOferta, ArrayList<CategoriaOferta> categorias) throws ClassNotFoundException, SQLException
 	{
-		int cantidad = categorias.size();
 		Connection con = dao.openConBD();
 		for( CategoriaOferta categoria : categorias)
 		{
@@ -313,7 +311,6 @@ public class OfertaDao
 		Oferta oferta = null;
 		while (rs.next())
 		{
-			String id = rs.getString(atributo.ID_OFERTA.toString());
 			String idCategoria = rs.getString("idCategoria");
 			
 			if( oferta == null)
