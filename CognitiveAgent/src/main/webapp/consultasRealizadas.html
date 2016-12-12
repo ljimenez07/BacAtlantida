@@ -101,7 +101,7 @@
 						<tbody>
 							<th:block th:each="consulta : ${consultasFiltradas}">
 								<tr>
-									<td class="texto-normal-ca" th:text="${consulta.descripcion}"/>
+									<td class="texto-normal-ca" th:text="${consulta.tema.obtenerNombre()}"/>
 									<td class="texto-normal-ca text-center" th:text="${consulta.vecesConsultado}"/>
 								</tr>
 							</th:block>

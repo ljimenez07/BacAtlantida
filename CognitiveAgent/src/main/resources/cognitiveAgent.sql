@@ -93,10 +93,6 @@ CREATE TABLE cognitiveagent.SPRING_SESSION_ATTRIBUTES (
 CREATE INDEX SPRING_SESSION_ATTRIBUTES_IX1 ON cognitiveagent.SPRING_SESSION_ATTRIBUTES (SESSION_ID);
 
 
-
-
-
-
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
@@ -165,3 +161,21 @@ CREATE TABLE `cognitiveagent`.`popups_vistos_por_usuario` (
   `usuario` VARCHAR(45) NOT NULL,
   `nuevasOfertas` TINYINT NULL,
   PRIMARY KEY (`usuario`));
+  
+DROP TABLE IF EXISTS `bitacora_de_conversaciones`;
+CREATE TABLE `bitacora_de_conversaciones` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_sesion` varchar(100) NOT NULL,
+  `id_usuario` varchar(100) DEFAULT NULL,
+  `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `conversacion` blob NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS `estadistica_tema`;
+CREATE TABLE `estadistica_tema` (
+  `idTema` varchar(55) NOT NULL,
+  `fecha` date NOT NULL,
+  `vecesConsultado` int(11) DEFAULT '0',
+  PRIMARY KEY (`idTema`,`fecha`)
+) ENGINE=InnoDB;

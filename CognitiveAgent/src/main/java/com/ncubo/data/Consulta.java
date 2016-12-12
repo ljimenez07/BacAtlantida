@@ -8,7 +8,6 @@ public class Consulta
 {
 	private Tema tema;
 	private Timestamp fecha;
-	private String descripcion;
 	private int vecesConsultado;
 	
 	public Consulta()
@@ -26,14 +25,6 @@ public class Consulta
 	{
 		this.tema = tema;
 		this.fecha = fecha;
-		this.vecesConsultado = vecesConsultado;
-	}
-	
-	public Consulta(Tema tema, Timestamp fecha, String descripcion, int vecesConsultado)
-	{
-		this.tema = tema;
-		this.fecha = fecha;
-		this.descripcion = descripcion;
 		this.vecesConsultado = vecesConsultado;
 	}
 
@@ -55,15 +46,6 @@ public class Consulta
 	public void setFecha(Timestamp fecha)
 	{
 		this.fecha = fecha;
-	}
-	
-	public String getDescripcion()
-	{
-		return descripcion;
-	}
-	public void setDescripcion(String descripcion)
-	{
-		this.descripcion = descripcion;
 	}
 	
 	public int getVecesConsultado()

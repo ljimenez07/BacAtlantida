@@ -1,10 +1,9 @@
 package com.ncubo.data;
 
-import java.nio.channels.NetworkChannel;
 import java.util.ArrayList;
 
-public class Categorias  extends ArrayList<CategoriaOferta>{
-
+public class Categorias  extends ArrayList<CategoriaOferta>
+{
 	private static final long serialVersionUID = 8724350546196251284L;
 
 	public Categorias()

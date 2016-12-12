@@ -1,7 +1,7 @@
 package com.ncubo.data;
 
-public class Indice {
-	
+public class Indice
+{
 	private final int MARGEN = 10;
 	private int indice;
 	private int pagina;

@@ -43,12 +43,13 @@
 	<div id="nuevasOfertas" class="modal fade" style=""role="dialog">
 		<div class="modal-dialog modal-sm" style="background-color: white;">
 			<div class="modal-body">
-				Hay nuevas ofertas para ti! 
+				¡ Hay nuevas ofertas para ti ! Deseas verlas ?
 			</div>
 			<div class="modal-footer">
 				<div class="row">
 					<div class="col-xs-12">
-						<button data-href="conocerte" data-after="quitarModal()" class="btn btn-default clickable">Si</button>
+						<button data-href="ofertas" data-after="quitarModalNuevasOfertas()" class="btn btn-default clickable">Sí</button>
+						<button  data-after="quitarModalNuevasOfertas()" class="btn btn-default clickable">Ahora no</button>
 					</div>
 				</div>
 			</div>
@@ -105,7 +106,7 @@
 	<script type="text/javascript" src="js/popupconocerte.handlebars.js"></script>
 	<script type="text/javascript" src="js/login.handlebars.js"></script>
 	
-	<script>
+	<script  type="text/javascript">
 	var audios = new Array();
 	var audioEnReproduccion = null;
 	var estaReproduciendo = false;
@@ -114,6 +115,11 @@
 	
 	var mensajesDeErrorEnAudio = ["", {code: 1, "message": "MEDIA_ERR_ABORTED"}, {code: 2, "message": "MEDIA_ERR_NETWORK"}, {code: 3, "message": "MEDIA_ERR_DECODE"}, {code: 4, "message": "MEDIA_ERR_SRC_NOT_SUPPORTED"}];
 	
+	
+	function quitarModalNuevasOfertas()
+	{
+		$("#nuevasOfertas").modal('hide');
+	}
 	function quitarModal()
 	{
 		setCookie('mostrarpopupdeconocerte', true, 100);
@@ -226,7 +232,7 @@
 			var after = $(this).data("after");
 			var href = $(this).data("href");
 			var accion = $(this).data("accion");
-			
+
 			if( before!= undefined )
 			{
 				eval(before);
@@ -317,7 +323,11 @@
 		})
 		.done(function(data) 
 		{
-			console.log({ajax: param.url, params: param, respuesta: data});
+			if(data.mostrarPopupdeOfertasNuevas)
+			{
+				$("#nuevasOfertas").modal('show');
+			}
+			
 			if(data.usuarioEstaLogueado)
 			{
 				estaLogueado = true;
@@ -326,14 +336,12 @@
 				$(".header-chat-icon.no-logueado").hide();
 				$("#menu-item-conocerte").show();
 				$("#menu-item-salir").show();
+				
 				if(param.done != undefined)
 				{
 					param.done(data);
 				}
-				if(data.mostrarPopupdeOfertasNuevas)
-				{
-					$("#nuevasOfertas").modal('show');
-				}
+
 			}
 			else if(data.usuarioEstaLogueado != undefined && estaLogueado && param.debeEvaluarSesion == undefined)
 			{

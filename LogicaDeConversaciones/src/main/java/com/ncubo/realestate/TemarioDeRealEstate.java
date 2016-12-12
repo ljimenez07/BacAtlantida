@@ -24,6 +24,7 @@ public class TemarioDeRealEstate extends Temario
 		Tema resultado = new Tema
 		(
 			"saludo",
+			"Saludo",
 			"deam_house_universe",
 			true,
 			"deam_house_universe",
@@ -39,6 +40,7 @@ public class TemarioDeRealEstate extends Temario
 		Tema resultado = new Tema
 		(
 			"cualPais",
+			"Cual pais",
 			"want_house",
 			false,
 			"want_house",
@@ -54,6 +56,7 @@ public class TemarioDeRealEstate extends Temario
 		Tema resultado = new Tema
 		(
 			"conFamiliaOSolo",
+			"Con familia o solo",
 			"want_house",
 			false,
 			"want_house",
@@ -68,6 +71,7 @@ public class TemarioDeRealEstate extends Temario
 		Tema resultado = new Tema
 		(
 			"determinarLocalizacion",
+			"Determinar localizacion",
 			"want_house",
 			false,
 			"want_house",
@@ -82,6 +86,7 @@ public class TemarioDeRealEstate extends Temario
 		Tema resultado = new Tema
 		(
 			"quierePatio",
+			"patio",
 			"want_house",
 			false,
 			"want_house",
@@ -96,6 +101,7 @@ public class TemarioDeRealEstate extends Temario
 		Tema resultado = new Tema
 		(
 			"quiereEnCondominio",
+			"Condominio",
 			"want_house",
 			false,
 			"want_house",
@@ -109,6 +115,7 @@ public class TemarioDeRealEstate extends Temario
 		Tema resultado = new Tema
 		(
 			"mostrarResultados",
+			"Mostrar resultados",
 			"want_house",
 			false,
 			"want_house",
@@ -122,6 +129,7 @@ public class TemarioDeRealEstate extends Temario
 		Tema resultado = new Tema
 		(
 			"despedida",
+			"Despedida",
 			"deam_house_universe",
 			true,
 			"deam_house_universe",

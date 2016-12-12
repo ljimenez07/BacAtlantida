@@ -12,10 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ncubo.conf.Usuario;
-import com.ncubo.dao.OfertaDao.atributo;
 import com.ncubo.data.CategoriaOferta;
 import com.ncubo.data.Categorias;
-import com.ncubo.data.Oferta;
 
 @Component
 public class UsuarioDao {
@@ -113,13 +111,11 @@ public class UsuarioDao {
 	
 	public ArrayList<Usuario> usuarios() throws ClassNotFoundException, SQLException
 	{
-		Categorias result = new Categorias();
-		
 		Connection con = dao.openConBD();
 		String query = 
-			"SELECT usuario, nuevasOfertas, peso, nombre, id "+
-			"FROM popups_vistos_por_usuario "+
-			"LEFT OUTER JOIN categoria_usuario_peso on idUsuarioenBA =  usuario "+
+			"SELECT idUsuarioenBA, nuevasOfertas, peso, nombre, id, idCategoria "+
+			"FROM categoria_usuario_peso "+
+			"LEFT OUTER JOIN popups_vistos_por_usuario  on idUsuarioenBA =  usuario "+
 			"LEFT OUTER JOIN categoriadeoferta on categoriadeoferta.id =  categoria_usuario_peso.idCategoria ";
 				
 		PreparedStatement stmt = con.prepareStatement(query);
@@ -130,7 +126,7 @@ public class UsuarioDao {
 		
 		while (rs.next())
 		{
-			String id = rs.getString( "usuario" );
+			String id = rs.getString( "idUsuarioenBA" );
 			String idCategoria = rs.getString("idCategoria");
 			
 			if( ! usuriosMap.containsKey(id) )
@@ -167,7 +163,7 @@ public class UsuarioDao {
 			+ "WHERE usuario = ? ";
 				
 		PreparedStatement stmt = con.prepareStatement(query);
-		stmt.setString(1, usuario.getIdSesion() );
+		stmt.setString(1, usuario.getUsuarioId()  );
 		
 		boolean resultado = false;
 		
@@ -176,6 +172,29 @@ public class UsuarioDao {
 		if( rs.next() )
 		{
 			resultado = ! rs.getBoolean( "nuevasOfertas" );
+		}
+
+		return resultado;
+	}
+	
+	public boolean yaContestoElConocerteAlmenosUnaVez(Usuario usuario) throws ClassNotFoundException, SQLException
+	{
+		Connection con = dao.openConBD();
+		String query = 
+			"SELECT peso "
+			+ "FROM categoria_usuario_peso "
+			+ "WHERE idUsuarioenBA = ? ";
+				
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setString(1, usuario.getUsuarioId()  );
+		
+		boolean resultado = false;
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		if( rs.next() )
+		{
+			resultado = true;
 		}
 
 		return resultado;
