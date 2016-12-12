@@ -96,7 +96,7 @@ public class AgenteCognitivo
 			String idFrase = salida.get(i).getFraseActual().getIdFrase();
 			texto = texto.replace("$", "");
 			
-			if((idFrase.equals("saldoCredito") ||  idFrase.equals("disponibleCredito") ) && usuario.getEstaLogueado())
+			if(idFrase.equals("saldoCredito") && usuario.getEstaLogueado())
 			{
 				textos = extraerDatos.obtenerSaldoTarjetaCredito( texto, usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
@@ -107,7 +107,18 @@ public class AgenteCognitivo
 					arrayList.put(jsonObject);
 				}
 			}
-			else if(idFrase.equals("saldoCuentaAhorros") && usuario.getEstaLogueado())
+			else if(idFrase.equals("disponibleCredito") && usuario.getEstaLogueado())
+			{
+				textos = extraerDatos.obtenerDisponibleTarjetaCredito(texto, usuario.getUsuarioId());
+				for(int j = 0; j < textos.length; j++)
+				{
+					JSONObject jsonObject = new JSONObject();
+					jsonObject.put("texto", textos[j]);
+					jsonObject.put("audio", "");	
+					arrayList.put(jsonObject);
+				}
+			}
+			else if((idFrase.equals("saldoCuentaAhorros") || idFrase.equals("disponibleCuentaAhorros")) && usuario.getEstaLogueado())
 			{
 				textos = extraerDatos.obtenerSaldoCuentaAhorros(texto, usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
@@ -138,31 +149,6 @@ public class AgenteCognitivo
 					jsonObject.put("audio", "");	
 					arrayList.put(jsonObject);
 				}
-			}
-			else if(idFrase.equals("disponibleCuentaAhorros") && usuario.getEstaLogueado())
-			{
-				textos = extraerDatos.obtenerSaldoCuentaAhorros( texto, usuario.getUsuarioId());
-				for(int j = 0; j < textos.length; j++)
-				{
-					JSONObject jsonObject = new JSONObject();
-					jsonObject.put("texto", textos[j]);
-					jsonObject.put("audio", "");	
-					arrayList.put(jsonObject);
-				}
-			}
-			else if(idFrase.equals("disponiblePuntos") && usuario.getEstaLogueado())	
-			{			
-				texto = texto.replaceAll("%pp", "200");
-					JSONObject jsonObject = new JSONObject();
-					jsonObject.put("texto", texto);
-					jsonObject.put("audio", "");	
-					arrayList.put(jsonObject);
-			}
-			else if(idFrase.equals("disponibleMillas")){
-				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", texto);
-				jsonObject.put("audio", salida.get(i).getMiSonido().url());	
-				arrayList.put(jsonObject);
 			}
 			else
 			{
