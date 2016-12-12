@@ -469,9 +469,9 @@ public class Conversacion {
 	
 	private void ponerComoYaTratado(Tema tema)
 	{
-		//if ( ! hilo.existeTema(temaActual)){ //si quiere que solo lo cuente una vez
+		if ( ! hilo.existeTema(temaActual)){ //si quiere que solo lo cuente una vez
 			estadisticasTemasTratados.darSeguimiento(temaActual);
-		//}
+		}
 		if(tema.sePuedeRepetir()){
 			hilo.ponerComoDichoEste(tema);
 		}else{

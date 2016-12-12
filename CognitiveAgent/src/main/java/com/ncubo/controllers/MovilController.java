@@ -106,11 +106,9 @@ public class MovilController {
 			JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.getEstaLogueado())
 					.put("usuarioNombre", usuario.getEstaLogueado() ? usuario.getUsuarioNombre() : "");
 			
-			String[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);
+			Boolean[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);
 			
-			for(int i = 0; i < cuentas.length; i++){
-				usuario.setVariablesDeContexto(cuentas[i], "true");
-			}
+			
 			
 			return respuesta.toString();
 		}

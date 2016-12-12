@@ -194,11 +194,10 @@ public abstract class Frase
 					{
 						
 						textoTag = texto.substring(texto.indexOf("@@")+2, texto.indexOf("@@@"));
-						System.out.println(textoTag);
 						if(textoTag.contains("#"))
 						{
 							textoNumerosTelefonicos = texto.substring(texto.indexOf("@@#@@@")+6, texto.indexOf("@@#/@@@"));
-							textoParaReproducir = textoParaReproducir.replaceFirst("@@#@@@"+textoNumerosTelefonicos+"@@#/@@@", "");
+							textoParaReproducir = textoParaReproducir.replace("@@#@@@"+textoNumerosTelefonicos+"@@#/@@@", "");
 							texto = texto.replaceFirst("@@#@@@", "");
 							texto = texto.replaceFirst("@@#/@@@", "");
 						}

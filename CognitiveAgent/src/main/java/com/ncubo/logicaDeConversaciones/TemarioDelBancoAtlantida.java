@@ -507,6 +507,26 @@ public class TemarioDelBancoAtlantida extends Temario{
 		return resultado;
 	}
 	
+	private Tema quiereSaberTelefonos()
+	{
+		Tema resultado = new Tema
+		(
+			"quiereSaberTelefonos",
+			"Conocer números telefónicos",
+			"BAFAQ",
+			true,
+			"saber_numeros",
+			frase("numerosCallCenter"),
+			frase("numerosAgencias"),
+			frase("cualTelefono"),
+			frase("preguntarPorOtraConsulta"),
+			frase("quiereHacerOtraConsulta"),
+			frase("noQuiereHacerOtraConsulta"),
+			frase("noEntendi")
+		);
+		return resultado;
+	}
+	
 	@Override
 	protected void cargarTemario(Temas temasDelDiscurso){
 		
@@ -532,6 +552,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		temasDelDiscurso.add(quiereReportarExtravio());
 		temasDelDiscurso.add(noEntendi());
 		temasDelDiscurso.add(quiereAgradecer());
+		temasDelDiscurso.add(quiereSaberTelefonos());
 	}
 	
 	
