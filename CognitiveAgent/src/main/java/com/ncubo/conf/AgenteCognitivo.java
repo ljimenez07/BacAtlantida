@@ -1,5 +1,6 @@
 package com.ncubo.conf;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,9 @@ import com.ncubo.chatbot.watson.TextToSpeechWatson;
 import com.ncubo.dao.ConsultaDao;
 import com.ncubo.dao.UsuarioDao;
 import com.ncubo.data.Categorias;
+import com.ncubo.data.Configuracion;
+import com.ncubo.db.BitacoraDao;
+import com.ncubo.db.ConexionALaDB;
 import com.ncubo.logicaDeConversaciones.Conversaciones;
 import com.ncubo.util.FTPServidor;
 
@@ -45,7 +49,7 @@ public class AgenteCognitivo
 	
 	@Autowired
 	private UsuarioDao usuarioDao;
-
+	
 	@Autowired
 	private FTPServidor ftp;
 	
@@ -56,10 +60,14 @@ public class AgenteCognitivo
 	@Autowired
 	private ExtraerDatosWebService extraerDatos;
 
+	@Autowired
+	private Configuracion config;
+	
 	@PostConstruct
     public void init(){
 		misConversaciones.inicializar(getPathXML(), consultaDao);
 		inicializarGeneradorDeAudiosSingleton();
+		inicializadorDeLaBD();
 		historicoDeConversaciones = new HistoricosDeConversaciones();
     }
 	
@@ -302,6 +310,10 @@ public class AgenteCognitivo
 				this.getVoiceTextToSpeech(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), ftp.getCarpeta(), this.getPathAudio(), this.geturlPublicaAudios());
 	}
 	
+	private void inicializadorDeLaBD(){
+		ConexionALaDB.getInstance(config.getUrl(), config.getNombreBase(), config.getUsuario(), config.getClave());
+	}
+	
 	public void generarTodosLosAudiosEstaticos(){
 		System.out.println("El path xml es: "+getPathXML());
 		misConversaciones.generarAudiosEstaticos(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
@@ -320,8 +332,9 @@ public class AgenteCognitivo
 		}
 	}
 	
-	public String borrarUnaConversacion(String idSession){
-		return misConversaciones.borrarUnaConversacion(idSession);
+	public String borrarUnaConversacion(String idSesion){
+		historicoDeConversaciones.borrarElHistoricoDeUnaConversacion(idSesion, misConversaciones.buscarUnClienteApartirDeLaSesion(idSesion));
+		return misConversaciones.borrarUnaConversacion(idSesion);
 	}
 	
 	public String verTodasLasCoversacionesActivas(){
@@ -337,7 +350,7 @@ public class AgenteCognitivo
 	}
 	
 	public String borrarTodasLasConversacionesDeUnCliente(String idCliente){
-		historicoDeConversaciones.borrarElHistoricoDeUnaConversacion(misConversaciones.obtenerLosIdsDeSesionDeUnCliente(idCliente));
+		historicoDeConversaciones.borrarElHistoricoDeUnaConversacionPorCliente(misConversaciones.obtenerLosIdsDeSesionDeUnCliente(idCliente));
 		return misConversaciones.borrarTodasLasConversacionesDeUnCliente(idCliente);
 	}
 	
