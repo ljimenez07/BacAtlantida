@@ -388,13 +388,16 @@ public class ExtraerDatosWebService {
 			"</soapenv:Body>"+
 		"</soapenv:Envelope>";
 		
-		String[] movimientos = new String[4];
-		movimientos[0] = texto;
+		String[] arregloMovimientos = new String[4];
+		arregloMovimientos[0] = texto;
 		requestBody = String.format(requestBody, usuario, cuenta);
 		String responseXML = 
 				given().
+				header("Content-Type", "text/xml;charset=UTF-8").
+				auth().
+				basic(usuario, password).
 				body(requestBody).
-				post().
+				post(movimientos).
 				andReturn().
 				asString();
 		
@@ -428,14 +431,14 @@ public class ExtraerDatosWebService {
 				nombreMoneda = "Lempiras";
 			}
 			if(codigoTransaccion.getValue().equals("CR"))
-				movimientos[j] = "El día "+fecha+ " a las "+ hora + " se realizó un crédito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
+				arregloMovimientos[j] = "El día "+fecha+ " a las "+ hora + " se realizó un crédito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
 			if(codigoTransaccion.getValue().equals("DB"))
-				movimientos[j] = "El día "+fecha+ " a las "+ hora + " se realizó un débito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
+				arregloMovimientos[j] = "El día "+fecha+ " a las "+ hora + " se realizó un débito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
 			
 			last--;
 		}
 		
-		return movimientos;
+		return arregloMovimientos;
 	}
 	
 	public String[] obtenerDisponibleTarjetaCredito(String texto, String usuario){
