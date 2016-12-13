@@ -138,11 +138,13 @@ public class MovilController {
 			
 			respuesta.put("usuarioNombre", usuario.getUsuarioNombre());
 			respuesta.put("estaLogueado", usuario.getEstaLogueado());
+			respuesta.put("mostrarPopConocerte", usuario.getEstaLogueado() && usuarioDao.yaContestoElConocerteAlmenosUnaVez(usuario) );
 		}
 		else
 		{
 			respuesta.put("usuarioNombre", "");
 			respuesta.put("estaLogueado", false);
+			respuesta.put("mostrarPopConocerte", false);
 		}
 		
 	return respuesta.toString();

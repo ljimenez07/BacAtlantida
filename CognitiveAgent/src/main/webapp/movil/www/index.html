@@ -207,21 +207,29 @@
 		pantallas["ofertas"] = {title: "INICIO", body: Handlebars.templates.ofertas(), DebajoDelPanel: ""};
 		pantallas["oferta"] = {title: "DETALLE DE LA OFERTA", body: "", DebajoDelPanel: ""};
 		
-		inicializarPantallas();
+		inicializarPantallas();	
 		
-		if(getCookie("mostrarpopupdeconocerte") == "")
-		{
-			$("#popupconocerte").modal('show');
-		}	
-		
+		cargarInformacionDelUsuario();
+	});
+	
+	function cargarInformacionDelUsuario()
+	{
 		ajax({
 			url: serverDomain + "/movil/usuario",
 			done: function(data)
 			{
+				
 				establecerBienvenida(data.estaLogueado, data.usuarioNombre);
+				
+				inicializarPantallas()
+				
+				if( data.mostrarPopConocerte && getCookie("mostrarpopupdeconocerte") == "" )
+				{
+					$("#popupconocerte").modal('show');
+				}
 			}
-		});
-	});
+		});	
+	}
 	
 	function inicializarPantallas()
 	{
