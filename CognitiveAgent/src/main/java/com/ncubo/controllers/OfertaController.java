@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -188,8 +189,17 @@ public class OfertaController
 		}
 		Indice indiceInicial = new Indice( pagina );
 				
+		
+		List<Oferta>ofertas = ofertaService.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario);
+		if( ofertas.size() == 0 )
+		{
+			System.out.println(String.format("Para el usuario %s no hay ofertas acorde a susu gustos. Se van a mostrar todas sus ofertas", usuario.getUsuarioId()));
+			ofertas = ofertaService.obtenerUltimasDiezOfertasParaMostrarDesdeSinConsiderarElUsuario(
+					indiceInicial, usuario);
+		}
+		
 		ObjectMapper mapper = new ObjectMapper();
-		JSONArray array = new JSONArray(mapper.writeValueAsString((ofertaService.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario))));
+		JSONArray array = new JSONArray(mapper.writeValueAsString(( ofertas )));
 
 		boolean puedeVerElpopupDeNuevasOfertas = usuario.getEstaLogueado() && usuarioDao.puedeVerElpopupDeNuevasOfertas( usuario );
 		

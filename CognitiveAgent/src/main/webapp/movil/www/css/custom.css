@@ -432,7 +432,7 @@ input
 	-ms-user-select: none;
 }
 .msg time:before{
-	content:"\f017";
+/*	content:"\f017";*/
 	color: #ddd;
 	font-family: FontAwesome;
 	display: inline-block;
