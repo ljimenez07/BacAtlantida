@@ -92,21 +92,19 @@ public class Conversacion {
 				String idFraseActivada = respuesta.obtenerFraseActivada();
 				if(respuesta.cambiarAGeneral()){
 					extraerOracionesAfirmarivasYPreguntas(misSalidas, respuesta, idFraseActivada);
-					this.temaActual = this.temario.buscarTema(Constantes.FRASE_SALUDO);
+					//this.temaActual = this.temario.buscarTema(Constantes.FRASE_SALUDO);
 					agente.cambiarAWorkspaceGeneral();
-					/*respuesta = agente.enviarRespuestaAWatson(respuestaDelCliente, fraseActual);
-					this.hilo.agregarUnaRespuesta(respuesta);
-					idFraseActivada = respuesta.obtenerFraseActivada();
-					extraerOracionesAfirmarivasYPreguntas(respuesta, idFraseActivada);*/
 					
-					if(this.temaActual != null){
-						if( (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_SALUDO)) && (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_DESPEDIDA)) )
-							ponerComoYaTratado(this.temaActual);
+					if (misSalidas.isEmpty()){
+						return analizarLaRespuestaConWatson(respuestaDelCliente);
 					}
 					
+					/*if(this.temaActual != null){
+						if( (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_SALUDO)) && (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_DESPEDIDA)) )
+							ponerComoYaTratado(this.temaActual);
+					}*/
 				}else{
 					if(agente.hayQueCambiarDeTema()){
-						
 						
 						idFraseActivada = respuesta.obtenerFraseActivada();
 						extraerOracionesAfirmarivasYPreguntas(misSalidas, respuesta, idFraseActivada);
