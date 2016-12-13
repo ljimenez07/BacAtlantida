@@ -33,7 +33,11 @@ $(function(){
 		var guardarCola = true;
 		var colaDeReproduccion = new Array();
 		
-		$("#chat-id-{{pathDelServidor}}").prepend('<div class="row contenedor-boton-escuchar-mensajes"><div class="col-xs-6"><div class="boton-escuchar-mensajes desactivado" /></div></div><div style="height: 54px" />');
+		$("#chat-id-{{pathDelServidor}}").prepend('<div style="height: 54px" />');
+		if(deviceType != "iPad" && deviceType != "iPhone")
+		{
+			$("#chat-id-{{pathDelServidor}}").prepend('<div class="row contenedor-boton-escuchar-mensajes"><div class="col-xs-6"><div class="boton-escuchar-mensajes desactivado" /></div></div>');
+		}
 		$("#chat-id-{{pathDelServidor}} .boton-escuchar-mensajes").click(function()
 		{
 			$(this).toggleClass("activado").toggleClass("desactivado");
@@ -144,26 +148,33 @@ $(function(){
 					var textos = data.textos;
 					if(textos != undefined)
 					{
+						var fecha = new Date();
+						var hora = dosDigitos(fecha.getHours()) + ":" + dosDigitos(fecha.getMinutes());
 						for(var i = 0; i < textos.length; i++)
 						{
-							var fecha = new Date();
-							var hora = dosDigitos(fecha.getHours()) + ":" + dosDigitos(fecha.getMinutes());
-							var respuesta = mensajeDeAgente.clone();
-							respuesta.find(".msg p").html(textos[i].texto);
-							respuesta.find("time").html(hora);
-							conversation.append(respuesta);
-							
+							var htmlAudio = "";
 							if(textos[i].audio != "")
 							{
-								reproducirMensaje(textos[i].audio);
+								if(deviceType == "iPad" || deviceType == "iPhone")
+								{
+									htmlAudio = '<br /><br /><audio controls preload="auto"><source src="' + serverDomain + textos[i].audio + '"></audio>';
+								}
+								else
+								{
+									reproducirMensaje(textos[i].audio);
+								}
 							}
+							var respuesta = mensajeDeAgente.clone();
+							respuesta.find(".msg p").html(textos[i].texto + htmlAudio);
+							respuesta.find("time").html(hora);
+							conversation.append(respuesta);
 						}
 					}
 					
 					if(data.seTerminoElChat == true)
 					{
 						ajax({
-							url: serverDomain + "/conversacion/borrarUnaConversacion/" + data.idSesion
+							url: serverDomain + "/conversacion/borrarUnaConversacion"
 						});
 						
 						setTimeout(function()

@@ -138,6 +138,11 @@ public class OfertaService
 		
 	}
 	
+	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesdeSinConsiderarElUsuario(Indice indiceInicial, Usuario usuario) throws Exception
+	{
+		return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario);
+	}
+	
 	private void obtenerUltimasDiezOfertasParaMostrarDesde(List<Oferta> ofertasFinales, Indice indiceInicial, Usuario usuario, Belleza belleza, Hotel hoteles, Restaurate restaurante) throws Exception
 	{
 		List<Oferta> ofertas =  ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario);

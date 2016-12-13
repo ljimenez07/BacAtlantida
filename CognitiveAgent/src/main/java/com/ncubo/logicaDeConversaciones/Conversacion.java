@@ -199,7 +199,7 @@ public class Conversacion {
 		
 		if(agente.hayQueCambiarDeTemaWSEspecifico()){
 			if(this.temaActualDelWorkSpaceEspecifico != null){
-				ponerComoYaTratado(this.temaActualDelWorkSpaceEspecifico);
+				ponerComoYaTratadoTemaEspecifico(this.temaActualDelWorkSpaceEspecifico);
 			}
 			
 			String idFraseActivada = "";
@@ -208,7 +208,7 @@ public class Conversacion {
 				extraerOracionesAfirmarivasYPreguntasDeWorkspaceEspecifico(misSalidas, respuesta, idFraseActivada, true);
 			}
 			
-			this.temaActualDelWorkSpaceEspecifico = this.temario.proximoTemaATratar(temaActualDelWorkSpaceEspecifico, hilo.verTemasYaTratadosYQueNoPuedoRepetir(), nombreDelWorkSpaseAUsar, nombreDeLaIntencion);
+			this.temaActualDelWorkSpaceEspecifico = this.temario.proximoTemaATratar(temaActualDelWorkSpaceEspecifico, hilo.verTemasYaTratadosYQueNoPuedoRepetirParaTemaEspecifico(), nombreDelWorkSpaseAUsar, nombreDeLaIntencion);
 			agente.yaNoCambiarDeTemaWSEspecifico();
 			agregarVariablesDeContextoEspecificoDelClienteAWatson(temaActualDelWorkSpaceEspecifico, nombreDelWorkSpaseAUsar);
 			if(this.temaActualDelWorkSpaceEspecifico == null){ // Ya no hay mas temas	
@@ -502,6 +502,19 @@ public class Conversacion {
 		}else{
 			hilo.noPuedoRepetir(tema);
 		}
+	}
+	
+	private void ponerComoYaTratadoTemaEspecifico(Tema tema)
+	{
+		if ( ! hilo.existeTemaEspecifico(temaActualDelWorkSpaceEspecifico)){ //si quiere que solo lo cuente una vez
+			estadisticasTemasTratados.darSeguimiento(temaActualDelWorkSpaceEspecifico);
+		}
+		
+		hilo.noPuedoRepetirTemaEspecifico(temaActualDelWorkSpaceEspecifico);
+	}
+	
+	public void borrarTemasEspecificosYaDichos(){
+		hilo.borrarTemasEspecificosYaDichos();
 	}
 	
 	public void guardarEstadiscitas() throws ClassNotFoundException, SQLException
