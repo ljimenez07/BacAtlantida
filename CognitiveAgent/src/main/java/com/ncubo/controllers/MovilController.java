@@ -107,7 +107,7 @@ public class MovilController {
 					.put("usuarioNombre", usuario.getEstaLogueado() ? usuario.getUsuarioNombre() : "")
 					.put("idUsuario", usuario.getEstaLogueado() ? usuario.getUsuarioId() : "");
 			
-			/*String[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);	
+		/*	boolean[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);	
 			
 			try {
 				serverCognitivo.guardarSiTieneTarjetaCredito(usuario.getUsuarioId(), cuentas[0]);
@@ -116,8 +116,8 @@ public class MovilController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				
-			}*/
-			
+			}
+			*/
 			
 			return respuesta.toString();
 		}

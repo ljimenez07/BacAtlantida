@@ -622,7 +622,7 @@ public class ExtraerDatosWebService {
 		return response;
 	}
 
-	public String[] tieneCuentas(String user){
+	public boolean[] tieneCuentas(String user){
 		
 		/*
 		Boolean[] cuentas = {false,false}; 
@@ -648,7 +648,7 @@ public class ExtraerDatosWebService {
 			cuentas[1] = true;
 			*/
 		
-		String[][] cuentas = {{"true","false"},{"false","true"},{"true","true"},{"false","false"}};
+		boolean[][] cuentas = {{true,false},{false,true},{true,true},{false,false}};
 		 int rnd = new Random().nextInt(cuentas.length);
 		 System.out.println("tiene tarjetas "+cuentas[rnd][0]);
 		 System.out.println("tiene cuentas "+cuentas[rnd][1]);

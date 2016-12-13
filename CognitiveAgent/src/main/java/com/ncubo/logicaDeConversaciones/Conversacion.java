@@ -272,8 +272,8 @@ public class Conversacion {
 				}
 				if(variable.equals("tieneTarjetaCredito")){
 					try {
-							String tieneTarjetaCredito = this.participante.obtenerSiTieneTarjetaCredito();
-							agente.activarValiableEnElContextoDeWatson("tieneTarjetaCredito", tieneTarjetaCredito);
+							Boolean tieneTarjetaCredito = this.participante.obtenerSiTieneTarjetaCredito();
+							agente.activarValiableEnElContextoDeWatson("tieneTarjetaCredito", String.valueOf(tieneTarjetaCredito));
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							System.out.println("Error al activar contexto en Watson: "+e.getMessage());
@@ -281,8 +281,8 @@ public class Conversacion {
 				}
 				if(variable.equals("tieneCuentaAhorros")){
 					try {
-							String tieneCuentaAhorros = this.participante.obtenerSiTieneCuentaAhorros();
-							agente.activarValiableEnElContextoDeWatson("tieneCuentaAhorros", tieneCuentaAhorros);
+							Boolean tieneCuentaAhorros = this.participante.obtenerSiTieneCuentaAhorros();
+							agente.activarValiableEnElContextoDeWatson("tieneCuentaAhorros", String.valueOf(tieneCuentaAhorros));
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							System.out.println("Error al activar contexto en Watson: "+e.getMessage());
