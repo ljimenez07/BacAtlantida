@@ -56,7 +56,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
-			frase("necesitaLogin")
+			frase("necesitaLogin"),
+			frase("despedidaCerrarSesion")
 		);
 		return resultado;
 	}
@@ -83,7 +84,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
-			frase("necesitaLogin")
+			frase("necesitaLogin"),
+			frase("despedidaCerrarSesion")
 		);
 		return resultado;
 	}
@@ -103,7 +105,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("tasaOtras"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
-			frase("noQuiereHacerOtraConsulta")
+			frase("noQuiereHacerOtraConsulta"),
+			frase("despedidaCerrarSesion")
 		);
 		return resultado;
 	}
@@ -127,7 +130,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
-			frase("necesitaLogin")
+			frase("necesitaLogin"),
+			frase("despedidaCerrarSesion")
 		);
 		return resultado;
 	}
@@ -179,7 +183,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
-			frase("noEntendi")
+			frase("noEntendi"),
+			frase("despedidaCerrarSesion")
 		);
 		return resultado;
 	}
@@ -221,7 +226,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			"BAIntents",
 			true,
 			"despedidas",
-			frase("despedida")
+			frase("despedida"),
+			frase("despedidaCerrarSesion")
 		);
 		return resultado;
 	}		
@@ -312,7 +318,9 @@ public class TemarioDelBancoAtlantida extends Temario{
 			variables,
 			frase("despedidaConocerte"),
 			frase("fueraContextoConocerteDelBanco"),
-			frase("fueraContextoConocerteGeneral")
+			frase("fueraContextoConocerteGeneral"),
+			frase("despedidaCerrarSesion")
+			
 		);
 		return resultado;
 	}
@@ -347,7 +355,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
-			frase("noEntendi")
+			frase("noEntendi"),
+			frase("despedidaCerrarSesion")
 		);
 		return resultado;
 	}
@@ -386,7 +395,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
-			frase("noEntendi")
+			frase("noEntendi"),
+			frase("despedidaCerrarSesion")
 		);
 		return resultado;
 	}
@@ -415,7 +425,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
-			frase("noEntendi")
+			frase("noEntendi"),
+			frase("despedidaCerrarSesion")
 		);
 		return resultado;
 	}
@@ -466,7 +477,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
-			frase("noEntendi")
+			frase("noEntendi"),
+			frase("despedidaCerrarSesion")
 		);
 		return resultado;
 	}
@@ -484,7 +496,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
-			frase("noEntendi")
+			frase("noEntendi"),
+			frase("despedidaCerrarSesion")
 		);
 		return resultado;
 	}
@@ -502,7 +515,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
-			frase("noEntendi")
+			frase("noEntendi"),
+			frase("despedidaCerrarSesion")
 		);
 		return resultado;
 	}
@@ -522,7 +536,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
-			frase("noEntendi")
+			frase("noEntendi"),
+			frase("despedidaCerrarSesion")
 		);
 		return resultado;
 	}

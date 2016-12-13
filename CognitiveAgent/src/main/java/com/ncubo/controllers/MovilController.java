@@ -107,9 +107,7 @@ public class MovilController {
 					.put("usuarioNombre", usuario.getEstaLogueado() ? usuario.getUsuarioNombre() : "")
 					.put("idUsuario", usuario.getEstaLogueado() ? usuario.getUsuarioId() : "");
 			
-			Boolean[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);
-			
-			
+			//Boolean[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);
 			
 			return respuesta.toString();
 		}

@@ -1093,13 +1093,20 @@
 		<tipo>afirmativa</tipo>		
 		<mandatoria>true</mandatoria>				
 		<enVozAlta>false</enVozAlta>				
-		<frases>				
+		<frases>	
+			<frase>Entiendo, ¿En que más te puedo ayudar?</frase>
 		</frases>				
-		<vinetas>
-			<vineta> @@img src="http://emojipedia-us.s3.amazonaws.com/cache/45/43/4543202f731f729d056cb94052db7810.png" class="imagen-del-chat" /## </vineta>
-			<vineta> @@img src="https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/like-128.png" class="imagen-del-chat" /## </vineta>
-			<vineta> @@img src="http://emojipedia-us.s3.amazonaws.com/cache/75/e6/75e67ae041ac8091914d2dfb7eb338e1.png" class="imagen-del-chat" /## </vineta>
-		</vinetas>				
+		<vinetas></vinetas>				
+	</conversacion>
+	
+	<conversacion id="despedidaCerrarSesion">				
+		<tipo>afirmativa</tipo>		
+		<mandatoria>true</mandatoria>				
+		<enVozAlta>false</enVozAlta>				
+		<frases>	
+			<frase>Hemos terminado la sesión y espero volver a servirte pronto. ¡Adiós!</frase>
+		</frases>				
+		<vinetas></vinetas>				
 	</conversacion>
 	
 	<conjunciones>
