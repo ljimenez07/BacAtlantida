@@ -199,6 +199,15 @@
 		}
 	}
 	
+	function resizeIframe(iframe) {
+		var altura = iframe.contentWindow.document.body.scrollHeight + 'px';
+		iframe.style.height = altura;
+		var parent = $(iframe).parent();
+		var ancho = parent.width();
+		var minimo = ancho / 4 * 3;
+		parent.css({"height": altura, "min-height": minimo});
+	}
+	
 	var pantallas = new Object();
 	$(function()
 	{
