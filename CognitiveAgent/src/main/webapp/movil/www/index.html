@@ -146,7 +146,7 @@
 	{
 		$("#sesion-expirada").modal('hide');
 		ajax({
-			url: serverDomain + "/conversacion/borrarTodasLasConversacionesDeUnCliente/" + idUsuario
+			url: serverDomain + "/conversacion/borrarTodasLasConversacionesDeUnCliente"
 		});
 		recargarVistasSinLoguear();
 	}

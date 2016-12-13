@@ -7,6 +7,7 @@ public class HiloDeLaConversacion {
 
 	private Temas temasYaDichos = new Temas();
 	private Temas temasYaDichosQueNoPuedoRepetir = new Temas();
+	private Temas temasYaDichosQueNoPuedoRepetirParaWorkspaceEspecifico = new Temas();
 	private ArrayList<Frase> loQueYaSeHaDicho = new ArrayList<Frase>();
 	private ArrayList<Respuesta> respuestas = new ArrayList<Respuesta>();
 	private ArrayList<Salida> misSalidas = new ArrayList<Salida>();
@@ -45,5 +46,22 @@ public class HiloDeLaConversacion {
 	public boolean existeTema(Tema tema)
 	{
 		return temasYaDichos.contains(tema);
+	}
+	
+	public boolean existeTemaEspecifico(Tema tema)
+	{
+		return temasYaDichosQueNoPuedoRepetirParaWorkspaceEspecifico.contains(tema);
+	}
+	
+	public void noPuedoRepetirTemaEspecifico(Tema tema){
+		temasYaDichosQueNoPuedoRepetirParaWorkspaceEspecifico.add(tema);
+	}
+	
+	public Temas verTemasYaTratadosYQueNoPuedoRepetirParaTemaEspecifico(){
+		return temasYaDichosQueNoPuedoRepetirParaWorkspaceEspecifico;
+	}
+	
+	public void borrarTemasEspecificosYaDichos(){
+		temasYaDichosQueNoPuedoRepetirParaWorkspaceEspecifico.clear();;
 	}
 }

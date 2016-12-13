@@ -1092,7 +1092,7 @@
 	<conversacion id="despistar">				
 		<tipo>afirmativa</tipo>		
 		<mandatoria>true</mandatoria>				
-		<enVozAlta>false</enVozAlta>				
+		<enVozAlta>true</enVozAlta>				
 		<frases>	
 			<frase>Entiendo, ¿En que más te puedo ayudar?</frase>
 		</frases>				
@@ -1102,7 +1102,7 @@
 	<conversacion id="despedidaCerrarSesion">				
 		<tipo>afirmativa</tipo>		
 		<mandatoria>true</mandatoria>				
-		<enVozAlta>false</enVozAlta>				
+		<enVozAlta>true</enVozAlta>				
 		<frases>	
 			<frase>Hemos terminado la sesión y espero volver a servirte pronto. ¡Adiós!</frase>
 		</frases>				
