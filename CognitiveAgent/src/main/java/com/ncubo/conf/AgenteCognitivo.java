@@ -345,7 +345,20 @@ public class AgenteCognitivo
 	}
 	
 	public String verElHistoricoDeLaConversacion(String idSesion){
-		return historicoDeConversaciones.verElHistoricoDeUnaConversacion(idSesion);
+		String miHistorico = historicoDeConversaciones.verElHistoricoDeUnaConversacion(idSesion);
+		if (miHistorico.isEmpty()){
+			try {
+				miHistorico = historicoDeConversaciones.obtenerMiBitacoraDeBD().buscarUnaConversacion(idSesion, "2016-12-12 15:31:23", 0);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+			
+		return miHistorico;
 	}
 	
 	public String verElHistoricoDeUnaConversacionEspecifica(String idSesion){

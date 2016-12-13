@@ -129,4 +129,9 @@ public class HistoricosDeConversaciones {
 		}
 		return resultado;
 	}
+	
+	public BitacoraDao obtenerMiBitacoraDeBD(){
+		return miBitacora;
+	}
+	
 }

@@ -67,5 +67,6 @@ public class Constantes {
 	public static String INTENCION_DESPEDIDA = "despedidas";
 	public static String INTENCION_SALUDAR = "saludos";
 	public static String INTENCION_DESPISTADOR = "despistar";
+	public static String INTENCION_QUE_PUEDEN_PREGUNTAR = "que_pueden_preguntar";
 	
 }

@@ -357,7 +357,13 @@ public class Conversacion {
 				fraseActual = saludar;
 				ponerComoYaTratado(saludar);
 				
-			}else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals(Constantes.INTENCION_FUERA_DE_CONTEXTO)){
+				Afirmacion despedidaCerrarSesion = (Afirmacion) this.temaActual.buscarUnaFrase("despedidaCerrarSesion");
+				misSalidas.add(agente.decir(despedidaCerrarSesion, respuesta, temaActual));
+				fraseActual = despedidaCerrarSesion;
+				ponerComoYaTratado(despedidaCerrarSesion);
+				
+			}else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals(Constantes.INTENCION_FUERA_DE_CONTEXTO) ||
+					agente.obtenerNombreDeLaIntencionGeneralActiva().equals(Constantes.INTENCION_QUE_PUEDEN_PREGUNTAR)){
 				System.out.println("Esta fuera de contexto ...");
 				this.temaActual = this.temario.buscarTema(Constantes.FRASE_FUERA_DE_CONTEXTO);
 				
