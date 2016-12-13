@@ -40,6 +40,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 	{
 		List<String> variables = new ArrayList<>();
 		variables.add("estaLogueado");
+		variables.add("tieneTarjetaCredito");
+		variables.add("tieneCuentaAhorros");
 		
 		Tema resultado = new Tema
 		(
@@ -57,7 +59,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
 			frase("necesitaLogin"),
-			frase("despedidaCerrarSesion")
+			frase("noTieneNada"),
+	frase("despedidaCerrarSesion")
 		);
 		return resultado;
 	}
@@ -66,6 +69,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 	{
 		List<String> variables = new ArrayList<>();
 		variables.add("estaLogueado");
+		variables.add("tieneTarjetaCredito");
+		variables.add("tieneCuentaAhorros");
 		
 		Tema resultado = new Tema
 		(
@@ -84,8 +89,9 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
+			frase("despedidaCerrarSesion"),
 			frase("necesitaLogin"),
-			frase("despedidaCerrarSesion")
+			frase("noTieneNada")
 		);
 		return resultado;
 	}
@@ -115,6 +121,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 	{
 		List<String> variables = new ArrayList<>();
 		variables.add("estaLogueado");
+		variables.add("tieneTarjetaCredito");
+		variables.add("tieneCuentaAhorros");
 		
 		Tema resultado = new Tema
 		(
@@ -130,8 +138,9 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
+			frase("despedidaCerrarSesion"),
 			frase("necesitaLogin"),
-			frase("despedidaCerrarSesion")
+			frase("noTieneNada")
 		);
 		return resultado;
 	}
@@ -542,6 +551,46 @@ public class TemarioDelBancoAtlantida extends Temario{
 		return resultado;
 	}
 	
+	
+	private Tema quiereSaberHorarios()
+	{
+		Tema resultado = new Tema
+		(
+			"quiereSaberHorarios",
+			"Horarios",
+			"BAFAQ",
+			true,
+			"saber_horarios",
+			frase("horariosAgencias"),
+			frase("horariosAutoBanco"),
+			frase("preguntarPorOtraConsulta"),
+			frase("quiereHacerOtraConsulta"),
+			frase("noQuiereHacerOtraConsulta"),
+			frase("noEntendi")
+		);
+		return resultado;
+	}
+	
+	
+	private Tema quiereSaberUbicacion()
+	{
+		Tema resultado = new Tema
+		(
+			"quiereSaberUbicacion",
+			"Ubicación de agencias, sucursales o autobancos",
+			"BAFAQ",
+			true,
+			"saber_ubicacion",
+			frase("ubicacionAgencias"),
+			frase("ubicacionAutoBanco"),
+			frase("preguntarPorOtraConsulta"),
+			frase("quiereHacerOtraConsulta"),
+			frase("noQuiereHacerOtraConsulta"),
+			frase("noEntendi")
+		);
+		return resultado;
+	}
+	
 	@Override
 	protected void cargarTemario(Temas temasDelDiscurso){
 		
@@ -568,6 +617,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 		temasDelDiscurso.add(noEntendi());
 		temasDelDiscurso.add(quiereAgradecer());
 		temasDelDiscurso.add(quiereSaberTelefonos());
+		temasDelDiscurso.add(quiereSaberHorarios());
+		temasDelDiscurso.add(quiereSaberUbicacion());
 	}
 	
 	

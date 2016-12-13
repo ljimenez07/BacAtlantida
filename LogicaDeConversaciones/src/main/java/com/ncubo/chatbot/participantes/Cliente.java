@@ -125,5 +125,22 @@ public class Cliente extends Participante{
 		return administradorDeVariablesDeContexto.obtenerVariable("nombreCliente").toString();
 	}
 	
+	// tiene tarjetas de credito
+	public void guardarSiTieneTarjetaCredito(boolean tieneTarjeta) throws Exception{
+		administradorDeVariablesDeContexto.ejecutar(String.format("tieneTarjetaCredito = '%s'; show tieneTarjetaCredito;", tieneTarjeta));
+	}
+	
+	public boolean obtenerSiTieneTarjetaCredito() throws Exception{
+		return Boolean.parseBoolean(administradorDeVariablesDeContexto.obtenerVariable("tieneTarjetaCredito"));
+	}
+	
+	// tiene tarjetas de credito
+	public void guardarSiTieneCuentaAhorros(boolean tieneCuenta) throws Exception{
+		administradorDeVariablesDeContexto.ejecutar(String.format("tieneCuentaAhorros = '%s'; show tieneCuentaAhorros;", tieneCuenta));
+	}
+		
+	public boolean obtenerSiTieneCuentaAhorros() throws Exception{
+		return Boolean.parseBoolean(administradorDeVariablesDeContexto.obtenerVariable("tieneCuentaAhorros"));
+	}
 }
 
