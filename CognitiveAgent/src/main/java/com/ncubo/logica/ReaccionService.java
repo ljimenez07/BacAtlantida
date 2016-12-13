@@ -40,6 +40,8 @@ public class ReaccionService
 			double peso = categoriaDelUsuario.getPeso() - categoriaDelaOferta.getPeso();
 			peso =  peso / 2 ;
 			
+			if( peso > 0 ) peso = 0; //Esto se hace porque las ofertas no pueden quedar negativas, solo van de 0-2.Entonces si un usuario da muchos dislikes va a quedar tan largo de todas las ofertas que no le va a salir ninguna.
+			
 			usuario.getCategorias().get(i).setPeso(peso);
 		}
 		

@@ -6,18 +6,21 @@
 					<div class="row">
 						<div class="col-xs-12 embed-responsive embed-responsive-4by3">
 							{{#if esHtml}}
-								<iframe class="html-de-oferta embed-responsive-item" frameBorder="0" scrolling="no" id="html-de-oferta-{{idOferta}}" style="display:block; width:100%; height:100vh;"></iframe>
+								<div class="overlay"></div>
+								<iframe class="html-de-oferta embed-responsive-item" frameBorder="0" scrolling="no" id="html-de-oferta-{{idOferta}}" style="display:block; width:100%;"></iframe>
 								<script type="text/javascript">
 								var source = serverDomain + "/archivossubidos/{{imagenPublicidadPath}}";
 								var iframe = $('#ofertas #html-de-oferta-{{idOferta}}');
 								iframe.attr("src", source);
-								/*iframe.ready(function() {
-									var newHeight = $(this).find("body")[0].offsetHeight + "px";
-									iframe.css({height: newHeight});
-								});*/
+								
+								var parent = iframe.parent();
+								var ancho = parent.width();
+								var alto = ancho / 4 * 3;
+								var overlay = parent.find(".overlay");
+								overlay.width(ancho).height(alto);
 								</script>
 							{{else}}
-								<img src="/archivossubidos/{{imagenPublicidadPath}}" class="imagen-de-oferta">
+								<img src="/archivossubidos/{{imagenPublicidadPath}}" class="imagen-de-oferta embed-responsive-item">
 							{{/if}}
 						</div>
 					</div>

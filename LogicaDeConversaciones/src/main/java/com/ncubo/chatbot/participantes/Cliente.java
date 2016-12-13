@@ -57,7 +57,7 @@ public class Cliente extends Participante{
 		}
 	}
 	
-	private boolean contieneElIdSesion(String idSesion){
+	public boolean contieneElIdSesion(String idSesion){
 		return misIdsDeSesiones.contains(idSesion);
 	}
 	

@@ -17,7 +17,7 @@
 	<script type="text/javascript" src="js/globals.js"></script>
 	<title>Agente Cognitivo</title>
 </head>
-<body>
+<body onload="onLoad()">
 	<!-- Google Tag Manager (noscript) -->
 	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPXB6S"
 	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -107,11 +107,27 @@
 	<script type="text/javascript" src="js/login.handlebars.js"></script>
 	
 	<script  type="text/javascript">
+	
+	function onLoad() {
+		document.addEventListener("deviceready", onDeviceReady, false);
+	}
+	
+	document.addEventListener("backbutton", onBackKeyDown, false);
+
+	function onBackKeyDown(e) {
+		e.preventDefault();
+		var page = ordenDelasVistas.pop();
+		cambiarVista(page, false);
+	}
+	
+	
+	var ordenDelasVistas = new Array();
 	var audios = new Array();
 	var audioEnReproduccion = null;
 	var estaReproduciendo = false;
 	var estaLogueado = false;
-	var ventanaActual = "ofertas";
+	var vistaActual = "ofertas";
+	var idUsuario = "";
 	
 	var mensajesDeErrorEnAudio = ["", {code: 1, "message": "MEDIA_ERR_ABORTED"}, {code: 2, "message": "MEDIA_ERR_NETWORK"}, {code: 3, "message": "MEDIA_ERR_DECODE"}, {code: 4, "message": "MEDIA_ERR_SRC_NOT_SUPPORTED"}];
 	
@@ -122,27 +138,30 @@
 	}
 	function quitarModal()
 	{
-		setCookie('mostrarpopupdeconocerte', true, 100);
+		setCookie('mostrarpopupdeconocerte', false);
 		$("#popupconocerte").modal('hide');
 	}
 	
 	function quitarModalSesion()
 	{
 		$("#sesion-expirada").modal('hide');
-		inicializarPantallas();
+		ajax({
+			url: serverDomain + "/conversacion/borrarTodasLasConversacionesDeUnCliente/" + idUsuario
+		});
+		recargarVistasSinLoguear();
 	}
 	
-	function cambiarVista(href)
+	function cambiarVista(href, guardarVistaEnHistorial)
 	{
 		audios = new Array();
 		var app = $(".app");
 		
 		app.find(".show").hide();
-		app.find("#"+href).show();
+		app.find("#" + href).show();
 		
 		app.find(".show").removeClass("show");
-		app.find("#"+href).removeClass("hide");
-		app.find("#"+href).addClass("show");
+		app.find("#" + href).removeClass("hide");
+		app.find("#" + href).addClass("show");
 		
 		var botonEscucharMensajes = $("#chat-id-" + href + " .boton-escuchar-mensajes");
 		if(botonEscucharMensajes.hasClass("desactivado"))
@@ -157,8 +176,13 @@
 		else
 		{
 			$("body").css({"overflow": "scroll"});
-			ventanaActual = href;
+			vistaActual = href;
 		}
+		
+		if( guardarVistaEnHistorial != undefined && guardarVistaEnHistorial)
+		{
+			ordenDelasVistas.push( href );	
+		}		
 	}
 	
 	function menu(accion)
@@ -175,6 +199,15 @@
 		}
 	}
 	
+	function resizeIframe(iframe) {
+		var altura = iframe.contentWindow.document.body.scrollHeight + 'px';
+		iframe.style.height = altura;
+		var parent = $(iframe).parent();
+		var ancho = parent.width();
+		var minimo = ancho / 4 * 3;
+		parent.css({"height": altura, "min-height": minimo});
+	}
+	
 	var pantallas = new Object();
 	$(function()
 	{
@@ -187,21 +220,28 @@
 		pantallas["ofertas"] = {title: "INICIO", body: Handlebars.templates.ofertas(), DebajoDelPanel: ""};
 		pantallas["oferta"] = {title: "DETALLE DE LA OFERTA", body: "", DebajoDelPanel: ""};
 		
-		inicializarPantallas();
-		
-		if(getCookie("mostrarpopupdeconocerte") == "")
-		{
-			$("#popupconocerte").modal('show');
-		}	
-		
+		cargarInformacionDelUsuario();
+	});
+	
+	function cargarInformacionDelUsuario()
+	{
 		ajax({
 			url: serverDomain + "/movil/usuario",
 			done: function(data)
 			{
+				inicializarPantallas();
+				
 				establecerBienvenida(data.estaLogueado, data.usuarioNombre);
+				idUsuario = data.idUsuario;				
+				
+				if( data.mostrarPopConocerte && 
+					( getCookie("mostrarpopupdeconocerte") == "" || getCookie("mostrarpopupdeconocerte") == "true" ))
+				{
+					$("#popupconocerte").modal('show');
+				}
 			}
-		});
-	});
+		});	
+	}
 	
 	function inicializarPantallas()
 	{
@@ -240,7 +280,7 @@
 			
 			if(href != undefined )
 			{
-				cambiarVista( href );
+				cambiarVista( href, true );
 			}
 			
 			if(accion != undefined)
@@ -256,11 +296,7 @@
 						debeEvaluarSesion: false,
 						done: function(data)
 						{
-							$("#menu-item-conocerte").hide();
-							$("#menu-item-salir").hide();
-							estaLogueado = false;
-							inicializarPantallas();
-							cambiarVista("ofertas");
+							recargarVistasSinLoguear();
 						}
 					});
 				}
@@ -271,6 +307,16 @@
 				eval(after);
 			}
 		});	
+	}
+	
+	function recargarVistasSinLoguear()
+	{
+		$("#menu-item-conocerte").hide();
+		$("#menu-item-salir").hide();
+		estaLogueado = false;
+		idUsuario = "";
+		inicializarPantallas();
+		cambiarVista("ofertas", true);
 	}
 	
 	function agregarAColaDeReproduccion(pathDelArchivo)

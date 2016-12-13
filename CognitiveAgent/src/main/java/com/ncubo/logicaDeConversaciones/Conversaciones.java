@@ -286,6 +286,21 @@ public class Conversaciones {
 		return resultado;
 	}
 
+	public String buscarUnClienteApartirDeLaSesion(String idSesion){
+		String resultado = "";
+		
+		Enumeration<String> keys = misClientes.keys();
+		while(keys.hasMoreElements()){
+			String key = keys.nextElement();
+			if(misClientes.get(key).contieneElIdSesion(idSesion)){
+				resultado = key;
+				break;
+			}
+		}
+		
+		return resultado;
+	}
+	
 	public void inicializar(String pathXML, ConsultaDao consultaDao) {
 		System.out.println("El path xml es: "+pathXML);
 		temarioDelBancoAtlantida = new TemarioDelBancoAtlantida(pathXML);

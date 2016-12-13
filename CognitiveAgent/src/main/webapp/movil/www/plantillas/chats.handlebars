@@ -170,7 +170,7 @@ $(function(){
 						{
 							$(".app #{{pathDelServidor}}").html(Handlebars.templates.layout(pantallas["{{pathDelServidor}}"]));
 							bindClickeable();
-							cambiarVista("ofertas");
+							cambiarVista("ofertas", true);
 						}, 5000);
 					}
 					moverScrollParaAbajoEnFuncionDelUltimoMensaje();
@@ -181,7 +181,7 @@ $(function(){
 					console.log(XMLHttpRequest.responseJSON.exception);
 					if( XMLHttpRequest.responseJSON.exception.includes("NoSessionException") )
 					{
-						cambiarVista( "login" );
+						cambiarVista( "login" , true);
 					}
 				}
 			});
