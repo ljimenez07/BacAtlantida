@@ -229,16 +229,15 @@ public class OfertaDao
 		stmt.setString(1, idUsuario);
 		stmt.setString(2, idUsuario);
 		stmt.setDate(3, new Date(Calendar.getInstance().getTimeInMillis()));
-		stmt.setInt(4, indiceInicial.valorEntero());
+		stmt.setInt(4, indiceInicial.valorEntero() * 10);
 		
 		ResultSet rs = stmt.executeQuery();
-		
 		
 		while (rs.next())
 		{
 			String id = rs.getString(atributo.ID_OFERTA.toString());
 			String idCategoria = rs.getString("idCategoria");
-			
+
 			if ( !ofertasMap.containsKey( id ) )
 			{
 				Oferta oferta = new Oferta(
