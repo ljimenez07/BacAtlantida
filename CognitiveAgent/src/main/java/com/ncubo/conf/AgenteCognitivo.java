@@ -432,4 +432,26 @@ public class AgenteCognitivo
 		return misConversaciones.obtenerCliente(idCliente).obtenerValorDeGustosDeBelleza();
 	}
 	
+	public void guardarSiTieneTarjetaCredito(String idCliente, String valor) throws Exception
+	{
+		misConversaciones.obtenerCliente(idCliente).guardarSiTieneTarjetaCredito(valor);
+	}
+	
+	public String obtenerSiTieneTarjetaCredito(String idCliente) throws Exception
+	{
+		return misConversaciones.obtenerCliente(idCliente).obtenerSiTieneTarjetaCredito();
+	}
+	
+	public void guardarSiTieneCuentaAhorros(String idCliente, String valor) throws Exception
+	{
+		misConversaciones.obtenerCliente(idCliente).guardarSiTieneCuentaAhorros(valor);
+	}
+	
+	public String obtenerSiTieneCuentaAhorros(String idCliente) throws Exception
+	{
+		return misConversaciones.obtenerCliente(idCliente).obtenerSiTieneCuentaAhorros();
+	}
+	
+	
+	
 }

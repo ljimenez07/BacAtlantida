@@ -106,8 +106,16 @@ public class MovilController {
 			JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.getEstaLogueado())
 					.put("usuarioNombre", usuario.getEstaLogueado() ? usuario.getUsuarioNombre() : "");
 			
-			Boolean[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);
+			/*String[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);	
 			
+			try {
+				serverCognitivo.guardarSiTieneTarjetaCredito(usuario.getUsuarioId(), cuentas[0]);
+				serverCognitivo.guardarSiTieneCuentaAhorros(usuario.getUsuarioId(), cuentas[1]);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				
+			}*/
 			
 			
 			return respuesta.toString();

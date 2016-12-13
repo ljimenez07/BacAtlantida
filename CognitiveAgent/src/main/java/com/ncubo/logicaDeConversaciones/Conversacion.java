@@ -270,6 +270,25 @@ public class Conversacion {
 					}
 					
 				}
+				if(variable.equals("tieneTarjetaCredito")){
+					try {
+							String tieneTarjetaCredito = this.participante.obtenerSiTieneTarjetaCredito();
+							agente.activarValiableEnElContextoDeWatson("tieneTarjetaCredito", tieneTarjetaCredito);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							System.out.println("Error al activar contexto en Watson: "+e.getMessage());
+						}
+				}
+				if(variable.equals("tieneCuentaAhorros")){
+					try {
+							String tieneCuentaAhorros = this.participante.obtenerSiTieneCuentaAhorros();
+							agente.activarValiableEnElContextoDeWatson("tieneCuentaAhorros", tieneCuentaAhorros);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							System.out.println("Error al activar contexto en Watson: "+e.getMessage());
+						}
+					
+				}
 			}
 		}
 	}

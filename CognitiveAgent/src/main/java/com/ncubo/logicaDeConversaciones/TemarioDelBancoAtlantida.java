@@ -40,6 +40,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 	{
 		List<String> variables = new ArrayList<>();
 		variables.add("estaLogueado");
+		variables.add("tieneTarjetaCredito");
+		variables.add("tieneCuentaAhorros");
 		
 		Tema resultado = new Tema
 		(
@@ -65,6 +67,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 	{
 		List<String> variables = new ArrayList<>();
 		variables.add("estaLogueado");
+		variables.add("tieneTarjetaCredito");
+		variables.add("tieneCuentaAhorros");
 		
 		Tema resultado = new Tema
 		(
@@ -112,6 +116,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 	{
 		List<String> variables = new ArrayList<>();
 		variables.add("estaLogueado");
+		variables.add("tieneTarjetaCredito");
+		variables.add("tieneCuentaAhorros");
 		
 		Tema resultado = new Tema
 		(
