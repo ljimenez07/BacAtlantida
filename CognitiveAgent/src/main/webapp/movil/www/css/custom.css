@@ -565,6 +565,16 @@ red
 	margin-top: 75px;
 }
 
+#ofertas .overlay
+{
+	z-index: 3;
+	position: relative;
+	top: 0;
+	left: 0;
+}
+
+
+
 
 /*Login*/
 
