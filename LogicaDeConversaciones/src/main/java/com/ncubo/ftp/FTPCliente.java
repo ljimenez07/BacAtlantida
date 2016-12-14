@@ -157,7 +157,10 @@ public class FTPCliente
 		{
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 			ftpClient.storeFile(nombreArchivo, archivo);
-		} 
+		}catch (Exception e){
+			System.out.println("Error al transferir al FTP: "+e.getMessage());
+			ftpClient.storeFile(nombreArchivo, archivo);
+		}
 		finally
 		{
 			archivo.close();

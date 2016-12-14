@@ -207,7 +207,10 @@ public class TemarioDelBancoAtlantida extends Temario{
 			"BAIntents",
 			true,
 			"out_of_scope",
-			frase("fueraDeContextoGeneral")
+			frase("fueraDeContextoGeneral"),
+			frase("despistar"),
+			frase("errorDeComunicacionConWatson"),
+			frase("noEntendiCallCenter")
 		);
 		return resultado;
 	}
