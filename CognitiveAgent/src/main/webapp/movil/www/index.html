@@ -114,10 +114,15 @@
 	
 	document.addEventListener("backbutton", onBackKeyDown, false);
 
-	function onBackKeyDown(e) {
-		e.preventDefault();
-		var page = ordenDelasVistas.pop();
-		cambiarVista(page, false);
+	function onBackKeyDown(e)
+	{
+		if( ordenDelasVistas.length > 0)
+		{
+			e.preventDefault();
+			var page = ordenDelasVistas.pop();
+			cambiarVista(page, false);
+		}
+		
 	}
 	
 	var deviceType = "";
