@@ -395,6 +395,19 @@
 		</when>
 	</conversacion>
 	
+	<conversacion id="fueraDeContextoBanco">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>En estos momentos no tengo esa información disponible. @@br/@@@ Si deseas puedes consultar a los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+		</frases>
+		<vinetas></vinetas>
+		<when>
+			<condition operador="and" tipo="intencion">out_of_scope_bank</condition>
+		</when>
+	</conversacion>
+	
 	<conversacion id="responderAgradecimiento">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
@@ -412,7 +425,6 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<curioso>¿Podrías repetirme sobre cuál de nuestros productos necesitas información?</curioso>
-			<curioso>¿Podrías repetirme en qué deseas que te ayude?</curioso>
 			<curioso>¿En cuál de nuestros productos estás interesado?</curioso>
 			<curioso>¿Sobre cuál producto te puedo dar información?</curioso>
 		</frases>
@@ -819,12 +831,22 @@
 		<vinetas></vinetas>
 	</conversacion>
 	
+	<conversacion id="precioAOL">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El servicio es completamente gratuito para la Banca Personal, sin embargo la Banca Empresarial y PYME tiene un costo el cual es informado cuando se presenta la oferta de servicio por el Ejecutivo de Cuenta.</frase>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
 	<conversacion id="reportarExtravio">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Lamento lo sucedido, si necesitas reportar el extravío de tus tarjetas de crédito y débito puedes llamar a los siguientes números telefónicos: @@br/@@@  @@br/@@@ En Honduras: @@br/@@@ 22 80 10 10. @@br/@@@ 25 80 10 10. @@br/@@@ 24 80 10 10. @@br/@@@ @@br/@@@ En el Extranjero:  @@br/@@@ @@br/@@@ VISA: @@br/@@@ USA y Canadá: 1 - 800 847 29 11. @@br/@@@ En otros países: (410) 581 01 20. @@br/@@@ @@br/@@@ MASTERCARD: @@br/@@@ USA y Canadá: 1 - 800 - 307 - 73 - 09. @@br/@@@ En otros países: 1 - 636 722 71 11. @@br/@@@ @@br/@@@ Recuerda que este servicio está disponible las 24 horas, los 7 días de la semana.</frase>
+			<frase>Lamento lo sucedido, si necesitas reportar el extravío de tus tarjetas de crédito y débito puedes llamar a los siguientes números telefónicos: @@br/@@@  @@br/@@@ En Honduras: @@br/@@@ 22 80 10 10. @@br/@@@ 25 80 10 10. @@br/@@@ 24 80 10 10. @@br/@@@ @@br/@@@ En el Extranjero:  @@br/@@@ @@br/@@@ VISA: @@br/@@@ USA y Canadá: 1 (800) 847 29 11. @@br/@@@ En otros países: (410) 581 01 20. @@br/@@@ @@br/@@@ MASTERCARD: @@br/@@@ USA y Canadá: 1 (800) 307 73 09. @@br/@@@ En otros países: 1 (636) 722 72 11. @@br/@@@ @@br/@@@ Recuerda que este servicio está disponible las 24 horas, los 7 días de la semana.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -1132,7 +1154,7 @@
 	<conversacion id="despistar">				
 		<tipo>afirmativa</tipo>		
 		<mandatoria>true</mandatoria>				
-		<enVozAlta>true</enVozAlta>				
+		<enVozAlta>false</enVozAlta>				
 		<frases>	
 			<frase>Entiendo, ¿En que más te puedo ayudar?</frase>
 		</frases>				
@@ -1142,7 +1164,7 @@
 	<conversacion id="despedidaCerrarSesion">				
 		<tipo>afirmativa</tipo>		
 		<mandatoria>true</mandatoria>				
-		<enVozAlta>true</enVozAlta>				
+		<enVozAlta>false</enVozAlta>				
 		<frases>	
 			<frase>Hemos terminado la sesión y espero volver a servirte pronto. ¡Adiós!</frase>
 		</frases>				
@@ -1176,10 +1198,10 @@
 	</variablesDeAmbiente>
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
-		<workspace tipo="general" idIBM="3d0a52ba-eab5-489e-8fd0-bbce45f9335c" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="bf75bad0-7597-4731-945b-7ed137657f1d" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
-		<workspace tipo="especifico" idIBM="8cbe633c-b878-4217-a58c-b701bd374d4a" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="28d051b1-ce4d-4aa6-9871-2e2cfeac4f79" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion">BAFAQ</workspace>
+		<workspace tipo="general" idIBM="c20069e8-ba7a-4cf8-806d-25f738db1a21" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="especifico" idIBM="f67464d0-3b79-475c-a1d2-fb0921fc6860" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
+		<workspace tipo="especifico" idIBM="d79e2691-0295-4686-a787-df7beb683658" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
+		<workspace tipo="especifico" idIBM="2648676e-3358-48a2-9842-a79d572b4a6c" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>
