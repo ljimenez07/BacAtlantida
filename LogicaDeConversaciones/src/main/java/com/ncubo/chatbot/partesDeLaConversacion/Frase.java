@@ -209,7 +209,6 @@ public abstract class Frase
 
 						}
 					}
-					System.out.println(textoParaReproducir);
 					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir, false);
 					
 					String path = pathAGuardar+File.separator+nombreDelArchivo;
