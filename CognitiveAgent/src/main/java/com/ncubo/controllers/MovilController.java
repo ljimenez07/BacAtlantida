@@ -175,6 +175,17 @@ public class MovilController {
 	}
 	
 	@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/generarAudioEstaticoParaUnaFrase", method = RequestMethod.GET)
+	@ResponseBody String generarAudioEstaticoParaUnaFrase(
+			@RequestParam(value="indexTema") int indexTema,
+			@RequestParam(value="indexFrase") int indexFrase,
+			@RequestParam(value="idtema") String nombreTema,
+			@RequestParam(value="archivo") String nombreDelArchivo){
+		// http://localhost:8080/conversacion/generarAudioEstaticoParaUnaFrase?idtema=saludo&archivo=xxx.wav&indexTema=0&indexFrase=0
+		serverCognitivo.cargarElNombreDeUnSonidoEstaticoEnMemoria(indexTema, indexFrase, nombreTema, nombreDelArchivo);
+		return "Ok";
+	}
+	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/verTodasLasCoversacionesActivas", method = RequestMethod.GET)
 	@ResponseBody String verTodasLasCoversacionesActivas(){
 		return serverCognitivo.verTodasLasCoversacionesActivas();

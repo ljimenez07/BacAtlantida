@@ -318,14 +318,10 @@ public class AgenteCognitivo
 		}
 	}
 	
-	public void cargarElNombreDeUnSonidoEstaticoEnMemoria(String pathAGuardar, String url, String indexTema, String indexFrase, String nombreTema, String nombreDelArchivo){
+	public void cargarElNombreDeUnSonidoEstaticoEnMemoria(int indexTema, int indexFrase, String idNombreTema, String nombreDelArchivo){
 		System.out.println("El path xml es: "+getPathXML());
-		int miIndexTema = 0;
-		int miIndexFrase = 0;
 		try{
-			miIndexTema = Integer.parseInt(indexTema);
-			miIndexFrase = Integer.parseInt(indexFrase);
-			misConversaciones.cargarElNombreDeUnSonidoEstaticoEnMemoria(pathAGuardar, url, miIndexTema, miIndexFrase, nombreTema, nombreDelArchivo);
+			misConversaciones.cargarElNombreDeUnSonidoEstaticoEnMemoria(this.getPathAudio(), this.geturlPublicaAudios(), indexTema, indexFrase, idNombreTema, nombreDelArchivo);
 		}catch(Exception e){
 			System.out.println("Error al generar el audio estatico: "+e.getMessage());
 		}

@@ -133,7 +133,11 @@ public abstract class Temario
 	}
 	
 	public void cargarElNombreDeUnSonidoEstaticoEnMemoria(String pathAGuardar, String ipPublica, int indexTema, int indexFrase, String nombreTema, String nombreDelArchivo){
-		temasDelDiscurso.buscarTema(nombreTema).obtenerMisFrases()[indexTema].cargarElNombreDeUnSonidoEstaticoEnMemoria(indexFrase, nombreDelArchivo, pathAGuardar, ipPublica);
+		try{
+			temasDelDiscurso.buscarTemaEnMisTemas(nombreTema).obtenerMisFrases()[indexTema].cargarElNombreDeUnSonidoEstaticoEnMemoria(indexFrase, nombreDelArchivo, pathAGuardar, ipPublica);
+		}catch(Exception e){
+			System.out.println("Error al generar la fase del tema "+nombreTema);
+		}
 	}
 	
 	public String verMiTemario(){
