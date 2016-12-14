@@ -156,6 +156,7 @@ public class FTPCliente
 		try
 		{
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+			ftpClient.enterLocalPassiveMode();
 			ftpClient.storeFile(nombreArchivo, archivo);
 		}catch (Exception e){
 			System.out.println("Error al transferir al FTP: "+e.getMessage());
@@ -207,7 +208,7 @@ public class FTPCliente
 					e.printStackTrace();
 				}
 			}
-			System.out.println("Terminé de subir el archivo");
+			System.out.println("Terminï¿½ de subir el archivo");
 		}
 	}
 	

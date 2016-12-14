@@ -57,11 +57,11 @@ $(function(){
 			}
 		});
 		
-		function reproducirMensaje(pathDelAudio)
+		function reproducirMensaje(pathDelAudio, callback)
 		{
 			if(debeReproducirElAudio)
 			{
-				agregarAColaDeReproduccion(pathDelAudio);
+				agregarAColaDeReproduccion(pathDelAudio, callback);
 			}
 			else if(guardarCola)
 			{
@@ -145,9 +145,35 @@ $(function(){
 				data : textoAEnviar,
 				done: function( data ) 
 				{
+					var callback;
 					var textos = data.textos;
 					if(textos != undefined)
 					{
+						var indiceDelUltimoMensajeConAudio;
+						if(data.seTerminoElChat)
+						{
+							ajax({
+								url: serverDomain + "/conversacion/borrarUnaConversacion"
+							});
+							
+							callback = function()
+							{
+								$(".app #{{pathDelServidor}}").html(Handlebars.templates.layout(pantallas["{{pathDelServidor}}"]));
+								bindClickeable();
+								estaReproduciendo = false;
+								reproducirCola();
+								cambiarVista("ofertas", true);
+							};
+						
+							for(var i = 0; i < textos.length; i++)
+							{
+								if(textos[i].audio != "")
+								{
+									indiceDelUltimoMensajeConAudio = i;
+								}
+							}
+						}
+						
 						var fecha = new Date();
 						var hora = dosDigitos(fecha.getHours()) + ":" + dosDigitos(fecha.getMinutes());
 						for(var i = 0; i < textos.length; i++)
@@ -161,7 +187,14 @@ $(function(){
 								}
 								else
 								{
-									reproducirMensaje(textos[i].audio);
+									if(i == indiceDelUltimoMensajeConAudio)
+									{
+										reproducirMensaje(textos[i].audio, callback);
+									}
+									else
+									{
+										reproducirMensaje(textos[i].audio);
+									}
 								}
 							}
 							var respuesta = mensajeDeAgente.clone();
@@ -169,20 +202,6 @@ $(function(){
 							respuesta.find("time").html(hora);
 							conversation.append(respuesta);
 						}
-					}
-					
-					if(data.seTerminoElChat == true)
-					{
-						ajax({
-							url: serverDomain + "/conversacion/borrarUnaConversacion"
-						});
-						
-						setTimeout(function()
-						{
-							$(".app #{{pathDelServidor}}").html(Handlebars.templates.layout(pantallas["{{pathDelServidor}}"]));
-							bindClickeable();
-							cambiarVista("ofertas", true);
-						}, 5000);
 					}
 					moverScrollParaAbajoEnFuncionDelUltimoMensaje();
 				},
@@ -207,7 +226,6 @@ $(function(){
 			{
 				callback();
 			}
-			
 		}
 		
 		this.reenviarUltimoMensajeSinImprimirlo = function()
