@@ -309,4 +309,16 @@ public abstract class Frase
 		
 		return resultado;
 	}
+	
+	public void cargarElNombreDeUnSonidoEstaticoEnMemoria(int index, String nombreDelArchivo, String pathAGuardar, String ipPublica){
+		String path = pathAGuardar+File.separator+nombreDelArchivo;
+		String miIp = ipPublica+nombreDelArchivo;
+		this.sonidosDeLosTextosDeLaFrase.add(index, new Sonido(miIp, path));
+	}
+	
+	public void cargarElNombreDeUnSonidoImpertinenteEstaticoEnMemoria(int index, String nombreDelArchivo, String pathAGuardar, String ipPublica){
+		String path = pathAGuardar+File.separator+nombreDelArchivo;
+		String miIp = ipPublica+nombreDelArchivo;
+		this.sonidosDeLosTextosImpertinentesDeLaFrase.add(index, new Sonido(miIp, path));
+	}
 }

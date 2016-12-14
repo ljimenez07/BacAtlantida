@@ -6,7 +6,7 @@ public class Constantes {
 	public static String WATSON_CONVERSATION_ID = "8af4d07d-d2b5-4a32-804c-6a0e2749ffed";
 	public static String WATSON_CONVERSATION_USER = "bb9bd2e7-d63f-490c-b5d6-32f026a4c646";
 	public static String WATSON_CONVERSATION_PASS = "Tvm3ZJzX2vab";
-	public static double WATSON_CONVERSATION_CONFIDENCE = 0.70;
+	public static double WATSON_CONVERSATION_CONFIDENCE = 0.55;
 	
 	public static String WATSON_USER_TEXT_SPEECH = "8f1ec844-f8ad-4303-9293-3da7192c5b59";
 	public static String WATSON_PASS_TEXT_SPEECH = "LHVIAi4Kfweb";
