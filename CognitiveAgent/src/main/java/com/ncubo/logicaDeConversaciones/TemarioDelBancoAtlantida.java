@@ -404,6 +404,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("precioPasaporte"),
 			frase("precioLicencia"),
 			frase("precioEmbajada"),
+			frase("precioAOL"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
@@ -594,6 +595,23 @@ public class TemarioDelBancoAtlantida extends Temario{
 		return resultado;
 	}
 	
+	private Tema fueraDeContextoBanco()
+	{
+		Tema resultado = new Tema
+		(
+			"fueraDeContextoBanco",
+			"Preguntas sobre el Banco y sus productos sin respuesta",
+			"BAFAQ",
+			true,
+			"out_of_scope_bank",
+			frase("fueraDeContextoBanco"),
+			frase("preguntarPorOtraConsulta"),
+			frase("quiereHacerOtraConsulta"),
+			frase("noQuiereHacerOtraConsulta")
+		);
+		return resultado;
+	}
+	
 	@Override
 	protected void cargarTemario(Temas temasDelDiscurso){
 		
@@ -622,6 +640,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		temasDelDiscurso.add(quiereSaberTelefonos());
 		temasDelDiscurso.add(quiereSaberHorarios());
 		temasDelDiscurso.add(quiereSaberUbicacion());
+		temasDelDiscurso.add(fueraDeContextoBanco());
 	}
 	
 	
