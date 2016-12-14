@@ -314,7 +314,20 @@ public class AgenteCognitivo
 			misConversaciones.generarAudiosEstaticosDeUnTema(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
 					this.getPathAudio(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), ftp.getCarpeta(), index, this.geturlPublicaAudios());
 		}catch(Exception e){
-			e.getStackTrace();
+			System.out.println("Error al generar el audio estatico: "+e.getMessage());
+		}
+	}
+	
+	public void cargarElNombreDeUnSonidoEstaticoEnMemoria(String pathAGuardar, String url, String indexTema, String indexFrase, String nombreTema, String nombreDelArchivo){
+		System.out.println("El path xml es: "+getPathXML());
+		int miIndexTema = 0;
+		int miIndexFrase = 0;
+		try{
+			miIndexTema = Integer.parseInt(indexTema);
+			miIndexFrase = Integer.parseInt(indexFrase);
+			misConversaciones.cargarElNombreDeUnSonidoEstaticoEnMemoria(pathAGuardar, url, miIndexTema, miIndexFrase, nombreTema, nombreDelArchivo);
+		}catch(Exception e){
+			System.out.println("Error al generar el audio estatico: "+e.getMessage());
 		}
 	}
 	

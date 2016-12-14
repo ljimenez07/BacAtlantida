@@ -164,7 +164,13 @@ public class Conversaciones {
 		TextToSpeechWatson.getInstance(usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, carpeta, pathAGuardar, url);
 		System.out.println(String.format("El path a guardar los audios es %s y la url publica es %s", pathAGuardar, url));
 		temarioDelBancoAtlantida.generarAudioEstaticosDeUnTema(pathAGuardar, url, index);
-		System.out.println("Se termino de generar audios estaticos.");
+		System.out.println("Se termino de generar audios estaticos de tema.");
+	}
+	
+	public void cargarElNombreDeUnSonidoEstaticoEnMemoria(String pathAGuardar, String url, int indexTema, int indexFrase, String nombreTema, String nombreDelArchivo){
+		System.out.println(String.format("El path a guardar los audios es %s y la url publica es %s", pathAGuardar, url));
+		temarioDelBancoAtlantida.cargarElNombreDeUnSonidoEstaticoEnMemoria(pathAGuardar, url, indexTema, indexFrase, nombreTema, nombreDelArchivo);
+		System.out.println("Se termino de agregar el audio a la frase.");
 	}
 	
 	public String verMiTemario(){

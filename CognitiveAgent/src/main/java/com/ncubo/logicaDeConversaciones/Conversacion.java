@@ -172,10 +172,13 @@ public class Conversacion {
 			}
 		}
 		
+		if(misSalidas.isEmpty()){
+			decirTemaNoEntendi(misSalidas, respuesta);
+		}
 		
 		return misSalidas;
 	}
-
+	
 	public ArrayList<Salida> analizarLaRespuestaConWatsonEnUnWorkspaceEspecifico(String respuestaDelCliente, String nombreDelWorkSpaseAUsar, String nombreDeLaIntencion) throws Exception{
 		
 		ArrayList<Salida> misSalidas = new ArrayList<Salida>();
@@ -244,7 +247,21 @@ public class Conversacion {
 			}
 		}
 		
+		if(misSalidas.isEmpty()){
+			decirTemaNoEntendi(misSalidas, respuesta);
+		}
+		
 		return misSalidas;
+	}
+	
+	private void decirTemaNoEntendi(ArrayList<Salida> misSalidas, Respuesta respuesta){
+		System.out.println("No entendi bien ...");
+		this.temaActual = this.temario.buscarTema(Constantes.INTENCION_NO_ENTIENDO);
+		
+		Afirmacion fueraDeContexto = (Afirmacion) this.temaActual.buscarUnaFrase(Constantes.INTENCION_NO_ENTIENDO);
+		misSalidas.add(agente.decir(fueraDeContexto, respuesta, temaActual));
+		fraseActual = fueraDeContexto;
+		ponerComoYaTratado(fueraDeContexto);
 	}
 	
 	private void agregarVariablesDeContextoDelClienteAWatson(Tema tema){
@@ -371,13 +388,8 @@ public class Conversacion {
 				ponerComoYaTratado(fueraDeContexto);
 				
 			}else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals(Constantes.INTENCION_NO_ENTIENDO)){
-				System.out.println("No entendi bien ...");
-				this.temaActual = this.temario.buscarTema(Constantes.INTENCION_NO_ENTIENDO);
+				decirTemaNoEntendi(misSalidas, respuesta);
 				
-				Afirmacion fueraDeContexto = (Afirmacion) this.temaActual.buscarUnaFrase(Constantes.INTENCION_NO_ENTIENDO);
-				misSalidas.add(agente.decir(fueraDeContexto, respuesta, temaActual));
-				fraseActual = fueraDeContexto;
-				ponerComoYaTratado(fueraDeContexto);
 			} else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals(Constantes.INTENCION_DESPISTADOR)){
 				System.out.println("Quiere despistar  ...");
 

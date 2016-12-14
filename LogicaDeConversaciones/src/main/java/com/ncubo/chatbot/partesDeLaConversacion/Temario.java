@@ -132,6 +132,10 @@ public abstract class Temario
 		temasDelDiscurso.get(index).generarAudiosEstaticos(pathAGuardar, ipPublica);
 	}
 	
+	public void cargarElNombreDeUnSonidoEstaticoEnMemoria(String pathAGuardar, String ipPublica, int indexTema, int indexFrase, String nombreTema, String nombreDelArchivo){
+		temasDelDiscurso.buscarTema(nombreTema).obtenerMisFrases()[indexTema].cargarElNombreDeUnSonidoEstaticoEnMemoria(indexFrase, nombreDelArchivo, pathAGuardar, ipPublica);
+	}
+	
 	public String verMiTemario(){
 		String resultado = "";
 		int contador = 0;
