@@ -185,6 +185,7 @@ public class MovilController {
 		serverCognitivo.cargarElNombreDeUnSonidoEstaticoEnMemoria(indexTema, indexFrase, nombreTema, nombreDelArchivo);
 		return "Ok";
 	}
+	
 	@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/verTodasLasCoversacionesActivas", method = RequestMethod.GET)
 	@ResponseBody String verTodasLasCoversacionesActivas(){
@@ -234,9 +235,10 @@ public class MovilController {
 	}
 	
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value="/conversacion/verElHistoricoDeLaConversacion/{id}", method = RequestMethod.GET)
-	@ResponseBody String verElHistoricoDeLaConversacion(@PathVariable("id") String id){
-		return serverCognitivo.verElHistoricoDeLaConversacion(id);
+	@RequestMapping(value="/conversacion/verElHistoricoDeLaConversacion", method = RequestMethod.GET)
+	@ResponseBody String verElHistoricoDeLaConversacion(@RequestParam(value="id") String id, @RequestParam(value="fecha") String feha, @RequestParam(value="esEspecifica") int esConversacionEspecifica){
+		// http://localhost:8080/conversacion/verElHistoricoDeLaConversacion?id=3485fe88-b63c-4502-8ce1-d2519fcf60e3&fecha=2016-12-14%2017:32:49&esEspecifica=0
+		return serverCognitivo.verElHistoricoDeLaConversacion(id, feha, esConversacionEspecifica); // "2016-12-12 15:31:23"
 	}
 	
 	@CrossOrigin(origins = "*")
