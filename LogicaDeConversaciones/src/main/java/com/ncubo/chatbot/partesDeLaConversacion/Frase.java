@@ -182,6 +182,7 @@ public abstract class Frase
 	public void generarAudiosEstaticos(String pathAGuardar, String ipPublica){
 		this.pathAGuardarLosAudiosTTS = pathAGuardar;
 		this.ipPublicaAMostrarLosAudioTTS = ipPublica;
+		sonidosDeLosTextosDeLaFrase.clear();
 		
 		if (sePuedeDecirEnVozAlta()){
 			if(esEstatica()){
@@ -214,12 +215,13 @@ public abstract class Frase
 					String path = pathAGuardar+File.separator+nombreDelArchivo;
 					String miIp = ipPublica+nombreDelArchivo;
 					sonidosDeLosTextosDeLaFrase.add(new Sonido(miIp, path));
-					
 					textosDeLaFrase[index] = texto;
 				}
 			}
 			
 			if(hayTextosImpertinetes()){
+				sonidosDeLosTextosImpertinentesDeLaFrase.clear();
+				
 				for(int index = 0; index < textosImpertinetesDeLaFrase.length; index ++){
 					String texto = textosImpertinetesDeLaFrase[index];
 					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, false);
@@ -227,6 +229,7 @@ public abstract class Frase
 					String miIp = ipPublica+nombreDelArchivo;
 					sonidosDeLosTextosImpertinentesDeLaFrase.add(new Sonido(miIp, path));
 				}
+				
 			}
 		}
 	}

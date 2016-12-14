@@ -45,12 +45,13 @@ $(function(){
 				done: function(data) 
 				{
 					$(".app #ofertas").html(Handlebars.templates.layout(pantallas["ofertas"]));
+					$(".app #conocerte").html(Handlebars.templates.layout(pantallas["conocerte"]));
 					establecerBienvenida(data.usuarioEstaLogueado, data.usuarioNombre);
 					bindClickeable();
 					estaLogueado = true;
 					
 					idUsuario = data.idUsuario;
-					cargarInformacionDelUsuario();
+					
 					cambiarVista(vistaActual, true);
 				},
 				fail: function(XMLHttpRequest, textStatus, textStatus) 

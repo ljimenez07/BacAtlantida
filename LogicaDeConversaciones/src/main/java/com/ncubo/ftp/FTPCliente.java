@@ -190,7 +190,14 @@ public class FTPCliente
 			}
 			catch(Exception ex)
 			{
-				ex.printStackTrace();
+				try
+				{
+					subirUnArchivo(archivo, pathDondeGuardar);
+				}
+				catch(Exception ex1)
+				{
+					ex1.printStackTrace();
+				}
 			}
 			finally
 			{
@@ -200,7 +207,7 @@ public class FTPCliente
 					e.printStackTrace();
 				}
 			}
-			System.out.println("Terminé de subir");
+			System.out.println("Terminé de subir el archivo");
 		}
 	}
 	

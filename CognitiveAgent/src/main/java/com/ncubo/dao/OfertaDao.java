@@ -229,7 +229,7 @@ public class OfertaDao
 		stmt.setString(1, idUsuario);
 		stmt.setString(2, idUsuario);
 		stmt.setDate(3, new Date(Calendar.getInstance().getTimeInMillis()));
-		stmt.setInt(4, indiceInicial.valorEntero() * 10);
+		stmt.setInt(4, indiceInicial.valorEntero() * 3);
 		
 		ResultSet rs = stmt.executeQuery();
 		
