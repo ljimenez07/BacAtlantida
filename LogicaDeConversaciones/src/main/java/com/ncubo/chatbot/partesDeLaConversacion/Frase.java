@@ -211,6 +211,7 @@ public abstract class Frase
 						}
 					}
 					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir, false);
+					
 					String path = pathAGuardar+File.separator+nombreDelArchivo;
 					String miIp = ipPublica+nombreDelArchivo;
 					sonidosDeLosTextosDeLaFrase.add(new Sonido(miIp, path));

@@ -155,7 +155,12 @@ public class Participante{
 			}else{
 				if(! texto.equals("")){
 					try{
-						String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, true);
+						
+						String textoParaReproducir = texto;
+						textoParaReproducir = textoParaReproducir.replace("&nbsp;", " ");
+						textoParaReproducir = textoParaReproducir.replace("<br/>", " ");
+						
+						String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir, true);
 						String path = pregunta.getPathAGuardarLosAudiosTTS()+File.separator+nombreDelArchivo;
 						String miIp = TextToSpeechWatson.getInstance().obtenerUrlPublicaDeAudios()+nombreDelArchivo;
 						sonido = new Sonido(miIp, path);
