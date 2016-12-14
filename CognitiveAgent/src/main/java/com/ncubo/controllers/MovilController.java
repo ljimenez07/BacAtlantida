@@ -107,7 +107,17 @@ public class MovilController {
 					.put("usuarioNombre", usuario.getEstaLogueado() ? usuario.getUsuarioNombre() : "")
 					.put("idUsuario", usuario.getEstaLogueado() ? usuario.getUsuarioId() : "");
 			
-			//Boolean[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);
+		/*	boolean[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);	
+			
+			try {
+				serverCognitivo.guardarSiTieneTarjetaCredito(usuario.getUsuarioId(), cuentas[0]);
+				serverCognitivo.guardarSiTieneCuentaAhorros(usuario.getUsuarioId(), cuentas[1]);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				
+			}
+			*/
 			
 			return respuesta.toString();
 		}
@@ -119,8 +129,7 @@ public class MovilController {
 	@GetMapping("/movil/logout")
 	@ResponseBody String logout(HttpSession sesion) throws JSONException
 	{
-		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-		borrarTodasLasConversacionesDeUnCliente(usuario.getUsuarioId());
+		borrarTodasLasConversacionesDeUnCliente(sesion);
 		sesion.setAttribute(Usuario.LLAVE_EN_SESSION, null);
 		return new JSONObject().put("usuarioEstaLogueado", false).toString();
 	}
@@ -184,15 +193,27 @@ public class MovilController {
 	}
 	
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value="/conversacion/borrarTodasLasConversacionesDeUnCliente/{id}", method = RequestMethod.GET)
-	@ResponseBody String borrarTodasLasConversacionesDeUnCliente(@PathVariable("id") String id){
-		return serverCognitivo.borrarTodasLasConversacionesDeUnCliente(id);
+	@RequestMapping(value="/conversacion/borrarTodasLasConversacionesDeUnCliente", method = RequestMethod.GET)
+	@ResponseBody String borrarTodasLasConversacionesDeUnCliente(HttpSession sesion){
+		return borrarUnaConversacion(sesion);
 	}
 	
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value="/conversacion/borrarUnaConversacion/{id}", method = RequestMethod.GET)
-	@ResponseBody String borrarUnaConversacion(@PathVariable("id") String id){
-		return serverCognitivo.borrarUnaConversacion(id);
+	@RequestMapping(value="/conversacion/borrarUnaConversacion", method = RequestMethod.GET)
+	@ResponseBody String borrarUnaConversacion(HttpSession sesion){
+		
+		Object objeto = sesion.getAttribute(Usuario.LLAVE_EN_SESSION) ;
+		if(objeto != null)
+		{
+			Usuario usuario = ( Usuario ) objeto;
+			if (usuario.getUsuarioId().isEmpty()){
+				return serverCognitivo.borrarUnaConversacion(usuario.getIdSesion());
+			}else{
+				return serverCognitivo.borrarTodasLasConversacionesDeUnCliente(usuario.getUsuarioId());
+			}
+		}
+		
+		return "";
 	}
 	
 	@CrossOrigin(origins = "*")

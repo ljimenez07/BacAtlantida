@@ -113,7 +113,16 @@ function bindAcciones()
 	
 	$("#ofertas .boton-escuchar").off("click").on("click", function()
 	{
-		agregarAColaDeReproduccion($(this).data("audio"));
+		if(deviceType != "iPad" && deviceType != "iPhone")
+		{
+			agregarAColaDeReproduccion($(this).data("audio"));
+		}
+		else
+		{
+			var audio = new Audio();
+			audio.src = serverDomain + $(this).data("audio");
+			audio.play();
+		}
 	});
 	
 	$("#ofertas .boton-compartir").off("click").on("click", function()

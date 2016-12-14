@@ -92,21 +92,19 @@ public class Conversacion {
 				String idFraseActivada = respuesta.obtenerFraseActivada();
 				if(respuesta.cambiarAGeneral()){
 					extraerOracionesAfirmarivasYPreguntas(misSalidas, respuesta, idFraseActivada);
-					this.temaActual = this.temario.buscarTema(Constantes.FRASE_SALUDO);
+					//this.temaActual = this.temario.buscarTema(Constantes.FRASE_SALUDO);
 					agente.cambiarAWorkspaceGeneral();
-					/*respuesta = agente.enviarRespuestaAWatson(respuestaDelCliente, fraseActual);
-					this.hilo.agregarUnaRespuesta(respuesta);
-					idFraseActivada = respuesta.obtenerFraseActivada();
-					extraerOracionesAfirmarivasYPreguntas(respuesta, idFraseActivada);*/
 					
-					if(this.temaActual != null){
-						if( (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_SALUDO)) && (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_DESPEDIDA)) )
-							ponerComoYaTratado(this.temaActual);
+					if (misSalidas.isEmpty()){
+						return analizarLaRespuestaConWatson(respuestaDelCliente);
 					}
 					
+					/*if(this.temaActual != null){
+						if( (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_SALUDO)) && (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_DESPEDIDA)) )
+							ponerComoYaTratado(this.temaActual);
+					}*/
 				}else{
 					if(agente.hayQueCambiarDeTema()){
-						
 						
 						idFraseActivada = respuesta.obtenerFraseActivada();
 						extraerOracionesAfirmarivasYPreguntas(misSalidas, respuesta, idFraseActivada);
@@ -199,7 +197,7 @@ public class Conversacion {
 		
 		if(agente.hayQueCambiarDeTemaWSEspecifico()){
 			if(this.temaActualDelWorkSpaceEspecifico != null){
-				ponerComoYaTratado(this.temaActualDelWorkSpaceEspecifico);
+				ponerComoYaTratadoTemaEspecifico(this.temaActualDelWorkSpaceEspecifico);
 			}
 			
 			String idFraseActivada = "";
@@ -208,7 +206,7 @@ public class Conversacion {
 				extraerOracionesAfirmarivasYPreguntasDeWorkspaceEspecifico(misSalidas, respuesta, idFraseActivada, true);
 			}
 			
-			this.temaActualDelWorkSpaceEspecifico = this.temario.proximoTemaATratar(temaActualDelWorkSpaceEspecifico, hilo.verTemasYaTratadosYQueNoPuedoRepetir(), nombreDelWorkSpaseAUsar, nombreDeLaIntencion);
+			this.temaActualDelWorkSpaceEspecifico = this.temario.proximoTemaATratar(temaActualDelWorkSpaceEspecifico, hilo.verTemasYaTratadosYQueNoPuedoRepetirParaTemaEspecifico(), nombreDelWorkSpaseAUsar, nombreDeLaIntencion);
 			agente.yaNoCambiarDeTemaWSEspecifico();
 			agregarVariablesDeContextoEspecificoDelClienteAWatson(temaActualDelWorkSpaceEspecifico, nombreDelWorkSpaseAUsar);
 			if(this.temaActualDelWorkSpaceEspecifico == null){ // Ya no hay mas temas	
@@ -268,6 +266,25 @@ public class Conversacion {
 					}else{
 						agente.activarValiableEnElContextoDeWatson("estaLogueado", "false");
 					}
+					
+				}
+				if(variable.equals("tieneTarjetaCredito")){
+					try {
+							Boolean tieneTarjetaCredito = this.participante.obtenerSiTieneTarjetaCredito();
+							agente.activarValiableEnElContextoDeWatson("tieneTarjetaCredito", String.valueOf(tieneTarjetaCredito));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							System.out.println("Error al activar contexto en Watson: "+e.getMessage());
+						}
+				}
+				if(variable.equals("tieneCuentaAhorros")){
+					try {
+							Boolean tieneCuentaAhorros = this.participante.obtenerSiTieneCuentaAhorros();
+							agente.activarValiableEnElContextoDeWatson("tieneCuentaAhorros", String.valueOf(tieneCuentaAhorros));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							System.out.println("Error al activar contexto en Watson: "+e.getMessage());
+						}
 					
 				}
 			}
@@ -483,6 +500,19 @@ public class Conversacion {
 		}else{
 			hilo.noPuedoRepetir(tema);
 		}
+	}
+	
+	private void ponerComoYaTratadoTemaEspecifico(Tema tema)
+	{
+		if ( ! hilo.existeTemaEspecifico(temaActualDelWorkSpaceEspecifico)){ //si quiere que solo lo cuente una vez
+			estadisticasTemasTratados.darSeguimiento(temaActualDelWorkSpaceEspecifico);
+		}
+		
+		hilo.noPuedoRepetirTemaEspecifico(temaActualDelWorkSpaceEspecifico);
+	}
+	
+	public void borrarTemasEspecificosYaDichos(){
+		hilo.borrarTemasEspecificosYaDichos();
 	}
 	
 	public void guardarEstadiscitas() throws ClassNotFoundException, SQLException

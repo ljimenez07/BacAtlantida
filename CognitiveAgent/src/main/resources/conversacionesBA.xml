@@ -109,7 +109,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Por ahora solo puedo proporcionar el saldo de su tarjeta de crédito y de la cuenta de ahorros. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
+			<frase>Por ahora solo puedo proporcionar el saldo de su tarjeta de crédito y de la cuenta de ahorros. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -174,7 +174,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Por ahora solo puedo proporcionar el disponible de tarjeta de crédito y cuenta de ahorros. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
+			<frase>Por ahora solo puedo proporcionar el disponible de tarjeta de crédito y cuenta de ahorros. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 - 80 - 10 - 10 @@br/@@@ San Pedro Sula: 25 - 80 - 10 - 10 @@br/@@@ La Ceiba: 24 - 80 - 10 - 10</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -289,8 +289,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Fue un placer ayudarte, ¡que pases un feliz día!. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
-			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
+			<frase>Fue un placer ayudarte, ¡que pases un feliz día!. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -300,35 +300,15 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Fue un placer ayudarte, ¡que pases un feliz día!. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
-			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
-			<frase>Es un placcer servirle y recuerde que le atendemos las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
-			<frase>Hasta luego, fue un gusto atenderte. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
+			<frase>Fue un placer ayudarte, ¡que pases un feliz día!. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase>Es un placcer servirle y recuerde que le atendemos las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase>Hasta luego, fue un gusto atenderte. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
 		</frases>
 		<vinetas></vinetas>
 		<when>
 			<condition operador="and" tipo="intencion">despedidas</condition>
 		</when>
-	</conversacion>
-	
-	<conversacion id="numerosCallCenter">
-		<tipo>afirmativa</tipo>
-		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
-		<frases>
-			<frase>Nuestros números telefónicos son los siguientes: @@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</frase>
-		</frases>
-		<vinetas></vinetas>
-	</conversacion>
-	
-	<conversacion id="numerosAgencias">
-		<tipo>afirmativa</tipo>
-		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
-		<frases>
-			<frase>En estos momentos no tengo los números telefónicos de nuestras agencias.</frase>
-		</frases>
-		<vinetas></vinetas>
 	</conversacion>
 	
 	<conversacion id="cualTelefono">
@@ -342,12 +322,72 @@
 		<vinetas></vinetas>
 	</conversacion>
 	
+	<conversacion id="numerosCallCenter">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Nuestros números telefónicos son los siguientes: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
+	<conversacion id="numerosAgencias">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>En estos momentos no tengo los números telefónicos de nuestras agencias. @@br/@@@ Si deseas puedes llamar a los siguientes números telefónicos y consultar esa información: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
+	<conversacion id="horariosAgencias">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>En estos momentos no tengo los horarios de atención de nuestras agencias. @@br/@@@ Si deseas puedes llamar a los siguientes números telefónicos y consultar esa información: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
+	<conversacion id="ubicacionAgencias">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>En estos momentos no tengo la ubicación de nuestras agencias. @@br/@@@ Si deseas puedes llamar a los siguientes números telefónicos y consultar esa información: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
+	<conversacion id="horariosAutoBanco">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>En estos momentos no tengo los horarios disponibles. @@br/@@@ Si deseas puedes llamar a los siguientes números telefónicos y consultar esa información: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
+	<conversacion id="ubicacionAutoBanco">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>En estos momentos no tengo información sobre ubicaciones disponible. @@br/@@@ Si deseas puedes llamar a los siguientes números telefónicos y consultar esa información: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
 	<conversacion id="fueraDeContextoGeneral">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Puedo responder tus consultas sobre requisitos y costos de algunos de nuestros productos tales como: @@br/@@@ @@br/@@@ 1. Cuentas de ahorro. @@br/@@@ 2. Cuentas de cheques. @@br/@@@ 3. Préstamos. @@br/@@@ 4. Tarjetas de débito y crédito. @@br/@@@ 5. Mensajitos. @@br/@@@ 6. Atlántida Online. @@br/@@@ @@br/@@@ También puedo proporcionarte información sobre costos de citas para: @@br/@@@ @@br/@@@ 1. Licencia para conducir. @@br/@@@ 2. Pasaporte. @@br/@@@ 3. Embajada. @@br/@@@ @@br/@@@ Adicionalmente, te puedo ayudar con: @@br/@@@ @@br/@@@ 1. Costos de la hoja de antecedentes penales. @@br/@@@ 2. Números telefónicos de nuestras agencias. @@br/@@@ 3. Reporte de extravió o robo de tarjeta. @@br/@@@ 4. Tipo de cambio. @@br/@@@ @@br/@@@ Si has iniciado sesión también podré darte el saldo, disponible o últimos movimientos de tus cuentas o tarjetas de crédito.</frase>
+			<frase>Puedo responder tus consultas sobre requisitos y costos de algunos de nuestros productos tales como: @@br/@@@ @@br/@@@ 1. Cuentas de ahorro. @@br/@@@ 2. Cuentas de cheques. @@br/@@@ 3. Préstamos. @@br/@@@ 4. Tarjetas de débito y crédito. @@br/@@@ 5. Mensajitos. @@br/@@@ 6. Atlántida Online. @@br/@@@ @@br/@@@ También puedo proporcionarte información sobre costos de citas para: @@br/@@@ @@br/@@@ 1. Licencia para conducir. @@br/@@@ 2. Pasaporte. @@br/@@@ 3. Embajada. @@br/@@@ @@br/@@@ Adicionalmente, te puedo ayudar con: @@br/@@@ @@br/@@@ 1. Costos de la hoja de antecedentes penales. @@br/@@@ 2. Números telefónicos de nuestras agencias. @@br/@@@ 3. Reporte de extravío o robo de tarjeta. @@br/@@@ 4. Tipo de cambio. @@br/@@@ @@br/@@@ Si has iniciado sesión también podré darte el saldo, disponible o últimos movimientos de tus cuentas o tarjetas de crédito.</frase>
 		</frases>
 		<vinetas></vinetas>
 		<when>
@@ -384,7 +424,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<curioso>Tenemos a tu disposición estos tipos de cuenta de ahorros: @@br/@@@ @@br/@@@ 1) Ahorro Atlántida. @@br/@@@ 2) Ahorro Atlántida Kids. @@br/@@@ 3) Ahorro Atlántida "U". @@br/@@@ 4) Ahorro Remesas. @@br/@@@ 5) Ahorro Virtual Remesas.@@br/@@@ @@br/@@@ ¿Sobre cuál de estos productos necesitas información?</curioso>
+			<curioso>Tenemos a tu disposición estos tipos de cuenta de ahorros: @@br/@@@ @@br/@@@ 1)@@!Ahorro Atlántida. @@br/@@@ 2)@@!Ahorro Atlántida Kids. @@br/@@@ 3)@@!Ahorro Atlántida "U". @@br/@@@ 4)@@!Ahorro Remesas. @@br/@@@ 5)@@!Ahorro Virtual Remesas.@@br/@@@ @@br/@@@ ¿Sobre cuál de estos productos necesitas información?</curioso>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -584,7 +624,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para abrir una cuenta de ahorro debes: @@br/@@@ @@br/@@@ 1) Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia o pasaporte. @@br/@@@2) Completar la solicitud. @@br/@@@3) Realizar el depósito inicial de 500 Lempiras. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorros es de 500 Lempiras, y no olvides que hay un cargo por 30 Lempiras en caso que no se cumpla ese mínimo.</frase>
+			<frase>Para abrir una cuenta de ahorro debes: @@br/@@@ @@br/@@@ 1)@@!Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia o pasaporte. @@br/@@@2)@@!Completar la solicitud. @@br/@@@3)@@!Realizar el depósito inicial de 500 Lempiras. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorros es de 500 Lempiras, y no olvides que hay un cargo por 30 Lempiras en caso que no se cumpla ese mínimo.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -594,7 +634,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para abrir una cuenta de ahorro debes: @@br/@@@ @@br/@@@ 1) Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia o pasaporte. @@br/@@@2) Completar la solicitud. @@br/@@@3) Realizar el depósito inicial de 500 Euros. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorros es de 500 Euros, y no olvides que hay un cargo por 1 Euro en caso que no se cumpla ese mínimo.</frase>
+			<frase>Para abrir una cuenta de ahorro debes: @@br/@@@ @@br/@@@ 1)@@!Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia o pasaporte. @@br/@@@2)@@!Completar la solicitud. @@br/@@@3)@@!Realizar el depósito inicial de 500 Euros. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorros es de 500 Euros, y no olvides que hay un cargo por 1 Euro en caso que no se cumpla ese mínimo.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -604,7 +644,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para abrir una cuenta de ahorro debes: @@br/@@@ @@br/@@@ 1) Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia o pasaporte. @@br/@@@2) Completar la solicitud. @@br/@@@3) Realizar el depósito inicial de 100 Dólares. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorros es de 100 Dólares, y no olvides que hay un cargo por 1 Dólar en caso que no se cumpla ese mínimo.</frase>
+			<frase>Para abrir una cuenta de ahorro debes: @@br/@@@ @@br/@@@ 1)@@!Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia o pasaporte. @@br/@@@2)@@!Completar la solicitud. @@br/@@@3)@@!Realizar el depósito inicial de 100 Dólares. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorros es de 100 Dólares, y no olvides que hay un cargo por 1 Dólar en caso que no se cumpla ese mínimo.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -614,7 +654,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para abrir una cuenta de ahorro Kids debes:  @@br/@@@ @@br/@@@ 1) Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia o pasaporte. @@br/@@@ 2) Partida de nacimiento del niño. @@br/@@@ 3) Completar la solicitud. @@br/@@@ 4) Realizar el depósito inicial de 100 Lempiras. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorros Atlántida Kids es de 100 Lempiras, en esta cuenta el cargo por saldo menor al mínimo no aplica.</frase>
+			<frase>Para abrir una cuenta de ahorro Kids debes:  @@br/@@@ @@br/@@@ 1)@@!Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia o pasaporte. @@br/@@@ 2)@@!Partida de nacimiento del niño. @@br/@@@ 3)@@!Completar la solicitud. @@br/@@@ 4)@@!Realizar el depósito inicial de 100 Lempiras. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorros Atlántida Kids es de 100 Lempiras, en esta cuenta el cargo por saldo menor al mínimo no aplica.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -624,7 +664,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para abrir una cuenta de ahorro Kids debes: @@br/@@@ @@br/@@@ 1) Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia o pasaporte. @@br/@@@ 2) Partida de nacimiento del niño. @@br/@@@ 3) Completar la solicitud. @@br/@@@ 4) Realizar el depósito inicial 30 Dólares. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorros Atlántida Kids es de 30 Dólares, en esta cuenta el cargo por saldo menor al mínimo no aplica.</frase>
+			<frase>Para abrir una cuenta de ahorro Kids debes: @@br/@@@ @@br/@@@ 1)@@!Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia o pasaporte. @@br/@@@ 2)@@!Partida de nacimiento del niño. @@br/@@@ 3)@@!Completar la solicitud. @@br/@@@ 4)@@!Realizar el depósito inicial 30 Dólares. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorros Atlántida Kids es de 30 Dólares, en esta cuenta el cargo por saldo menor al mínimo no aplica.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -634,7 +674,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para abrir una cuenta de ahorro Remesas debes:  @@br/@@@ @@br/@@@ 1) Completar la solicitud.  @@br/@@@ 2) Contrato de autorización para crédito automático a cuenta, en caso que desees optar por este servicio.  @@br/@@@ 3) Copia de un recibo de cobro reciente de Remesas Familiares (Máximo 6 meses). @@br/@@@ 4) Monto de apertura de cuenta por 100 Lempiras. @@br/@@@ @@br/@@@ Para Hondureños:  @@br/@@@ @@br/@@@ 1) Original y fotocopia de tarjeta de identidad.  @@br/@@@  @@br/@@@ Para Extranjeros: @@br/@@@ @@br/@@@ 1) Original y fotocopia de carnet de residencia o pasaporte @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorro Remesas es de 100 Lempiras, en esta cuenta el cargo por saldo menor al mínimo es de 15 Lempiras.</frase>
+			<frase>Para abrir una cuenta de ahorro Remesas debes:  @@br/@@@ @@br/@@@ 1)@@!Completar la solicitud.  @@br/@@@ 2)@@!Contrato de autorización para crédito automático a cuenta, en caso que desees optar por este servicio.  @@br/@@@ 3)@@!Copia de un recibo de cobro reciente de Remesas Familiares (Máximo 6 meses). @@br/@@@ 4)@@!Monto de apertura de cuenta por 100 Lempiras. @@br/@@@ @@br/@@@ Para Hondureños:  @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de tarjeta de identidad.  @@br/@@@  @@br/@@@ Para Extranjeros: @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de carnet de residencia o pasaporte @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorro Remesas es de 100 Lempiras, en esta cuenta el cargo por saldo menor al mínimo es de 15 Lempiras.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -644,7 +684,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para abrir una cuenta de ahorro Remesas debes:  @@br/@@@ @@br/@@@ 1) Completar la solicitud.  @@br/@@@ 2) Contrato de autorización para crédito automático a cuenta, en caso que desees optar por este servicio.  @@br/@@@ 3) Copia de un recibo de cobro reciente de Remesas Familiares (Máximo 6 meses). @@br/@@@ 4) Monto de apertura de cuenta por 50 Dólares. @@br/@@@ @@br/@@@ Para Hondureños:  @@br/@@@ @@br/@@@ 1) Original y fotocopia de tarjeta de identidad.  @@br/@@@  @@br/@@@ Para Extranjeros:  @@br/@@@ @@br/@@@ 1) Original y fotocopia de carnet de residencia o pasaporte @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorro Remesas es de 50 Dólares, en esta cuenta el cargo por saldo menor al mínimo es de 1 Dólar.</frase>
+			<frase>Para abrir una cuenta de ahorro Remesas debes:  @@br/@@@ @@br/@@@ 1)@@!Completar la solicitud.  @@br/@@@ 2)@@!Contrato de autorización para crédito automático a cuenta, en caso que desees optar por este servicio.  @@br/@@@ 3)@@!Copia de un recibo de cobro reciente de Remesas Familiares (Máximo 6 meses). @@br/@@@ 4)@@!Monto de apertura de cuenta por 50 Dólares. @@br/@@@ @@br/@@@ Para Hondureños:  @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de tarjeta de identidad.  @@br/@@@  @@br/@@@ Para Extranjeros:  @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de carnet de residencia o pasaporte @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorro Remesas es de 50 Dólares, en esta cuenta el cargo por saldo menor al mínimo es de 1 Dólar.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -654,7 +694,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para abrir una cuenta de ahorro Virtual Remesas debes tener las siguientes consideraciones:  @@br/@@@ @@br/@@@ 1) Sólo para hondureños residentes en EUA. @@br/@@@ 2) Presentar tu tarjeta de identidad hondureña o pasaporte junto con la contraseña. @@br/@@@ 3) Se abre a través de una llamada a nuestro Call Center 1-877-898-8863.  @@br/@@@ 4) Debes enviar una remesa como depósito inicial a través de los Agentes Atlántida USA, ubicados en las ciudades de Miami, Houston y Fort Lauderdale. @@br/@@@ 5) No tiene libreta solo Tarjeta de débito en dólares. @@br/@@@ 6) El monto de apertura es de 120 Dólares, de los cuales 20 Dólares se destinan para el envío y recibo de documentos. @@br/@@@ 7) Los depósitos a la cuenta se hacen a través de envío de remesas con crédito a cuenta a través de los Agentes Atlántida USA y cuyo beneficiario es el dueño de la cuenta. @@br/@@@ 8) La cuenta de ahorros y tarjeta de débito se activa una vez que se han recibido los documentos firmados por el cliente en Banco Atlántida.   @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorro Virtual Remesas es de 100 Dólares, en esta cuenta el cargo por saldo menor al mínimo es de 1 Dólar.</frase>
+			<frase>Para abrir una cuenta de ahorro Virtual Remesas debes tener las siguientes consideraciones:  @@br/@@@ @@br/@@@ 1)@@!Sólo para hondureños residentes en EUA. @@br/@@@ 2)@@!Presentar tu tarjeta de identidad hondureña o pasaporte junto con la contraseña. @@br/@@@ 3)@@!Se abre a través de una llamada a nuestro Call Center 1-877-898-8863.  @@br/@@@ 4)@@!Debes enviar una remesa como depósito inicial a través de los Agentes Atlántida USA, ubicados en las ciudades de Miami, Houston y Fort Lauderdale. @@br/@@@ 5)@@!No tiene libreta solo Tarjeta de débito en dólares. @@br/@@@ 6)@@!El monto de apertura es de 120 Dólares, de los cuales 20 Dólares se destinan para el envío y recibo de documentos. @@br/@@@ 7)@@!Los depósitos a la cuenta se hacen a través de envío de remesas con crédito a cuenta a través de los Agentes Atlántida USA y cuyo beneficiario es el dueño de la cuenta. @@br/@@@ 8)@@!La cuenta de ahorros y tarjeta de débito se activa una vez que se han recibido los documentos firmados por el cliente en Banco Atlántida.   @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorro Virtual Remesas es de 100 Dólares, en esta cuenta el cargo por saldo menor al mínimo es de 1 Dólar.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -664,7 +704,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para solicitar Atlántida Online debes: @@br/@@@ @@br/@@@  1) Ser uno de nuestros clientes. @@br/@@@ 2) Tener correo electrónico. @@br/@@@ 3) Completar la solicitud. @@br/@@@ 4) Firmar el contrato de la banca personal por Internet. @@br/@@@ 5) Presentar fotocopia de tarjeta de identidad (para hondureños), carné de residencia o pasaporte (para extranjeros).</frase>
+			<frase>Para solicitar Atlántida Online debes: @@br/@@@ @@br/@@@  1)@@!Ser uno de nuestros clientes. @@br/@@@ 2)@@!Tener correo electrónico. @@br/@@@ 3)@@!Completar la solicitud. @@br/@@@ 4)@@!Firmar el contrato de la banca personal por Internet. @@br/@@@ 5)@@!Presentar fotocopia de tarjeta de identidad (para hondureños), carné de residencia o pasaporte (para extranjeros).</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -674,7 +714,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para solicitar un préstamo personal debes presentar: @@br/@@@ @@br/@@@ 1) Original y copia de tarjeta de identidad. @@br/@@@ 2) Último recibo público pagado servicios públicos (ENEE, HONDUTEL, SANAA). @@br/@@@ 3) Copia de RTN numérico. @@br/@@@ 4) Constancia  de trabajo donde indique cargo, sueldo y antigüedad. @@br/@@@ @@br/@@@ Además debes cumplir con las siguientes condiciones: @@br/@@@ @@br/@@@ 1) Un año de laborar en empresa privada y dos en sector público. @@br/@@@ 2) Ingreso mínimo mensual sea de 12 500 Lempiras (tega, Sps y la Ceiba) y 9 500 Lempiras (el resto del país). @@br/@@@ 3) Ser mayor de 21 años. @@br/@@@ 4) En el caso de ser comerciante individual presentar los estados financieros de los dos últimos años autenticados por un perito, estados de cuenta bancario de los dos últimos meses y el permiso de operación del negocio.</frase>
+			<frase>Para solicitar un préstamo personal debes presentar: @@br/@@@ @@br/@@@ 1)@@!Original y copia de tarjeta de identidad. @@br/@@@ 2)@@!Último recibo público pagado servicios públicos (ENEE, HONDUTEL, SANAA). @@br/@@@ 3)@@!Copia de RTN numérico. @@br/@@@ 4)@@!Constancia  de trabajo donde indique cargo, sueldo y antigüedad. @@br/@@@ @@br/@@@ Además debes cumplir con las siguientes condiciones: @@br/@@@ @@br/@@@ 1)@@!Un año de laborar en empresa privada y dos en sector público. @@br/@@@ 2)@@!Ingreso mínimo mensual sea de 12 500 Lempiras (tega, Sps y la Ceiba) y 9 500 Lempiras (el resto del país). @@br/@@@ 3)@@!Ser mayor de 21 años. @@br/@@@ 4)@@!En el caso de ser comerciante individual presentar los estados financieros de los dos últimos años autenticados por un perito, estados de cuenta bancario de los dos últimos meses y el permiso de operación del negocio.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -684,7 +724,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para solicitar un préstamo de vehículo en el caso que seas asalariado debes presentar: @@br/@@@ @@br/@@@ 1) Factura Proforma. @@br/@@@ 2) Fotocopia de tarjeta de Identidad. @@br/@@@ 3) Fotocopia de RTN. @@br/@@@ 4) Fotocopia de último recibo de servicios públicos. @@br/@@@ 5) Constancia de trabajo con deducciones y detalle de antigüedad (1 año de laborar en empresa privada y 2 en sector público) exceptuando empleados bajo convenio. @@br/@@@ @@br/@@@ Si eres comerciante individual debes presentar lo siguiente: @@br/@@@ @@br/@@@ 1) Factura Proforma. @@br/@@@ 2) Fotocopia de Tarjeta de Identidad. @@br/@@@ 3) Estados Financieros de los 2 últimos años. @@br/@@@ 4) Escritura de Comerciante Individual. @@br/@@@ 5) Permiso de Operación Vigente o Carnet de Colegiación o Permiso de Explotación.</frase>
+			<frase>Para solicitar un préstamo de vehículo en el caso que seas asalariado debes presentar: @@br/@@@ @@br/@@@ 1)@@!Factura Proforma. @@br/@@@ 2)@@!Fotocopia de tarjeta de Identidad. @@br/@@@ 3)@@!Fotocopia de RTN. @@br/@@@ 4)@@!Fotocopia de último recibo de servicios públicos. @@br/@@@ 5)@@!Constancia de trabajo con deducciones y detalle de antigüedad (1 año de laborar en empresa privada y 2 en sector público) exceptuando empleados bajo convenio. @@br/@@@ @@br/@@@ Si eres comerciante individual debes presentar lo siguiente: @@br/@@@ @@br/@@@ 1)@@!Factura Proforma. @@br/@@@ 2) Fotocopia de Tarjeta de Identidad. @@br/@@@ 3) Estados Financieros de los 2 últimos años. @@br/@@@ 4)@@!Escritura de Comerciante Individual. @@br/@@@ 5)@@!Permiso de Operación Vigente o Carnet de Colegiación o Permiso de Explotación.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -694,7 +734,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para solicitar un préstamo de vivienda en el caso que seas asalariado debes presentar: @@br/@@@ @@br/@@@ 1) Fotocopia de tarjeta de Identidad. @@br/@@@ 2) Fotocopia de RTN. @@br/@@@ 3) Constancia de Trabajo con Deducciones y Detalle de Antigüedad (1 año de laborar en empresa privada y 2 en sector público) exceptuando empleados bajo convenio. @@br/@@@ 4) Escritura del Inmueble que otorgará en garantía más Promesa de venta. @@br/@@@ 5) Documentos del vendedor (Fotocopia de Id y RTN). @@br/@@@ 6) Constancia de no poseer Bienes Inmuebles (Fondos Banhprovi). @@br/@@@ 7) Si es construcción o mejoras presentar presupuesto de construcción y el plano de construcción. @@br/@@@ @@br/@@@ Si eres comerciante individual debes presentar: @@br/@@@ @@br/@@@ 1) Fotocopia de Tarjeta de Identidad. @@br/@@@ 2) Estados Financieros de los 2 últimos años. @@br/@@@ 3) Escritura de comerciante individual. @@br/@@@ 4) Permiso de operación vigente o carnet de colegiación o permiso de explotación. @@br/@@@ 5) Escritura del inmueble que otorgará en garantía. @@br/@@@ 6) Promesa de venta. @@br/@@@ 7) Documentos del vendedor (Fotocopia de Id y RTN). @@br/@@@ 8) Constancia de no poseer Bienes Inmuebles (Fondos Banhprovi). @@br/@@@ 9) Si es construcción o mejoras presentar presupuesto de construcción y el plano de construcción.</frase>
+			<frase>Para solicitar un préstamo de vivienda en el caso que seas asalariado debes presentar: @@br/@@@ @@br/@@@ 1)@@!Fotocopia de tarjeta de Identidad. @@br/@@@ 2)@@!Fotocopia de RTN. @@br/@@@ 3)@@!Constancia de Trabajo con Deducciones y Detalle de Antigüedad (1 año de laborar en empresa privada y 2 en sector público) exceptuando empleados bajo convenio. @@br/@@@ 4)@@!Escritura del Inmueble que otorgará en garantía más Promesa de venta. @@br/@@@ 5)@@!Documentos del vendedor (Fotocopia de Id y RTN). @@br/@@@ 6)@@!Constancia de no poseer Bienes Inmuebles (Fondos Banhprovi). @@br/@@@ 7)@@!Si es construcción o mejoras presentar presupuesto de construcción y el plano de construcción. @@br/@@@ @@br/@@@ Si eres comerciante individual debes presentar: @@br/@@@ @@br/@@@ 1)@@!Fotocopia de Tarjeta de Identidad. @@br/@@@ 2)@@!Estados Financieros de los 2 últimos años. @@br/@@@ 3)@@!Escritura de comerciante individual. @@br/@@@ 4)@@!Permiso de operación vigente o carnet de colegiación o permiso de explotación. @@br/@@@ 5)@@!Escritura del inmueble que otorgará en garantía. @@br/@@@ 6)@@!Promesa de venta. @@br/@@@ 7)@@!Documentos del vendedor (Fotocopia de Id y RTN). @@br/@@@ 8)@@!Constancia de no poseer Bienes Inmuebles (Fondos Banhprovi). @@br/@@@ 9)@@!Si es construcción o mejoras presentar presupuesto de construcción y el plano de construcción.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -784,7 +824,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Lamento lo sucedido, si necesitas reportar el extravío de tus tarjetas de crédito y débito puedes llamar a los siguientes números telefónicos: @@#@@@ @@br/@@@  @@br/@@@ En Honduras: @@br/@@@ 2280-1010 / 2580-1010 / 2480-1010 @@br/@@@ @@br/@@@ En el Extranjero:  @@br/@@@ @@br/@@@ VISA: @@br/@@@ USA y Canadá: 1-800-847-2911 @@br/@@@ En otros países: (410)-581-0120 @@br/@@@ @@br/@@@ MASTERCARD: @@br/@@@ USA y Canadá: 1-800-307-7309 @@br/@@@ En otros países: 1-636-722-7111 @@br/@@@ @@br/@@@ @@#/@@@ Recuerda que este servicio está disponible las 24 horas, los 7 días de la semana.</frase>
+			<frase>Lamento lo sucedido, si necesitas reportar el extravío de tus tarjetas de crédito y débito puedes llamar a los siguientes números telefónicos: @@br/@@@  @@br/@@@ En Honduras: @@br/@@@ 22 80 10 10. @@br/@@@ 25 80 10 10. @@br/@@@ 24 80 10 10. @@br/@@@ @@br/@@@ En el Extranjero:  @@br/@@@ @@br/@@@ VISA: @@br/@@@ USA y Canadá: 1 - 800 847 29 11. @@br/@@@ En otros países: (410) 581 01 20. @@br/@@@ @@br/@@@ MASTERCARD: @@br/@@@ USA y Canadá: 1 - 800 - 307 - 73 - 09. @@br/@@@ En otros países: 1 - 636 722 71 11. @@br/@@@ @@br/@@@ Recuerda que este servicio está disponible las 24 horas, los 7 días de la semana.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -794,7 +834,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para disfrutar del servicio Mensajitos Atlántida debes: @@br/@@@ @@br/@@@ 1) Poseer algún producto con el banco (cuentas de ahorro, cheques, tarjeta de crédito, etc) o recibir remesas.  @@br/@@@ 2) Llenar contrato de afiliación para clientes de Mensajitos Atlántida.  @@br/@@@ 3) Fotocopia de la tarjeta de identidad para hondureños, carné de residente o pasaporte para extranjeros.  @@br/@@@ 4) Poseer un teléfono celular de TIGO, Claro.  @@br/@@@ @@br/@@@ El servicio es gratis, pero el costo del mensajito lo determina la empresa de celular.  @@br/@@@ Puedes solicitarlo en cualquier agencia del país.</frase>
+			<frase>Para disfrutar del servicio Mensajitos Atlántida debes: @@br/@@@ @@br/@@@ 1)@@!Poseer algún producto con el banco (cuentas de ahorro, cheques, tarjeta de crédito, etc) o recibir remesas.  @@br/@@@ 2)@@!Llenar contrato de afiliación para clientes de Mensajitos Atlántida.  @@br/@@@ 3)@@!Fotocopia de la tarjeta de identidad para hondureños, carné de residente o pasaporte para extranjeros.  @@br/@@@ 4)@@!Poseer un teléfono celular de TIGO, Claro.  @@br/@@@ @@br/@@@ El servicio es gratis, pero el costo del mensajito lo determina la empresa de celular.  @@br/@@@ Puedes solicitarlo en cualquier agencia del país.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -804,7 +844,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para obtener una tarjeta de débito debes: @@br/@@@ @@br/@@@ 1) Poseer una cuenta de ahorros o cheques en lempiras con el Banco. @@br/@@@ 2) Ser mayor de 18 años. @@br/@@@ 3) Llenar la solicitud. </frase>
+			<frase>Para obtener una tarjeta de débito debes: @@br/@@@ @@br/@@@ 1)@@!Poseer una cuenta de ahorros o cheques en lempiras con el Banco. @@br/@@@ 2)@@!Ser mayor de 18 años. @@br/@@@ 3)@@!Llenar la solicitud. </frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -814,7 +854,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para adquirir una de nuestras tarjetas de crédito debes: %br@@br/@@@ Para asalariados:  @@br/@@@ @@br/@@@ 1) Llenar la solicitud. @@br/@@@ 2) Presentar constancia de trabajo (sueldo, antigüedad y cargo). @@br/@@@ 3) Fotocopia de la tarjeta de identidad. @@br/@@@ 4) Tiempo de laborar: en empresa privada 1 año y empresa pública 2 años. @@br/@@@ 5) Fotocopia del último recibo de un servicio público. @@br/@@@ 6) RTN. @@br/@@@ 7) Ingresos desde 10 000 Lempiras. @@br/@@@@@br/@@@ Para comerciantes Individuales: @@br/@@@ @@br/@@@ 1) Llenar la solicitud. @@br/@@@ 2) Fotocopia de la tarjeta de identidad. @@br/@@@ 3) Estados financieros recientes. @@br/@@@ 4) Fotocopia del permiso de operación del negocio. @@br/@@@ 5) Fotocopia del último recibo de un servicio público. @@br/@@@ 6) RTN.</frase>
+			<frase>Para adquirir una de nuestras tarjetas de crédito debes: @@br/@@@ @@br/@@@ Para asalariados:  @@br/@@@ @@br/@@@ 1)@@!Llenar la solicitud. @@br/@@@ 2)@@!Presentar constancia de trabajo (sueldo, antigüedad y cargo). @@br/@@@ 3)@@!Fotocopia de la tarjeta de identidad. @@br/@@@ 4)@@!Tiempo de laborar: en empresa privada 1 año y empresa pública 2 años. @@br/@@@ 5)@@!Fotocopia del último recibo de un servicio público. @@br/@@@ 6)@@!RTN. @@br/@@@ 7)@@!Ingresos desde 10 000 Lempiras. @@br/@@@@@br/@@@ Para comerciantes Individuales: @@br/@@@ @@br/@@@ 1)@@!Llenar la solicitud. @@br/@@@ 2)@@!Fotocopia de la tarjeta de identidad. @@br/@@@ 3)@@!Estados financieros recientes. @@br/@@@ 4)@@!Fotocopia del permiso de operación del negocio. @@br/@@@ 5)@@!Fotocopia del último recibo de un servicio público. @@br/@@@ 6)@@!RTN.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -834,7 +874,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para adquirir una cuenta de cheques para persona natural debes presentar: @@br/@@@ @@br/@@@ 1) Original y copia de tarjeta de identidad. @@br/@@@ 2) Original y copia de carnet de residencia o pasaporte (para extranjeros). @@br/@@@ 3) Completar la solicitud única de productos. @@br/@@@ 4) Dos referencias bancarias, comerciales o personales (por escrito). @@br/@@@ 5) Se apertura con 2 500 Lempiras o 1 000 Dólares. @@br/@@@ 6) Copia de RTN.</frase>
+			<frase>Para adquirir una cuenta de cheques debes presentar: @@br/@@@ @@br/@@@ 1)@@!Original y copia de tarjeta de identidad. @@br/@@@ 2)@@!Original y copia de carnet de residencia o pasaporte (para extranjeros). @@br/@@@ 3)@@!Completar la solicitud única de productos. @@br/@@@ 4)@@!Dos referencias bancarias, comerciales o personales (por escrito). @@br/@@@ 5)@@!Se apertura con 2 500 Lempiras o 1 000 Dólares. @@br/@@@ 6)@@!Copia de RTN.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -844,7 +884,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para adquirir una cuenta de cheques para Empresas debes presentar: @@br/@@@ @@br/@@@ 1) Copia de la escritura constitución de la empresa. @@br/@@@ 2) Copia del permiso de operación. @@br/@@@ 3) Copia de RTN. @@br/@@@ 4) Si es Sociedad Anónima necesitas una carta informando sobre los socios principales de la empresa. @@br/@@@ 5) Referencias bancarias, comerciales, de proveedores o clientes. @@br/@@@ 6) Copia de tarjeta de identidad de cada uno de las personas que van a firmar en la cuenta. @@br/@@@ 7) Llenar la solicitud única de productos. @@br/@@@ 8) Se apertura con 2 500 Lempiras o 1 000 Dólares.</frase>
+			<frase>Para adquirir una cuenta de cheques para Empresas debes presentar: @@br/@@@ @@br/@@@ 1)@@!Copia de la escritura constitución de la empresa. @@br/@@@ 2)@@!Copia del permiso de operación. @@br/@@@ 3)@@!Copia de RTN. @@br/@@@ 4)@@!Si es Sociedad Anónima necesitas una carta informando sobre los socios principales de la empresa. @@br/@@@ 5)@@!Referencias bancarias, comerciales, de proveedores o clientes. @@br/@@@ 6)@@!Copia de tarjeta de identidad de cada uno de las personas que van a firmar en la cuenta. @@br/@@@ 7)@@!Llenar la solicitud única de productos. @@br/@@@ 8)@@!Se apertura con 2 500 Lempiras o 1 000 Dólares.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -854,7 +894,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para adquirir una cuenta de cheques para Instituciones Gubernamentales debes presentar: @@br/@@@ @@br/@@@ 1) Nombramiento del poder ejecutivo o ministro en su caso. @@br/@@@ 2) Solicitud de apertura de la cuenta por escrito, firmada por la persona nombrada en el poder. Debe incluir los nombres de personas que firmaran en la cuenta. @@br/@@@ 3) Los firmantes deberán presentar toda la documentación para la apertura de cuentas personales. @@br/@@@ 4) Llenar la solicitud. @@br/@@@ 5) Se apertura con 2 500 Lempiras o 1 000 Dólares.</frase>
+			<frase>Para adquirir una cuenta de cheques para Instituciones Gubernamentales debes presentar: @@br/@@@ @@br/@@@ 1)@@!Nombramiento del poder ejecutivo o ministro en su caso. @@br/@@@ 2)@@!Solicitud de apertura de la cuenta por escrito, firmada por la persona nombrada en el poder. Debe incluir los nombres de personas que firmaran en la cuenta. @@br/@@@ 3)@@!Los firmantes deberán presentar toda la documentación para la apertura de cuentas personales. @@br/@@@ 4)@@!Llenar la solicitud. @@br/@@@ 5)@@!Se apertura con 2 500 Lempiras o 1 000 Dólares.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -864,7 +904,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para adquirir una cuenta de cheques para Instituciones No Gubernamentales debes presentar: @@br/@@@ @@br/@@@ 1) Original y copia de personería jurídica y que incluyan los estatutos. @@br/@@@ 2) Fotocopia del punto del acta donde se nombra a los miembros de la Asamblea o Junta Directiva. @@br/@@@ 3) Las personas firmantes deberan presentar toda la documentacion para la apertura de cuentas personales. @@br/@@@ 4) Llenar la solicitud. @@br/@@@ 5) Se apertura con 2 500 Lempiras o 1 000 Dólares.</frase>
+			<frase>Para adquirir una cuenta de cheques para Instituciones No Gubernamentales debes presentar: @@br/@@@ @@br/@@@ 1)@@!Original y copia de personería jurídica y que incluyan los estatutos. @@br/@@@ 2)@@!Fotocopia del punto del acta donde se nombra a los miembros de la Asamblea o Junta Directiva. @@br/@@@ 3)@@!Las personas firmantes deberan presentar toda la documentacion para la apertura de cuentas personales. @@br/@@@ 4)@@!Llenar la solicitud. @@br/@@@ 5)@@!Se apertura con 2 500 Lempiras o 1 000 Dólares.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -894,7 +934,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Los pasos que debes seguir para pagar la tasa consular o cita de la embajada son los siguientes: @@br/@@@ @@br/@@@ 1) Debes ingresar a la página web:  www.ustraveldocs.com/hn  y definir un perfil para poder completar el formulario de la hoja de depósito. @@br/@@@ 2) Es importante que en opciones de pago hayas seleccionado Banco Atlántida.  @@br/@@@ 3) Cuando imprimas la Boleta de Depósito de Banco Atlántida, contiene el número de referencia CGI, puedes presentarla en cualquier punto de servicio para realizar el pago de la Tasa Consular. @@br/@@@ 4) Para realizar el pago le brindamos las opciones de Ventanilla, Atlántida Online, Kioscos y Agentes. @@br/@@@ 5) El monto a cancelar dependerá de la hoja de depósito y la tasa de cambio que estableció el CGI. @@br/@@@ 6) Luego de realizado el pago recibirás un comprobante con el número de recibo, el cual le servirá para continuar el proceso en la página www.ustraveldocs.com/hn  y poder agendar la cita.</frase>
+			<frase>Los pasos que debes seguir para pagar la tasa consular o cita de la embajada son los siguientes: @@br/@@@ @@br/@@@ 1)@@!Debes ingresar a la página web:  www.ustraveldocs.com/hn  y definir un perfil para poder completar el formulario de la hoja de depósito. @@br/@@@ 2)@@!Es importante que en opciones de pago hayas seleccionado Banco Atlántida.  @@br/@@@ 3)@@!Cuando imprimas la Boleta de Depósito de Banco Atlántida, contiene el número de referencia CGI, puedes presentarla en cualquier punto de servicio para realizar el pago de la Tasa Consular. @@br/@@@ 4)@@!Para realizar el pago le brindamos las opciones de Ventanilla, Atlántida Online, Kioscos y Agentes. @@br/@@@ 5)@@!El monto a cancelar dependerá de la hoja de depósito y la tasa de cambio que estableció el CGI. @@br/@@@ 6)@@!Luego de realizado el pago recibirás un comprobante con el número de recibo, el cual le servirá para continuar el proceso en la página www.ustraveldocs.com/hn  y poder agendar la cita.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -914,7 +954,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>En Banco Atlántida le recibimos el pago de la cita para solicitar la emisión del pasaporte electrónico en las oficinas de migración a nivel nacional.  @@br/@@@ El costo va a depender del tiempo de vigencia, por ejemplo, por 5 años el costo es de 35 dólares, pero por 10 años el costo es de 50 dólares. Cuando eres menor de edad el pasaporte sólo se autoriza por 5 años.  @@br/@@@ Si deseas el pasaporte el mismo día debes cancelar 20 dólares adicionales al monto que pagas por la vigencia, pero antes de ir al banco tiene que presentarse a las oficinas de pasaporte ubicadas  en Tegucigalpa, San Pedro Sula o La Ceiba y solicitar una cita express.  @@br/@@@  @@br/@@@ Recuerda que: @@br/@@@ @@br/@@@ 1) Si es la primera vez que solicitas pasaporte o el que tienes ya está vencido debes presentar la tarjeta de identidad original. Pero si tu pasaporte está vigente entonces debes presentar ese documento.  @@br/@@@ 2) Si eres mayor de 21 años, debes presentar en el Banco la tarjeta de identidad. Pero si tu edad está entre 18 y 21 entonces uno de tus padres, el tutor, representante o apoderado legal, debidamente identificado, debe presentar tu tarjeta de identidad.  En caso que seas menor de 18 años esa persona deberá presentar tu partida de nacimiento.  @@br/@@@ @@br/@@@ Información adicional y detallada está disponible en el sitio: http://inm.gob.hn/pasaporte </frase>
+			<frase>En Banco Atlántida le recibimos el pago de la cita para solicitar la emisión del pasaporte electrónico en las oficinas de migración a nivel nacional.  @@br/@@@ El costo va a depender del tiempo de vigencia, por ejemplo, por 5 años el costo es de 35 dólares, pero por 10 años el costo es de 50 dólares. Cuando eres menor de edad el pasaporte sólo se autoriza por 5 años.  @@br/@@@ Si deseas el pasaporte el mismo día debes cancelar 20 dólares adicionales al monto que pagas por la vigencia, pero antes de ir al banco tiene que presentarse a las oficinas de pasaporte ubicadas  en Tegucigalpa, San Pedro Sula o La Ceiba y solicitar una cita express.  @@br/@@@  @@br/@@@ Recuerda que: @@br/@@@ @@br/@@@ 1)@@!Si es la primera vez que solicitas pasaporte o el que tienes ya está vencido debes presentar la tarjeta de identidad original. Pero si tu pasaporte está vigente entonces debes presentar ese documento.  @@br/@@@ 2)@@!Si eres mayor de 21 años, debes presentar en el Banco la tarjeta de identidad. Pero si tu edad está entre 18 y 21 entonces uno de tus padres, el tutor, representante o apoderado legal, debidamente identificado, debe presentar tu tarjeta de identidad.  En caso que seas menor de 18 años esa persona deberá presentar tu partida de nacimiento.  @@br/@@@ @@br/@@@ Información adicional y detallada está disponible en el sitio: http://inm.gob.hn/pasaporte </frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -934,7 +974,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Si eres ciudadano hondureño o residente legal podemos recibir su pago para que solicites licencia de conducir.  @@br/@@@ @@br/@@@ 1) Ten en cuenta que el precio de la licencia depende de dos factores: a) el tipo de Licencia, y b) la vigencia (1, 2 o 5 años). Por ejemplo, la Liviana Nacional tiene un precio de 150 lempiras por 1 año, 250 lempiras por 2 años y 600 lempiras la de 5 años. @@br/@@@ 2) Cuando pagas te damos un recibo con tus datos personales, fecha, hora y centro de atención al cual debes presentarte para solicitar la licencia. @@br/@@@ 3) Entre los centros de atención que puedes escoger para hacer el trámite de tu licencia están: @@br/@@@ @@br/@@@ a) Tegucigalpa. @@br/@@@ b) San Pedro Sula. @@br/@@@ c) Juticalpa. @@br/@@@ d) El Progreso, Yoro. @@br/@@@ e) La Ceiba. @@br/@@@ f) Santa Rosa de Copán. @@br/@@@ g) Danlí, El Paraíso. @@br/@@@ h) Choluteca. @@br/@@@ i) Puerto Cortés. @@br/@@@ @@br/@@@ IMPORTANTE: @@br/@@@ @@br/@@@ A) Una vez que sales de la agencia con el recibo impreso no se pueden hacer devoluciones de dinero ni reversar la cita. @@br/@@@ B) Los recibos de citas tendrán vigencia de un año a partir de su emisión. @@br/@@@ C) Si pierdes la cita puedes reprogramarla yendo a la agencia con su recibo y pagando 12 lempiras. @@br/@@@ D) Si pierdes el recibo y la cita aún no ha vencido puedes acudir a una agencia y reponerlo, pagando 12 lempiras. </frase>
+			<frase>Si eres ciudadano hondureño o residente legal podemos recibir su pago para que solicites licencia de conducir.  @@br/@@@ @@br/@@@ 1)@@!Ten en cuenta que el precio de la licencia depende de dos factores: a) el tipo de Licencia, y b) la vigencia (1, 2 o 5 años). Por ejemplo, la Liviana Nacional tiene un precio de 150 lempiras por 1 año, 250 lempiras por 2 años y 600 lempiras la de 5 años. @@br/@@@ 2)@@!Cuando pagas te damos un recibo con tus datos personales, fecha, hora y centro de atención al cual debes presentarte para solicitar la licencia. @@br/@@@ 3)@@!Entre los centros de atención que puedes escoger para hacer el trámite de tu licencia están: @@br/@@@ @@br/@@@ a) Tegucigalpa. @@br/@@@ b) San Pedro Sula. @@br/@@@ c) Juticalpa. @@br/@@@ d) El Progreso, Yoro. @@br/@@@ e) La Ceiba. @@br/@@@ f) Santa Rosa de Copán. @@br/@@@ g) Danlí, El Paraíso. @@br/@@@ h) Choluteca. @@br/@@@ i) Puerto Cortés. @@br/@@@ @@br/@@@ IMPORTANTE: @@br/@@@ @@br/@@@ A) Una vez que sales de la agencia con el recibo impreso no se pueden hacer devoluciones de dinero ni reversar la cita. @@br/@@@ B) Los recibos de citas tendrán vigencia de un año a partir de su emisión. @@br/@@@ C) Si pierdes la cita puedes reprogramarla yendo a la agencia con su recibo y pagando 12 lempiras. @@br/@@@ D) Si pierdes el recibo y la cita aún no ha vencido puedes acudir a una agencia y reponerlo, pagando 12 lempiras. </frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -1063,7 +1103,7 @@
 			<frase>Lo siento, no entendí. ¿En qué te puedo ayudar?</frase>
 			<frase>Perdón, no entiendo. ¿Hay algo más con lo que te pueda ayudar?</frase>
 			<frase>Creo que no entendí. ¿En que te gustaría que te ayude?</frase>	
-			<meRindo>Lo siento, no entendí. Para mayor información puedes consultar en los siguientes números telefónicos:@@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@</meRindo>
+			<meRindo>Lo siento, no entendí. Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80 10 10. @@br/@@@ San Pedro Sula: 25 80 10 10. @@br/@@@ La Ceiba: 24 80 10 10.</meRindo>
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>
@@ -1073,8 +1113,8 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>
-			<frase>Perdón, no entiendo. @@br/@@@ @@br/@@@ Si gustas puedes llamar a para mayor ayuda: @@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@ @@br/@@@ @@br/@@@ ¿Hay algo más con lo que te pueda ayudar?</frase>
-			<frase>Creo que no entendí. @@br/@@@ @@br/@@@ Si necesitas más información puedes llamar a los siguientes números telefónicos: @@#@@@ @@br/@@@ @@br/@@@ Tegucigalpa: 2280-1010 @@br/@@@ San Pedro Sula: 2580-1010 @@br/@@@ La Ceiba: 2480-1010 @@#/@@@ @@br/@@@ @@br/@@@ ¿Te gustaría que te ayude en algo más?</frase>	
+			<frase>Perdón, no entiendo. @@br/@@@ @@br/@@@ Si gustas puedes llamar a para mayor ayuda: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10. @@br/@@@ @@br/@@@ ¿Hay algo más con lo que te pueda ayudar?</frase>
+			<frase>Creo que no entendí. @@br/@@@ @@br/@@@ Si necesitas más información puedes llamar a los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10. @@br/@@@ @@br/@@@ ¿Te gustaría que te ayude en algo más?</frase>	
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>
@@ -1092,7 +1132,7 @@
 	<conversacion id="despistar">				
 		<tipo>afirmativa</tipo>		
 		<mandatoria>true</mandatoria>				
-		<enVozAlta>false</enVozAlta>				
+		<enVozAlta>true</enVozAlta>				
 		<frases>	
 			<frase>Entiendo, ¿En que más te puedo ayudar?</frase>
 		</frases>				
@@ -1102,9 +1142,19 @@
 	<conversacion id="despedidaCerrarSesion">				
 		<tipo>afirmativa</tipo>		
 		<mandatoria>true</mandatoria>				
-		<enVozAlta>false</enVozAlta>				
+		<enVozAlta>true</enVozAlta>				
 		<frases>	
 			<frase>Hemos terminado la sesión y espero volver a servirte pronto. ¡Adiós!</frase>
+		</frases>				
+		<vinetas></vinetas>				
+	</conversacion>
+	
+		<conversacion id="noTieneNada">				
+		<tipo>afirmativa</tipo>		
+		<mandatoria>true</mandatoria>				
+		<enVozAlta>true</enVozAlta>				
+		<frases>				
+			<frase>Según nuestro sistema no tienes ni tarjetas de crédito ni cuentas de ahorro con nosotros.</frase>		
 		</frases>				
 		<vinetas></vinetas>				
 	</conversacion>
@@ -1126,10 +1176,10 @@
 	</variablesDeAmbiente>
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
-		<workspace tipo="general" idIBM="0ec78686-a61d-4bd7-b207-7b9a6a5e8e28" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="e7d6fefc-adba-4814-b5dc-0164ade4a38b" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
-		<workspace tipo="especifico" idIBM="f6a14d08-2634-4f9c-9fd1-a083b0cb2b48" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="8d867007-67e0-45e2-b038-976ba4c11abd" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros">BAFAQ</workspace>
+		<workspace tipo="general" idIBM="3d0a52ba-eab5-489e-8fd0-bbce45f9335c" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="especifico" idIBM="bf75bad0-7597-4731-945b-7ed137657f1d" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
+		<workspace tipo="especifico" idIBM="8cbe633c-b878-4217-a58c-b701bd374d4a" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
+		<workspace tipo="especifico" idIBM="28d051b1-ce4d-4aa6-9871-2e2cfeac4f79" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>

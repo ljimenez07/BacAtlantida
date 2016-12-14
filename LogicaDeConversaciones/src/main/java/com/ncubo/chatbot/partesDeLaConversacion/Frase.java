@@ -192,7 +192,8 @@ public abstract class Frase
 					String textoTag = ""; 
 					while(texto.contains("@@"))
 					{
-						
+						texto = texto.replace("@@!", "&nbsp;");
+						textoParaReproducir = textoParaReproducir.replace("@@!", " ");
 						textoTag = texto.substring(texto.indexOf("@@")+2, texto.indexOf("@@@"));
 						if(textoTag.contains("#"))
 						{
