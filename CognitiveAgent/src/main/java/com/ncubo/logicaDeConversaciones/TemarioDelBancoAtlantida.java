@@ -60,7 +60,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("noQuiereHacerOtraConsulta"),
 			frase("necesitaLogin"),
 			frase("noTieneNada"),
-	frase("despedidaCerrarSesion")
+			frase("despedidaCerrarSesion")
 		);
 		return resultado;
 	}
