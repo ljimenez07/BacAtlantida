@@ -116,13 +116,19 @@
 
 	function onBackKeyDown(e)
 	{
+	
 		if( ordenDelasVistas.length > 0)
 		{
 			e.preventDefault();
 			var page = ordenDelasVistas.pop();
+			alert("aaaa "+ordenDelasVistas.length+"   "+page);
 			cambiarVista(page, false);
 		}
-		
+		else
+		{
+			alert("aaaa "+ordenDelasVistas.length);
+			navigator.app.exitApp();
+		}
 	}
 	
 	var deviceType = "";
@@ -174,6 +180,11 @@
 			botonEscucharMensajes.click();
 		}
 		
+		if( guardarVistaEnHistorial != undefined && guardarVistaEnHistorial)
+		{
+			ordenDelasVistas.push( vistaActual );	
+		}
+		
 		if(href == "login")
 		{
 			$("body").css({"overflow": "hidden"});
@@ -182,11 +193,6 @@
 		{
 			$("body").css({"overflow": "scroll"});
 			vistaActual = href;
-		}
-		
-		if( guardarVistaEnHistorial != undefined && guardarVistaEnHistorial)
-		{
-			ordenDelasVistas.push( href );	
 		}		
 	}
 	
