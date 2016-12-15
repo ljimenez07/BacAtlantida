@@ -414,8 +414,9 @@ public class OfertaDao
 		for(Oferta ofertaActual : ultimasOfertas)
 		{
 			int levenshteinDistance = LevenshteinDistance.distance( nombreComercio, ofertaActual.getComercio());
+			boolean contieneParteDelNombre = ofertaActual.getComercio().toLowerCase().contains(nombreComercio.toLowerCase());
 			
-			if ( levenshteinDistance < 6 )
+			if ( levenshteinDistance < 6 || contieneParteDelNombre)
 			{
 				if(cantidadQueLleva >= desde)
 				{
