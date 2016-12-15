@@ -278,172 +278,290 @@ public class ExtraerDatosWebService {
 		
 	}
 	
-	public String[] obtenerMovimientos(String texto, String user, String cuenta) throws ParseException{
+	public String[] obtenerMovimientos(String texto, String user, String tipoCuenta) throws ParseException{
 		String[] arregloMovimientos = null;
 		try{
-		String requestBody = ""+
-			"<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:con=\"http://hn.infatlan.och/ws/ACD004/out/ConsultaSaldo\">"+
-			"<soapenv:Header/>"+
-			"<soapenv:Body>"+
-				"<con:MT_ConsultaSaldo>"+
-					"<activarMultipleEntrada>?</activarMultipleEntrada>"+
-					"<activarParametroAdicional>?</activarParametroAdicional>"+
-					"<!--Optional:-->"+
-					"<transaccionId>100128</transaccionId>"+
-					"<!--Optional:-->"+
-					"<aplicacionId>001</aplicacionId>"+
-					"<paisId>?</paisId>"+
-					"<empresaId>?</empresaId>"+
-					"<!--Optional:-->"+
-					"<regionId>?</regionId>"+
-					"<!--Optional:-->"+
-					"<canalId>?</canalId>"+
-					"<!--Optional:-->"+
-					"<version>?</version>"+
-					"<!--Optional:-->"+
-					"<llaveSesion>?</llaveSesion>"+
-					"<!--Optional:-->"+
-					"<usuarioId>?</usuarioId>"+
-					"<!--Optional:-->"+
-					"<token>?</token>"+
-					"<!--Zero or more repetitions:-->"+
-					"<identificadorColeccion>"+
-						"<!--Optional:-->"+
-						"<was>?</was>"+
-						"<!--Optional:-->"+
-						"<pi>?</pi>"+
-						"<!--Optional:-->"+
-						"<omniCanal>?</omniCanal>"+
-						"<!--Optional:-->"+
-						"<recibo>?</recibo>"+
-						"<!--Optional:-->"+
-						"<numeroTransaccion>?</numeroTransaccion>"+
-					"</identificadorColeccion>"+
-					"<!--Optional:-->"+
-					"<parametroAdicionalColeccion>"+
-						"<!--Zero or more repetitions:-->"+
-						"<parametroAdicionalItem>"+
-							"<linea>0</linea>"+
+			
+			String requestBodySaldo = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:con=\"http://hn.infatlan.och/ws/ACD004/out/ConsultaSaldo\"><soapenv:Header/><soapenv:Body> <con:MT_ConsultaSaldo> <activarMultipleEntrada>?</activarMultipleEntrada> <activarParametroAdicional>?</activarParametroAdicional> <!--Optional:--><transaccionId>100128</transaccionId><!--Optional:--><aplicacionId>?</aplicacionId> <paisId>?</paisId><empresaId>?</empresaId><!--Optional:--><regionId>?</regionId><!--Optional:--> <canalId>?</canalId><!--Optional:--><version>?</version> <!--Optional:--> <llaveSesion>?</llaveSesion>  <!--Optional:--> <usuarioId>?</usuarioId> <!--Optional:--><token>?</token> <!--Zero or more repetitions:--> <identificadorColeccion> <!--Optional:-->  <was>?</was> <!--Optional:--> <pi>?</pi> <!--Optional:--> <omniCanal>?</omniCanal> <!--Optional:--><recibo>?</recibo> <!--Optional:--> <numeroTransaccion>?</numeroTransaccion> </identificadorColeccion> <!--Optional:--><parametroAdicionalColeccion> <!--Zero or more repetitions:-->  <parametroAdicionalItem> <!--You may enter the following 3 items in any order--> <linea>0</linea> <!--Optional:--> <tipoRegistro>TC</tipoRegistro>  <!--Optional:--><valor>M</valor> </parametroAdicionalItem>   <parametroAdicionalItem> <!--You may enter the following 3 items in any order--> <linea>0</linea>         <!--Optional:--> <tipoRegistro>UAI</tipoRegistro> <!--Optional:--> <valor>%s</valor> </parametroAdicionalItem> </parametroAdicionalColeccion>"
+				       +"  <!--Optional:--><logColeccion><!--Zero or more repetitions:--> <logItem> <identificadorWas>?</identificadorWas>"
+				        +"       <!--Optional:-->"
+				        +"       <identificadorPi>?</identificadorPi>"
+				        +"       <!--Optional:-->"
+				        +"       <identificadorOmniCanal>?</identificadorOmniCanal>"
+				         +"      <!--Optional:-->"
+				         +"      <identificadorRecibo>?</identificadorRecibo>"
+				          +"     <!--Optional:-->"
+				        +"       <numeroPeticion>?</numeroPeticion>"
+				         +"      <!--Optional:-->"
+				          +"     <identificadorNumeroTransaccion>?</identificadorNumeroTransaccion>"
+				         +"      <!--Optional:-->"
+				          +"     <aplicacionId>?</aplicacionId>"
+				          +"     <!--Optional:-->"
+				          +"     <canalId>?</canalId>"
+				         +"      <!--Optional:-->"
+				         +"      <ambienteId>?</ambienteId>"
+				         +"      <!--Optional:-->"
+				         +"      <transaccionId></transaccionId>"
+				         +"      <!--Optional:-->"
+				         +"      <accion>?</accion>"
+				         +"      <!--Optional:-->"
+				          +"     <tipo>?</tipo>"
+				          +"     <!--Optional:-->"
+				         +"      <fecha>?</fecha>"
+				         +"      <!--Optional:-->"
+				         +"      <hora>?</hora>"
+				         +"      <!--Optional:-->"
+				         +"      <auxiliar1>?</auxiliar1>"
+				         +"      <!--Optional:-->"
+				         +"      <auxiliar2>?</auxiliar2>"
+				          +"     <!--Optional:-->"
+				          +"     <parametroAdicionalColeccion>"
+				          +"        <!--Zero or more repetitions:-->"
+				            +"      <parametroAdicionalItem>"
+				            +"         <linea>?</linea>"
+				            +"         <!--Optional:-->"
+				            +"         <tipoRegistro>?</tipoRegistro>"
+				             +"        <!--Optional:-->"
+				             +"        <valor>?</valor>"
+				             +"     </parametroAdicionalItem>"
+				            +"   </parametroAdicionalColeccion>"
+				         +"   </logItem>"
+				        +" </logColeccion>"
+				       +"  <!--Optional:-->"
+				        +" <consultaSaldoColeccion>"
+				        +"    <tipoCuenta>%s</tipoCuenta>"
+				       +"     <!--Optional:-->"
+				       +"     <peticionId>?</peticionId>"
+				       +"  </consultaSaldoColeccion>"
+				    +"  </con:MT_ConsultaSaldo>"
+				 +"  </soapenv:Body>"
+				+"</soapenv:Envelope>";
+			
+			requestBodySaldo = String.format(requestBodySaldo, user, tipoCuenta);
+			System.out.println(requestBodySaldo);
+			
+			String responseXML =
+					given(). 
+					header("Content-Type", "text/xml;charset=UTF-8").
+					auth().
+					basic(usuario, password).
+					body(requestBodySaldo).
+					post(saldo).
+					andReturn().
+					asString();
+			
+			System.out.println(saldo+" \n\t  "+requestBodySaldo+"	\n\t"+responseXML);
+			
+			XmlPath xmlPath = new XmlPath(responseXML).setRoot("Envelope");
+			NodeChildrenImpl body = xmlPath.get("Body");
+			NodeImpl consultaSaldo = body.get(0).get("MT_ConsultaSaldoResponse");
+			NodeImpl coleccion;
+			List<?> cuentas = null;
+			if(tipoCuenta.equals("2"))
+			{
+				coleccion = consultaSaldo.getNode("Respuesta").getNode("productoColeccion").get("cuentaColeccion");
+				cuentas = coleccion.getList("cuentaItem");
+			}
+			
+			if(tipoCuenta.equals("2"))
+			{
+				coleccion = consultaSaldo.getNode("Respuesta").getNode("productoColeccion").get("tarjetaColeccion");
+				cuentas = coleccion.getList("tarjetaItem");
+			}
+			
+			
+			
+			int tam = cuentas.size()*3+1;
+			
+			
+			arregloMovimientos = new String[tam];
+			
+			arregloMovimientos[0] = texto;
+			
+			int i = 0;
+			
+			for(int s = 0; s < cuentas.size(); s++)
+			{
+				NodeImpl nodoTarjeta = (NodeImpl) cuentas.get(s);
+				String cuenta = "";
+				if(tipoCuenta.equals("2"))
+					cuenta = nodoTarjeta.get("numeroCuenta").toString();
+				if(tipoCuenta.equals("4"))
+					cuenta = nodoTarjeta.get("numeroTarjeta").toString();
+			
+					String requestBody = ""+
+					"<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:con=\"http://hn.infatlan.och/ws/ACD078/out/ConsultaMovimiento\">"+
+					"<soapenv:Header/>"+
+					"<soapenv:Body>"+
+						"<con:MT_ConsultaMovimiento>"+
+							"<activarMultipleEntrada>?</activarMultipleEntrada>"+
+							"<activarParametroAdicional>?</activarParametroAdicional>"+
 							"<!--Optional:-->"+
-							"<tipoRegistro>UAI</tipoRegistro>"+
-							"<!--Optional:-->"+
-							"<valor>tsbasapi23</valor>"+
-						"</parametroAdicionalItem>"+
-						  "<parametroAdicionalItem>"+
-							"<linea>1</linea>"+
-							"<!--Optional:-->"+
-							"<tipoRegistro>TC</tipoRegistro>"+
-							"<!--Optional:-->"+
-							"<valor>E</valor>"+
-						"</parametroAdicionalItem>"+
-					"</parametroAdicionalColeccion>"+
-					"<!--Optional:-->"+
-					"<logColeccion>"+
-						"<!--Zero or more repetitions:-->"+
-						"<logItem>"+
-							"<identificadorWas>?</identificadorWas>"+
-							"<!--Optional:-->"+
-							"<identificadorPi>?</identificadorPi>"+
-							"<!--Optional:-->"+
-							"<identificadorOmniCanal>?</identificadorOmniCanal>"+
-							"<!--Optional:-->"+
-							"<identificadorRecibo>?</identificadorRecibo>"+
-							"<!--Optional:-->"+
-							"<numeroPeticion>?</numeroPeticion>"+
-							"<!--Optional:-->"+
-							"<identificadorNumeroTransaccion>?</identificadorNumeroTransaccion>"+
+							"<transaccionId>100143</transaccionId>"+
 							"<!--Optional:-->"+
 							"<aplicacionId>?</aplicacionId>"+
+							"<paisId>?</paisId>"+
+							"<empresaId>?</empresaId>"+
+							"<!--Optional:-->"+
+							"<regionId>?</regionId>"+
 							"<!--Optional:-->"+
 							"<canalId>?</canalId>"+
 							"<!--Optional:-->"+
-							"<ambienteId>?</ambienteId>"+
+							"<version>?</version>"+
 							"<!--Optional:-->"+
-							"<transaccionId>?</transaccionId>"+
+							"<llaveSesion>?</llaveSesion>"+
 							"<!--Optional:-->"+
-							"<accion>?</accion>"+
+							"<usuarioId>?</usuarioId>"+
 							"<!--Optional:-->"+
-							"<tipo>?</tipo>"+
-							"<!--Optional:-->"+
-							"<fecha>?</fecha>"+
-							"<!--Optional:-->"+
-							"<hora>?</hora>"+
-							"<!--Optional:-->"+
-							"<auxiliar1>?</auxiliar1>"+
-							"<!--Optional:-->"+
-							"<auxiliar2>?</auxiliar2>"+
+							"<token>?</token>"+
+							"<!--Zero or more repetitions:-->"+
+							"<identificadorColeccion>"+
+								"<!--Optional:-->"+
+								"<was>?</was>"+
+								"<!--Optional:-->"+
+								"<pi>?</pi>"+
+								"<!--Optional:-->"+
+								"<omniCanal>?</omniCanal>"+
+								"<!--Optional:-->"+
+								"<recibo>?</recibo>"+
+								"<!--Optional:-->"+
+								"<numeroTransaccion>?</numeroTransaccion>"+
+							"</identificadorColeccion>"+
 							"<!--Optional:-->"+
 							"<parametroAdicionalColeccion>"+
 								"<!--Zero or more repetitions:-->"+
 								"<parametroAdicionalItem>"+
-									"<linea>?</linea>"+
+									"<linea>0</linea>"+
 									"<!--Optional:-->"+
-									"<tipoRegistro>?</tipoRegistro>"+
+									"<tipoRegistro>UAI</tipoRegistro>"+
 									"<!--Optional:-->"+
-									"<valor>?</valor>"+
+									"<valor>%s</valor>"+
 								"</parametroAdicionalItem>"+
 							"</parametroAdicionalColeccion>"+
-						"</logItem>"+
-					"</logColeccion>"+
-					"<!--Optional:-->"+
-					"<consultaSaldoColeccion>"+
-						"<tipoCuenta>4</tipoCuenta>"+
-						"<!--Optional:-->"+
-						"<peticionId>?</peticionId>"+
-					"</consultaSaldoColeccion>"+
-				"</con:MT_ConsultaSaldo>"+
-			"</soapenv:Body>"+
-		"</soapenv:Envelope>";
-		
-		arregloMovimientos = new String[4];
-		arregloMovimientos[0] = texto;
-		requestBody = String.format(requestBody, user, cuenta);
-		String responseXML = 
-				given().
-				header("Content-Type", "text/xml;charset=UTF-8").
-				auth().
-				basic(usuario, password).
-				body(requestBody).
-				post(movimientos).
-				andReturn().
-				asString();
-		
-		XmlPath xmlPath = new XmlPath(responseXML).setRoot("Envelope");
-		NodeChildrenImpl body = xmlPath.get("Body");
-		NodeImpl tasa = body.get(0).get("MT_ConsultaMovimientoResponse");
-		List<?> codigo = tasa.getNode("Respuesta").getNode("movimientoCuentaTarjetaColeccion").get("movimientoCuentaTarjetaItem");
-		
-		int last = codigo.size()-1;
-		for(int j = 1; j < 4 ; j++)
-		{
-			DateFormat formatoDeFechaInicial = new SimpleDateFormat("yyyyMMdd");
-			DateFormat formatoDeFechaFinal = new SimpleDateFormat("dd/MM/yyyy");
-			NodeImpl movimiento = (NodeImpl) codigo.get(last);
-			String fecha = formatoDeFechaFinal.format(formatoDeFechaInicial.parse(movimiento.get("fecha").toString()));
-			NodeImpl hora = movimiento.get("hora");
-			NodeImpl codigoTransaccion = movimiento.get("codigoTransaccion");
-			NodeImpl montoTransaccion = movimiento.get("montoTransaccion");
-			NodeImpl moneda = movimiento.get("moneda");
-			NodeImpl descripcion = movimiento.get("descripcion");
-			String nombreMoneda = "";
-			if(moneda.toString().equals("USD"))	{
-				nombreMoneda = "Dólares";
+							"<!--Optional:-->"+
+							"<logColeccion>"+
+								"<!--Zero or more repetitions:-->"+
+								"<logItem>"+
+									"<identificadorWas>?</identificadorWas>"+
+									"<!--Optional:-->"+
+									"<identificadorPi>?</identificadorPi>"+
+									"<!--Optional:-->"+
+									"<identificadorOmniCanal>?</identificadorOmniCanal>"+
+									"<!--Optional:-->"+
+									"<identificadorRecibo>?</identificadorRecibo>"+
+									"<!--Optional:-->"+
+									"<numeroPeticion>?</numeroPeticion>"+
+									"<!--Optional:-->"+
+									"<identificadorNumeroTransaccion>?</identificadorNumeroTransaccion>"+
+									"<!--Optional:-->"+
+									"<aplicacionId>?</aplicacionId>"+
+									"<!--Optional:-->"+
+									"<canalId>?</canalId>"+
+									"<!--Optional:-->"+
+									"<ambienteId>?</ambienteId>"+
+									"<!--Optional:-->"+
+									"<transaccionId>?</transaccionId>"+
+									"<!--Optional:-->"+
+									"<accion>?</accion>"+
+									"<!--Optional:-->"+
+									"<tipo>?</tipo>"+
+									"<!--Optional:-->"+
+									"<fecha>?</fecha>"+
+									"<!--Optional:-->"+
+									"<hora>?</hora>"+
+									"<!--Optional:-->"+
+									"<auxiliar1>?</auxiliar1>"+
+									"<!--Optional:-->"+
+									"<auxiliar2>?</auxiliar2>"+
+									"<!--Optional:-->"+
+									"<parametroAdicionalColeccion>"+
+										"<!--Zero or more repetitions:-->"+
+										"<parametroAdicionalItem>"+
+											"<linea>?</linea>"+
+											"<!--Optional:-->"+
+											"<tipoRegistro>?</tipoRegistro>"+
+											"<!--Optional:-->"+
+											"<valor>?</valor>"+
+										"</parametroAdicionalItem>"+
+									"</parametroAdicionalColeccion>"+
+								"</logItem>"+
+							"</logColeccion>"+
+							"<!--Optional:-->"+
+							"<consultaMovimientoColeccion>"+
+							  "<!--Optional:-->"+
+				            "<tipoConsulta>E</tipoConsulta>"+
+				            "<!--Optional:-->"+
+				            "<tipoCuenta>%s</tipoCuenta>"+
+				            "<!--Optional:-->"+
+				            "<numeroCuenta>%s</numeroCuenta>"+
+				            "<!--Optional:-->"+
+				            "<periodo>?</periodo>"+
+				            "<!--Optional:-->"+
+				            "<fechaInicio>?</fechaInicio>"+
+				            "<!--Optional:-->"+
+				            "<fechaFinal>?</fechaFinal>"+
+				            "<!--Optional:-->"+
+				            "<tipoMonto>?</tipoMonto>"+
+				            "<!--Optional:-->"+
+				            "<monto>?</monto>"+
+				            "<!--Optional:-->"+
+				            "<operacion>?</operacion>"+
+				         "</consultaMovimientoColeccion>"+
+				      "</con:MT_ConsultaMovimiento>"+
+					"</soapenv:Body>"+
+				"</soapenv:Envelope>";
+				
+				
+				requestBody = String.format(requestBody, user, tipoCuenta, cuenta);
+				String responseXMLMovimientos = 
+						given().
+						header("Content-Type", "text/xml;charset=UTF-8").
+						auth().
+						basic(usuario, password).
+						body(requestBody).
+						post(movimientos).
+						andReturn().
+						asString();
+				
+				XmlPath xmlPathMovimientos = new XmlPath(responseXMLMovimientos).setRoot("Envelope");
+				NodeChildrenImpl bodyMovimientos = xmlPathMovimientos.get("Body");
+				NodeImpl tasa = bodyMovimientos.get(0).get("MT_ConsultaMovimientoResponse");
+				List<?> codigo = tasa.getNode("Respuesta").getNode("movimientoCuentaTarjetaColeccion").get("movimientoCuentaTarjetaItem");
+				
+				int last = codigo.size()-1;
+				for(int j = 1; j < 4 ; j++)
+				{
+					DateFormat formatoDeFechaInicial = new SimpleDateFormat("yyyyMMdd");
+					DateFormat formatoDeFechaFinal = new SimpleDateFormat("dd/MM/yyyy");
+					NodeImpl movimiento = (NodeImpl) codigo.get(last);
+					String fecha = formatoDeFechaFinal.format(formatoDeFechaInicial.parse(movimiento.get("fecha").toString()));
+					NodeImpl hora = movimiento.get("hora");
+					NodeImpl codigoTransaccion = movimiento.get("codigoTransaccion");
+					NodeImpl montoTransaccion = movimiento.get("montoTransaccion");
+					NodeImpl moneda = movimiento.get("moneda");
+					NodeImpl descripcion = movimiento.get("descripcion");
+					String nombreMoneda = "";
+					if(moneda.toString().equals("USD"))	{
+						nombreMoneda = "Dólares";
+					}
+					if(moneda.toString().equals("EUR"))		
+					{
+						nombreMoneda = "Euros";
+					}
+					if(moneda.toString().equals("LPS"))		
+					{
+						nombreMoneda = "Lempiras";
+					}
+					if(codigoTransaccion.getValue().equals("CR"))
+						arregloMovimientos[i] = "El día "+fecha+ " a las "+ hora + " se realizó un crédito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
+					if(codigoTransaccion.getValue().equals("DB"))
+						arregloMovimientos[i] = "El día "+fecha+ " a las "+ hora + " se realizó un débito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
+					
+					last--;
+					i++;
+				}
+				
 			}
-			if(moneda.toString().equals("EUR"))		
-			{
-				nombreMoneda = "Euros";
-			}
-			if(moneda.toString().equals("LPS"))		
-			{
-				nombreMoneda = "Lempiras";
-			}
-			if(codigoTransaccion.getValue().equals("CR"))
-				arregloMovimientos[j] = "El día "+fecha+ " a las "+ hora + " se realizó un crédito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
-			if(codigoTransaccion.getValue().equals("DB"))
-				arregloMovimientos[j] = "El día "+fecha+ " a las "+ hora + " se realizó un débito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
-			
-			last--;
-		}
 	}catch (Exception e) {
 		// TODO: handle exception
 		arregloMovimientos = new String [1];

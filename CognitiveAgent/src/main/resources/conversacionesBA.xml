@@ -1164,11 +1164,12 @@
 		<variable nombre="sePreocupaPorLaSalud" tipo="double">0</variable>
 	</variablesDeAmbiente>
 	
+	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
-		<workspace tipo="general" idIBM="c20069e8-ba7a-4cf8-806d-25f738db1a21" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="150841fa-25fd-45ee-9b48-80df960c1261" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
+		<workspace tipo="general" idIBM="f4f81a3e-adb4-43c6-ba00-fe08c30f7905" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="especifico" idIBM="8ad42315-8cc8-42bf-9a0d-91c4e2373d60" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="3643b7c9-4cf3-4d02-adfd-9a52d6c6c5e3" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="2648676e-3358-48a2-9842-a79d572b4a6c" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="f901aadd-f2f5-4c60-958c-1a0cb9df3727" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>
