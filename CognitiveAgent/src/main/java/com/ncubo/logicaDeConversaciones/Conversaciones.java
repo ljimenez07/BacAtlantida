@@ -15,7 +15,7 @@ import com.ncubo.chatbot.partesDeLaConversacion.Temario;
 import com.ncubo.chatbot.participantes.Cliente;
 import com.ncubo.chatbot.watson.TextToSpeechWatson;
 import com.ncubo.conf.Usuario;
-import com.ncubo.dao.ConsultaDao;
+import com.ncubo.db.ConsultaDao;
 
 import java.util.concurrent.Semaphore;
 
@@ -30,8 +30,7 @@ public class Conversaciones {
 	private final Semaphore semaphore = new Semaphore(1);
 	private ConsultaDao consultaDao;
 
-	public Conversaciones(){
-	}
+	public Conversaciones(){}
 	
 	private String crearUnaNuevoConversacion(Usuario usuario) throws Exception{
 		
@@ -215,7 +214,7 @@ public class Conversaciones {
 		if(existeLaConversacion(idSesion)){
 			synchronized(misConversaciones){
 				try {
-					misConversaciones.get(idSesion).guardarEstadiscitas();
+					misConversaciones.get(idSesion).guardarEstadiscitas(idSesion);
 				} catch (ClassNotFoundException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -307,11 +306,15 @@ public class Conversaciones {
 		return resultado;
 	}
 	
-	public void inicializar(String pathXML, ConsultaDao consultaDao) {
+	public void inicializar(String pathXML) {
+		consultaDao = new ConsultaDao();
 		System.out.println("El path xml es: "+pathXML);
 		temarioDelBancoAtlantida = new TemarioDelBancoAtlantida(pathXML);
-		this.consultaDao = consultaDao;
 		consultaDao.establecerTemario(temarioDelBancoAtlantida);
+	}
+	
+	public ConsultaDao obtenerConsultaDao(){
+		return this.consultaDao;
 	}
 	
 	public Cliente obtenerCliente(String idCliente)

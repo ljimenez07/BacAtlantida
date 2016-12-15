@@ -117,7 +117,7 @@ public abstract class Frase
 		return resultado;
 	}
 	
-	public List<String> textoImpertinete(){
+	public List<String> textoImpertinente(){
 		List<String> resultado = new ArrayList<>();
 		if(textosImpertinetesDeLaFrase.length > 0){
 			int unIndiceAlAzar = (int)Math.floor(Math.random()*textosImpertinetesDeLaFrase.length);
@@ -129,12 +129,12 @@ public abstract class Frase
 		}
 	}
 	
-	public Sonido obtenerSonidoImpertienteAUsar(int idDelSonidoImpertineteAUsar){
+	public Sonido obtenerSonidoImpertinenteAUsar(int idDelSonidoImpertinenteAUsar){
 		Sonido resultado = null;
 		if(hayTextosImpertinetes() && sonidosDeLosTextosImpertinentesDeLaFrase.size() > 0){
-			if (idDelSonidoImpertineteAUsar == -1){
-				idDelSonidoImpertineteAUsar = (int)Math.floor(Math.random()*sonidosDeLosTextosImpertinentesDeLaFrase.size());
-			}resultado = sonidosDeLosTextosImpertinentesDeLaFrase.get(idDelSonidoImpertineteAUsar);
+			if (idDelSonidoImpertinenteAUsar == -1){
+				idDelSonidoImpertinenteAUsar = (int)Math.floor(Math.random()*sonidosDeLosTextosImpertinentesDeLaFrase.size());
+			}resultado = sonidosDeLosTextosImpertinentesDeLaFrase.get(idDelSonidoImpertinenteAUsar);
 		}
 		return resultado;
 	}
@@ -290,7 +290,7 @@ public abstract class Frase
 		return muletillas[unIndiceAlAzar];
 	}*/
 	
-	public String optenerLaInformacionDeLaFrase(){
+	public String obtenerLaInformacionDeLaFrase(){
 		String resultado = "";
 		
 		if(textosDeLaFrase.length > 0){

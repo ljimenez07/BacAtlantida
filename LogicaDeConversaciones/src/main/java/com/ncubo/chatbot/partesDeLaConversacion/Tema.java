@@ -117,7 +117,7 @@ public class Tema
 		String resultado = "";
 		resultado += "IdTema: "+id+" - "+obtenerIdTema()+" => \n"; 
 		for(int index = 0; index < frases.length; index ++){
-			resultado += frases[index].optenerLaInformacionDeLaFrase()+"\n";
+			resultado += frases[index].obtenerLaInformacionDeLaFrase()+"\n";
 		}
 		return resultado;
 	}

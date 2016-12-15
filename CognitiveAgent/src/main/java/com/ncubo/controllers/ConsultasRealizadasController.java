@@ -12,14 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ncubo.dao.ConsultaDao;
+import com.ncubo.db.ConsultaDao;
+import com.ncubo.logicaDeConversaciones.Conversaciones;
 import com.ncubo.util.Validacion;
 
 @Controller
 public class ConsultasRealizadasController
 {
+	
 	@Autowired
-	private ConsultaDao consultaDao;
+	private Conversaciones misConversaciones;
 	
 	@GetMapping("/BackOffice/consultasRealizadas")
 	public String visualizarOfertas(Model model) throws ClassNotFoundException, SQLException
@@ -30,7 +32,7 @@ public class ConsultasRealizadasController
 		
 		model.addAttribute("fechaDesde", fechaDesde);
 		model.addAttribute("fechaHasta", fechaHasta);
-		model.addAttribute("consultasFiltradas", consultaDao.obtener(fechaDesde, fechaHasta));
+		model.addAttribute("consultasFiltradas", misConversaciones.obtenerConsultaDao().obtener(fechaDesde, fechaHasta));
 		
 		return "consultasRealizadas";
 	}
@@ -47,7 +49,7 @@ public class ConsultasRealizadasController
 			return "consultasRealizadas";
 		}
 		
-		model.addAttribute("consultasFiltradas", consultaDao.obtener(fechaDesde, fechaHasta));
+		model.addAttribute("consultasFiltradas", misConversaciones.obtenerConsultaDao().obtener(fechaDesde, fechaHasta));
 		return "consultasRealizadas";
 	}
 	

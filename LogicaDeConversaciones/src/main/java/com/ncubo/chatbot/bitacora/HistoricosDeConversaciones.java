@@ -6,15 +6,18 @@ import java.util.Hashtable;
 
 import com.ncubo.db.BitacoraDao;
 import com.ncubo.db.ConexionALaDB;
+import com.ncubo.db.EstadisticasPorConversacionDao;
 
 public class HistoricosDeConversaciones {
 
 	private final static Hashtable<String, HistoricoDeLaConversacion> historicoDeMisConversaciones = new Hashtable<String, HistoricoDeLaConversacion>();
 	private final static Hashtable<String, HistoricoDeLaConversacion> historicoDeMisConversacionesEspecificas = new Hashtable<String, HistoricoDeLaConversacion>();
 	private BitacoraDao miBitacora;
+	private EstadisticasPorConversacionDao estadisticasPorConversacion;
 	
 	public HistoricosDeConversaciones(){
 		miBitacora = new BitacoraDao();
+		estadisticasPorConversacion = new EstadisticasPorConversacionDao();
 	}
 	
 	private boolean existeElHistoricoDeLaConversacion(String idSesion){
@@ -75,7 +78,6 @@ public class HistoricosDeConversaciones {
 			}
 			
 		}
-		
 	}
 	
 	private boolean guardarUnaConversacionEnLaDB(String idSesion, String idCliente, String miHistorico, int esConversacionEspecifica){

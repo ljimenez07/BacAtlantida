@@ -138,7 +138,7 @@ public class Participante{
 		int idDelSonidoImpertineteAUsar = -1;
 		if (formaDeManifestarseEscrita.esEnFormaEscrita()){
 			if(pregunta.hayTextosImpertinetes()){
-				resultado = pregunta.textoImpertinete();
+				resultado = pregunta.textoImpertinente();
 				texto = resultado.get(1);
 				idDelSonidoImpertineteAUsar = Integer.valueOf(resultado.get(0));
 			}else{
@@ -151,7 +151,7 @@ public class Participante{
 		if (formaDeManifestarseOral.esEnFormaOral()){
 			Sonido sonido = null;
 			if(pregunta.hayTextosImpertinetes()){
-				sonido = pregunta.obtenerSonidoImpertienteAUsar(idDelSonidoImpertineteAUsar);
+				sonido = pregunta.obtenerSonidoImpertinenteAUsar(idDelSonidoImpertineteAUsar);
 			}else{
 				if(! texto.equals("")){
 					try{

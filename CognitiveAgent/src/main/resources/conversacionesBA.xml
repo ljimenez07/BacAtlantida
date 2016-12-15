@@ -1164,7 +1164,6 @@
 		<variable nombre="sePreocupaPorLaSalud" tipo="double">0</variable>
 	</variablesDeAmbiente>
 	
-	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
 		<workspace tipo="general" idIBM="f4f81a3e-adb4-43c6-ba00-fe08c30f7905" intencionesParaSeReferenciado="">BAIntents</workspace>
 		<workspace tipo="especifico" idIBM="8ad42315-8cc8-42bf-9a0d-91c4e2373d60" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
