@@ -45,15 +45,15 @@ public class ArchivosController
 	{
 		CacheDeAudios.inicializar(capacidadDeAudiosLivianos, capacidadDeAudiosPesados, limiteTamanioAudiosLivianos);
 	}
-
+	
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value="/archivossubidos/{nombre:.*}", method = RequestMethod.GET)
-	void archivossubidos(HttpSession session, HttpServletRequest request, HttpServletResponse response, @PathVariable String nombre) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ClassNotFoundException, SQLException 
+	@RequestMapping(value = "/archivossubidos/{nombre:.*}", method = RequestMethod.GET)
+	void archivossubidos(HttpSession session, HttpServletRequest request, HttpServletResponse response, @PathVariable String nombre) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ClassNotFoundException, SQLException
 	{
 		String remoteFile2 = nombre.replace("-", "/");
 		InputStream streamPorDevolver = null;
 		
-		if (remoteFile2.startsWith("audio"))
+		if(remoteFile2.startsWith("audio"))
 		{
 			byte[] bytesStreamPorDevolver = CacheDeAudios.obtener(remoteFile2);
 			
@@ -63,7 +63,7 @@ public class ArchivosController
 				bytesStreamPorDevolver = IOUtils.toByteArray(streamPorDevolver);
 				CacheDeAudios.agregar(remoteFile2, bytesStreamPorDevolver);
 			}
-			streamPorDevolver= new ByteArrayInputStream(bytesStreamPorDevolver);
+			streamPorDevolver = new ByteArrayInputStream(bytesStreamPorDevolver);
 		}
 		else
 		{
@@ -72,21 +72,21 @@ public class ArchivosController
 		
 		byte[] bytesArray = new byte[4096];
 		int bytesRead = -1;
-
+		
 		ServletContext context = request.getServletContext();
 		String mimetype = context.getMimeType(remoteFile2);
-
-		if (mimetype == null)
+		
+		if(mimetype == null)
 		{
 			mimetype = "application/octet-stream";
 		}
 		
 		response.setContentType(mimetype);
 		OutputStream outStream = response.getOutputStream();
-
+		
 		if(streamPorDevolver != null)
 		{
-			while ((bytesRead = streamPorDevolver.read(bytesArray)) != -1)
+			while((bytesRead = streamPorDevolver.read(bytesArray)) != -1)
 			{
 				outStream.write(bytesArray, 0, bytesRead);
 			}
@@ -94,35 +94,35 @@ public class ArchivosController
 			streamPorDevolver.close();
 		}
 	}
-
+	
 	public int getCapacidadDeAudiosLivianos()
 	{
 		return capacidadDeAudiosLivianos;
 	}
-
+	
 	public void setCapacidadDeAudiosLivianos(int capacidadDeAudiosLivianos)
 	{
 		this.capacidadDeAudiosLivianos = capacidadDeAudiosLivianos;
 	}
-
+	
 	public int getCapacidadDeAudiosPesados()
 	{
 		return capacidadDeAudiosPesados;
 	}
-
+	
 	public void setCapacidadDeAudiosPesados(int capacidadDeAudiosPesados)
 	{
 		this.capacidadDeAudiosPesados = capacidadDeAudiosPesados;
 	}
-
-	public int getLimiteTamanioAudiosLivianos() {
+	
+	public int getLimiteTamanioAudiosLivianos()
+	{
 		return limiteTamanioAudiosLivianos;
 	}
-
-	public void setLimiteTamanioAudiosLivianos(int limiteTamanioAudiosLivianos) {
+	
+	public void setLimiteTamanioAudiosLivianos(int limiteTamanioAudiosLivianos)
+	{
 		this.limiteTamanioAudiosLivianos = limiteTamanioAudiosLivianos;
 	}
 	
-	
-
 }

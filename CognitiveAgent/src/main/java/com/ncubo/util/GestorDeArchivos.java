@@ -53,7 +53,7 @@ public class GestorDeArchivos
 	
 	public String subirArchivo(MultipartFile uploadfile) throws IOException, ZipException
 	{
-		String nombreArchivo = uploadfile.getOriginalFilename();
+		String nombreArchivo = uploadfile.getOriginalFilename().replaceAll("-", "");
 		path = path.replace("\\", "/");
 		String archivoDestino = path;
 		String filepath = Paths.get(archivoDestino, nombreArchivo).toString();
