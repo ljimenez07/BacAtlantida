@@ -247,6 +247,10 @@ public class Conversacion {
 			}
 		}
 		
+		if(this.temaActualDelWorkSpaceEspecifico.obtenerIdTema().equals("despedidaConocerte")){
+			temaActualDelWorkSpaceEspecifico = null;
+			hilo.borrarTemasEspecificosYaDichos();
+		}
 		if(misSalidas.isEmpty()){
 			decirTemaNoEntendi(misSalidas, respuesta);
 		}

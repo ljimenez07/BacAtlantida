@@ -116,13 +116,17 @@
 
 	function onBackKeyDown(e)
 	{
+	
 		if( ordenDelasVistas.length > 0)
 		{
 			e.preventDefault();
 			var page = ordenDelasVistas.pop();
 			cambiarVista(page, false);
 		}
-		
+		else
+		{
+			navigator.app.exitApp();
+		}
 	}
 	
 	var deviceType = "";
@@ -174,6 +178,11 @@
 			botonEscucharMensajes.click();
 		}
 		
+		if( guardarVistaEnHistorial != undefined && guardarVistaEnHistorial)
+		{
+			ordenDelasVistas.push( vistaActual );	
+		}
+		
 		if(href == "login")
 		{
 			$("body").css({"overflow": "hidden"});
@@ -182,11 +191,6 @@
 		{
 			$("body").css({"overflow": "scroll"});
 			vistaActual = href;
-		}
-		
-		if( guardarVistaEnHistorial != undefined && guardarVistaEnHistorial)
-		{
-			ordenDelasVistas.push( href );	
 		}		
 	}
 	
@@ -325,7 +329,7 @@
 		cambiarVista("ofertas", true);
 	}
 	
-	function agregarAColaDeReproduccion(pathDelArchivo)
+	function agregarAColaDeReproduccion(pathDelArchivo, callback)
 	{
 		var audio = new Audio(serverDomain + pathDelArchivo);
 		audio.onerror = function(e){
@@ -335,6 +339,7 @@
 			audios = new Array();
 		};
 		audio.onplay = function(){console.log("Reproduciendo: " + audio.src)};
+		audio.callback = callback;
 		audios.push(audio);
 		reproducirCola();
 	}
@@ -357,7 +362,11 @@
 	{
 		audioEnReproduccion = audio;
 		audioEnReproduccion.play();
-		if(callback)
+		if(audioEnReproduccion.callback != undefined)
+		{
+			audioEnReproduccion.onended = audioEnReproduccion.callback;
+		}
+		else
 		{
 			audioEnReproduccion.onended = callback;
 		}

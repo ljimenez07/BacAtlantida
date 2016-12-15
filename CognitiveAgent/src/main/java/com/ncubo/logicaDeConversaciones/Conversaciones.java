@@ -167,10 +167,10 @@ public class Conversaciones {
 		System.out.println("Se termino de generar audios estaticos de tema.");
 	}
 	
-	public void cargarElNombreDeUnSonidoEstaticoEnMemoria(String pathAGuardar, String url, int indexTema, int indexFrase, String nombreTema, String nombreDelArchivo){
+	public void cargarElNombreDeUnSonidoEstaticoEnMemoria(String pathAGuardar, String url, int indexTema, int indexFrase, String idNombreTema, String nombreDelArchivo){
 		System.out.println(String.format("El path a guardar los audios es %s y la url publica es %s", pathAGuardar, url));
-		temarioDelBancoAtlantida.cargarElNombreDeUnSonidoEstaticoEnMemoria(pathAGuardar, url, indexTema, indexFrase, nombreTema, nombreDelArchivo);
-		System.out.println("Se termino de agregar el audio a la frase.");
+		temarioDelBancoAtlantida.cargarElNombreDeUnSonidoEstaticoEnMemoria(pathAGuardar, url, indexTema, indexFrase, idNombreTema, nombreDelArchivo);
+		System.out.println("Se termino de agregar el audio a la frase en el tema "+idNombreTema);
 	}
 	
 	public String verMiTemario(){

@@ -81,7 +81,12 @@ public class OfertaController
 			return "redirect:insertarOferta";
 		}
 		model.addAttribute("listaDeOfertas", ofertas);
-		model.addAttribute("cantidadDePaginacion", ofertaDao.cantidadPaginas());
+		int cantidadDePaginas = ofertaDao.cantidadPaginas();
+		if(cantidadDePaginas > 1)
+		{
+			model.addAttribute("cantidadDePaginacion", cantidadDePaginas);
+		}
+		
 		return "tablaDeOfertas";
 	}
 	
@@ -95,7 +100,12 @@ public class OfertaController
 			visualizarOfertas(model);
 		}
 		model.addAttribute("listaDeOfertas", ofertas);
-		model.addAttribute("cantidadDePaginacion", ofertaDao.cantidadPaginas());
+		int cantidadDePaginas = ofertaDao.cantidadPaginas();
+		if(cantidadDePaginas > 1)
+		{
+			model.addAttribute("cantidadDePaginacion", cantidadDePaginas);
+		}
+		
 		return "tablaDeOfertas";
 	}
 	
@@ -127,10 +137,6 @@ public class OfertaController
 		if(desde != 0 && ofertas.isEmpty())
 		{
 			return filtrarOfertas(nombreComercio, 0, model);
-		}
-		if (ofertas.isEmpty())
-		{
-			return "redirect:insertarOferta";
 		}
 		if (ofertas.size() == ofertaDao.getCantidadPaginacion())
 		{
@@ -193,7 +199,7 @@ public class OfertaController
 		List<Oferta>ofertas = ofertaService.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario);
 		if( ofertas.size() == 0 )
 		{
-			System.out.println(String.format("Para el usuario %s no hay ofertas acorde a susu gustos. Se van a mostrar todas sus ofertas", usuario.getUsuarioId()));
+			System.out.println(String.format("Para el usuario %s no hay ofertas acorde a sus gustos. Se van a mostrar todas sus ofertas", usuario.getUsuarioId()));
 			ofertas = ofertaService.obtenerUltimasDiezOfertasParaMostrarDesdeSinConsiderarElUsuario(
 					indiceInicial, usuario);
 		}

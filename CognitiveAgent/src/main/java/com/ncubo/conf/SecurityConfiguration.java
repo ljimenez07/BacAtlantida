@@ -41,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 		.logout()
 			.permitAll()
 			.and()
-		.headers().frameOptions().sameOrigin();
+		.headers().frameOptions().disable();
 	}
 
 	@Autowired

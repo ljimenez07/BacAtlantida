@@ -66,44 +66,51 @@
 				</div>
 			</div>
 			</form>
-			<form th:action="@{/BackOffice/modificarOferta}" th:method="get">
-			<div class="row">
-				<div class="table-responsive">
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th class="text-center titulo-tabla-ca">Título de Oferta</th>
-							<th class="text-center titulo-tabla-ca">Comercio</th>
-							<th class="text-center titulo-tabla-ca">Descripción</th>
-							<th class="text-center titulo-tabla-ca">Ciudad</th>
-							<th class="text-center titulo-tabla-ca">Estado</th>
-							<th class="text-center titulo-tabla-ca" colspan="2">Acciones</th>
-						</tr>
-					</thead>
-					<tbody>
-						<th:block th:each="oferta : ${listaDeOfertas}">
-							<tr>
-								<td class="texto-normal-ca" th:id=" ${ 'tituloOferta' + oferta.idOferta}" th:text="${oferta.tituloDeOferta}"/>
-								<td class="texto-normal-ca" th:text="${oferta.comercio}"/>
-								<td class="texto-normal-ca" th:text="${oferta.descripcion}"/>
-								<td class="texto-normal-ca" th:text="${oferta.ciudad}"/>
-								<td class="texto-normal-ca" th:if="${oferta.estado}" th:text="Activa"/>
-								<td class="texto-normal-ca" th:unless="${oferta.estado}" th:text="Inactiva"/>
-								<td class="text-center"> <button id="modificar-oferta-btn" type="submit" class="boton-editar"
-									th:name="idOferta" th:value="${oferta.idOferta}"></button></td>
-								<td class="text-center">
-									<button id="eliminar-oferta-btn" type="button" class="boton-eliminar" 
-										th:onclick="'eliminarOferta(\'' + ${oferta.idOferta} + '\');'"
-										name="eliminar">
-									</button>
-								</td>
-							</tr>
-						</th:block>
-					</tbody>
-				</table>
+			<div th:if="${#lists.isEmpty(listaDeOfertas)}">
+				<div class="col-md-12" style="text-align: center;">
+					<label for="mensajeTablaVacia" class="text-center">No se encontraron registros con esos criterios</label>
 				</div>
 			</div>
-			</form>
+			<div th:unless="${#lists.isEmpty(listaDeOfertas)}">
+				<form th:action="@{/BackOffice/modificarOferta}" th:method="get">
+				<div class="row">
+					<div class="table-responsive">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th class="text-center titulo-tabla-ca">Título de Oferta</th>
+								<th class="text-center titulo-tabla-ca">Comercio</th>
+								<th class="text-center titulo-tabla-ca">Descripción</th>
+								<th class="text-center titulo-tabla-ca">Ciudad</th>
+								<th class="text-center titulo-tabla-ca">Estado</th>
+								<th class="text-center titulo-tabla-ca" colspan="2">Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="oferta : ${listaDeOfertas}">
+								<tr>
+									<td class="texto-normal-ca" th:id=" ${ 'tituloOferta' + oferta.idOferta}" th:text="${oferta.tituloDeOferta}"/>
+									<td class="texto-normal-ca" th:text="${oferta.comercio}"/>
+									<td class="texto-normal-ca" th:text="${oferta.descripcion}"/>
+									<td class="texto-normal-ca" th:text="${oferta.ciudad}"/>
+									<td class="texto-normal-ca" th:if="${oferta.estado}" th:text="Activa"/>
+									<td class="texto-normal-ca" th:unless="${oferta.estado}" th:text="Inactiva"/>
+									<td class="text-center"> <button id="modificar-oferta-btn" type="submit" class="boton-editar"
+										th:name="idOferta" th:value="${oferta.idOferta}"></button></td>
+									<td class="text-center">
+										<button id="eliminar-oferta-btn" type="button" class="boton-eliminar" 
+											th:onclick="'eliminarOferta(\'' + ${oferta.idOferta} + '\');'"
+											name="eliminar">
+										</button>
+									</td>
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+					</div>
+				</div>
+				</form>
+			</div>
 			<th:block th:if="${cantidadDePaginacion} != null">
 				<ul class="pagination pagination-sm">
 					<th:block th:each=" i : ${#numbers.sequence( 1, cantidadDePaginacion)}">
