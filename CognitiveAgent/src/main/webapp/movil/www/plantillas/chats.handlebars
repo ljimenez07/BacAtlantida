@@ -177,7 +177,7 @@ $(function(){
 								}
 							}
 							
-							if(!debeReproducirElAudio)
+							if(!debeReproducirElAudio || indiceDelUltimoMensajeConAudio == undefined)
 							{
 								setTimeout(callback, 15000);
 							}
