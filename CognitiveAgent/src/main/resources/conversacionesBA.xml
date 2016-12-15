@@ -148,27 +148,6 @@
 		<vinetas></vinetas>
 	</conversacion>
 	
-	<conversacion id="disponiblePuntos">
-		<tipo>afirmativa</tipo>
-		<mandatoria>true</mandatoria>
-		<enVozAlta>false</enVozAlta>
-		<frases>
-			<frase>Tienes $%pp puntos.</frase>
-			<frase>Tus puntos son $%pp.</frase>
-		</frases>
-		<vinetas></vinetas>
-	</conversacion>
-	
-	<conversacion id="disponibleMillas">
-		<tipo>afirmativa</tipo>
-		<mandatoria>true</mandatoria>
-		<enVozAlta>false</enVozAlta>
-		<frases>
-			<frase>En este momento no puedo obtener información sobre millas. Puedes consultar http://www.bancatlan.hn/ para más detalles</frase>
-		</frases>
-		<vinetas></vinetas>
-	</conversacion>
-	
 	<conversacion id="noTengoDisponible">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
@@ -184,7 +163,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Claro, el dólar está a $%dc la compra y $%dv la venta.</frase>
+			<frase>Claro, el día de hoy el dólar está a $%dc la compra y $%dv la venta.</frase>
 			<frase>El tipo de cambio del dólar para hoy es $%dc la compra, y $%dv la venta.</frase>
 		</frases>
 		<vinetas></vinetas>
@@ -387,7 +366,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Puedo responder tus consultas sobre requisitos y costos de algunos de nuestros productos tales como: @@br/@@@ @@br/@@@ 1. Cuentas de ahorro. @@br/@@@ 2. Cuentas de cheques. @@br/@@@ 3. Préstamos. @@br/@@@ 4. Tarjetas de débito y crédito. @@br/@@@ 5. Mensajitos. @@br/@@@ 6. Atlántida Online. @@br/@@@ @@br/@@@ También puedo proporcionarte información sobre costos de citas para: @@br/@@@ @@br/@@@ 1. Licencia para conducir. @@br/@@@ 2. Pasaporte. @@br/@@@ 3. Embajada. @@br/@@@ @@br/@@@ Adicionalmente, te puedo ayudar con: @@br/@@@ @@br/@@@ 1. Costos de la hoja de antecedentes penales. @@br/@@@ 2. Números telefónicos de nuestras agencias. @@br/@@@ 3. Reporte de extravío o robo de tarjeta. @@br/@@@ 4. Tipo de cambio. @@br/@@@ @@br/@@@ Si has iniciado sesión también podré darte el saldo, disponible o últimos movimientos de tus cuentas o tarjetas de crédito.</frase>
+			<frase>Puedo responder tus consultas sobre requisitos y costos de algunos de nuestros productos tales como: @@br/@@@ @@br/@@@ 1. Cuentas de ahorro. @@br/@@@ 2. Cuentas de cheques. @@br/@@@ 3. Préstamos. @@br/@@@ 4. Tarjetas de débito y crédito. @@br/@@@ 5. Mensajitos. @@br/@@@ 6. Atlántida Online. @@br/@@@ @@br/@@@ También puedo proporcionarte información sobre costos de citas para: @@br/@@@ @@br/@@@ 1. Licencia para conducir. @@br/@@@ 2. Pasaporte. @@br/@@@ 3. Embajada Americana (USA). @@br/@@@ @@br/@@@ Adicionalmente, te puedo ayudar con: @@br/@@@ @@br/@@@ 1. Costos de la hoja de antecedentes penales. @@br/@@@ 2. Números telefónicos de nuestras agencias. @@br/@@@ 3. Cómo reportar extravío o robo de tarjeta. @@br/@@@ 4. Tipo de cambio. @@br/@@@ @@br/@@@ Si has iniciado sesión también podré darte el saldo, disponible o últimos movimientos de tus cuentas o tarjetas de crédito.</frase>
 		</frases>
 		<vinetas></vinetas>
 		<when>
@@ -901,36 +880,6 @@
 		<vinetas></vinetas>
 	</conversacion>
 	
-	<conversacion id="requisitosChequesEmpresas">
-		<tipo>afirmativa</tipo>
-		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
-		<frases>
-			<frase>Para adquirir una cuenta de cheques para Empresas debes presentar: @@br/@@@ @@br/@@@ 1)@@!Copia de la escritura constitución de la empresa. @@br/@@@ 2)@@!Copia del permiso de operación. @@br/@@@ 3)@@!Copia de RTN. @@br/@@@ 4)@@!Si es Sociedad Anónima necesitas una carta informando sobre los socios principales de la empresa. @@br/@@@ 5)@@!Referencias bancarias, comerciales, de proveedores o clientes. @@br/@@@ 6)@@!Copia de tarjeta de identidad de cada uno de las personas que van a firmar en la cuenta. @@br/@@@ 7)@@!Llenar la solicitud única de productos. @@br/@@@ 8)@@!Se apertura con 2 500 Lempiras o 1 000 Dólares.</frase>
-		</frases>
-		<vinetas></vinetas>
-	</conversacion>
-	
-	<conversacion id="requisitosChequesGubernamentales">
-		<tipo>afirmativa</tipo>
-		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
-		<frases>
-			<frase>Para adquirir una cuenta de cheques para Instituciones Gubernamentales debes presentar: @@br/@@@ @@br/@@@ 1)@@!Nombramiento del poder ejecutivo o ministro en su caso. @@br/@@@ 2)@@!Solicitud de apertura de la cuenta por escrito, firmada por la persona nombrada en el poder. Debe incluir los nombres de personas que firmaran en la cuenta. @@br/@@@ 3)@@!Los firmantes deberán presentar toda la documentación para la apertura de cuentas personales. @@br/@@@ 4)@@!Llenar la solicitud. @@br/@@@ 5)@@!Se apertura con 2 500 Lempiras o 1 000 Dólares.</frase>
-		</frases>
-		<vinetas></vinetas>
-	</conversacion>
-	
-	<conversacion id="requisitosChequesNoGubernamentales">
-		<tipo>afirmativa</tipo>
-		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
-		<frases>
-			<frase>Para adquirir una cuenta de cheques para Instituciones No Gubernamentales debes presentar: @@br/@@@ @@br/@@@ 1)@@!Original y copia de personería jurídica y que incluyan los estatutos. @@br/@@@ 2)@@!Fotocopia del punto del acta donde se nombra a los miembros de la Asamblea o Junta Directiva. @@br/@@@ 3)@@!Las personas firmantes deberan presentar toda la documentacion para la apertura de cuentas personales. @@br/@@@ 4)@@!Llenar la solicitud. @@br/@@@ 5)@@!Se apertura con 2 500 Lempiras o 1 000 Dólares.</frase>
-		</frases>
-		<vinetas></vinetas>
-	</conversacion>
-	
 	<conversacion id="cualCheques">		
 		<tipo>pregunta</tipo>		
 		<mandatoria>true</mandatoria>		
@@ -956,7 +905,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Los pasos que debes seguir para pagar la tasa consular o cita de la embajada son los siguientes: @@br/@@@ @@br/@@@ 1)@@!Debes ingresar a la página web:  www.ustraveldocs.com/hn  y definir un perfil para poder completar el formulario de la hoja de depósito. @@br/@@@ 2)@@!Es importante que en opciones de pago hayas seleccionado Banco Atlántida.  @@br/@@@ 3)@@!Cuando imprimas la Boleta de Depósito de Banco Atlántida, contiene el número de referencia CGI, puedes presentarla en cualquier punto de servicio para realizar el pago de la Tasa Consular. @@br/@@@ 4)@@!Para realizar el pago le brindamos las opciones de Ventanilla, Atlántida Online, Kioscos y Agentes. @@br/@@@ 5)@@!El monto a cancelar dependerá de la hoja de depósito y la tasa de cambio que estableció el CGI. @@br/@@@ 6)@@!Luego de realizado el pago recibirás un comprobante con el número de recibo, el cual le servirá para continuar el proceso en la página www.ustraveldocs.com/hn  y poder agendar la cita.</frase>
+			<frase>Los pasos que debes seguir para pagar la tasa consular o cita de la Embajada Americana (USA) son los siguientes: @@br/@@@ @@br/@@@ 1)@@!Debes ingresar a la página web:  www.ustraveldocs.com/hn  y definir un perfil para poder completar el formulario de la hoja de depósito. @@br/@@@ 2)@@!Es importante que en opciones de pago hayas seleccionado Banco Atlántida.  @@br/@@@ 3)@@!Cuando imprimas la Boleta de Depósito de Banco Atlántida, contiene el número de referencia CGI, puedes presentarla en cualquier punto de servicio para realizar el pago de la Tasa Consular. @@br/@@@ 4)@@!Para realizar el pago le brindamos las opciones de Ventanilla, Atlántida Online, Kioscos y Agentes. @@br/@@@ 5)@@!El monto a cancelar dependerá de la hoja de depósito y la tasa de cambio que estableció el CGI. @@br/@@@ 6)@@!Luego de realizado el pago recibirás un comprobante con el número de recibo, el cual le servirá para continuar el proceso en la página www.ustraveldocs.com/hn  y poder agendar la cita.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -1154,7 +1103,7 @@
 	<conversacion id="despistar">				
 		<tipo>afirmativa</tipo>		
 		<mandatoria>true</mandatoria>				
-		<enVozAlta>false</enVozAlta>				
+		<enVozAlta>true</enVozAlta>				
 		<frases>	
 			<frase>Entiendo, ¿En que más te puedo ayudar?</frase>
 		</frases>				
@@ -1164,7 +1113,7 @@
 	<conversacion id="despedidaCerrarSesion">				
 		<tipo>afirmativa</tipo>		
 		<mandatoria>true</mandatoria>				
-		<enVozAlta>false</enVozAlta>				
+		<enVozAlta>true</enVozAlta>				
 		<frases>	
 			<frase>Hemos terminado la sesión y espero volver a servirte pronto. ¡Adiós!</frase>
 		</frases>				
