@@ -138,10 +138,6 @@ public class OfertaController
 		{
 			return filtrarOfertas(nombreComercio, 0, model);
 		}
-		if (ofertas.isEmpty())
-		{
-			return "redirect:insertarOferta";
-		}
 		if (ofertas.size() == ofertaDao.getCantidadPaginacion())
 		{
 			model.addAttribute("cantidadDePaginacionFiltroSiguiente", desdeSiguiente);
