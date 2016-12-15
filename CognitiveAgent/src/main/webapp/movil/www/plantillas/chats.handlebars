@@ -52,6 +52,7 @@ $(function(){
 			}
 			if(!debeReproducirElAudio)
 			{
+				colaDeReproduccion = new Array();
 				audios = new Array();
 				audioEnReproduccion.pause();
 				estaReproduciendo = false;
@@ -157,6 +158,8 @@ $(function(){
 								url: serverDomain + "/conversacion/borrarUnaConversacion"
 							});
 							
+							campoDeEntrada.attr("disabled", true);
+							
 							callback = function()
 							{
 								$(".app #{{pathDelServidor}}").html(Handlebars.templates.layout(pantallas["{{pathDelServidor}}"]));
@@ -172,6 +175,11 @@ $(function(){
 								{
 									indiceDelUltimoMensajeConAudio = i;
 								}
+							}
+							
+							if(!debeReproducirElAudio)
+							{
+								setTimeout(callback, 15000);
 							}
 						}
 						
