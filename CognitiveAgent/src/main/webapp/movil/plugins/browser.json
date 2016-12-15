@@ -17,9 +17,5 @@
             "PACKAGE_NAME": "io.ncubo.agentecognitivo"
         }
     },
-    "dependent_plugins": {
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "io.ncubo.agentecognitivo"
-        }
-    }
+    "dependent_plugins": {}
 }

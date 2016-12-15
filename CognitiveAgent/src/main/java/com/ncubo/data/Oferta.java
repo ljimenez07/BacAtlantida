@@ -301,7 +301,7 @@ public class Oferta implements Comparable<Oferta>
 	
 	public int compareTo(Oferta oferta)
 	{
-		return getFechaHoraRegistro().compareTo(oferta.getFechaHoraRegistro());
+		return oferta.getFechaHoraRegistro().compareTo(getFechaHoraRegistro());
 	}
 	
 	public void cambiarApostrofes()
