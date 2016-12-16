@@ -195,14 +195,7 @@ public class OfertaController
 		}
 		Indice indiceInicial = new Indice( pagina );
 				
-		
 		List<Oferta>ofertas = ofertaService.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario);
-		if( ofertas.size() == 0 )
-		{
-			System.out.println(String.format("Para el usuario %s no hay ofertas acorde a sus gustos. Se van a mostrar todas sus ofertas", usuario.getUsuarioId()));
-			ofertas = ofertaService.obtenerUltimasDiezOfertasParaMostrarDesdeSinConsiderarElUsuario(
-					indiceInicial, usuario);
-		}
 		
 		ObjectMapper mapper = new ObjectMapper();
 		JSONArray array = new JSONArray(mapper.writeValueAsString(( ofertas )));
@@ -236,7 +229,7 @@ public class OfertaController
 	@ResponseBody public String cantidadDeOfertas(HttpSession sesion) throws ClassNotFoundException, SQLException, JSONException
 	{
 		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-		JSONObject respuesta = new JSONObject().put("cantidad", ofertaDao.obtenerCantidadDeOfertasParaMostrar());
+		JSONObject respuesta = new JSONObject().put("cantidad", ofertaService.obtenerCantidadDeOfertasParaMostrar(usuario));
 		respuesta.put("usuarioEstaLogueado", usuario == null ? false : usuario.getEstaLogueado());
 		
 		return respuesta.toString();

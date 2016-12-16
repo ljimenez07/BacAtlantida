@@ -186,7 +186,7 @@ public class UsuarioDao {
 			+ "WHERE idUsuarioenBA = ? ";
 				
 		PreparedStatement stmt = con.prepareStatement(query);
-		stmt.setString(1, usuario.getUsuarioId()  );
+		stmt.setString(1, usuario.getUsuarioId() );
 		
 		boolean resultado = false;
 		

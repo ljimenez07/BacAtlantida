@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import com.ncubo.conf.Usuario;
 import com.ncubo.data.CategoriaOferta;
+import com.ncubo.data.Categorias;
 import com.ncubo.data.Indice;
 import com.ncubo.data.Oferta;
 import com.ncubo.util.LevenshteinDistance;
@@ -191,93 +192,184 @@ public class OfertaDao
 
 	}
 	
-	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(Indice indiceInicial, Usuario usuario) throws ClassNotFoundException, SQLException
+	private Categorias categoriasPorOferta( Connection con, int idOferta) throws SQLException
+	{
+		String query = 
+			"SELECT "
+			+ "peso, idCategoria "
+			+ "FROM categoria_con_oferta_y_peso "
+			+ "WHERE idOferta = ? ";
+		
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setInt(1, idOferta);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		Categorias categorias = new Categorias();
+		
+		while (rs.next())
+		{
+			int id = rs.getInt("idCategoria");
+			double peso = rs.getDouble("peso");
+			
+			CategoriaOferta categoria = new CategoriaOferta( id, "", peso);
+			categorias.agregar(categoria);
+	
+		}
+		
+		return categorias;
+	}
+	
+	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(Indice indiceInicial, Usuario usuario, double distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas) throws ClassNotFoundException, SQLException
 	{
 		boolean esUnUsuarioConocido = true;
-		String idUsuario;
 		
-		if(usuario == null || usuario.getUsuarioId() == null || usuario.getUsuarioId().isEmpty())
-		{
-			idUsuario = "NULL";
-			esUnUsuarioConocido = false;
-		}
-		else
-		{
-			idUsuario =  usuario.getUsuarioId();
-		}
-		
-		HashMap<String, Oferta> ofertasMap = new HashMap<String, Oferta>();
+		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
 		
 		Connection con = dao.openConBD();
 		String query = 
-			"SELECT oferta.idOferta, tituloDeOferta, comercio, descripcion, "
-			+ "idCategoria, peso, nombre, ciudad, estado, restricciones, vigenciaDesde, "
+			"SELECT "
+			+ "o.idOferta, tituloDeOferta, comercio, descripcion, "
+			+ "ciudad, estado, restricciones, vigenciaDesde, "
 			+ "vigenciaHasta, imagenComercioPath, imagenPublicidadPath, fechaHoraRegistro, "
 			+ "IF(idUsuario = ?, IF(reaccion = 1, 1, NULL), NULL) AS likes, "
-			+ "IF(idUsuario = ?, IF(reaccion = 0, 1, NULL), NULL) AS dislikes "
-			+ "FROM oferta "
-			+ "LEFT JOIN reaccion ON oferta.idOferta = reaccion.idOferta "
-			+ "LEFT JOIN categoria_con_oferta_y_peso ON oferta.idOferta = categoria_con_oferta_y_peso.idOferta "
-			+ "LEFT JOIN categoriadeoferta ON categoriadeoferta.id = categoria_con_oferta_y_peso.idCategoria "
+			+ "IF(idUsuario = ?, IF(reaccion = 0, 1, NULL), NULL) AS dislikes, "
+			+ " belleza.peso as belleza, "
+			+ " hoteles.peso as hoteles, "
+			+ " restaurante.peso as restaurante "
+			+ "FROM oferta o "
+			+ "LEFT JOIN reaccion ON o.idOferta = reaccion.idOferta "
+			
+				+ "INNER JOIN ( "
+				+ "SELECT c.peso, c.idOferta, c.idCategoria from oferta o2 "
+				+ "INNER JOIN categoria_con_oferta_y_peso c ON o2.idOferta = c.idOferta " 
+				+ ") as belleza on o.idOferta = belleza.idOferta and belleza.idCategoria = 3  "
+				
+				+ "INNER JOIN ( "
+				+ "SELECT c.peso, c.idOferta, c.idCategoria from oferta o2 "
+				+ "INNER JOIN categoria_con_oferta_y_peso c ON o2.idOferta = c.idOferta " 
+				+ ") as hoteles on o.idOferta = hoteles.idOferta and hoteles.idCategoria = 2  "
+				
+				+ "INNER JOIN ( "
+				+ "SELECT c.peso, c.idOferta, c.idCategoria from oferta o2 "
+				+ "INNER JOIN categoria_con_oferta_y_peso c ON o2.idOferta = c.idOferta " 
+				+ ") as restaurante on o.idOferta = restaurante.idOferta and restaurante.idCategoria = 1  "
+					
+			
 			+ "WHERE eliminada = 0 "
 			+ "AND estado = 1 "
+			+ "AND SQRT( POW( belleza.peso - ?, 2 ) + POW( hoteles.peso - ?, 2 ) + POW( restaurante.peso - ?, 2 ) ) <= ?"
 			+ "AND vigenciaHasta >= ? "
 			+ "ORDER BY fechaHoraRegistro "
-			+ "DESC LIMIT ?, 30;"; //El 30 es por que cada oferta sale 3 veces
+			+ "DESC LIMIT ?, 10;"; 
 				
 		PreparedStatement stmt = con.prepareStatement(query);
-		stmt.setString(1, idUsuario);
-		stmt.setString(2, idUsuario);
-		stmt.setDate(3, new Date(Calendar.getInstance().getTimeInMillis()));
-		stmt.setInt(4, indiceInicial.valorEntero() * 3);
+		stmt.setString(1, usuario.getUsuarioId());
+		stmt.setString(2, usuario.getUsuarioId());
+		stmt.setDouble(3, usuario.getCategorias().obtenerCategoriaDeBelleza().getPeso());
+		stmt.setDouble(4, usuario.getCategorias().obtenerCategoriaDeHotel().getPeso());
+		stmt.setDouble(5, usuario.getCategorias().obtenerCategoriaDeRestaurante().getPeso());
+		stmt.setDouble(6, distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas );
+		stmt.setDate(7, new Date(Calendar.getInstance().getTimeInMillis()));
+		stmt.setInt(8, indiceInicial.valorEntero() );
 		
 		ResultSet rs = stmt.executeQuery();
 		
 		while (rs.next())
 		{
-			String id = rs.getString(atributo.ID_OFERTA.toString());
-			String idCategoria = rs.getString("idCategoria");
+			int id = rs.getInt(atributo.ID_OFERTA.toString());
 
-			if ( !ofertasMap.containsKey( id ) )
-			{
-				Oferta oferta = new Oferta(
-					rs.getInt(atributo.ID_OFERTA.toString()),
-					rs.getString(atributo.TITULO_DE_OFERTA.toString()),
-					rs.getString(atributo.COMERCIO.toString()),
-					rs.getString(atributo.DESCRIPCION.toString()),
-					//new CategoriaOferta(rs.getInt(atributo.CATEGORIA.toString()), rs.getString(atributo.NOMBRE_CATEGORIA.toString())),
-					rs.getString(atributo.CIUDAD.toString()),
-					rs.getBoolean(atributo.ESTADO.toString()),
-					rs.getString(atributo.RESTRICCIONES.toString()),
-					rs.getDate(atributo.VIGENCIA_DESDE.toString()),
-					rs.getDate(atributo.VIGENCIA_HASTA.toString()),
-					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
-					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
-					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),
-					rs.getInt(atributo.LIKES.toString()),
-					rs.getInt(atributo.DISLIKES.toString())
-					);
-				oferta.setEsUnUsuarioConocido(esUnUsuarioConocido);
-				ofertasMap.put(id, oferta);
-			}
+			Oferta oferta = new Oferta(
+				rs.getInt(atributo.ID_OFERTA.toString()),
+				rs.getString(atributo.TITULO_DE_OFERTA.toString()),
+				rs.getString(atributo.COMERCIO.toString()),
+				rs.getString(atributo.DESCRIPCION.toString()),
+				//new CategoriaOferta(rs.getInt(atributo.CATEGORIA.toString()), rs.getString(atributo.NOMBRE_CATEGORIA.toString())),
+				rs.getString(atributo.CIUDAD.toString()),
+				rs.getBoolean(atributo.ESTADO.toString()),
+				rs.getString(atributo.RESTRICCIONES.toString()),
+				rs.getDate(atributo.VIGENCIA_DESDE.toString()),
+				rs.getDate(atributo.VIGENCIA_HASTA.toString()),
+				rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
+				rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
+				rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),
+				rs.getInt(atributo.LIKES.toString()),
+				rs.getInt(atributo.DISLIKES.toString())
+				);
+			oferta.setEsUnUsuarioConocido(esUnUsuarioConocido);
 			
-			if( idCategoria != null )
-			{
-				CategoriaOferta categoria = new CategoriaOferta(
-						rs.getInt("idCategoria"),
-						rs.getString("nombre"),
-						rs.getDouble("peso"));
-				ofertasMap.get( id ).agregarCategoria(categoria);
-			}
-			
-
+			oferta.setCategorias( categoriasPorOferta(con, id ) );
+			ofertas.add( oferta );
 		}
 		
-		Collection<Oferta> values = ofertasMap.values();
-		ArrayList<Oferta> listaDeOfertas = new ArrayList<Oferta>(values);
-
 		dao.closeConBD();
-		return listaDeOfertas;
+		
+		return ofertas;
+	}
+	
+	
+	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(Indice indiceInicial) throws ClassNotFoundException, SQLException
+	{
+		boolean esUnUsuarioConocido = true;
+		String idUsuario = "NULL";
+		
+		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+		
+		Connection con = dao.openConBD();
+		String query = 
+			"SELECT "
+			+ "o.idOferta, tituloDeOferta, comercio, descripcion, "
+			+ "ciudad, estado, restricciones, vigenciaDesde, "
+			+ "vigenciaHasta, imagenComercioPath, imagenPublicidadPath, fechaHoraRegistro, "
+			+ "IF(idUsuario = ?, IF(reaccion = 1, 1, NULL), NULL) AS likes, "
+			+ "IF(idUsuario = ?, IF(reaccion = 0, 1, NULL), NULL) AS dislikes "
+			+ "FROM oferta o "
+			+ "LEFT JOIN reaccion ON o.idOferta = reaccion.idOferta "
+			+ "WHERE eliminada = 0 "
+			+ "AND estado = 1 "
+			+ "AND vigenciaHasta >= ? "
+			+ "ORDER BY fechaHoraRegistro "
+			+ "DESC LIMIT ?, 10;"; 
+				
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setString(1, idUsuario);
+		stmt.setString(2, idUsuario);
+		stmt.setDate(3, new Date(Calendar.getInstance().getTimeInMillis()));
+		stmt.setInt(4, indiceInicial.valorEntero());
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		while (rs.next())
+		{
+			int id = rs.getInt(atributo.ID_OFERTA.toString());
+
+			Oferta oferta = new Oferta(
+				rs.getInt(atributo.ID_OFERTA.toString()),
+				rs.getString(atributo.TITULO_DE_OFERTA.toString()),
+				rs.getString(atributo.COMERCIO.toString()),
+				rs.getString(atributo.DESCRIPCION.toString()),
+				//new CategoriaOferta(rs.getInt(atributo.CATEGORIA.toString()), rs.getString(atributo.NOMBRE_CATEGORIA.toString())),
+				rs.getString(atributo.CIUDAD.toString()),
+				rs.getBoolean(atributo.ESTADO.toString()),
+				rs.getString(atributo.RESTRICCIONES.toString()),
+				rs.getDate(atributo.VIGENCIA_DESDE.toString()),
+				rs.getDate(atributo.VIGENCIA_HASTA.toString()),
+				rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
+				rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
+				rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),
+				rs.getInt(atributo.LIKES.toString()),
+				rs.getInt(atributo.DISLIKES.toString())
+				);
+			oferta.setEsUnUsuarioConocido(esUnUsuarioConocido);
+			
+			oferta.setCategorias( categoriasPorOferta(con, id ) );
+			
+			ofertas.add( oferta);	
+		}
+		
+		dao.closeConBD();
+
+		return ofertas;
 	}
 	
 	public Oferta obtener(int idOferta, String idUsuario) throws ClassNotFoundException, SQLException
@@ -289,14 +381,12 @@ public class OfertaDao
 			esUnUsuarioConocido = false;
 		}
 		String query = 
-				"SELECT oferta.idOferta, tituloDeOferta, comercio, descripcion, idCategoria, peso, nombre, ciudad, estado, restricciones, vigenciaDesde, "
+				"SELECT oferta.idOferta, tituloDeOferta, comercio, descripcion ciudad, estado, restricciones, vigenciaDesde, "
 				+ "vigenciaHasta, imagenComercioPath, imagenPublicidadPath, fechaHoraRegistro, "
 				+ "IF(idUsuario = ?, IF(reaccion = 1, 1, NULL), NULL) AS likes, IF(idUsuario = ?, "
 				+ "IF(reaccion = 0, 1, NULL), NULL) AS dislikes "
 				+ "FROM oferta "
 				+ "LEFT JOIN reaccion ON oferta.idOferta = reaccion.idOferta "
-				+ "LEFT JOIN categoria_con_oferta_y_peso ON oferta.idOferta = categoria_con_oferta_y_peso.idOferta "
-				+ "LEFT JOIN categoriadeoferta ON categoriadeoferta.id = categoria_con_oferta_y_peso.idCategoria "
 				+ "WHERE oferta.idOferta = ? "
 				+ "ORDER BY oferta.idOferta";
 		
@@ -310,7 +400,7 @@ public class OfertaDao
 		Oferta oferta = null;
 		while (rs.next())
 		{
-			String idCategoria = rs.getString("idCategoria");
+			int id = rs.getInt("idCategoria");
 			
 			if( oferta == null)
 			{
@@ -332,18 +422,8 @@ public class OfertaDao
 					rs.getInt(atributo.DISLIKES.toString())
 					);
 				oferta.setEsUnUsuarioConocido(esUnUsuarioConocido);
+				oferta.setCategorias( categoriasPorOferta(con, id ) );
 			}
-			
-			if( idCategoria != null )
-			{
-				CategoriaOferta categoria = new CategoriaOferta(
-						rs.getInt("idCategoria"),
-						rs.getString("nombre"),
-						rs.getDouble("peso"));
-				oferta.agregarCategoria(categoria);
-			}
-			
-
 		}
 		
 		dao.closeConBD();
@@ -357,6 +437,52 @@ public class OfertaDao
 		Connection con = dao.openConBD();
 		PreparedStatement stmt = con.prepareStatement(query);
 		stmt.setDate(1, new Date(Calendar.getInstance().getTimeInMillis()));
+		ResultSet rs = stmt.executeQuery();
+		
+		rs.next();
+		int cantidad = rs.getInt("cantidad");
+		dao.closeConBD();
+		return cantidad;
+	}
+	
+	public int obtenerCantidadDeOfertasParaMostrar(Usuario usuario, double distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas) throws ClassNotFoundException, SQLException
+	{
+		String query = 
+			"SELECT "
+			+ " count(o.idOferta) as cantidad "
+			+ "FROM oferta o "
+			
+				+ "INNER JOIN ( "
+				+ "SELECT c.peso, c.idOferta, c.idCategoria from oferta o2 "
+				+ "INNER JOIN categoria_con_oferta_y_peso c ON o2.idOferta = c.idOferta " 
+				+ ") as belleza on o.idOferta = belleza.idOferta and belleza.idCategoria = 3  "
+				
+				+ "INNER JOIN ( "
+				+ "SELECT c.peso, c.idOferta, c.idCategoria from oferta o2 "
+				+ "INNER JOIN categoria_con_oferta_y_peso c ON o2.idOferta = c.idOferta " 
+				+ ") as hoteles on o.idOferta = hoteles.idOferta and hoteles.idCategoria = 2  "
+				
+				+ "INNER JOIN ( "
+				+ "SELECT c.peso, c.idOferta, c.idCategoria from oferta o2 "
+				+ "INNER JOIN categoria_con_oferta_y_peso c ON o2.idOferta = c.idOferta " 
+				+ ") as restaurante on o.idOferta = restaurante.idOferta and restaurante.idCategoria = 1  "
+					
+			
+			+ "WHERE eliminada = 0 "
+			+ "AND estado = 1 "
+			+ "AND SQRT( POW( belleza.peso - ?, 2 ) + POW( hoteles.peso - ?, 2 ) + POW( restaurante.peso - ?, 2 ) ) <= ?"
+			+ "AND vigenciaHasta >= ? "
+			+ "ORDER BY fechaHoraRegistro ";
+		
+		Connection con = dao.openConBD();
+		PreparedStatement stmt = con.prepareStatement(query);
+
+		stmt.setDouble(1, usuario.getCategorias().obtenerCategoriaDeBelleza().getPeso());
+		stmt.setDouble(2, usuario.getCategorias().obtenerCategoriaDeHotel().getPeso());
+		stmt.setDouble(3, usuario.getCategorias().obtenerCategoriaDeRestaurante().getPeso());
+		stmt.setDouble(4, distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas );
+		stmt.setDate(5, new Date(Calendar.getInstance().getTimeInMillis()));
+		
 		ResultSet rs = stmt.executeQuery();
 		
 		rs.next();
