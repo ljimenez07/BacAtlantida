@@ -138,7 +138,7 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%stc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroTarjeta = nodoTarjeta.get("numeroTarjeta");
-			if(!alias.toString().equals("Alias no ingresado"))
+			if(!alias.toString().equals("Alias no ingresado") || !alias.toString().equals("N/A"))
 				nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString()+"-"+alias.toString());
 			else nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString());	
 			
@@ -262,7 +262,7 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%cc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroCuenta = nodoTarjeta.get("numeroCuenta");
-			if(!alias.toString().equals("Alias no ingresado") || !alias.toString().equals(""))
+			if(!alias.toString().equals("Alias no ingresado") || !alias.toString().equals("N/A"))
 				nuevoTexto = nuevoTexto.replaceAll("%ncc", numeroCuenta.toString()+"-"+alias.toString());
 			else nuevoTexto = nuevoTexto.replaceAll("%ncc", numeroCuenta.toString());	
 			
@@ -679,7 +679,7 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%stc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroTarjeta = nodoTarjeta.get("numeroTarjeta");
-			if(!alias.toString().equals("Alias no ingresado") || !alias.toString().equals(""))
+			if(!alias.toString().equals("Alias no ingresado") || !alias.toString().equals("N/A"))
 				nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString()+"-"+alias.toString());
 			else nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString());	
 			
