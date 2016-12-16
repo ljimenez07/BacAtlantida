@@ -47,7 +47,7 @@ public class Stub
 							+ "</estado> "
 							+ "<validaPreLoginColeccion>"
 								+"<valido>S</valido>"
-								+ "<usuarioId>OPAGOAG025</usuarioId>"
+								+ "<usuarioId>0801198102112</usuarioId>"
 								+ "<usuarioNombre>Oscar Orlando Pagoaca Argueta</usuarioNombre>"
 								+ "<llaveSession>sdfaerf34tgergvrevrev</llaveSession>"
 							+ "</validaPreLoginColeccion>"

@@ -20,12 +20,12 @@ import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 import com.ncubo.chatbot.bitacora.HistoricosDeConversaciones;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.chatbot.watson.TextToSpeechWatson;
-import com.ncubo.dao.ConsultaDao;
 import com.ncubo.dao.UsuarioDao;
 import com.ncubo.data.Categorias;
 import com.ncubo.data.Configuracion;
 import com.ncubo.db.BitacoraDao;
 import com.ncubo.db.ConexionALaDB;
+import com.ncubo.db.ConsultaDao;
 import com.ncubo.logicaDeConversaciones.Conversaciones;
 import com.ncubo.util.FTPServidor;
 
@@ -43,9 +43,6 @@ public class AgenteCognitivo
 	private String pathAudio;
 	private String pathXML;
 	private String urlPublicaAudios;
-
-	@Autowired
-	private ConsultaDao consultaDao;
 	
 	@Autowired
 	private UsuarioDao usuarioDao;
@@ -65,7 +62,7 @@ public class AgenteCognitivo
 	
 	@PostConstruct
     public void init(){
-		misConversaciones.inicializar(getPathXML(), consultaDao);
+		misConversaciones.inicializar(getPathXML());
 		inicializarGeneradorDeAudiosSingleton();
 		inicializadorDeLaBD();
 		historicoDeConversaciones = new HistoricosDeConversaciones();

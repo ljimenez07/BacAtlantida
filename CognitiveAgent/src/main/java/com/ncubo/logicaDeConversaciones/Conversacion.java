@@ -18,7 +18,8 @@ import com.ncubo.chatbot.partesDeLaConversacion.Tema;
 import com.ncubo.chatbot.partesDeLaConversacion.Temario;
 import com.ncubo.chatbot.participantes.Agente;
 import com.ncubo.chatbot.participantes.Cliente;
-import com.ncubo.dao.ConsultaDao;
+import com.ncubo.db.ConsultaDao;
+import com.ncubo.estadisticas.Estadisticas;
 
 public class Conversacion {
 
@@ -531,9 +532,9 @@ public class Conversacion {
 		hilo.borrarTemasEspecificosYaDichos();
 	}
 	
-	public void guardarEstadiscitas() throws ClassNotFoundException, SQLException
+	public void guardarEstadiscitas(String idSesion) throws ClassNotFoundException, SQLException
 	{
-		estadisticasTemasTratados.guardarEstadiscitasEnBaseDeDatos();
+		estadisticasTemasTratados.guardarEstadiscitasEnBaseDeDatos(idSesion);
 	}
 	
 }

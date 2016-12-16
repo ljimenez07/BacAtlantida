@@ -81,6 +81,17 @@
 		<vinetas></vinetas>
 	</conversacion>
 	
+	
+	<conversacion id="quiereSaldoCuentaAhorros">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>¿Quieres el saldo de tu cuenta de ahorros?</curioso>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
 	<conversacion id="saldoCredito">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
@@ -88,7 +99,6 @@
 		<frases>
 			<frase>El saldo de tu tarjeta de crédito $%ntc es de $%stc $%nmm.</frase>
 			<frase>Tu saldo en $%nmm es de %stc en la tarjeta de crédito $%ntc.</frase>
-			<frase>Claro, tu saldo en $%nmm es de %stc en la tarjeta de crédito $%ntc.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -125,6 +135,16 @@
 		<vinetas></vinetas>
 	</conversacion>
 	
+	<conversacion id="quiereDisponibleCuentaAhorros">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>¿Quieres el disponible de tu cuenta de ahorros?</curioso>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
 	<conversacion id="disponibleCredito">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
@@ -132,7 +152,6 @@
 		<frases>
 			<frase>El disponible de tu tarjeta de crédito $%ntc es de $%stc $%nmm.</frase>
 			<frase>Tu disponible en $%nmm es de %stc en la tarjeta de crédito $%ntc.</frase>
-			<frase>Claro, tu disponible en $%nmm es de %stc en la tarjeta de crédito $%ntc.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -1072,7 +1091,6 @@
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
 			<frase>Lo siento, no entendí. ¿En qué te puedo ayudar?</frase>
-			<frase>Perdón, no entiendo. ¿Hay algo más con lo que te pueda ayudar?</frase>
 			<frase>Creo que no entendí. ¿En que te gustaría que te ayude?</frase>	
 			<meRindo>Lo siento, no entendí. Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80 10 10. @@br/@@@ San Pedro Sula: 25 80 10 10. @@br/@@@ La Ceiba: 24 80 10 10.</meRindo>
 		</frases>		
@@ -1147,10 +1165,10 @@
 	</variablesDeAmbiente>
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
-		<workspace tipo="general" idIBM="c20069e8-ba7a-4cf8-806d-25f738db1a21" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="f67464d0-3b79-475c-a1d2-fb0921fc6860" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
+		<workspace tipo="general" idIBM="f4f81a3e-adb4-43c6-ba00-fe08c30f7905" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="especifico" idIBM="554283e5-845c-44d7-91be-0a5fe31d4445" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="3643b7c9-4cf3-4d02-adfd-9a52d6c6c5e3" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="2648676e-3358-48a2-9842-a79d572b4a6c" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="5fbe427e-d2d1-4083-a3fd-e76c567cd6ed" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>

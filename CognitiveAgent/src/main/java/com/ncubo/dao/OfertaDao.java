@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -366,8 +367,10 @@ public class OfertaDao
 			
 			ofertas.add( oferta);	
 		}
-		
+
 		dao.closeConBD();
+		dao.closeConBD();
+		Collections.sort(listaDeOfertas);
 
 		return ofertas;
 	}

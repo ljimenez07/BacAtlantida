@@ -1,21 +1,15 @@
-package com.ncubo.dao;
+package com.ncubo.db;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.ncubo.chatbot.partesDeLaConversacion.Temario;
 import com.ncubo.data.Consulta;
 
-@Component("consultaDao")
 public class ConsultaDao
 {
-	@Autowired
-	private Persistencia dao;
 	private final String NOMBRE_TABLA = "estadistica_tema";
 	private Temario temario;
 	
@@ -49,7 +43,7 @@ public class ConsultaDao
 				+ " WHERE " + atributo.FECHA + " BETWEEN '" + fechaDesde + "' AND '" + fechaHasta + "'" 
 				+ " group by " + atributo.ID_TEMA + " ;";
 
-		Connection con = dao.openConBD();
+		Connection con = ConexionALaDB.getInstance().openConBD();
 		ResultSet rs = con.createStatement().executeQuery(query);
 		
 		while (rs.next())
@@ -61,7 +55,7 @@ public class ConsultaDao
 				));
 		}
 		
-		dao.closeConBD();
+		ConexionALaDB.getInstance().closeConBD();
 		return consultas;
 	}
 	
@@ -77,9 +71,9 @@ public class ConsultaDao
 				 + " VALUES (" + queryDatos + ") "
 				 + " ON DUPLICATE KEY UPDATE " + atributo.VECES_CONSULTADO + " = " +atributo.VECES_CONSULTADO + " + " + consulta.getVecesConsultado();
 		
-		Connection con = dao.openConBD();
+		Connection con = ConexionALaDB.getInstance().openConBD();
 		con.createStatement().execute(query);
-		dao.closeConBD();
+		ConexionALaDB.getInstance().closeConBD();
 	}
 
 	public void establecerTemario(Temario temario) {

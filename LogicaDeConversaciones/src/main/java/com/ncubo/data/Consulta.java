@@ -10,9 +10,7 @@ public class Consulta
 	private Timestamp fecha;
 	private int vecesConsultado;
 	
-	public Consulta()
-	{
-	}
+	public Consulta(){}
 	
 	public Consulta(Tema tema, Timestamp fecha)
 	{
