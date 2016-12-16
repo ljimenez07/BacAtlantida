@@ -382,7 +382,7 @@ public class OfertaDao
 			esUnUsuarioConocido = false;
 		}
 		String query = 
-				"SELECT oferta.idOferta, tituloDeOferta, comercio, descripcion ciudad, estado, restricciones, vigenciaDesde, "
+				"SELECT oferta.idOferta, tituloDeOferta, comercio, descripcion, ciudad, estado, restricciones, vigenciaDesde, "
 				+ "vigenciaHasta, imagenComercioPath, imagenPublicidadPath, fechaHoraRegistro, "
 				+ "IF(idUsuario = ?, IF(reaccion = 1, 1, NULL), NULL) AS likes, IF(idUsuario = ?, "
 				+ "IF(reaccion = 0, 1, NULL), NULL) AS dislikes "
@@ -401,12 +401,12 @@ public class OfertaDao
 		Oferta oferta = null;
 		while (rs.next())
 		{
-			int id = rs.getInt("idCategoria");
+			int id = rs.getInt(atributo.ID_OFERTA.toString());
 			
 			if( oferta == null)
 			{
 				oferta = new Oferta(
-					rs.getInt(atributo.ID_OFERTA.toString()),
+					id,
 					rs.getString(atributo.TITULO_DE_OFERTA.toString()),
 					rs.getString(atributo.COMERCIO.toString()),
 					rs.getString(atributo.DESCRIPCION.toString()),
