@@ -116,7 +116,7 @@ public class OfertaService
 	{
 		if( usuario == null || 
 			! usuario.getEstaLogueado() || 
-			usuarioDao.yaContestoElConocerteAlmenosUnaVez(usuario) )
+			! usuarioDao.yaContestoElConocerteAlmenosUnaVez(usuario) )
 		{
 			return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial);
 		}
@@ -149,7 +149,7 @@ public class OfertaService
 	public int obtenerCantidadDeOfertasParaMostrar(Usuario usuario) throws ClassNotFoundException, SQLException {
 		if( usuario == null || 
 				! usuario.getEstaLogueado() || 
-				 usuarioDao.yaContestoElConocerteAlmenosUnaVez(usuario) )
+				! usuarioDao.yaContestoElConocerteAlmenosUnaVez(usuario) )
 		{
 			return ofertaDao.obtenerCantidadDeOfertasParaMostrar();
 		}

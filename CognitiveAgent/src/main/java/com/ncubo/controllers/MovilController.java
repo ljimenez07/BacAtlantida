@@ -146,7 +146,7 @@ public class MovilController {
 			respuesta.put("usuarioNombre", usuario.getUsuarioNombre());
 			respuesta.put("idUsuario", usuario.getUsuarioId());
 			respuesta.put("estaLogueado", usuario.getEstaLogueado());
-			respuesta.put("mostrarPopConocerte", usuario.getEstaLogueado() && usuarioDao.yaContestoElConocerteAlmenosUnaVez(usuario) );
+			respuesta.put("mostrarPopConocerte", usuario.getEstaLogueado() && ! usuarioDao.yaContestoElConocerteAlmenosUnaVez(usuario) );
 		}
 		else
 		{
