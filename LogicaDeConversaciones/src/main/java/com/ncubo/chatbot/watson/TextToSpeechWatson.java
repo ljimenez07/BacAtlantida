@@ -138,7 +138,7 @@ public class TextToSpeechWatson
 	
 	private InputStream transformarAMp3(InputStream in, String extensionOriginal) throws IllegalArgumentException, InputFormatException, EncoderException
 	{
-		File archivoMp3 = new File("/Users/rdiaz/Watson.mp3");
+		File archivoMp3 = new File(System.getProperty("user.home") + "/Watson.mp3");
 		File archivoOriginal = transformarInputStreamAFile(in, extensionOriginal);
 		
 		AudioAttributes audio = new AudioAttributes();
@@ -152,6 +152,7 @@ public class TextToSpeechWatson
 		Encoder encoder = new Encoder();
 		
 		encoder.encode(archivoOriginal, archivoMp3, attrs);
+		archivoOriginal.delete();
 		
 		return transformarFileAInputStream(archivoMp3);
 	}
@@ -159,11 +160,10 @@ public class TextToSpeechWatson
 	private File transformarInputStreamAFile(InputStream inputStream, String extensionOriginal)
 	{
 		OutputStream outputStream = null;
-		File file = new File("/Users/rdiaz/Watson." + extensionOriginal);
+		File file = new File(System.getProperty("user.home") + "/Watson." + extensionOriginal);
 		
 		try
 		{
-			// write the inputStream to a FileOutputStream
 			outputStream = new FileOutputStream(file);
 			
 			int read = 0;
@@ -209,12 +209,12 @@ public class TextToSpeechWatson
 		
 		try
 		{
-			// read this file into InputStream
 			inputStream = new FileInputStream(archivo.getAbsolutePath());
 		} catch(IOException e)
 		{
 			e.printStackTrace();
 		}
+		archivo.delete();
 		
 		return inputStream;
 	}
