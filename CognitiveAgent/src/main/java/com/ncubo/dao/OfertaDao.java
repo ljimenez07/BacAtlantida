@@ -369,8 +369,6 @@ public class OfertaDao
 		}
 
 		dao.closeConBD();
-		dao.closeConBD();
-		Collections.sort(listaDeOfertas);
 
 		return ofertas;
 	}
