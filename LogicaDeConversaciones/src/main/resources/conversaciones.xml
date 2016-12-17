@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <conversacions>
+
 	<conversacion id="saludoGeneral">
 		<tipo>saludo</tipo>
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Hello!.</frase>
-			<frase>Hi!.</frase>
+			<frase>¡Hola!, soy tu asesora del Banco Atlántida.</frase>
 		</frases>
-		<vineta></vineta>
+		<vinetas></vinetas>
 	</conversacion>
 	
 	<conversacion id="queBusca">
@@ -241,6 +241,12 @@
 		<conjuncion id="conjuncion1">I'm sorry, i didn't undertand.</conjuncion>
 		<conjuncion id="conjuncion2">I didn't catch that.</conjuncion>
 	</conjunciones>
+	
+	<variablesDeAmbiente>
+		<variable nombre="nombreCliente" tipo="string"></variable>
+		<variable nombre="hora" tipo="hora"></variable>
+		<variable nombre="estaLogueado" tipo="boolean">false</variable>
+	</variablesDeAmbiente>
 	
 	<workspaces user="bb9bd2e7-d63f-490c-b5d6-32f026a4c646" pass="Tvm3ZJzX2vab">
 		<workspace tipo="general" idIBM="d0d0e2bd-931a-4bca-ba05-e8bd8b7f1ac0" intencionesParaSeReferenciado="">deam_house_universe</workspace>

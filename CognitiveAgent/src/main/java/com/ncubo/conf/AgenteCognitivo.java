@@ -43,7 +43,8 @@ public class AgenteCognitivo
 	private String pathAudio;
 	private String pathXML;
 	private String urlPublicaAudios;
-	
+	private String pathXMLAudios;
+
 	@Autowired
 	private UsuarioDao usuarioDao;
 	
@@ -300,7 +301,7 @@ public class AgenteCognitivo
 	public void generarTodosLosAudiosEstaticos(){
 		System.out.println("El path xml es: "+getPathXML());
 		misConversaciones.generarAudiosEstaticos(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
-				this.getPathAudio(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), ftp.getCarpeta(), this.geturlPublicaAudios());
+				this.getPathAudio(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), ftp.getCarpeta(), this.geturlPublicaAudios(), this.getPathXMLAudios());
 	}
 	
 	public void generarAudioEstatico(String id){
@@ -484,6 +485,12 @@ public class AgenteCognitivo
 		return misConversaciones.obtenerCliente(idCliente).obtenerSiTieneCuentaAhorros();
 	}
 	
-	
+	public String getPathXMLAudios() {
+		return pathXMLAudios;
+	}
+
+	public void setPathXMLAudios(String pathXMLAudios) {
+		this.pathXMLAudios = pathXMLAudios;
+	}
 	
 }

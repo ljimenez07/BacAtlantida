@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ncubo.chatbot.audiosXML.AudiosXML;
 import com.ncubo.chatbot.exceptiones.ChatException;
 import com.ncubo.chatbot.watson.TextToSpeechWatson;
 
@@ -147,11 +148,11 @@ public abstract class Frase
 		}
 	}
 	
-	boolean esEstatica(){
+	public boolean esEstatica(){
 		return esEstatica;
 	}
 	
-	boolean esDinamica(){
+	public boolean esDinamica(){
 		return ! esEstatica;
 	}
 	
@@ -189,7 +190,6 @@ public abstract class Frase
 				for(int index = 0; index < textosDeLaFrase.length; index ++){
 					String texto = textosDeLaFrase[index];
 					String textoParaReproducir = texto;
-					String textoNumerosTelefonicos = "";
 					String textoTag = ""; 
 					while(texto.contains("@@"))
 					{
@@ -201,9 +201,15 @@ public abstract class Frase
 						texto = texto.replace("@@"+textoTag+"@@@", "<"+textoTag+">");
 
 					}
-					textoParaReproducir = textoParaReproducir.replace("<br/>", " ");
-					textoParaReproducir = textoParaReproducir.replace("&nbsp;"," ");
-					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir, false);
+					String nombreDelArchivo = "";
+					if(AudiosXML.getInstance().hayQueGenerarAudios(this.idFrase, texto, index, false)){
+						textoParaReproducir = textoParaReproducir.replace("<br/>", " ");
+						textoParaReproducir = textoParaReproducir.replace("&nbsp;"," ");
+						nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir, false);
+					}else{
+						nombreDelArchivo = AudiosXML.getInstance().obtenerUnAudioDeLaFrase(this.idFrase, index, false);
+						nombreDelArchivo = nombreDelArchivo.replace(ipPublica, "");
+					}
 					
 					String path = pathAGuardar+File.separator+nombreDelArchivo;
 					String miIp = ipPublica+nombreDelArchivo;
@@ -217,7 +223,15 @@ public abstract class Frase
 				
 				for(int index = 0; index < textosImpertinetesDeLaFrase.length; index ++){
 					String texto = textosImpertinetesDeLaFrase[index];
-					String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, false);
+					
+					String nombreDelArchivo = "";
+					if(AudiosXML.getInstance().hayQueGenerarAudios(this.idFrase, texto, index, true)){
+						nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(texto, false);
+					}else{
+						nombreDelArchivo = AudiosXML.getInstance().obtenerUnAudioDeLaFrase(this.idFrase, index, true);
+						nombreDelArchivo = nombreDelArchivo.replace(ipPublica, "");
+					}
+					
 					String path = pathAGuardar+File.separator+nombreDelArchivo;
 					String miIp = ipPublica+nombreDelArchivo;
 					sonidosDeLosTextosImpertinentesDeLaFrase.add(new Sonido(miIp, path));
@@ -259,6 +273,10 @@ public abstract class Frase
 		return textosDeLaFrase;
 	}
 
+	public String[] getTextosImpertinetesDeLaFrase() {
+		return textosImpertinetesDeLaFrase;
+	}
+	
 	public List<String> conjuncionParaRepreguntar(){
 		/*String muletillas[] = new String[]{"I'm sorry, i didn't undertand.", "I didn't catch that."};
 		

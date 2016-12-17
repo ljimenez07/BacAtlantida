@@ -70,13 +70,8 @@ public class TextToSpeechWatson
 		return textToSpeechWatson;
 	}
 	
-	public static TextToSpeechWatson getInstance()
-	{
-		if(textToSpeechWatson == null)
-		{
-			// textToSpeechWatson = new TextToSpeechWatson(usuarioTTS,
-			// contrasenaTTS, vozTTS, ftp.getUsuario(), ftp.getPassword(),
-			// ftp.getHost(), ftp.getPuerto(), pathAudios);
+	public static TextToSpeechWatson getInstance(){
+		if(textToSpeechWatson == null){
 			throw new ChatException("No se a inicializado esta clase. Debe instanciar esta clase primero.");
 		}
 		return textToSpeechWatson;

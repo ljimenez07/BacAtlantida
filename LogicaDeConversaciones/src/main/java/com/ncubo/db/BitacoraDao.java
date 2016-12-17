@@ -112,8 +112,16 @@ public class BitacoraDao {
 		return resultado;
 	}
 	
-	public void cambiarDeEstadoAVerificadoDeLaConversacion(int idBitacoraConversacion){
+	public void cambiarDeEstadoAVerificadoDeLaConversacion(int idBitacoraConversacion) throws ClassNotFoundException, SQLException{
 		// update bitacora_de_conversaciones set haSidoVerificado = 1 where id = 126;
+		String query = String.format("update %s set %s = 1 where id = ?", NOMBRE_TABLA_BITACORA, atributosDeLaBitacoraDao.HA_SIDO_VERIFICADO);
 		
+		Connection con = ConexionALaDB.getInstance().openConBD();
+		
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setInt(1, idBitacoraConversacion);
+		stmt.executeUpdate(query);
+		
+		ConexionALaDB.getInstance().closeConBD();
 	}
 }
