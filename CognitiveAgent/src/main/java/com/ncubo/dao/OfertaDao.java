@@ -311,7 +311,7 @@ public class OfertaDao
 	
 	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(Indice indiceInicial) throws ClassNotFoundException, SQLException
 	{
-		boolean esUnUsuarioConocido = true;
+		boolean esUnUsuarioConocido = false;
 		String idUsuario = "NULL";
 		
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
