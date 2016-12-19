@@ -8,6 +8,7 @@
 	<modules>
 		<module>LogicaDeConversaciones</module>
 		<module>CognitiveAgent</module>
+		<module>Api</module>
   </modules>
 
 
