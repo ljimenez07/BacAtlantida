@@ -93,12 +93,13 @@ public class MovilController {
 		if(responseLogin[0].equals("S"))
 		{
 			Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-			Categorias categorias = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
 			
 			usuario.setLlaveSession(responseLogin[1]);
 			usuario.setUsuarioId(responseLogin[2]);
 			usuario.setUsuarioNombre(responseLogin[3]);
 			usuario.hizologinExitosaMente();
+			
+			Categorias categorias = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
 			usuario.setCategorias( categorias );
 			
 			boolean[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);
