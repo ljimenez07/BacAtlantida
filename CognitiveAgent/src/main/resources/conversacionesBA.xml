@@ -1148,6 +1148,27 @@
 		<vinetas></vinetas>				
 	</conversacion>
 	
+		<conversacion id="noTieneTarjetas">				
+		<tipo>afirmativa</tipo>		
+		<mandatoria>true</mandatoria>				
+		<enVozAlta>true</enVozAlta>				
+		<frases>				
+			<frase>Según nuestro sistema no tienes tarjetas de crédito con nosotros.</frase>		
+		</frases>				
+		<vinetas></vinetas>				
+	</conversacion>
+	
+	<conversacion id="noTieneCuentas">				
+		<tipo>afirmativa</tipo>		
+		<mandatoria>true</mandatoria>				
+		<enVozAlta>true</enVozAlta>				
+		<frases>				
+			<frase>Según nuestro sistema no tienes cuentas de ahorro con nosotros.</frase>		
+		</frases>				
+		<vinetas></vinetas>				
+	</conversacion>
+	
+	
 	<conjunciones>
 		<conjuncion id="conjuncion1">Disculpame, pero no te entiendo.</conjuncion>
 		<conjuncion id="conjuncion2">No logro comprenderte.</conjuncion>
@@ -1166,7 +1187,7 @@
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
 		<workspace tipo="general" idIBM="f4f81a3e-adb4-43c6-ba00-fe08c30f7905" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="554283e5-845c-44d7-91be-0a5fe31d4445" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
+		<workspace tipo="especifico" idIBM="fdba23dc-2ece-425c-85e3-e43b4fcac8ef" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="3643b7c9-4cf3-4d02-adfd-9a52d6c6c5e3" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
 		<workspace tipo="especifico" idIBM="5fbe427e-d2d1-4083-a3fd-e76c567cd6ed" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
 	</workspaces>
