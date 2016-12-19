@@ -46,7 +46,7 @@ public class ArchivosController
 		CacheDeAudios.inicializar(capacidadDeAudiosLivianos, capacidadDeAudiosPesados, limiteTamanioAudiosLivianos);
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/archivossubidos/{nombre:.*}", method = RequestMethod.GET)
 	void archivossubidos(HttpSession session, HttpServletRequest request, HttpServletResponse response, @PathVariable String nombre) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ClassNotFoundException, SQLException
 	{

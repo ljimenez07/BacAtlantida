@@ -40,7 +40,7 @@ public class MovilController {
 	@Autowired
 	private UsuarioDao usuarioDao;
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/chat/", method = RequestMethod.POST)
 	@ResponseBody String chat(@RequestBody String mensaje, HttpSession session) throws Exception 
 	{
@@ -63,7 +63,7 @@ public class MovilController {
 		return object.toString();
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/conocerte/", method = RequestMethod.POST)
 	@ResponseBody String conocerte(@RequestBody String mensaje, HttpSession session) throws Exception 
 	{
@@ -85,7 +85,7 @@ public class MovilController {
 		return object.toString();
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/movil/login", method = RequestMethod.POST)
 	@ResponseBody String login(@RequestBody String mensaje, HttpSession sesion, @RequestParam String name, @RequestParam String password) throws JSONException, JsonParseException, JsonMappingException, IOException, ClassNotFoundException, SQLException 
 	{
@@ -124,7 +124,7 @@ public class MovilController {
 		throw new CredencialesInvalidosException();
 	}
 
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@GetMapping("/movil/logout")
 	@ResponseBody String logout(HttpSession sesion) throws JSONException
 	{
@@ -133,7 +133,7 @@ public class MovilController {
 		return new JSONObject().put("usuarioEstaLogueado", false).toString();
 	}
 
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@GetMapping("/movil/usuario")
 	@ResponseBody String obtenerUsuario(HttpSession sesion) throws JSONException, ClassNotFoundException, SQLException
 	{
@@ -159,21 +159,21 @@ public class MovilController {
 	return respuesta.toString();
 	}
 
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/generarAudiosEstaticos", method = RequestMethod.GET)
 	@ResponseBody String generarAudiosEstaticos(){
 		serverCognitivo.generarTodosLosAudiosEstaticos();
 		return "Ok";
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/generarAudioEstatico/{id}", method = RequestMethod.GET)
 	@ResponseBody String generarAudioEstatico(@PathVariable("id") String id){
 		serverCognitivo.generarAudioEstatico(id);
 		return "Ok";
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/generarAudioEstaticoParaUnaFrase", method = RequestMethod.GET)
 	@ResponseBody String generarAudioEstaticoParaUnaFrase(
 			@RequestParam(value="indexTema") int indexTema,
@@ -185,31 +185,31 @@ public class MovilController {
 		return "Ok";
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/verTodasLasCoversacionesActivas", method = RequestMethod.GET)
 	@ResponseBody String verTodasLasCoversacionesActivas(){
 		return serverCognitivo.verTodasLasCoversacionesActivas();
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/verTodosLosClientesActivos", method = RequestMethod.GET)
 	@ResponseBody String verTodosLosClientesActivos(){
 		return serverCognitivo.verTodosLosClientesActivos();
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/verLosIdsDeLasConversacionesActivasPorCliente/{id}", method = RequestMethod.GET)
 	@ResponseBody String verLosIdsDeLasConversacionesActivasPorCliente(@PathVariable("id") String id){
 		return serverCognitivo.verLosIdsDeLasConversacionesActivasPorCliente(id);
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/borrarTodasLasConversacionesDeUnCliente", method = RequestMethod.GET)
 	@ResponseBody String borrarTodasLasConversacionesDeUnCliente(HttpSession sesion){
 		return borrarUnaConversacion(sesion);
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/borrarUnaConversacion", method = RequestMethod.GET)
 	@ResponseBody String borrarUnaConversacion(HttpSession sesion){
 		
@@ -227,26 +227,26 @@ public class MovilController {
 		return "";
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/verMiTemario", method = RequestMethod.GET)
 	@ResponseBody String verMiTemario(){
 		return serverCognitivo.verMiTemario();
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/verElHistoricoDeLaConversacion", method = RequestMethod.GET)
 	@ResponseBody String verElHistoricoDeLaConversacion(@RequestParam(value="id") String id, @RequestParam(value="fecha") String feha, @RequestParam(value="esEspecifica") int esConversacionEspecifica){
 		// http://localhost:8080/conversacion/verElHistoricoDeLaConversacion?id=3485fe88-b63c-4502-8ce1-d2519fcf60e3&fecha=2016-12-14%2017:32:49&esEspecifica=0
 		return serverCognitivo.verElHistoricoDeLaConversacion(id, feha, esConversacionEspecifica); // "2016-12-12 15:31:23"
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/verElHistoricoDeUnaConversacionEspecifica/{id}", method = RequestMethod.GET)
 	@ResponseBody String verElHistoricoDeUnaConversacionEspecifica(@PathVariable("id") String id){
 		return serverCognitivo.verElHistoricoDeUnaConversacionEspecifica(id);
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/obtenerValorDeGustosDeHoteles/{id}", method = RequestMethod.GET)
 	@ResponseBody String obtenerValorDeGustosDeHoteles(@PathVariable("id") String id) throws Exception{
 		return ""+serverCognitivo.obtenerValorDeGustosDeHoteles(id);

@@ -14,6 +14,7 @@ if [ ${#3} -gt 0 ]; then
 	cordova platform add $3
 	cordova plugin add cordova-plugin-queries-schemes
 	cordova plugin add cordova-plugin-x-socialsharing
+	cordova plugin add cordova-plugin-whitelist
 	cordova build $3
 fi
 echo "fin"

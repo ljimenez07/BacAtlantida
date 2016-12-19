@@ -184,7 +184,7 @@ public class OfertaController
 		return "redirect:gestionDeOfertas";
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@GetMapping(value = "/ofertas", produces = "application/json")
 	@ResponseBody public String ofertas(@RequestParam("pagina") int pagina, HttpSession sesion) throws Exception
 	{
@@ -215,7 +215,7 @@ public class OfertaController
 		return respuesta.toString();
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@GetMapping(value = "/ofertas/{idOferta}", produces = "application/json")
 	@ResponseBody public Oferta oferta(@PathVariable int idOferta, HttpSession sesion) throws ClassNotFoundException, SQLException
 	{
@@ -224,7 +224,7 @@ public class OfertaController
 		return ofertaDao.obtener(idOferta, idUsuario);
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@GetMapping(value = "/ofertas/cantidad", produces = "application/json")
 	@ResponseBody public String cantidadDeOfertas(HttpSession sesion) throws ClassNotFoundException, SQLException, JSONException
 	{
@@ -235,7 +235,7 @@ public class OfertaController
 		return respuesta.toString();
 	}
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@GetMapping(value = "/ofertas/compartida/{id}")
 	public String ofertaCompartida(@PathVariable("id") int id, HttpServletRequest request) throws ClassNotFoundException, SQLException, JSONException
 	{
