@@ -27,7 +27,7 @@ public class ReaccionesDao
 												+ "GROUP BY oferta.tituloDeOferta;";
 	
 	private final String QUERY_LIKES_POR_CATEGORIA = "SELECT categoriadeoferta.nombre "
-													+ "AS tituloLabel, sum(peso) AS meGusta "
+													+ "AS tituloLabel, count(peso) AS meGusta "
 													+ "FROM reaccion JOIN oferta on oferta.idOferta = reaccion.idOferta "
 													+ "JOIN  categoria_con_oferta_y_peso on categoria_con_oferta_y_peso.idOferta = oferta.idOferta "
 													+ "JOIN  categoriadeoferta on categoriadeoferta.id = categoria_con_oferta_y_peso.idCategoria "
@@ -36,6 +36,7 @@ public class ReaccionesDao
 													+ "AND oferta.eliminada=0 "
 													+ "AND fecha BETWEEN ? AND ? "
 													+ "AND oferta.vigenciaHasta >= ? "
+													+ "AND peso > 0 "
 													+ "GROUP BY categoriadeoferta.nombre;";
 	
 	private final String QUERY_DISLIKES_POR_OFERTA = "SELECT  oferta.tituloDeOferta "
@@ -49,13 +50,14 @@ public class ReaccionesDao
 													+ "GROUP BY oferta.tituloDeOferta;";
 	
 	private String QUERY_DISLIKES_POR_CATEGORIA = "SELECT categoriadeoferta.nombre "
-													+ "AS tituloLabelDislike, sum(peso) AS noMegusta "
+													+ "AS tituloLabelDislike, count(peso) AS noMegusta "
 													+ "FROM reaccion JOIN oferta on oferta.idOferta = reaccion.idOferta "
 													+ "JOIN  categoria_con_oferta_y_peso on categoria_con_oferta_y_peso.idOferta = oferta.idOferta "
 													+ "JOIN  categoriadeoferta on categoriadeoferta.id = categoria_con_oferta_y_peso.idCategoria "
 													+ "AND reaccion='0' "
 													+ "AND oferta.estado=1 "
 													+ "AND oferta.eliminada = 0 "
+													+ "AND peso > 0 "
 													+ "AND fecha BETWEEN ? AND ? "
 													+ "AND oferta.vigenciaHasta >= ? "
 													+ "GROUP BY categoriadeoferta.nombre;";

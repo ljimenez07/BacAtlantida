@@ -363,27 +363,34 @@ public class AgenteCognitivo
 		return misConversaciones.verMiTemario();
 	}
 	
-	public String verElHistoricoDeLaConversacion(String idSesion, String fecha, int esConversacionEspecifica){
-		String miHistorico = historicoDeConversaciones.verElHistoricoDeUnaConversacion(idSesion);
-		if (miHistorico.isEmpty()){
-			try {
-				miHistorico = historicoDeConversaciones.obtenerMiBitacoraDeBD().buscarUnaConversacion(idSesion, fecha, esConversacionEspecifica);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	public String verElHistoricoDeLaConversacion(String idSesion, String fecha){
+		String miHistorico = "";
+		
+		try {
+			miHistorico = historicoDeConversaciones.obtenerMiBitacoraDeBD().buscarUnaConversacion(idSesion, fecha);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(historicoDeConversaciones.existeElHistoricoDeLaConversacion(idSesion) && miHistorico.isEmpty()){
+			miHistorico = historicoDeConversaciones.verElHistoricoDeUnaConversacion(idSesion);
 		}
 			
 		return miHistorico;
 	}
-	
-	public String verElHistoricoDeUnaConversacionEspecifica(String idSesion){
-		return historicoDeConversaciones.verElHistoricoDeUnaConversacionEspecifica(idSesion);
-	}
 
+	public String buscarConversacionesQueNoHanSidoVerificadasPorTema(String idTema) throws ClassNotFoundException, SQLException{
+		return historicoDeConversaciones.buscarConversacionesQueNoHanSidoVerificadasPorTema(idTema);
+	}
+	
+	public String cambiarDeEstadoAVerificadoDeLaConversacion(String idCliente, String idSesion, String fecha) throws ClassNotFoundException, SQLException{
+		return historicoDeConversaciones.cambiarDeEstadoAVerificadoDeLaConversacion(idCliente, idSesion, fecha);
+	}
+	
 	public String getUser() 
 	{
 		return user;

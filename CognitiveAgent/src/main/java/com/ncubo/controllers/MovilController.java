@@ -93,12 +93,18 @@ public class MovilController {
 		if(responseLogin[0].equals("S"))
 		{
 			Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-			Categorias categorias = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
+			
+			if( usuario == null)
+			{
+				usuario = new Usuario(sesion.getId());
+			}
 			
 			usuario.setLlaveSession(responseLogin[1]);
 			usuario.setUsuarioId(responseLogin[2]);
 			usuario.setUsuarioNombre(responseLogin[3]);
 			usuario.hizologinExitosaMente();
+			
+			Categorias categorias = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
 			usuario.setCategorias( categorias );
 			
 			boolean[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);
@@ -228,21 +234,23 @@ public class MovilController {
 	
 	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/verElHistoricoDeLaConversacion", method = RequestMethod.GET)
-	@ResponseBody String verElHistoricoDeLaConversacion(@RequestParam(value="id") String id, @RequestParam(value="fecha") String feha, @RequestParam(value="esEspecifica") int esConversacionEspecifica){
-		// http://localhost:8080/conversacion/verElHistoricoDeLaConversacion?id=3485fe88-b63c-4502-8ce1-d2519fcf60e3&fecha=2016-12-14%2017:32:49&esEspecifica=0
-		return serverCognitivo.verElHistoricoDeLaConversacion(id, feha, esConversacionEspecifica); // "2016-12-12 15:31:23"
+	@ResponseBody String verElHistoricoDeLaConversacion(@RequestParam(value="id") String id, @RequestParam(value="fecha") String feha){
+		// http://localhost:8080/conversacion/verElHistoricoDeLaConversacion?id=3485fe88-b63c-4502-8ce1-d2519fcf60e3&fecha=2016-12-14%2017:32:49
+		return serverCognitivo.verElHistoricoDeLaConversacion(id, feha); // "2016-12-12 15:31:23"
 	}
 	
 	//@CrossOrigin(origins = "*")
-	@RequestMapping(value="/conversacion/verElHistoricoDeUnaConversacionEspecifica/{id}", method = RequestMethod.GET)
-	@ResponseBody String verElHistoricoDeUnaConversacionEspecifica(@PathVariable("id") String id){
-		return serverCognitivo.verElHistoricoDeUnaConversacionEspecifica(id);
+	@RequestMapping(value="/conversacion/buscarConversacionesQueNoHanSidoVerificadasPorTema", method = RequestMethod.GET)
+	@ResponseBody String buscarConversacionesQueNoHanSidoVerificadasPorTema(@RequestParam(value="idTema") String idTema) throws ClassNotFoundException, SQLException{
+		// http://localhost:8080/conversacion/verElHistoricoDeLaConversacion?id=3485fe88-b63c-4502-8ce1-d2519fcf60e3&fecha=2016-12-14%2017:32:49
+		return serverCognitivo.buscarConversacionesQueNoHanSidoVerificadasPorTema(idTema);
 	}
 	
 	//@CrossOrigin(origins = "*")
-	@RequestMapping(value="/conversacion/obtenerValorDeGustosDeHoteles/{id}", method = RequestMethod.GET)
-	@ResponseBody String obtenerValorDeGustosDeHoteles(@PathVariable("id") String id) throws Exception{
-		return ""+serverCognitivo.obtenerValorDeGustosDeHoteles(id);
+	@RequestMapping(value="/conversacion/cambiarDeEstadoLaConversacion", method = RequestMethod.GET)
+	@ResponseBody String cambiarDeEstadoAVerificadoDeLaConversacion(@RequestParam(value="idSesion") String idSesion, @RequestParam(value="fecha") String fecha) throws ClassNotFoundException, SQLException{
+		// http://localhost:8080/conversacion/verElHistoricoDeLaConversacion?idSesion=3485fe88-b63c-4502-8ce1-d2519fcf60e3&fecha=2016-12-14%2017:32:49
+		return serverCognitivo.cambiarDeEstadoAVerificadoDeLaConversacion("", idSesion, fecha);
 	}
-
+		
 }

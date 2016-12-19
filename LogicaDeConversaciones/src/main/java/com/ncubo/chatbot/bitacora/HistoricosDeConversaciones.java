@@ -4,6 +4,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.ncubo.db.BitacoraDao;
 import com.ncubo.db.ConexionALaDB;
 import com.ncubo.db.EstadisticasPorConversacionDao;
@@ -20,7 +24,7 @@ public class HistoricosDeConversaciones {
 		estadisticasPorConversacion = new EstadisticasPorConversacionDao();
 	}
 	
-	private boolean existeElHistoricoDeLaConversacion(String idSesion){
+	public boolean existeElHistoricoDeLaConversacion(String idSesion){
 		return historicoDeMisConversaciones.containsKey(idSesion);
 	}
 	
@@ -38,11 +42,23 @@ public class HistoricosDeConversaciones {
 	}
 	
 	public String verElHistoricoDeUnaConversacion(String idSesion){
-		String resultado = "";
+		String miHistorico = "";
+		JSONObject jsonObject = new JSONObject();
+		
 		if(existeElHistoricoDeLaConversacion(idSesion)){
-			resultado = historicoDeMisConversaciones.get(idSesion).verMiHistorico();
+			miHistorico = historicoDeMisConversaciones.get(idSesion).verMiHistorico();
 		}
-		return resultado;
+		
+		String miHistoricoEspecifico = verElHistoricoDeUnaConversacionEspecifica(idSesion);
+		try {
+			jsonObject.put("Chat General", miHistorico);
+			jsonObject.put("Conocerte", miHistoricoEspecifico);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return jsonObject.toString();
 	}
 	
 	private String borrarElHistoricoDeUnaConversacionGeneral(String idSesion){
@@ -66,23 +82,28 @@ public class HistoricosDeConversaciones {
 		
 		if(! idSesion.isEmpty()){
 			String miHistorico = verElHistoricoDeUnaConversacion(idSesion);
-			if(! miHistorico.isEmpty()){
-				if(guardarUnaConversacionEnLaDB(idSesion, idCliente, miHistorico, 0))
-					borrarElHistoricoDeUnaConversacionGeneral(idSesion);
-			}
-			
 			String miHistoricoEspecifica = verElHistoricoDeUnaConversacionEspecifica(idSesion);
-			if(! miHistoricoEspecifica.isEmpty()){
-				if(guardarUnaConversacionEnLaDB(idSesion, idCliente, miHistoricoEspecifica, 1))
-					borrarElHistoricoDeUnaConversacionEspecifica(idSesion);
-			}
 			
+			JSONObject jsonObject = new JSONObject();
+			
+			try {
+				jsonObject.put("Chat General", miHistorico);
+				jsonObject.put("Conocerte", miHistoricoEspecifica);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			if(guardarUnaConversacionEnLaDB(idSesion, idCliente, jsonObject.toString())){
+				borrarElHistoricoDeUnaConversacionGeneral(idSesion);
+				borrarElHistoricoDeUnaConversacionEspecifica(idSesion);
+			}
 		}
 	}
 	
-	private boolean guardarUnaConversacionEnLaDB(String idSesion, String idCliente, String miHistorico, int esConversacionEspecifica){
+	private boolean guardarUnaConversacionEnLaDB(String idSesion, String idCliente, String miHistorico){
 		try {
-			miBitacora.insertar(idSesion, idCliente, miHistorico, esConversacionEspecifica);
+			miBitacora.insertar(idSesion, idCliente, miHistorico);
 			return true;
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -136,4 +157,18 @@ public class HistoricosDeConversaciones {
 		return miBitacora;
 	}
 	
+	public String buscarConversacionesQueNoHanSidoVerificadasPorTema(String idTema) throws ClassNotFoundException, SQLException{
+		JSONArray resultado = new JSONArray();
+
+		ArrayList<String> idSesiones = estadisticasPorConversacion.buscarConversacionesQueNoHanSidoVerificadasPorTema(idTema);
+		for (String idSesion: idSesiones){
+			resultado.put(idSesion);
+		}
+		
+		return resultado.toString();
+	}
+	
+	public String cambiarDeEstadoAVerificadoDeLaConversacion(String idCliente, String idSesion, String fecha) throws ClassNotFoundException, SQLException{
+		return miBitacora.cambiarDeEstadoAVerificadoDeLaConversacion(idCliente, idSesion, fecha);
+	}
 }
