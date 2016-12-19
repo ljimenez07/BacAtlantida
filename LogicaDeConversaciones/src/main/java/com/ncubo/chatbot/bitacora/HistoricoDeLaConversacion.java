@@ -39,11 +39,11 @@ public class HistoricoDeLaConversacion {
 		return misHistorico.toString();
 	}
 	
-	public static void main(String argv[]) {
+	/*public static void main(String argv[]) {
 		HistoricoDeLaConversacion historico = new HistoricoDeLaConversacion();
 		historico.agregarHistorico("Hola!", "{\"textos\":[{\"texto\":\"¡Hola!\",\"audio\":\"\"},{\"texto\":\"¿En qué puedo ayudarte?\",\"audio\":\"\"}]}");
 		historico.agregarHistorico("como estas", "{\"textos\":[{\"texto\":\"¡Hola!, soy tu asesor del Banco Atlántida.\",\"audio\":\"\"},{\"texto\":\"¿En qué puedo ayudarte?\",\"audio\":\"\"}]}");
 		
 		System.out.println(historico.verMiHistorico());
-	}
+	}*/
 }
