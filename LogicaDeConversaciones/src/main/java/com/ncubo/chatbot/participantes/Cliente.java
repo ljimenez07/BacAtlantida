@@ -127,20 +127,21 @@ public class Cliente extends Participante{
 	
 	// tiene tarjetas de credito
 	public void guardarSiTieneTarjetaCredito(boolean tieneTarjeta) throws Exception{
-		administradorDeVariablesDeContexto.ejecutar(String.format("tieneTarjetaCredito = '%s'; show tieneTarjetaCredito;", tieneTarjeta));
+		administradorDeVariablesDeContexto.ejecutar(String.format("tieneTarjetaCredito = %s; show tieneTarjetaCredito;", tieneTarjeta));
 	}
 	
 	public boolean obtenerSiTieneTarjetaCredito() throws Exception{
-		return Boolean.parseBoolean(administradorDeVariablesDeContexto.obtenerVariable("tieneTarjetaCredito"));
+		return Boolean.parseBoolean(administradorDeVariablesDeContexto.obtenerVariable("tieneTarjetaCredito").toString().trim().replace("\"", ""));
 	}
 	
 	// tiene tarjetas de credito
 	public void guardarSiTieneCuentaAhorros(boolean tieneCuenta) throws Exception{
-		administradorDeVariablesDeContexto.ejecutar(String.format("tieneCuentaAhorros = '%s'; show tieneCuentaAhorros;", tieneCuenta));
+		administradorDeVariablesDeContexto.ejecutar(String.format("tieneCuentaAhorros = %s; show tieneCuentaAhorros;", tieneCuenta));
 	}
 		
 	public boolean obtenerSiTieneCuentaAhorros() throws Exception{
-		return Boolean.parseBoolean(administradorDeVariablesDeContexto.obtenerVariable("tieneCuentaAhorros"));
+		return Boolean.parseBoolean(administradorDeVariablesDeContexto.obtenerVariable("tieneCuentaAhorros").toString().trim().replace("\"", ""));
+
 	}
 }
 

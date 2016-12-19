@@ -48,6 +48,8 @@ public class Conversaciones {
 			}
 			cliente.agregarIdsDeSesiones(usuario.getIdSesion());
 			cliente.cambiarEstadoDeLogeo(usuario.getEstaLogueado());
+			cliente.guardarSiTieneTarjetaCredito(usuario.isTieneTarjetaCredito());
+			cliente.guardarSiTieneCuentaAhorros(usuario.isTieneCuentaAhorros());
 			
 			synchronized(misConversaciones){
 				if(existeLaConversacion(usuario.getIdSesion())){
@@ -97,6 +99,8 @@ public class Conversaciones {
 				// TODO Verificar si cambio el id de sesion, si es asi agregarla al cliente y hacerlo saber a conversacion
 				misClientes.get(cliente.getUsuarioId()).agregarIdsDeSesiones(cliente.getIdSesion());
 				misClientes.get(cliente.getUsuarioId()).cambiarEstadoDeLogeo(cliente.getEstaLogueado());
+				misClientes.get(cliente.getUsuarioId()).guardarSiTieneTarjetaCredito(cliente.isTieneTarjetaCredito());
+				misClientes.get(cliente.getUsuarioId()).guardarSiTieneCuentaAhorros(cliente.isTieneCuentaAhorros());
 				misConversaciones.get(cliente.getIdSesion()).cambiarParticipante(misClientes.get(cliente.getUsuarioId())); // Actualizar cliente en la conversacion
 				resultado = hablarConElAjente(cliente, textoDelCliente, esConocerte);
 				

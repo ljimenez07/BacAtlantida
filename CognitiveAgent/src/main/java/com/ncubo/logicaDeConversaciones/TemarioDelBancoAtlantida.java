@@ -61,6 +61,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("noQuiereHacerOtraConsulta"),
 			frase("necesitaLogin"),
 			frase("noTieneNada"),
+			frase("noTieneTarjetas"),
+			frase("noTieneCuentas"),
 			frase("despedidaCerrarSesion")
 		);
 		return resultado;
@@ -91,7 +93,9 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("noQuiereHacerOtraConsulta"),
 			frase("despedidaCerrarSesion"),
 			frase("necesitaLogin"),
-			frase("noTieneNada")
+			frase("noTieneNada"),
+			frase("noTieneTarjetas"),
+			frase("noTieneCuentas")
 		);
 		return resultado;
 	}
@@ -140,7 +144,9 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("noQuiereHacerOtraConsulta"),
 			frase("despedidaCerrarSesion"),
 			frase("necesitaLogin"),
-			frase("noTieneNada")
+			frase("noTieneNada"),
+			frase("noTieneTarjetas"),
+			frase("noTieneCuentas")
 		);
 		return resultado;
 	}
