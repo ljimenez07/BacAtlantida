@@ -94,6 +94,11 @@ public class MovilController {
 		{
 			Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
 			
+			if( usuario == null)
+			{
+				usuario = new Usuario(sesion.getId());
+			}
+			
 			usuario.setLlaveSession(responseLogin[1]);
 			usuario.setUsuarioId(responseLogin[2]);
 			usuario.setUsuarioNombre(responseLogin[3]);
