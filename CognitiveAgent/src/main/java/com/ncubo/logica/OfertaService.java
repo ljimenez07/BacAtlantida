@@ -118,7 +118,7 @@ public class OfertaService
 			! usuario.getEstaLogueado() || 
 			! usuarioDao.yaContestoElConocerteAlmenosUnaVez(usuario) )
 		{
-			return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial);
+			return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario);
 		}
 		
 		Categorias  categoriasDelUsuario = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
@@ -129,7 +129,7 @@ public class OfertaService
 		
 		if( noHayOfertasParaSusGustosPorLotantoListarLasMasRecientes )
 		{
-			return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial);
+			return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario);
 		}
 		
 		return ofertasFinales;
