@@ -246,4 +246,11 @@ public class MovilController {
 		return serverCognitivo.buscarConversacionesQueNoHanSidoVerificadasPorTema(idTema);
 	}
 	
+	//@CrossOrigin(origins = "*")
+	@RequestMapping(value="/conversacion/cambiarDeEstadoLaConversacion", method = RequestMethod.GET)
+	@ResponseBody String cambiarDeEstadoAVerificadoDeLaConversacion(@RequestParam(value="idSesion") String idSesion, @RequestParam(value="fecha") String fecha) throws ClassNotFoundException, SQLException{
+		// http://localhost:8080/conversacion/verElHistoricoDeLaConversacion?idSesion=3485fe88-b63c-4502-8ce1-d2519fcf60e3&fecha=2016-12-14%2017:32:49
+		return serverCognitivo.cambiarDeEstadoAVerificadoDeLaConversacion("", idSesion, fecha);
+	}
+		
 }

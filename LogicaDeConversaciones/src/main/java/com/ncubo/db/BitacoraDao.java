@@ -12,7 +12,6 @@ import com.ncubo.db.EstadisticasPorConversacionDao.atributosDeLasEstadisticasPor
 public class BitacoraDao {
 
 	private final String NOMBRE_TABLA_BITACORA = "bitacora_de_conversaciones";
-	private final String NOMBRE_TABLA_ESTADISTICAS_CONVERSACION= "estadisticas_por_conversacion";
 	
 	public enum atributosDeLaBitacoraDao
 	{
@@ -80,25 +79,32 @@ public class BitacoraDao {
 		return resultado;
 	}
 	
-	private int obtenerIdDeLaBitacora(String idTema, String fecha, String idUsuario) throws ClassNotFoundException, SQLException{
+	private int obtenerIdDeLaBitacoraDeUnaConversacion(String idCliente, String idSesion, String fecha) throws ClassNotFoundException, SQLException{
 		int resultado = 0;
 		
-		// select bitacora_de_conversaciones.id from estadisticas_por_conversacion join bitacora_de_conversaciones where 
-		// estadisticas_por_conversacion.idConversacion = bitacora_de_conversaciones.id_sesion and estadisticas_por_conversacion.idTema = 'quiereTasaDeCambio' 
-		// and bitacora_de_conversaciones.fecha = '2016-12-15 16:07:49' and bitacora_de_conversaciones.esConversacionEspecifica = 0 
-		//and bitacora_de_conversaciones.haSidoVerificado = 0;
+		// SELECT id FROM cognitiveagent2.bitacora_de_conversaciones where id_sesion = '5cf8066d-f023-44e6-9000-99138a2fab6e' and fecha = '2016-12-19 14:36:59';
 		
-		String query = String.format("select %s.%s from %s join %s where %s.%s = %s.%s and %s.%s = ? and %s.%s = ? and %s.%s = ? and %s.%s = 0;", 
+		/*String query = String.format("select %s.%s from %s join %s where %s.%s = %s.%s and %s.%s = ? and %s.%s = ? and %s.%s = ? and %s.%s = 0;", 
 				NOMBRE_TABLA_BITACORA, atributosDeLaBitacoraDao.ID, NOMBRE_TABLA_ESTADISTICAS_CONVERSACION, NOMBRE_TABLA_BITACORA, NOMBRE_TABLA_ESTADISTICAS_CONVERSACION, 
 				"idConversacion", NOMBRE_TABLA_BITACORA, atributosDeLaBitacoraDao.ID_SESION, NOMBRE_TABLA_ESTADISTICAS_CONVERSACION, atributosDeLasEstadisticasPorConversacionDao.ID_TEMA, NOMBRE_TABLA_BITACORA, 
-				atributosDeLaBitacoraDao.FECHA, 
-				NOMBRE_TABLA_BITACORA, atributosDeLaBitacoraDao.HA_SIDO_VERIFICADO);
+				atributosDeLaBitacoraDao.FECHA, NOMBRE_TABLA_BITACORA, atributosDeLaBitacoraDao.HA_SIDO_VERIFICADO);*/
+		String query = "";
+		if(idCliente.isEmpty()){
+			query = String.format("select %s FROM %s where %s = ? and %s = ?;", atributosDeLaBitacoraDao.ID, 
+					NOMBRE_TABLA_BITACORA, atributosDeLaBitacoraDao.ID_SESION, atributosDeLaBitacoraDao.FECHA);
+		}else{
+			query = String.format("select %s FROM %s where %s = ? and %s = ? and %s = ?;", atributosDeLaBitacoraDao.ID, 
+					NOMBRE_TABLA_BITACORA, atributosDeLaBitacoraDao.ID_SESION, atributosDeLaBitacoraDao.FECHA, atributosDeLaBitacoraDao.ID_USARIO);
+		}
 		
 		Connection con = ConexionALaDB.getInstance().openConBD();
 		PreparedStatement stmt = con.prepareStatement(query);
 		
-		stmt.setString(1, idTema);
+		stmt.setString(1, idSesion);
 		stmt.setString(2, fecha);
+		if( ! idCliente.isEmpty()){
+			stmt.setString(3, idCliente);
+		}
 		
 		ResultSet rs = stmt.executeQuery();
 		
@@ -109,18 +115,24 @@ public class BitacoraDao {
 		return resultado;
 	}
 	
-	public void cambiarDeEstadoAVerificadoDeLaConversacion(String idTema, String fecha, String idUsuario) throws ClassNotFoundException, SQLException{
+	public String cambiarDeEstadoAVerificadoDeLaConversacion(String idCliente, String idSesion, String fecha) throws ClassNotFoundException, SQLException{
 		// update bitacora_de_conversaciones set haSidoVerificado = 1 where id = 126;
 		
-		int idBitacoraConversacion = obtenerIdDeLaBitacora(idTema, fecha, idUsuario);
-		String query = String.format("update %s set %s = 1 where id = ?;", NOMBRE_TABLA_BITACORA, atributosDeLaBitacoraDao.HA_SIDO_VERIFICADO);
-		
-		Connection con = ConexionALaDB.getInstance().openConBD();
-		
-		PreparedStatement stmt = con.prepareStatement(query);
-		stmt.setInt(1, idBitacoraConversacion);
-		stmt.executeUpdate();
-		
-		ConexionALaDB.getInstance().closeConBD();
+		try{
+			int idBitacoraConversacion = obtenerIdDeLaBitacoraDeUnaConversacion(idCliente, idSesion, fecha);
+			String query = String.format("update %s set %s = 1 where id = ?;", NOMBRE_TABLA_BITACORA, atributosDeLaBitacoraDao.HA_SIDO_VERIFICADO);
+			
+			Connection con = ConexionALaDB.getInstance().openConBD();
+			
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, idBitacoraConversacion);
+			stmt.executeUpdate();
+			
+			ConexionALaDB.getInstance().closeConBD();
+			
+			return "listo";
+		}catch(Exception e){
+			return "Error al actualizar: "+e.getMessage();
+		}
 	}
 }

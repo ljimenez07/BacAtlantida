@@ -168,4 +168,7 @@ public class HistoricosDeConversaciones {
 		return resultado.toString();
 	}
 	
+	public String cambiarDeEstadoAVerificadoDeLaConversacion(String idCliente, String idSesion, String fecha) throws ClassNotFoundException, SQLException{
+		return miBitacora.cambiarDeEstadoAVerificadoDeLaConversacion(idCliente, idSesion, fecha);
+	}
 }

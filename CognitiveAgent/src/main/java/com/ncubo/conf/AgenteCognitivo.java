@@ -387,6 +387,10 @@ public class AgenteCognitivo
 		return historicoDeConversaciones.buscarConversacionesQueNoHanSidoVerificadasPorTema(idTema);
 	}
 	
+	public String cambiarDeEstadoAVerificadoDeLaConversacion(String idCliente, String idSesion, String fecha) throws ClassNotFoundException, SQLException{
+		return historicoDeConversaciones.cambiarDeEstadoAVerificadoDeLaConversacion(idCliente, idSesion, fecha);
+	}
+	
 	public String getUser() 
 	{
 		return user;
