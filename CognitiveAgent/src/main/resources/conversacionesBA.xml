@@ -684,7 +684,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para abrir una cuenta de ahorro Remesas debes:  @@br/@@@ @@br/@@@ 1)@@!Completar la solicitud.  @@br/@@@ 2)@@!Contrato de autorización para crédito automático a cuenta, en caso que desees optar por este servicio.  @@br/@@@ 3)@@!Copia de un recibo de cobro reciente de Remesas Familiares (Máximo 6 meses). @@br/@@@ 4)@@!Monto de apertura de cuenta por 100 Lempiras. @@br/@@@ @@br/@@@ Para Hondureños:  @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de tarjeta de identidad.  @@br/@@@  @@br/@@@ Para Extranjeros: @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de carnet de residencia o pasaporte @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorro Remesas es de 100 Lempiras, en esta cuenta el cargo por saldo menor al mínimo es de 15 Lempiras.</frase>
+			<frase>Para abrir una cuenta de ahorro Remesas debes:  @@br/@@@ @@br/@@@ 1)@@!Completar la solicitud.  @@br/@@@ 2)@@!Contrato de autorización para crédito automático a cuenta, en caso que desees optar por este servicio.  @@br/@@@ 3)@@!Copia de un recibo de cobro reciente de Remesas Familiares (Máximo 6 meses). @@br/@@@ 4)@@!Monto de apertura de cuenta por 100 Lempiras. @@br/@@@ @@br/@@@ Para Hondureños:  @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de tarjeta de identidad.  @@br/@@@  @@br/@@@ Para Extranjeros: @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de carnet de residencia o pasaporte. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorro Remesas es de 100 Lempiras, en esta cuenta el cargo por saldo menor al mínimo es de 15 Lempiras.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -694,7 +694,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para abrir una cuenta de ahorro Remesas debes:  @@br/@@@ @@br/@@@ 1)@@!Completar la solicitud.  @@br/@@@ 2)@@!Contrato de autorización para crédito automático a cuenta, en caso que desees optar por este servicio.  @@br/@@@ 3)@@!Copia de un recibo de cobro reciente de Remesas Familiares (Máximo 6 meses). @@br/@@@ 4)@@!Monto de apertura de cuenta por 50 Dólares. @@br/@@@ @@br/@@@ Para Hondureños:  @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de tarjeta de identidad.  @@br/@@@  @@br/@@@ Para Extranjeros:  @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de carnet de residencia o pasaporte @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorro Remesas es de 50 Dólares, en esta cuenta el cargo por saldo menor al mínimo es de 1 Dólar.</frase>
+			<frase>Para abrir una cuenta de ahorro Remesas debes:  @@br/@@@ @@br/@@@ 1)@@!Completar la solicitud.  @@br/@@@ 2)@@!Contrato de autorización para crédito automático a cuenta, en caso que desees optar por este servicio.  @@br/@@@ 3)@@!Copia de un recibo de cobro reciente de Remesas Familiares (Máximo 6 meses). @@br/@@@ 4)@@!Monto de apertura de cuenta por 50 Dólares. @@br/@@@ @@br/@@@ Para Hondureños:  @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de tarjeta de identidad.  @@br/@@@  @@br/@@@ Para Extranjeros:  @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de carnet de residencia o pasaporte. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorro Remesas es de 50 Dólares, en esta cuenta el cargo por saldo menor al mínimo es de 1 Dólar.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -835,6 +835,16 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<frase>El servicio es completamente gratuito para la Banca Personal, sin embargo la Banca Empresarial y PYME tiene un costo el cual es informado cuando se presenta la oferta de servicio por el Ejecutivo de Cuenta.</frase>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
+	<conversacion id="precioMensajitos">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El servicio es gratis, pero el costo del mensajito lo determina la empresa de celular.  @@br/@@@ Puedes solicitarlo en cualquier agencia del país.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -1186,10 +1196,10 @@
 	</variablesDeAmbiente>
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
-		<workspace tipo="general" idIBM="f4f81a3e-adb4-43c6-ba00-fe08c30f7905" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="general" idIBM="e3127218-0122-4b1f-925a-7ce1f9ab2e00" intencionesParaSeReferenciado="">BAIntents</workspace>
 		<workspace tipo="especifico" idIBM="fdba23dc-2ece-425c-85e3-e43b4fcac8ef" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="3643b7c9-4cf3-4d02-adfd-9a52d6c6c5e3" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="5fbe427e-d2d1-4083-a3fd-e76c567cd6ed" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="c513068f-2aad-40df-a55a-5c21b4de6b34" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>

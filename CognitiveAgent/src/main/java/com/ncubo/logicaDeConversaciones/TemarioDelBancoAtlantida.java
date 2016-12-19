@@ -405,6 +405,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("precioLicencia"),
 			frase("precioEmbajada"),
 			frase("precioAOL"),
+			frase("precioMensajitos"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
