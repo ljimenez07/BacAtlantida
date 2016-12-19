@@ -99,7 +99,7 @@ public class TextToSpeechWatson
 	public String getAudioToURL(String text, boolean esAudioDinamico)
 	{
 		UUID idOne = UUID.randomUUID();
-		String nombreDelArchivo = idOne + ".mp3";
+		String nombreDelArchivo = idOne + ".wav";
 		nombreDelArchivo = nombreDelArchivo.replace("-", "");
 		
 		String pathFinal = this.pathAudios + "/" + nombreDelArchivo;
@@ -111,8 +111,7 @@ public class TextToSpeechWatson
 		{
 			System.out.println("Generando audio al texto con Watson: " + text);
 			in = textService.synthesize(text, new Voice(voice, null, null), audioFormat).execute();
-			InputStream mp3InputStream = transformarAMp3(in, audioFormat.name().toLowerCase());
-			transferirAudiosAlFTP(esAudioDinamico, pathFinal, mp3InputStream);
+			transferirAudiosAlFTP(esAudioDinamico, pathFinal, in);
 			
 		} catch(Exception e1)
 		{
@@ -121,8 +120,7 @@ public class TextToSpeechWatson
 			try
 			{
 				in = textService.synthesize(text, new Voice(voice, null, null), audioFormat).execute();
-				InputStream mp3InputStream = transformarAMp3(in, audioFormat.name().toLowerCase());
-				transferirAudiosAlFTP(esAudioDinamico, pathFinal, mp3InputStream);
+				transferirAudiosAlFTP(esAudioDinamico, pathFinal, in);
 			} catch(Exception e)
 			{
 				System.out.println("ERROR al transferir el audio: " + e.getMessage());
