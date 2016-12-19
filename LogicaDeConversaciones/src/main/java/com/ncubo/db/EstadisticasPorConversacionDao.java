@@ -58,9 +58,6 @@ public class EstadisticasPorConversacionDao {
 				atributosDeLaBitacoraDao.ID_SESION, NOMBRE_TABLA_ESTADISTICAS_CONVERSACION, atributosDeLasEstadisticasPorConversacionDao.ID_TEMA,
 				NOMBRE_TABLA_BITACORA, atributosDeLaBitacoraDao.HA_SIDO_VERIFICADO);
 		
-		//String query = "SELECT " + atributosDeLasEstadisticasPorConversacionDao.ID_CONVERSACION + " from "
-		//		+ NOMBRE_TABLA_ESTADISTICAS_CONVERSACION +" where idTema=? ;";
-
 		Connection con = ConexionALaDB.getInstance().openConBD();
 		
 		PreparedStatement stmt = con.prepareStatement(query);

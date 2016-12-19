@@ -80,7 +80,7 @@ public class BitacoraDao {
 		return resultado;
 	}
 	
-	public int obtenerIdDeLaBitacora(String idTema, String fecha) throws ClassNotFoundException, SQLException{
+	private int obtenerIdDeLaBitacora(String idTema, String fecha, String idUsuario) throws ClassNotFoundException, SQLException{
 		int resultado = 0;
 		
 		// select bitacora_de_conversaciones.id from estadisticas_por_conversacion join bitacora_de_conversaciones where 
@@ -109,15 +109,17 @@ public class BitacoraDao {
 		return resultado;
 	}
 	
-	public void cambiarDeEstadoAVerificadoDeLaConversacion(int idBitacoraConversacion) throws ClassNotFoundException, SQLException{
+	public void cambiarDeEstadoAVerificadoDeLaConversacion(String idTema, String fecha, String idUsuario) throws ClassNotFoundException, SQLException{
 		// update bitacora_de_conversaciones set haSidoVerificado = 1 where id = 126;
-		String query = String.format("update %s set %s = 1 where id = ?", NOMBRE_TABLA_BITACORA, atributosDeLaBitacoraDao.HA_SIDO_VERIFICADO);
+		
+		int idBitacoraConversacion = obtenerIdDeLaBitacora(idTema, fecha, idUsuario);
+		String query = String.format("update %s set %s = 1 where id = ?;", NOMBRE_TABLA_BITACORA, atributosDeLaBitacoraDao.HA_SIDO_VERIFICADO);
 		
 		Connection con = ConexionALaDB.getInstance().openConBD();
 		
 		PreparedStatement stmt = con.prepareStatement(query);
 		stmt.setInt(1, idBitacoraConversacion);
-		stmt.executeUpdate(query);
+		stmt.executeUpdate();
 		
 		ConexionALaDB.getInstance().closeConBD();
 	}
