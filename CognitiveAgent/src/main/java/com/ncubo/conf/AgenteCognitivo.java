@@ -148,7 +148,10 @@ public class AgenteCognitivo
 			}
 			else if(idFrase.equals("movimientosTarjeta") || idFrase.equals("movimientosCuenta") && usuario.getEstaLogueado())
 			{
-				textos = extraerDatos.obtenerMovimientos(texto, usuario.getUsuarioId(), "");
+				if(idFrase.equals("movimientosTarjeta"))
+					textos = extraerDatos.obtenerMovimientos(texto, usuario.getUsuarioId(), "4");
+				if(idFrase.equals("movimientosCuenta"))
+					textos = extraerDatos.obtenerMovimientos(texto, usuario.getUsuarioId(), "2");
 				
 				for(int j = 0; j < textos.length; j++)
 				{

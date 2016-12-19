@@ -16,6 +16,8 @@ public class Usuario implements Serializable
 	private String usuarioNombre = "";
 	private String llaveSession = "";
 	private boolean estaLogueado = false;
+	private boolean tieneTarjetaCredito = false;
+	private boolean tieneCuentaAhorros = false;
 	private static ArrayList<Usuario> usuariosLogueados = new ArrayList<Usuario>();
 	private String idSesion = "";
 	private Hashtable<String, String> variablesDeContexto = new Hashtable<String, String>();
@@ -27,34 +29,6 @@ public class Usuario implements Serializable
 	{
 		this.setIdSesion(idSesion);		
 	}
-
-	/*public String getContextoDeWatsonParaChats()
-	{
-		return contextoDeWatsonParaChats;
-	}
-	
-	public void setContextoDeWatsonParaChats(String contextoDeWatsonParaChats)
-	{
-		this.contextoDeWatsonParaChats =  contextoDeWatsonParaChats;
-	}
-	
-	public String getContextoDeWatsonParaConocerte()
-	{
-		return contextoDeWatsonParaConocerte;
-	}
-	
-	public void setContextoDeWatsonParaConocerte(String contextoDeWatsonParaConocerte)
-	{
-		this.contextoDeWatsonParaConocerte =  contextoDeWatsonParaConocerte;
-	}
-
-
-	@Override
-	public String toString() {
-		return "Usuario [contextoDeWatsonParaChats=" + contextoDeWatsonParaChats + ", contextoDeWatsonParaConocerte="
-				+ contextoDeWatsonParaConocerte + ", usuarioId=" + usuarioId + ", usuarioNombre=" + usuarioNombre
-				+ ", llaveSession=" + llaveSession + ", estaLogueado=" + estaLogueado + "]";
-	}*/
 
 	public boolean getEstaLogueado()
 	{
@@ -117,6 +91,20 @@ public class Usuario implements Serializable
 		this.categorias = categorias;
 	}
 	
-	
+	public boolean isTieneTarjetaCredito() {
+		return tieneTarjetaCredito;
+	}
+
+	public void setTieneTarjetaCredito(boolean tieneTarjetaCredito) {
+		this.tieneTarjetaCredito = tieneTarjetaCredito;
+	}
+
+	public boolean isTieneCuentaAhorros() {
+		return tieneCuentaAhorros;
+	}
+
+	public void setTieneCuentaAhorros(boolean tieneCuentaAhorros) {
+		this.tieneCuentaAhorros = tieneCuentaAhorros;
+	}
 }
 

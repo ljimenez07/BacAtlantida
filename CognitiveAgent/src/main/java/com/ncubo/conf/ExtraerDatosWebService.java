@@ -89,7 +89,6 @@ public class ExtraerDatosWebService {
  +"  </soapenv:Body>"
 +"</soapenv:Envelope>";
 		requestBody = String.format(requestBody, user);
-		System.out.println(requestBody);
 		
 		String responseXML = given().
 				header("Content-Type", "text/xml;charset=UTF-8").
@@ -117,8 +116,6 @@ public class ExtraerDatosWebService {
 			NodeImpl nodoTarjeta = (NodeImpl) tarjetas.get(s);
 			NodeImpl moneda = nodoTarjeta.get("moneda");
 			NodeImpl saldo = null;
-			System.out.println();
-			System.out.println(moneda.toString());
 			
 			String nuevoTexto = texto;
 			if(moneda.toString().equals("USD"))	{
@@ -138,7 +135,7 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%stc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroTarjeta = nodoTarjeta.get("numeroTarjeta");
-			if(!alias.toString().equals("Alias no ingresado") || !alias.toString().equals("N/A"))
+			if(!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
 				nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString()+"-"+alias.toString());
 			else nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString());	
 			
@@ -212,9 +209,7 @@ public class ExtraerDatosWebService {
 			 +"  </soapenv:Body>"
 			+"</soapenv:Envelope>";
 					requestBody = String.format(requestBody, user);
-		System.out.println(requestBody);
-		
-		String responseXML =
+				String responseXML =
 				given(). 
 				header("Content-Type", "text/xml;charset=UTF-8").
 				auth().
@@ -241,8 +236,6 @@ public class ExtraerDatosWebService {
 			NodeImpl nodoTarjeta = (NodeImpl) cuentas.get(s);
 			NodeImpl moneda = nodoTarjeta.get("moneda");
 			NodeImpl saldo = null;
-			System.out.println();
-			System.out.println(moneda.toString());
 			String nuevoTexto = texto;
 			
 			if(moneda.toString().equals("USD"))	{
@@ -262,7 +255,7 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%cc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroCuenta = nodoTarjeta.get("numeroCuenta");
-			if(!alias.toString().equals("Alias no ingresado") || !alias.toString().equals("N/A"))
+			if(!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
 				nuevoTexto = nuevoTexto.replaceAll("%ncc", numeroCuenta.toString()+"-"+alias.toString());
 			else nuevoTexto = nuevoTexto.replaceAll("%ncc", numeroCuenta.toString());	
 			
@@ -338,7 +331,6 @@ public class ExtraerDatosWebService {
 				+"</soapenv:Envelope>";
 			
 			requestBodySaldo = String.format(requestBodySaldo, user, tipoCuenta);
-			System.out.println(requestBodySaldo);
 			
 			String responseXML =
 					given(). 
@@ -363,7 +355,7 @@ public class ExtraerDatosWebService {
 				cuentas = coleccion.getList("cuentaItem");
 			}
 			
-			if(tipoCuenta.equals("2"))
+			if(tipoCuenta.equals("4"))
 			{
 				coleccion = consultaSaldo.getNode("Respuesta").getNode("productoColeccion").get("tarjetaColeccion");
 				cuentas = coleccion.getList("tarjetaItem");
@@ -371,24 +363,37 @@ public class ExtraerDatosWebService {
 			
 			
 			
-			int tam = cuentas.size()*3+1;
+			int tam = cuentas.size()*4+1;
 			
 			
 			arregloMovimientos = new String[tam];
 			
 			arregloMovimientos[0] = texto;
 			
-			int i = 0;
+			int i = 1;
 			
 			for(int s = 0; s < cuentas.size(); s++)
 			{
 				NodeImpl nodoTarjeta = (NodeImpl) cuentas.get(s);
 				String cuenta = "";
 				if(tipoCuenta.equals("2"))
+				{
 					cuenta = nodoTarjeta.get("numeroCuenta").toString();
+					String alias = nodoTarjeta.get("alias").toString();
+					if(!alias.equals("Alias no ingresado") && !alias.equals("N/A"))
+						arregloMovimientos[i] = "Para la cuenta "+cuenta.toString()+"-"+alias+":";
+					else arregloMovimientos[i] = "Para la cuenta"+cuenta.toString()+":";
+				}
 				if(tipoCuenta.equals("4"))
+				{
 					cuenta = nodoTarjeta.get("numeroTarjeta").toString();
-			
+					String alias = nodoTarjeta.get("alias").toString();
+					if(!alias.equals("Alias no ingresado") && !alias.equals("N/A"))
+						arregloMovimientos[i] = "Para la tarjeta "+cuenta.toString()+"-"+alias+":";
+					else arregloMovimientos[i] = "Para la tarjeta "+cuenta.toString()+":";
+				}
+				
+				i++;
 					String requestBody = ""+
 					"<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:con=\"http://hn.infatlan.och/ws/ACD078/out/ConsultaMovimiento\">"+
 					"<soapenv:Header/>"+
@@ -629,7 +634,6 @@ public class ExtraerDatosWebService {
 			 +"  </soapenv:Body>"
 			+"</soapenv:Envelope>";
 		requestBody = String.format(requestBody, user);
-		System.out.println(requestBody);
 		
 		String responseXML =
 				given().
@@ -658,8 +662,6 @@ public class ExtraerDatosWebService {
 			NodeImpl nodoTarjeta = (NodeImpl) tarjetas.get(s);
 			NodeImpl moneda = nodoTarjeta.get("moneda");
 			NodeImpl saldo = null;
-			System.out.println();
-			System.out.println(moneda.toString());
 			
 			String nuevoTexto = texto;
 			if(moneda.toString().equals("USD"))	{
@@ -679,7 +681,7 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%stc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroTarjeta = nodoTarjeta.get("numeroTarjeta");
-			if(!alias.toString().equals("Alias no ingresado") || !alias.toString().equals("N/A"))
+			if(!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
 				nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString()+"-"+alias.toString());
 			else nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString());	
 			
@@ -817,10 +819,120 @@ public class ExtraerDatosWebService {
 
 	public boolean[] tieneCuentas(String user){
 		
-		/*
-		Boolean[] cuentas = {false,false}; 
-		String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:con=\"http://hn.infatlan.och/ws/ACD004/out/ConsultaSaldo\"><soapenv:Header/> <soapenv:Body> <con:MT_ConsultaSaldo> <activarMultipleEntrada>?</activarMultipleEntrada><activarParametroAdicional>?</activarParametroAdicional> <!--Optional:--><transaccionId>?</transaccionId><!--Optional:--><aplicacionId>?</aplicacionId><paisId>?</paisId><empresaId>?</empresaId>  <!--Optional:-->  <regionId>?</regionId>	<!--Optional:--> <canalId>?</canalId><!--Optional:-->  <version>?</version> <!--Optional:--> <llaveSesion></llaveSesion>  <!--Optional:--><usuarioId>?</usuarioId> <!--Optional:--> <token>?</token> <!--Zero or more repetitions:-->  <identificadorColeccion> <!--Optional:--> <was>?</was> <!--Optional:-->  <pi>?</pi><!--Optional:--><omniCanal>?</omniCanal>  <!--Optional:--> <recibo>?</recibo> <!--Optional:--><numeroTransaccion>?</numeroTransaccion></identificadorColeccion> <!--Optional:-->  <parametroAdicionalColeccion> <!--Zero or more repetitions:--> <parametroAdicionalItem>  <linea>?</linea>  <!--Optional:-->  <tipoRegistro>UAI</tipoRegistro> <!--Optional:-->	 <valor>%s</valor></parametroAdicionalItem>  </parametroAdicionalColeccion> <!--Optional:--> <logColeccion><!--Zero or more repetitions:--> <logItem> <identificadorWas>?</identificadorWas> <!--Optional:--><identificadorPi>?</identificadorPi> <!--Optional:--> <identificadorOmniCanal>?</identificadorOmniCanal>  <!--Optional:--><identificadorRecibo>?</identificadorRecibo> <!--Optional:--><numeroPeticion>?</numeroPeticion> <!--Optional:--> <identificadorNumeroTransaccion>?</identificadorNumeroTransaccion> <!--Optional:--> <aplicacionId>?</aplicacionId> <!--Optional:-->	<canalId>?</canalId> <!--Optional:-->  <ambienteId>?</ambienteId> <!--Optional:-->  <transaccionId>?</transaccionId> <!--Optional:--><accion>?</accion> <!--Optional:--> <tipo>?</tipo> <!--Optional:--> <fecha>?</fecha> <!--Optional:--> <hora>?</hora><!--Optional:--><auxiliar1>?</auxiliar1> <!--Optional:--> <auxiliar2>?</auxiliar2>  <!--Optional:--> <parametroAdicionalColeccion>  <!--Zero or more repetitions:--> <parametroAdicionalItem> <linea>?</linea>  <!--Optional:-->  <tipoRegistro>?</tipoRegistro>  <!--Optional:-->	<valor>?</valor> </parametroAdicionalItem> </parametroAdicionalColeccion> </logItem> </logColeccion>  <!--Optional:-->  <consultaSaldoColeccion> <tipoCuenta>?</tipoCuenta> <!--Optional:--> <peticionId>?</peticionId> </consultaSaldoColeccion> </con:MT_ConsultaSaldo></soapenv:Body></soapenv:Envelope>";
-		
+		boolean[] cuentas = {false,false}; 
+		String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:con=\"http://hn.infatlan.och/ws/ACD004/out/ConsultaSaldo\">"+
+			"<soapenv:Header/>"+
+				"<soapenv:Body>"+
+					"<con:MT_ConsultaSaldo>"+
+						"<activarMultipleEntrada>?</activarMultipleEntrada>"+
+				         "<activarParametroAdicional>?</activarParametroAdicional>"+
+				         "<!--Optional:-->"+
+				         "<transaccionId>100128</transaccionId>"+
+				         "<!--Optional:-->"+
+				         "<aplicacionId>?</aplicacionId>"+
+				         "<paisId>?</paisId>"+
+				         "<empresaId>?</empresaId>"+
+				         "<!--Optional:-->"+
+				         "<regionId>?</regionId>"+
+				         "<!--Optional:-->"+
+				         "<canalId>?</canalId>"+
+				         "<!--Optional:-->"+
+				         "<version>?</version>"+
+				         "<!--Optional:-->"+
+				         "<llaveSesion/>"+
+				         "<!--Optional:-->"+
+				         "<usuarioId>?</usuarioId>"+
+				         "<!--Optional:-->"+
+				         "<token>?</token>"+
+				         "<!--Zero or more repetitions:-->"+
+				         "<identificadorColeccion>"+
+				         "	<!--Optional:-->"+
+				         "   <was>?</was>"+
+				         "   <!--Optional:-->"+
+				         "   <pi>?</pi>"+
+				         "   <!--Optional:-->"+
+				         "   <omniCanal>?</omniCanal>"+
+				         "   <!--Optional:-->"+
+				         "   <recibo>?</recibo>"+
+				         "   <!--Optional:-->"+
+				         "   <numeroTransaccion>?</numeroTransaccion>"+
+				         "</identificadorColeccion>"+
+				         "<!--Optional:-->"+
+				         "<parametroAdicionalColeccion>"+
+				         "   <!--Zero or more repetitions:-->"+
+				         "    <parametroAdicionalItem>"+
+				         "      <!--You may enter the following 3 items in any order-->"+
+				         "      <linea>0</linea>"+
+				         "      <!--Optional:-->"+
+				         "      <tipoRegistro>TC</tipoRegistro>"+
+				         "      <!--Optional:-->"+
+				         "      <valor>M</valor>"+
+				         "   </parametroAdicionalItem>"+
+				         "   <parametroAdicionalItem>"+
+				         "     <linea>?</linea>"+
+				         "      <!--Optional:-->"+
+				         "      <tipoRegistro>UAI</tipoRegistro>"+
+				         "      <!--Optional:--> "+
+				         "      <valor>%s</valor>"+
+				         "   </parametroAdicionalItem>"+
+				         "</parametroAdicionalColeccion>"+
+				         "<!--Optional:-->"+
+				         "<logColeccion>"+
+				         "   <!--Zero or more repetitions:-->"+
+				         "   <logItem>"+
+				         "      <identificadorWas>?</identificadorWas>"+
+				         "      <!--Optional:-->"+
+				         "      <identificadorPi>?</identificadorPi>"+
+				         "     <!--Optional:-->"+
+				         "      <identificadorOmniCanal>?</identificadorOmniCanal>"+
+				         "      <!--Optional:-->"+
+				         "      <identificadorRecibo>?</identificadorRecibo>"+
+				         "      <!--Optional:-->"+
+				         "      <numeroPeticion>?</numeroPeticion>"+
+				         "      <!--Optional:-->"+
+				         "      <identificadorNumeroTransaccion>?</identificadorNumeroTransaccion>"+
+				         "      <!--Optional:-->"+
+				         "      <aplicacionId>?</aplicacionId>"+
+				         "      <!--Optional:-->"+
+				         "      <canalId>?</canalId>"+
+				         "      <!--Optional:-->"+
+				         "      <ambienteId>?</ambienteId>"+
+				         "      <!--Optional:-->"+
+				         "      <transaccionId>?</transaccionId>"+
+				         "      <!--Optional:-->"+
+				         "      <accion>?</accion>"+
+				         "     <!--Optional:-->"+
+				         "      <tipo>?</tipo>"+
+				         "      <!--Optional:-->"+
+				         "      <fecha>?</fecha>"+
+				         "      <!--Optional:-->"+
+				         "      <hora>?</hora>"+
+				         "      <!--Optional:-->"+
+				         "      <auxiliar1>?</auxiliar1>"+
+				         "      <!--Optional:-->"+
+				         "      <auxiliar2>?</auxiliar2>"+
+				         "     <!--Optional:-->"+
+				         "      <parametroAdicionalColeccion>"+
+				         "        <!--Zero or more repetitions:-->"+
+				         "         <parametroAdicionalItem>"+
+				         "            <linea>?</linea>"+
+				         "            <!--Optional:-->"+
+				         "            <tipoRegistro>?</tipoRegistro>"+
+				         "            <!--Optional:-->"+
+				         "            <valor>?</valor>"+
+				         "         </parametroAdicionalItem>"+
+				         "      </parametroAdicionalColeccion>"+
+				         "   </logItem>"+
+				         "</logColeccion>"+
+				         "<!--Optional:-->"+
+				         "<consultaSaldoColeccion>"+
+				         "   <tipoCuenta>?</tipoCuenta>"+
+				         "   <!--Optional:-->"+
+				         "   <peticionId>?</peticionId>"+
+				         "</consultaSaldoColeccion>"+
+			         "</con:MT_ConsultaSaldo>"+
+		         "</soapenv:Body>"+
+	         "</soapenv:Envelope>";
 		
 		requestBody = String.format(requestBody, user);
 		System.out.println(requestBody);
@@ -837,16 +949,11 @@ public class ExtraerDatosWebService {
 		
 		if(responseXML.contains("tarjetaItem"))
 			cuentas[0] = true;
-		if(responseXML.contains("cuentaItem"))
+		if(responseXML.contains("cuentaItem") && responseXML.contains("<tipo>2</tipo>"))
 			cuentas[1] = true;
-			*/
-		
-		boolean[][] cuentas = {{true,false},{false,true},{true,true},{false,false}};
-		 int rnd = new Random().nextInt(cuentas.length);
-		 System.out.println("tiene tarjetas "+cuentas[rnd][0]);
-		 System.out.println("tiene cuentas "+cuentas[rnd][1]);
+			
 
-		    return cuentas[rnd];
+		    return cuentas;
 	}
 
 	public String getTipoCambio() 
