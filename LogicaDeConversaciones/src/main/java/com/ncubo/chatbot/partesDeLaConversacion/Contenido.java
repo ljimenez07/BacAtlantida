@@ -20,7 +20,6 @@ import com.ncubo.chatbot.watson.Entidades;
 import com.ncubo.chatbot.watson.Intencion;
 import com.ncubo.chatbot.watson.Intenciones;
 import com.ncubo.chatbot.watson.WorkSpace;
-import com.ncubo.realestate.ContenidoDeRealEstate;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
@@ -271,7 +270,6 @@ public abstract class Contenido
 				valores = new Hashtable<String, Operador>();
 				
 				if(tipo.equals("entidad")){
-					String operador = eElement.getAttribute("operador");
 					String entidadValor = condition.getElementsByTagName("condition").item(temp).getTextContent();
 					String entidadValores[] = entidadValor.split("@");
 					String entidad = "";

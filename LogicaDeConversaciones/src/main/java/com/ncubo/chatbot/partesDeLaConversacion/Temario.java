@@ -140,6 +140,10 @@ public abstract class Temario
 		}
 	}
 	
+	public Temas obtenerMisTemas(){
+		return temasDelDiscurso;
+	}
+	
 	public String verMiTemario(){
 		String resultado = "";
 		int contador = 0;
