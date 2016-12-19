@@ -309,11 +309,23 @@ public class OfertaDao
 	}
 	
 	
-	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(Indice indiceInicial) throws ClassNotFoundException, SQLException
+	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(Indice indiceInicial, Usuario usuario) throws ClassNotFoundException, SQLException
 	{
-		boolean esUnUsuarioConocido = false;
-		String idUsuario = "NULL";
+		boolean esUnUsuarioConocido = true;
+		String idUsuario;
 		
+		
+		if(usuario == null || usuario.getUsuarioId() == null || usuario.getUsuarioId().isEmpty())
+		{
+			idUsuario = "NULL";
+			esUnUsuarioConocido = false;
+		}
+		else
+		{
+			idUsuario =  usuario.getUsuarioId();
+		}
+		 
+		 
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
 		
 		Connection con = dao.openConBD();
