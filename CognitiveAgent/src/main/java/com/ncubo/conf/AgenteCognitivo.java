@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Entity;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Intent;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
+import com.ncubo.chatbot.audiosXML.AudiosXML;
 import com.ncubo.chatbot.bitacora.HistoricosDeConversaciones;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.chatbot.watson.TextToSpeechWatson;
@@ -67,6 +68,7 @@ public class AgenteCognitivo
 		inicializarGeneradorDeAudiosSingleton();
 		inicializadorDeLaBD();
 		historicoDeConversaciones = new HistoricosDeConversaciones();
+		generarTodosLosAudiosEstaticosInternamente();
     }
 	
 	public String procesarMensajeChat(Usuario usuario, String mensaje, Date date) throws Exception
@@ -302,6 +304,13 @@ public class AgenteCognitivo
 		System.out.println("El path xml es: "+getPathXML());
 		misConversaciones.generarAudiosEstaticos(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
 				this.getPathAudio(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), ftp.getCarpeta(), this.geturlPublicaAudios(), this.getPathXMLAudios());
+	}
+	
+	public void generarTodosLosAudiosEstaticosInternamente(){
+		if (AudiosXML.getInstance().exiteElArchivoXMLDeAudios(this.getPathXMLAudios())){
+			misConversaciones.generarAudiosEstaticos(this.getUserTextToSpeech(), this.getPasswordTextToSpeech(), this.getVoiceTextToSpeech(), 
+					this.getPathAudio(), ftp.getUsuario(), ftp.getPassword(), ftp.getHost(), ftp.getPuerto(), ftp.getCarpeta(), this.geturlPublicaAudios(), this.getPathXMLAudios());
+		}
 	}
 	
 	public void generarAudioEstatico(String id){
