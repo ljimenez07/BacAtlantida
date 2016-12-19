@@ -44,8 +44,8 @@ $(function(){
 				data: $(this).serialize(),
 				done: function(data) 
 				{
-					$(".app #ofertas").html(Handlebars.templates.layout(pantallas["ofertas"]));
-					$(".app #conocerte").html(Handlebars.templates.layout(pantallas["conocerte"]));
+					//$(".app #ofertas").html(Handlebars.templates.layout(pantallas["ofertas"]));
+				//	$(".app #conocerte").html(Handlebars.templates.layout(pantallas["conocerte"]));
 					establecerBienvenida(data.usuarioEstaLogueado, data.usuarioNombre);
 					bindClickeable();
 					estaLogueado = true;
