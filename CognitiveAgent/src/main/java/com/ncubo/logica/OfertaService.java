@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -112,65 +114,27 @@ public class OfertaService
 	}
 	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesde(Indice indiceInicial, Usuario usuario) throws Exception
 	{
-
 		if( usuario == null || 
 			! usuario.getEstaLogueado() || 
 			! usuarioDao.yaContestoElConocerteAlmenosUnaVez(usuario) )
 		{
-			return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario);
+			return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial);
 		}
 		
 		Categorias  categoriasDelUsuario = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
 		usuario.setCategorias(categoriasDelUsuario);
 		
-		List<Oferta> ofertasFinales = new ArrayList<Oferta>();
-				
-		obtenerUltimasDiezOfertasParaMostrarDesde( 
-				ofertasFinales, 
-				indiceInicial, 
-				usuario, 
-				categoriasDelUsuario.obtenerCategoriaDeBelleza(), 
-				categoriasDelUsuario.obtenerCategoriaDeHotel(), 
-				categoriasDelUsuario.obtenerCategoriaDeRestaurante()
-				);
+		List<Oferta> ofertasFinales = ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario, distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas);
+		boolean noHayOfertasParaSusGustosPorLotantoListarLasMasRecientes =ofertasFinales.size() ==0 && indiceInicial.getPagina() == 1;
+		
+		if( noHayOfertasParaSusGustosPorLotantoListarLasMasRecientes )
+		{
+			return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial);
+		}
 		
 		return ofertasFinales;
-		
 	}
-	
-	public List<Oferta> obtenerUltimasDiezOfertasParaMostrarDesdeSinConsiderarElUsuario(Indice indiceInicial, Usuario usuario) throws Exception
-	{
-		return ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario);
-	}
-	
-	private void obtenerUltimasDiezOfertasParaMostrarDesde(List<Oferta> ofertasFinales, Indice indiceInicial, Usuario usuario, Belleza belleza, Hotel hoteles, Restaurate restaurante) throws Exception
-	{
-		List<Oferta> ofertas =  ofertaDao.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario);
 		
-		if( ofertas.size() == 0)
-		{
-			return;
-		}
-		
-		for( Oferta oferta : ofertas )
-		{
-			double distanciaActualEntreAmbasCategorias = oferta.distanciaEuclidianaDeCategoria(
-				belleza, 
-				hoteles,
-				restaurante );
-			 
-			if( distanciaActualEntreAmbasCategorias <= distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas )
-			{
-				ofertasFinales.add( oferta );
-			}
-		}	
-		
-		if( ofertasFinales.size() < 10)
-		{
-			indiceInicial.agregarleDiez();
-			obtenerUltimasDiezOfertasParaMostrarDesde( ofertasFinales, indiceInicial, usuario,  belleza, hoteles, restaurante);
-		}
-	}
 
 	public double getDistanciaMaximaEntreLasCategoriasDeUsuarioyOfertas()
 	{
@@ -180,6 +144,19 @@ public class OfertaService
 	public void setDistanciaMaximaEntreLasCategoriasDeUsuarioyOfertas( double distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas)
 	{
 		this.distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas = distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas;
+	}
+
+	public int obtenerCantidadDeOfertasParaMostrar(Usuario usuario) throws ClassNotFoundException, SQLException {
+		if( usuario == null || 
+				! usuario.getEstaLogueado() || 
+				! usuarioDao.yaContestoElConocerteAlmenosUnaVez(usuario) )
+		{
+			return ofertaDao.obtenerCantidadDeOfertasParaMostrar();
+		}
+		else
+		{
+			return ofertaDao.obtenerCantidadDeOfertasParaMostrar(usuario, distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas);
+		}
 	}
 	
 }

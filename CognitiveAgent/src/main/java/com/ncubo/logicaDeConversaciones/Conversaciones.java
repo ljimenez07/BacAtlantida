@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.ncubo.chatbot.audiosXML.AudiosXML;
 import com.ncubo.chatbot.exceptiones.ChatException;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
 import com.ncubo.chatbot.partesDeLaConversacion.Temario;
@@ -158,8 +159,10 @@ public class Conversaciones {
 		return resultado;
 	}
 	
-	public void generarAudiosEstaticos(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, String carpetaFTP, String url){
-		HiloParaGenerarAudiosEstaticos hilo = new HiloParaGenerarAudiosEstaticos(usuarioTTS, contrasenaTTS, vozTTS, pathAGuardar, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, carpetaFTP, url);
+	public void generarAudiosEstaticos(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String usuarioFTP, 
+			String contrasenaFTP, String hostFTP, int puetoFTP, String carpetaFTP, String url, String pathXMLAudios){
+		HiloParaGenerarAudiosEstaticos hilo = new HiloParaGenerarAudiosEstaticos(usuarioTTS, contrasenaTTS, vozTTS, pathAGuardar, 
+				usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, carpetaFTP, url, pathXMLAudios);
 		hilo.start();
 	}
 	
@@ -191,8 +194,10 @@ public class Conversaciones {
 		private int puetoFTP;
 		private String carpetaFTP;
 		private String urlAReproducir;
+		private String pathXMLAudios;
 		
-		public HiloParaGenerarAudiosEstaticos(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, String carpetaFTP, String url){
+		public HiloParaGenerarAudiosEstaticos(String usuarioTTS, String contrasenaTTS, String vozTTS, String pathAGuardar, 
+				String usuarioFTP, String contrasenaFTP, String hostFTP, int puetoFTP, String carpetaFTP, String url, String pathXMLAudios){
 			this.usuarioTTS = usuarioTTS;
 			this.contrasenaTTS = contrasenaTTS;
 			this.vozTTS = vozTTS;
@@ -203,12 +208,18 @@ public class Conversaciones {
 			this.puetoFTP = puetoFTP;
 			this.carpetaFTP = carpetaFTP;
 			this.urlAReproducir = url;
+			this.pathXMLAudios = pathXMLAudios;
 		}
 		
 		public void run(){
 			TextToSpeechWatson.getInstance(usuarioTTS, contrasenaTTS, vozTTS, usuarioFTP, contrasenaFTP, hostFTP, puetoFTP, carpetaFTP, pathAGuardar, urlAReproducir);
 			System.out.println(String.format("El path a guardar los audios es %s y la url publica es %s", pathAGuardar, urlAReproducir));
+			if (AudiosXML.getInstance().exiteElArchivoXMLDeAudios(this.pathXMLAudios)){
+				AudiosXML.getInstance().cargarLosNombresDeLosAudios();
+			}
 			temarioDelBancoAtlantida.generarAudioEstaticosDeTodasLasFrases(pathAGuardar, urlAReproducir);
+			AudiosXML.getInstance().guardarLosAudiosDeUnaFrase(temarioDelBancoAtlantida);
+			
 			System.out.println("Se termino de generar audios estaticos.");
 		}
 	}

@@ -23,7 +23,7 @@ public class ReaccionController
 	@Autowired
 	private ReaccionService reaccionService;
 	
-	@CrossOrigin(origins = "*")
+	//@CrossOrigin(origins = "*")
 	@PostMapping(value = "/reaccion/oferta", produces = "application/json")
 	@ResponseBody public String reaccionAOferta(@RequestParam("idOferta") int idOferta, @RequestParam(value = "reaccion", required = false) Boolean reaccion, HttpSession sesion) throws ClassNotFoundException, SQLException, JSONException
 	{
