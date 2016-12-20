@@ -106,7 +106,7 @@ public class AgenteCognitivo
 			
 			if(idFrase.equals("saldoCredito") && usuario.getEstaLogueado())
 			{
-				textos = extraerDatos.obtenerSaldoTarjetaCredito( texto, usuario.getUsuarioId());
+				textos = extraerDatos.obtenerSaldoTarjetaCredito( texto, usuario.getLlaveSession(), usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
 				{
 					JSONObject jsonObject = new JSONObject();
@@ -117,7 +117,7 @@ public class AgenteCognitivo
 			}
 			else if(idFrase.equals("disponibleCredito") && usuario.getEstaLogueado())
 			{
-				textos = extraerDatos.obtenerDisponibleTarjetaCredito(texto, usuario.getUsuarioId());
+				textos = extraerDatos.obtenerDisponibleTarjetaCredito(texto, usuario.getLlaveSession(), usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
 				{
 					JSONObject jsonObject = new JSONObject();
@@ -128,7 +128,7 @@ public class AgenteCognitivo
 			}
 			else if((idFrase.equals("saldoCuentaAhorros") || idFrase.equals("disponibleCuentaAhorros")) && usuario.getEstaLogueado())
 			{
-				textos = extraerDatos.obtenerSaldoCuentaAhorros(texto, usuario.getUsuarioId());
+				textos = extraerDatos.obtenerSaldoCuentaAhorros(texto, usuario.getLlaveSession(), usuario.getUsuarioId());
 				for(int j = 0; j < textos.length; j++)
 				{
 					JSONObject jsonObject = new JSONObject();
@@ -149,9 +149,9 @@ public class AgenteCognitivo
 			else if(idFrase.equals("movimientosTarjeta") || idFrase.equals("movimientosCuenta") && usuario.getEstaLogueado())
 			{
 				if(idFrase.equals("movimientosTarjeta"))
-					textos = extraerDatos.obtenerMovimientos(texto, usuario.getUsuarioId(), "4");
+					textos = extraerDatos.obtenerMovimientos(texto, usuario.getLlaveSession(), usuario.getUsuarioId(), "4");
 				if(idFrase.equals("movimientosCuenta"))
-					textos = extraerDatos.obtenerMovimientos(texto, usuario.getUsuarioId(), "2");
+					textos = extraerDatos.obtenerMovimientos(texto, usuario.getLlaveSession(), usuario.getUsuarioId(), "2");
 				
 				for(int j = 0; j < textos.length; j++)
 				{
