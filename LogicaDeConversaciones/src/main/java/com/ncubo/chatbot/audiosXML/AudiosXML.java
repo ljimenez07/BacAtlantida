@@ -256,7 +256,7 @@ public class AudiosXML {
 				try{
 					empName.setAttribute("audio", miFrase.obtenerSonidoAUsar(index).url());
 				}catch(Exception e){
-					empName.setAttribute("audio", "test.wav");
+					empName.setAttribute("audio", "test.mp3");
 				}
 				
 				frases.appendChild(empName);
@@ -271,7 +271,7 @@ public class AudiosXML {
 				try{
 					empName.setAttribute("audio", miFrase.obtenerSonidoImpertinenteAUsar(index).url());
 				}catch(Exception e){
-					empName.setAttribute("audio", "test.wav");
+					empName.setAttribute("audio", "test.mp3");
 				}
 				frases.appendChild(empName);
 			}
@@ -285,7 +285,7 @@ public class AudiosXML {
 				try{
 					empName.setAttribute("audio", miFrase.obtenerSonidoAUsar(index).url());
 				}catch(Exception e){
-					empName.setAttribute("audio", "test.wav");
+					empName.setAttribute("audio", "test.mp3");
 				}
 				frases.appendChild(empName);
 			}

@@ -4,7 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+//import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.UUID;
@@ -17,10 +17,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ibm.watson.developer_cloud.text_to_speech.v1.TextToSpeech;
+/*import com.ibm.watson.developer_cloud.text_to_speech.v1.TextToSpeech;
 import com.ibm.watson.developer_cloud.text_to_speech.v1.model.AudioFormat;
 import com.ibm.watson.developer_cloud.text_to_speech.v1.model.Voice;
-import com.ncubo.conf.AgenteCognitivo;
+import com.ncubo.conf.AgenteCognitivo;*/
+
+import com.ncubo.chatbot.watson.TextToSpeechWatson;
 
 @Component
 @ConfigurationProperties("archivos")
@@ -29,8 +31,8 @@ public class GestorDeArchivos
 	private String[] formatoDeImagenes = { "PNG", "JPG", "TIF","BMP", "GIF", "JPEG"};
 	private String[] extensionesDeArchivosComprimidos = {"zip"};
 	private String path;
-	@Autowired
-	private AgenteCognitivo agenteCognitivo;
+	/*@Autowired
+	private AgenteCognitivo agenteCognitivo;*/
 	@Autowired
 	private FTPServidor ftp;
 	
@@ -95,15 +97,18 @@ public class GestorDeArchivos
 	
 	public String textoAAudio(String subPath, String mensaje) throws IOException
 	{
-		TextToSpeech textService = new TextToSpeech();
-		textService.setUsernameAndPassword(agenteCognitivo.getUserTextToSpeech(), agenteCognitivo.getPasswordTextToSpeech());
+		//TextToSpeech textService = new TextToSpeech();
+		//textService.setUsernameAndPassword(agenteCognitivo.getUserTextToSpeech(), agenteCognitivo.getPasswordTextToSpeech());
 
-		String pathArchivo = subPath + "/" + "descripcion.wav";
+		//String pathArchivo = subPath + "/" + "descripcion.wav";
 
-		String voice = agenteCognitivo.getVoiceTextToSpeech();
-		InputStream in = textService.synthesize(mensaje, new Voice(voice, null, null), AudioFormat.WAV).execute();
+		//String voice = agenteCognitivo.getVoiceTextToSpeech();
+		//InputStream in = textService.synthesize(mensaje, new Voice(voice, null, null), AudioFormat.WAV).execute();
 		
-		ftp.subirUnArchivo(in, pathArchivo);
+		//ftp.subirUnArchivo(in, pathArchivo);
+		
+		TextToSpeechWatson.getInstance().getAudioToURL(mensaje, false, subPath, "descripcion");
+		
 		return path;
 	}
 	

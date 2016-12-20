@@ -119,13 +119,8 @@ public class Conversacion {
 							
 							if(this.temario.buscarTema(agente.obtenerNombreDelWorkspaceActual(), laIntencion) == null && ! laIntencion.equals("afirmacion") && ! laIntencion.equals("negacion")){
 								agente.cambiarAWorkspaceGeneral();
-								System.out.println("No entendi bien ...");
-								this.temaActual = this.temario.buscarTema(Constantes.INTENCION_NO_ENTIENDO);
-								
-								Afirmacion fueraDeContexto = (Afirmacion) this.temaActual.buscarUnaFrase(Constantes.INTENCION_NO_ENTIENDO);
-								misSalidas.add(agente.decir(fueraDeContexto, respuesta, temaActual));
-								fraseActual = fueraDeContexto;
-								ponerComoYaTratado(fueraDeContexto);
+
+								decirTemaNoEntendi(misSalidas, respuesta);
 							}
 						}else{
 							if (idFraseActivada.equals("")){ // Quiere decir que no hay ninguna pregunta en la salida
@@ -266,7 +261,7 @@ public class Conversacion {
 		Afirmacion fueraDeContexto = (Afirmacion) this.temaActual.buscarUnaFrase(Constantes.INTENCION_NO_ENTIENDO);
 		misSalidas.add(agente.decir(fueraDeContexto, respuesta, temaActual));
 		fraseActual = fueraDeContexto;
-		ponerComoYaTratado(fueraDeContexto);
+		ponerComoYaTratado(this.temaActual);
 	}
 	
 	private void agregarVariablesDeContextoDelClienteAWatson(Tema tema){
@@ -392,7 +387,7 @@ public class Conversacion {
 				Afirmacion fueraDeContexto = (Afirmacion) this.temaActual.buscarUnaFrase("fueraDeContextoGeneral");
 				misSalidas.add(agente.decir(fueraDeContexto, respuesta, temaActual));
 				fraseActual = fueraDeContexto;
-				ponerComoYaTratado(fueraDeContexto);
+				ponerComoYaTratado(this.temaActual);
 				
 			}else if(agente.obtenerNombreDeLaIntencionGeneralActiva().equals(Constantes.INTENCION_NO_ENTIENDO)){
 				decirTemaNoEntendi(misSalidas, respuesta);

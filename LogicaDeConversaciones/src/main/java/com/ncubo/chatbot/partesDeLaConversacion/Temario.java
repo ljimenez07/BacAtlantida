@@ -149,7 +149,7 @@ public abstract class Temario
 		int contador = 0;
 		
 		for(Tema tema: temasDelDiscurso){
-			resultado +=tema.obtenerTodasMisFrases(contador);
+			resultado += tema.obtenerTodasMisFrases(contador);
 			contador ++;
 		}
 		
