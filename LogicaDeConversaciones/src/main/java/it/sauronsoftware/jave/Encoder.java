@@ -517,6 +517,9 @@ public class Encoder {
 		Pattern p3 = Pattern.compile(
 				"^\\s*Stream #\\S+: ((?:Audio)|(?:Video)|(?:Data)): (.*)\\s*$",
 				Pattern.CASE_INSENSITIVE);
+		Pattern p4 = Pattern.compile(
+				"^\\s*Metadata:.*$",
+				Pattern.CASE_INSENSITIVE);
 		MultimediaInfo info = null;
 		try {
 			int step = 0;
@@ -551,7 +554,12 @@ public class Encoder {
 						info.setDuration(duration);
 						step++;
 					} else {
-						step = 3;
+						Matcher m2 = p4.matcher(line);
+						if(m2.matches()) {
+							reader.readLine();
+						} else {
+							step = 3;
+						}
 					}
 				} else if (step == 2) {
 					Matcher m = p3.matcher(line);
@@ -644,7 +652,12 @@ public class Encoder {
 							info.setAudio(audio);
 						}
 					} else {
-						step = 3;
+						Matcher m2 = p4.matcher(line);
+						if(m2.matches()) {
+							reader.readLine();
+						} else {
+							step = 3;
+						}
 					}
 				}
 				if (step == 3) {
@@ -659,31 +672,6 @@ public class Encoder {
 			throw new InputFormatException();
 		}
 		return info;
-	}
-
-	/**
-	 * Private utility. Parse a line and try to match its contents against the
-	 * {@link Encoder#PROGRESS_INFO_PATTERN} pattern. It the line can be parsed,
-	 * it returns a hashtable with progress informations, otherwise it returns
-	 * null.
-	 * 
-	 * @param line
-	 *            The line from the ffmpeg output.
-	 * @return A hashtable with the value reported in the line, or null if the
-	 *         given line can not be parsed.
-	 */
-	private Hashtable parseProgressInfoLine(String line) {
-		Hashtable table = null;
-		Matcher m = PROGRESS_INFO_PATTERN.matcher(line);
-		while (m.find()) {
-			if (table == null) {
-				table = new Hashtable();
-			}
-			String key = m.group(1);
-			String value = m.group(2);
-			table.put(key, value);
-		}
-		return table;
 	}
 
 	/**
@@ -831,23 +819,10 @@ public class Encoder {
 			throw new EncoderException(e);
 		}
 		try {
-			String lastWarning = null;
-			long duration;
-			long progress = 0;
 			RBufferedReader reader = null;
 			reader = new RBufferedReader(new InputStreamReader(ffmpeg
 					.getErrorStream()));
 			MultimediaInfo info = parseMultimediaInfo(source, reader);
-			if (durationAttribute != null) {
-				duration = (long) Math
-						.round((durationAttribute.floatValue() * 1000L));
-			} else {
-				duration = info.getDuration();
-				if (offsetAttribute != null) {
-					duration -= (long) Math
-							.round((offsetAttribute.floatValue() * 1000L));
-				}
-			}
 			if (listener != null) {
 				listener.sourceInfo(info);
 			}
@@ -879,51 +854,6 @@ public class Encoder {
 					if (!line.startsWith("  ")) {
 						step++;
 					}
-				}
-				if (step == 4) {
-					line = line.trim();
-					if (line.length() > 0) {
-						Hashtable table = parseProgressInfoLine(line);
-						if (table == null) {
-							if (listener != null) {
-								listener.message(line);
-							}
-							lastWarning = line;
-						} else {
-							if (listener != null) {
-								String time = (String) table.get("time");
-								if (time != null) {
-									int dot = time.indexOf('.');
-									if (dot > 0 && dot == time.length() - 2
-											&& duration > 0) {
-										String p1 = time.substring(0, dot);
-										String p2 = time.substring(dot + 1);
-										try {
-											long i1 = Long.parseLong(p1);
-											long i2 = Long.parseLong(p2);
-											progress = (i1 * 1000L)
-													+ (i2 * 100L);
-											int perm = (int) Math
-													.round((double) (progress * 1000L)
-															/ (double) duration);
-											if (perm > 1000) {
-												perm = 1000;
-											}
-											listener.progress(perm);
-										} catch (NumberFormatException e) {
-											;
-										}
-									}
-								}
-							}
-							lastWarning = null;
-						}
-					}
-				}
-			}
-			if (lastWarning != null) {
-				if (!SUCCESS_PATTERN.matcher(lastWarning).matches()) {
-					throw new EncoderException(lastWarning);
 				}
 			}
 		} catch (IOException e) {

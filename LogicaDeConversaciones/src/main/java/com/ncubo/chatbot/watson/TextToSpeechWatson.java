@@ -21,10 +21,10 @@ import com.ncubo.chatbot.exceptiones.ChatException;
 import com.ncubo.ftp.FTPCliente;
 
 import it.sauronsoftware.jave.AudioAttributes;
+import it.sauronsoftware.jave.CustomFFMPEGLocator;
 import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.EncoderException;
 import it.sauronsoftware.jave.EncodingAttributes;
-import it.sauronsoftware.jave.InputFormatException;
 
 public class TextToSpeechWatson
 {
@@ -70,8 +70,10 @@ public class TextToSpeechWatson
 		return textToSpeechWatson;
 	}
 	
-	public static TextToSpeechWatson getInstance(){
-		if(textToSpeechWatson == null){
+	public static TextToSpeechWatson getInstance()
+	{
+		if(textToSpeechWatson == null)
+		{
 			throw new ChatException("No se a inicializado esta clase. Debe instanciar esta clase primero.");
 		}
 		return textToSpeechWatson;
@@ -99,19 +101,26 @@ public class TextToSpeechWatson
 	public String getAudioToURL(String text, boolean esAudioDinamico)
 	{
 		UUID idOne = UUID.randomUUID();
-		String nombreDelArchivo = idOne + ".wav";
+		String nombreDelArchivo = idOne + ".mp3";
 		nombreDelArchivo = nombreDelArchivo.replace("-", "");
 		
 		String pathFinal = this.pathAudios + "/" + nombreDelArchivo;
 		
 		InputStream in = null;
 		AudioFormat audioFormat = AudioFormat.WAV;
+		File temp = new File(System.getProperty("user.home") + "/audios-de-watson");
+		if(!temp.exists())
+		{
+			temp.mkdir();
+			temp.deleteOnExit();
+		}
 		
 		try
 		{
 			System.out.println("Generando audio al texto con Watson: " + text);
 			in = textService.synthesize(text, new Voice(voice, null, null), audioFormat).execute();
-			transferirAudiosAlFTP(esAudioDinamico, pathFinal, in);
+			InputStream mp3InputStream = transformarAMp3(in, audioFormat.name().toLowerCase(), temp);
+			transferirAudiosAlFTP(esAudioDinamico, pathFinal, mp3InputStream);
 			
 		} catch(Exception e1)
 		{
@@ -120,13 +129,145 @@ public class TextToSpeechWatson
 			try
 			{
 				in = textService.synthesize(text, new Voice(voice, null, null), audioFormat).execute();
-				transferirAudiosAlFTP(esAudioDinamico, pathFinal, in);
+				InputStream mp3InputStream = transformarAMp3(in, audioFormat.name().toLowerCase(), temp);
+				transferirAudiosAlFTP(esAudioDinamico, pathFinal, mp3InputStream);
 			} catch(Exception e)
 			{
 				System.out.println("ERROR al transferir el audio: " + e.getMessage());
 			}
 		}
 		return nombreDelArchivo;
+	}
+	
+	public String getAudioToURL(String text, boolean esAudioDinamico, String pathToTransferirAlFTP, String fileName)
+	{
+		String nombreDelArchivo = fileName + ".mp3";
+		String pathFinal = pathToTransferirAlFTP + "/" + nombreDelArchivo;
+		
+		InputStream in = null;
+		AudioFormat audioFormat = AudioFormat.WAV;
+		File temp = new File(System.getProperty("user.home") + "/audios-de-watson");
+		if(!temp.exists())
+		{
+			temp.mkdir();
+			temp.deleteOnExit();
+		}
+		
+		try
+		{
+			System.out.println("Generando audio al texto con Watson: " + text);
+			in = textService.synthesize(text, new Voice(voice, null, null), audioFormat).execute();
+			InputStream mp3InputStream = transformarAMp3(in, audioFormat.name().toLowerCase(), temp);
+			transferirAudiosAlFTP(esAudioDinamico, pathFinal, mp3InputStream);
+			
+		} catch(Exception e1)
+		{
+			// throw new ChatException(String.format("Error debido a: %s",
+			// e1.getMessage()));
+			try
+			{
+				in = textService.synthesize(text, new Voice(voice, null, null), audioFormat).execute();
+				InputStream mp3InputStream = transformarAMp3(in, audioFormat.name().toLowerCase(), temp);
+				transferirAudiosAlFTP(esAudioDinamico, pathFinal, mp3InputStream);
+			} catch(Exception e)
+			{
+				System.out.println("ERROR al transferir el audio: " + e.getMessage());
+			}
+		}
+		return nombreDelArchivo;
+	}
+	
+	private InputStream transformarAMp3(InputStream in, String extensionOriginal, File parentDirectory)
+	{
+		File archivoMp3 = new File(parentDirectory, "Watson.mp3");
+		try {
+			archivoMp3.createNewFile();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		File archivoOriginal = transformarInputStreamAFile(in, extensionOriginal, parentDirectory);
+		
+		AudioAttributes audio = new AudioAttributes();
+		audio.setCodec("libmp3lame");
+		audio.setBitRate(new Integer(128000));
+		audio.setChannels(new Integer(2));
+		audio.setSamplingRate(new Integer(44100));
+		EncodingAttributes attrs = new EncodingAttributes();
+		attrs.setFormat("mp3");
+		attrs.setAudioAttributes(audio);
+		Encoder encoder = new Encoder(new CustomFFMPEGLocator());
+		
+		try {
+			encoder.encode(archivoOriginal, archivoMp3, attrs);
+		} catch (IllegalArgumentException | EncoderException e) {
+			e.printStackTrace();
+		}
+		
+		return transformarFileAInputStream(archivoMp3);
+	}
+	
+	private File transformarInputStreamAFile(InputStream inputStream, String extensionOriginal, File parentDirectory)
+	{
+		OutputStream outputStream = null;
+		File file = new File(parentDirectory, "Watson." + extensionOriginal);
+		try {
+			file.createNewFile();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		try
+		{
+			outputStream = new FileOutputStream(file);
+			
+			int read = 0;
+			byte[] bytes = new byte[2048];
+			
+			while((read = inputStream.read(bytes)) != -1)
+			{
+				outputStream.write(bytes, 0, read);
+			}
+		} catch(IOException e)
+		{
+			e.printStackTrace();
+		} finally
+		{
+			if(inputStream != null)
+			{
+				try
+				{
+					inputStream.close();
+				} catch(IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+			if(outputStream != null)
+			{
+				try
+				{
+					outputStream.close();
+				} catch(IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+		return file;
+	}
+	
+	private InputStream transformarFileAInputStream(File archivo)
+	{
+		InputStream inputStream = null;
+		
+		try
+		{
+			inputStream = new FileInputStream(archivo.getAbsolutePath());
+		} catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		return inputStream;
 	}
 	
 	private void transferirAudiosAlFTP(boolean esAudioDinamico, String pathFinal, InputStream in) throws IOException

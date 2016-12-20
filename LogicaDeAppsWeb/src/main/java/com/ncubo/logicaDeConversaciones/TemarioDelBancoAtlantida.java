@@ -641,8 +641,6 @@ public class TemarioDelBancoAtlantida extends Temario{
 		temasDelDiscurso.add(fueraDeContextoBanco());
 	}
 	
-	
-	
 	public void cargarIntenciones(List<Intenciones> intenciones)
 	{
 		//intenciones.add (Intencion.get("WANT_HOUSE"));

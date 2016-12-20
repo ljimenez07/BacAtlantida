@@ -130,7 +130,7 @@ public class BitacoraDao {
 			
 			ConexionALaDB.getInstance().closeConBD();
 			
-			return "listo";
+			return "La actualización se hizo exitosamente.";
 		}catch(Exception e){
 			return "Error al actualizar: "+e.getMessage();
 		}
