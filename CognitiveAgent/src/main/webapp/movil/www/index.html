@@ -334,6 +334,7 @@
 		audio.onerror = function(e){
 			console.log("Error de audio: " + audio.src);
 			console.log(mensajesDeErrorEnAudio[e.currentTarget.error.code]);
+			setTimeout(callback, 15000);
 			estaReproduciendo = false;
 			audios = new Array();
 		};
