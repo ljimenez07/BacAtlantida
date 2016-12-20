@@ -140,11 +140,6 @@
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.ncubo</groupId>
-			<artifactId>LogicaDeAppsWeb</artifactId>
-			<version>0.0.1</version>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

@@ -1,1 +1,1 @@
-var serverDomain = "http://localhost:8080/Api"; 
+var serverDomain = "http://intranet.ncubo.com:8082/CognitiveAgent"; 
