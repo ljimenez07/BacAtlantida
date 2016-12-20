@@ -184,67 +184,8 @@ public class OfertaController
 		return "redirect:gestionDeOfertas";
 	}
 	
-	//@CrossOrigin(origins = "*")
-	@GetMapping(value = "/ofertas", produces = "application/json")
-	@ResponseBody public String ofertas(@RequestParam("pagina") int pagina, HttpSession sesion) throws Exception
-	{
-		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-		if( usuario == null )
-		{
-			usuario = new Usuario(sesion.getId());
-		}
-		Indice indiceInicial = new Indice( pagina );
-				
-		List<Oferta>ofertas = ofertaService.obtenerUltimasDiezOfertasParaMostrarDesde(indiceInicial, usuario);
-		
-		ObjectMapper mapper = new ObjectMapper();
-		JSONArray array = new JSONArray(mapper.writeValueAsString(( ofertas )));
-
-		boolean puedeVerElpopupDeNuevasOfertas = usuario.getEstaLogueado() && usuarioDao.puedeVerElpopupDeNuevasOfertas( usuario );
-		
-		JSONObject respuesta = new JSONObject();
-		respuesta.put("indice", new JSONObject(mapper.writeValueAsString(indiceInicial)));
-		respuesta.put("resultados", array);
-		respuesta.put("mostrarPopupdeOfertasNuevas", puedeVerElpopupDeNuevasOfertas);
-		
-		if(  puedeVerElpopupDeNuevasOfertas )
-		{
-			usuarioDao.marcarComoVistoElPopupDeNuevasOfertas( usuario.getUsuarioId() );
-		}
-		
-		return respuesta.toString();
-	}
 	
-	//@CrossOrigin(origins = "*")
-	@GetMapping(value = "/ofertas/{idOferta}", produces = "application/json")
-	@ResponseBody public Oferta oferta(@PathVariable int idOferta, HttpSession sesion) throws ClassNotFoundException, SQLException
-	{
-		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-		String idUsuario = usuario == null ? null : usuario.getEstaLogueado() ? usuario.getUsuarioId() : null;
-		return ofertaDao.obtener(idOferta, idUsuario);
-	}
-	
-	//@CrossOrigin(origins = "*")
-	@GetMapping(value = "/ofertas/cantidad", produces = "application/json")
-	@ResponseBody public String cantidadDeOfertas(HttpSession sesion) throws ClassNotFoundException, SQLException, JSONException
-	{
-		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-		JSONObject respuesta = new JSONObject().put("cantidad", ofertaService.obtenerCantidadDeOfertasParaMostrar(usuario));
-		respuesta.put("usuarioEstaLogueado", usuario == null ? false : usuario.getEstaLogueado());
 		
-		return respuesta.toString();
-	}
-	
-	//@CrossOrigin(origins = "*")
-	@GetMapping(value = "/ofertas/compartida/{id}")
-	public String ofertaCompartida(@PathVariable("id") int id, HttpServletRequest request) throws ClassNotFoundException, SQLException, JSONException
-	{
-		request.setAttribute("oferta", ofertaDao.obtener(id, null));
-		request.setAttribute("url", request.getRequestURL());
-		request.setAttribute("baseURL", request.getRequestURL().toString().replace(request.getRequestURI(), "") + request.getContextPath());
-		return "ofertaCompartida";
-	}
-	
 	@ResponseBody
 	@RequestMapping(value = "/BackOffice/subirImagenPublicidad", method = RequestMethod.POST)
 	public String subirImagenPublicidad(@RequestParam("imagen-publicidad-input") MultipartFile uploadfile) throws IOException

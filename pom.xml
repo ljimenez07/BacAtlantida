@@ -7,6 +7,8 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>LogicaDeConversaciones</module>
+		<module>LogicaDeAppsWeb</module>
+		<module>Api</module>
 		<module>CognitiveAgent</module>
   </modules>
 
