@@ -525,6 +525,7 @@ public class Encoder {
 			int step = 0;
 			while (true) {
 				String line = reader.readLine();
+				System.out.println(line);
 				if (line == null) {
 					break;
 				}
@@ -824,6 +825,7 @@ public class Encoder {
 			int step = 0;
 			String line;
 			while ((line = reader.readLine()) != null) {
+				System.out.println(line);
 				if (step == 0) {
 					if (line.startsWith("WARNING: ")) {
 						if (listener != null) {
