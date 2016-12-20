@@ -61,7 +61,6 @@ public class DefaultFFMPEGLocator extends FFMPEGLocator {
 		// Temp dir?
 		File temp = new File(System.getProperty("java.io.tmpdir"), "jave-"
 				+ myEXEversion);
-		System.out.println(temp.getAbsolutePath());
 		if (!temp.exists()) {
 			temp.mkdirs();
 			temp.deleteOnExit();
