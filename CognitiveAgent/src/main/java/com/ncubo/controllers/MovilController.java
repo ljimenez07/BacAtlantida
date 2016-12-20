@@ -107,9 +107,14 @@ public class MovilController {
 			Categorias categorias = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
 			usuario.setCategorias( categorias );
 			
-			boolean[] cuentas = extraerDatos.tieneCuentas(responseLogin[2]);
-			usuario.setTieneTarjetaCredito(cuentas[0]);
-			usuario.setTieneCuentaAhorros(cuentas[1]);
+			boolean[] cuentasvacio = new boolean[2];
+			boolean[] cuentas = extraerDatos.tieneCuentas(responseLogin[2],responseLogin[1]);
+			
+			if(!cuentas.equals(cuentasvacio))
+			{
+				usuario.setTieneTarjetaCredito(cuentas[0]);
+				usuario.setTieneCuentaAhorros(cuentas[1]);
+			}
 			
 			sesion.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
 			JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.getEstaLogueado())
