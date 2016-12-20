@@ -21,6 +21,7 @@ import com.ncubo.chatbot.exceptiones.ChatException;
 import com.ncubo.ftp.FTPCliente;
 
 import it.sauronsoftware.jave.AudioAttributes;
+import it.sauronsoftware.jave.CustomFFMPEGLocator;
 import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.EncoderException;
 import it.sauronsoftware.jave.EncodingAttributes;
@@ -194,7 +195,7 @@ public class TextToSpeechWatson
 		EncodingAttributes attrs = new EncodingAttributes();
 		attrs.setFormat("mp3");
 		attrs.setAudioAttributes(audio);
-		Encoder encoder = new Encoder();
+		Encoder encoder = new Encoder(new CustomFFMPEGLocator());
 		
 		try {
 			encoder.encode(archivoOriginal, archivoMp3, attrs);

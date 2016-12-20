@@ -652,7 +652,12 @@ public class Encoder {
 							info.setAudio(audio);
 						}
 					} else {
-						step = 3;
+						Matcher m2 = p4.matcher(line);
+						if(m2.matches()) {
+							reader.readLine();
+						} else {
+							step = 3;
+						}
 					}
 				}
 				if (step == 3) {
