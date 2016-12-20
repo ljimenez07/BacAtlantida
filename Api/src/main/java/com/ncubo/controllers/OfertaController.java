@@ -134,16 +134,6 @@ public class OfertaController
 		return "ofertaCompartida";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "/BackOffice/subirImagenPublicidad", method = RequestMethod.POST)
-	public String subirImagenPublicidad(@RequestParam("imagen-publicidad-input") MultipartFile uploadfile) throws IOException
-	{
-		System.out.println("Imagen publicidad");
-		if( ! gestorDeArchivos.esUnaImagen(uploadfile) && ! gestorDeArchivos.esUnArchivoComprimido(uploadfile))
-		{
-			return "No es una extension valida";
-		}
-		return gestorDeArchivos.subirArchivo(uploadfile);
-	}
+
 
 }
