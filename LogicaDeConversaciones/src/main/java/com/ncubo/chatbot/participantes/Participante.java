@@ -131,43 +131,57 @@ public class Participante{
 	}
 	
 	public Salida volverAPreguntar(Frase pregunta, Respuesta respuesta, Tema tema){
+		return volverAPreguntarConMeRindo(pregunta, respuesta, tema, false);
+	}
+	
+	public Salida volverAPreguntarConMeRindo(Frase pregunta, Respuesta respuesta, Tema tema, boolean meRindo){
 		
 		Salida salida = new Salida();
 		List<String> resultado = null;
 		String texto = "";
 		int idDelSonidoImpertineteAUsar = -1;
 		if (formaDeManifestarseEscrita.esEnFormaEscrita()){
-			if(pregunta.hayTextosImpertinetes()){
-				resultado = pregunta.textoImpertinente();
+			if(meRindo && pregunta.hayTextosMeRindo()){
+				resultado = pregunta.textoMeRindo();
 				texto = resultado.get(1);
 				idDelSonidoImpertineteAUsar = Integer.valueOf(resultado.get(0));
 			}else{
-				resultado = pregunta.texto();
-				texto = pregunta.conjuncionParaRepreguntar().get(1)+" "+resultado.get(1);
+				if(pregunta.hayTextosImpertinetes()){
+					resultado = pregunta.textoImpertinente();
+					texto = resultado.get(1);
+					idDelSonidoImpertineteAUsar = Integer.valueOf(resultado.get(0));
+				}else{
+					resultado = pregunta.texto();
+					texto = pregunta.conjuncionParaRepreguntar().get(1)+" "+resultado.get(1);
+				}
 			}		
 			salida.escribir(texto, respuesta, tema, pregunta);
 		}
 		
 		if (formaDeManifestarseOral.esEnFormaOral()){
 			Sonido sonido = null;
-			if(pregunta.hayTextosImpertinetes()){
-				sonido = pregunta.obtenerSonidoImpertinenteAUsar(idDelSonidoImpertineteAUsar);
+			if(meRindo && pregunta.hayTextosMeRindo()){
+				sonido = pregunta.obtenerSonidoMeRindoAUsar(idDelSonidoImpertineteAUsar);
 			}else{
-				if(! texto.equals("")){
-					try{
+				if(pregunta.hayTextosImpertinetes()){
+					sonido = pregunta.obtenerSonidoImpertinenteAUsar(idDelSonidoImpertineteAUsar);
+				}else{
+					if(! texto.equals("")){
+						try{
+							
+							String textoParaReproducir = texto;
+							textoParaReproducir = textoParaReproducir.replace("&nbsp;", " ");
+							textoParaReproducir = textoParaReproducir.replace("<br/>", " ");
+							
+							String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir, true);
+							String path = pregunta.getPathAGuardarLosAudiosTTS()+File.separator+nombreDelArchivo;
+							String miIp = TextToSpeechWatson.getInstance().obtenerUrlPublicaDeAudios()+nombreDelArchivo;
+							sonido = new Sonido(miIp, path);
+						}catch(Exception e){
+							System.out.println("Error al generar el audio dinamico de: "+texto);
+						}
 						
-						String textoParaReproducir = texto;
-						textoParaReproducir = textoParaReproducir.replace("&nbsp;", " ");
-						textoParaReproducir = textoParaReproducir.replace("<br/>", " ");
-						
-						String nombreDelArchivo = TextToSpeechWatson.getInstance().getAudioToURL(textoParaReproducir, true);
-						String path = pregunta.getPathAGuardarLosAudiosTTS()+File.separator+nombreDelArchivo;
-						String miIp = TextToSpeechWatson.getInstance().obtenerUrlPublicaDeAudios()+nombreDelArchivo;
-						sonido = new Sonido(miIp, path);
-					}catch(Exception e){
-						System.out.println("Error al generar el audio dinamico de: "+texto);
 					}
-					
 				}
 			}
 			if(sonido != null)
@@ -181,5 +195,5 @@ public class Participante{
 		
 		return salida;
 	}
-	
+
 }

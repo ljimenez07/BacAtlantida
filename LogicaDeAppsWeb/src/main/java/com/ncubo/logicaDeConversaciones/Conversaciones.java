@@ -218,7 +218,7 @@ public class Conversaciones {
 				AudiosXML.getInstance().cargarLosNombresDeLosAudios();
 			}
 			temarioDelBancoAtlantida.generarAudioEstaticosDeTodasLasFrases(pathAGuardar, urlAReproducir);
-			AudiosXML.getInstance().guardarLosAudiosDeUnaFrase(temarioDelBancoAtlantida);
+			AudiosXML.getInstance().guardarLosAudiosDeUnaFrase(temarioDelBancoAtlantida.contenido());
 			
 			System.out.println("Se termino de generar audios estaticos.");
 		}

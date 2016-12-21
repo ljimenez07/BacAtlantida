@@ -10,13 +10,19 @@ public class ContenidoDeAudios {
 	private final String[] textosImpertinetesDeLaFrase;
 	private final String[] sonidosDeLosTextosImpertinentesDeLaFrase;
 	
+	private final String[] textosDeLaFraseMeRindo;
+	private final String[] sonidosDeLosTextosDeLaFraseMeRindo;
+	
 	public ContenidoDeAudios(String idFrase, String[] textosDeLaFrase, String[] sonidosDeLosTextosDeLaFrase, 
-			String[] textosImpertinetesDeLaFrase, String[] sonidosDeLosTextosImpertinentesDeLaFrase){
+			String[] textosImpertinetesDeLaFrase, String[] sonidosDeLosTextosImpertinentesDeLaFrase, 
+			String[] textosDeLaFraseMeRindo, String[] sonidosDeLosTextosDeLaFraseMeRindo){
 		this.idFrase = idFrase;
 		this.textosDeLaFrase = textosDeLaFrase;
 		this.sonidosDeLosTextosDeLaFrase = sonidosDeLosTextosDeLaFrase;
 		this.textosImpertinetesDeLaFrase = textosImpertinetesDeLaFrase;
 		this.sonidosDeLosTextosImpertinentesDeLaFrase = sonidosDeLosTextosImpertinentesDeLaFrase;
+		this.textosDeLaFraseMeRindo = textosDeLaFraseMeRindo;
+		this.sonidosDeLosTextosDeLaFraseMeRindo = sonidosDeLosTextosDeLaFraseMeRindo;
 	}
 	
 	public String getIdFrase() {
@@ -37,5 +43,13 @@ public class ContenidoDeAudios {
 
 	public String[] getSonidosDeLosTextosImpertinentesDeLaFrase() {
 		return sonidosDeLosTextosImpertinentesDeLaFrase;
+	}
+	
+	public String[] getTextosDeLaFraseMeRindo() {
+		return textosDeLaFraseMeRindo;
+	}
+
+	public String[] getSonidosDeLosTextosDeLaFraseMeRindo() {
+		return sonidosDeLosTextosDeLaFraseMeRindo;
 	}
 }

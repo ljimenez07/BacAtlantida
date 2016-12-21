@@ -13,6 +13,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.ncubo.chatbot.partesDeLaConversacion.Contenido;
 import com.ncubo.chatbot.partesDeLaConversacion.Frase;
 import com.ncubo.chatbot.partesDeLaConversacion.Tema;
 import com.ncubo.chatbot.partesDeLaConversacion.Temario;
@@ -106,17 +107,22 @@ public class AudiosXML {
 		}
 	}
 	
-	public void guardarLosAudiosDeUnaFrase(Temario miTemario){
+	public void guardarLosAudiosDeUnaFrase(Contenido miContenido){
 		
 		crearElArchivo();
 		
-		for(int index = 0; index < miTemario.obtenerMisTemas().size(); index ++){
+		/*for(int index = 0; index < miTemario.obtenerMisTemas().size(); index ++){
 			Tema miTema = miTemario.obtenerMisTemas().get(index);
 			Frase[] frases = miTema.obtenerMisFrases();
 			for(int indexTema = 0; indexTema < frases.length; indexTema ++){
 				if(frases[indexTema].esEstatica())
 					escribirUnaFrase(frases[indexTema]);
 			}
+		}*/
+		
+		ArrayList<Frase> misFrases = miContenido.obtenerMiFrases();
+		for(int index = 0; index < misFrases.size(); index ++){
+			escribirUnaFrase(misFrases.get(index));
 		}
 		
 		guardarElArchivoADisco();
@@ -126,16 +132,13 @@ public class AudiosXML {
 		return misFrases.containsKey(idFrase);
 	}
 	
-	public boolean hayQueGenerarAudios(String idFrase, String textoDeLaFrase, int posicionDeLaFrase, boolean esImpertinente){
+	public boolean hayQueGenerarAudios(String idFrase, String textoDeLaFrase, int posicionDeLaFrase){
 		try{
 			if(exiteLaFrase(idFrase)){
 				textoDeLaFrase = textoDeLaFrase.trim();
 				String miTexto = "";
-				if(esImpertinente){
-					miTexto = misFrases.get(idFrase).getTextosImpertinetesDeLaFrase()[posicionDeLaFrase].trim();
-				}else{
-					miTexto = misFrases.get(idFrase).getTextosDeLaFrase()[posicionDeLaFrase].trim();
-				}
+				miTexto = misFrases.get(idFrase).getTextosDeLaFrase()[posicionDeLaFrase].trim();
+				
 				if(textoDeLaFrase.equals(miTexto))
 					return false;
 				else
@@ -148,15 +151,49 @@ public class AudiosXML {
 		}
 	}
 	
-	public String obtenerUnAudioDeLaFrase(String idFrase, int posicionDeLaFrase, boolean esImpertinente){
+	public boolean hayQueGenerarAudiosImpertinetes(String idFrase, String textoDeLaFrase, int posicionDeLaFrase){
+		try{
+			if(exiteLaFrase(idFrase)){
+				textoDeLaFrase = textoDeLaFrase.trim();
+				String miTexto = "";
+				miTexto = misFrases.get(idFrase).getTextosImpertinetesDeLaFrase()[posicionDeLaFrase].trim();
+				
+				if(textoDeLaFrase.equals(miTexto))
+					return false;
+				else
+					return true;
+			}else{
+				return true;
+			}
+		}catch(Exception e){
+			return true;
+		}
+	}
+	
+	public boolean hayQueGenerarAudiosMeRindo(String idFrase, String textoDeLaFrase, int posicionDeLaFrase){
+		try{
+			if(exiteLaFrase(idFrase)){
+				textoDeLaFrase = textoDeLaFrase.trim();
+				String miTexto = "";
+				miTexto = misFrases.get(idFrase).getTextosDeLaFraseMeRindo()[posicionDeLaFrase].trim();
+				
+				if(textoDeLaFrase.equals(miTexto))
+					return false;
+				else
+					return true;
+			}else{
+				return true;
+			}
+		}catch(Exception e){
+			return true;
+		}
+	}
+	
+	public String obtenerUnAudioDeLaFrase(String idFrase, int posicionDeLaFrase){
 		String resultado = "";
 		try{
 			if(exiteLaFrase(idFrase)){
-				if(esImpertinente){
-					resultado = misFrases.get(idFrase).getSonidosDeLosTextosImpertinentesDeLaFrase()[posicionDeLaFrase];
-				}else{
-					resultado = misFrases.get(idFrase).getSonidosDeLosTextosDeLaFrase()[posicionDeLaFrase];
-				}
+				resultado = misFrases.get(idFrase).getSonidosDeLosTextosDeLaFrase()[posicionDeLaFrase];
 			}
 		}catch(Exception e){
 			resultado = "";
@@ -164,6 +201,29 @@ public class AudiosXML {
 		return resultado;
 	}
 	
+	public String obtenerUnAudioDeLaFraseImpertinete(String idFrase, int posicionDeLaFrase){
+		String resultado = "";
+		try{
+			if(exiteLaFrase(idFrase)){
+				resultado = misFrases.get(idFrase).getSonidosDeLosTextosImpertinentesDeLaFrase()[posicionDeLaFrase];
+			}
+		}catch(Exception e){
+			resultado = "";
+		}
+		return resultado;
+	}
+	
+	public String obtenerUnAudioDeLaFraseMeRindo(String idFrase, int posicionDeLaFrase){
+		String resultado = "";
+		try{
+			if(exiteLaFrase(idFrase)){
+				resultado = misFrases.get(idFrase).getSonidosDeLosTextosDeLaFraseMeRindo()[posicionDeLaFrase];
+			}
+		}catch(Exception e){
+			resultado = "";
+		}
+		return resultado;
+	}
 	public void cargarLosNombresDeLosAudios(){
 		misFrases.clear();
 		
@@ -202,9 +262,11 @@ public class AudiosXML {
 					
 					ArrayList<String[]> textosDeLaFrase = obtenerFrasesPorTipo(frases, tipoDeFraseACargar);
 					ArrayList<String[]> textosImpertinetesDeLaFrase = obtenerFrasesPorTipo(frases, "impertinente");
+					ArrayList<String[]> textosMeRindoDeLaFrase = obtenerFrasesPorTipo(frases, "meRindo");
 					
 					ContenidoDeAudios miFrase = new ContenidoDeAudios(idDeLaFrase, textosDeLaFrase.get(0), textosDeLaFrase.get(1), 
-							textosImpertinetesDeLaFrase.get(0), textosImpertinetesDeLaFrase.get(1));
+							textosImpertinetesDeLaFrase.get(0), textosImpertinetesDeLaFrase.get(1), 
+							textosMeRindoDeLaFrase.get(0), textosMeRindoDeLaFrase.get(1));
 					
 					misFrases.put(idDeLaFrase, miFrase);
 				}
@@ -284,6 +346,22 @@ public class AudiosXML {
 				empName.appendChild(doc.createTextNode(frase));
 				try{
 					empName.setAttribute("audio", miFrase.obtenerSonidoAUsar(index).url());
+				}catch(Exception e){
+					empName.setAttribute("audio", "test.mp3");
+				}
+				frases.appendChild(empName);
+			}
+		}
+		
+		String[] frasesMeRindoAGuardar = miFrase.getTextosMeRindoDeLaFrase();
+		if(frasesMeRindoAGuardar != null){
+			for (int index = 0; index < frasesMeRindoAGuardar.length; index ++){
+				String frase = frasesMeRindoAGuardar[index];
+				
+				Element empName = doc.createElement("meRindo");
+				empName.appendChild(doc.createTextNode(frase));
+				try{
+					empName.setAttribute("audio", miFrase.obtenerSonidoMeRindoAUsar(index).url());
 				}catch(Exception e){
 					empName.setAttribute("audio", "test.mp3");
 				}

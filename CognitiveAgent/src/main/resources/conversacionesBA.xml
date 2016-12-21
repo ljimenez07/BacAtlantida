@@ -77,10 +77,10 @@
 		<frases>
 			<curioso>¿Quieres el saldo de tu tarjeta de crédito?</curioso>
 			<impertinente>Necesito saber si te refieres a la cuenta de ahorros o tarjeta de crédito.</impertinente>
+			<meRindo>Lo siento, no entendí. Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80 10 10. @@br/@@@ San Pedro Sula: 25 80 10 10. @@br/@@@ La Ceiba: 24 80 10 10.</meRindo>			
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
-	
 	
 	<conversacion id="quiereSaldoCuentaAhorros">
 		<tipo>pregunta</tipo>
@@ -88,6 +88,7 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<curioso>¿Quieres el saldo de tu cuenta de ahorros?</curioso>
+			<meRindo>Lo siento, no entendí. Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80 10 10. @@br/@@@ San Pedro Sula: 25 80 10 10. @@br/@@@ La Ceiba: 24 80 10 10.</meRindo>			
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -749,12 +750,13 @@
 		<vinetas></vinetas>
 	</conversacion>
 	
-		<conversacion id="cualProductoPrestamo">		
+	<conversacion id="cualProductoPrestamo">		
 		<tipo>pregunta</tipo>		
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>¿Quieres un préstamo personal, de vehículo o de vivienda?</curioso>		
+			<curioso>¿Quieres un préstamo personal, de vehículo o de vivienda?</curioso>
+			<meRindo>Lo siento, no entendí. Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80 10 10. @@br/@@@ San Pedro Sula: 25 80 10 10. @@br/@@@ La Ceiba: 24 80 10 10.</meRindo>						
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>	
@@ -765,6 +767,7 @@
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
 			<curioso>¿Quieres los antecedentes penales o policiales?</curioso>		
+			<meRindo>Lo siento, no entendí. Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80 10 10. @@br/@@@ San Pedro Sula: 25 80 10 10. @@br/@@@ La Ceiba: 24 80 10 10.</meRindo>			
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>	
@@ -1177,7 +1180,6 @@
 		</frases>				
 		<vinetas></vinetas>				
 	</conversacion>
-	
 	
 	<conjunciones>
 		<conjuncion id="conjuncion1">Disculpame, pero no te entiendo.</conjuncion>

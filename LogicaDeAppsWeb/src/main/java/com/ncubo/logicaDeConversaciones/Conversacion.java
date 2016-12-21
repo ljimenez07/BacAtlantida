@@ -99,17 +99,17 @@ public class Conversacion {
 					if (misSalidas.isEmpty()){
 						return analizarLaRespuestaConWatson(respuestaDelCliente);
 					}
-					
-					/*if(this.temaActual != null){
-						if( (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_SALUDO)) && (! this.temaActual.obtenerIdTema().equals(Constantes.FRASE_DESPEDIDA)) )
-							ponerComoYaTratado(this.temaActual);
-					}*/
 				}else{
 					if(agente.hayQueCambiarDeTema()){
 						
 						idFraseActivada = respuesta.obtenerFraseActivada();
 						extraerOracionesAfirmarivasYPreguntas(misSalidas, respuesta, idFraseActivada);
 						String laIntencion = agente.obtenernombreDeLaIntencionEspecificaActiva();
+						
+						if(agente.seTieneQueAbordarElTema()){
+							agente.yaNoSeTieneQueAbordarElTema();
+							misSalidas.add(agente.volverAPreguntarConMeRindo(fraseActual, respuesta, temaActual, true));
+						}
 						
 						this.temaActual = this.temario.proximoTemaATratar(temaActual, hilo.verTemasYaTratadosYQueNoPuedoRepetir(), agente.obtenerNombreDelWorkspaceActual(), laIntencion);
 						agente.yaNoCambiarDeTema();
@@ -119,8 +119,6 @@ public class Conversacion {
 							
 							if(this.temario.buscarTema(agente.obtenerNombreDelWorkspaceActual(), laIntencion) == null && ! laIntencion.equals("afirmacion") && ! laIntencion.equals("negacion")){
 								agente.cambiarAWorkspaceGeneral();
-
-								decirTemaNoEntendi(misSalidas, respuesta);
 							}
 						}else{
 							if (idFraseActivada.equals("")){ // Quiere decir que no hay ninguna pregunta en la salida

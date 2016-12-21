@@ -236,13 +236,13 @@ public abstract class Contenido
 						miFrase = new Saludo(idDeLaFrase, textosDeLaFrase, vinetasDeLaFrase, caracteristicasDeLaFrase);
 					}else if(elTipoEs.equals("pregunta")){
 						caracteristicasDeLaFrase[2] = CaracteristicaDeLaFrase.esUnaPregunta;
-						miFrase = new Pregunta(idDeLaFrase, textosDeLaFrase, obtenerFrasesPorTipo(frases, "impertinente"), vinetasDeLaFrase,
+						miFrase = new Pregunta(idDeLaFrase, textosDeLaFrase, obtenerFrasesPorTipo(frases, "impertinente"), vinetasDeLaFrase, obtenerFrasesPorTipo(frases, "meRindo"),
 								caracteristicasDeLaFrase, 
 								obtenerEntidades((Element) eElement.getElementsByTagName("when").item(0)), 
 								obtenerIntenciones((Element) eElement.getElementsByTagName("when").item(0)));
 					}else if(elTipoEs.equals("afirmativa")){
 						caracteristicasDeLaFrase[2] = CaracteristicaDeLaFrase.esUnaOracionAfirmativa;
-						miFrase = new Afirmacion(idDeLaFrase, textosDeLaFrase, vinetasDeLaFrase, caracteristicasDeLaFrase);
+						miFrase = new Afirmacion(idDeLaFrase, textosDeLaFrase, vinetasDeLaFrase, obtenerFrasesPorTipo(frases, "meRindo"), caracteristicasDeLaFrase);
 					}else if(elTipoEs.equals("despedida")){
 						caracteristicasDeLaFrase[2] = CaracteristicaDeLaFrase.esUnaDespedida;
 						miFrase = new Despedida(idDeLaFrase, textosDeLaFrase, vinetasDeLaFrase, caracteristicasDeLaFrase);
@@ -339,6 +339,10 @@ public abstract class Contenido
 	
 	public ArrayList<WorkSpace> getMiWorkSpaces() {
 		return miWorkSpaces;
+	}
+	
+	public ArrayList<Frase> obtenerMiFrases(){
+		return frases;
 	}
 	
 	public static void main(String argv[]) {
