@@ -641,7 +641,7 @@ public class ExtraerDatosWebService {
 					NodeImpl movimiento = (NodeImpl) codigo.get(last);
 					String fecha = formatoDeFechaFinal.format(formatoDeFechaInicial.parse(movimiento.get("fecha").toString()));
 					NodeImpl hora = movimiento.get("hora");
-					NodeImpl codigoTransaccion = movimiento.get("codigoTransaccion");
+					NodeImpl codigoTransaccion = movimiento.get("tipoTransaccion");
 					NodeImpl montoTransaccion = movimiento.get("montoTransaccion");
 					NodeImpl moneda = movimiento.get("moneda");
 					NodeImpl descripcion = movimiento.get("descripcion");
@@ -657,9 +657,9 @@ public class ExtraerDatosWebService {
 					{
 						nombreMoneda = "Lempiras";
 					}
-					if(codigoTransaccion.getValue().equals("CR"))
+					if(codigoTransaccion.getValue().equals("5"))
 						arregloMovimientos[i] = "El día "+fecha+ " a las "+ hora + " se realizó un crédito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
-					if(codigoTransaccion.getValue().equals("DB"))
+					if(codigoTransaccion.getValue().equals("0"))
 						arregloMovimientos[i] = "El día "+fecha+ " a las "+ hora + " se realizó un débito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
 					else
 						arregloMovimientos[i] = "El día "+fecha+ " a las "+ hora + " se realizó un movimiento por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
