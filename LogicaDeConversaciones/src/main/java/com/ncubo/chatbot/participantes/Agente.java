@@ -179,6 +179,11 @@ public class Agente extends Participante{
 			if(numeroDeIntentosActualesEnRepetirUnaPregunta == MAXIMO_DE_INTENTOS_OPCIONALES){
 				// Abordar el tema
 				cambiarDeTema = true; // Buscar otro tema
+				// Actualizar contexto
+				miContextos.put(nombreDeWorkspaceActual, respuesta.getMiContexto());
+				cambiarAWorkspaceGeneral();
+				noEntendiLaUltimaRespuesta = true;
+				// TODO decir frase me rindo
 				abordarElTemaPorNOLoEntendi = true;
 			}else{
 				// Actualizar contexto
@@ -499,5 +504,13 @@ public class Agente extends Participante{
 	public static void main(String[] args) throws Exception {
 		Agente agente = new Agente();
 		agente.respaldarVariablesDeContexto("{system={dialog_request_counter=2.0, dialog_stack=[{dialog_node=node_2_1479401409144}], dialog_turn_counter=2.0}, idTema=quiereMovimientos, conversation_id=95225b89-891d-43a5-9db2-2a190d730343, quiereMovimientos=true, oracionesAfirmativas=[movimientos], nodo=preguntarPorOtraConsulta}");
+	}
+	
+	public boolean seTieneQueAbordarElTema(){
+		return abordarElTemaPorNOLoEntendi;
+	}
+	
+	public void yaNoSeTieneQueAbordarElTema(){
+		abordarElTemaPorNOLoEntendi = false;
 	}
 }
