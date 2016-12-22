@@ -1,4 +1,4 @@
-<div style="height: 54px" />
+<div style="height: 69px" />
 <div class="container contenedor-campo-de-entrada">
 	<div id="chat-id-container-{{pathDelServidor}}" class="row">
 		<div class="col-xs-10">
@@ -26,14 +26,14 @@ $(function(){
 		var conversation = $("#chat-id-{{pathDelServidor}} #conversation");
 		var campoDeEntrada = $("#chat-id-container-{{pathDelServidor}} #campoDeEntrada");
 		var mensajeDeAgente = $('<li class="other"><div class="msg"><p></p><time>20:17</time></div></li>');
-		var mensajeDeUsuario = $('<li class="self"><div class="msg"><p></p><time>20:17</time></div></li>');
+		var mensajeDeUsuario = $('<li class="self"><div class="msg"><p></p><time>20:17</time></div><div class="after" /></li>');
 		var botonDeEnviarMensaje = $("#chat-id-container-{{pathDelServidor}} #enviar");
 		var ultimoMensajeEnviado="";
 		var debeReproducirElAudio = false;
 		var guardarCola = true;
 		var colaDeReproduccion = new Array();
 		
-		$("#chat-id-{{pathDelServidor}}").prepend('<div style="height: 54px" />');
+		$("#chat-id-{{pathDelServidor}}").prepend('<div style="height: 57px" />');
 		if(deviceType != "iPad" && deviceType != "iPhone")
 		{
 			$("#chat-id-{{pathDelServidor}}").prepend('<div class="row contenedor-boton-escuchar-mensajes"><div class="col-xs-6"><div class="boton-escuchar-mensajes desactivado" /></div></div>');
@@ -243,6 +243,7 @@ $(function(){
 							var respuesta = mensajeDeAgente.clone();
 							respuesta.find(".msg p").html(textos[i].texto + htmlAudio);
 							respuesta.find("time").html(hora);
+							respuesta.find(".msg").append('<div class="after" />');
 							conversation.append(respuesta);
 						}
 					}

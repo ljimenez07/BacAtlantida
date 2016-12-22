@@ -258,14 +258,14 @@
 	$(function()
 	{
 		deviceType = (navigator.userAgent.match(/iPad/i))  == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i))  == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)) == "Android" ? "Android" : (navigator.userAgent.match(/BlackBerry/i)) == "BlackBerry" ? "BlackBerry" : "null";
-		pantallas["login"] = {title: "LOGIN", body: Handlebars.templates.login(), DebajoDelPanel: ""};
+		pantallas["login"] = {title: "Login", body: Handlebars.templates.login(), DebajoDelPanel: ""};
 		var chat = {"pathDelServidor":"chat"};
-		pantallas["chat"] = {title: "CHAT", body: '<div id="chat-id-'+chat.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(chat)};
+		pantallas["chat"] = {title: "Chat", body: '<div id="chat-id-'+chat.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(chat)};
 		var conocerte = {"pathDelServidor":"conocerte"};
-		pantallas["conocerte"] = {title: "CONOCERTE", body: '<div id="chat-id-'+conocerte.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(conocerte)};
+		pantallas["conocerte"] = {title: "Conocerte", body: '<div id="chat-id-'+conocerte.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(conocerte)};
 		pantallas["popupconocerte"] ={};		
-		pantallas["ofertas"] = {title: "INICIO", body: Handlebars.templates.ofertas(), DebajoDelPanel: ""};
-		pantallas["oferta"] = {title: "DETALLE DE LA OFERTA", body: "", DebajoDelPanel: ""};
+		pantallas["ofertas"] = {title: "Inicio", body: Handlebars.templates.ofertas(), DebajoDelPanel: ""};
+		pantallas["oferta"] = {title: "Detalle de la oferta", body: "", DebajoDelPanel: ""};
 		
 		cargarInformacionDelUsuario();
 	});
@@ -435,8 +435,6 @@
 			{
 				estaLogueado = true;
 				$(".contenedor-boton-ingresar").remove();
-				$(".chat-icon-logueado").show();
-				$(".header-chat-icon.no-logueado").hide();
 				$("#menu-item-conocerte").show();
 				$("#menu-item-salir").show();
 				
@@ -489,6 +487,11 @@
 		d.setTime(d.getTime() + (exdays*24*60*60*1000));
 		var expires = "expires="+ d.toUTCString();
 		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
+	
+	window.onerror = function(a, b, c)
+	{
+		console.log("Error: " + a + ", " + b + ", " + c);
 	}
 	</script>
 

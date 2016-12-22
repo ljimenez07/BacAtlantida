@@ -68,7 +68,7 @@ function bindAcciones()
 	
 				$("#oferta .boton-compartir").off("click").on("click", function()
 				{
-					compartir($(this).data("id"), $(this).data("path"), $(this).data("titulo"));
+					setTimeout(compartir($(this).data("id"), $(this).data("path"), $(this).data("titulo")), 0);
 				});
 				
 				$("#oferta .imagen-de-oferta").each(function()
@@ -127,7 +127,7 @@ function bindAcciones()
 	
 	$("#ofertas .boton-compartir").off("click").on("click", function()
 	{
-		compartir($(this).data("id"), $(this).data("path"), $(this).data("titulo"));
+		setTimeout(compartir($(this).data("id"), $(this).data("path"), $(this).data("titulo")), 0);
 	});
 }
 
