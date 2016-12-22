@@ -147,26 +147,39 @@ $(function(){
 				data : textoAEnviar,
 				done: function( data ) 
 				{
-					var callback;
+					var callback, callbackOnPlay;
 					var textos = data.textos;
 					if(textos != undefined)
 					{
 						var indiceDelUltimoMensajeConAudio;
 						if(data.seTerminoElChat)
 						{
+							debeEjecutarCallbackEnElCambioDeVista = true;
 							ajax({
 								url: serverDomain + "/conversacion/borrarUnaConversacion"
 							});
 							
 							campoDeEntrada.attr("disabled", true);
 							
-							callback = function()
+							callback = function(seEstaEjecutandoEnElCambioDeVista)
 							{
 								$(".app #{{pathDelServidor}}").html(Handlebars.templates.layout(pantallas["{{pathDelServidor}}"]));
 								bindClickeable();
-								estaReproduciendo = false;
+								if(estaReproduciendo)
+								{
+									audioEnReproduccion.pause();
+									estaReproduciendo = false;
+								}
 								reproducirCola();
-								cambiarVista("ofertas", true);
+								if(seEstaEjecutandoEnElCambioDeVista == undefined || !seEstaEjecutandoEnElCambioDeVista)
+								{
+									cambiarVista("ofertas", true);
+								}
+							};
+							
+							callbackOnPlay = function()
+							{
+								aunDebeEjecutarCallback = false;
 							};
 						
 							for(var i = 0; i < textos.length; i++)
@@ -179,8 +192,26 @@ $(function(){
 							
 							if(!debeReproducirElAudio || indiceDelUltimoMensajeConAudio == undefined)
 							{
-								setTimeout(callback, 15000);
+								setTimeout(function()
+								{
+									if(aunDebeEjecutarCallback)
+									{
+										callback();
+									}
+								}, 15000);
 							}
+						}
+						else
+						{
+							callback = function()
+							{
+								
+							};
+							
+							callbackOnPlay = function()
+							{
+								
+							};
 						}
 						
 						var fecha = new Date();
@@ -192,7 +223,10 @@ $(function(){
 							{
 								if(deviceType == "iPad" || deviceType == "iPhone")
 								{
-									htmlAudio = '<br /><br /><audio controls preload="auto"><source src="' + serverDomain + textos[i].audio + '"></audio>';
+									aunDebeEjecutarCallback = true;
+									aux1 = callback;
+									aux2 = callbackOnPlay;
+									htmlAudio = '<br /><br /><audio controls preload="auto" onended="aux1()" onplay="aux2()"><source src="' + serverDomain + textos[i].audio + '"></audio>';
 								}
 								else
 								{

@@ -136,6 +136,10 @@
 	var estaLogueado = false;
 	var vistaActual = "ofertas";
 	var idUsuario = "";
+	var aunDebeEjecutarCallback = true;
+	var debeEjecutarCallbackEnElCambioDeVista = false;
+	var aux1;
+	var aux2;
 	
 	var mensajesDeErrorEnAudio = ["", {code: 1, "message": "MEDIA_ERR_ABORTED"}, {code: 2, "message": "MEDIA_ERR_NETWORK"}, {code: 3, "message": "MEDIA_ERR_DECODE"}, {code: 4, "message": "MEDIA_ERR_SRC_NOT_SUPPORTED"}];
 	
@@ -161,7 +165,41 @@
 	
 	function cambiarVista(href, guardarVistaEnHistorial)
 	{
+		if(vistaActual == "chat" || vistaActual == "conocerte")
+		{
+			if(debeEjecutarCallbackEnElCambioDeVista)
+			{
+				aunDebeEjecutarCallback = false;
+				debeEjecutarCallbackEnElCambioDeVista = false;
+				var ejecutoCallback = false;
+				for(var index in audios)
+				{
+					var audio = audios[index];
+					if(audio.callback != undefined)
+					{
+						audio.callback(true);
+						ejecutoCallback = true;
+					}
+				}
+				if(!ejecutoCallback)
+				{
+					if(audioEnReproduccion != undefined && audioEnReproduccion.callback != undefined)
+					{
+						audio.callback(true);
+					}
+					else
+					{
+						aux1(true);
+					}
+				}
+			}
+		}
 		audios = new Array();
+		if(estaReproduciendo)
+		{
+			audioEnReproduccion.pause();
+			estaReproduciendo = false;
+		}
 		var app = $(".app");
 		
 		app.find(".show").hide();
@@ -338,7 +376,11 @@
 			estaReproduciendo = false;
 			audios = new Array();
 		};
-		audio.onplay = function(){console.log("Reproduciendo: " + audio.src)};
+		audio.onplay = function()
+		{
+			console.log("Reproduciendo: " + audio.src)
+			aunDebeEjecutarCallback = false;
+		};
 		audio.callback = callback;
 		audios.push(audio);
 		reproducirCola();
