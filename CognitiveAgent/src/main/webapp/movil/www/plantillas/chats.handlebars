@@ -38,10 +38,14 @@ $(function(){
 		{
 			$("#chat-id-{{pathDelServidor}}").prepend('<div class="row contenedor-boton-escuchar-mensajes"><div class="col-xs-6"><div class="boton-escuchar-mensajes desactivado" /></div></div>');
 		}
-		$("#chat-id-{{pathDelServidor}} .boton-escuchar-mensajes").click(function()
+		
+		var botonDeAudio = $("#chat-id-{{pathDelServidor}} .boton-escuchar-mensajes");
+		
+		$(botonDeAudio).click(function()
 		{
 			$(this).toggleClass("activado").toggleClass("desactivado");
 			debeReproducirElAudio = !debeReproducirElAudio;
+			botonesDeAudio.{{pathDelServidor}} = debeReproducirElAudio;
 			guardarCola = false;
 			if(colaDeReproduccion.length > 0)
 			{
@@ -56,8 +60,14 @@ $(function(){
 				audios = new Array();
 				audioEnReproduccion.pause();
 				estaReproduciendo = false;
+				aunDebeEjecutarCallback = true;
 			}
 		});
+		
+		if(vistaActual == "{{pathDelServidor}}" && !botonesDeAudio.{{pathDelServidor}})
+		{
+			botonDeAudio.click();
+		}
 		
 		function reproducirMensaje(pathDelAudio, callback)
 		{
@@ -171,8 +181,9 @@ $(function(){
 									estaReproduciendo = false;
 								}
 								reproducirCola();
-								if(seEstaEjecutandoEnElCambioDeVista == undefined || !seEstaEjecutandoEnElCambioDeVista)
+								if(seEstaEjecutandoEnElCambioDeVista != true)
 								{
+									debeEjecutarCallbackEnElCambioDeVista = false;
 									cambiarVista("ofertas", true);
 								}
 							};
@@ -224,7 +235,16 @@ $(function(){
 								if(deviceType == "iPad" || deviceType == "iPhone")
 								{
 									aunDebeEjecutarCallback = true;
-									aux1 = callback;
+									aux1 = function(){
+										aunDebeEjecutarCallback = true;
+										setTimeout(function()
+										{
+											if(aunDebeEjecutarCallback)
+											{
+												callback();
+											}
+										}, 3000);
+									};
 									aux2 = callbackOnPlay;
 									htmlAudio = '<br /><br /><audio controls preload="auto" onended="aux1()" onplay="aux2()"><source src="' + serverDomain + textos[i].audio + '"></audio>';
 								}
@@ -282,6 +302,6 @@ $(function(){
 			return numero > 9 ? numero : "0" + numero
 		}
 	}
-	var initChats{{pathDelServidor}} = initChats{{pathDelServidor}}();	
+	var initChats{{pathDelServidor}} = initChats{{pathDelServidor}}();
 });
 </script>

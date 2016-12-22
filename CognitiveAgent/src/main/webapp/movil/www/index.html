@@ -138,6 +138,8 @@
 	var idUsuario = "";
 	var aunDebeEjecutarCallback = true;
 	var debeEjecutarCallbackEnElCambioDeVista = false;
+	var botonesDeAudio = {chat: false, conocerte: false};
+	console.log(botonesDeAudio);
 	var aux1;
 	var aux2;
 	
@@ -185,7 +187,7 @@
 				{
 					if(audioEnReproduccion != undefined && audioEnReproduccion.callback != undefined)
 					{
-						audio.callback(true);
+						audioEnReproduccion.callback(true);
 					}
 					else
 					{
@@ -209,13 +211,15 @@
 		app.find("#" + href).removeClass("hide");
 		app.find("#" + href).addClass("show");
 		
+		botonesDeAudio = {chat: false, conocerte: false};
+		
 		var botonEscucharMensajes = $("#chat-id-" + href + " .boton-escuchar-mensajes");
 		if(botonEscucharMensajes.hasClass("desactivado"))
 		{
 			botonEscucharMensajes.click();
 		}
 		
-		if( guardarVistaEnHistorial != undefined && guardarVistaEnHistorial)
+		if(guardarVistaEnHistorial != undefined && guardarVistaEnHistorial)
 		{
 			ordenDelasVistas.push( vistaActual );	
 		}
@@ -277,9 +281,10 @@
 			done: function(data)
 			{
 				inicializarPantallas();
-				
-				establecerBienvenida(data.estaLogueado, data.usuarioNombre);
-				idUsuario = data.idUsuario;				
+
+				idUsuario = data.idUsuario;
+				estaLogueado = data.estaLogueado;
+				establecerBienvenida(data.usuarioNombre);
 				
 				if( data.mostrarPopConocerte && 
 					( getCookie("mostrarpopupdeconocerte") == "" || getCookie("mostrarpopupdeconocerte") == "true" ))
@@ -302,7 +307,7 @@
 		bindClickeable();
 	}
 	
-	function establecerBienvenida(estaLogueado, nombreUsuario)
+	function establecerBienvenida(nombreUsuario)
 	{
 		if(estaLogueado)
 		{
