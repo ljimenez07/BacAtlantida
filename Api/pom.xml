@@ -51,11 +51,6 @@
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.ibm.watson.developer_cloud</groupId>
-			<artifactId>java-sdk</artifactId>
-			<version>3.3.0</version>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
@@ -144,8 +139,13 @@
 			<artifactId>LogicaDeAppsWeb</artifactId>
 			<version>0.0.1</version>
 		</dependency>
+				<dependency>
+			<groupId>com.ibm.watson.developer_cloud</groupId>
+			<artifactId>java-sdk</artifactId>
+			<version>3.3.0</version>
+		</dependency>
 	</dependencies>
-	<build>
+<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
