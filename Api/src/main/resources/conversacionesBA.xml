@@ -6,7 +6,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>¡Hola!, soy tu asesora del Banco Atlántida.</frase>
+			<frase>¡Hola!, soy tu asesora de Banco Atlántida.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -16,7 +16,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>¡Buenos días!, soy tu asesora del Banco Atlántida.</frase>
+			<frase>¡Buenos días!, soy tu asesora de Banco Atlántida.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -27,7 +27,7 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<frase>¡Hola!</frase>
-			<frase>¡Hola!, soy tu asesora del Banco Atlántida.</frase>
+			<frase>¡Hola!, soy tu asesora de Banco Atlántida.</frase>
 		</frases>
 		<vinetas></vinetas>
 		<when>
@@ -41,7 +41,7 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<frase>¡Hola $!</frase>
-			<frase>¡Hola $!, soy tu asesora del Banco Atlántida.</frase>
+			<frase>¡Hola $!, soy tu asesora de Banco Atlántida.</frase>
 		</frases>
 		<vinetas></vinetas>
 		<when>
@@ -77,10 +77,10 @@
 		<frases>
 			<curioso>¿Quieres el saldo de tu tarjeta de crédito?</curioso>
 			<impertinente>Necesito saber si te refieres a la cuenta de ahorros o tarjeta de crédito.</impertinente>
+			<meRindo>Lo siento, no entendí. Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80 10 10. @@br/@@@ San Pedro Sula: 25 80 10 10. @@br/@@@ La Ceiba: 24 80 10 10.</meRindo>			
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
-	
 	
 	<conversacion id="quiereSaldoCuentaAhorros">
 		<tipo>pregunta</tipo>
@@ -88,6 +88,7 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<curioso>¿Quieres el saldo de tu cuenta de ahorros?</curioso>
+			<meRindo>Lo siento, no entendí. Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80 10 10. @@br/@@@ San Pedro Sula: 25 80 10 10. @@br/@@@ La Ceiba: 24 80 10 10.</meRindo>			
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -119,7 +120,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Por ahora solo puedo proporcionar el saldo de su tarjeta de crédito y de la cuenta de ahorros. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase>Por ahora solo puedo proporcionar el saldo de tu tarjeta de crédito y de tu cuenta de ahorros. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -130,7 +131,7 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<curioso>¿Quieres el disponible de tu tarjeta de crédito?</curioso>
-			<impertinente>Necesito saber, ¿si te refieres a la cuenta de ahorros o tarjeta de crédito?.</impertinente>
+			<impertinente>Necesito saber, ¿si te refieres a la cuenta de ahorros o tarjeta de crédito?</impertinente>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -172,7 +173,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Por ahora solo puedo proporcionar el disponible de tarjeta de crédito y cuenta de ahorros. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 - 80 - 10 - 10 @@br/@@@ San Pedro Sula: 25 - 80 - 10 - 10 @@br/@@@ La Ceiba: 24 - 80 - 10 - 10</frase>
+			<frase>Por ahora solo puedo proporcionar el disponible de tu tarjeta de crédito y de tu cuenta de ahorros. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 - 80 - 10 - 10 @@br/@@@ San Pedro Sula: 25 - 80 - 10 - 10 @@br/@@@ La Ceiba: 24 - 80 - 10 - 10</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -182,7 +183,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Claro, el día de hoy el dólar está a $%dc la compra y $%dv la venta.</frase>
+			<frase>El día de hoy el dólar está a $%dc la compra y $%dv la venta.</frase>
 			<frase>El tipo de cambio del dólar para hoy es $%dc la compra, y $%dv la venta.</frase>
 		</frases>
 		<vinetas></vinetas>
@@ -276,8 +277,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<curioso>Muy bien, ¿qué información necesitas?.</curioso>
-			<curioso>Claro, dime ¿cómo te puedo ayudar?.</curioso>
+			<curioso>Muy bien, ¿qué información necesitas?</curioso>
+			<curioso>Claro, dime ¿cómo te puedo ayudar?</curioso>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -287,7 +288,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Fue un placer ayudarte, ¡que pases un feliz día!. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase>Fue un placer ayudarte, ¡que pases un feliz día! @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
 			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
 		</frases>
 		<vinetas></vinetas>
@@ -298,7 +299,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Fue un placer ayudarte, ¡que pases un feliz día!. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase>Fue un placer ayudarte, ¡que pases un feliz día! @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
 			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
 			<frase>Es un placer servirle y recuerde que le atendemos las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
 			<frase>Hasta luego, fue un gusto atenderte. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
@@ -684,7 +685,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para abrir una cuenta de ahorro Remesas debes:  @@br/@@@ @@br/@@@ 1)@@!Completar la solicitud.  @@br/@@@ 2)@@!Contrato de autorización para crédito automático a cuenta, en caso que desees optar por este servicio.  @@br/@@@ 3)@@!Copia de un recibo de cobro reciente de Remesas Familiares (Máximo 6 meses). @@br/@@@ 4)@@!Monto de apertura de cuenta por 100 Lempiras. @@br/@@@ @@br/@@@ Para Hondureños:  @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de tarjeta de identidad.  @@br/@@@  @@br/@@@ Para Extranjeros: @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de carnet de residencia o pasaporte @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorro Remesas es de 100 Lempiras, en esta cuenta el cargo por saldo menor al mínimo es de 15 Lempiras.</frase>
+			<frase>Para abrir una cuenta de ahorro Remesas debes:  @@br/@@@ @@br/@@@ 1)@@!Completar la solicitud.  @@br/@@@ 2)@@!Contrato de autorización para crédito automático a cuenta, en caso que desees optar por este servicio.  @@br/@@@ 3)@@!Copia de un recibo de cobro reciente de Remesas Familiares (Máximo 6 meses). @@br/@@@ 4)@@!Monto de apertura de cuenta por 100 Lempiras. @@br/@@@ @@br/@@@ Para Hondureños:  @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de tarjeta de identidad.  @@br/@@@  @@br/@@@ Para Extranjeros: @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de carnet de residencia o pasaporte. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorro Remesas es de 100 Lempiras, en esta cuenta el cargo por saldo menor al mínimo es de 15 Lempiras.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -694,7 +695,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para abrir una cuenta de ahorro Remesas debes:  @@br/@@@ @@br/@@@ 1)@@!Completar la solicitud.  @@br/@@@ 2)@@!Contrato de autorización para crédito automático a cuenta, en caso que desees optar por este servicio.  @@br/@@@ 3)@@!Copia de un recibo de cobro reciente de Remesas Familiares (Máximo 6 meses). @@br/@@@ 4)@@!Monto de apertura de cuenta por 50 Dólares. @@br/@@@ @@br/@@@ Para Hondureños:  @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de tarjeta de identidad.  @@br/@@@  @@br/@@@ Para Extranjeros:  @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de carnet de residencia o pasaporte @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorro Remesas es de 50 Dólares, en esta cuenta el cargo por saldo menor al mínimo es de 1 Dólar.</frase>
+			<frase>Para abrir una cuenta de ahorro Remesas debes:  @@br/@@@ @@br/@@@ 1)@@!Completar la solicitud.  @@br/@@@ 2)@@!Contrato de autorización para crédito automático a cuenta, en caso que desees optar por este servicio.  @@br/@@@ 3)@@!Copia de un recibo de cobro reciente de Remesas Familiares (Máximo 6 meses). @@br/@@@ 4)@@!Monto de apertura de cuenta por 50 Dólares. @@br/@@@ @@br/@@@ Para Hondureños:  @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de tarjeta de identidad.  @@br/@@@  @@br/@@@ Para Extranjeros:  @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de carnet de residencia o pasaporte. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorro Remesas es de 50 Dólares, en esta cuenta el cargo por saldo menor al mínimo es de 1 Dólar.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -724,7 +725,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para solicitar un préstamo personal debes presentar: @@br/@@@ @@br/@@@ 1)@@!Original y copia de tarjeta de identidad. @@br/@@@ 2)@@!Último recibo público pagado servicios públicos (ENEE, HONDUTEL, SANAA). @@br/@@@ 3)@@!Copia de RTN numérico. @@br/@@@ 4)@@!Constancia  de trabajo donde indique cargo, sueldo y antigüedad. @@br/@@@ @@br/@@@ Además debes cumplir con las siguientes condiciones: @@br/@@@ @@br/@@@ 1)@@!Un año de laborar en empresa privada y dos en sector público. @@br/@@@ 2)@@!Ingreso mínimo mensual sea de 12 500 Lempiras (tega, Sps y la Ceiba) y 9 500 Lempiras (el resto del país). @@br/@@@ 3)@@!Ser mayor de 21 años. @@br/@@@ 4)@@!En el caso de ser comerciante individual presentar los estados financieros de los dos últimos años autenticados por un perito, estados de cuenta bancario de los dos últimos meses y el permiso de operación del negocio.</frase>
+			<frase>Para solicitar un préstamo personal debes presentar: @@br/@@@ @@br/@@@ 1)@@!Original y copia de tarjeta de identidad. @@br/@@@ 2)@@!*Fotocopia de último recibo público ya sea agua, luz o teléfono. @@br/@@@ 3)@@!Copia de RTN numérico. @@br/@@@ 4)@@!Constancia  de trabajo donde indique cargo, sueldo y antigüedad. @@br/@@@ @@br/@@@ Además debes cumplir con las siguientes condiciones: @@br/@@@ @@br/@@@ 1)@@!Un año de laborar en empresa privada y dos en sector público. @@br/@@@ 2)@@!Ingreso mínimo mensual sea de 12 500 Lempiras (tega, Sps y la Ceiba) y 9 500 Lempiras (el resto del país). @@br/@@@ 3)@@!Ser mayor de 21 años. @@br/@@@ 4)@@!En el caso de ser comerciante individual presentar los estados financieros de los dos últimos años autenticados por un perito, estados de cuenta bancario de los dos últimos meses y el permiso de operación del negocio.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -749,12 +750,13 @@
 		<vinetas></vinetas>
 	</conversacion>
 	
-		<conversacion id="cualProductoPrestamo">		
+	<conversacion id="cualProductoPrestamo">		
 		<tipo>pregunta</tipo>		
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>¿Quieres un préstamo personal, de vehículo o de vivienda?</curioso>		
+			<curioso>¿Quieres un préstamo personal, de vehículo o de vivienda?</curioso>
+			<meRindo>Lo siento, no entendí. Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80 10 10. @@br/@@@ San Pedro Sula: 25 80 10 10. @@br/@@@ La Ceiba: 24 80 10 10.</meRindo>						
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>	
@@ -765,6 +767,7 @@
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
 			<curioso>¿Quieres los antecedentes penales o policiales?</curioso>		
+			<meRindo>Lo siento, no entendí. Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80 10 10. @@br/@@@ San Pedro Sula: 25 80 10 10. @@br/@@@ La Ceiba: 24 80 10 10.</meRindo>			
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>	
@@ -835,6 +838,16 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<frase>El servicio es completamente gratuito para la Banca Personal, sin embargo la Banca Empresarial y PYME tiene un costo el cual es informado cuando se presenta la oferta de servicio por el Ejecutivo de Cuenta.</frase>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
+	<conversacion id="precioMensajitos">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El servicio es gratis, pero el costo del mensajito lo determina la empresa de celular.  @@br/@@@ Puedes solicitarlo en cualquier agencia del país.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -944,7 +957,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>En Banco Atlántida le recibimos el pago de la cita para solicitar la emisión del pasaporte electrónico en las oficinas de migración a nivel nacional.  @@br/@@@ El costo va a depender del tiempo de vigencia, por ejemplo, por 5 años el costo es de 35 dólares, pero por 10 años el costo es de 50 dólares. Cuando eres menor de edad el pasaporte sólo se autoriza por 5 años.  @@br/@@@ Si deseas el pasaporte el mismo día debes cancelar 20 dólares adicionales al monto que pagas por la vigencia, pero antes de ir al banco tiene que presentarse a las oficinas de pasaporte ubicadas  en Tegucigalpa, San Pedro Sula o La Ceiba y solicitar una cita express.  @@br/@@@  @@br/@@@ Recuerda que: @@br/@@@ @@br/@@@ 1)@@!Si es la primera vez que solicitas pasaporte o el que tienes ya está vencido debes presentar la tarjeta de identidad original. Pero si tu pasaporte está vigente entonces debes presentar ese documento.  @@br/@@@ 2)@@!Si eres mayor de 21 años, debes presentar en el Banco la tarjeta de identidad. Pero si tu edad está entre 18 y 21 entonces uno de tus padres, el tutor, representante o apoderado legal, debidamente identificado, debe presentar tu tarjeta de identidad.  En caso que seas menor de 18 años esa persona deberá presentar tu partida de nacimiento.  @@br/@@@ @@br/@@@ Información adicional y detallada está disponible en el sitio: http://inm.gob.hn/pasaporte </frase>
+			<frase>En Banco Atlántida te recibimos el pago de la cita para solicitar la emisión del pasaporte electrónico en las oficinas de migración a nivel nacional.  @@br/@@@ El costo va a depender del tiempo de vigencia, por ejemplo, por 5 años el costo es de 35 dólares, pero por 10 años el costo es de 50 dólares. Cuando eres menor de edad el pasaporte sólo se autoriza por 5 años.  @@br/@@@ Si deseas el pasaporte el mismo día debes cancelar 20 dólares adicionales al monto que pagas por la vigencia, pero antes de ir al banco tiene que presentarse a las oficinas de pasaporte ubicadas  en Tegucigalpa, San Pedro Sula o La Ceiba y solicitar una cita express.  @@br/@@@  @@br/@@@ Recuerda que: @@br/@@@ @@br/@@@ 1)@@!Si es la primera vez que solicitas pasaporte o el que tienes ya está vencido debes presentar la tarjeta de identidad original. Pero si tu pasaporte está vigente entonces debes presentar ese documento.  @@br/@@@ 2)@@!Si eres mayor de 21 años, debes presentar en el Banco la tarjeta de identidad. Pero si tu edad está entre 18 y 21 entonces uno de tus padres, el tutor, representante o apoderado legal, debidamente identificado, debe presentar tu tarjeta de identidad.  En caso que seas menor de 18 años esa persona deberá presentar tu partida de nacimiento.  @@br/@@@ @@br/@@@ Información adicional y detallada está disponible en el sitio: http://inm.gob.hn/pasaporte </frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -954,7 +967,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>En Banco Atlántida le recibimos el pago de la cita para solicitar la emisión del pasaporte electrónico en las oficinas de migración a nivel nacional.  @@br/@@@ El costo va a depender del tiempo de vigencia, por ejemplo, por 5 años el costo es de 35 dólares, pero por 10 años el costo es de 50 dólares. Cuando eres menor de edad el pasaporte sólo se autoriza por 5 años.  @@br/@@@ Si deseas el pasaporte el mismo día debes cancelar 20 dólares adicionales al monto que pagas por la vigencia, pero antes de ir al banco tiene que presentarse a las oficinas de pasaporte ubicadas  en Tegucigalpa, San Pedro Sula o La Ceiba y solicitar una cita express.  @@br/@@@ @@br/@@@ Información adicional y detallada está disponible en el sitio: http://inm.gob.hn/pasaporte</frase>
+			<frase>En Banco Atlántida te recibimos el pago de la cita para solicitar la emisión del pasaporte electrónico en las oficinas de migración a nivel nacional.  @@br/@@@ El costo va a depender del tiempo de vigencia, por ejemplo, por 5 años el costo es de 35 dólares, pero por 10 años el costo es de 50 dólares. Cuando eres menor de edad el pasaporte sólo se autoriza por 5 años.  @@br/@@@ Si deseas el pasaporte el mismo día debes cancelar 20 dólares adicionales al monto que pagas por la vigencia, pero antes de ir al banco tiene que presentarse a las oficinas de pasaporte ubicadas  en Tegucigalpa, San Pedro Sula o La Ceiba y solicitar una cita express.  @@br/@@@ @@br/@@@ Información adicional y detallada está disponible en el sitio: http://inm.gob.hn/pasaporte</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -964,7 +977,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Si eres ciudadano hondureño o residente legal podemos recibir su pago para que solicites licencia de conducir.  @@br/@@@ @@br/@@@ 1)@@!Ten en cuenta que el precio de la licencia depende de dos factores: a) el tipo de Licencia, y b) la vigencia (1, 2 o 5 años). Por ejemplo, la Liviana Nacional tiene un precio de 150 lempiras por 1 año, 250 lempiras por 2 años y 600 lempiras la de 5 años. @@br/@@@ 2)@@!Cuando pagas te damos un recibo con tus datos personales, fecha, hora y centro de atención al cual debes presentarte para solicitar la licencia. @@br/@@@ 3)@@!Entre los centros de atención que puedes escoger para hacer el trámite de tu licencia están: @@br/@@@ @@br/@@@ a) Tegucigalpa. @@br/@@@ b) San Pedro Sula. @@br/@@@ c) Juticalpa. @@br/@@@ d) El Progreso, Yoro. @@br/@@@ e) La Ceiba. @@br/@@@ f) Santa Rosa de Copán. @@br/@@@ g) Danlí, El Paraíso. @@br/@@@ h) Choluteca. @@br/@@@ i) Puerto Cortés. @@br/@@@ @@br/@@@ IMPORTANTE: @@br/@@@ @@br/@@@ A) Una vez que sales de la agencia con el recibo impreso no se pueden hacer devoluciones de dinero ni reversar la cita. @@br/@@@ B) Los recibos de citas tendrán vigencia de un año a partir de su emisión. @@br/@@@ C) Si pierdes la cita puedes reprogramarla yendo a la agencia con su recibo y pagando 12 lempiras. @@br/@@@ D) Si pierdes el recibo y la cita aún no ha vencido puedes acudir a una agencia y reponerlo, pagando 12 lempiras. </frase>
+			<frase>Si eres ciudadano hondureño o residente legal podemos recibir tu pago para que solicites licencia de conducir.  @@br/@@@ @@br/@@@ 1)@@!Ten en cuenta que el precio de la licencia depende de dos factores: a) el tipo de Licencia, y b) la vigencia (1, 2 o 5 años). Por ejemplo, la Liviana Nacional tiene un precio de 150 lempiras por 1 año, 250 lempiras por 2 años y 600 lempiras la de 5 años. @@br/@@@ 2)@@!Cuando pagas te damos un recibo con tus datos personales, fecha, hora y centro de atención al cual debes presentarte para solicitar la licencia. @@br/@@@ 3)@@!Entre los centros de atención que puedes escoger para hacer el trámite de tu licencia están: @@br/@@@ @@br/@@@ a) Tegucigalpa. @@br/@@@ b) San Pedro Sula. @@br/@@@ c) Juticalpa. @@br/@@@ d) El Progreso, Yoro. @@br/@@@ e) La Ceiba. @@br/@@@ f) Santa Rosa de Copán. @@br/@@@ g) Danlí, El Paraíso. @@br/@@@ h) Choluteca. @@br/@@@ i) Puerto Cortés. @@br/@@@ @@br/@@@ IMPORTANTE: @@br/@@@ @@br/@@@ A) Una vez que sales de la agencia con el recibo impreso no se pueden hacer devoluciones de dinero ni reversar la cita. @@br/@@@ B) Los recibos de citas tendrán vigencia de un año a partir de su emisión. @@br/@@@ C) Si pierdes la cita puedes reprogramarla yendo a la agencia con su recibo y pagando 12 lempiras. @@br/@@@ D) Si pierdes el recibo y la cita aún no ha vencido puedes acudir a una agencia y reponerlo, pagando 12 lempiras. </frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -974,7 +987,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>El precio de la licencia depende de dos factores: a) el tipo de Licencia, y b) la vigencia (1, 2 o 5 años). Por ejemplo, la Liviana Nacional tiene un precio de 150 lempiras por 1 año, 250 lempiras por 2 años y 600 lempiras la de 5 años.</frase>
+			<frase>El precio de la licencia depende de dos factores:  @@br/@@@ a) El tipo de Licencia.  @@br/@@@ b) La vigencia (1, 2 o 5 años).  @@br/@@@  @@br/@@@ Por ejemplo, la Liviana Nacional tiene un precio de 150 lempiras por 1 año, 250 lempiras por 2 años y 600 lempiras la de 5 años.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>	
@@ -985,22 +998,22 @@
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
 			<frase>¡Hola! Para poder conocer lo que más te gusta, te haré algunas preguntas.</frase>		
-			<frase>¡Me alegro que hayas aceptado responder algunas preguntas!, tus respuestas me ayudarán a conocer tus preferencias, y así recomendarte sólo las ofertas y beneficios 	que son de tu interés.</frase>		
+			<frase>¡Me alegro que hayas aceptado responder algunas preguntas!, tus respuestas me ayudarán a conocer tus preferencias, y así recomendarte sólo las ofertas y beneficios que son de tu interés.</frase>		
 			<frase>¡Buenas! Te haré algunas preguntas para poder conocer lo que te gusta y así recomendarte promociones y beneficios especiales que sean de tu interés.</frase>			
 		</frases>		
 		<vinetas></vinetas>		
 		<when>		
 			<condition operador="and" tipo="intencion">saludos</condition>		
 		</when>		
-	</conversacion>	    
+	</conversacion>   
    
 	<conversacion id="preguntarPorRestaurantes">		
 		<tipo>pregunta</tipo>		
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>¡Sabes!  A mí me encanta todo tipo de comidas y regularmente salgo a cenar a restaurantes. Si tuvieras la oportunidad, ¿te gustaría salir a cenar o prefieres quedarte en casa?.</curioso>
-			<curioso>Durante un fin de semana qué prefieres, ¿quedarte en casa y cocinar; o salir a cenar a un restaurante?.</curioso>
+			<curioso>¡Sabes!  A mí me encanta todo tipo de comidas y regularmente salgo a cenar a restaurantes. Si tuvieras la oportunidad, ¿te gustaría salir a cenar o prefieres quedarte en casa?</curioso>
+			<curioso>Durante un fin de semana qué prefieres, ¿quedarte en casa y cocinar; o salir a cenar a un restaurante?</curioso>
 			<impertinente>No entendí tu respuesta. ¿Te gusta ir a restaurantes o quedarte en casa?</impertinente>			
 		</frases>		
 		<vinetas></vinetas>		
@@ -1011,7 +1024,7 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>Muy bien, te cuento que para mí es muy cansado tener que pensar qué hacer para la cena, ir de compras y llegar a casa a prepararla. ¿Verdad que es preferible salir a cenar a un restaurante?.</curioso>
+			<curioso>Muy bien, te cuento que para mí es muy cansado tener que pensar qué hacer para la cena, ir de compras y llegar a casa a prepararla. ¿Verdad que es preferible salir a cenar a un restaurante?</curioso>
 			<impertinente>No entendí tu respuesta. ¿Te gusta ir a restaurantes o no?</impertinente>			
 		</frases>		
 		<vinetas></vinetas>		
@@ -1022,8 +1035,8 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>Personalmente creo que lo más importante es compartir mi tiempo libre con familiares y amigos, por eso cuando tengo la oportunidad me escapo a vacacionar a algún nuevo hotel. Cuéntame, ¿cuándo vas de vacaciones te hospedas en un hotel o prefieres acampar?.</curioso>	
-			<curioso>A mí me gusta vacacionar y por eso busco hoteles que me brinden alojamiento junto con muchas comodidades y tipos de esparcimiento.  En tu caso, cuando vas de vacaciones, ¿prefieres un hotel o prefieres acampar?.</curioso>
+			<curioso>Personalmente creo que lo más importante es compartir mi tiempo libre con familiares y amigos, por eso cuando tengo la oportunidad me escapo a vacacionar a algún nuevo hotel. Cuéntame, ¿cuándo vas de vacaciones te hospedas en un hotel o prefieres acampar?</curioso>	
+			<curioso>A mí me gusta vacacionar y por eso busco hoteles que me brinden alojamiento junto con muchas comodidades y tipos de esparcimiento.  En tu caso, cuando vas de vacaciones, ¿prefieres un hotel o prefieres acampar?</curioso>
 			<impertinente>Necesito estar seguro, ¿utilizas los hoteles o prefieres acampar?</impertinente>
 		</frases>		
 		<vinetas></vinetas>		
@@ -1034,7 +1047,7 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>¡Sabes! Yo trabajo mucho y me gusta ir a los hoteles porque no tengo que cocinar y descanso bastante.  Me imagino que por estas razones y, otras más, también te gustaría alojarte en hoteles, ¿Verdad que sí?.</curioso>
+			<curioso>¡Sabes! Yo trabajo mucho y me gusta ir a los hoteles porque no tengo que cocinar y descanso bastante.  Me imagino que por estas razones y, otras más, también te gustaría alojarte en hoteles, ¿Verdad que sí?</curioso>
 			<impertinente>Perdona pero no entendí tu respuesta. ¿Te gusta ir a hoteles, o no?</impertinente>
 		</frases>		
 		<vinetas></vinetas>		
@@ -1045,10 +1058,10 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>Te cuento que cuando voy a un hotel me encanta ir a relajarme al spa y contratar un buen masaje. Creo que es una experiencia súper relajante! En tu caso, si tuvieras la oportunidad, cuando estés muy estresado o cansado, ¿harías lo mismo?.</curioso>
-			<curioso>¡La sociedad y los gustos han cambiado mucho! La tendencia actual es que tanto hombres como mujeres cuiden más de su apariencia y, por eso, acostumbro visitar salones de belleza para verme y sentirme mejor. Cuéntame, ¿también vas a esos lugares para que te consientan y lucir mucho mejor?.</curioso>
-			<curioso>Para mí es súper gratificante recibir un masaje y que además me hagan una limpieza facial porque luego te sientes como nuevo y además luzco muy bien. Cuéntame, ¿te gustaría darte este tipo de gustos?.</curioso>
-			<impertinente>Perdona pero no comprendí lo que me respondiste. ¿Vas a salones de belleza, Spas o lugares de relajación?.</impertinente>
+			<curioso>Te cuento que cuando voy a un hotel me encanta ir a relajarme al spa y contratar un buen masaje. ¡Creo que es una experiencia súper relajante! En tu caso, si tuvieras la oportunidad, cuando estás muy estresado o cansado, ¿harías lo mismo?</curioso>
+			<curioso>¡La sociedad y los gustos han cambiado mucho! La tendencia actual es que tanto hombres como mujeres cuiden más de su apariencia y, por eso, acostumbro visitar salones de belleza para verme y sentirme mejor. Cuéntame, ¿también vas a esos lugares para que te consientan y lucir mucho mejor?</curioso>
+			<curioso>Para mí es súper gratificante recibir un masaje y que además me hagan una limpieza facial porque luego te sientes como nuevo y además luzco muy bien. Cuéntame, ¿te gustaría darte este tipo de gustos?</curioso>
+			<impertinente>Perdona pero no comprendí lo que me respondiste. ¿Vas a salones de belleza, spas o lugares de relajación?</impertinente>
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>
@@ -1078,9 +1091,9 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<frase>Genial! gracias por compartirme tus respuestas, las usaremos para informarte de los beneficios que puedes aprovechar por ser cliente de Banco Atlántida.</frase>		
+			<frase>¡Genial!, gracias por compartirme tus respuestas, las usaremos para informarte de los beneficios que puedes aprovechar por ser cliente de Banco Atlántida.</frase>		
 			<frase>Gracias por tus respuestas, te estaremos enviando información relevante para ti acerca de promociones y beneficios.</frase>		
-			<frase>Muy bien! al iniciar sesión encontrarás información de promociones y beneficios que podrás aprovechar.</frase>		
+			<frase>¡Muy bien!, al iniciar sesión encontrarás información de promociones y beneficios que podrás aprovechar.</frase>		
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>
@@ -1133,7 +1146,7 @@
 		<mandatoria>true</mandatoria>				
 		<enVozAlta>true</enVozAlta>				
 		<frases>	
-			<frase>Hemos terminado la sesión y espero volver a servirte pronto. ¡Adiós!</frase>
+			<frase>Hemos terminado la sesión y espero volver a servirte pronto. ¡Hasta luego!</frase>
 		</frases>				
 		<vinetas></vinetas>				
 	</conversacion>
@@ -1168,7 +1181,6 @@
 		<vinetas></vinetas>				
 	</conversacion>
 	
-	
 	<conjunciones>
 		<conjuncion id="conjuncion1">Disculpame, pero no te entiendo.</conjuncion>
 		<conjuncion id="conjuncion2">No logro comprenderte.</conjuncion>
@@ -1186,10 +1198,10 @@
 	</variablesDeAmbiente>
 	
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
-		<workspace tipo="general" idIBM="f4f81a3e-adb4-43c6-ba00-fe08c30f7905" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="general" idIBM="99007e3b-a55c-49ab-9658-101f20a17bee" intencionesParaSeReferenciado="">BAIntents</workspace>
 		<workspace tipo="especifico" idIBM="fdba23dc-2ece-425c-85e3-e43b4fcac8ef" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
-		<workspace tipo="especifico" idIBM="3643b7c9-4cf3-4d02-adfd-9a52d6c6c5e3" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="5fbe427e-d2d1-4083-a3fd-e76c567cd6ed" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="f4577484-51f1-432b-bcad-a17b2b0a98e9" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
+		<workspace tipo="especifico" idIBM="6b8ed933-5592-42c9-a070-e70b30fce858" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>
