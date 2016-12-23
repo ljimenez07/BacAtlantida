@@ -23,8 +23,10 @@
 	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<!-- End Google Tag Manager (noscript) -->
 	
+	<div class="loader" style="display: none; top: 300px; left: 100px;"></div>
+	
 	<div id="modales">
-		<div id="sesion-expirada" class="modal fade" style="display:none;"role="dialog">
+		<div id="sesion-expirada" class="modal fade" style="display:none;" role="dialog">
 			<div class="modal-dialog modal-sm" style="background-color: white;">
 				<div class="modal-body">
 					 Su sesión ha expirado
@@ -92,7 +94,6 @@
 	</div>
 	<script type="text/javascript" src="cordova.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
-	<script type="text/javascript" src="js/angular.min.js"></script>
 	<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
@@ -107,9 +108,19 @@
 	
 	<script  type="text/javascript">
 	
-	function onLoad() {
+	function onLoad()
+	{
 		document.addEventListener("deviceready", onDeviceReady, false);
 	}
+	
+	var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+	var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+	var hw = w / 2;
+	var hh = h / 2;
+	var mw = hw - 20;
+	var mh = hh - 20;
+	$(".loader").css({top: mh + "px", left: mw + "px"});
+	
 	
 	document.addEventListener("backbutton", onBackKeyDown, false);
 
@@ -138,6 +149,8 @@
 	var idUsuario = "";
 	var aunDebeEjecutarCallback = true;
 	var debeEjecutarCallbackEnElCambioDeVista = false;
+	var botonesDeAudio = {chat: false, conocerte: false};
+	var contadorDeCarga = 0;
 	var aux1;
 	var aux2;
 	
@@ -185,7 +198,7 @@
 				{
 					if(audioEnReproduccion != undefined && audioEnReproduccion.callback != undefined)
 					{
-						audio.callback(true);
+						audioEnReproduccion.callback(true);
 					}
 					else
 					{
@@ -209,13 +222,15 @@
 		app.find("#" + href).removeClass("hide");
 		app.find("#" + href).addClass("show");
 		
+		botonesDeAudio = {chat: false, conocerte: false};
+		
 		var botonEscucharMensajes = $("#chat-id-" + href + " .boton-escuchar-mensajes");
 		if(botonEscucharMensajes.hasClass("desactivado"))
 		{
 			botonEscucharMensajes.click();
 		}
 		
-		if( guardarVistaEnHistorial != undefined && guardarVistaEnHistorial)
+		if(guardarVistaEnHistorial != undefined && guardarVistaEnHistorial)
 		{
 			ordenDelasVistas.push( vistaActual );	
 		}
@@ -277,9 +292,10 @@
 			done: function(data)
 			{
 				inicializarPantallas();
-				
-				establecerBienvenida(data.estaLogueado, data.usuarioNombre);
-				idUsuario = data.idUsuario;				
+
+				idUsuario = data.idUsuario;
+				estaLogueado = data.estaLogueado;
+				establecerBienvenida(data.usuarioNombre);
 				
 				if( data.mostrarPopConocerte && 
 					( getCookie("mostrarpopupdeconocerte") == "" || getCookie("mostrarpopupdeconocerte") == "true" ))
@@ -302,7 +318,7 @@
 		bindClickeable();
 	}
 	
-	function establecerBienvenida(estaLogueado, nombreUsuario)
+	function establecerBienvenida(nombreUsuario)
 	{
 		if(estaLogueado)
 		{
@@ -376,9 +392,9 @@
 			estaReproduciendo = false;
 			audios = new Array();
 		};
+		audio.onloadedmetadata = quitarCarga;
 		audio.onplay = function()
 		{
-			console.log("Reproduciendo: " + audio.src)
 			aunDebeEjecutarCallback = false;
 		};
 		audio.callback = callback;
@@ -416,6 +432,7 @@
 	
 	function ajax(param)
 	{
+		agregarCarga();
 		$.ajax({
 			type: param.type != undefined ? param.type : "GET",
 			contentType :param.contentType != undefined ? param.contentType : "application/x-www-form-urlencoded; charset=UTF-8",
@@ -460,6 +477,10 @@
 			{
 				param.fail(XMLHttpRequest, textStatus, textStatus);
 			}
+		})
+		.always(function()
+		{
+			quitarCarga();
 		});
 	}
 	
@@ -489,9 +510,22 @@
 		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 	}
 	
-	window.onerror = function(a, b, c)
+	function agregarCarga()
 	{
-		console.log("Error: " + a + ", " + b + ", " + c);
+		$(".loader").show();
+		contadorDeCarga++;
+	}
+	
+	function quitarCarga()
+	{
+		if(contadorDeCarga > 0)
+		{
+			contadorDeCarga--;
+		}
+		if(contadorDeCarga == 0)
+		{
+			$(".loader").hide();
+		}
 	}
 	</script>
 
