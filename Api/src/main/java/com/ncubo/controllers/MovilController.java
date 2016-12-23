@@ -1,18 +1,16 @@
 package com.ncubo.controllers;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -87,7 +85,7 @@ public class MovilController {
 	
 	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/movil/login", method = RequestMethod.POST)
-	@ResponseBody String login(@RequestBody String mensaje, HttpSession sesion, @RequestParam String name, @RequestParam String password) throws JSONException, JsonParseException, JsonMappingException, IOException, ClassNotFoundException, SQLException 
+	public ResponseEntity<?> login(@RequestBody String mensaje, HttpSession sesion, @RequestParam String name, @RequestParam String password) throws ClassNotFoundException, SQLException, JSONException 
 	{
 		String[] responseLogin = extraerDatos.login(name , password);
 		if(responseLogin[0].equals("S"))
@@ -122,10 +120,17 @@ public class MovilController {
 					.put("idUsuario", usuario.getEstaLogueado() ? usuario.getUsuarioId() : "");
 			
 			
-			return respuesta.toString();
+			return new ResponseEntity<>(respuesta.toString(), HttpStatus.OK);
 		}
 		
-		throw new CredencialesInvalidosException();
+		try
+		{
+			throw new CredencialesInvalidosException();
+		}
+		catch(CredencialesInvalidosException e)
+		{
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+		}
 	}
 
 	//@CrossOrigin(origins = "*")

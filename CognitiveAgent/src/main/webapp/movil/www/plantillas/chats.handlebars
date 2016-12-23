@@ -189,6 +189,8 @@ $(function(){
 								}
 							};
 							
+							aux1 = callback;
+							
 							callbackOnPlay = function()
 							{
 								aunDebeEjecutarCallback = false;
@@ -204,7 +206,6 @@ $(function(){
 							
 							if(!debeReproducirElAudio || indiceDelUltimoMensajeConAudio == undefined)
 							{
-								aux1 = callback;
 								setTimeout(function()
 								{
 									if(aunDebeEjecutarCallback)
