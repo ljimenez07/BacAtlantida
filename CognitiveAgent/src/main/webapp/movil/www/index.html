@@ -23,8 +23,10 @@
 	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<!-- End Google Tag Manager (noscript) -->
 	
+	<div class="loader" style="display: none;"></div>
+	
 	<div id="modales">
-		<div id="sesion-expirada" class="modal fade" style="display:none;"role="dialog">
+		<div id="sesion-expirada" class="modal fade" style="display:none;" role="dialog">
 			<div class="modal-dialog modal-sm" style="background-color: white;">
 				<div class="modal-body">
 					 Su sesión ha expirado
@@ -106,7 +108,16 @@
 	
 	<script  type="text/javascript">
 	
-	function onLoad() {
+	function onLoad()
+	{
+		var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+		var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+		var hw = w / 2;
+		var hh = h / 2;
+		var mw = hw - 20;
+		var mh = hh - 20;
+		$(".loader").css({top: mh + "px", left: mw + "px"});
+		
 		document.addEventListener("deviceready", onDeviceReady, false);
 	}
 	
@@ -138,6 +149,7 @@
 	var aunDebeEjecutarCallback = true;
 	var debeEjecutarCallbackEnElCambioDeVista = false;
 	var botonesDeAudio = {chat: false, conocerte: false};
+	var contadorDeCarga = 0;
 	var aux1;
 	var aux2;
 	
@@ -418,6 +430,9 @@
 	
 	function ajax(param)
 	{
+		var loader = $(".loader");
+		loader.show();
+		contadorDeCarga++;
 		$.ajax({
 			type: param.type != undefined ? param.type : "GET",
 			contentType :param.contentType != undefined ? param.contentType : "application/x-www-form-urlencoded; charset=UTF-8",
@@ -461,6 +476,14 @@
 			if( param.fail != undefined )
 			{
 				param.fail(XMLHttpRequest, textStatus, textStatus);
+			}
+		})
+		.always(function()
+		{
+			contadorDeCarga--;
+			if(contadorDeCarga == 0)
+			{
+				loader.hide();
 			}
 		});
 	}
