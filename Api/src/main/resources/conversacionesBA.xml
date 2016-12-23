@@ -1215,7 +1215,7 @@
 	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
 		<workspace tipo="general" idIBM="255d3122-4ba4-4fbe-9462-f74f3b56e19c" intencionesParaSeReferenciado="">BAIntents</workspace>
 		<workspace tipo="especifico" idIBM="01fa9455-9864-4a0b-8f79-d7e8df69b88e" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
-		<workspace tipo="especifico" idIBM="a2f160fa-09c4-499c-90c2-4f91a0ed5807" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
+		<workspace tipo="especifico" idIBM="ada954b5-1057-479c-860c-720963896e12" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
 		<workspace tipo="especifico" idIBM="0d59d91c-83a6-4a52-89f3-6ab163fdbc73" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
 	</workspaces>
 	
