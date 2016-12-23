@@ -340,6 +340,20 @@ public class TemarioDelBancoAtlantida extends Temario{
 		return resultado;
 	}
 	
+	private Tema noEntendiConocerte()
+	{
+		Tema resultado = new Tema
+		(
+			"noEntendiConocerte",
+			"No entiendo de Conocerte",
+			"BAIntents",
+			true,
+			"out_of_scope",
+			frase("noEntendiConocerte")
+		);
+		return resultado;
+	}
+	
 	private Tema quiereAbrirCuenta()
 	{
 		Tema resultado = new Tema
@@ -619,6 +633,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		temasDelDiscurso.add(preguntarPorHospedaje());
 		temasDelDiscurso.add(preguntarPorBelleza());
 		temasDelDiscurso.add(despedidaConocerte());
+		temasDelDiscurso.add(noEntendiConocerte());
 		
 		temasDelDiscurso.add(saludo());
 		temasDelDiscurso.add(quiereSaldo());

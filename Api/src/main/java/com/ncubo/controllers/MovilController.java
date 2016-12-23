@@ -242,7 +242,7 @@ public class MovilController {
 		return serverCognitivo.verMiTemario();
 	}
 	
-	//@CrossOrigin(origins = "*")
+	/*//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/verElHistoricoDeLaConversacion", method = RequestMethod.GET)
 	@ResponseBody String verElHistoricoDeLaConversacion(@RequestParam(value="id") String id, @RequestParam(value="fecha") String feha){
 		// http://localhost:8080/conversacion/verElHistoricoDeLaConversacion?id=3485fe88-b63c-4502-8ce1-d2519fcf60e3&fecha=2016-12-14%2017:32:49
@@ -252,7 +252,7 @@ public class MovilController {
 	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/buscarConversacionesQueNoHanSidoVerificadasPorTema", method = RequestMethod.GET)
 	@ResponseBody String buscarConversacionesQueNoHanSidoVerificadasPorTema(@RequestParam(value="idTema") String idTema) throws ClassNotFoundException, SQLException{
-		// http://localhost:8080/conversacion/verElHistoricoDeLaConversacion?id=3485fe88-b63c-4502-8ce1-d2519fcf60e3&fecha=2016-12-14%2017:32:49
+		// http://localhost:8080/conversacion/buscarConversacionesQueNoHanSidoVerificadasPorTema?idTema=saludo
 		return serverCognitivo.buscarConversacionesQueNoHanSidoVerificadasPorTema(idTema);
 	}
 	
@@ -267,5 +267,5 @@ public class MovilController {
 	@ResponseBody String cambiarDeEstadoAVerificadoDeLaConversacionConUsuario(@RequestParam(value="idCliente") String idCliente, @RequestParam(value="idSesion") String idSesion, @RequestParam(value="fecha") String fecha) throws ClassNotFoundException, SQLException{
 		// http://localhost:8080/conversacion/verElHistoricoDeLaConversacion?idCliente=123456&idSesion=3485fe88-b63c-4502-8ce1-d2519fcf60e3&fecha=2016-12-14%2017:32:49
 		return serverCognitivo.cambiarDeEstadoAVerificadoDeLaConversacion(idCliente, idSesion, fecha);
-	}
+	}*/
 }
