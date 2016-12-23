@@ -20,7 +20,7 @@
 			<input placeholder="Contraseña" type="password" id="password"name="password" class="form-control" >
 		</div>
 	</div>
-	<div class="row" style="height: 60px;"><div class="col-xs-12"></div></div>
+	<div class="row contenedor-centrado" style="height: 60px;"><div class="col-xs-12 text-center"><span id="contenedor-de-mensajes-login"></span></div></div>
 	<div class="row">
 		<div class="col-xs-12 form-group text-center">
 			<button class="btn form-control">Continuar</button>
@@ -29,9 +29,6 @@
 	<div class="alert alert-danger" style ="display:none;" role="alert"></div>
 	<div class="row" style="height: 300px;"><div class="col-xs-12"></div></div>
 </form>
-<style>
-	
-</style>
 
 <script>
 
@@ -40,30 +37,29 @@ $(function(){
 	{
 		$("#formLogin").submit(function(e) 
 		{
+			$("#contenedor-de-mensajes-login").html();
 			ajax({
 				type: "POST",
 				url: serverDomain + "/movil/login",
 				data: $(this).serialize(),
 				done: function(data) 
 				{
+					console.log(data);
 					estaLogueado = true;
 					
 					cargarInformacionDelUsuario();
 					
 					cambiarVista(vistaActual, true);
 				},
-				fail: function(XMLHttpRequest, textStatus, textStatus) 
+				fail: function(XMLHttpRequest, textStatus, errorThrown) 
 				{
-					if( XMLHttpRequest.responseJSON.exception.includes("CredencialesInvalidosException") )
-					{
-						var alert= $(this).find(".alert");
-					}
+					$("#contenedor-de-mensajes-login").html(XMLHttpRequest.responseText);
 				}
 			});
 			e.preventDefault();
 		});
 
-	}/*CredencialesInvalidosException*/
+	}
 	initLogin();
 
 });

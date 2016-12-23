@@ -1012,9 +1012,10 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>¡Sabes!  A mí me encanta todo tipo de comidas y regularmente salgo a cenar a restaurantes. Si tuvieras la oportunidad, ¿te gustaría salir a cenar o prefieres quedarte en casa?</curioso>
+			<curioso>¡Sabes!  A mí me encanta todo tipo de comidas y regularmente salgo a cenar a restaurantes. @@br/@@@ Si tuvieras la oportunidad, ¿te gustaría salir a cenar o prefieres quedarte en casa?</curioso>
 			<curioso>Durante un fin de semana qué prefieres, ¿quedarte en casa y cocinar; o salir a cenar a un restaurante?</curioso>
-			<impertinente>No entendí tu respuesta. ¿Te gusta ir a restaurantes o quedarte en casa?</impertinente>			
+			<impertinente>No entendí tu respuesta. ¿Te gusta ir a restaurantes o quedarte en casa?</impertinente>	
+			<meRindo>Perdón, pero no entendí tus respuestas. Por el momento, sigamos con otra pregunta.</meRindo>
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>
@@ -1024,8 +1025,9 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>Muy bien, te cuento que para mí es muy cansado tener que pensar qué hacer para la cena, ir de compras y llegar a casa a prepararla. ¿Verdad que es preferible salir a cenar a un restaurante?</curioso>
-			<impertinente>No entendí tu respuesta. ¿Te gusta ir a restaurantes o no?</impertinente>			
+			<curioso>Muy bien, te cuento que para mí es muy cansado tener que pensar qué hacer para la cena, ir de compras y llegar a casa a prepararla. @@br/@@@ ¿Verdad que es preferible salir a cenar a un restaurante?</curioso>
+			<impertinente>No entendí tu respuesta. ¿Te gusta ir a restaurantes o no?</impertinente>		
+			<meRindo>Perdón, pero no entendí tus respuestas. Por el momento, sigamos con otra pregunta.</meRindo>
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>
@@ -1035,9 +1037,10 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>Personalmente creo que lo más importante es compartir mi tiempo libre con familiares y amigos, por eso cuando tengo la oportunidad me escapo a vacacionar a algún nuevo hotel. Cuéntame, ¿cuándo vas de vacaciones te hospedas en un hotel o prefieres acampar?</curioso>	
-			<curioso>A mí me gusta vacacionar y por eso busco hoteles que me brinden alojamiento junto con muchas comodidades y tipos de esparcimiento.  En tu caso, cuando vas de vacaciones, ¿prefieres un hotel o prefieres acampar?</curioso>
+			<curioso>Personalmente creo que lo más importante es compartir mi tiempo libre con familiares y amigos, por eso cuando tengo la oportunidad me escapo a vacacionar a algún nuevo hotel. @@br/@@@ Cuéntame, ¿cuándo vas de vacaciones te hospedas en un hotel o prefieres acampar?</curioso>	
+			<curioso>A mí me gusta vacacionar y por eso busco hoteles que me brinden alojamiento junto con muchas comodidades y tipos de esparcimiento.  @@br/@@@ En tu caso, cuando vas de vacaciones, ¿prefieres un hotel o prefieres acampar?</curioso>
 			<impertinente>Necesito estar seguro, ¿utilizas los hoteles o prefieres acampar?</impertinente>
+			<meRindo>Perdón, pero no entendí tus respuestas.</meRindo>
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>
@@ -1047,8 +1050,9 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>¡Sabes! Yo trabajo mucho y me gusta ir a los hoteles porque no tengo que cocinar y descanso bastante.  Me imagino que por estas razones y, otras más, también te gustaría alojarte en hoteles, ¿Verdad que sí?</curioso>
+			<curioso>¡Sabes! Yo trabajo mucho y me gusta ir a los hoteles porque no tengo que cocinar y descanso bastante.  @@br/@@@ Me imagino que por estas razones y, otras más, también te gustaría alojarte en hoteles, ¿Verdad que sí?</curioso>
 			<impertinente>Perdona pero no entendí tu respuesta. ¿Te gusta ir a hoteles, o no?</impertinente>
+			<meRindo>Perdón, pero no entendí tus respuestas.</meRindo>
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>
@@ -1058,10 +1062,11 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>Te cuento que cuando voy a un hotel me encanta ir a relajarme al spa y contratar un buen masaje. ¡Creo que es una experiencia súper relajante! En tu caso, si tuvieras la oportunidad, cuando estás muy estresado o cansado, ¿harías lo mismo?</curioso>
-			<curioso>¡La sociedad y los gustos han cambiado mucho! La tendencia actual es que tanto hombres como mujeres cuiden más de su apariencia y, por eso, acostumbro visitar salones de belleza para verme y sentirme mejor. Cuéntame, ¿también vas a esos lugares para que te consientan y lucir mucho mejor?</curioso>
-			<curioso>Para mí es súper gratificante recibir un masaje y que además me hagan una limpieza facial porque luego te sientes como nuevo y además luzco muy bien. Cuéntame, ¿te gustaría darte este tipo de gustos?</curioso>
+			<curioso>Te cuento que cuando voy a un hotel me encanta ir a relajarme al spa y contratar un buen masaje. ¡Creo que es una experiencia súper relajante! @@br/@@@ En tu caso, si tuvieras la oportunidad, cuando estás muy estresado o cansado, ¿harías lo mismo?</curioso>
+			<curioso>¡La sociedad y los gustos han cambiado mucho! La tendencia actual es que tanto hombres como mujeres cuiden más de su apariencia y, por eso, acostumbro visitar salones de belleza para verme y sentirme mejor. @@br/@@@ Cuéntame, ¿también vas a esos lugares para que te consientan y lucir mucho mejor?</curioso>
+			<curioso>Para mí es súper gratificante recibir un masaje y que además me hagan una limpieza facial porque luego te sientes como nuevo y además luzco muy bien. @@br/@@@ Cuéntame, ¿te gustaría darte este tipo de gustos?</curioso>
 			<impertinente>Perdona pero no comprendí lo que me respondiste. ¿Vas a salones de belleza, spas o lugares de relajación?</impertinente>
+			<meRindo>Perdón, pero no entendí tus respuestas.</meRindo>
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>
@@ -1071,7 +1076,7 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<frase>Disculpa, pero esas preguntas no las puede responder en este chat de conocerte. Debes pasarse al chat general de consultas.</frase>				
+			<frase>Disculpa, pero esta pregunta no la puedo responder en este chat de conocerte. Debes pasarte al chat general de consultas.</frase>				
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>
@@ -1081,7 +1086,7 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<frase>Actualmente no estoy entrenado para responder ese tipo de preguntas.</frase>				
+			<frase>Actualmente, no estoy entrenada para responder ese tipo de preguntas.</frase>				
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>
@@ -1094,6 +1099,16 @@
 			<frase>¡Genial!, gracias por compartirme tus respuestas, las usaremos para informarte de los beneficios que puedes aprovechar por ser cliente de Banco Atlántida.</frase>		
 			<frase>Gracias por tus respuestas, te estaremos enviando información relevante para ti acerca de promociones y beneficios.</frase>		
 			<frase>¡Muy bien!, al iniciar sesión encontrarás información de promociones y beneficios que podrás aprovechar.</frase>		
+		</frases>		
+		<vinetas></vinetas>		
+	</conversacion>
+	
+	<conversacion id="noEntendiConocerte">		
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>		
+		<enVozAlta>true</enVozAlta>		
+		<frases>		
+			<frase>Perdón,  pero no entendí tus respuestas.</frase>
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>
@@ -1146,7 +1161,7 @@
 		<mandatoria>true</mandatoria>				
 		<enVozAlta>true</enVozAlta>				
 		<frases>	
-			<frase>Hemos terminado la sesión y espero volver a servirte pronto. ¡Hasta luego!</frase>
+			<frase>Hemos terminado la sesión, en breve serás redireccionado a la sección de ofertas. Espero volver a servirte pronto, ¡hasta luego!</frase>
 		</frases>				
 		<vinetas></vinetas>				
 	</conversacion>

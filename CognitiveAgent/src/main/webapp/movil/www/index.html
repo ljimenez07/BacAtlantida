@@ -243,7 +243,7 @@
 		{
 			$("body").css({"overflow": "scroll"});
 			vistaActual = href;
-		}		
+		}
 	}
 	
 	function menu(accion)
@@ -309,7 +309,10 @@
 	function inicializarPantallas()
 	{
 		$(".app #ofertas").html(Handlebars.templates.layout(pantallas["ofertas"]));
-		$(".app #oferta").html(Handlebars.templates.layout(pantallas["oferta"]));
+		if(vistaActual != "oferta")
+		{
+			$(".app #oferta").html(Handlebars.templates.layout(pantallas["oferta"]));
+		}
 		$("#modales").append(Handlebars.templates.popupconocerte(pantallas["popupconocerte"]));
 		$(".app #chat").html(Handlebars.templates.layout(pantallas["chat"]));
 		$(".app #conocerte").html(Handlebars.templates.layout(pantallas["conocerte"]));
@@ -471,7 +474,7 @@
 				param.done(data);
 			}
 		})
-		.fail(function(XMLHttpRequest, textStatus, textStatus) 
+		.fail(function(XMLHttpRequest, textStatus, errorThrown ) 
 		{
 			if( param.fail != undefined )
 			{

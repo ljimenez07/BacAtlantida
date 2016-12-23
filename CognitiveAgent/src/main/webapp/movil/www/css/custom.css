@@ -637,6 +637,12 @@ red
 	align-items: center;
 }
 
+#contenedor-de-mensajes-login
+{
+	color: white;
+	font-size: 11pt;
+}
+
 
 .loader {
   border: 5px solid #D4D4D4;

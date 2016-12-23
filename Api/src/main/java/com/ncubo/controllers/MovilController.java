@@ -1,18 +1,16 @@
 package com.ncubo.controllers;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -87,7 +85,7 @@ public class MovilController {
 	
 	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/movil/login", method = RequestMethod.POST)
-	@ResponseBody String login(@RequestBody String mensaje, HttpSession sesion, @RequestParam String name, @RequestParam String password) throws JSONException, JsonParseException, JsonMappingException, IOException, ClassNotFoundException, SQLException 
+	public ResponseEntity<?> login(@RequestBody String mensaje, HttpSession sesion, @RequestParam String name, @RequestParam String password) throws ClassNotFoundException, SQLException, JSONException 
 	{
 		String[] responseLogin = extraerDatos.login(name , password);
 		if(responseLogin[0].equals("S"))
@@ -122,10 +120,17 @@ public class MovilController {
 					.put("idUsuario", usuario.getEstaLogueado() ? usuario.getUsuarioId() : "");
 			
 			
-			return respuesta.toString();
+			return new ResponseEntity<>(respuesta.toString(), HttpStatus.OK);
 		}
 		
-		throw new CredencialesInvalidosException();
+		try
+		{
+			throw new CredencialesInvalidosException();
+		}
+		catch(CredencialesInvalidosException e)
+		{
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+		}
 	}
 
 	//@CrossOrigin(origins = "*")
@@ -237,7 +242,7 @@ public class MovilController {
 		return serverCognitivo.verMiTemario();
 	}
 	
-	//@CrossOrigin(origins = "*")
+	/*//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/verElHistoricoDeLaConversacion", method = RequestMethod.GET)
 	@ResponseBody String verElHistoricoDeLaConversacion(@RequestParam(value="id") String id, @RequestParam(value="fecha") String feha){
 		// http://localhost:8080/conversacion/verElHistoricoDeLaConversacion?id=3485fe88-b63c-4502-8ce1-d2519fcf60e3&fecha=2016-12-14%2017:32:49
@@ -247,7 +252,7 @@ public class MovilController {
 	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/conversacion/buscarConversacionesQueNoHanSidoVerificadasPorTema", method = RequestMethod.GET)
 	@ResponseBody String buscarConversacionesQueNoHanSidoVerificadasPorTema(@RequestParam(value="idTema") String idTema) throws ClassNotFoundException, SQLException{
-		// http://localhost:8080/conversacion/verElHistoricoDeLaConversacion?id=3485fe88-b63c-4502-8ce1-d2519fcf60e3&fecha=2016-12-14%2017:32:49
+		// http://localhost:8080/conversacion/buscarConversacionesQueNoHanSidoVerificadasPorTema?idTema=saludo
 		return serverCognitivo.buscarConversacionesQueNoHanSidoVerificadasPorTema(idTema);
 	}
 	
@@ -262,5 +267,5 @@ public class MovilController {
 	@ResponseBody String cambiarDeEstadoAVerificadoDeLaConversacionConUsuario(@RequestParam(value="idCliente") String idCliente, @RequestParam(value="idSesion") String idSesion, @RequestParam(value="fecha") String fecha) throws ClassNotFoundException, SQLException{
 		// http://localhost:8080/conversacion/verElHistoricoDeLaConversacion?idCliente=123456&idSesion=3485fe88-b63c-4502-8ce1-d2519fcf60e3&fecha=2016-12-14%2017:32:49
 		return serverCognitivo.cambiarDeEstadoAVerificadoDeLaConversacion(idCliente, idSesion, fecha);
-	}
+	}*/
 }

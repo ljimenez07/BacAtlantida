@@ -189,12 +189,16 @@ public class Conversacion {
 			String sePreocupaPorLaSalud = respuesta.messageResponse().getContext().get("sePreocupaPorLaSalud").toString();
 			
 			participante.actualizarValoresDeConocerte(leGustaLosHoteles, leGustaComerAfuera, sePreocupaPorLaSalud);
-			
 		}
 		
 		if(agente.hayQueCambiarDeTemaWSEspecifico()){
 			if(this.temaActualDelWorkSpaceEspecifico != null){
 				ponerComoYaTratadoTemaEspecifico(this.temaActualDelWorkSpaceEspecifico);
+			}
+			
+			if(agente.seTieneQueAbordarElTemaEspecifico()){
+				agente.yaNoSeTieneQueAbordarElTemaEspecifico();
+				misSalidas.add(agente.volverAPreguntarConMeRindo(fraseActualDelWorkSpaceEspecifico, respuesta, temaActualDelWorkSpaceEspecifico, true));
 			}
 			
 			String idFraseActivada = "";
@@ -246,7 +250,7 @@ public class Conversacion {
 			hilo.borrarTemasEspecificosYaDichos();
 		}
 		if(misSalidas.isEmpty()){
-			decirTemaNoEntendi(misSalidas, respuesta);
+			decirTemaNoEntendiEspecifico(misSalidas, respuesta);
 		}
 		
 		return misSalidas;
@@ -260,6 +264,16 @@ public class Conversacion {
 		misSalidas.add(agente.decir(fueraDeContexto, respuesta, temaActual));
 		fraseActual = fueraDeContexto;
 		ponerComoYaTratado(this.temaActual);
+	}
+	
+	private void decirTemaNoEntendiEspecifico(ArrayList<Salida> misSalidas, Respuesta respuesta){
+		System.out.println("No entendi bien en Conocerte ...");
+		this.temaActualDelWorkSpaceEspecifico = this.temario.buscarTema(Constantes.INTENCION_NO_ENTIENDO_ESPECIFICO);
+		
+		Afirmacion fueraDeContexto = (Afirmacion) this.temaActualDelWorkSpaceEspecifico.buscarUnaFrase(Constantes.INTENCION_NO_ENTIENDO_ESPECIFICO);
+		misSalidas.add(agente.decir(fueraDeContexto, respuesta, temaActualDelWorkSpaceEspecifico));
+		fraseActualDelWorkSpaceEspecifico = fueraDeContexto;
+		ponerComoYaTratadoTemaEspecifico(this.temaActualDelWorkSpaceEspecifico);
 	}
 	
 	private void agregarVariablesDeContextoDelClienteAWatson(Tema tema){
