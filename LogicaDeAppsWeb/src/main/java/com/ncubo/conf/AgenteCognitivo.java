@@ -141,10 +141,13 @@ public class AgenteCognitivo
 				
 				texto = extraerDatos.obtenerTasaCambio(texto);
 				
-				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("texto", texto);
-				jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(texto, true));	
-				arrayList.put(jsonObject);
+				if(!arrayList.toString().contains("\"texto\":\""+texto+"\""))
+				{
+					JSONObject jsonObject = new JSONObject();
+					jsonObject.put("texto", texto);
+					jsonObject.put("audio", urlPublicaAudios+TextToSpeechWatson.getInstance().getAudioToURL(texto, true));	
+					arrayList.put(jsonObject);
+				}
 			}
 			else if(idFrase.equals("movimientosTarjeta") || idFrase.equals("movimientosCuenta") && usuario.getEstaLogueado())
 			{
