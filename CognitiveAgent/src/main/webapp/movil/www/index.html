@@ -92,7 +92,6 @@
 	</div>
 	<script type="text/javascript" src="cordova.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
-	<script type="text/javascript" src="js/angular.min.js"></script>
 	<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
@@ -139,7 +138,6 @@
 	var aunDebeEjecutarCallback = true;
 	var debeEjecutarCallbackEnElCambioDeVista = false;
 	var botonesDeAudio = {chat: false, conocerte: false};
-	console.log(botonesDeAudio);
 	var aux1;
 	var aux2;
 	
@@ -383,7 +381,6 @@
 		};
 		audio.onplay = function()
 		{
-			console.log("Reproduciendo: " + audio.src)
 			aunDebeEjecutarCallback = false;
 		};
 		audio.callback = callback;
@@ -492,11 +489,6 @@
 		d.setTime(d.getTime() + (exdays*24*60*60*1000));
 		var expires = "expires="+ d.toUTCString();
 		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-	}
-	
-	window.onerror = function(a, b, c)
-	{
-		console.log("Error: " + a + ", " + b + ", " + c);
 	}
 	</script>
 
