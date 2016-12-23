@@ -23,7 +23,7 @@
 	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<!-- End Google Tag Manager (noscript) -->
 	
-	<div class="loader" style="display: none;"></div>
+	<div class="loader" style="display: none; top: 300px; left: 100px;"></div>
 	
 	<div id="modales">
 		<div id="sesion-expirada" class="modal fade" style="display:none;" role="dialog">
@@ -110,16 +110,17 @@
 	
 	function onLoad()
 	{
-		var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-		var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-		var hw = w / 2;
-		var hh = h / 2;
-		var mw = hw - 20;
-		var mh = hh - 20;
-		$(".loader").css({top: mh + "px", left: mw + "px"});
-		
 		document.addEventListener("deviceready", onDeviceReady, false);
 	}
+	
+	var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+	var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+	var hw = w / 2;
+	var hh = h / 2;
+	var mw = hw - 20;
+	var mh = hh - 20;
+	$(".loader").css({top: mh + "px", left: mw + "px"});
+	
 	
 	document.addEventListener("backbutton", onBackKeyDown, false);
 
@@ -391,6 +392,7 @@
 			estaReproduciendo = false;
 			audios = new Array();
 		};
+		audio.onloadedmetadata = quitarCarga;
 		audio.onplay = function()
 		{
 			aunDebeEjecutarCallback = false;
@@ -430,9 +432,7 @@
 	
 	function ajax(param)
 	{
-		var loader = $(".loader");
-		loader.show();
-		contadorDeCarga++;
+		agregarCarga();
 		$.ajax({
 			type: param.type != undefined ? param.type : "GET",
 			contentType :param.contentType != undefined ? param.contentType : "application/x-www-form-urlencoded; charset=UTF-8",
@@ -480,11 +480,7 @@
 		})
 		.always(function()
 		{
-			contadorDeCarga--;
-			if(contadorDeCarga == 0)
-			{
-				loader.hide();
-			}
+			quitarCarga();
 		});
 	}
 	
@@ -512,6 +508,24 @@
 		d.setTime(d.getTime() + (exdays*24*60*60*1000));
 		var expires = "expires="+ d.toUTCString();
 		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
+	
+	function agregarCarga()
+	{
+		$(".loader").show();
+		contadorDeCarga++;
+	}
+	
+	function quitarCarga()
+	{
+		if(contadorDeCarga > 0)
+		{
+			contadorDeCarga--;
+		}
+		if(contadorDeCarga == 0)
+		{
+			$(".loader").hide();
+		}
 	}
 	</script>
 

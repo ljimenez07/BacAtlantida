@@ -646,7 +646,8 @@ red
   height: 40px;
   -webkit-animation: spin 1s linear infinite;
   animation: spin 1s linear infinite;
-  position: absolute;
+  position: fixed;
+  z-index: 10;
 }
 
 @-webkit-keyframes spin {
