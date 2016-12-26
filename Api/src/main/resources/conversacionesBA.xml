@@ -301,7 +301,7 @@
 		<frases>
 			<frase>Fue un placer ayudarte, ¡que pases un feliz día! @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
 			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
-			<frase>Es un placer servirle y recuerde que le atendemos las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase>Es un placer servirte y recuerde que te atendemos las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
 			<frase>Hasta luego, fue un gusto atenderte. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
 		</frases>
 		<vinetas></vinetas>
@@ -725,7 +725,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para solicitar un préstamo personal debes presentar: @@br/@@@ @@br/@@@ 1)@@!Original y copia de tarjeta de identidad. @@br/@@@ 2)@@!*Fotocopia de último recibo público ya sea agua, luz o teléfono. @@br/@@@ 3)@@!Copia de RTN numérico. @@br/@@@ 4)@@!Constancia  de trabajo donde indique cargo, sueldo y antigüedad. @@br/@@@ @@br/@@@ Además debes cumplir con las siguientes condiciones: @@br/@@@ @@br/@@@ 1)@@!Un año de laborar en empresa privada y dos en sector público. @@br/@@@ 2)@@!Ingreso mínimo mensual sea de 12 500 Lempiras (tega, Sps y la Ceiba) y 9 500 Lempiras (el resto del país). @@br/@@@ 3)@@!Ser mayor de 21 años. @@br/@@@ 4)@@!En el caso de ser comerciante individual presentar los estados financieros de los dos últimos años autenticados por un perito, estados de cuenta bancario de los dos últimos meses y el permiso de operación del negocio.</frase>
+			<frase>Para solicitar un préstamo personal debes presentar: @@br/@@@ @@br/@@@ 1)@@!Original y copia de tarjeta de identidad. @@br/@@@ 2)@@!Fotocopia de último recibo público ya sea agua, luz o teléfono. @@br/@@@ 3)@@!Copia de RTN numérico. @@br/@@@ 4)@@!Constancia  de trabajo donde indique cargo, sueldo y antigüedad. @@br/@@@ @@br/@@@ Además debes cumplir con las siguientes condiciones: @@br/@@@ @@br/@@@ 1)@@!Un año de laborar en empresa privada y dos en sector público. @@br/@@@ 2)@@!Ingreso mínimo mensual sea de 12 500 Lempiras (tega, Sps y la Ceiba) y 9 500 Lempiras (el resto del país). @@br/@@@ 3)@@!Ser mayor de 21 años. @@br/@@@ 4)@@!En el caso de ser comerciante individual presentar los estados financieros de los dos últimos años autenticados por un perito, estados de cuenta bancario de los dos últimos meses y el permiso de operación del negocio.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -1212,11 +1212,11 @@
 		<variable nombre="sePreocupaPorLaSalud" tipo="double">0</variable>
 	</variablesDeAmbiente>
 	
-	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
-		<workspace tipo="general" idIBM="255d3122-4ba4-4fbe-9462-f74f3b56e19c" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="01fa9455-9864-4a0b-8f79-d7e8df69b88e" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
-		<workspace tipo="especifico" idIBM="ada954b5-1057-479c-860c-720963896e12" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="0d59d91c-83a6-4a52-89f3-6ab163fdbc73" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
+	<workspaces user="c2bbaaba-491a-4c2c-81ce-63dbc88b69c9" pass="2xtXzqmmzXAe">
+		<workspace tipo="general" idIBM="84c0ed58-2bec-4149-96b8-5c514256ff41" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="especifico" idIBM="45a89ccc-20bf-435c-af1f-efd014090609" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
+		<workspace tipo="especifico" idIBM="94f2b5c9-149b-404e-ae3c-cfd214ba7a53" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
+		<workspace tipo="especifico" idIBM="6c27df42-5953-414b-87a8-b41039221268" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>
