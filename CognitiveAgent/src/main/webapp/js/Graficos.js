@@ -31,14 +31,14 @@ function graficoDePastel(labelsMegusta, seriesMegusta, labelsNomegusta, seriesNo
 		var ctx = document.getElementById('megusta');
 		var ctx2 = document.getElementById('nomegusta');
 
-		totalLikesDiv.innerHTML = "Total Me gusta " + sumaTotalLikes;
-		totalDislikesDiv.innerHTML = "Total No Me gusta " + sumaTotalDislikes;
+		totalLikesDiv.innerHTML = "Total de \"Me gusta\": " + sumaTotalLikes;
+		totalDislikesDiv.innerHTML = "Total de \"No me gusta\": " + sumaTotalDislikes;
 		
 		var colores = [];
-		for(etiqueta of labelsMegusta)
+		labelsMegusta.forEach(function(etiqueta)
 		{
 			colores.push(generarColor());
-		}
+		});
 		generarColor();
 		
 		var data = 
