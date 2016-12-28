@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -176,30 +174,27 @@ public class OfertaDao
 	public void insertarCategorias(int idOferta, ArrayList<CategoriaOferta> categorias) throws ClassNotFoundException, SQLException
 	{
 		Connection con = dao.openConBD();
-		for( CategoriaOferta categoria : categorias)
+		for(CategoriaOferta categoria : categorias)
 		{
 			String query ="";
 			query += "INSERT INTO categoria_con_oferta_y_peso (idCategoria, idOferta, peso) VALUES ";
-			query += "("+categoria.getId()+", "+idOferta+","+categoria.getPeso()+") ";
-			query += "ON DUPLICATE KEY UPDATE peso = "+categoria.getPeso()+" ; ";
+			query += "(" + categoria.getId() + ", " + idOferta + ", " + categoria.getPeso() + ") ";
+			query += "ON DUPLICATE KEY UPDATE peso = " + categoria.getPeso() + ";";
 			
 			PreparedStatement preparedStatement = con.prepareStatement(query);
 			preparedStatement.executeUpdate();
-			
 		}
-
 		
 		dao.closeConBD();
-
 	}
 	
-	private Categorias categoriasPorOferta( Connection con, int idOferta) throws SQLException
+	private Categorias categoriasPorOferta(Connection con, int idOferta) throws SQLException
 	{
 		String query = 
 			"SELECT "
 			+ "peso, idCategoria "
 			+ "FROM categoria_con_oferta_y_peso "
-			+ "WHERE idOferta = ? ";
+			+ "WHERE idOferta = ?;";
 		
 		PreparedStatement stmt = con.prepareStatement(query);
 		stmt.setInt(1, idOferta);
@@ -215,7 +210,6 @@ public class OfertaDao
 			
 			CategoriaOferta categoria = new CategoriaOferta( id, "", peso);
 			categorias.agregar(categoria);
-	
 		}
 		
 		return categorias;

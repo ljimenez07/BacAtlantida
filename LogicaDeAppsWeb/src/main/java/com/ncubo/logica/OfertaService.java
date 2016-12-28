@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -17,12 +15,9 @@ import org.springframework.validation.BindingResult;
 import com.ncubo.conf.Usuario;
 import com.ncubo.dao.OfertaDao;
 import com.ncubo.dao.UsuarioDao;
-import com.ncubo.data.Belleza;
 import com.ncubo.data.Categorias;
-import com.ncubo.data.Hotel;
 import com.ncubo.data.Indice;
 import com.ncubo.data.Oferta;
-import com.ncubo.data.Restaurate;
 import com.ncubo.util.GestorDeArchivos;
 
 @Component
@@ -99,7 +94,6 @@ public class OfertaService
 				usuarioDao.marcarComoNoVistoElPopupDeNuevasOfertas( usuario.getIdSesion() );
 			}
 		}
-		
 	}
 	
 	public void modificar(Oferta oferta) throws ClassNotFoundException, SQLException, IOException
