@@ -89,6 +89,22 @@
 					</div>
 				</div>
 			</div>
+			<div class="row centrar" th:if="${consultasFiltradas} == null">
+				<div class="table-responsive">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th class="text-center titulo-tabla-ca">Tema consultado</th>
+								<th class="text-center titulo-tabla-ca">Cantidad</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td colspan="2" class="texto-normal-ca" th:text="No se encontraron coincidencias para este rango de fechas."/>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			<div class="row centrar" th:unless="${consultasFiltradas} == null">
 				<div class="table-responsive" th:if="${not #lists.isEmpty(consultasFiltradas)}">
 					<table class="table table-bordered">

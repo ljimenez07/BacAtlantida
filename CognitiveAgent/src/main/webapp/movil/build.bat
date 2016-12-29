@@ -9,7 +9,11 @@ call handlebars ./www/plantillas/oferta.handlebars -f ./www/js/oferta.handlebars
 call handlebars ./www/plantillas/popupconocerte.handlebars -f ./www/js/popupconocerte.handlebars.js 
 call handlebars ./www/plantillas/login.handlebars -f ./www/js/login.handlebars.js 
 
-rem rm -rf platforms
-rem cordova platform add ios
-rem cordova platform add android
-cordova run android
+IF [%2] == [] GOTO :EOF
+
+rd /s /q platforms
+cordova platform add %2
+cordova plugin add cordova-plugin-queries-schemes
+cordova plugin add cordova-plugin-x-socialsharing
+cordova plugin add cordova-plugin-whitelist
+cordova build %2
