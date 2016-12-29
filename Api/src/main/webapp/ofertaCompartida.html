@@ -1,14 +1,39 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-	<!-- You can use Open Graph tags to customize link previews.
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+<!-- You can use Open Graph tags to customize link previews.
 	Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
-	<meta property="og:url"           th:content="${url}" />
-	<meta property="og:type"          content="website" />
-	<meta property="og:title"         content="Ofertas - Banco Atl&aacute;ntida" />
-	<meta property="og:description"   th:content="${oferta.tituloDeOferta}" />
-	<meta property="og:image"         th:content="${baseURL + '/archivossubidos/' + oferta.imagenParaMostrar}" />
-	<title>Banco Atl&aacute;ntida</title>
+<meta property="og:url" th:content="${url}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Ofertas - Banco Atl&aacute;ntida" />
+<meta property="og:description" th:content="${oferta.tituloDeOferta}" />
+<meta property="og:image" th:content="${baseURL + '/archivossubidos/' + oferta.imagenParaMostrar}" />
+<title>Banco Atl&aacute;ntida</title>
+<script th:src="@{/js/jquery.min.js}"></script>
+<link rel="stylesheet" th:href="@{/resources/css/bootstrap.min.css}"></link>
+<link rel="stylesheet" th:href="@{/resources/css/bootstrap-theme.min.css}"></link>
+<script type="text/javascript" th:src="@{/resources/js/bootstrap.js}"></script>
+<link rel="stylesheet" th:href="@{/resources/css/custom.css}"></link>
+<style type="text/css">
+.comercio
+{
+	font-size: 15pt;
+	color: #E92531;
+	font-weight: bold;
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+.titulo
+{
+	
+}
+
+.descripcion
+{
+	
+}
+</style>
 </head>
 <body>
 
@@ -22,16 +47,37 @@
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));</script>
 	
+	<script type="text/javascript">
+	function resizeIframe(iframe)
+	{
+		var altura = iframe.contentWindow.document.body.scrollHeight + 'px';
+		iframe.style.height = altura;
+		var parent = $(iframe).parent();
+		var ancho = parent.width();
+		var minimo = ancho / 4 * 3;
+		parent.css({"height": altura, "min-height": minimo});
+	}
+	</script>
+	
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-12 text-center">
+			<div class="col-xs-12 text-left">
 				<div th:if="${oferta.esHtml}">
-					<iframe class="html-de-oferta" frameBorder="0" scrolling="no" seamless="seamless" th:id="${'html-de-oferta-' + oferta.idOferta}" style="display:block; width:100%; height:100vh;" th:src="@{/archivossubidos/} + ${oferta.imagenPublicidadPath}"></iframe>
+					<iframe class="html-de-oferta" frameBorder="0" scrolling="no" seamless="seamless" th:id="${'html-de-oferta-' + oferta.idOferta}" style="display:block; width:100%;" onload="resizeIframe(this)" th:src="@{/archivossubidos/} + ${oferta.imagenPublicidadPath}"></iframe>
 				</div>
 				<div th:unless="${oferta.esHtml}">
 					<img th:src="@{/archivossubidos/} + ${oferta.imagenPublicidadPath}" style="max-width: 100%;"></img>
 				</div>
 			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 comercio" th:text="${oferta.comercio}"></div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 titulo" th:text="${oferta.tituloDeOferta}"></div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 descripcion" th:text="${oferta.descripcion}"></div>
 		</div>
 	</div>
 	<br />

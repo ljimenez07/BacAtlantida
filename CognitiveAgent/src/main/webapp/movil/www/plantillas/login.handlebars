@@ -1,12 +1,4 @@
 <form id="formLogin">
-	<div class="row">
-		<div class="col-xs-12">
-			<div id="image-container" class="text-center">
-				<img alt="Logo Banco Atlantida" src="img/logo-BA-rojo.png" class="img-responsive imagen-centrada"/>
-			</div>
-		</div>
-	</div>
-	<div class="row" style="height: 25px;"><div class="col-xs-12"></div></div>
 	<div class="row mensaje-bienvenida-login"><div class="col-xs-12 text-center">Nuestra Asesora Bancaria Interactiva te da la bienvenida, ingresa con tus credenciales de Atl&aacute;ntida Online.</div></div>
 	<div class="row" style="height: 25px;"><div class="col-xs-12"></div></div>
 	<div class="row">
@@ -17,7 +9,7 @@
 	<div class="row" style="height: 40px;"><div class="col-xs-12"></div></div>
 	<div class="row">
 		<div class="col-xs-12 form-group">
-			<input placeholder="Contraseña" type="password" id="password"name="password" class="form-control" >
+			<input placeholder="Contraseña" type="password" id="password" name="password" class="form-control" >
 		</div>
 	</div>
 	<div class="row contenedor-centrado" style="height: 60px;"><div class="col-xs-12 text-center"><span id="contenedor-de-mensajes-login"></span></div></div>
@@ -35,6 +27,8 @@
 $(function(){
 	function initLogin()
 	{
+		$("#login .botonDeIngresar").remove();
+		
 		$("#formLogin").submit(function(e) 
 		{
 			$("#contenedor-de-mensajes-login").html();
