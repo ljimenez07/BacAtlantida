@@ -210,7 +210,7 @@ public class Oferta implements Comparable<Oferta>
 	
 	public boolean getEsHtml()
 	{
-		return imagenPublicidadPath.endsWith(".html");
+		return imagenPublicidadPath.endsWith(".html") || imagenPublicidadPath.endsWith(".htm") || imagenPublicidadPath.endsWith(".HTML") || imagenPublicidadPath.endsWith(".HTM");
 	}
 	
 	public String getImagenParaMostrar()
