@@ -393,7 +393,7 @@
 	
 	function agregarAColaDeReproduccion(pathDelArchivo, callback)
 	{
-		var audio = new Audio(serverDomain + pathDelArchivo + "d");
+		var audio = new Audio(serverDomain + pathDelArchivo);
 		audio.estaCargando = true;
 		audio.onerror = function(e){
 			console.log("Error de audio: " + audio.src);
