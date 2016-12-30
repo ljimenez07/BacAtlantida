@@ -40,51 +40,67 @@
 				</div>
 			</div>		
 		</div>
-	</div>
 	
-	<div id="nuevasOfertas" class="modal fade" style=""role="dialog">
-		<div class="modal-dialog modal-sm" style="background-color: white;">
-			<div class="modal-body">
-				¡ Hay nuevas ofertas para ti ! 
-			</div>
-			<div class="modal-footer">
-				<div class="row">
-					<div class="col-xs-12">
-						<button data-after="quitarModalNuevasOfertas()" class="btn btn-default clickable">Aceptar</button>
+		<div id="nuevasOfertas" class="modal fade" style=""role="dialog">
+			<div class="modal-dialog modal-sm" style="background-color: white;">
+				<div class="modal-body">
+					¡Hay nuevas ofertas para ti! 
+				</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-xs-12">
+							<button data-after="quitarModalNuevasOfertas()" class="btn btn-default clickable">Aceptar</button>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>		
-	</div>
-
-	<div data-accion="ocultar-menu" class="modal modal-menu clickable" style="display: none">
-		<div class="container menu" style="display: none;">
-			<div data-href="conocerte" class="row clickable" id="menu-item-conocerte" style="display: none;">
-				<div class="col-xs-2 contenedor-imagen-menu">
-					<div class="icono-conocerme"></div>
+			</div>		
+		</div>
+	
+		<div id="compartirNoSoportado" class="modal fade" style=""role="dialog">
+			<div class="modal-dialog modal-sm" style="background-color: white;">
+				<div class="modal-body">
+					Lo siento, la opci&oacute;n de compartir no est&aacute; disponible para esta plataforma.
 				</div>
-				<div class="col-xs-10 contenedor-texto-menu">
-					<div>Conocerme</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-xs-12">
+							<button data-after="quitarModalCompartirNoSoportado()" class="btn btn-default clickable">Aceptar</button>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div data-href="chat" class="row clickable">
-				<div class="col-xs-2 contenedor-imagen-menu">
-					<div class="icono-consultar"></div>
+			</div>		
+		</div>
+	
+		<div data-accion="ocultar-menu" class="modal modal-menu clickable" style="display: none">
+			<div class="container menu" style="display: none;">
+				<div data-href="conocerte" class="row clickable" id="menu-item-conocerte" style="display: none;">
+					<div class="col-xs-2 contenedor-imagen-menu">
+						<div class="icono-conocerme"></div>
+					</div>
+					<div class="col-xs-10 contenedor-texto-menu">
+						<div>Conocerme</div>
+					</div>
 				</div>
-				<div class="col-xs-10 contenedor-texto-menu">
-					<div>Consultar</div>
+				<div data-href="chat" class="row clickable">
+					<div class="col-xs-2 contenedor-imagen-menu">
+						<div class="icono-consultar"></div>
+					</div>
+					<div class="col-xs-10 contenedor-texto-menu">
+						<div>Consultar</div>
+					</div>
 				</div>
-			</div>
-			<div data-accion="salir" class="row clickable" id="menu-item-salir" style="display: none;">
-				<div class="col-xs-2 contenedor-imagen-menu">
-					<div class="icono-salir"></div>
-				</div>
-				<div class="col-xs-10 contenedor-texto-menu">
-					<div>Salir</div>
+				<div data-accion="salir" class="row clickable" id="menu-item-salir" style="display: none;">
+					<div class="col-xs-2 contenedor-imagen-menu">
+						<div class="icono-salir"></div>
+					</div>
+					<div class="col-xs-10 contenedor-texto-menu">
+						<div>Salir</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 	<div class="app">
 		<div id="ofertas" class="show" ></div>
 		<div id="oferta" class="hide" ></div>
@@ -167,11 +183,16 @@
 	
 	var mensajesDeErrorEnAudio = ["", {code: 1, "message": "MEDIA_ERR_ABORTED"}, {code: 2, "message": "MEDIA_ERR_NETWORK"}, {code: 3, "message": "MEDIA_ERR_DECODE"}, {code: 4, "message": "MEDIA_ERR_SRC_NOT_SUPPORTED"}];
 	
-	
 	function quitarModalNuevasOfertas()
 	{
 		$("#nuevasOfertas").modal('hide');
 	}
+	
+	function quitarModalCompartirNoSoportado()
+	{
+		$("#compartirNoSoportado").modal('hide');
+	}
+	
 	function quitarModal()
 	{
 		setCookie('mostrarpopupdeconocerte', false);
