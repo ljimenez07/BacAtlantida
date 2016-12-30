@@ -16,4 +16,5 @@ cordova platform add %2
 cordova plugin add cordova-plugin-queries-schemes
 cordova plugin add cordova-plugin-x-socialsharing
 cordova plugin add cordova-plugin-whitelist
+cordova plugin add cordova-plugin-splashscreen
 cordova build %2
