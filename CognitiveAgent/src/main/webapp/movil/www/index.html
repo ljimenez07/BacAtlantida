@@ -113,14 +113,25 @@
 		document.addEventListener("deviceready", onDeviceReady, false);
 	}
 	
-	var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-	var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-	var hw = w / 2;
-	var hh = h / 2;
-	var mw = hw - 20;
-	var mh = hh - 20;
-	$(".loader").css({top: mh + "px", left: mw + "px"});
+	function actualizarDimensiones()
+	{
+		var anchura = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+		var altura = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+		var mediaAnchura = anchura / 2;
+		var mediaAltura = altura / 2;
+		var anchuraCalculada = mediaAnchura - 20;
+		var alturaCalculada = mediaAltura - 20;
+		$(".loader").css({top: alturaCalculada + "px", left: anchuraCalculada + "px"});
+		
+		$("#fondo-del-login").height(altura - 437);
+	}
 	
+	actualizarDimensiones();
+	
+	$(window).on('resize', function()
+	{
+		actualizarDimensiones();
+	});
 	
 	document.addEventListener("backbutton", onBackKeyDown, false);
 
@@ -235,13 +246,8 @@
 			ordenDelasVistas.push( vistaActual );	
 		}
 		
-		if(href == "login")
+		if(href != "login")
 		{
-			$("body").css({"overflow": "hidden"});
-		}
-		else
-		{
-			$("body").css({"overflow": "scroll"});
 			vistaActual = href;
 		}
 	}

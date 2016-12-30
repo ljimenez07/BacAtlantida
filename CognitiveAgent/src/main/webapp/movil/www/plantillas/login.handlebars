@@ -19,7 +19,7 @@
 		</div>
 	</div>
 	<div class="alert alert-danger" style ="display:none;" role="alert"></div>
-	<div class="row" style="height: 300px;"><div class="col-xs-12"></div></div>
+	<div class="row" id="fondo-del-login" style="height: 300px;"></div>
 </form>
 
 <script>
@@ -28,6 +28,8 @@ $(function(){
 	function initLogin()
 	{
 		$("#login .botonDeIngresar").remove();
+		
+		actualizarDimensiones();
 		
 		$("#formLogin").submit(function(e) 
 		{
