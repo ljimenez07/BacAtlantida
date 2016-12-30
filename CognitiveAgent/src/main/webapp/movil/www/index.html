@@ -393,15 +393,25 @@
 	
 	function agregarAColaDeReproduccion(pathDelArchivo, callback)
 	{
-		var audio = new Audio(serverDomain + pathDelArchivo);
+		var audio = new Audio(serverDomain + pathDelArchivo + "d");
+		audio.estaCargando = true;
 		audio.onerror = function(e){
 			console.log("Error de audio: " + audio.src);
 			console.log(mensajesDeErrorEnAudio[e.currentTarget.error.code]);
 			setTimeout(callback, 15000);
 			estaReproduciendo = false;
+			if(audio.estaCargando)
+			{
+				audio.estaCargando = false;
+				quitarCarga();
+			}
 			audios = new Array();
 		};
-		audio.onloadedmetadata = quitarCarga;
+		audio.onloadedmetadata = function()
+		{
+			audio.estaCargando = false;
+			quitarCarga();
+		};
 		audio.onplay = function()
 		{
 			aunDebeEjecutarCallback = false;
