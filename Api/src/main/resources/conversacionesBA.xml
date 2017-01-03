@@ -173,7 +173,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Por ahora solo puedo proporcionar el disponible de tu tarjeta de crédito y de tu cuenta de ahorros. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 - 80 - 10 - 10 @@br/@@@ San Pedro Sula: 25 - 80 - 10 - 10 @@br/@@@ La Ceiba: 24 - 80 - 10 - 10</frase>
+			<frase>Por ahora solo puedo proporcionar el disponible de tu tarjeta de crédito y de tu cuenta de ahorros. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22  80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
