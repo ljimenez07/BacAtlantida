@@ -158,7 +158,15 @@ function compartir(id, pathImagen, titulo)
 		console.log("Sharing failed with message: " + msg);
 	}
 	
-	window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
+	try
+	{
+		window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
+	}
+	catch(err)
+	{
+		quitarCarga();
+		$("#compartirNoSoportado").modal('show');
+	}
 }
 
 function agregarDominioAImagenes()

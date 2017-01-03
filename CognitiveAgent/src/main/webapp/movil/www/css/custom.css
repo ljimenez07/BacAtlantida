@@ -585,17 +585,29 @@ red
 	cursor: pointer;
 }
 
-#oferta .detalle-de-oferta
-{
-	margin-top: 75px;
-}
-
 #ofertas .overlay
 {
 	z-index: 3;
 	position: relative;
 	top: 0;
 	left: 0;
+}
+
+#oferta .detalle-de-oferta
+{
+	margin-top: 75px;
+}
+
+#oferta .label-restricciones, #oferta .label-ciudad
+{
+	color: #E92531;
+	font-weight: bold;
+	margin-top: 5px;
+}
+
+.letra-small
+{
+	font-size: small;
 }
 
 
@@ -605,14 +617,12 @@ red
 
 #formLogin
 {
-	margin-top: 25%;
-	overflow: hidden;
+	margin-top: 85px;
 }
 
 #login .panel-body
 {
 	background-color: #E92531;
-	overflow: hidden;
 }
 
 #login .btn 

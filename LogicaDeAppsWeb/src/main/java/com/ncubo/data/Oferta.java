@@ -210,7 +210,7 @@ public class Oferta implements Comparable<Oferta>
 	
 	public boolean getEsHtml()
 	{
-		return imagenPublicidadPath.endsWith(".html");
+		return imagenPublicidadPath.endsWith(".html") || imagenPublicidadPath.endsWith(".htm") || imagenPublicidadPath.endsWith(".HTML") || imagenPublicidadPath.endsWith(".HTM");
 	}
 	
 	public String getImagenParaMostrar()
@@ -325,14 +325,16 @@ public class Oferta implements Comparable<Oferta>
 	
 	public boolean cambioLaDescripcion()
 	{
-		return ! descripcion.trim().equals( descripcionAnterior.trim() );
+		return ! descripcion.trim().equals(descripcionAnterior.trim());
 	}
 
-	public String getDescripcionAudio() {
+	public String getDescripcionAudio()
+	{
 		return descripcionAudio;
 	}
 
-	public void setDescripcionAudio(String descripcionAudio) {
+	public void setDescripcionAudio(String descripcionAudio)
+	{
 		this.descripcionAudio = descripcionAudio;
 	}
 	
@@ -348,11 +350,12 @@ public class Oferta implements Comparable<Oferta>
 		return bindingResult;
 	}
 
-	public Categorias getCategorias() {
+	public Categorias getCategorias()
+	{
 		return categorias;
 	}
 
-	public void setCategorias( Categorias categorias) 
+	public void setCategorias(Categorias categorias) 
 	{
 		this.categorias = categorias;
 	}
@@ -362,7 +365,7 @@ public class Oferta implements Comparable<Oferta>
 		categorias.agregar( categoria );
 	}
 
-	public double distanciaEuclidianaDeCategoria(Belleza bellezaArg, Hotel hotelArg, Restaurate restaurateArg) 
+	public double distanciaEuclidianaDeCategoria(Belleza bellezaArg, Hotel hotelArg, Restaurante restaurateArg) 
 	{
 		//TODO debe sacarse la distancia por el mismo tipo de categoria
 		int index = categorias.indexOf( bellezaArg );
@@ -382,7 +385,4 @@ public class Oferta implements Comparable<Oferta>
 		
 		return distancia;
 	}
-	
-	
-		
 }

@@ -40,51 +40,67 @@
 				</div>
 			</div>		
 		</div>
-	</div>
 	
-	<div id="nuevasOfertas" class="modal fade" style=""role="dialog">
-		<div class="modal-dialog modal-sm" style="background-color: white;">
-			<div class="modal-body">
-				¡ Hay nuevas ofertas para ti ! 
-			</div>
-			<div class="modal-footer">
-				<div class="row">
-					<div class="col-xs-12">
-						<button data-after="quitarModalNuevasOfertas()" class="btn btn-default clickable">Aceptar</button>
+		<div id="nuevasOfertas" class="modal fade" style=""role="dialog">
+			<div class="modal-dialog modal-sm" style="background-color: white;">
+				<div class="modal-body">
+					¡Hay nuevas ofertas para ti! 
+				</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-xs-12">
+							<button data-after="quitarModalNuevasOfertas()" class="btn btn-default clickable">Aceptar</button>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>		
-	</div>
-
-	<div data-accion="ocultar-menu" class="modal modal-menu clickable" style="display: none">
-		<div class="container menu" style="display: none;">
-			<div data-href="conocerte" class="row clickable" id="menu-item-conocerte" style="display: none;">
-				<div class="col-xs-2 contenedor-imagen-menu">
-					<div class="icono-conocerme"></div>
+			</div>		
+		</div>
+	
+		<div id="compartirNoSoportado" class="modal fade" style=""role="dialog">
+			<div class="modal-dialog modal-sm" style="background-color: white;">
+				<div class="modal-body">
+					Lo siento, la opci&oacute;n de compartir no est&aacute; disponible para esta plataforma.
 				</div>
-				<div class="col-xs-10 contenedor-texto-menu">
-					<div>Conocerme</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-xs-12">
+							<button data-after="quitarModalCompartirNoSoportado()" class="btn btn-default clickable">Aceptar</button>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div data-href="chat" class="row clickable">
-				<div class="col-xs-2 contenedor-imagen-menu">
-					<div class="icono-consultar"></div>
+			</div>		
+		</div>
+	
+		<div data-accion="ocultar-menu" class="modal modal-menu clickable" style="display: none">
+			<div class="container menu" style="display: none;">
+				<div data-href="conocerte" class="row clickable" id="menu-item-conocerte" style="display: none;">
+					<div class="col-xs-2 contenedor-imagen-menu">
+						<div class="icono-conocerme"></div>
+					</div>
+					<div class="col-xs-10 contenedor-texto-menu">
+						<div>Conocerme</div>
+					</div>
 				</div>
-				<div class="col-xs-10 contenedor-texto-menu">
-					<div>Consultar</div>
+				<div data-href="chat" class="row clickable">
+					<div class="col-xs-2 contenedor-imagen-menu">
+						<div class="icono-consultar"></div>
+					</div>
+					<div class="col-xs-10 contenedor-texto-menu">
+						<div>Consultar</div>
+					</div>
 				</div>
-			</div>
-			<div data-accion="salir" class="row clickable" id="menu-item-salir" style="display: none;">
-				<div class="col-xs-2 contenedor-imagen-menu">
-					<div class="icono-salir"></div>
-				</div>
-				<div class="col-xs-10 contenedor-texto-menu">
-					<div>Salir</div>
+				<div data-accion="salir" class="row clickable" id="menu-item-salir" style="display: none;">
+					<div class="col-xs-2 contenedor-imagen-menu">
+						<div class="icono-salir"></div>
+					</div>
+					<div class="col-xs-10 contenedor-texto-menu">
+						<div>Salir</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 	<div class="app">
 		<div id="ofertas" class="show" ></div>
 		<div id="oferta" class="hide" ></div>
@@ -113,14 +129,25 @@
 		document.addEventListener("deviceready", onDeviceReady, false);
 	}
 	
-	var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-	var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-	var hw = w / 2;
-	var hh = h / 2;
-	var mw = hw - 20;
-	var mh = hh - 20;
-	$(".loader").css({top: mh + "px", left: mw + "px"});
+	function actualizarDimensiones()
+	{
+		var anchura = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+		var altura = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+		var mediaAnchura = anchura / 2;
+		var mediaAltura = altura / 2;
+		var anchuraCalculada = mediaAnchura - 20;
+		var alturaCalculada = mediaAltura - 20;
+		$(".loader").css({top: alturaCalculada + "px", left: anchuraCalculada + "px"});
+		
+		$("#fondo-del-login").height(altura - 437);
+	}
 	
+	actualizarDimensiones();
+	
+	$(window).on('resize', function()
+	{
+		actualizarDimensiones();
+	});
 	
 	document.addEventListener("backbutton", onBackKeyDown, false);
 
@@ -156,11 +183,16 @@
 	
 	var mensajesDeErrorEnAudio = ["", {code: 1, "message": "MEDIA_ERR_ABORTED"}, {code: 2, "message": "MEDIA_ERR_NETWORK"}, {code: 3, "message": "MEDIA_ERR_DECODE"}, {code: 4, "message": "MEDIA_ERR_SRC_NOT_SUPPORTED"}];
 	
-	
 	function quitarModalNuevasOfertas()
 	{
 		$("#nuevasOfertas").modal('hide');
 	}
+	
+	function quitarModalCompartirNoSoportado()
+	{
+		$("#compartirNoSoportado").modal('hide');
+	}
+	
 	function quitarModal()
 	{
 		setCookie('mostrarpopupdeconocerte', false);
@@ -235,13 +267,8 @@
 			ordenDelasVistas.push( vistaActual );	
 		}
 		
-		if(href == "login")
+		if(href != "login")
 		{
-			$("body").css({"overflow": "hidden"});
-		}
-		else
-		{
-			$("body").css({"overflow": "scroll"});
 			vistaActual = href;
 		}
 	}
@@ -388,14 +415,24 @@
 	function agregarAColaDeReproduccion(pathDelArchivo, callback)
 	{
 		var audio = new Audio(serverDomain + pathDelArchivo);
+		audio.estaCargando = true;
 		audio.onerror = function(e){
 			console.log("Error de audio: " + audio.src);
 			console.log(mensajesDeErrorEnAudio[e.currentTarget.error.code]);
 			setTimeout(callback, 15000);
 			estaReproduciendo = false;
+			if(audio.estaCargando)
+			{
+				audio.estaCargando = false;
+				quitarCarga();
+			}
 			audios = new Array();
 		};
-		audio.onloadedmetadata = quitarCarga;
+		audio.onloadedmetadata = function()
+		{
+			audio.estaCargando = false;
+			quitarCarga();
+		};
 		audio.onplay = function()
 		{
 			aunDebeEjecutarCallback = false;

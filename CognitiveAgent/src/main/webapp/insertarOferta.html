@@ -3,157 +3,6 @@
 	<meta charset="UTF-8"></meta>
 </head>
 
-
-
-<script>
-
-var activeAjaxConnections = 0;
-var imagenComercioStatus = false;
-var imagenPublicidadStatus = false;
-var estaEsPaginaEditar = false;
-	$(document).ready(function()
-	{	
-		 $('agregarOferta-form').parsley({
-	            successClass: 'success',
-	            errorClass: 'error',
-	            errors: {
-	                classHandler: function(el) {
-	                    return $(el).closest('.control-group');
-	                }
-	            }
-	        });
-		
-		if(esPaginaEditar()) // Entonces las imagenes ya estan cargadas.
-		{
-			estaEsPaginaEditar = true;
-			$("#logo-comercio-input").removeAttr("data-parsley-required");
-			$("#logo-comercio-input").removeAttr("data-parsley-error-message");
-			
-			$("#imagen-publicidad-input").removeAttr("data-parsley-required");
-			$("#imagen-publicidad-input").removeAttr("data-parsley-error-message");
-			
-		}
-		
-		$("#imagen-publicidad-input").on("change", subirImagenPublicidad);
-		$("#logo-comercio-input").on("change", subirImagenComercio);
-		
-		$("#vigenciaDesde-input").datepicker(
-		{
-			dateFormat : "yy-mm-dd",
-			forceParse: false,
-			beforeShow : function() {
-				jQuery(this).datepicker('option', 'maxDate',
-				jQuery('#vigenciaHasta-input').val());
-			}
-		});
-		$("#vigenciaHasta-input").datepicker
-		(
-			{
-				dateFormat : "yy-mm-dd",
-				forceParse: false,
-				beforeShow : function() {
-					jQuery(this).datepicker('option', 'minDate',
-					jQuery('#vigenciaDesde-input').val());
-			}
-		});
-	});
-	
-	function subirImagenPublicidad()
-	{
-	
-		
-		$.ajax(
-		{
-			
-			url: "subirImagenPublicidad",
-			type: "POST",
-			data: new FormData($("#agregarOferta-form")[0]),
-			enctype: 'multipart/form-data',
-			processData: false,
-			contentType: false,
-			cache: false,
-			beforeSend: function(xhr)
-			{
-				activeAjaxConnections = activeAjaxConnections+1;
-			},
-			success: function (data)
-			{
-				if(data == 'No es una extension valida')
-				{
-					$("#mensaje-error-imagen").text("Error!! " + data);
-					$("#contenedor-mensaje-error").css("visibility","visible");
-				}
-				if(data == '')
-				{
-					$("#imagen-publicidad").val("");
-				}
-				else
-				{
-					$("#imagen-publicidad").val(data);
-				}
-			},
-			error: function (xhr, errDesc, exception)
-			{
-
-				$("#mensaje-error-imagen").text("Error!! " + xhr.responseJSON.localizedMessage);
-				$("#contenedor-mensaje-error").css("visibility","visible");
-
-			},
-			complete( data)
-			{
-				imagenPublicidadStatus = true;
-				activeAjaxConnections = activeAjaxConnections-1;
-			}
-		});
-	}
-		
-	function subirImagenComercio()
-	{
-		$.ajax(
-		{
-		
-			url: "subirImagenComercio",
-			type: "POST",
-			data: new FormData($("#agregarOferta-form")[0]),
-			enctype: 'multipart/form-data',
-			processData: false,
-			contentType: false,
-			cache: false,
-			beforeSend: function(xhr, opts)
-			{
-				activeAjaxConnections = activeAjaxConnections+1;
-			},
-			success: function (data)
-			{
-				if(data == 'No es una extension valida')
-				{
-					$("#mensaje-error-imagen").text("Error!! " + data);
-					$("#contenedor-mensaje-error").css("visibility","visible");
-				}
-				
-				if(data == '')
-				{
-					$("#logo-comercio").val("");
-				}
-				else
-				{
-					$("#logo-comercio").val(data);
-				}
-			},
-			error: function (xhr, errDesc, exception)
-			{
-				
-				$("#mensaje-error-imagen").text("Error!! " + xhr.responseJSON.localizedMessage);
-				$("#contenedor-mensaje-error").css("visibility","visible");
-			},
-			complete( data)
-			{
-				imagenComercioStatus = true;
-				activeAjaxConnections = activeAjaxConnections-1;
-			}
-		});
-	}
-</script>
 <style>
 	.quitar-padding-left
 	{
@@ -210,7 +59,6 @@ var estaEsPaginaEditar = false;
 					</div>
 				</div>
 				<div class="row">
-				
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="nombreComercio-lbl" class="titulo-ca"><span class="asterisco">*</span>Nombre del comercio</label>
@@ -235,7 +83,6 @@ var estaEsPaginaEditar = false;
 						</div>
 					</div>
 				</div>
-				
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
@@ -317,7 +164,7 @@ var estaEsPaginaEditar = false;
 									</div>
 								</div>
 								<div class="col-xs-3">
-									<select class="form-control" th:field="*{categorias[__${categoriaStat.count}__].peso}">
+									<select class="form-control" th:field="*{categorias[__${categoriaStat.index}__].peso}">
 										<option value="0">Poco</option>
 										<option value="1">Moderado</option>
 										<option value="2">Mucho</option>
@@ -333,15 +180,15 @@ var estaEsPaginaEditar = false;
 				
 				<input type="hidden" name="accion" id="accion"/>
 				<div class="row" id="contenedor-mensaje-error" style="visibility: hidden;">
-					    <div class="alert alert-danger" >
-					            <div class="row" >
-					            	<div class="col-md-3 offset-md-2"></div>
-					                <div class="col-md-1">
-					                  <span class="glyphicon glyphicon-remove" onclick="esconderEsteMensaje()" style="cursor:pointer;"></span>
-					                </div>
-					                <div class="col-md-6" id="error-message"><p id="mensaje-error-imagen"></p></div>
-					            </div>
-					       </div>
+					<div class="alert alert-danger" >
+						<div class="row" >
+							<div class="col-md-3 offset-md-2"></div>
+							<div class="col-md-1">
+								<span class="glyphicon glyphicon-remove" onclick="esconderEsteMensaje()" style="cursor:pointer;"></span>
+							</div>
+							<div class="col-md-6" id="error-message"><p id="mensaje-error-imagen"></p></div>
+						</div>
+					</div>
 				</div>
 				<div class="row agregar-padding-top" align="center">
 					<div class="col-md-12">
@@ -364,42 +211,182 @@ var estaEsPaginaEditar = false;
 		</form>
 	</div>
 	<br/>
-	</div>
-	<script th:inline="javascript">
-    /* attach a submit handler to the form */
-      
-    	$("#limpiar-submit").click(
-    	function()
-    	{
-    		window.location.href = [[@{'/BackOffice/gestionDeOfertas'}]] ;
-    	}
-    	);
-    
-       	  $("#ingresar-submit").click(function() 
-       		{
-       		  	if(estaEsPaginaEditar)
-       		  	{
-       		  		submit();
-       		  	}
-       		  	else 
-       		  	{
-       		  		submit();
-       		  	}
+</div>
+<script th:inline="javascript">
+var activeAjaxConnections = 0;
+var imagenComercioStatus = false;
+var imagenPublicidadStatus = false;
+var estaEsPaginaEditar = false;
+$(document).ready(function()
+{	
+	 $('agregarOferta-form').parsley({
+		successClass: 'success',
+		errorClass: 'error',
+		errors: {
+			classHandler: function(el) {
+				return $(el).closest('.control-group');
+			}
+		}
 	});
-    
-   function submit()
-   {
-		console.log("imagenes subidas");
-		$("#accion").val($("#ingresar-submit").val());
-		$("#agregarOferta-form").submit();
-		imagenComercioStatus = false;
-		imagenPublicidadStatus = false;
-   }
-   function esconderEsteMensaje()
-   {
-	   $("#contenedor-mensaje-error").css("visibility","hidden");
-   }
-  
+	
+	if(esPaginaEditar()) // Entonces las imagenes ya estan cargadas.
+	{
+		estaEsPaginaEditar = true;
+		$("#logo-comercio-input").removeAttr("data-parsley-required");
+		$("#logo-comercio-input").removeAttr("data-parsley-error-message");
+		
+		$("#imagen-publicidad-input").removeAttr("data-parsley-required");
+		$("#imagen-publicidad-input").removeAttr("data-parsley-error-message");
+		
+	}
+	
+	$("#imagen-publicidad-input").on("change", subirImagenPublicidad);
+	$("#logo-comercio-input").on("change", subirImagenComercio);
+	
+	$("#vigenciaDesde-input").datepicker(
+	{
+		dateFormat : "yy-mm-dd",
+		forceParse: false,
+		beforeShow : function() {
+			jQuery(this).datepicker('option', 'maxDate',
+			jQuery('#vigenciaHasta-input').val());
+		}
+	});
+	$("#vigenciaHasta-input").datepicker
+	(
+		{
+			dateFormat : "yy-mm-dd",
+			forceParse: false,
+			beforeShow : function() {
+				jQuery(this).datepicker('option', 'minDate',
+				jQuery('#vigenciaDesde-input').val());
+		}
+	});
+});
+
+function subirImagenPublicidad()
+{
+	$.ajax(
+	{
+		url: "subirImagenPublicidad",
+		type: "POST",
+		data: new FormData($("#agregarOferta-form")[0]),
+		enctype: 'multipart/form-data',
+		processData: false,
+		contentType: false,
+		cache: false,
+		beforeSend: function(xhr)
+		{
+			activeAjaxConnections = activeAjaxConnections+1;
+		},
+		success: function (data)
+		{
+			if(data == 'No es una extension valida')
+			{
+				$("#mensaje-error-imagen").text("Error!! " + data);
+				$("#contenedor-mensaje-error").css("visibility","visible");
+			}
+			if(data == '')
+			{
+				$("#imagen-publicidad").val("");
+			}
+			else
+			{
+				$("#imagen-publicidad").val(data);
+			}
+		},
+		error: function (xhr, errDesc, exception)
+		{
+
+			$("#mensaje-error-imagen").text("Error!! " + xhr.responseJSON.localizedMessage);
+			$("#contenedor-mensaje-error").css("visibility","visible");
+
+		},
+		complete: function(data)
+		{
+			imagenPublicidadStatus = true;
+			activeAjaxConnections = activeAjaxConnections-1;
+		}
+	});
+}
+	
+function subirImagenComercio()
+{
+	$.ajax(
+	{
+		url: "subirImagenComercio",
+		type: "POST",
+		data: new FormData($("#agregarOferta-form")[0]),
+		enctype: 'multipart/form-data',
+		processData: false,
+		contentType: false,
+		cache: false,
+		beforeSend: function(xhr, opts)
+		{
+			activeAjaxConnections = activeAjaxConnections+1;
+		},
+		success: function (data)
+		{
+			if(data == 'No es una extension valida')
+			{
+				$("#mensaje-error-imagen").text("Error!! " + data);
+				$("#contenedor-mensaje-error").css("visibility","visible");
+			}
+			
+			if(data == '')
+			{
+				$("#logo-comercio").val("");
+			}
+			else
+			{
+				$("#logo-comercio").val(data);
+			}
+		},
+		error: function (xhr, errDesc, exception)
+		{
+			
+			$("#mensaje-error-imagen").text("Error!! " + xhr.responseJSON.localizedMessage);
+			$("#contenedor-mensaje-error").css("visibility","visible");
+		},
+		complete: function(data)
+		{
+			imagenComercioStatus = true;
+			activeAjaxConnections = activeAjaxConnections-1;
+		}
+	});
+}
+
+$("#limpiar-submit").click(
+function()
+{
+	window.location.href = [[@{'/BackOffice/gestionDeOfertas'}]] ;
+});
+
+$("#ingresar-submit").click(function()
+{
+	if(estaEsPaginaEditar)
+	{
+		submit();
+	}
+	else 
+	{
+		submit();
+	}
+});
+
+function submit()
+{
+	console.log("imagenes subidas");
+	$("#accion").val($("#ingresar-submit").val());
+	$("#agregarOferta-form").submit();
+	imagenComercioStatus = false;
+	imagenPublicidadStatus = false;
+}
+
+function esconderEsteMensaje()
+{
+	$("#contenedor-mensaje-error").css("visibility","hidden");
+}
 </script>
 	
 	<div th:include="fragments/footer :: body"></div>

@@ -103,7 +103,7 @@ public class UsuarioDao {
 				rs.getDouble( "peso" )
 				);
 			
-			result.agregar( categoriaOferta );
+			result.agregar(categoriaOferta);
 		}
 
 		return result;

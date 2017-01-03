@@ -1,14 +1,52 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-	<!-- You can use Open Graph tags to customize link previews.
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+<!-- You can use Open Graph tags to customize link previews.
 	Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
-	<meta property="og:url"           th:content="${url}" />
-	<meta property="og:type"          content="website" />
-	<meta property="og:title"         content="Ofertas - Banco Atl&aacute;ntida" />
-	<meta property="og:description"   th:content="${oferta.tituloDeOferta}" />
-	<meta property="og:image"         th:content="${baseURL + '/archivossubidos/' + oferta.imagenParaMostrar}" />
-	<title>Banco Atl&aacute;ntida</title>
+<meta property="og:url" th:content="${url}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Ofertas - Banco Atl&aacute;ntida" />
+<meta property="og:description" th:content="${oferta.tituloDeOferta}" />
+<meta property="og:image" th:content="${baseURL + '/archivossubidos/' + oferta.imagenParaMostrar}" />
+<title>Banco Atl&aacute;ntida</title>
+<script th:src="@{/js/jquery.min.js}"></script>
+<link rel="stylesheet" th:href="@{/resources/css/bootstrap.min.css}"></link>
+<link rel="stylesheet" th:href="@{/resources/css/bootstrap-theme.min.css}"></link>
+<script type="text/javascript" th:src="@{/resources/js/bootstrap.js}"></script>
+<link rel="stylesheet" th:href="@{/resources/css/custom.css}"></link>
+<style type="text/css">
+.comercio
+{
+	font-size: 15pt;
+	color: #E92531;
+	font-weight: bold;
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+.label-restricciones, .label-ciudad
+{
+	color: #E92531;
+	font-weight: bold;
+	margin-top: 5px;
+}
+
+.small-font
+{
+	font-size: small;
+}
+
+.contenedor-centrado
+{
+	display: flex;
+	align-items: center;
+}
+
+.contenedor-centrado div
+{
+	margin: 0 auto;
+}
+</style>
 </head>
 <body>
 
@@ -22,25 +60,54 @@
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));</script>
 	
+	<script type="text/javascript">
+	function resizeIframe(iframe)
+	{
+		var altura = iframe.contentWindow.document.body.scrollHeight + 'px';
+		iframe.style.height = altura;
+		var parent = $(iframe).parent();
+		var ancho = parent.width();
+		var minimo = ancho / 4 * 3;
+		parent.css({"height": altura, "min-height": minimo});
+	}
+	</script>
+	
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-12 text-center">
+			<div class="col-xs-12 text-left">
 				<div th:if="${oferta.esHtml}">
-					<iframe class="html-de-oferta" frameBorder="0" scrolling="no" seamless="seamless" th:id="${'html-de-oferta-' + oferta.idOferta}" style="display:block; width:100%; height:100vh;" th:src="@{/archivossubidos/} + ${oferta.imagenPublicidadPath}"></iframe>
+					<iframe class="html-de-oferta" frameBorder="0" scrolling="no" seamless="seamless" th:id="${'html-de-oferta-' + oferta.idOferta}" style="display:block; width:100%;" onload="resizeIframe(this)" th:src="@{/archivossubidos/} + ${oferta.imagenPublicidadPath}"></iframe>
 				</div>
 				<div th:unless="${oferta.esHtml}">
 					<img th:src="@{/archivossubidos/} + ${oferta.imagenPublicidadPath}" style="max-width: 100%;"></img>
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-xs-12 comercio" th:text="${oferta.comercio}"></div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 titulo" th:text="${oferta.tituloDeOferta}"></div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 descripcion" th:text="${oferta.descripcion}"></div>
+		</div>
+		<div class="row contenedor-centrado small-font">
+			<div class="col-xs-4 col-sm-2 col-md-1 label-restricciones text-left">
+				<span>Restricciones:</span>
+			</div>
+			<div class="col-xs-8 col-sm-10 col-md-11 text-left">
+				<span th:text="${oferta.restricciones}"></span>
+			</div>
+		</div>
+		<div class="row contenedor-centrado small-font">
+			<div class="col-xs-4 col-sm-2 col-md-1 label-ciudad text-left">
+				<span>Ciudad:</span>
+			</div>
+			<div class="col-xs-8 col-sm-10 col-md-11 text-left">
+				<span th:text="${oferta.ciudad}"></span>
+			</div>
+		</div>
 	</div>
-	<br />
-	
-	<!-- Your share button code -->
-	<div class="fb-share-button" 
-		th:attr="data-href=${url}" 
-		data-layout="button">
-	</div>
-	
 </body>
 </html>

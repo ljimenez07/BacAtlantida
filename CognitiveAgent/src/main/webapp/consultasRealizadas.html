@@ -108,12 +108,26 @@
 						</tbody>
 					</table>
 				</div>
+				<div class="table-responsive" th:if="${#lists.isEmpty(consultasFiltradas)}">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th class="text-center titulo-tabla-ca">Tema consultado</th>
+								<th class="text-center titulo-tabla-ca">Cantidad</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td colspan="2" class="texto-normal-ca text-center">No se encontraron coincidencias para este rango de fechas.</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 				
 			</div>
 		</div>
 		<br/>
 	</div>
-	
 	<div th:include="fragments/footer :: body" id="footer"></div>
 	
 </body>
