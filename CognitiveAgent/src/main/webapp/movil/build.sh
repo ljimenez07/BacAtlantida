@@ -16,9 +16,9 @@ if [ ${#3} -gt 0 ]; then
 	cordova plugin add cordova-plugin-x-socialsharing
 	cordova plugin add cordova-plugin-whitelist
 	cordova plugin add cordova-plugin-splashscreen
-  if [ $3 = "android" ]; then
-    cp -r $2/res/drawable-* $2/platforms/android/res/
-  fi
+	if [ $3 = "android" ]; then
+		cp -r $2/res/drawable-* $2/platforms/android/res/
+	fi
 	cordova build $3
 fi
 echo "fin"

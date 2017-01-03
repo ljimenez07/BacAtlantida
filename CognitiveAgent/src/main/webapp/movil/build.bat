@@ -9,7 +9,7 @@ call handlebars ./www/plantillas/oferta.handlebars -f ./www/js/oferta.handlebars
 call handlebars ./www/plantillas/popupconocerte.handlebars -f ./www/js/popupconocerte.handlebars.js 
 call handlebars ./www/plantillas/login.handlebars -f ./www/js/login.handlebars.js 
 
-IF [%2] == [] GOTO :EOF
+IF [%2] == [] GOTO :SALIR
 
 rd /s /q platforms
 cordova platform add %2
@@ -17,4 +17,15 @@ cordova plugin add cordova-plugin-queries-schemes
 cordova plugin add cordova-plugin-x-socialsharing
 cordova plugin add cordova-plugin-whitelist
 cordova plugin add cordova-plugin-splashscreen
+
+IF %2 == android GOTO :COPIAR_ARCHIVOS
+
+:BUILD
 cordova build %2
+GOTO :SALIR
+
+:COPIAR_ARCHIVOS
+for /f "delims=" %%a in ('dir /b/ad ".\res\drawable-*" ') do xcopy ".\res\%%a\*" ".\platforms\android\res\%%a\" /y
+GOTO :BUILD
+
+:SALIR
