@@ -87,7 +87,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="descripcion-lbl" class="titulo-ca"><span class="asterisco">*</span>Descripción</label>
-							<textarea data-parsley-error-message= "Descripcion es requerida." data-parsley-required="true"  class="form-control" rows="4" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')} ? 'sobresaltar-field'"></textarea>
+							<textarea data-parsley-required-message="Descripcion es requerida." data-parsley-required="true" data-parsley-maxlength-message="La descripción solo puede contener un máximo de 255 caracteres." data-parsley-maxlength="255" class="form-control" rows="4" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')} ? 'sobresaltar-field'"></textarea>
 							<textarea style="display:none;" rows="4" th:field="*{descripcionAnterior}"></textarea>
 							<p class="campo-requerido" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"/>
 						</div>
@@ -95,7 +95,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="restricciones-lbl" class="titulo-ca"><span class="asterisco">*</span>Restricciones</label>
-							<textarea data-parsley-error-message= "Restricciones son requeridas." data-parsley-required="true" class="form-control" rows="4" th:field="*{restricciones}" th:classappend="${#fields.hasErrors('restricciones')} ? 'sobresaltar-field'"></textarea>
+							<textarea data-parsley-required-message="Restricciones son requeridas." data-parsley-required="true" data-parsley-maxlength-message="Las restricciones solo pueden contener un máximo de 255 caracteres." data-parsley-maxlength="255" class="form-control" rows="4" th:field="*{restricciones}" th:classappend="${#fields.hasErrors('restricciones')} ? 'sobresaltar-field'"></textarea>
 							<p class="campo-requerido" th:if="${#fields.hasErrors('restricciones')}" th:errors="*{restricciones}"/>
 						</div>
 					</div>

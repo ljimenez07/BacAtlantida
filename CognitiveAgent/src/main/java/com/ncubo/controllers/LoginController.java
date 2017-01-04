@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class LoginController
 {
+	@RequestMapping("/index.html")
+	public String inicio()
+	{
+		return "redirect:/BackOffice/gestionDeOfertas";
+	}
+	
 	@RequestMapping("/login")
 	public String login( Model model) throws ClassNotFoundException, SQLException
 	{

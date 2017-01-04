@@ -221,7 +221,7 @@ public class OfertaController
 		bindingResult = oferta.validarCampos(bindingResult, oferta);
 		
 		if (bindingResult.hasErrors())
-		{		
+		{
 			return modificarOferta(model, 0, oferta, idUsuario);
 		}
 		oferta.setFechaHoraRegistro(new Timestamp(new Date().getTime()));

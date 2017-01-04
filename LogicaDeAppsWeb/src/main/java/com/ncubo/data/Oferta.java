@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.validation.BindingResult;
 
@@ -25,6 +26,7 @@ public class Oferta implements Comparable<Oferta>
 	private String comercio;
 	
 	@NotEmpty(message = "*Campo requerido")
+	@Length(max = 255, message = "El campo de descripción no puede contener más de 255 caracteres")
 	private String descripcion;
 	private String descripcionAnterior;
 	private String descripcionAudio;
@@ -36,6 +38,7 @@ public class Oferta implements Comparable<Oferta>
 	private boolean estado;
 	
 	@NotEmpty(message = "*Campo requerido")
+	@Length(max = 255, message = "El campo de restricciones no puede contener más de 255 caracteres")
 	private String restricciones;
 	
 	@NotNull(message = "*Campo requerido")
