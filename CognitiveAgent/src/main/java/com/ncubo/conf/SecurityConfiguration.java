@@ -12,34 +12,40 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter 
 {
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	protected void configure(HttpSecurity http) throws Exception
+	{
 		http
 		.csrf().disable()
 		.authorizeRequests()
 		.antMatchers("/", "/archivossubidos/**").permitAll()
-		.antMatchers("/", "/Ecommerce/**").permitAll() //TODO este hay que quitarlo
-			.antMatchers("/", "/BackOffice/**").hasRole("USER")
-			.antMatchers("/", "/index.html").permitAll()
-			.antMatchers("/", "/movil/**").permitAll()
-			.antMatchers("/", "/conversacion/**").permitAll()
-			.antMatchers("/", "/ofertas/**").permitAll()
-			.antMatchers("/", "/ofertas").permitAll()
-			.antMatchers("/", "/reaccion/**").permitAll()
-			.antMatchers("/","/css/**").permitAll()
-			.antMatchers("/","/js/**").permitAll()
-			.antMatchers("/","/imagenes/BA.png").permitAll()
-			.anyRequest().authenticated()
-			.and()
+		.antMatchers("/", "/BackOffice/**").hasRole("USER")
+		.antMatchers("/", "/index.html").permitAll()
+		.antMatchers("/", "/movil/**").permitAll()
+		.antMatchers("/", "/conversacion/**").permitAll()
+		.antMatchers("/", "/ofertas/**").permitAll()
+		.antMatchers("/", "/ofertas").permitAll()
+		.antMatchers("/", "/reaccion/**").permitAll()
+		.antMatchers("/","/css/**").permitAll()
+		.antMatchers("/","/js/**").permitAll()
+		.antMatchers("/","/img/**").permitAll()
+		.antMatchers("/","/imagenes/**").permitAll()
+		.antMatchers("/","/archivos/**").permitAll()
+		.antMatchers("/","/fonts/**").permitAll()
+		.anyRequest().authenticated()
+		.and()
 		.formLogin()
 			.loginPage("/login")
 			.permitAll()
 			.and()
 		.logout()
-			.permitAll();
+			.permitAll()
+			.and()
+		.headers().frameOptions().disable();
 	}
 
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
+	{
 		auth
 			.inMemoryAuthentication()
 				.withUser("user").password("password").roles("USER");

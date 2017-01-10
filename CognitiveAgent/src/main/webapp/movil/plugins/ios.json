@@ -7,8 +7,17 @@
         "files": {}
     },
     "installed_plugins": {
+        "cordova-plugin-queries-schemes": {
+            "PACKAGE_NAME": "io.ncubo.agentecognitivo"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "io.ncubo.agentecognitivo"
+        },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
+            "PACKAGE_NAME": "io.ncubo.agentecognitivo"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "io.ncubo.agentecognitivo"
         }
     },
     "dependent_plugins": {}

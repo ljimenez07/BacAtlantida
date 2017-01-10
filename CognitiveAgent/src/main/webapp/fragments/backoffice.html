@@ -1,19 +1,22 @@
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:fragment="head (title)">
 	<meta charset="UTF-8"></meta>
 	<title th:text="${title}">Page Title</title>
 	
 	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/parsley.min.js}"></script>
 	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"></link>
 	<link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}"></link>
 	<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
-	<link rel="stylesheet" th:href="@{/fonts/roboto.css}"></link>
+	<link rel="stylesheet" th:href="@{/css/custom.css}"></link>
 	<link rel="stylesheet" th:href="@{/css/jquery-ui.css}"></link>
+	<link rel="stylesheet" th:href="@{/css/parsley.css}"></link>
 	<script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
 	<script type="text/javascript" th:src="@{/js/jquery.maskedinput.js}"></script>
-	
+	<script type="text/javascript" th:src="@{/js/Validaciones.js}"></script>
+	<script type="text/javascript" th:src="@{/alertifyjs/alertify.min.js}"></script>
 	<style th:inline="text">
 		body
 		{
@@ -37,7 +40,6 @@
 		
 		[role=presentation]
 		{
-			font-family: 'Roboto', serif;
 			font-size: 21px;
 			font-weight: bold;
 		}
@@ -45,41 +47,40 @@
 		/* fonts y colores de los fonts */
 		.titulo-tabla-ca
 		{
-			font-family: 'Roboto', serif;
 			font-size: 16px;
 			font-weight: bold;
 			background-color: rgb(231,232,233);
 		}
 		.titulo-ca
 		{
-			font-family: 'Roboto', serif;
 			font-size: 16px;
 		}
 		.texto-normal-ca
 		{
-			font-family: 'Roboto', serif;
 			font-size: 16px;
 			font-weight: normal;
 		}
 		.notas-ca
 		{
-			font-family: 'Roboto', serif;
 			font-size: 16px;
 			color: rgb(177,179,181);
 		}
 		.campo-requerido
 		{
-			font-family: 'Roboto', serif;
 			font-size: 13px;
 			color: #3e61ac;
 		}
 		
-		.btn-default
+		.btn-default, .acomodar-padding-boton
 		{
-			font-family: 'Roboto', serif;
 			font-size: 16px;
 			padding-bottom: 1px;
 			padding-top: 1px;
+		}
+		
+		.my-btn
+		{
+			background-color: #e92531;
 		}
 		/* fin fonts y colores de los fonts */
 		
@@ -157,7 +158,16 @@
 			display: inline-block;
 			vertical-align: middle;
 		}
-		.glyphicon-search
+		.icono-menu-salir
+		{
+			width: 37px;
+			height: 33px;
+			cursor: pointer;
+			background: url([[@{/img/iconos-menu-33x33-34.png}]]) -33px  0;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		.glyphicon-search, .glyphicon-log-out
 		{
 			color: red;
 		}
@@ -270,7 +280,7 @@
 		}
 		
 		.relleno-blanco {
-			background-image: url("../img/relleno-blanco.png");
+			background-image: url([[@{/img/relleno-blanco.png}]]);
 			background-repeat: repeat-x;
 			height: 61px;
 			width: 400px;
@@ -285,6 +295,8 @@
 		
 		.info-usuario {
 			color: white;
+			display: flex;
+			align-items: center;
 		}
 		
 		.info-usuario img {
@@ -295,6 +307,18 @@
 		
 		#buscarComercio, #buscarComercio .form-group {
 			margin-bottom: 0;
+		}
+
+		.pull-left-menu
+		{
+			right: 0;
+			left: auto;
+		}
+		.centrar
+		{
+			margin: auto;
+			width: 70%;
+			padding: 10px;
 		}
 	</style>
 </head>

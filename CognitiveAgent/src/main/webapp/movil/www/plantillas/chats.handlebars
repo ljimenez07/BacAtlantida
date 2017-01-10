@@ -1,10 +1,13 @@
+<div style="height: 69px" />
 <div class="container contenedor-campo-de-entrada">
 	<div id="chat-id-container-{{pathDelServidor}}" class="row">
-		<div class="col-xs-10">
+		<div class="col-xs-10 col-sm-11">
 			<input placeholder="Escribe aquí" type="text" id="campoDeEntrada" class="form-control" >
 		</div>
-		<div class="col-xs-2">
-			<button id="enviar" class="btn btn-default"></button>
+		<div class="col-xs-2 col-sm-1 contenedor-centrado">
+			<div>
+				<button id="enviar" class="btn btn-default"></button>
+			</div>
 		</div>
 	</div>
 </div>
@@ -12,7 +15,7 @@
 	.panel-body
 	{
 		height: 100%;
-		overflow: scroll
+		overflow: scroll;
 	}
 </style>
 
@@ -25,14 +28,65 @@ $(function(){
 		var conversation = $("#chat-id-{{pathDelServidor}} #conversation");
 		var campoDeEntrada = $("#chat-id-container-{{pathDelServidor}} #campoDeEntrada");
 		var mensajeDeAgente = $('<li class="other"><div class="msg"><p></p><time>20:17</time></div></li>');
-		var mensajeDeUsuario = $('<li class="self"><div class="msg"><p></p><time>20:17</time></div></li>');
+		var mensajeDeUsuario = $('<li class="self"><div class="msg"><p></p><time>20:17</time></div><div class="after" /></li>');
 		var botonDeEnviarMensaje = $("#chat-id-container-{{pathDelServidor}} #enviar");
 		var ultimoMensajeEnviado="";
+		var debeReproducirElAudio = false;
+		var guardarCola = true;
+		var colaDeReproduccion = new Array();
 		
-		botonDeEnviarMensaje.click(function(){
+		$("#chat-id-{{pathDelServidor}}").prepend('<div style="height: 57px" />');
+		if(deviceType != "iPad" && deviceType != "iPhone")
+		{
+			$("#chat-id-{{pathDelServidor}}").prepend('<div class="row contenedor-boton-escuchar-mensajes"><div class="col-xs-6"><div class="boton-escuchar-mensajes desactivado" /></div></div>');
+		}
 		
+		var botonDeAudio = $("#chat-id-{{pathDelServidor}} .boton-escuchar-mensajes");
+		
+		$(botonDeAudio).click(function()
+		{
+			$(this).toggleClass("activado").toggleClass("desactivado");
+			debeReproducirElAudio = !debeReproducirElAudio;
+			botonesDeAudio.{{pathDelServidor}} = debeReproducirElAudio;
+			guardarCola = false;
+			if(colaDeReproduccion.length > 0)
+			{
+				$.each(colaDeReproduccion, function(index, value)
+				{
+					reproducirMensaje(value);
+				});
+			}
+			if(!debeReproducirElAudio)
+			{
+				colaDeReproduccion = new Array();
+				audios = new Array();
+				audioEnReproduccion.pause();
+				estaReproduciendo = false;
+				aunDebeEjecutarCallback = true;
+			}
+		});
+		
+		if(vistaActual == "{{pathDelServidor}}" && !botonesDeAudio.{{pathDelServidor}})
+		{
+			botonDeAudio.click();
+		}
+		
+		function reproducirMensaje(pathDelAudio, callback)
+		{
+			if(debeReproducirElAudio)
+			{
+				agregarCarga();
+				agregarAColaDeReproduccion(pathDelAudio, callback);
+			}
+			else if(guardarCola)
+			{
+				colaDeReproduccion.push(pathDelAudio);
+			}
+		}
+		
+		botonDeEnviarMensaje.click(function()
+		{
 			enviarAlServer({ textoAEnviar:campoDeEntrada.val() });
-			
 		});
 		
 		resizeDiv();
@@ -43,15 +97,6 @@ $(function(){
 		
 		function resizeDiv(muestraTeclado, callback)
 		{
-			vpw = $(window).width();
-			vph = $(window).height();
-			var altura = vph - 72 - 68 - 30;
-			if(muestraTeclado)
-			{
-				altura -= 250;
-			}
-			chat.css({'height': altura + 'px'});
-			
 			if(callback != undefined)
 			{
 				callback();
@@ -61,9 +106,15 @@ $(function(){
 		$('input').bind('focus', function()
 		{
 			resizeDiv(true, function(){
-				moverScrollParaAbajoEnFuncionDelUltimoMensaje(function(){
-					$("html, body").animate({scrollTop: 0}, "fast");
-				});
+				moverScrollParaAbajoEnFuncionDelUltimoMensaje(function()
+					{
+						var tamanioEnPxDelScroll = chat.parent().parent()[0].scrollHeight;
+						if(tamanioEnPxDelScroll > 0) // evita que el scroll retorne arriba por culpa del callback.
+						{
+							$("html, body").animate({scrollTop: tamanioEnPxDelScroll}, "fast");
+						}
+					
+					});
 			});
 		});
 		
@@ -88,11 +139,11 @@ $(function(){
 			var imprimirElMensajeQueElUsuarioEscribioEnLaConversacion = ( param.imprimirElMensajeQueElUsuarioEscribioEnLaConversacion == undefined ) ? true : false;
 			var textoAEnviar = param.textoAEnviar.trim();
 					
-			if( ! sePuedenEnviarVaciosAlServer && textoAEnviar == "") return	
-			if( imprimirElMensajeQueElUsuarioEscribioEnLaConversacion )
+			if(!sePuedenEnviarVaciosAlServer && textoAEnviar == "") return	
+			if(imprimirElMensajeQueElUsuarioEscribioEnLaConversacion)
 			{
 				var fecha = new Date();
-				var hora = fecha.getHours() + ":" + fecha.getMinutes();
+				var hora = dosDigitos(fecha.getHours()) + ":" + dosDigitos(fecha.getMinutes());
 				var mensaje = mensajeDeUsuario.clone();
 				mensaje.find(".msg p").html(textoAEnviar);
 				mensaje.find("time").html(hora);
@@ -105,17 +156,122 @@ $(function(){
 			ajax({
 				type: "POST",
 				contentType :"text/plain; charset=UTF-8",
-				url : serverDomain+"/conversacion/{{pathDelServidor}}/",
+				url : serverDomain + "/conversacion/{{pathDelServidor}}/",
 				data : textoAEnviar,
-				done:function( data ) 
+				done: function( data ) 
 				{
-					var fecha = new Date();
-					var hora = fecha.getHours() + ":" + fecha.getMinutes();
-					var respuesta = mensajeDeAgente.clone();
-					respuesta.find(".msg p").html(data.texto);
-					respuesta.find("time").html(hora);
-					conversation.append(respuesta);
-					
+					var callback, callbackOnPlay;
+					var textos = data.textos;
+					if(textos != undefined)
+					{
+						var indiceDelUltimoMensajeConAudio;
+						if(data.seTerminoElChat)
+						{
+							debeEjecutarCallbackEnElCambioDeVista = true;
+							ajax({
+								url: serverDomain + "/conversacion/borrarUnaConversacion"
+							});
+							
+							campoDeEntrada.attr("disabled", true);
+							
+							callback = function(seEstaEjecutandoEnElCambioDeVista)
+							{
+								$(".app #{{pathDelServidor}}").html(Handlebars.templates.layout(pantallas["{{pathDelServidor}}"]));
+								bindClickeable();
+								if(estaReproduciendo)
+								{
+									audioEnReproduccion.pause();
+									estaReproduciendo = false;
+								}
+								reproducirCola();
+								if(seEstaEjecutandoEnElCambioDeVista != true)
+								{
+									debeEjecutarCallbackEnElCambioDeVista = false;
+									cambiarVista("ofertas", true);
+								}
+							};
+							
+							aux1 = callback;
+							
+							callbackOnPlay = function()
+							{
+								aunDebeEjecutarCallback = false;
+							};
+						
+							for(var i = 0; i < textos.length; i++)
+							{
+								if(textos[i].audio != "")
+								{
+									indiceDelUltimoMensajeConAudio = i;
+								}
+							}
+							
+							if(!debeReproducirElAudio || indiceDelUltimoMensajeConAudio == undefined)
+							{
+								setTimeout(function()
+								{
+									if(aunDebeEjecutarCallback)
+									{
+										callback();
+									}
+								}, 15000);
+							}
+						}
+						else
+						{
+							callback = function()
+							{
+								
+							};
+							
+							callbackOnPlay = function()
+							{
+								
+							};
+						}
+						
+						var fecha = new Date();
+						var hora = dosDigitos(fecha.getHours()) + ":" + dosDigitos(fecha.getMinutes());
+						for(var i = 0; i < textos.length; i++)
+						{
+							var htmlAudio = "";
+							if(textos[i].audio != "")
+							{
+								if(deviceType == "iPad" || deviceType == "iPhone")
+								{
+									aunDebeEjecutarCallback = true;
+									aux1 = function(){
+										aunDebeEjecutarCallback = true;
+										setTimeout(function()
+										{
+											if(aunDebeEjecutarCallback)
+											{
+												callback();
+											}
+										}, 3000);
+									};
+									aux2 = callbackOnPlay;
+									htmlAudio = '<br /><br /><audio controls preload="auto" onended="aux1()" onplay="aux2()"><source src="' + serverDomain + textos[i].audio + '"></audio>';
+								}
+								else
+								{
+									if(i == indiceDelUltimoMensajeConAudio)
+									{
+										reproducirMensaje(textos[i].audio, callback);
+									}
+									else
+									{
+										reproducirMensaje(textos[i].audio);
+									}
+								}
+							}
+							var respuesta = mensajeDeAgente.clone();
+							respuesta.find(".msg p").html(textos[i].texto + htmlAudio);
+							respuesta.find("time").html(hora);
+							respuesta.find(".msg").append('<div class="after" />');
+							conversation.append(respuesta);
+						}
+					}
 					moverScrollParaAbajoEnFuncionDelUltimoMensaje();
 				},
 				fail: function(XMLHttpRequest, textStatus, textStatus) 
@@ -124,17 +280,17 @@ $(function(){
 					console.log(XMLHttpRequest.responseJSON.exception);
 					if( XMLHttpRequest.responseJSON.exception.includes("NoSessionException") )
 					{
-						cambiarVista( "login" );
+						cambiarVista( "login" , true);
 					}
 				}
 			});
 			
 			ultimoMensajeEnviado = textoAEnviar;
-			
 		}
+		
 		function moverScrollParaAbajoEnFuncionDelUltimoMensaje(callback)
 		{
-			chat.parent().parent().scrollTop(chat.parent().parent()[0].scrollHeight);
+			window.scrollTo(0,chat.parent().parent()[0].scrollHeight);
 			if(callback != undefined)
 			{
 				callback();
@@ -145,8 +301,12 @@ $(function(){
 		{
 			enviarAlServer({sePuedenEnviarVaciosAlServer:false, imprimirElMensajeQueElUsuarioEscribioEnLaConversacion:false, textoAEnviar:ultimoMensajeEnviado});
 		}
-
+		
+		function dosDigitos(numero)
+		{
+			return numero > 9 ? numero : "0" + numero
+		}
 	}
-	var initChats{{pathDelServidor}} = initChats{{pathDelServidor}}();	
+	var initChats{{pathDelServidor}} = initChats{{pathDelServidor}}();
 });
 </script>

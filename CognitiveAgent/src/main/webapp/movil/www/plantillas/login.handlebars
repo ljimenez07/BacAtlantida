@@ -1,54 +1,60 @@
 <form id="formLogin">
+	<div class="row mensaje-bienvenida-login"><div class="col-xs-12 text-center">Nuestra Asesora Bancaria Interactiva te da la bienvenida, ingresa con tus credenciales de Atl&aacute;ntida Online.</div></div>
+	<div class="row" style="height: 25px;"><div class="col-xs-12"></div></div>
 	<div class="row">
 		<div class="col-xs-12 form-group">
-			<label>Nombre</label>
-			<input placeholder="" type="text" id="name" name="name" class="form-control" autofocus>
+			<input placeholder="Usuario" type="text" id="name" name="name" class="form-control" autofocus>
 		</div>
 	</div>
+	<div class="row" style="height: 40px;"><div class="col-xs-12"></div></div>
 	<div class="row">
 		<div class="col-xs-12 form-group">
-			<label>Password</label>
-			<input placeholder="" type="password" id="password"name="password" class="form-control" >
+			<input placeholder="Contraseña" type="password" id="password" name="password" class="form-control" >
 		</div>
 	</div>
+	<div class="row contenedor-centrado" style="height: 60px;"><div class="col-xs-12 text-center"><span id="contenedor-de-mensajes-login"></span></div></div>
 	<div class="row">
-		<div class="col-xs-12 form-group">
-			<button class="btn form-control">Enviar</button>
+		<div class="col-xs-12 form-group text-center">
+			<button class="btn form-control">Continuar</button>
 		</div>
 	</div>
 	<div class="alert alert-danger" style ="display:none;" role="alert"></div>
+	<div class="row" id="fondo-del-login" style="height: 300px;"></div>
 </form>
-<style>
-	
-</style>
 
 <script>
 
 $(function(){
 	function initLogin()
 	{
+		$("#login .botonDeIngresar").remove();
+		
+		actualizarDimensiones();
+		
 		$("#formLogin").submit(function(e) 
 		{
+			$("#contenedor-de-mensajes-login").html();
 			ajax({
 				type: "POST",
 				url: serverDomain + "/movil/login",
 				data: $(this).serialize(),
-				done: function( data ) 
+				done: function(data) 
 				{
-					location.reload();
+					estaLogueado = true;
+					
+					cargarInformacionDelUsuario();
+					
+					cambiarVista(vistaActual, true);
 				},
-				fail: function(XMLHttpRequest, textStatus, textStatus) 
+				fail: function(XMLHttpRequest, textStatus, errorThrown) 
 				{
-					if( XMLHttpRequest.responseJSON.exception.includes("CredencialesInvalidosException") )
-					{
-						var alert= $(this).find(".alert");
-					}
+					$("#contenedor-de-mensajes-login").html(XMLHttpRequest.responseText);
 				}
 			});
 			e.preventDefault();
 		});
 
-	}/*CredencialesInvalidosException*/
+	}
 	initLogin();
 
 });

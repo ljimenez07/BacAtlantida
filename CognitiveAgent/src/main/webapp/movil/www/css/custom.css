@@ -22,7 +22,9 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
-	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	font-family: 'NeoSan';
+	letter-spacing: 1px;
+	line-height: 1.2;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -50,6 +52,21 @@ table {
 strong {
 	font-weight: bold;
 }
+
+@font-face {
+	font-family: 'NeoSan';
+	src: url('../fonts/NeoSan.ttf') format('truetype');
+	font-weigth: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'NeoSanMed';
+	src: url('../fonts/NeoSanMed.ttf') format('truetype');
+	font-weigth: normal;
+	font-style: normal;
+}
+
 /* Agente Cognitivo */
 
 .hide
@@ -87,6 +104,13 @@ input
 
 .panel-heading {
 	padding-top: 0;
+	z-index: 1;
+	width: 100%;
+}
+
+.panel.panel-default
+{
+	box-shadow: none;
 }
 
 .panel-default {
@@ -100,14 +124,43 @@ input
 
 #enviar
 {
-	width: 38px;
+	width: 39px;
 	height: 39px;
 	background: url(../img/iconos-rojos-38x38.png) 0 0;
 	border: 0px;
 }
 
+.contenedor-boton-escuchar-mensajes
+{
+	z-index: 2;
+	position: fixed;
+	background: rgba(54, 25, 25, 0);
+	width: 100%;
+	margin-top: 20px;
+	padding: 15px 0;
+}
+
+.boton-escuchar-mensajes.activado
+{
+	width: 38px;
+	height: 39px;
+	margin-top:-16px;
+	background: url(../img/iconos-rojos-38x38.png) -51px 0;
+	border: 0px;
+}
+
+.boton-escuchar-mensajes.desactivado
+{
+	width: 38px;
+	height: 39px;
+	margin-top: -16px;
+	background: url(../img/iconos-rojos-38x38.png) 38px 0;
+	border: 0px;
+}
+
 .panel-heading
 {
+	position:fixed;
 	font-family: "Arial Bold";
 	font-size: 14pt;
 }
@@ -118,7 +171,6 @@ input
 	font-family: "Arial Bold";
 	font-size: 16pt;
 }
-
 
 .clickable:hover
 {
@@ -144,13 +196,25 @@ input
 	color: white;
 }
 
+.contenedor-centrado
+{
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+
+.contenedor-centrado div
+{
+	margin: 0 auto;
+}
+
 .logo-header {
-	margin: 6px 0;
+	max-width: 212px;
+	width: 100%;
 }
 
 .botonDeIngresar {
 	color: white;
-	margin-top: 11px;
 	font-size: 10pt;
 	font-weight: bold;
 }
@@ -221,18 +285,11 @@ input
 
 /*Chat*/
 
-.header-chat-icon {
-	width: 39px;
-	height: 28px;
-	background: url(../img/iconos-40x28.png) -39px 0;
-	margin: 3px 0;
-}
-
 .header-menu-icon {
 	width: 38px;
 	height: 28px;
 	background: url(../img/iconos-40x28.png) 0 0;
-	margin: 3px 0;
+	display: block;
 }
 
 
@@ -245,6 +302,7 @@ input
 	padding: 0.5rem;
 	overflow: hidden;
 	display: flex;
+	padding-bottom: 10px;
 }
 .chat .avatar {
 	width: 40px;
@@ -298,15 +356,28 @@ input
 	font-family: "Arial regular";
 	font-size: 14pt;
 }
-.other:before {
-	content: "";
+
+.other .after {
+	order: 0;
 	position: relative;
-	top: 0px;
+	top: 26px;
 	right: 0px;
-	left: 40px;
+	left: 20px;
 	width: 0px;
 	height: 0px;
-	border: 5px solid #fff;
+	border: 5px solid #D4D4D5;
+	border-right-color: transparent;
+	border-bottom-color: transparent;
+}
+
+.self .after {
+	order: 2;
+	position: relative;
+	top: 8px;
+	right: 20px;
+	width: 0px;
+	height: 0px;
+	border: 5px solid #E92531;
 	border-left-color: transparent;
 	border-bottom-color: transparent;
 }
@@ -386,7 +457,7 @@ input
 	-ms-user-select: none;
 }
 .msg time:before{
-	content:"\f017";
+/*	content:"\f017";*/
 	color: #ddd;
 	font-family: FontAwesome;
 	display: inline-block;
@@ -395,7 +466,7 @@ input
 
 .contenedor-campo-de-entrada
 {
-	position: relative;
+	position: fixed;
 	width: 100%;
 	left: 0;
 	bottom: 0;
@@ -403,10 +474,46 @@ input
 	padding: 15px
 }
 
+.imagen-del-chat
+{
+	max-width: 50px;
+	max-height: 50px;
+}
+
 
 
 
 /* Promociones */
+
+.contenedor-de-mensaje-bienvenida
+{
+	margin-top: 75px;
+	border-bottom: 2px solid rgba(0,0,0,0.1);
+}
+
+red
+{
+	color: #E92531;
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+.top10
+{
+	font-size: 14pt;
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+.beneficios
+{
+	font-size: 13pt;
+}
+
+.html-de-oferta
+{
+	width: 100%;
+}
 
 .imagen-de-oferta {
 	width: 100%;
@@ -466,6 +573,7 @@ input
 }
 
 .boton-escuchar {
+	z-index: 1;
 	width: 25px;
 	height: 25px;
 	cursor: pointer;
@@ -476,3 +584,95 @@ input
 	color: dodgerblue;
 	cursor: pointer;
 }
+
+#ofertas .overlay
+{
+	z-index: 3;
+	position: relative;
+	top: 0;
+	left: 0;
+}
+
+#oferta .detalle-de-oferta
+{
+	margin-top: 75px;
+}
+
+#oferta .label-restricciones, #oferta .label-ciudad
+{
+	color: #E92531;
+	font-weight: bold;
+	margin-top: 5px;
+}
+
+.letra-small
+{
+	font-size: small;
+}
+
+
+
+
+/*Login*/
+
+#formLogin
+{
+	margin-top: 85px;
+}
+
+#login .panel-body
+{
+	background-color: #E92531;
+}
+
+#login .btn 
+{
+	background-color: #F5F5F5;
+	color: #88898C;
+	font-weight: bold;
+	width: 200px;
+}
+
+#login #image-container img
+{
+	margin: 0 auto;
+}
+
+.mensaje-bienvenida-login
+{
+	height: 50px;
+	color: white;
+	font-size: 11pt;
+	display: flex;
+	align-items: center;
+}
+
+#contenedor-de-mensajes-login
+{
+	color: white;
+	font-size: 11pt;
+}
+
+
+.loader {
+  border: 5px solid #D4D4D4;
+  border-radius: 50%;
+  border-top: 5px solid #E92531;
+  width: 40px;
+  height: 40px;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+  position: fixed;
+  z-index: 10;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+

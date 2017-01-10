@@ -28,6 +28,11 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
+
+        window.onerror = function(a, b, c)
+    	{
+    		setTimeout(alert("Error: " + a + ", " + b + ", " + c), 0);
+    	}
     },
 
     // Update DOM on a Received Event

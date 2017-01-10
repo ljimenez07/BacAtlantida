@@ -7,20 +7,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,24 +27,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ncubo.conf.Usuario;
 import com.ncubo.dao.CategoriaDao;
 import com.ncubo.dao.OfertaDao;
+import com.ncubo.dao.UsuarioDao;
 import com.ncubo.data.Oferta;
-import com.ncubo.logica.OfertaLogica;
+import com.ncubo.logica.OfertaService;
 import com.ncubo.util.GestorDeArchivos;
 
 @Controller
 public class OfertaController
 {
 	@Autowired
-	private OfertaDao ofertaDao;
-	@Autowired
 	private CategoriaDao categoriaDao;
+	
 	@Autowired
-	private GestorDeArchivos gestorDeArchivos;
+	private OfertaService ofertaService;
 	@Autowired
-	private OfertaLogica ofertaLogica;
+	private OfertaDao ofertaDao;
+	
+	@Autowired
+	private UsuarioDao usuarioDao;
 	
 	private final String ACTION_INSERTAR_OFERTA = "BackOffice/insertarOferta";
 	private final String ACTION_MODIFICAR_OFERTA = "BackOffice/modificarOferta";
@@ -62,38 +60,87 @@ public class OfertaController
 	private final String BOTON_SECUNDARIO_MODIFICAR_OFERTA = "imagen-cancelar";
 	private final String BOTON_SECUNDARIO_INSERTAR_OFERTA = "imagen-cancelar";
 	
+	@Autowired
+	GestorDeArchivos gestorDeArchivos;
 	
 	@RequestMapping("/BackOffice/gestionDeOfertas")
 	public String visualizarOfertas(Model model) throws ClassNotFoundException, SQLException
 	{
-		ArrayList<Oferta> ofertas = ofertaDao.obtener();
+		ArrayList<Oferta> ofertas = ofertaDao.obtener(0);
 		if (ofertas.isEmpty())
 		{
 			return "redirect:insertarOferta";
 		}
 		model.addAttribute("listaDeOfertas", ofertas);
+		int cantidadDePaginas = ofertaDao.cantidadPaginas();
+		if(cantidadDePaginas > 1)
+		{
+			model.addAttribute("cantidadDePaginacion", cantidadDePaginas);
+		}
+		
+		return "tablaDeOfertas";
+	}
+	
+	@RequestMapping("/BackOffice/gestionDeOfertas/{pagina}")
+	public String visualizarOfertasPaginacion(Model model, @PathVariable int pagina) throws ClassNotFoundException, SQLException
+	{
+		int idDesde = ofertaDao.getCantidadPaginacion() * (pagina -1);
+		ArrayList<Oferta> ofertas = ofertaDao.obtener(idDesde);
+		if (ofertas.isEmpty())
+		{
+			visualizarOfertas(model);
+		}
+		model.addAttribute("listaDeOfertas", ofertas);
+		int cantidadDePaginas = ofertaDao.cantidadPaginas();
+		if(cantidadDePaginas > 1)
+		{
+			model.addAttribute("cantidadDePaginacion", cantidadDePaginas);
+		}
+		
 		return "tablaDeOfertas";
 	}
 	
 	@RequestMapping("/BackOffice/filtrarOfertas")
 	public String filtrarOfertas(@RequestParam("busquedaComercio") String nombreComercio, Model model) throws ClassNotFoundException, SQLException
 	{
-		model.addAttribute("busquedaComercio", nombreComercio);
-		ArrayList<Oferta> ofertas = ofertaLogica.filtrarOferta(nombreComercio);
-
-		if (ofertas.isEmpty())
-		{
-			return "redirect:insertarOferta";
-		}
-		model.addAttribute("listaDeOfertas", ofertas);
-		return "tablaDeOfertas";
+		return filtrarOfertas(nombreComercio, 0, model);
 	}
 	
-
-	@RequestMapping("/login")
-	public String login( Model model) throws ClassNotFoundException, SQLException
+	@RequestMapping("/BackOffice/filtrarOfertas/{busquedaComercio}/{desde}")
+	public String filtrarOfertasDesde(@PathVariable("busquedaComercio") String nombreComercio, @PathVariable("desde") int desde, Model model) throws ClassNotFoundException, SQLException
 	{
-		return "login";
+		return filtrarOfertas(nombreComercio, desde, model);
+	}
+	
+	private String filtrarOfertas(String nombreComercio, int desde, Model model) throws ClassNotFoundException, SQLException
+	{
+		int desdeSiguiente = desde + ofertaDao.getCantidadPaginacion();
+		int desdeAtras = desde - ofertaDao.getCantidadPaginacion();
+		
+		model.addAttribute("busquedaComercio", nombreComercio);
+		
+		ArrayList<Oferta> ofertas = ofertaService.filtrarOferta(nombreComercio, desde);
+
+		if (ofertas == null)
+		{
+			return visualizarOfertas(model);
+		}
+		if(desde != 0 && ofertas.isEmpty())
+		{
+			return filtrarOfertas(nombreComercio, 0, model);
+		}
+		if (ofertas.size() == ofertaDao.getCantidadPaginacion())
+		{
+			model.addAttribute("cantidadDePaginacionFiltroSiguiente", desdeSiguiente);
+		}
+		if (desdeAtras >= 0)
+		{
+			model.addAttribute("cantidadDePaginacionFiltroAtras", desdeAtras);
+		}
+		
+		model.addAttribute("listaDeOfertas", ofertas);
+		model.addAttribute("cantidadDePaginacionFiltro", desde);
+		return "tablaDeOfertas";
 	}
 	
 	@GetMapping("/BackOffice/insertarOferta")
@@ -110,15 +157,14 @@ public class OfertaController
 	@PostMapping(value = "/BackOffice/insertarOferta", params="accion=ingresar")
 	public String insertarOfertas(@Valid Oferta oferta, BindingResult bindingResult, Model model) throws ClassNotFoundException, SQLException, ParseException, IOException
 	{
-		bindingResult = ofertaLogica.validarCampos(bindingResult, oferta);
+		bindingResult = oferta.validarCampos(bindingResult, oferta);
 		
 		if (bindingResult.hasErrors())
 		{
 			return cargarInsertarOfertas(oferta, model);
 		}
 		oferta.setFechaHoraRegistro(new Timestamp(new Date().getTime()));
-		ofertaDao.insertar(oferta);
-		gestorDeArchivos.textoAAudio( ""+oferta.getIdOferta(), oferta.getDescripcion() );
+		ofertaService.insertar(oferta);
 		
 		return "redirect:gestionDeOfertas";
 	}
@@ -129,36 +175,6 @@ public class OfertaController
 		return "redirect:gestionDeOfertas";
 	}
 	
-	@CrossOrigin(origins = "*")
-	@GetMapping(value = "/ofertas", produces = "application/json")
-	@ResponseBody public List<Oferta> ofertas(@RequestParam("pagina") int pagina, HttpSession sesion) throws ClassNotFoundException, SQLException
-	{
-		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-		String idUsuario = usuario == null ? null : usuario.getUsuarioId();
-		int indiceInicial = (pagina - 1) * 10;
-		return ofertaDao.ultimasDiezOfertasDesde(indiceInicial, idUsuario);
-	}
-	
-	@CrossOrigin(origins = "*")
-	@GetMapping(value = "/ofertas/{idOferta}", produces = "application/json")
-	@ResponseBody public Oferta oferta(@PathVariable int idOferta, HttpSession sesion) throws ClassNotFoundException, SQLException
-	{
-		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-		String idUsuario = usuario == null ? null : usuario.getUsuarioId();
-		return ofertaDao.obtener(idOferta, idUsuario);
-	}
-	
-	@CrossOrigin(origins = "*")
-	@GetMapping(value = "/ofertas/cantidad", produces = "application/json")
-	@ResponseBody public String cantidadDeOfertas(HttpSession sesion) throws ClassNotFoundException, SQLException
-	{
-		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-		JSONObject respuesta = new JSONObject().put("cantidad", ofertaDao.cantidad());
-		respuesta.put("usuarioEstaLogueado", usuario == null ? false : usuario.getEstaLogueado());
-		
-		return respuesta.toString();
-	}
-	
 	@ResponseBody
 	@RequestMapping(value = "/BackOffice/subirImagenPublicidad", method = RequestMethod.POST)
 	public String subirImagenPublicidad(@RequestParam("imagen-publicidad-input") MultipartFile uploadfile) throws IOException
@@ -166,7 +182,7 @@ public class OfertaController
 		System.out.println("Imagen publicidad");
 		if( ! gestorDeArchivos.esUnaImagen(uploadfile) && ! gestorDeArchivos.esUnArchivoComprimido(uploadfile))
 		{
-			return "";
+			return "No es una extension valida";
 		}
 		return gestorDeArchivos.subirArchivo(uploadfile);
 	}
@@ -178,7 +194,7 @@ public class OfertaController
 		System.out.println("Imagen Comercio");
 		if( ! gestorDeArchivos.esUnaImagen(uploadfile))
 		{
-			return "";
+			return "No es una extension valida";
 		}
 		return gestorDeArchivos.subirArchivo(uploadfile);
 	}
@@ -202,20 +218,14 @@ public class OfertaController
 	@PostMapping(value = "/BackOffice/modificarOferta", params="accion=ingresar")
 	public String modificarOferta(@Valid Oferta oferta, BindingResult bindingResult, Model model, HttpServletRequest request, @RequestParam(value = "idUsuario", required = false) String idUsuario) throws ClassNotFoundException, SQLException, ParseException, IOException
 	{
-		bindingResult = ofertaLogica.validarCampos(bindingResult, oferta);
+		bindingResult = oferta.validarCampos(bindingResult, oferta);
 		
 		if (bindingResult.hasErrors())
-		{		
+		{
 			return modificarOferta(model, 0, oferta, idUsuario);
 		}
 		oferta.setFechaHoraRegistro(new Timestamp(new Date().getTime()));
-		ofertaDao.modificar(oferta);
-		
-		if( oferta.cambioLaDescripcion() )
-		{
-			System.err.println("Cambio");
-			gestorDeArchivos.textoAAudio( ""+oferta.getIdOferta(), oferta.getDescripcion() );
-		}
+		ofertaService.modificar( oferta );
 		
 		return "redirect:gestionDeOfertas";
 	}
@@ -234,8 +244,10 @@ public class OfertaController
 	}
 	
 	@InitBinder
-	public void initBinder(final WebDataBinder binder){
-	  final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
-	  binder.registerCustomEditor(java.sql.Date.class, new CustomDateEditor(dateFormat, true));
+	public void initBinder(final WebDataBinder binder)
+	{
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
+		binder.registerCustomEditor(java.sql.Date.class, new CustomDateEditor(dateFormat, true));
 	}
+
 }

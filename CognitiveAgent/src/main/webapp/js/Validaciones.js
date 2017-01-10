@@ -35,3 +35,44 @@
 		}
 		return flag;	
 	}
+	
+	function sumarUnDiaAlaFechaDada(fecha)
+	{
+		var arrayDate = fecha.split("-");
+		var date = new Date();
+		date.setDate(parseInt(arrayDate[2]) + 1 );
+		console.log(date.getDate());
+		fecha = date.getFullYear() +"-"+ (date.getMonth() +1) +"-"+ date.getDate();
+		return fecha;
+	}
+	function esPaginaEditar()
+	{
+		// Dado que ingresar y editar son la misma vista.
+		// Se efectua una verificacion de campos para ver si las imagenes estan cargas, en tal caso la vista corresponde a EDITAR.
+		imagenComercio = $("#logo-comercio").val();
+		imagenPublicidad = $("#imagen-publicidad").val();
+		
+		if(imagenComercio === '' && imagenPublicidad === '')
+		{
+			return false;
+		}		
+		else
+		{
+			return true;
+	  	}
+	}
+	
+	function lasImagenesSeTerminaronDeSubir()
+	{
+		if(imagenPublicidadStatus == true && imagenComercioStatus == true)
+			return true;
+	}
+	// Esta funcion se requiere en caso de que la fecha del dia sea de un solo digito.
+	function devuelveFechaEnCasoDeQueSoloTengaUnaCifra(fecha)
+	{
+		if(fecha < 10)
+		{
+			return "0" + fecha;
+		}
+		else return fecha;
+	}

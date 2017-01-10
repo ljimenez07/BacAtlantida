@@ -1,16 +1,14 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:include="fragments/backoffice :: head (title='Consultas Realizadas')">
 <meta charset="UTF-8"></meta>
 </head>
 <style>
 	.titulo-ca
 	{
-		font-family: 'Roboto', serif;
 		font-size: 16px;
 	}
 	.notas-ca
 	{
-		font-family: 'Roboto', serif;
 		font-size: 16px;
 		color: rgb(177, 179, 181);
 	}
@@ -18,11 +16,13 @@
 	{
 		padding-top: 3%;
 	}
-	.center
+	#footer
 	{
-		margin: auto;
-		width: 70%;
-		padding: 10px;
+		bottom:0;
+		position:fixed;
+		left:0%;
+		width:100%;
+		
 	}
 
 </style>
@@ -54,7 +54,7 @@
 		<div th:include="fragments/backoffice :: body(paginaActual='consultasRealizadas')"></div>
 	
 		<div class="container agregar-padding-bottom">
-			<div class="row center">
+			<div class="row centrar">
 				<form th:action="@{/BackOffice/filtrarConsultasRealizadas}" th:method="post">
 					<div class="col-md-4">
 						<div class="form-group">
@@ -82,14 +82,14 @@
 					</div>
 				</form>
 			</div>
-			<div class="row center" th:if="${mensajeError} != null">
+			<div class="row centrar" th:if="${mensajeError} != null">
 				<div class="col-md-12">
 					<div class="form-group">
 						<p>**Fechas incorrectas.</p>
 					</div>
 				</div>
 			</div>
-			<div class="row center" th:unless="${consultasFiltradas} == null">
+			<div class="row centrar" th:unless="${consultasFiltradas} == null">
 				<div class="table-responsive" th:if="${not #lists.isEmpty(consultasFiltradas)}">
 					<table class="table table-bordered">
 						<thead>
@@ -101,24 +101,34 @@
 						<tbody>
 							<th:block th:each="consulta : ${consultasFiltradas}">
 								<tr>
-									<td class="texto-normal-ca" th:text="${consulta.descripcion}"/>
+									<td class="texto-normal-ca" th:text="${consulta.tema.obtenerNombre()}"/>
 									<td class="texto-normal-ca text-center" th:text="${consulta.vecesConsultado}"/>
 								</tr>
 							</th:block>
 						</tbody>
 					</table>
 				</div>
-				<div th:if="${#lists.isEmpty(consultasFiltradas)}">
-					<div class="col-md-12">
-						<label for="mensajeTablaVacia" class="text-center">No se encontraron registros con esos criterios</label>
-					</div>
+				<div class="table-responsive" th:if="${#lists.isEmpty(consultasFiltradas)}">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th class="text-center titulo-tabla-ca">Tema consultado</th>
+								<th class="text-center titulo-tabla-ca">Cantidad</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td colspan="2" class="texto-normal-ca text-center">No se encontraron coincidencias para este rango de fechas.</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
+				
 			</div>
 		</div>
 		<br/>
 	</div>
-	
-	<div th:include="fragments/footer :: body"></div>
+	<div th:include="fragments/footer :: body" id="footer"></div>
 	
 </body>
 </html>

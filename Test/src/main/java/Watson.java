@@ -86,13 +86,13 @@ public class Watson
 			return;
 		}
 		
-		if( ! expected.equals( ultimaRespuestaAsObject.getString("texto")  ))
+		if( ! expected.trim().equals( ultimaRespuestaAsObject.getString("texto").trim()  ))
 		{
-			System.err.println("Con "+session+" A '"+text+"' \n\t se esperaba '"+expected+"' \n\t  y se recibiÃ³ '"+new JSONObject(ultimaRespuesta.asString()).getString("texto")+"'");
+			System.err.println("Con "+session+" A '"+text+"' \n\t se esperaba '"+expected+"' \n\t  y se recibió '"+new JSONObject(ultimaRespuesta.asString()).getString("texto")+"'");
 		}
 		else
 		{
-			System.out.println("Con "+session+" A '"+text+"' \n\t  se encontrÃ³ '"+expected);
+			System.out.println("Con "+session+" A '"+text+"' \n\t  se encontró '"+expected);
 		}		
 	}
 	
@@ -110,13 +110,13 @@ public class Watson
 		
 		for ( String valor : valores)
 		{
-			if( valor.trim().equals( new JSONObject(ultimaRespuesta.asString()).getString("texto")  ))
+			if( valor.trim().equals( new JSONObject(ultimaRespuesta.asString()).getString("texto").trim()  ))
 			{
-				System.out.println("Con "+session+" A '"+text+"' \n\t  se encontrÃ³ '"+valor);
+				System.out.println("Con "+session+" A '"+text+"' \n\t  se encontró '"+valor);
 				return;
 			}
 		}
-		System.err.println("Con "+session+" A '"+text+"' \n\t  se esperaba algunas de estas respuestas '"+global+"' \n\t y se recibiÃ³ '"+new JSONObject(ultimaRespuesta.asString()).getString("texto")+"'");
+		System.err.println("Con "+session+" A '"+text+"' \n\t  se esperaba algunas de estas respuestas '"+global+"' \n\t y se recibió '"+new JSONObject(ultimaRespuesta.asString()).getString("texto")+"'");
 		
 	}
 	

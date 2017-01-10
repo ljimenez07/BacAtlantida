@@ -1,45 +1,70 @@
-<div class="row">
-  <div class="col-xs-12">
-    {{#if esHtml}}
-      <div class="html-de-oferta"></div>
-    {{else}}
-      <img src="{{imagenPublicidadPath}}" class="imagen-de-oferta">
-    {{/if}}
-    <div class="row nombre-del-comercio">
-      <div class="col-xs-12">
-        <strong>{{comercio}}</strong>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12">
-        <span>{{tituloDeOferta}}</span>
-      </div>
-    </div>
-    <div class="row contenedor-de-botones">
-      <div class="col-xs-12">
-        <div class="tiempo-transcurrido">Hace {{tiempoTranscurrido}}</div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 text-center">
-        <img src="./img/icono-94x91.png">
-      </div>
-    </div>
-    <div class="row contenedor-de-botones">
-      <div class="col-xs-6">
-      	<div class="row">
-      	  {{#if esUnUsuarioConocido}}
-            <div class="col-xs-3"><div class="boton-like {{like}}"></div></div>
-            <div class="col-xs-3"><div class="boton-dislike {{dislike}}"></div></div>
-          {{/if}}
-      	</div>
-      </div>
-      <div class="col-xs-6">
-        <div class="row">
-          <div class="col-xs-9"></div>
-            <div class="col-xs-3"><div class="boton-compartir"></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="row detalle-de-oferta">
+	<div class="col-xs-12">
+		<div class="row">
+			<div class="col-xs-12">
+				{{#if esHtml}}
+					<iframe class="html-de-oferta" frameBorder="0" scrolling="no" id="html-de-oferta-{{idOferta}}" style="display:block; width:100%;" onload="resizeIframe(this)"></iframe>
+					<script type="text/javascript">
+					var source = serverDomain + "/archivossubidos/{{imagenPublicidadPath}}";
+					var iframe = $('#oferta #html-de-oferta-{{idOferta}}');
+					iframe.attr("src", source);
+					</script>
+				{{else}}
+					<img src="/archivossubidos/{{imagenPublicidadPath}}" class="imagen-de-oferta">
+				{{/if}}
+			</div>
+		</div>
+		<div class="row nombre-del-comercio">
+			<div class="col-xs-12">
+				<strong>{{comercio}}</strong>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<span>{{tituloDeOferta}}</span>
+			</div>
+		</div>
+		<div class="row contenedor-centrado letra-small">
+			<div class="col-xs-4 col-sm-2 col-md-1 label-restricciones text-left">
+				<span>Restricciones:</span>
+			</div>
+			<div class="col-xs-8 col-sm-10 col-md-11 text-left">
+				<span>{{restricciones}}</span>
+			</div>
+		</div>
+		<div class="row contenedor-centrado letra-small">
+			<div class="col-xs-4 col-sm-2 col-md-1 label-ciudad text-left">
+				<span>Ciudad:</span>
+			</div>
+			<div class="col-xs-8 col-sm-10 col-md-11 text-left">
+				<span>{{ciudad}}</span>
+			</div>
+		</div>
+		<div class="row contenedor-de-botones">
+			<div class="col-xs-12">
+				<div class="tiempo-transcurrido">Hace {{tiempoTranscurrido}}</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 text-center boton-escuchar-oferta" data-audio="/archivossubidos{{descripcionAudio}}">
+				<img src="./img/icono-94x91.png">
+			</div>
+		</div>
+		<div class="row contenedor-de-botones">
+			<div class="col-xs-6">
+				<div class="row">
+					{{#if esUnUsuarioConocido}}
+						<div class="col-xs-3"><div class="boton-like {{like}}"></div></div>
+						<div class="col-xs-3"><div class="boton-dislike {{dislike}}"></div></div>
+					{{/if}}
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="row">
+					<div class="col-xs-9"></div>
+					<div class="col-xs-3"><div class="boton-compartir" data-id="{{idOferta}}" data-titulo="{{tituloDeOferta}}" data-path="{{imagenPublicidadPath}}"></div></div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

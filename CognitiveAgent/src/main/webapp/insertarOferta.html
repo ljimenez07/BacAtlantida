@@ -1,89 +1,9 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:include="fragments/backoffice :: head (title='Insertar Oferta')">
 	<meta charset="UTF-8"></meta>
 </head>
 
-
-
-<script>
-	$(document).ready(function()
-	{
-		$("#imagen-publicidad-input").on("change", subirImagenPublicidad);
-		$("#logo-comercio-input").on("change", subirImagenComercio);
-		
-		$("#vigenciaDesde-input").datepicker(
-		{
-			dateFormat : "yy-mm-dd",
-			forceParse: false,
-			beforeShow : function() {
-				jQuery(this).datepicker('option', 'maxDate',
-				jQuery('#vigenciaHasta-input').val());
-			}
-		});
-		$("#vigenciaHasta-input").datepicker
-		(
-			{
-				dateFormat : "yy-mm-dd",
-				forceParse: false,
-				beforeShow : function() {
-					jQuery(this).datepicker('option', 'minDate',
-					jQuery('#vigenciaDesde-input').val());
-			}
-		});
-	});
-	
-	function subirImagenPublicidad()
-	{
-		$.ajax(
-		{
-			url: "subirImagenPublicidad",
-			type: "POST",
-			data: new FormData($("#agregarOferta-form")[0]),
-			enctype: 'multipart/form-data',
-			processData: false,
-			contentType: false,
-			cache: false,
-			success: function (data)
-			{
-				if(data == '')
-				{
-					$("#imagen-publicidad").val("");
-				}
-				else
-				{
-					$("#imagen-publicidad").val(data);
-				}
-			}
-		});
-	}
-		
-	function subirImagenComercio()
-	{
-		$.ajax(
-		{
-			url: "subirImagenComercio",
-			type: "POST",
-			data: new FormData($("#agregarOferta-form")[0]),
-			enctype: 'multipart/form-data',
-			processData: false,
-			contentType: false,
-			cache: false,
-			success: function (data)
-			{
-				if(data == '')
-				{
-					$("#logo-comercio").val("");
-				}
-				else
-				{
-					$("#logo-comercio").val(data);
-				}
-			}
-		});
-	}
-</script>
 <style>
-	
 	.quitar-padding-left
 	{
 		padding-left: 0;
@@ -108,7 +28,6 @@
 	.campo-requerido
 	{
 		color: #3e61ac;
-		font-family: 'Roboto', serif;
 	}
 </style>
 <body>
@@ -118,42 +37,32 @@
 	<div th:include="fragments/backoffice :: body(paginaActual='insertarOferta')"></div>
 	
 	<div class="container agregar-padding-bottom">
-		<form id="agregarOferta-form" method="POST" th:action="@{/__${action}__}" th:object="${oferta}" action="#">
+		<form data-parsley-validate="true" id="agregarOferta-form" method="POST" th:action="@{/__${action}__}" th:object="${oferta}" action="#">
 		<input type="hidden" id="id-comercio" th:field="*{idOferta}"/>
 			<div id="agregarOferta">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="tituloOferta-lbl" class="titulo-ca"><span class="asterisco">*</span>Título de oferta</label>
-							<input id="asd" type="text" class="form-control" th:field="*{tituloDeOferta}" th:classappend="${#fields.hasErrors('tituloDeOferta')} ? 'sobresaltar-field'"/>
+							<input data-parsley-error-message= "Titulo de la oferta es requerido." data-parsley-required="true" id="asd" type="text" class="form-control" th:field="*{tituloDeOferta}" th:classappend="${#fields.hasErrors('tituloDeOferta')} ? 'sobresaltar-field'"/>
 							<p class="campo-requerido" th:if="${#fields.hasErrors('tituloDeOferta')}" th:errors="*{tituloDeOferta}"/>
 						</div>
 					</div>
 					<div class="col-md-6 quitar-padding-left">
-						<div class="col-md-5">
+						<div class="col-md-12">
 							<div class="form-group">
 								<label for="ciudad-lbl" class="titulo-ca"><span class="asterisco">*</span>Ciudad</label>
-								<input type="text" class="form-control" th:field="*{ciudad}" th:classappend="${#fields.hasErrors('ciudad')} ? 'sobresaltar-field'"/>
+								<input data-parsley-error-message= "Ciudad es requerida." data-parsley-required="true" type="text" class="form-control" th:field="*{ciudad}" th:classappend="${#fields.hasErrors('ciudad')} ? 'sobresaltar-field'"/>
 								<p class="campo-requerido" th:if="${#fields.hasErrors('ciudad')}" th:errors="*{ciudad}"/>
-							</div>
-						</div>
-						<div class="col-md-5">
-							<div class="form-group">
-								<label for="categoria-lbl" class="titulo-ca">Categoría</label><br/>
-								<select class="form-control" th:field="*{categoria.id}">
-									<option th:each="categoriaActual : ${categorias}" th:value="${categoriaActual.id}" th:text="${categoriaActual.nombre}"></option>
-								</select>
 							</div>
 						</div>
 					</div>
 				</div>
-				
 				<div class="row">
-				
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="nombreComercio-lbl" class="titulo-ca"><span class="asterisco">*</span>Nombre del comercio</label>
-							<input type="text" class="form-control" th:field="*{comercio}" th:classappend="${#fields.hasErrors('comercio')} ? 'sobresaltar-field'"/>
+							<input data-parsley-error-message= "Nombre del comercio es requerido." data-parsley-required="true" type="text" class="form-control" th:field="*{comercio}" th:classappend="${#fields.hasErrors('comercio')} ? 'sobresaltar-field'"/>
 							<p class="campo-requerido" th:if="${#fields.hasErrors('comercio')}" th:errors="*{comercio}"/>
 						</div>
 					</div>
@@ -174,12 +83,11 @@
 						</div>
 					</div>
 				</div>
-				
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="descripcion-lbl" class="titulo-ca"><span class="asterisco">*</span>Descripción</label>
-							<textarea class="form-control" rows="4" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')} ? 'sobresaltar-field'"></textarea>
+							<textarea data-parsley-required-message="Descripcion es requerida." data-parsley-required="true" data-parsley-maxlength-message="La descripción solo puede contener un máximo de 255 caracteres." data-parsley-maxlength="255" class="form-control" rows="4" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')} ? 'sobresaltar-field'"></textarea>
 							<textarea style="display:none;" rows="4" th:field="*{descripcionAnterior}"></textarea>
 							<p class="campo-requerido" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"/>
 						</div>
@@ -187,7 +95,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="restricciones-lbl" class="titulo-ca"><span class="asterisco">*</span>Restricciones</label>
-							<textarea class="form-control" rows="4" th:field="*{restricciones}" th:classappend="${#fields.hasErrors('restricciones')} ? 'sobresaltar-field'"></textarea>
+							<textarea data-parsley-required-message="Restricciones son requeridas." data-parsley-required="true" data-parsley-maxlength-message="Las restricciones solo pueden contener un máximo de 255 caracteres." data-parsley-maxlength="255" class="form-control" rows="4" th:field="*{restricciones}" th:classappend="${#fields.hasErrors('restricciones')} ? 'sobresaltar-field'"></textarea>
 							<p class="campo-requerido" th:if="${#fields.hasErrors('restricciones')}" th:errors="*{restricciones}"/>
 						</div>
 					</div>
@@ -207,7 +115,7 @@
 							<div class="form-group">
 								<label for="vigenciaDesde-lbl" class="titulo-ca"><span class="asterisco">*</span>Vigencia desde</label>
 								<div class="inner-addon right-addon">
-									<input type="text" class="form-control fechaInput" th:field="*{vigenciaDesde}" id="vigenciaDesde-input"
+									<input data-parsley-error-message= "Vigencia desde es requerida." data-parsley-required="true" type="text" class="form-control fechaInput" th:field="*{vigenciaDesde}" id="vigenciaDesde-input"
 									th:classappend="${#fields.hasErrors('vigenciaDesde')} ? 'sobresaltar-field'" 
 									/>
 									<p class="campo-requerido" th:if="${#fields.hasErrors('vigenciaDesde')}" th:errors="*{vigenciaDesde}"/>
@@ -219,7 +127,7 @@
 							<div class="form-group">
 								<label for="vigenciaHasta-lbl" class="titulo-ca"><span class="asterisco">*</span>Hasta</label>
 								<div class="inner-addon right-addon">
-									<input type="text" class="form-control fechaInput" th:field="*{vigenciaHasta}" id="vigenciaHasta-input"
+									<input data-parsley-error-message= "Vigencia hasta es requerida." data-parsley-required="true" type="text" class="form-control fechaInput" th:field="*{vigenciaHasta}" id="vigenciaHasta-input"
 									th:classappend="${#fields.hasErrors('vigenciaHasta')} ? 'sobresaltar-field'"
 									/>
 									<p class="campo-requerido" th:if="${#fields.hasErrors('vigenciaHasta')}" th:errors="*{vigenciaHasta}"/>
@@ -232,32 +140,64 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="logo-label-lbl" class="titulo-ca"><span class="asterisco">*</span>Logo del comercio</label>
-								<input id="logo-comercio-input" type="file" name="logo-comercio-input" accept="image/*"/>
+								<input data-parsley-error-message= "Logo comercio es requerido." data-parsley-required="true" id="logo-comercio-input" type="file" name="logo-comercio-input" accept="image/*"/>
 								<p class="campo-requerido" th:if="${#fields.hasErrors('imagenComercioPath')}" th:errors="*{imagenComercioPath}"  id="validador-imagen-comercio"/>
-							</div>
+							</div>		
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="publicidad-label-lbl" class="titulo-ca"><span class="asterisco">*</span>Imagen de publicidad</label> 
-								<input id="imagen-publicidad-input" type="file" name="imagen-publicidad-input" 
+								<input data-parsley-error-message= "Imagen de publicada es requerida." data-parsley-required="true" id="imagen-publicidad-input" type="file" name="imagen-publicidad-input" 
 								accept=".zip,image/*"/>
 								<p class="campo-requerido" th:if="${#fields.hasErrors('imagenPublicidadPath')}" th:errors="*{imagenPublicidadPath}"/>
 							</div>
 						</div>
 					</div>
 				</div>
-				
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label for="categoria-lbl" class="titulo-ca">A cuáles categorías pertenece esta oferta:</label><br/>	
+							<div th:each="categoria, categoriaStat : *{categorias}" class="row">
+								<div class="col-xs-3"> 
+									<div th:text="${categoria.nombre}">
+									</div>
+								</div>
+								<div class="col-xs-3">
+									<select class="form-control" th:field="*{categorias[__${categoriaStat.index}__].peso}">
+										<option value="0">Poco</option>
+										<option value="1">Moderado</option>
+										<option value="2">Mucho</option>
+									</select>
+								</div>
+								<div class="col-xs-3"></div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<input type="hidden" id="logo-comercio" th:field="*{imagenComercioPath}"/>
 				<input type="hidden" id="imagen-publicidad" th:field="*{imagenPublicidadPath}"/>
 				
+				<input type="hidden" name="accion" id="accion"/>
+				<div class="row" id="contenedor-mensaje-error" style="visibility: hidden;">
+					<div class="alert alert-danger" >
+						<div class="row" >
+							<div class="col-md-3 offset-md-2"></div>
+							<div class="col-md-1">
+								<span class="glyphicon glyphicon-remove" onclick="esconderEsteMensaje()" style="cursor:pointer;"></span>
+							</div>
+							<div class="col-md-6" id="error-message"><p id="mensaje-error-imagen"></p></div>
+						</div>
+					</div>
+				</div>
 				<div class="row agregar-padding-top" align="center">
 					<div class="col-md-12">
 						<div class="form-group">
-							<button id="limpiar-submit" type="submit" class="btn btn-default agregar-padding-left" name="accion" value="limpiar">
+							<button id="limpiar-submit" type="button" class="btn btn-default agregar-padding-left buttonMandarInfoALserver" name="accion" value="limpiar">
 								<span class="texto-junto-imagen">Cancelar</span>
 								<span th:class="${imagenBotonSecundario}"></span>
 							</button>
-							<button id="ingresar-submit" type="submit" class="btn btn-default agregar-padding-left" name="accion" value="ingresar">
+							<button id="ingresar-submit" type="button" class="btn btn-default agregar-padding-left buttonMandarInfoALserver" name="accion" value="ingresar">
 								<span class="texto-junto-imagen" th:text="${nombreBotonPrincipal}"></span>
 								<span th:class="${imagenBotonPrincipal}"></span>
 							</button>
@@ -271,9 +211,185 @@
 		</form>
 	</div>
 	<br/>
-	</div>
+</div>
+<script th:inline="javascript">
+var activeAjaxConnections = 0;
+var imagenComercioStatus = false;
+var imagenPublicidadStatus = false;
+var estaEsPaginaEditar = false;
+$(document).ready(function()
+{	
+	 $('agregarOferta-form').parsley({
+		successClass: 'success',
+		errorClass: 'error',
+		errors: {
+			classHandler: function(el) {
+				return $(el).closest('.control-group');
+			}
+		}
+	});
+	
+	if(esPaginaEditar()) // Entonces las imagenes ya estan cargadas.
+	{
+		estaEsPaginaEditar = true;
+		$("#logo-comercio-input").removeAttr("data-parsley-required");
+		$("#logo-comercio-input").removeAttr("data-parsley-error-message");
+		
+		$("#imagen-publicidad-input").removeAttr("data-parsley-required");
+		$("#imagen-publicidad-input").removeAttr("data-parsley-error-message");
+		
+	}
+	
+	$("#imagen-publicidad-input").on("change", subirImagenPublicidad);
+	$("#logo-comercio-input").on("change", subirImagenComercio);
+	
+	$("#vigenciaDesde-input").datepicker(
+	{
+		dateFormat : "yy-mm-dd",
+		forceParse: false,
+		beforeShow : function() {
+			jQuery(this).datepicker('option', 'maxDate',
+			jQuery('#vigenciaHasta-input').val());
+		}
+	});
+	$("#vigenciaHasta-input").datepicker
+	(
+		{
+			dateFormat : "yy-mm-dd",
+			forceParse: false,
+			beforeShow : function() {
+				jQuery(this).datepicker('option', 'minDate',
+				jQuery('#vigenciaDesde-input').val());
+		}
+	});
+});
+
+function subirImagenPublicidad()
+{
+	$.ajax(
+	{
+		url: "subirImagenPublicidad",
+		type: "POST",
+		data: new FormData($("#agregarOferta-form")[0]),
+		enctype: 'multipart/form-data',
+		processData: false,
+		contentType: false,
+		cache: false,
+		beforeSend: function(xhr)
+		{
+			activeAjaxConnections = activeAjaxConnections+1;
+		},
+		success: function (data)
+		{
+			if(data == 'No es una extension valida')
+			{
+				$("#mensaje-error-imagen").text("Error!! " + data);
+				$("#contenedor-mensaje-error").css("visibility","visible");
+			}
+			if(data == '')
+			{
+				$("#imagen-publicidad").val("");
+			}
+			else
+			{
+				$("#imagen-publicidad").val(data);
+			}
+		},
+		error: function (xhr, errDesc, exception)
+		{
+
+			$("#mensaje-error-imagen").text("Error!! " + xhr.responseJSON.localizedMessage);
+			$("#contenedor-mensaje-error").css("visibility","visible");
+
+		},
+		complete: function(data)
+		{
+			imagenPublicidadStatus = true;
+			activeAjaxConnections = activeAjaxConnections-1;
+		}
+	});
+}
+	
+function subirImagenComercio()
+{
+	$.ajax(
+	{
+		url: "subirImagenComercio",
+		type: "POST",
+		data: new FormData($("#agregarOferta-form")[0]),
+		enctype: 'multipart/form-data',
+		processData: false,
+		contentType: false,
+		cache: false,
+		beforeSend: function(xhr, opts)
+		{
+			activeAjaxConnections = activeAjaxConnections+1;
+		},
+		success: function (data)
+		{
+			if(data == 'No es una extension valida')
+			{
+				$("#mensaje-error-imagen").text("Error!! " + data);
+				$("#contenedor-mensaje-error").css("visibility","visible");
+			}
+			
+			if(data == '')
+			{
+				$("#logo-comercio").val("");
+			}
+			else
+			{
+				$("#logo-comercio").val(data);
+			}
+		},
+		error: function (xhr, errDesc, exception)
+		{
+			
+			$("#mensaje-error-imagen").text("Error!! " + xhr.responseJSON.localizedMessage);
+			$("#contenedor-mensaje-error").css("visibility","visible");
+		},
+		complete: function(data)
+		{
+			imagenComercioStatus = true;
+			activeAjaxConnections = activeAjaxConnections-1;
+		}
+	});
+}
+
+$("#limpiar-submit").click(
+function()
+{
+	window.location.href = [[@{'/BackOffice/gestionDeOfertas'}]] ;
+});
+
+$("#ingresar-submit").click(function()
+{
+	if(estaEsPaginaEditar)
+	{
+		submit();
+	}
+	else 
+	{
+		submit();
+	}
+});
+
+function submit()
+{
+	console.log("imagenes subidas");
+	$("#accion").val($("#ingresar-submit").val());
+	$("#agregarOferta-form").submit();
+	imagenComercioStatus = false;
+	imagenPublicidadStatus = false;
+}
+
+function esconderEsteMensaje()
+{
+	$("#contenedor-mensaje-error").css("visibility","hidden");
+}
+</script>
 	
 	<div th:include="fragments/footer :: body"></div>
-	
 </body>
+
 </html>
