@@ -1213,10 +1213,10 @@
 	</variablesDeAmbiente>
 	
 	<workspaces user="c2bbaaba-491a-4c2c-81ce-63dbc88b69c9" pass="2xtXzqmmzXAe">
-		<workspace tipo="general" idIBM="84c0ed58-2bec-4149-96b8-5c514256ff41" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="45a89ccc-20bf-435c-af1f-efd014090609" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
+		<workspace tipo="general" idIBM="3b8f3b61-173d-4410-8f30-ea38d5828f31" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="especifico" idIBM="deeffe01-0b4b-4f6f-8d68-a394237b1667" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="94f2b5c9-149b-404e-ae3c-cfd214ba7a53" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="6c27df42-5953-414b-87a8-b41039221268" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="1f8cbf03-954c-4f79-ab1c-6095d0178c30" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>
