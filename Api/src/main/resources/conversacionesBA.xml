@@ -386,7 +386,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Puedo responder tus consultas sobre requisitos y costos de algunos de nuestros productos tales como: @@br/@@@ @@br/@@@ 1. Cuentas de ahorro. @@br/@@@ 2. Cuentas de cheques. @@br/@@@ 3. Préstamos. @@br/@@@ 4. Tarjetas de débito y crédito. @@br/@@@ 5. Mensajitos. @@br/@@@ 6. Atlántida Online. @@br/@@@ @@br/@@@ También puedo proporcionarte información sobre costos de citas para: @@br/@@@ @@br/@@@ 1. Licencia para conducir. @@br/@@@ 2. Pasaporte. @@br/@@@ 3. Embajada Americana (USA). @@br/@@@ @@br/@@@ Adicionalmente, te puedo ayudar con: @@br/@@@ @@br/@@@ 1. Costos de la hoja de antecedentes penales. @@br/@@@ 2. Números telefónicos de nuestras agencias. @@br/@@@ 3. Cómo reportar extravío o robo de tarjeta. @@br/@@@ 4. Tipo de cambio. @@br/@@@ @@br/@@@ Si has iniciado sesión también podré darte el saldo, disponible o últimos movimientos de tus cuentas o tarjetas de crédito.</frase>
+			<frase>Puedo responder tus consultas sobre requisitos y costos de algunos de nuestros productos tales como: @@br/@@@ @@br/@@@ 1. Cuentas de ahorro. @@br/@@@ 2. Cuentas de cheques. @@br/@@@ 3. Préstamos. @@br/@@@ 4. Tarjetas de débito y crédito. @@br/@@@ 5. Mensajitos. @@br/@@@ 6. Atlántida Online. @@br/@@@ @@br/@@@ También puedo proporcionarte información sobre costos de citas para: @@br/@@@ @@br/@@@ 1. Licencia para conducir. @@br/@@@ 2. Pasaporte. @@br/@@@ 3. Embajada Americana (USA). @@br/@@@ @@br/@@@ Adicionalmente, te puedo ayudar con: @@br/@@@ @@br/@@@ 1. Costos de la hoja de antecedentes penales. @@br/@@@ 2. Cómo reportar extravío o robo de tarjeta. @@br/@@@ 3. Tipo de cambio. @@br/@@@ @@br/@@@ Si has iniciado sesión también podré darte el saldo, disponible o últimos movimientos de tus cuentas o tarjetas de crédito.</frase>
 		</frases>
 		<vinetas></vinetas>
 		<when>
@@ -937,7 +937,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Los pasos que debes seguir para pagar la tasa consular o cita de la Embajada Americana (USA) son los siguientes: @@br/@@@ @@br/@@@ 1)@@!Debes ingresar a la página web:  www.ustraveldocs.com/hn  y definir un perfil para poder completar el formulario de la hoja de depósito. @@br/@@@ 2)@@!Es importante que en opciones de pago hayas seleccionado Banco Atlántida.  @@br/@@@ 3)@@!Cuando imprimas la Boleta de Depósito de Banco Atlántida, contiene el número de referencia CGI, puedes presentarla en cualquier punto de servicio para realizar el pago de la Tasa Consular. @@br/@@@ 4)@@!Para realizar el pago le brindamos las opciones de Ventanilla, Atlántida Online, Kioscos y Agentes. @@br/@@@ 5)@@!El monto a cancelar dependerá de la hoja de depósito y la tasa de cambio que estableció el CGI. @@br/@@@ 6)@@!Luego de realizado el pago recibirás un comprobante con el número de recibo, el cual le servirá para continuar el proceso en la página www.ustraveldocs.com/hn  y poder agendar la cita.</frase>
+			<frase>Los pasos que debes seguir para pagar la tasa consular o cita de la Embajada Americana (USA) son los siguientes: @@br/@@@ @@br/@@@ 1)@@!Debes ingresar a la página web:  www.ustraveldocs.com/hn  y definir un perfil para poder completar el formulario de la hoja de depósito. @@br/@@@ 2)@@!Es importante que en opciones de pago hayas seleccionado Banco Atlántida.  @@br/@@@ 3)@@!Cuando imprimas la Boleta de Depósito de Banco Atlántida, contiene el número de referencia CGI, puedes presentarla en cualquier punto de servicio para realizar el pago de la Tasa Consular. @@br/@@@ 4)@@!Para realizar el pago le brindamos las opciones de Ventanilla, Atlántida Online, Kioscos y Agentes. @@br/@@@ 5)@@!El monto a cancelar dependerá de la hoja de depósito (160, 190, 240 y 270 Dólares) y la tasa de cambio que estableció el CGI. @@br/@@@ 6)@@!Luego de realizado el pago recibirás un comprobante con el número de recibo, el cual le servirá para continuar el proceso en la página www.ustraveldocs.com/hn  y poder agendar la cita.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -947,7 +947,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>El monto a cancelar dependerá de la hoja de depósito y la tasa de cambio que estableció el CGI.</frase>
+			<frase>El monto a cancelar dependerá de la hoja de depósito (160, 190, 240 y 270 Dólares) y la tasa de cambio que estableció el CGI.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -1216,7 +1216,7 @@
 		<workspace tipo="general" idIBM="3b8f3b61-173d-4410-8f30-ea38d5828f31" intencionesParaSeReferenciado="">BAIntents</workspace>
 		<workspace tipo="especifico" idIBM="deeffe01-0b4b-4f6f-8d68-a394237b1667" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="94f2b5c9-149b-404e-ae3c-cfd214ba7a53" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="1f8cbf03-954c-4f79-ab1c-6095d0178c30" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="2caea239-9d8a-4110-b986-90c0ec03aace" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>
