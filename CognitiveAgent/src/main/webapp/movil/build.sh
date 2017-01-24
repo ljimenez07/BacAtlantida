@@ -19,6 +19,6 @@ if [ ${#3} -gt 0 ]; then
 	if [ $3 = "android" ]; then
 		cp -r $2/res/drawable-* $2/platforms/android/res/
 	fi
-	cordova build $3
+	cordova build $3 --release
 fi
 echo "fin"
