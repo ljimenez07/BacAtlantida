@@ -7,6 +7,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +27,7 @@ public class ExtraerDatosWebService {
 	private String saldo;
 	private String movimientos;
 	private String login;
+	private String preLogin;
 	private String usuario;
 	private String password;
 	
@@ -194,10 +197,15 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%stc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroTarjeta = nodoTarjeta.get("numeroTarjeta");
-			if(!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
+			if(saldo.equals("0.0") && (!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A")))
+				nuevoTexto = "No tienes saldo en la tarjeta de crédito " +numeroTarjeta.toString()+"-"+alias.toString();
+			else if(saldo.equals("0.0") && (alias.toString().equals("Alias no ingresado") || alias.toString().equals("N/A")))
+				nuevoTexto = "No tienes saldo en la tarjeta de crédito " +numeroTarjeta.toString();
+			else if(! saldo.equals("0.0") &&  !alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
 				nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString()+"-"+alias.toString());
 			else nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString());	
-			
+
+				
 			saldos[s] = nuevoTexto;
 		}
 	}catch (Exception e) {
@@ -373,7 +381,11 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%cc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroCuenta = nodoTarjeta.get("numeroCuenta");
-			if(!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
+			if(saldo.toString().equals("0.0") && (!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A")))
+				nuevoTexto = "No tienes saldo en la cuenta de ahorros " +numeroCuenta.toString()+"-"+alias.toString();
+			else if(saldo.toString().equals("0.0") && (alias.toString().equals("Alias no ingresado") || alias.toString().equals("N/A")))
+				nuevoTexto = "No tienes saldo en la cuenta de ahorros" +numeroCuenta.toString();
+			else if(!saldo.toString().equals("0.0") &&  !alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
 				nuevoTexto = nuevoTexto.replaceAll("%ncc", numeroCuenta.toString()+"-"+alias.toString());
 			else nuevoTexto = nuevoTexto.replaceAll("%ncc", numeroCuenta.toString());	
 			
@@ -841,7 +853,11 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%stc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroTarjeta = nodoTarjeta.get("numeroTarjeta");
-			if(!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
+			if(saldo.equals("0.0") && (!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A")))
+				nuevoTexto = "No tienes disponible en la tarjeta de crédito " +numeroTarjeta.toString()+"-"+alias.toString();
+			else if(saldo.equals("0.0") && (alias.toString().equals("Alias no ingresado") || alias.toString().equals("N/A")))
+				nuevoTexto = "No tienes disponible en la tarjeta de crédito " +numeroTarjeta.toString();
+			else if(! saldo.equals("0.0") &&  !alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
 				nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString()+"-"+alias.toString());
 			else nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString());	
 			
@@ -950,7 +966,46 @@ public class ExtraerDatosWebService {
 		return texto;
 	}
 	
-	public String[] login(String name, String clave){
+	public boolean login(String name, String clave){
+		boolean logueado = false;
+		try {
+			String requestBody = "{"+
+   "\"Id\": \"\","+
+   "\"UserName\": \"%s\","+
+   "\"AppType\": \"Consumers\","+
+   "\"ChannelType\": \"Mobile\","+
+   "\"UserType\": 1,"+
+   "\"Password\": \"%s\"}";
+					
+			requestBody = String.format(requestBody, name,clave);
+			
+			String responseXML = 
+					given().
+					header("Content-Type", "application/json").
+					header("Accept", "application/json").
+					header("channelType", "Mobile").
+					body(requestBody).
+					post(login).
+					andReturn().
+					asString();
+			
+			
+			System.out.println(responseXML);
+			
+			JSONParser parser = new JSONParser(); 
+			JSONObject json = (JSONObject) parser.parse(responseXML);
+
+			if(!json.containsKey("error"))
+				return true;
+	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return logueado;
+	}
+	
+	public String[] preLogin(String name){
 		String[] response = new String [4];
 		response[0] = "N";
 		
@@ -1079,7 +1134,7 @@ public class ExtraerDatosWebService {
 					auth().
 					basic(usuario, password).
 					body(requestBody).
-					post(login).
+					post(preLogin).
 					andReturn().
 					asString();
 			
@@ -1303,7 +1358,13 @@ public class ExtraerDatosWebService {
 		this.password = password;
 	}
 	
-	
+	public String getPreLogin() {
+		return preLogin;
+	}
+
+	public void setPreLogin(String preLogin) {
+		this.preLogin = preLogin;
+	}
 	
 }
  
