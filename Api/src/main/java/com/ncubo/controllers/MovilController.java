@@ -87,9 +87,10 @@ public class MovilController {
 	@RequestMapping(value="/movil/login", method = RequestMethod.POST)
 	public ResponseEntity<?> login(@RequestBody String mensaje, HttpSession sesion, @RequestParam String name, @RequestParam String password) throws ClassNotFoundException, SQLException, JSONException 
 	{
-		String[] responseLogin = extraerDatos.login(name , password);
-		if(responseLogin[0].equals("S"))
+		if(extraerDatos.login(name, password))
 		{
+			String[] responseLogin = extraerDatos.preLogin(name);
+		
 			Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
 			
 			if( usuario == null)
