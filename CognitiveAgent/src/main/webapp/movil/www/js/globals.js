@@ -1,1 +1,1 @@
-var serverDomain = "https://intranet.ncubo.com:443/Api";
+var serverDomain = "http://200.3.194.75/Api"; 
