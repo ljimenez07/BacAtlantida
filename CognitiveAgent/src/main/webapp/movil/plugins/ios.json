@@ -10,13 +10,13 @@
         "cordova-plugin-queries-schemes": {
             "PACKAGE_NAME": "movil.bancatlan.abi"
         },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "movil.bancatlan.abi"
-        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "movil.bancatlan.abi"
         },
         "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "movil.bancatlan.abi"
+        },
+        "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "movil.bancatlan.abi"
         }
     },

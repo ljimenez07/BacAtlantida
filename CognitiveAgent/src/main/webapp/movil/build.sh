@@ -18,7 +18,8 @@ if [ ${#3} -gt 0 ]; then
 	cordova plugin add cordova-plugin-splashscreen
 	if [ $3 = "android" ]; then
 		cp -r $2/res/drawable-* $2/platforms/android/res/
+    cp -r $2/res/mipmap-* $2/platforms/android/res/
 	fi
-	cordova build $3
+	cordova build $3 --release
 fi
 echo "fin"
