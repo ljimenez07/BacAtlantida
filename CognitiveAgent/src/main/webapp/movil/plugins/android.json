@@ -8,18 +8,18 @@
     },
     "installed_plugins": {
         "cordova-plugin-queries-schemes": {
-            "PACKAGE_NAME": "movil.bancatlan.abi"
+            "PACKAGE_NAME": "movil.bancatlan.abi2"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "movil.bancatlan.abi"
+            "PACKAGE_NAME": "movil.bancatlan.abi2"
         },
         "cordova-plugin-x-socialsharing": {
-            "PACKAGE_NAME": "movil.bancatlan.abi"
+            "PACKAGE_NAME": "movil.bancatlan.abi2"
         }
     },
     "dependent_plugins": {
         "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "movil.bancatlan.abi"
+            "PACKAGE_NAME": "movil.bancatlan.abi2"
         }
     }
 }
