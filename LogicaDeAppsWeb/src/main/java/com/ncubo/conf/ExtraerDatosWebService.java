@@ -938,7 +938,9 @@ public class ExtraerDatosWebService {
 				post(tipoCambio).
 				andReturn().
 				asString();
+		System.out.println("body "+requestBody);
 		
+		System.out.println(responseXML);
 		XmlPath xmlPath = new XmlPath(responseXML).setRoot("Envelope");
 		NodeChildrenImpl body = xmlPath.get("Body");
 		NodeImpl tasa = body.get(0).get("MT_TasaCambioResponse");
@@ -950,12 +952,17 @@ public class ExtraerDatosWebService {
 			NodeImpl moneda = nodeTipoCambio1.get("moneda");
 			NodeImpl compra = nodeTipoCambio1.get("compra");
 			NodeImpl venta = nodeTipoCambio1.get("venta");
-			if(moneda.getValue().equals(Entidad.DOLAR.toString())){
-				texto = texto.replace("%dc", compra.toString()+" Lempiras ").replace("%dv", venta.toString()+" Lempiras ");
+			if(compra.getValue().equals("0.0") || venta.getValue().equals("0.0"))
+				texto = "En este momento no puedo darte la tasa de cambio, inténtalo más tarde";
+			else{
+				if(moneda.getValue().equals(Entidad.DOLAR.toString())){
+					texto = texto.replace("%dc", compra.toString()+" Lempiras ").replace("%dv", venta.toString()+" Lempiras ");
+				}
+				if(moneda.getValue().equals(Entidad.EURO.toString())){
+					texto = texto.replace("%ec", compra.toString()+" Lempiras ").replace("%ev", venta.toString()+" Lempiras ");			
+				}
 			}
-			if(moneda.getValue().equals(Entidad.EURO.toString())){
-				texto = texto.replace("%ec", compra.toString()+" Lempiras ").replace("%ev", venta.toString()+" Lempiras ");			
-			}
+				
 		}
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -966,7 +973,7 @@ public class ExtraerDatosWebService {
 	
 	public String[] login(String name, String clave){
 		String[] response = new String [4];
-		response[0] = "N";
+		response[0] = "Error de comunicación, por favor inténtalo más tarde";
 		
 		try {
 			String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:val=\"http://hn.infatlan.och/ws/IA003/out/ValidaPreLogin\">"+
@@ -1097,7 +1104,6 @@ public class ExtraerDatosWebService {
 					andReturn().
 					asString();
 			
-			
 			System.out.println(responseXML);
 			XmlPath xmlPath = new XmlPath(responseXML).setRoot("Envelope");
 			NodeChildrenImpl body = xmlPath.get("Body");
@@ -1114,10 +1120,14 @@ public class ExtraerDatosWebService {
 					response[2] = validaPreLoginColeccion.getNode("usuarioId").toString();
 					response[3] = validaPreLoginColeccion.getNode("usuarioNombre").toString();
 				}
+				else{
+					if(!estado.getNode("descripcion").toString().equals("") && !estado.getNode("descripcion").toString().equals("Error desconocido"))
+						response[0] = estado.getNode("descripcion").toString();
+				}
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			response[0] = "Error de comunicación, por favor inténtalo más tarde";
 		}
 		return response;
 	}
@@ -1261,10 +1271,9 @@ public class ExtraerDatosWebService {
 				cuentas[1] = true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			cuentas[0] = false;
+			cuentas[1] = false;
 		}
-			
-
 		    return cuentas;
 	}
 
