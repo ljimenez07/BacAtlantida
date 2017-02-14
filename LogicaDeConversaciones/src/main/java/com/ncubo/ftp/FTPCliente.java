@@ -208,7 +208,7 @@ public class FTPCliente
 					e.printStackTrace();
 				}
 			}
-			System.out.println("Termin� de subir el archivo");
+			System.out.println("Se termino de subir el archivo.");
 		}
 	}
 	

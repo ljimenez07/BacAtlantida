@@ -9,7 +9,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.ncubo.db.BitacoraDao;
-import com.ncubo.db.ConexionALaDB;
 import com.ncubo.db.EstadisticasPorConversacionDao;
 
 public class HistoricosDeConversaciones {
@@ -73,9 +72,12 @@ public class HistoricosDeConversaciones {
 	}
 	
 	public void borrarElHistoricoDeUnaConversacionPorCliente(ArrayList<String> idsSesiones, String idCliente){
-		for (String idSesion: idsSesiones){
-			borrarElHistoricoDeUnaConversacion(idSesion, idCliente);
+		if(idsSesiones != null && ! idCliente.isEmpty()){
+			for (String idSesion: idsSesiones){
+				borrarElHistoricoDeUnaConversacion(idSesion, idCliente);
+			}
 		}
+		
 	}
 	
 	public void borrarElHistoricoDeUnaConversacion(String idSesion, String idCliente){

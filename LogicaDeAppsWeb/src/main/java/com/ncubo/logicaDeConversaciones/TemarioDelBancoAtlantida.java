@@ -582,6 +582,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
+			frase("despedidaCerrarSesion"),
 			frase("noEntendi")
 		);
 		return resultado;
@@ -602,6 +603,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
 			frase("noQuiereHacerOtraConsulta"),
+			frase("despedidaCerrarSesion"),
 			frase("noEntendi")
 		);
 		return resultado;
@@ -619,7 +621,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("fueraDeContextoBanco"),
 			frase("preguntarPorOtraConsulta"),
 			frase("quiereHacerOtraConsulta"),
-			frase("noQuiereHacerOtraConsulta")
+			frase("noQuiereHacerOtraConsulta"),
+			frase("despedidaCerrarSesion")
 		);
 		return resultado;
 	}

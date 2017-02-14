@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,20 +52,20 @@ public class ArchivosController
 		String remoteFile2 = nombre.replace("-", "/");
 		InputStream streamPorDevolver = null;
 		
-		if(remoteFile2.startsWith("audio"))
-		{
+		if(remoteFile2.startsWith("audio")){
 			byte[] bytesStreamPorDevolver = CacheDeAudios.obtener(remoteFile2);
 			
-			if(bytesStreamPorDevolver == null)
-			{
+			if(bytesStreamPorDevolver == null){
 				streamPorDevolver = ftp.descargarArchivo(remoteFile2);
-				bytesStreamPorDevolver = IOUtils.toByteArray(streamPorDevolver);
-				CacheDeAudios.agregar(remoteFile2, bytesStreamPorDevolver);
+				if(streamPorDevolver != null){
+					bytesStreamPorDevolver = IOUtils.toByteArray(streamPorDevolver);
+					CacheDeAudios.agregar(remoteFile2, bytesStreamPorDevolver);
+				}
 			}
-			streamPorDevolver = new ByteArrayInputStream(bytesStreamPorDevolver);
+			if(bytesStreamPorDevolver != null)
+				streamPorDevolver = new ByteArrayInputStream(bytesStreamPorDevolver);
 		}
-		else
-		{
+		else{
 			streamPorDevolver = ftp.descargarArchivo(remoteFile2);
 		}
 		

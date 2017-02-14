@@ -135,14 +135,19 @@ public class FTPServidor
 	
 	public InputStream descargarArchivo(String nombreArchivo) throws SocketException, IOException
 	{
-		FTPClient ftpClient = new FTPClient();
-		ftpClient.connect(host, puerto);
-		ftpClient.login(usuario, password);
-		ftpClient.enterLocalPassiveMode();
-		ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-		ftpClient.changeWorkingDirectory(carpeta);
+		try{
+			FTPClient ftpClient = new FTPClient();
+			ftpClient.connect(host, puerto);
+			ftpClient.login(usuario, password);
+			ftpClient.enterLocalPassiveMode();
+			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+			ftpClient.changeWorkingDirectory(carpeta);
 
-		return ftpClient.retrieveFileStream(nombreArchivo);
+			return ftpClient.retrieveFileStream(nombreArchivo);
+		}catch(Exception e){
+			System.out.println(String.format("El audio %s no se encontro en el FTP", nombreArchivo));
+			return null;
+		}
 	}
 	
 	public void subirUnArchivo(InputStream archivo, String pathDondeGuardar) throws IOException

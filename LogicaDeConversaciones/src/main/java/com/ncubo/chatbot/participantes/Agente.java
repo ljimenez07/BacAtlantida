@@ -467,8 +467,12 @@ public class Agente extends Participante{
 		//MessageResponse response = miWatsonConversacions.get(nombreDeWorkspaceActual).enviarAWatson(respuestaDelCliente, miContextos.get(nombreDeWorkspaceActual));
 		respuesta.llamarAWatson(respuestaDelCliente);
 		//String context = response.getContext().toString();
-		String context = respuesta.messageResponse().getContext().toString();
-		miContextos.put(nombreWorkspace, context);
+		try{
+			String context = respuesta.messageResponse().getContext().toString();
+			miContextos.put(nombreWorkspace, context);
+		}catch(Exception e){
+			System.out.println(String.format("Error al extraer el contexto de watson: %s", e.getStackTrace().toString()));
+		}
 		
 		borrarUnaVariableDelContextoEnUnWorkspace(Constantes.ANYTHING_ELSE, nombreWorkspace);
 		borrarUnaVariableDelContextoEnUnWorkspace(Constantes.NODO_ACTIVADO, nombreWorkspace);
