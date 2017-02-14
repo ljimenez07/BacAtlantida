@@ -27,7 +27,6 @@ public class ExtraerDatosWebService {
 	private String saldo;
 	private String movimientos;
 	private String login;
-	private String preLogin;
 	private String usuario;
 	private String password;
 	
@@ -965,46 +964,7 @@ public class ExtraerDatosWebService {
 		return texto;
 	}
 	
-	public boolean login(String name, String clave){
-		boolean logueado = false;
-		try {
-			String requestBody = "{"+
-   "\"Id\": \"\","+
-   "\"UserName\": \"%s\","+
-   "\"AppType\": \"Consumers\","+
-   "\"ChannelType\": \"Mobile\","+
-   "\"UserType\": 1,"+
-   "\"Password\": \"%s\"}";
-					
-			requestBody = String.format(requestBody, name,clave);
-			
-			String responseXML = 
-					given().
-					header("Content-Type", "application/json").
-					header("Accept", "application/json").
-					header("channelType", "Mobile").
-					body(requestBody).
-					post(login).
-					andReturn().
-					asString();
-			
-			
-			System.out.println(responseXML);
-			
-			JSONParser parser = new JSONParser(); 
-			JSONObject json = (JSONObject) parser.parse(responseXML);
-
-			if(!json.containsKey("error"))
-				return true;
-	
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return logueado;
-	}
-	
-	public String[] preLogin(String name){
+	public String[] login(String name, String clave){
 		String[] response = new String [4];
 		response[0] = "N";
 		
@@ -1133,7 +1093,7 @@ public class ExtraerDatosWebService {
 					auth().
 					basic(usuario, password).
 					body(requestBody).
-					post(preLogin).
+					post(login).
 					andReturn().
 					asString();
 			
@@ -1141,19 +1101,20 @@ public class ExtraerDatosWebService {
 			System.out.println(responseXML);
 			XmlPath xmlPath = new XmlPath(responseXML).setRoot("Envelope");
 			NodeChildrenImpl body = xmlPath.get("Body");
-			NodeImpl prelogin = body.get(0).get("MT_ValidaPreLoginResponse");
-			Node estado = prelogin.getNode("Respuesta").get("estado");
-			
-			String tipo = estado.getNode("tipo").toString();
-			if(tipo.equals("S1"))
-			{
-				Node validaPreLoginColeccion = prelogin.getNode("Respuesta").getNode("validaPreLoginColeccion");
-				response[0] = validaPreLoginColeccion.getNode("valido").toString();
-				response[1] = validaPreLoginColeccion.getNode("llaveSesion").toString();
-				response[2] = validaPreLoginColeccion.getNode("usuarioId").toString();
-				response[3] = validaPreLoginColeccion.getNode("usuarioNombre").toString();
+			if(!body.toString().contains("Error")){
+				NodeImpl prelogin = body.get(0).get("MT_ValidaPreLoginResponse");
+				Node estado = prelogin.getNode("Respuesta").get("estado");
+				
+				String tipo = estado.getNode("tipo").toString();
+				if(tipo.equals("S1"))
+				{
+					Node validaPreLoginColeccion = prelogin.getNode("Respuesta").getNode("validaPreLoginColeccion");
+					response[0] = validaPreLoginColeccion.getNode("valido").toString();
+					response[1] = validaPreLoginColeccion.getNode("llaveSesion").toString();
+					response[2] = validaPreLoginColeccion.getNode("usuarioId").toString();
+					response[3] = validaPreLoginColeccion.getNode("usuarioNombre").toString();
+				}
 			}
-		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1355,14 +1316,6 @@ public class ExtraerDatosWebService {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	
-	public String getPreLogin() {
-		return preLogin;
-	}
-
-	public void setPreLogin(String preLogin) {
-		this.preLogin = preLogin;
 	}
 	
 }
