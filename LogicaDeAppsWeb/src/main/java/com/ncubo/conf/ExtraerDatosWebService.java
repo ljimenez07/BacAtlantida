@@ -7,6 +7,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +27,7 @@ public class ExtraerDatosWebService {
 	private String saldo;
 	private String movimientos;
 	private String login;
+	private String preLogin;
 	private String usuario;
 	private String password;
 	
@@ -962,7 +965,46 @@ public class ExtraerDatosWebService {
 		return texto;
 	}
 	
-	public String[] login(String name, String clave){
+	public boolean login(String name, String clave){
+		boolean logueado = false;
+		try {
+			String requestBody = "{"+
+   "\"Id\": \"\","+
+   "\"UserName\": \"%s\","+
+   "\"AppType\": \"Consumers\","+
+   "\"ChannelType\": \"Mobile\","+
+   "\"UserType\": 1,"+
+   "\"Password\": \"%s\"}";
+					
+			requestBody = String.format(requestBody, name,clave);
+			
+			String responseXML = 
+					given().
+					header("Content-Type", "application/json").
+					header("Accept", "application/json").
+					header("channelType", "Mobile").
+					body(requestBody).
+					post(login).
+					andReturn().
+					asString();
+			
+			
+			System.out.println(responseXML);
+			
+			JSONParser parser = new JSONParser(); 
+			JSONObject json = (JSONObject) parser.parse(responseXML);
+
+			if(!json.containsKey("error"))
+				return true;
+	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return logueado;
+	}
+	
+	public String[] preLogin(String name){
 		String[] response = new String [4];
 		response[0] = "N";
 		
@@ -1091,7 +1133,7 @@ public class ExtraerDatosWebService {
 					auth().
 					basic(usuario, password).
 					body(requestBody).
-					post(login).
+					post(preLogin).
 					andReturn().
 					asString();
 			
@@ -1315,7 +1357,13 @@ public class ExtraerDatosWebService {
 		this.password = password;
 	}
 	
-	
+	public String getPreLogin() {
+		return preLogin;
+	}
+
+	public void setPreLogin(String preLogin) {
+		this.preLogin = preLogin;
+	}
 	
 }
  
