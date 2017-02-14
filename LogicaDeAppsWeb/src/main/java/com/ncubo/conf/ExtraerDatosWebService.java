@@ -194,10 +194,15 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%stc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroTarjeta = nodoTarjeta.get("numeroTarjeta");
-			if(!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
+			if(saldo.equals("0.0") && (!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A")))
+				nuevoTexto = "No tienes saldo en la tarjeta de crédito " +numeroTarjeta.toString()+"-"+alias.toString();
+			else if(saldo.equals("0.0") && (alias.toString().equals("Alias no ingresado") || alias.toString().equals("N/A")))
+				nuevoTexto = "No tienes saldo en la tarjeta de crédito " +numeroTarjeta.toString();
+			else if(! saldo.equals("0.0") &&  !alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
 				nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString()+"-"+alias.toString());
 			else nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString());	
-			
+
+				
 			saldos[s] = nuevoTexto;
 		}
 	}catch (Exception e) {
@@ -373,7 +378,11 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%cc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroCuenta = nodoTarjeta.get("numeroCuenta");
-			if(!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
+			if(saldo.toString().equals("0.0") && (!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A")))
+				nuevoTexto = "No tienes saldo en la cuenta de ahorros " +numeroCuenta.toString()+"-"+alias.toString();
+			else if(saldo.toString().equals("0.0") && (alias.toString().equals("Alias no ingresado") || alias.toString().equals("N/A")))
+				nuevoTexto = "No tienes saldo en la cuenta de ahorros" +numeroCuenta.toString();
+			else if(!saldo.toString().equals("0.0") &&  !alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
 				nuevoTexto = nuevoTexto.replaceAll("%ncc", numeroCuenta.toString()+"-"+alias.toString());
 			else nuevoTexto = nuevoTexto.replaceAll("%ncc", numeroCuenta.toString());	
 			
@@ -634,7 +643,7 @@ public class ExtraerDatosWebService {
 				{
 					max = codigo.size()+1;
 				}
-				for(int j = 1; j < 4 ; j++)
+				for(int j = 1; j < max ; j++)
 				{
 					DateFormat formatoDeFechaInicial = new SimpleDateFormat("yyyyMMdd");
 					DateFormat formatoDeFechaFinal = new SimpleDateFormat("dd/MM/yyyy");
@@ -841,7 +850,11 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%stc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroTarjeta = nodoTarjeta.get("numeroTarjeta");
-			if(!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
+			if(saldo.equals("0.0") && (!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A")))
+				nuevoTexto = "No tienes disponible en la tarjeta de crédito " +numeroTarjeta.toString()+"-"+alias.toString();
+			else if(saldo.equals("0.0") && (alias.toString().equals("Alias no ingresado") || alias.toString().equals("N/A")))
+				nuevoTexto = "No tienes disponible en la tarjeta de crédito " +numeroTarjeta.toString();
+			else if(! saldo.equals("0.0") &&  !alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
 				nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString()+"-"+alias.toString());
 			else nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString());	
 			
@@ -856,7 +869,6 @@ public class ExtraerDatosWebService {
 		return disponibles;
 		
 	}
-	
 	
 	public String obtenerTasaCambio( String texto )
 	{
