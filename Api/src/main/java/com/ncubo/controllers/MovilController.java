@@ -122,15 +122,8 @@ public class MovilController {
 			
 			return new ResponseEntity<>(respuesta.toString(), HttpStatus.OK);
 		}
-		
-		try
-		{
-			throw new CredencialesInvalidosException();
-		}
-		catch(CredencialesInvalidosException e)
-		{
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
-		}
+		else
+			return new ResponseEntity<>(responseLogin[0], HttpStatus.UNAUTHORIZED);
 	}
 
 	//@CrossOrigin(origins = "*")
