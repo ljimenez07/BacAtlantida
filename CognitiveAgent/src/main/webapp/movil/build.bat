@@ -11,22 +11,19 @@ call handlebars ./www/plantillas/login.handlebars -f ./www/js/login.handlebars.j
 
 IF [%2] == [] GOTO :SALIR
 
-rd /s /q platforms
+rd /s /q .\platforms
 cordova platform add %2
+
 cordova plugin add cordova-plugin-queries-schemes
 cordova plugin add cordova-plugin-x-socialsharing
 cordova plugin add cordova-plugin-whitelist
 cordova plugin add cordova-plugin-splashscreen
 
-IF %2 == android GOTO :COPIAR_ARCHIVOS
+xcopy "res" "platforms\android\res" /S /Y
+rd /S /Q platforms\android\res\android
+rd /S /Q platforms\android\res\ios
+rd /S /Q platforms\android\res\screen
 
-:BUILD
-cordova build %2 --release
-GOTO :SALIR
-
-:COPIAR_ARCHIVOS
-for /f "delims=" %%a in ('dir /b/ad ".\res\drawable-*" ') do xcopy ".\res\%%a\*" ".\platforms\android\res\%%a\" /y
-for /f "delims=" %%a in ('dir /b/ad ".\res\mipmap-*" ') do xcopy ".\res\%%a\*" ".\platforms\android\res\%%a\" /y
-GOTO :BUILD
+cordova build --release %2
 
 :SALIR
