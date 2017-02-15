@@ -27,7 +27,6 @@ public class ExtraerDatosWebService {
 	private String saldo;
 	private String movimientos;
 	private String login;
-	private String preLogin;
 	private String usuario;
 	private String password;
 	
@@ -646,7 +645,7 @@ public class ExtraerDatosWebService {
 				{
 					max = codigo.size()+1;
 				}
-				for(int j = 1; j < 4 ; j++)
+				for(int j = 1; j < max ; j++)
 				{
 					DateFormat formatoDeFechaInicial = new SimpleDateFormat("yyyyMMdd");
 					DateFormat formatoDeFechaFinal = new SimpleDateFormat("dd/MM/yyyy");
@@ -873,7 +872,6 @@ public class ExtraerDatosWebService {
 		
 	}
 	
-	
 	public String obtenerTasaCambio( String texto )
 	{
 	
@@ -940,7 +938,9 @@ public class ExtraerDatosWebService {
 				post(tipoCambio).
 				andReturn().
 				asString();
+		System.out.println("body "+requestBody);
 		
+		System.out.println(responseXML);
 		XmlPath xmlPath = new XmlPath(responseXML).setRoot("Envelope");
 		NodeChildrenImpl body = xmlPath.get("Body");
 		NodeImpl tasa = body.get(0).get("MT_TasaCambioResponse");
@@ -952,12 +952,17 @@ public class ExtraerDatosWebService {
 			NodeImpl moneda = nodeTipoCambio1.get("moneda");
 			NodeImpl compra = nodeTipoCambio1.get("compra");
 			NodeImpl venta = nodeTipoCambio1.get("venta");
-			if(moneda.getValue().equals(Entidad.DOLAR.toString())){
-				texto = texto.replace("%dc", compra.toString()+" Lempiras ").replace("%dv", venta.toString()+" Lempiras ");
+			if(compra.getValue().equals("0.0") || venta.getValue().equals("0.0"))
+				texto = "En este momento no puedo darte la tasa de cambio, inténtalo más tarde";
+			else{
+				if(moneda.getValue().equals(Entidad.DOLAR.toString())){
+					texto = texto.replace("%dc", compra.toString()+" Lempiras ").replace("%dv", venta.toString()+" Lempiras ");
+				}
+				if(moneda.getValue().equals(Entidad.EURO.toString())){
+					texto = texto.replace("%ec", compra.toString()+" Lempiras ").replace("%ev", venta.toString()+" Lempiras ");			
+				}
 			}
-			if(moneda.getValue().equals(Entidad.EURO.toString())){
-				texto = texto.replace("%ec", compra.toString()+" Lempiras ").replace("%ev", venta.toString()+" Lempiras ");			
-			}
+				
 		}
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -966,48 +971,9 @@ public class ExtraerDatosWebService {
 		return texto;
 	}
 	
-	public boolean login(String name, String clave){
-		boolean logueado = false;
-		try {
-			String requestBody = "{"+
-   "\"Id\": \"\","+
-   "\"UserName\": \"%s\","+
-   "\"AppType\": \"Consumers\","+
-   "\"ChannelType\": \"Mobile\","+
-   "\"UserType\": 1,"+
-   "\"Password\": \"%s\"}";
-					
-			requestBody = String.format(requestBody, name,clave);
-			
-			String responseXML = 
-					given().
-					header("Content-Type", "application/json").
-					header("Accept", "application/json").
-					header("channelType", "Mobile").
-					body(requestBody).
-					post(login).
-					andReturn().
-					asString();
-			
-			
-			System.out.println(responseXML);
-			
-			JSONParser parser = new JSONParser(); 
-			JSONObject json = (JSONObject) parser.parse(responseXML);
-
-			if(!json.containsKey("error"))
-				return true;
-	
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return logueado;
-	}
-	
-	public String[] preLogin(String name){
+	public String[] login(String name, String clave){
 		String[] response = new String [4];
-		response[0] = "N";
+		response[0] = "Error de comunicación, por favor inténtalo más tarde";
 		
 		try {
 			String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:val=\"http://hn.infatlan.och/ws/IA003/out/ValidaPreLogin\">"+
@@ -1134,30 +1100,34 @@ public class ExtraerDatosWebService {
 					auth().
 					basic(usuario, password).
 					body(requestBody).
-					post(preLogin).
+					post(login).
 					andReturn().
 					asString();
-			
 			
 			System.out.println(responseXML);
 			XmlPath xmlPath = new XmlPath(responseXML).setRoot("Envelope");
 			NodeChildrenImpl body = xmlPath.get("Body");
-			NodeImpl prelogin = body.get(0).get("MT_ValidaPreLoginResponse");
-			Node estado = prelogin.getNode("Respuesta").get("estado");
-			
-			String tipo = estado.getNode("tipo").toString();
-			if(tipo.equals("S1"))
-			{
-				Node validaPreLoginColeccion = prelogin.getNode("Respuesta").getNode("validaPreLoginColeccion");
-				response[0] = validaPreLoginColeccion.getNode("valido").toString();
-				response[1] = validaPreLoginColeccion.getNode("llaveSesion").toString();
-				response[2] = validaPreLoginColeccion.getNode("usuarioId").toString();
-				response[3] = validaPreLoginColeccion.getNode("usuarioNombre").toString();
+			if(!body.toString().contains("Error")){
+				NodeImpl prelogin = body.get(0).get("MT_ValidaPreLoginResponse");
+				Node estado = prelogin.getNode("Respuesta").get("estado");
+				
+				String tipo = estado.getNode("tipo").toString();
+				if(tipo.equals("S1"))
+				{
+					Node validaPreLoginColeccion = prelogin.getNode("Respuesta").getNode("validaPreLoginColeccion");
+					response[0] = validaPreLoginColeccion.getNode("valido").toString();
+					response[1] = validaPreLoginColeccion.getNode("llaveSesion").toString();
+					response[2] = validaPreLoginColeccion.getNode("usuarioId").toString();
+					response[3] = validaPreLoginColeccion.getNode("usuarioNombre").toString();
+				}
+				else{
+					if(!estado.getNode("descripcion").toString().equals("") && !estado.getNode("descripcion").toString().equals("Error desconocido"))
+						response[0] = estado.getNode("descripcion").toString();
+				}
 			}
-		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			response[0] = "Error de comunicación, por favor inténtalo más tarde";
 		}
 		return response;
 	}
@@ -1301,10 +1271,9 @@ public class ExtraerDatosWebService {
 				cuentas[1] = true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			cuentas[0] = false;
+			cuentas[1] = false;
 		}
-			
-
 		    return cuentas;
 	}
 
@@ -1356,14 +1325,6 @@ public class ExtraerDatosWebService {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	
-	public String getPreLogin() {
-		return preLogin;
-	}
-
-	public void setPreLogin(String preLogin) {
-		this.preLogin = preLogin;
 	}
 	
 }

@@ -87,10 +87,9 @@ public class MovilController {
 	@RequestMapping(value="/movil/login", method = RequestMethod.POST)
 	public ResponseEntity<?> login(@RequestBody String mensaje, HttpSession sesion, @RequestParam String name, @RequestParam String password) throws ClassNotFoundException, SQLException, JSONException 
 	{
-		if(extraerDatos.login(name, password))
+		String[] responseLogin = extraerDatos.login(name , password);
+		if(responseLogin[0].equals("S"))
 		{
-			String[] responseLogin = extraerDatos.preLogin(name);
-		
 			Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
 			
 			if( usuario == null)
@@ -123,15 +122,8 @@ public class MovilController {
 			
 			return new ResponseEntity<>(respuesta.toString(), HttpStatus.OK);
 		}
-		
-		try
-		{
-			throw new CredencialesInvalidosException();
-		}
-		catch(CredencialesInvalidosException e)
-		{
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
-		}
+		else
+			return new ResponseEntity<>(responseLogin[0], HttpStatus.UNAUTHORIZED);
 	}
 
 	//@CrossOrigin(origins = "*")

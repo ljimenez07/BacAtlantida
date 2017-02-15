@@ -129,10 +129,18 @@ public class Conversacion {
 								
 								// llamar a watson y ver que bloque se activo
 								respuesta = agente.inicializarTemaEnWatson(respuestaDelCliente);
-								idFraseActivada = agente.obtenerNodoActivado(respuesta.messageResponse());
 								
-								System.out.println("Id de la frase a decir: "+idFraseActivada);
-								extraerOracionesAfirmarivasYPreguntas(misSalidas, respuesta, idFraseActivada);
+								if (respuesta.hayProblemasEnLaComunicacionConWatson()){
+									Afirmacion errorDeComunicacionConWatson = (Afirmacion) this.temario.contenido().frase(Constantes.FRASE_ERROR_CON_WATSON);
+									misSalidas.add(agente.decir(errorDeComunicacionConWatson, respuesta, temaActual));
+									fraseActual = errorDeComunicacionConWatson;
+									ponerComoYaTratado(errorDeComunicacionConWatson);
+									agente.borrarUnaVariableDelContexto(this.temaActual.obtenerIdTema());
+								}else{
+									idFraseActivada = agente.obtenerNodoActivado(respuesta.messageResponse());
+									System.out.println("Id de la frase a decir: "+idFraseActivada);
+									extraerOracionesAfirmarivasYPreguntas(misSalidas, respuesta, idFraseActivada);
+								}
 							}
 						}
 						if(this.temaActual != null){

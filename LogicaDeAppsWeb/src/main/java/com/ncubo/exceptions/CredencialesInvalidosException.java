@@ -6,7 +6,7 @@ public class CredencialesInvalidosException extends RuntimeException implements 
 
 	public CredencialesInvalidosException()
 	{
-		super("El nombre de usuario o la contraseña no son correctas.");
+		super("El nombre de usuario ingresado no es válido.");
 	}
 	
 }
