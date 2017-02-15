@@ -166,6 +166,9 @@ public class FTPCliente
 		{
 			archivo.close();
 		}
+		
+		ftpClient.logout();
+		ftpClient.disconnect();
 	}
 	
 	public void subirUnArchivoPorHilo(InputStream archivo, String pathDondeGuardar)
