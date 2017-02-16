@@ -153,22 +153,28 @@ public class FTPCliente
 			}
 		}
 		
-		try
-		{
+		try{
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 			ftpClient.enterLocalPassiveMode();
-			ftpClient.storeFile(nombreArchivo, archivo);
-		}catch (Exception e){
-			System.out.println("Error al transferir al FTP: "+e.getMessage());
-			ftpClient.storeFile(nombreArchivo, archivo);
-		}
-		finally
-		{
+			boolean done = ftpClient.storeFile(nombreArchivo, archivo);
 			archivo.close();
+			if (done) {
+                System.out.println(String.format("- El archivo %s fue enviado exitosamente.", nombreArchivo));
+            }
+		}catch (Exception ex){
+			System.out.println("Error al transferir al FTP: "+ex.getMessage());
+			ex.printStackTrace();
 		}
-		
-		ftpClient.logout();
-		ftpClient.disconnect();
+		finally{
+			try {
+                if (ftpClient.isConnected()) {
+                    ftpClient.logout();
+                    ftpClient.disconnect();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+		}
 	}
 	
 	public void subirUnArchivoPorHilo(InputStream archivo, String pathDondeGuardar)
