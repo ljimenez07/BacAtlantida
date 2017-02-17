@@ -66,9 +66,20 @@ public class Agente extends Participante{
 				contexto = conversacion.enviarMSG("", null).getContext().toString();
 			}catch (Exception e){
 				try{
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException exception) {}
 					contexto = conversacion.enviarMSG("", null).getContext().toString();
-				}catch (Exception e1){}
+				}catch (Exception e1){
+					try{
+						try {
+							Thread.sleep(500);
+						} catch (InterruptedException exception1) {}
+						contexto = conversacion.enviarMSG("", null).getContext().toString();
+					}catch (Exception e2){}
+				}
 			}
+			
 			miWatsonConversacions.put(workspace.getNombre(), conversacion);
 			miContextos.put(workspace.getNombre(), contexto);
 			System.out.println("En el workspace "+workspace.getNombre()+" se tiene el Contexto: "+contexto);
