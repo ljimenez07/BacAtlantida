@@ -133,7 +133,7 @@ public class FTPServidor
 		return pathArchivoGuardado.replaceAll("-", "_").replaceAll("/", "-");
 	}
 	
-	public InputStream descargarArchivo(String nombreArchivo) throws SocketException, IOException
+	public InputStream descargarArchivo(String nombreArchivo)
 	{
 		try{
 			FTPClient ftpClient = new FTPClient();

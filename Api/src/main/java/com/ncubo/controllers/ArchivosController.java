@@ -47,8 +47,8 @@ public class ArchivosController
 	
 	//@CrossOrigin(origins = "*")
 	@RequestMapping(value = "/archivossubidos/{nombre:.*}", method = RequestMethod.GET)
-	void archivossubidos(HttpSession session, HttpServletRequest request, HttpServletResponse response, @PathVariable String nombre) throws JSONException, JsonParseException, JsonMappingException, IOException, URISyntaxException, ClassNotFoundException, SQLException
-	{
+	public void archivossubidos(HttpSession session, HttpServletRequest request, HttpServletResponse response, @PathVariable String nombre){
+		
 		String remoteFile2 = nombre.replace("-", "/");
 		InputStream streamPorDevolver = null;
 		
@@ -58,7 +58,12 @@ public class ArchivosController
 			if(bytesStreamPorDevolver == null){
 				streamPorDevolver = ftp.descargarArchivo(remoteFile2);
 				if(streamPorDevolver != null){
-					bytesStreamPorDevolver = IOUtils.toByteArray(streamPorDevolver);
+					try {
+						bytesStreamPorDevolver = IOUtils.toByteArray(streamPorDevolver);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					CacheDeAudios.agregar(remoteFile2, bytesStreamPorDevolver);
 				}
 			}
@@ -75,22 +80,24 @@ public class ArchivosController
 		ServletContext context = request.getServletContext();
 		String mimetype = context.getMimeType(remoteFile2);
 		
-		if(mimetype == null)
-		{
+		if(mimetype == null){
 			mimetype = "application/octet-stream";
 		}
 		
 		response.setContentType(mimetype);
-		OutputStream outStream = response.getOutputStream();
-		
-		if(streamPorDevolver != null)
-		{
-			while((bytesRead = streamPorDevolver.read(bytesArray)) != -1)
-			{
-				outStream.write(bytesArray, 0, bytesRead);
+		OutputStream outStream = null;
+		try {
+			outStream = response.getOutputStream();
+			if(streamPorDevolver != null){
+				while((bytesRead = streamPorDevolver.read(bytesArray)) != -1){
+					outStream.write(bytesArray, 0, bytesRead);
+				}
+				outStream.close();
+				streamPorDevolver.close();
 			}
-			outStream.close();
-			streamPorDevolver.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
 		}
 	}
 	
