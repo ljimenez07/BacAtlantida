@@ -1,5 +1,6 @@
 package com.ncubo.chatbot.watson;
 
+import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,7 +10,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 import com.ibm.watson.developer_cloud.text_to_speech.v1.TextToSpeech;
@@ -62,36 +62,17 @@ public class TextToSpeechWatson
 		return textToSpeechWatson;
 	}
 	
-	public static TextToSpeechWatson getInstance()
-	{
-		if(textToSpeechWatson == null)
-		{
+	public static TextToSpeechWatson getInstance(){
+		
+		if(textToSpeechWatson == null){
 			throw new ChatException("No se a inicializado esta clase. Debe instanciar esta clase primero.");
 		}
+		
 		return textToSpeechWatson;
 	}
-	
-	public InputStream getAudio(String text)
-	{
-		InputStream in = null;
-		try
-		{
-			in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.WAV).execute();
-		} catch(Exception e)
-		{
-			try
-			{
-				in = textService.synthesize(text, new Voice(voice, null, null), AudioFormat.WAV).execute();
-			} catch(Exception e1)
-			{
-				System.out.println("Error generando los audios en watson: " + e1.getMessage());
-			}
-		}
-		return in;
-	}
-	
-	public String getAudioToURL(String text, boolean esAudioDinamico)
-	{
+
+	public String getAudioToURL(String text, boolean esAudioDinamico){
+		
 		UUID idOne = UUID.randomUUID();
 		String nombreDelArchivo = idOne + ".mp3";
 		nombreDelArchivo = nombreDelArchivo.replace("-", "");
@@ -107,20 +88,42 @@ public class TextToSpeechWatson
 		}
 		
 		try{
-			System.out.println("Generando audio con Watson al texto : " + text);
+			System.out.println("Generando audio al texto con Watson: " + text);
+			
 			in = generarAudioConWatson(text, audioFormat);
-			InputStream mp3InputStream = transformarAMp3(in, audioFormat.name().toLowerCase(), temp);
-			transferirAudiosAlFTP(esAudioDinamico, pathFinal, mp3InputStream);
-		} catch(Exception e1){
-			try{
-				if(in != null)
-					in = generarAudioConWatson(text, audioFormat);
+			if(in != null){
 				InputStream mp3InputStream = transformarAMp3(in, audioFormat.name().toLowerCase(), temp);
-				transferirAudiosAlFTP(esAudioDinamico, pathFinal, mp3InputStream);
-			} catch(Exception e){
-				System.out.println("ERROR al transferir el audio: " + e.getMessage());
+				if(mp3InputStream != null){
+					transferirAudiosAlFTP(esAudioDinamico, pathFinal, mp3InputStream);
+				}else{
+					System.out.println(String.format("No se pudo convertir el audio %s a mp3", nombreDelArchivo));
+				}
+			}else{
+				System.out.println(String.format("No se pudo generar el audio %s con watson", nombreDelArchivo));
+			}
+		}catch(Exception e1){
+			System.out.println(String.format("Error '%s' al generar y transferir audio del text '%s'. Se va a volver a intentar", e1.getStackTrace(), text));
+			
+			if(in != null)
+				in = generarAudioConWatson(text, audioFormat);
+			
+			if(in != null){
+				InputStream mp3InputStream = transformarAMp3(in, audioFormat.name().toLowerCase(), temp);
+				if(mp3InputStream != null){
+					try {
+						transferirAudiosAlFTP(esAudioDinamico, pathFinal, mp3InputStream);
+					} catch (IOException e) {
+						System.out.println(String.format("Error al transferir audio %s del text '%s'.", nombreDelArchivo, text));
+						e.printStackTrace();
+					}
+				}else{
+					System.out.println(String.format("No se pudo convertir el audio %s a mp3", nombreDelArchivo));
+				}
+			}else{
+				System.out.println(String.format("No se pudo generar el audio %s con watson", nombreDelArchivo));
 			}
 		}
+
 		return nombreDelArchivo;
 	}
 	
@@ -155,7 +158,7 @@ public class TextToSpeechWatson
 		return audio;
 	}
 	
-	public String getAudioToURL(String text, boolean esAudioDinamico, String pathToTransferirAlFTP, String fileName)
+	public String getAudioToURL(String text, boolean esAudioDinamico, String pathToTransferirAlFTP, String fileName) // De las ofertas
 	{
 		String nombreDelArchivo = fileName + ".mp3";
 		String pathFinal = pathToTransferirAlFTP + "/" + nombreDelArchivo;
@@ -171,18 +174,35 @@ public class TextToSpeechWatson
 		try{
 			System.out.println("Generando audio al texto con Watson: " + text);
 			in = generarAudioConWatson(text, audioFormat);
-			InputStream mp3InputStream = transformarAMp3(in, audioFormat.name().toLowerCase(), temp);
-			transferirAudiosAlFTP(esAudioDinamico, pathFinal, mp3InputStream);
-		} catch(Exception e1){
-			try{
-				if(in != null)
-					in = generarAudioConWatson(text, audioFormat);
+			if(in != null){
 				InputStream mp3InputStream = transformarAMp3(in, audioFormat.name().toLowerCase(), temp);
-				transferirAudiosAlFTP(esAudioDinamico, pathFinal, mp3InputStream);
-			} catch(Exception e){
-				System.out.println("ERROR al transferir el audio: " + e.getMessage());
+				if(mp3InputStream != null){
+					transferirAudiosAlFTP(esAudioDinamico, pathFinal, mp3InputStream);
+				}else{
+					System.out.println(String.format("No se pudo convertir el audio %s a mp3", nombreDelArchivo));
+				}
+			}else{
+				System.out.println(String.format("No se pudo generar el audio %s con watson", nombreDelArchivo));
+			}
+		} catch(Exception e1){
+			System.out.println(String.format("Error al generar y transferir audio del text '%s', se va a volver a intentar", text));
+			in = generarAudioConWatson(text, audioFormat);
+			if(in != null){
+				InputStream mp3InputStream = transformarAMp3(in, audioFormat.name().toLowerCase(), temp);
+				if(mp3InputStream != null){
+					try {
+						transferirAudiosAlFTP(esAudioDinamico, pathFinal, mp3InputStream);
+					} catch (IOException e) {
+						System.out.println(String.format("Error al transferir audio %s del text '%s'.", nombreDelArchivo, text));
+					}
+				}else{
+					System.out.println(String.format("No se pudo convertir el audio %s a mp3", nombreDelArchivo));
+				}
+			}else{
+				System.out.println(String.format("No se pudo generar el audio %s con watson", nombreDelArchivo));
 			}
 		}
+		
 		return nombreDelArchivo;
 	}
 	
@@ -265,37 +285,31 @@ public class TextToSpeechWatson
 		return file;
 	}
 	
-	private InputStream transformarFileAInputStream(File archivo)
-	{
+	private InputStream transformarFileAInputStream(File archivo){
+		
 		InputStream inputStream = null;
 		
-		try
-		{
+		try{
 			inputStream = new FileInputStream(archivo.getAbsolutePath());
-		} catch(IOException e)
-		{
-			e.printStackTrace();
+		}catch(IOException e){
+			System.out.println("Error al transformar file a Input Stream: "+e.getStackTrace().toString());
 		}
+		
 		return inputStream;
 	}
 	
 	private void transferirAudiosAlFTP(boolean esAudioDinamico, String pathFinal, InputStream in) throws IOException
 	{
-		if(esAudioDinamico)
-		{
-			CacheDeAudios.agregar(pathFinal, IOUtils.toByteArray(in));
-			ftp.subirUnArchivoPorHilo(in, pathFinal);
+		if(in != null){
+			if(esAudioDinamico){
+				CacheDeAudios.agregar(pathFinal, IOUtils.toByteArray(in)); // Importantes xq el audio se esta subiendo por hilo (si se consulta y no esta en el ftp, por lo menos esta en cache)
+				ftp.subirUnArchivoPorHilo(in, pathFinal);
+			}
+			else{
+				ftp.subirUnArchivo(in, pathFinal);
+				close(in);
+			}
 		}
-		else
-		{
-			ftp.subirUnArchivo(in, pathFinal);
-			close(in);
-		}
-	}
-	
-	public void borrarDirectorio(String direccionABorrar) throws IOException
-	{
-		FileUtils.forceDelete(new File(direccionABorrar));
 	}
 	
 	public String obtenerUrlPublicaDeAudios()
@@ -305,15 +319,10 @@ public class TextToSpeechWatson
 	
 	private void close(Closeable closeable)
 	{
-		if(closeable != null)
-		{
-			try
-			{
+		if(closeable != null){
+			try{
 				closeable.close();
-			} catch(IOException e)
-			{
-				// logger.info("Got error: " + e.getMessage());
-			}
+			} catch(IOException e){}
 		}
 	}
 	

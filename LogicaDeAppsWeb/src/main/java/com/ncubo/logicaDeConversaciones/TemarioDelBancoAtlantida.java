@@ -266,7 +266,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorRestaurantes"),
 			frase("preguntarPorRestaurantesSiNo"),
 			frase("fueraContextoConocerteDelBanco"),
-			frase("fueraContextoConocerteGeneral")
+			frase("fueraContextoConocerteGeneral"),
+			frase("noEntendiConocerte")
 		);
 		return resultado;
 	}	
@@ -289,7 +290,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("preguntarPorHospedaje"),
 			frase("preguntarPorHospedajeSiNo"),
 			frase("fueraContextoConocerteDelBanco"),
-			frase("fueraContextoConocerteGeneral")
+			frase("fueraContextoConocerteGeneral"),
+			frase("noEntendiConocerte")
 		);
 		return resultado;
 	}
@@ -311,7 +313,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			variables,
 			frase("preguntarPorBelleza"),
 			frase("fueraContextoConocerteDelBanco"),
-			frase("fueraContextoConocerteGeneral")
+			frase("fueraContextoConocerteGeneral"),
+			frase("noEntendiConocerte")
 		);
 		return resultado;
 	}
@@ -334,7 +337,8 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("despedidaConocerte"),
 			frase("fueraContextoConocerteDelBanco"),
 			frase("fueraContextoConocerteGeneral"),
-			frase("despedidaCerrarSesion")
+			frase("despedidaCerrarSesion"),
+			frase("noEntendiConocerte")
 			
 		);
 		return resultado;

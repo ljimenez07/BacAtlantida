@@ -254,6 +254,7 @@ public class OfertaDao
 					
 			
 			+ "WHERE eliminada = 0 "
+			+ "GROUP BY o.idOferta " 
 			+ "AND estado = 1 "
 			+ "AND SQRT( POW( belleza.peso - ?, 2 ) + POW( hoteles.peso - ?, 2 ) + POW( restaurante.peso - ?, 2 ) ) <= ?"
 			+ "AND vigenciaHasta >= ? "
@@ -339,6 +340,7 @@ public class OfertaDao
 			+ "WHERE eliminada = 0 "
 			+ "AND estado = 1 "
 			+ "AND vigenciaHasta >= ? "
+			+ "GROUP BY o.idOferta " 
 			+ "ORDER BY fechaHoraRegistro "
 			+ "DESC LIMIT ?, 10;"; 
 				
@@ -402,6 +404,7 @@ public class OfertaDao
 				+ "FROM oferta "
 				
 				+ "WHERE oferta.idOferta = ? "
+				+ "GROUP BY oferta.idOferta " 
 				+ "ORDER BY oferta.idOferta";
 		
 		Connection con = dao.openConBD();
@@ -487,6 +490,7 @@ public class OfertaDao
 			+ "AND estado = 1 "
 			+ "AND SQRT( POW( belleza.peso - ?, 2 ) + POW( hoteles.peso - ?, 2 ) + POW( restaurante.peso - ?, 2 ) ) <= ?"
 			+ "AND vigenciaHasta >= ? "
+			+ "GROUP BY o.idOferta "
 			+ "ORDER BY fechaHoraRegistro ";
 		
 		Connection con = dao.openConBD();
