@@ -92,10 +92,10 @@ public class OfertaDao
 				+ atributo.IMAGEN_COMERCIO_PATH + ", "
 				+ atributo.IMAGEN_PUBLICIDAD_PATH + ", "
 				+ atributo.FECHA_HORA_REGISTRO
-				+ ", SUM(IF(" + atributo.REACCION + " = 1, 1, 0)) AS " + atributo.LIKES
-				+ ", SUM(IF(" + atributo.REACCION + " = 0, 1, 0)) AS " + atributo.DISLIKES
+				//+ ", SUM(IF(" + atributo.REACCION + " = 1, 1, 0)) AS " + atributo.LIKES
+				//+ ", SUM(IF(" + atributo.REACCION + " = 0, 1, 0)) AS " + atributo.DISLIKES
 				+ " FROM "  + NOMBRE_TABLA
-				+ " LEFT JOIN " + NOMBRE_TABLA_REACCION + " ON " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + NOMBRE_TABLA_REACCION + ".idOferta"
+				//+ " LEFT JOIN " + NOMBRE_TABLA_REACCION + " ON " + NOMBRE_TABLA + "." + atributo.ID_OFERTA + " = " + NOMBRE_TABLA_REACCION + ".idOferta"
 				+ " WHERE " + atributo.ELIMINADA + " = 0"
 				+ " GROUP BY " + NOMBRE_TABLA + "." + atributo.ID_OFERTA 
 				+ " ORDER BY " + atributo.FECHA_HORA_REGISTRO + " DESC "
@@ -120,8 +120,8 @@ public class OfertaDao
 					rs.getString(atributo.IMAGEN_COMERCIO_PATH.toString()),
 					rs.getString(atributo.IMAGEN_PUBLICIDAD_PATH.toString()),
 					rs.getTimestamp(atributo.FECHA_HORA_REGISTRO.toString()),
-					rs.getInt(atributo.LIKES.toString()),
-					rs.getInt(atributo.DISLIKES.toString())
+					0,
+					0
 					));
 		}
 		
@@ -224,16 +224,18 @@ public class OfertaDao
 		Connection con = dao.openConBD();
 		String query = 
 			"SELECT "
+				+"(select count(reaccion) from reaccion r where idUsuario = ? and o.idOferta = r.idOferta AND reaccion = 1) as likes,"
+				 +"(select count(reaccion) from reaccion r where idUsuario = ? and o.idOferta = r.idOferta AND reaccion = 0) as dislikes,"
+				 
 			+ "o.idOferta, tituloDeOferta, comercio, descripcion, "
 			+ "ciudad, estado, restricciones, vigenciaDesde, "
 			+ "vigenciaHasta, imagenComercioPath, imagenPublicidadPath, fechaHoraRegistro, "
-			+ "IF(idUsuario = ?, IF(reaccion = 1, 1, NULL), NULL) AS likes, "
-			+ "IF(idUsuario = ?, IF(reaccion = 0, 1, NULL), NULL) AS dislikes, "
+			
 			+ " belleza.peso as belleza, "
 			+ " hoteles.peso as hoteles, "
 			+ " restaurante.peso as restaurante "
 			+ "FROM oferta o "
-			+ "LEFT JOIN reaccion ON o.idOferta = reaccion.idOferta "
+			
 			
 				+ "INNER JOIN ( "
 				+ "SELECT c.peso, c.idOferta, c.idCategoria from oferta o2 "
@@ -325,13 +327,15 @@ public class OfertaDao
 		Connection con = dao.openConBD();
 		String query = 
 			"SELECT "
+			+"(select count(reaccion) from reaccion r where idUsuario = ? and o.idOferta = r.idOferta AND reaccion = 1) as likes,"
+			+"(select count(reaccion) from reaccion r where idUsuario = ? and o.idOferta = r.idOferta AND reaccion = 0) as dislikes,"
+					 
 			+ "o.idOferta, tituloDeOferta, comercio, descripcion, "
 			+ "ciudad, estado, restricciones, vigenciaDesde, "
-			+ "vigenciaHasta, imagenComercioPath, imagenPublicidadPath, fechaHoraRegistro, "
-			+ "IF(idUsuario = ?, IF(reaccion = 1, 1, NULL), NULL) AS likes, "
-			+ "IF(idUsuario = ?, IF(reaccion = 0, 1, NULL), NULL) AS dislikes "
+			+ "vigenciaHasta, imagenComercioPath, imagenPublicidadPath, fechaHoraRegistro "
+			
 			+ "FROM oferta o "
-			+ "LEFT JOIN reaccion ON o.idOferta = reaccion.idOferta "
+			
 			+ "WHERE eliminada = 0 "
 			+ "AND estado = 1 "
 			+ "AND vigenciaHasta >= ? "
@@ -388,12 +392,15 @@ public class OfertaDao
 			esUnUsuarioConocido = false;
 		}
 		String query = 
-				"SELECT oferta.idOferta, tituloDeOferta, comercio, descripcion, ciudad, estado, restricciones, vigenciaDesde, "
-				+ "vigenciaHasta, imagenComercioPath, imagenPublicidadPath, fechaHoraRegistro, "
-				+ "IF(idUsuario = ?, IF(reaccion = 1, 1, NULL), NULL) AS likes, IF(idUsuario = ?, "
-				+ "IF(reaccion = 0, 1, NULL), NULL) AS dislikes "
+				"SELECT "
+						+"(select count(reaccion) from reaccion r where idUsuario = ? and oferta.idOferta = r.idOferta AND reaccion = 1) as likes,"
+						 +"(select count(reaccion) from reaccion r where idUsuario = ? and oferta.idOferta = r.idOferta AND reaccion = 0) as dislikes,"
+						 
+						+ "oferta.idOferta, tituloDeOferta, comercio, descripcion, ciudad, estado, restricciones, vigenciaDesde, "
+				+ "vigenciaHasta, imagenComercioPath, imagenPublicidadPath, fechaHoraRegistro "
+				
 				+ "FROM oferta "
-				+ "LEFT JOIN reaccion ON oferta.idOferta = reaccion.idOferta "
+				
 				+ "WHERE oferta.idOferta = ? "
 				+ "ORDER BY oferta.idOferta";
 		
@@ -402,6 +409,7 @@ public class OfertaDao
 		stmt.setString(1, idUsuario);
 		stmt.setString(2, idUsuario);
 		stmt.setInt(3, idOferta);
+		
 		
 		ResultSet rs = stmt.executeQuery();
 		Oferta oferta = null;

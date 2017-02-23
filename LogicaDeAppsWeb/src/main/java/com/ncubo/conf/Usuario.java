@@ -22,6 +22,9 @@ public class Usuario implements Serializable
 	private String idSesion = "";
 	private Hashtable<String, String> variablesDeContexto = new Hashtable<String, String>();
 	private Categorias categorias = new Categorias();
+	private String headerTokenKey = "";
+	private String headerToken = "";
+	private String responseLogin = "";
 	
 	protected Usuario(){}
 	
@@ -106,5 +109,30 @@ public class Usuario implements Serializable
 	public void setTieneCuentaAhorros(boolean tieneCuentaAhorros) {
 		this.tieneCuentaAhorros = tieneCuentaAhorros;
 	}
+
+	public String getHeaderTokenKey() {
+		return headerTokenKey;
+	}
+
+	public void setHeaderTokenKey(String headerTokenKey) {
+		this.headerTokenKey = headerTokenKey;
+	}
+
+	public String getHeaderToken() {
+		return headerToken;
+	}
+
+	public void setHeaderToken(String headerToken) {
+		this.headerToken = headerToken;
+	}
+
+	public String getResponseLogin() {
+		return responseLogin;
+	}
+
+	public void setResponseLogin(String responseLogin) {
+		this.responseLogin = responseLogin;
+	}
+	
 }
 

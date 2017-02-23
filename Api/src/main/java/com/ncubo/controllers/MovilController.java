@@ -87,52 +87,66 @@ public class MovilController {
 	@RequestMapping(value="/movil/login", method = RequestMethod.POST)
 	public ResponseEntity<?> login(@RequestBody String mensaje, HttpSession sesion, @RequestParam String name, @RequestParam String password) throws ClassNotFoundException, SQLException, JSONException 
 	{
-		String[] responseLogin = extraerDatos.login(name , password);
-		if(responseLogin[0].equals("S"))
+		String[] resultadosLogin = extraerDatos.login(name, password);
+		if(resultadosLogin[0].equals("true"))
 		{
+			String[] responsePreLogin = extraerDatos.preLogin(name);
 			Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
 			
-			if( usuario == null)
-			{
-				usuario = new Usuario(sesion.getId());
+			if(responsePreLogin[0].equals("S")){
+				usuario.setLlaveSession(responsePreLogin[1]);
+				usuario.setUsuarioId("user2");
+				usuario.setUsuarioNombre(responsePreLogin[3]);
+				usuario.setHeaderTokenKey(resultadosLogin[1]);
+				usuario.setHeaderToken(resultadosLogin[2]);
+				usuario.setResponseLogin(resultadosLogin[3]);
+				usuario.hizologinExitosaMente();
+				
+				Categorias categorias = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
+				usuario.setCategorias( categorias );
+				
+				boolean[] cuentasvacio = new boolean[2];
+				boolean[] cuentas = extraerDatos.tieneCuentas(responsePreLogin[2],responsePreLogin[1]);
+				
+				if(!cuentas.equals(cuentasvacio))
+				{
+					usuario.setTieneTarjetaCredito(cuentas[0]);
+					usuario.setTieneCuentaAhorros(cuentas[1]);
+				}
+				
+				sesion.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
+				JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.getEstaLogueado())
+						.put("usuarioNombre", usuario.getEstaLogueado() ? usuario.getUsuarioNombre() : "")
+						.put("idUsuario", usuario.getEstaLogueado() ? usuario.getUsuarioId() : "");
+				
+				
+				return new ResponseEntity<>(respuesta.toString(), HttpStatus.OK);
 			}
-			
-			usuario.setLlaveSession(responseLogin[1]);
-			usuario.setUsuarioId(responseLogin[2]);
-			usuario.setUsuarioNombre(responseLogin[3]);
-			usuario.hizologinExitosaMente();
-			
-			Categorias categorias = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
-			usuario.setCategorias( categorias );
-			
-			boolean[] cuentasvacio = new boolean[2];
-			boolean[] cuentas = extraerDatos.tieneCuentas(responseLogin[2],responseLogin[1]);
-			
-			if(!cuentas.equals(cuentasvacio))
-			{
-				usuario.setTieneTarjetaCredito(cuentas[0]);
-				usuario.setTieneCuentaAhorros(cuentas[1]);
-			}
-			
-			sesion.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
-			JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.getEstaLogueado())
-					.put("usuarioNombre", usuario.getEstaLogueado() ? usuario.getUsuarioNombre() : "")
-					.put("idUsuario", usuario.getEstaLogueado() ? usuario.getUsuarioId() : "");
-			
-			
-			return new ResponseEntity<>(respuesta.toString(), HttpStatus.OK);
+			else
+				return new ResponseEntity<>(responsePreLogin[0], HttpStatus.UNAUTHORIZED);
 		}
 		else
-			return new ResponseEntity<>(responseLogin[0], HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<>(resultadosLogin[0], HttpStatus.UNAUTHORIZED);
 	}
 
 	//@CrossOrigin(origins = "*")
 	@GetMapping("/movil/logout")
 	@ResponseBody String logout(HttpSession sesion) throws JSONException
 	{
-		borrarTodasLasConversacionesDeUnCliente(sesion);
-		sesion.setAttribute(Usuario.LLAVE_EN_SESSION, null);
-		return new JSONObject().put("usuarioEstaLogueado", false).toString();
+		Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
+		
+		if(usuario == null)
+		{
+			usuario = new Usuario(sesion.getId());
+		}
+		
+		if(extraerDatos.logout(usuario.getHeaderTokenKey(), usuario.getHeaderToken(), usuario.getResponseLogin()))
+		{
+			borrarTodasLasConversacionesDeUnCliente(sesion);
+			sesion.setAttribute(Usuario.LLAVE_EN_SESSION, null);
+			return new JSONObject().put("usuarioEstaLogueado", false).toString();
+		}
+		return new JSONObject().put("usuarioEstaLogueado", true).toString();
 	}
 
 	//@CrossOrigin(origins = "*")

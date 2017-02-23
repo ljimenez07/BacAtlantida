@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -16,6 +17,8 @@ import com.jayway.restassured.internal.path.xml.NodeChildrenImpl;
 import com.jayway.restassured.internal.path.xml.NodeImpl;
 import com.jayway.restassured.path.xml.XmlPath;
 import com.jayway.restassured.path.xml.element.Node;
+import com.jayway.restassured.response.Headers;
+import com.jayway.restassured.response.Response;
 
 import scala.util.Random;
 
@@ -27,6 +30,8 @@ public class ExtraerDatosWebService {
 	private String saldo;
 	private String movimientos;
 	private String login;
+	private String preLogin;
+	private String logout;
 	private String usuario;
 	private String password;
 	
@@ -196,13 +201,14 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%stc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroTarjeta = nodoTarjeta.get("numeroTarjeta");
+			String numeroCuentaConMascara = enmascararNumeroCuentaTarjeta(numeroTarjeta.toString());
 			if(saldo.equals("0.0") && (!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A")))
-				nuevoTexto = "No tienes saldo en la tarjeta de crédito " +numeroTarjeta.toString()+"-"+alias.toString();
+				nuevoTexto = "No tienes saldo en la tarjeta de crédito " +numeroCuentaConMascara+"-"+alias.toString();
 			else if(saldo.equals("0.0") && (alias.toString().equals("Alias no ingresado") || alias.toString().equals("N/A")))
-				nuevoTexto = "No tienes saldo en la tarjeta de crédito " +numeroTarjeta.toString();
+				nuevoTexto = "No tienes saldo en la tarjeta de crédito " +numeroCuentaConMascara;
 			else if(! saldo.equals("0.0") &&  !alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
-				nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString()+"-"+alias.toString());
-			else nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString());	
+				nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroCuentaConMascara+"-"+alias.toString());
+			else nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroCuentaConMascara);	
 
 				
 			saldos[s] = nuevoTexto;
@@ -210,7 +216,7 @@ public class ExtraerDatosWebService {
 	}catch (Exception e) {
 		// TODO: handle exception
 		saldos = new String [1];
-		saldos[0] = "En este momento no puedo darte el saldo, inténtalo más tarde";
+		saldos[0] = MensajesErrorConWebServices.ERROR_CONSULTA_SALDO;
 	}
 
 		return saldos;
@@ -380,13 +386,15 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%cc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroCuenta = nodoTarjeta.get("numeroCuenta");
+			String numeroCuentaConMascara = enmascararNumeroCuentaTarjeta(numeroCuenta.toString());
+			
 			if(saldo.toString().equals("0.0") && (!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A")))
-				nuevoTexto = "No tienes saldo en la cuenta de ahorros " +numeroCuenta.toString()+"-"+alias.toString();
+				nuevoTexto = "No tienes saldo en la cuenta de ahorros " +numeroCuentaConMascara+"-"+alias.toString();
 			else if(saldo.toString().equals("0.0") && (alias.toString().equals("Alias no ingresado") || alias.toString().equals("N/A")))
-				nuevoTexto = "No tienes saldo en la cuenta de ahorros" +numeroCuenta.toString();
+				nuevoTexto = "No tienes saldo en la cuenta de ahorros" +numeroCuentaConMascara;
 			else if(!saldo.toString().equals("0.0") &&  !alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
-				nuevoTexto = nuevoTexto.replaceAll("%ncc", numeroCuenta.toString()+"-"+alias.toString());
-			else nuevoTexto = nuevoTexto.replaceAll("%ncc", numeroCuenta.toString());	
+				nuevoTexto = nuevoTexto.replaceAll("%ncc", numeroCuentaConMascara+"-"+alias.toString());
+			else nuevoTexto = nuevoTexto.replaceAll("%ncc", numeroCuentaConMascara);	
 			
 			saldos[s] = nuevoTexto;
 		}
@@ -394,7 +402,7 @@ public class ExtraerDatosWebService {
 	}catch (Exception e) {
 		// TODO: handle exception
 		saldos = new String [1];
-		saldos[0] = "En este momento no puedo darte el saldo, inténtalo más tarde";
+		saldos[0] = MensajesErrorConWebServices.ERROR_CONSULTA_SALDO;
 	}
 		return saldos;
 		
@@ -567,18 +575,20 @@ public class ExtraerDatosWebService {
 				if(tipoCuenta.equals("2"))
 				{
 					cuenta = nodoTarjeta.get("numeroCuenta").toString();
+					String numeroCuentaConMascara = enmascararNumeroCuentaTarjeta(cuenta);
 					String alias = nodoTarjeta.get("alias").toString();
 					if(!alias.equals("Alias no ingresado") && !alias.equals("N/A"))
-						arregloMovimientos[i] = "Para la cuenta "+cuenta.toString()+"-"+alias+":";
-					else arregloMovimientos[i] = "Para la cuenta"+cuenta.toString()+":";
+						arregloMovimientos[i] = "Para la cuenta "+numeroCuentaConMascara+"-"+alias+":";
+					else arregloMovimientos[i] = "Para la cuenta"+numeroCuentaConMascara+":";
 				}
 				if(tipoCuenta.equals("4"))
 				{
 					cuenta = nodoTarjeta.get("numeroTarjeta").toString();
+					String numeroTarjetaConMascara = enmascararNumeroCuentaTarjeta(cuenta);
 					String alias = nodoTarjeta.get("alias").toString();
 					if(!alias.equals("Alias no ingresado") && !alias.equals("N/A"))
-						arregloMovimientos[i] = "Para la tarjeta "+cuenta.toString()+"-"+alias+":";
-					else arregloMovimientos[i] = "Para la tarjeta "+cuenta.toString()+":";
+						arregloMovimientos[i] = "Para la tarjeta "+numeroTarjetaConMascara+"-"+alias+":";
+					else arregloMovimientos[i] = "Para la tarjeta "+numeroTarjetaConMascara+":";
 				}
 				
 				i++;
@@ -631,13 +641,13 @@ public class ExtraerDatosWebService {
 						andReturn().
 						asString();
 				
-				System.out.println(movimientos+" \n\t  "+requestBody+"	\n\t"+responseXML);
+				System.out.println(movimientos+" \n\t  "+requestBody+"	\n\t"+responseXMLMovimientos);
 				
 				
 				XmlPath xmlPathMovimientos = new XmlPath(responseXMLMovimientos).setRoot("Envelope");
 				NodeChildrenImpl bodyMovimientos = xmlPathMovimientos.get("Body");
-				NodeImpl tasa = bodyMovimientos.get(0).get("MT_ConsultaMovimientoResponse");
-				List<?> codigo = tasa.getNode("Respuesta").getNode("movimientoCuentaTarjetaColeccion").get("movimientoCuentaTarjetaItem");
+				NodeImpl movimientoResponse = bodyMovimientos.get(0).get("MT_ConsultaMovimientoResponse");
+				List<?> codigo = movimientoResponse.getNode("Respuesta").getNode("movimientoCuentaTarjetaColeccion").get("movimientoCuentaTarjetaItem");
 				
 				int last = codigo.size()-1;
 				int max = 4;
@@ -682,7 +692,7 @@ public class ExtraerDatosWebService {
 	}catch (Exception e) {
 		// TODO: handle exception
 		arregloMovimientos = new String [1];
-		arregloMovimientos[0] = "En este momento no puedo darte los últimos movimientos, inténtalo más tarde";
+		arregloMovimientos[0] = MensajesErrorConWebServices.ERROR_CONSULTA_MOVIMIENTOS;
 	}
 		return arregloMovimientos;
 	}
@@ -852,13 +862,14 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%stc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroTarjeta = nodoTarjeta.get("numeroTarjeta");
+			String numeroTarjetaConMascara = enmascararNumeroCuentaTarjeta(numeroTarjeta.toString());
 			if(saldo.equals("0.0") && (!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A")))
-				nuevoTexto = "No tienes disponible en la tarjeta de crédito " +numeroTarjeta.toString()+"-"+alias.toString();
+				nuevoTexto = "No tienes disponible en la tarjeta de crédito " +numeroTarjetaConMascara+"-"+alias.toString();
 			else if(saldo.equals("0.0") && (alias.toString().equals("Alias no ingresado") || alias.toString().equals("N/A")))
-				nuevoTexto = "No tienes disponible en la tarjeta de crédito " +numeroTarjeta.toString();
+				nuevoTexto = "No tienes disponible en la tarjeta de crédito " + numeroTarjetaConMascara;
 			else if(! saldo.equals("0.0") &&  !alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
-				nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString()+"-"+alias.toString());
-			else nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjeta.toString());	
+				nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjetaConMascara +"-"+alias.toString());
+			else nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjetaConMascara);	
 			
 			disponibles[s] = nuevoTexto;
 		}
@@ -866,7 +877,7 @@ public class ExtraerDatosWebService {
 	}catch (Exception e) {
 		// TODO: handle exception
 		disponibles = new String [1];
-		disponibles[0] = "En este momento no puedo darte el disponible, inténtalo más tarde";
+		disponibles[0] = MensajesErrorConWebServices.ERROR_CONSULTA_DISPONIBLE;
 	}
 		return disponibles;
 		
@@ -953,7 +964,7 @@ public class ExtraerDatosWebService {
 			NodeImpl compra = nodeTipoCambio1.get("compra");
 			NodeImpl venta = nodeTipoCambio1.get("venta");
 			if(compra.getValue().equals("0.0") || venta.getValue().equals("0.0"))
-				texto = "En este momento no puedo darte la tasa de cambio, inténtalo más tarde";
+				texto = MensajesErrorConWebServices.ERROR_CONSULTA_TASA_CAMBIO;
 			else{
 				if(moneda.getValue().equals(Entidad.DOLAR.toString())){
 					texto = texto.replace("%dc", compra.toString()+" Lempiras ").replace("%dv", venta.toString()+" Lempiras ");
@@ -966,14 +977,14 @@ public class ExtraerDatosWebService {
 		}
 		}catch (Exception e) {
 			// TODO: handle exception
-			texto = "En este momento no puedo darte la tasa de cambio, inténtalo más tarde";
+			texto = MensajesErrorConWebServices.ERROR_CONSULTA_TASA_CAMBIO;
 		}
 		return texto;
 	}
 	
-	public String[] login(String name, String clave){
+	public String[] preLogin(String name){
 		String[] response = new String [4];
-		response[0] = "Error de comunicación, por favor inténtalo más tarde";
+		response[0] = MensajesErrorConWebServices.ERROR_COMUNICACION;
 		
 		try {
 			String requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:val=\"http://hn.infatlan.och/ws/IA003/out/ValidaPreLogin\">"+
@@ -1100,7 +1111,7 @@ public class ExtraerDatosWebService {
 					auth().
 					basic(usuario, password).
 					body(requestBody).
-					post(login).
+					post(preLogin).
 					andReturn().
 					asString();
 			
@@ -1127,7 +1138,7 @@ public class ExtraerDatosWebService {
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			response[0] = "Error de comunicación, por favor inténtalo más tarde";
+			response[0] = MensajesErrorConWebServices.ERROR_COMUNICACION;
 		}
 		return response;
 	}
@@ -1276,7 +1287,114 @@ public class ExtraerDatosWebService {
 		}
 		    return cuentas;
 	}
+	
+	
+	public String[] login(String name, String clave){
+		String[] resultados = new String[4];
+		resultados[0] = MensajesErrorConWebServices.ERROR_COMUNICACION;
+		try {
+			String requestBody = "{"+
+						   "\"Id\": \"\","+
+						   "\"UserName\": \"%s\","+
+						   "\"AppType\": \"Consumers\","+
+						   "\"ChannelType\": \"Mobile\","+
+						   "\"UserType\": 1,"+
+						   "\"Password\": \"%s\"}";
+					
+			requestBody = String.format(requestBody, name,clave);
+			
+			Response response = 
+					given().
+					header("Content-Type", "application/json").
+					header("Accept", "application/json").
+					header("channelType", "Mobile").
+					body(requestBody).
+					post(login).andReturn();
+			
+			String responseXML = response.asString();
+			Headers headers = response.getHeaders();
+			
+			
+			System.out.println(responseXML);
+			
+			JSONParser parser = new JSONParser(); 
+			JSONObject json = (JSONObject) parser.parse(responseXML);
 
+			if(!json.containsKey("error"))
+			{
+				if(headers.hasHeaderWithName("TokenKey") && headers.hasHeaderWithName("x-csrf-token"))
+				{
+					resultados[0] = "true";
+					resultados[1] = headers.getValue("TokenKey");
+					resultados[2] = headers.getValue("x-csrf-token");
+					resultados[3] = json.get("d").toString();
+					
+					System.out.println(headers.getValue("TokenKey"));
+					System.out.println(headers.getValue("x-csrf-token"));
+					System.out.println(json.get("d").toString());
+				}
+			}
+			else{
+				JSONObject error =  (JSONObject) json.get("error");
+				if(error.get("message").toString().contains(MensajesErrorConWebServices.CODIGO_CREDENCIALES_INCORRECTOS))
+					resultados[0] = MensajesErrorConWebServices.MENSAJE_CREDENCIALES_INCORRECTOS;
+				if(error.get("message").toString().contains(MensajesErrorConWebServices.CODIGO_SESION_YA_INICIADA))
+					resultados[0] = MensajesErrorConWebServices.MENSAJE_SESION_YA_INICIADA;
+			}
+	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			resultados[0] = MensajesErrorConWebServices.ERROR_COMUNICACION;
+		}
+		return resultados;
+	}
+	
+	public boolean logout(String tokenKey, String token, String requestBody){
+		boolean logueado = false;
+		try {
+				
+			requestBody = requestBody.replace("\\", "");
+			System.out.println(requestBody);
+			String response = 
+					given().
+					header("Content-Type", "application/json").
+					header("Accept", "application/json").
+					header("TokenKey", tokenKey).
+					header("x-csrf-token", token).
+					body(requestBody).
+					post(logout).
+					andReturn().
+					asString();
+			
+	
+			System.out.println(response);
+			
+			JSONParser parser = new JSONParser(); 
+			JSONObject json = (JSONObject) parser.parse(response);
+
+			if(!json.containsKey("error"))
+				return true;
+	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return false;
+		}
+		return logueado;
+	}
+
+	
+	public String enmascararNumeroCuentaTarjeta(String numero){
+		int longitudMascara = numero.length()-4;
+		String mascara = "";
+		for(int i=0; i < longitudMascara; i++){
+			mascara+="X";
+		}
+		String numerosAEnmascarar = numero.substring(0, longitudMascara);
+		System.out.println(numerosAEnmascarar);
+		numero = numero.replaceAll(numerosAEnmascarar, mascara);
+		return numero;
+	}
+	
 	public String getTipoCambio() 
 	{
 		return tipoCambio;
@@ -1325,6 +1443,22 @@ public class ExtraerDatosWebService {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getPreLogin() {
+		return preLogin;
+	}
+
+	public void setPreLogin(String preLogin) {
+		this.preLogin = preLogin;
+	}
+	
+	public String getLogout() {
+		return logout;
+	}
+
+	public void setLogout(String logout) {
+		this.logout = logout;
 	}
 	
 }
