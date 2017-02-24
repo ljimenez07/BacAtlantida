@@ -201,14 +201,14 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%stc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroTarjeta = nodoTarjeta.get("numeroTarjeta");
-			String numeroCuentaConMascara = enmascararNumeroCuentaTarjeta(numeroTarjeta.toString());
+			String ultimosDigitosTarjeta = ultimosDigitos(numeroTarjeta.toString());
 			if(saldo.equals("0.0") && (!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A")))
-				nuevoTexto = "No tienes saldo en la tarjeta de crédito " +numeroCuentaConMascara+"-"+alias.toString();
+				nuevoTexto = "No tienes saldo en la tarjeta de crédito que termina en " +ultimosDigitosTarjeta+"-"+alias.toString();
 			else if(saldo.equals("0.0") && (alias.toString().equals("Alias no ingresado") || alias.toString().equals("N/A")))
-				nuevoTexto = "No tienes saldo en la tarjeta de crédito " +numeroCuentaConMascara;
+				nuevoTexto = "No tienes saldo en la tarjeta de crédito que termina en " +ultimosDigitosTarjeta;
 			else if(! saldo.equals("0.0") &&  !alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
-				nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroCuentaConMascara+"-"+alias.toString());
-			else nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroCuentaConMascara);	
+				nuevoTexto = nuevoTexto.replaceAll("%ntc", ultimosDigitosTarjeta+"-"+alias.toString());
+			else nuevoTexto = nuevoTexto.replaceAll("%ntc", ultimosDigitosTarjeta);	
 
 				
 			saldos[s] = nuevoTexto;
@@ -386,15 +386,15 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%cc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroCuenta = nodoTarjeta.get("numeroCuenta");
-			String numeroCuentaConMascara = enmascararNumeroCuentaTarjeta(numeroCuenta.toString());
+			String ultimosDigitosCuenta = ultimosDigitos(numeroCuenta.toString());
 			
 			if(saldo.toString().equals("0.0") && (!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A")))
-				nuevoTexto = "No tienes saldo en la cuenta de ahorros " +numeroCuentaConMascara+"-"+alias.toString();
+				nuevoTexto = "No tienes saldo en la cuenta de ahorros que termina en " +ultimosDigitosCuenta+"-"+alias.toString();
 			else if(saldo.toString().equals("0.0") && (alias.toString().equals("Alias no ingresado") || alias.toString().equals("N/A")))
-				nuevoTexto = "No tienes saldo en la cuenta de ahorros" +numeroCuentaConMascara;
+				nuevoTexto = "No tienes saldo en la cuenta de ahorros que termina en " +ultimosDigitosCuenta;
 			else if(!saldo.toString().equals("0.0") &&  !alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
-				nuevoTexto = nuevoTexto.replaceAll("%ncc", numeroCuentaConMascara+"-"+alias.toString());
-			else nuevoTexto = nuevoTexto.replaceAll("%ncc", numeroCuentaConMascara);	
+				nuevoTexto = nuevoTexto.replaceAll("%ncc", ultimosDigitosCuenta+"-"+alias.toString());
+			else nuevoTexto = nuevoTexto.replaceAll("%ncc", ultimosDigitosCuenta);	
 			
 			saldos[s] = nuevoTexto;
 		}
@@ -575,20 +575,20 @@ public class ExtraerDatosWebService {
 				if(tipoCuenta.equals("2"))
 				{
 					cuenta = nodoTarjeta.get("numeroCuenta").toString();
-					String numeroCuentaConMascara = enmascararNumeroCuentaTarjeta(cuenta);
+					String ultimosDigitosCuenta = ultimosDigitos(cuenta);
 					String alias = nodoTarjeta.get("alias").toString();
 					if(!alias.equals("Alias no ingresado") && !alias.equals("N/A"))
-						arregloMovimientos[i] = "Para la cuenta "+numeroCuentaConMascara+"-"+alias+":";
-					else arregloMovimientos[i] = "Para la cuenta"+numeroCuentaConMascara+":";
+						arregloMovimientos[i] = "Para la cuenta que termina en "+ultimosDigitosCuenta+"-"+alias+":";
+					else arregloMovimientos[i] = "Para la cuenta que termina en "+ultimosDigitosCuenta+":";
 				}
 				if(tipoCuenta.equals("4"))
 				{
 					cuenta = nodoTarjeta.get("numeroTarjeta").toString();
-					String numeroTarjetaConMascara = enmascararNumeroCuentaTarjeta(cuenta);
+					String ultimosDigitosTarjeta = ultimosDigitos(cuenta);
 					String alias = nodoTarjeta.get("alias").toString();
 					if(!alias.equals("Alias no ingresado") && !alias.equals("N/A"))
-						arregloMovimientos[i] = "Para la tarjeta "+numeroTarjetaConMascara+"-"+alias+":";
-					else arregloMovimientos[i] = "Para la tarjeta "+numeroTarjetaConMascara+":";
+						arregloMovimientos[i] = "Para la tarjeta que termina en "+ultimosDigitosTarjeta+"-"+alias+":";
+					else arregloMovimientos[i] = "Para la tarjeta que termina en "+ultimosDigitosTarjeta+":";
 				}
 				
 				i++;
@@ -862,14 +862,14 @@ public class ExtraerDatosWebService {
 			nuevoTexto = nuevoTexto.replaceAll("%stc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroTarjeta = nodoTarjeta.get("numeroTarjeta");
-			String numeroTarjetaConMascara = enmascararNumeroCuentaTarjeta(numeroTarjeta.toString());
+			String ultimosDigitosTarjeta = ultimosDigitos(numeroTarjeta.toString());
 			if(saldo.equals("0.0") && (!alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A")))
-				nuevoTexto = "No tienes disponible en la tarjeta de crédito " +numeroTarjetaConMascara+"-"+alias.toString();
+				nuevoTexto = "No tienes disponible en la tarjeta de crédito que termina en " +ultimosDigitosTarjeta+"-"+alias.toString();
 			else if(saldo.equals("0.0") && (alias.toString().equals("Alias no ingresado") || alias.toString().equals("N/A")))
-				nuevoTexto = "No tienes disponible en la tarjeta de crédito " + numeroTarjetaConMascara;
+				nuevoTexto = "No tienes disponible en la tarjeta de crédito que termina en " + ultimosDigitosTarjeta;
 			else if(! saldo.equals("0.0") &&  !alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
-				nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjetaConMascara +"-"+alias.toString());
-			else nuevoTexto = nuevoTexto.replaceAll("%ntc", numeroTarjetaConMascara);	
+				nuevoTexto = nuevoTexto.replaceAll("%ntc", ultimosDigitosTarjeta +"-"+alias.toString());
+			else nuevoTexto = nuevoTexto.replaceAll("%ntc", ultimosDigitosTarjeta);	
 			
 			disponibles[s] = nuevoTexto;
 		}
@@ -1383,16 +1383,9 @@ public class ExtraerDatosWebService {
 	}
 
 	
-	public String enmascararNumeroCuentaTarjeta(String numero){
+	public String ultimosDigitos(String numero){
 		int longitudMascara = numero.length()-4;
-		String mascara = "";
-		for(int i=0; i < longitudMascara; i++){
-			mascara+="X";
-		}
-		String numerosAEnmascarar = numero.substring(0, longitudMascara);
-		System.out.println(numerosAEnmascarar);
-		numero = numero.replaceAll(numerosAEnmascarar, mascara);
-		return numero;
+		return numero.substring(longitudMascara, numero.length()-1);
 	}
 	
 	public String getTipoCambio() 

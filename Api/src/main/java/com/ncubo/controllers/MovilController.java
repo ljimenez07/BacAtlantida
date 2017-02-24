@@ -95,7 +95,7 @@ public class MovilController {
 			
 			if(responsePreLogin[0].equals("S")){
 				usuario.setLlaveSession(responsePreLogin[1]);
-				usuario.setUsuarioId("user2");
+				usuario.setUsuarioId(responsePreLogin[2]);
 				usuario.setUsuarioNombre(responsePreLogin[3]);
 				usuario.setHeaderTokenKey(resultadosLogin[1]);
 				usuario.setHeaderToken(resultadosLogin[2]);

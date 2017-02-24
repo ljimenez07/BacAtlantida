@@ -98,8 +98,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>El saldo de tu tarjeta de crédito $%ntc es de $%stc $%nmm.</frase>
-			<frase>Tu saldo en $%nmm es de %stc en la tarjeta de crédito $%ntc.</frase>
+			<frase>El saldo de tu tarjeta de crédito que termina en $%ntc es de $%stc $%nmm.</frase>
+			<frase>Tu saldo en $%nmm es de %stc en la tarjeta de crédito que termina en $%ntc.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -109,8 +109,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>Tu saldo es de $%cc $%nmm en la cuenta de ahorros $%ncc.</frase>
-			<frase>Tu cuenta de ahorros $%ncc tiene un saldo de $%cc $%nmm.</frase>
+			<frase>Tu saldo es de $%cc $%nmm en la cuenta de ahorros que termina en $%ncc.</frase>
+			<frase>Tu cuenta de ahorros que termina en $%ncc tiene un saldo de $%cc $%nmm.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -151,8 +151,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>El disponible de tu tarjeta de crédito $%ntc es de $%stc $%nmm.</frase>
-			<frase>Tu disponible en $%nmm es de %stc en la tarjeta de crédito $%ntc.</frase>
+			<frase>El disponible de tu tarjeta de crédito que termina en $%ntc es de $%stc $%nmm.</frase>
+			<frase>Tu disponible en $%nmm es de %stc en la tarjeta de crédito que termina en $%ntc.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -162,8 +162,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>Tu disponible es de $%cc $%nmm en la cuenta de ahorros $%ncc.</frase>
-			<frase>Tu cuenta de ahorros $%ncc tiene un disponible de $%cc $%nmm.</frase>
+			<frase>Tu disponible es de $%cc $%nmm en la cuenta de ahorros que termina en $%ncc.</frase>
+			<frase>Tu cuenta de ahorros que termina en $%ncc tiene un disponible de $%cc $%nmm.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
