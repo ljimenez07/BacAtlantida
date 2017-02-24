@@ -1385,7 +1385,7 @@ public class ExtraerDatosWebService {
 	
 	public String ultimosDigitos(String numero){
 		int longitudMascara = numero.length()-4;
-		return numero.substring(longitudMascara, numero.length()-1);
+		return numero.substring(longitudMascara, numero.length());
 	}
 	
 	public String getTipoCambio() 

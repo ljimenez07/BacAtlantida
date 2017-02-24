@@ -87,46 +87,37 @@ public class MovilController {
 	@RequestMapping(value="/movil/login", method = RequestMethod.POST)
 	public ResponseEntity<?> login(@RequestBody String mensaje, HttpSession sesion, @RequestParam String name, @RequestParam String password) throws ClassNotFoundException, SQLException, JSONException 
 	{
-		String[] resultadosLogin = extraerDatos.login(name, password);
-		if(resultadosLogin[0].equals("true"))
-		{
-			String[] responsePreLogin = extraerDatos.preLogin(name);
+		String[] responsePreLogin = extraerDatos.preLogin(name);
+		if(responsePreLogin[0].equals("S")){
+				
 			Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
+			usuario.setLlaveSession(responsePreLogin[1]);
+			usuario.setUsuarioId(responsePreLogin[2]);
+			usuario.setUsuarioNombre(responsePreLogin[3]);
+			usuario.hizologinExitosaMente();
+				
+			Categorias categorias = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
+			usuario.setCategorias( categorias );
+				
+			boolean[] cuentasvacio = new boolean[2];
+			boolean[] cuentas = extraerDatos.tieneCuentas(responsePreLogin[2],responsePreLogin[1]);
+				
+			if(!cuentas.equals(cuentasvacio))
+			{
+				usuario.setTieneTarjetaCredito(cuentas[0]);
+				usuario.setTieneCuentaAhorros(cuentas[1]);
+			}
+				
+			sesion.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
+			JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.getEstaLogueado())
+					.put("usuarioNombre", usuario.getEstaLogueado() ? usuario.getUsuarioNombre() : "")
+					.put("idUsuario", usuario.getEstaLogueado() ? usuario.getUsuarioId() : "");
 			
-			if(responsePreLogin[0].equals("S")){
-				usuario.setLlaveSession(responsePreLogin[1]);
-				usuario.setUsuarioId(responsePreLogin[2]);
-				usuario.setUsuarioNombre(responsePreLogin[3]);
-				usuario.setHeaderTokenKey(resultadosLogin[1]);
-				usuario.setHeaderToken(resultadosLogin[2]);
-				usuario.setResponseLogin(resultadosLogin[3]);
-				usuario.hizologinExitosaMente();
-				
-				Categorias categorias = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
-				usuario.setCategorias( categorias );
-				
-				boolean[] cuentasvacio = new boolean[2];
-				boolean[] cuentas = extraerDatos.tieneCuentas(responsePreLogin[2],responsePreLogin[1]);
-				
-				if(!cuentas.equals(cuentasvacio))
-				{
-					usuario.setTieneTarjetaCredito(cuentas[0]);
-					usuario.setTieneCuentaAhorros(cuentas[1]);
-				}
-				
-				sesion.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
-				JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.getEstaLogueado())
-						.put("usuarioNombre", usuario.getEstaLogueado() ? usuario.getUsuarioNombre() : "")
-						.put("idUsuario", usuario.getEstaLogueado() ? usuario.getUsuarioId() : "");
-				
-				
-				return new ResponseEntity<>(respuesta.toString(), HttpStatus.OK);
+			
+			return new ResponseEntity<>(respuesta.toString(), HttpStatus.OK);
 			}
 			else
 				return new ResponseEntity<>(responsePreLogin[0], HttpStatus.UNAUTHORIZED);
-		}
-		else
-			return new ResponseEntity<>(resultadosLogin[0], HttpStatus.UNAUTHORIZED);
 	}
 
 	//@CrossOrigin(origins = "*")
@@ -140,13 +131,9 @@ public class MovilController {
 			usuario = new Usuario(sesion.getId());
 		}
 		
-		if(extraerDatos.logout(usuario.getHeaderTokenKey(), usuario.getHeaderToken(), usuario.getResponseLogin()))
-		{
-			borrarTodasLasConversacionesDeUnCliente(sesion);
-			sesion.setAttribute(Usuario.LLAVE_EN_SESSION, null);
-			return new JSONObject().put("usuarioEstaLogueado", false).toString();
-		}
-		return new JSONObject().put("usuarioEstaLogueado", true).toString();
+		borrarTodasLasConversacionesDeUnCliente(sesion);
+		sesion.setAttribute(Usuario.LLAVE_EN_SESSION, null);
+		return new JSONObject().put("usuarioEstaLogueado", false).toString();
 	}
 
 	//@CrossOrigin(origins = "*")
