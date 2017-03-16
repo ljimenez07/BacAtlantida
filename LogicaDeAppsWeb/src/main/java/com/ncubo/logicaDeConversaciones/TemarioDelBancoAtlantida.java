@@ -350,7 +350,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		(
 			"noEntendiConocerte",
 			"No entiendo de Conocerte",
-			"BAIntents",
+			"ConocerteGeneral",
 			true,
 			"out_of_scope",
 			frase("noEntendiConocerte")
@@ -635,7 +635,11 @@ public class TemarioDelBancoAtlantida extends Temario{
 	protected void cargarTemario(Temas temasDelDiscurso){
 		
 		System.out.println("Cargando temario ...");
-		// Conocerte
+		for(Tema tema: this.contenido().obtenerMisTemas()){
+			temasDelDiscurso.add(tema);
+		}
+		
+		/*// Conocerte
 		temasDelDiscurso.add(saludarConocerte());
 		temasDelDiscurso.add(preguntarPorHospedaje());
 		temasDelDiscurso.add(preguntarPorBelleza());
@@ -660,7 +664,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 		temasDelDiscurso.add(quiereSaberTelefonos());
 		temasDelDiscurso.add(quiereSaberHorarios());
 		temasDelDiscurso.add(quiereSaberUbicacion());
-		temasDelDiscurso.add(fueraDeContextoBanco());
+		temasDelDiscurso.add(fueraDeContextoBanco());*/
 	}
 	
 	public void cargarIntenciones(List<Intenciones> intenciones)
@@ -686,9 +690,9 @@ public class TemarioDelBancoAtlantida extends Temario{
 
 	@Override
 	protected void cargarDependencias(Temas temasDelDiscurso){
-		temasDelDiscurso.get(1).dependeDe(temasDelDiscurso.get(0));
+		/*temasDelDiscurso.get(1).dependeDe(temasDelDiscurso.get(0));
 		temasDelDiscurso.get(2).dependeDe(temasDelDiscurso.get(0));
-		temasDelDiscurso.get(3).dependeDe(temasDelDiscurso.get(1)).dependeDe(temasDelDiscurso.get(2));
+		temasDelDiscurso.get(3).dependeDe(temasDelDiscurso.get(1)).dependeDe(temasDelDiscurso.get(2));*/
 	}
 	
 	public static void main(String argv[]) {
