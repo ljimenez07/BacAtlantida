@@ -70,6 +70,10 @@ public class Conversacion {
 		misSalidas.add(agente.decir(saludoGeneral, null, temaActual));
 		ponerComoYaTratado(saludoGeneral);
 		
+		Afirmacion queSabe = (Afirmacion) this.temario.buscarTema(Constantes.FRASE_SALUDO).buscarUnaFrase("fueraDeContextoGeneral");
+		misSalidas.add(agente.decir(queSabe, null, temaActual));
+		ponerComoYaTratado(queSabe);
+		
 		Pregunta queQuiere = (Pregunta) this.temario.extraerFraseDeSaludoInicial(CaracteristicaDeLaFrase.esUnaPregunta);
 		misSalidas.add(agente.decir(queQuiere, null, temaActual));
 		fraseActual = queQuiere;
@@ -377,6 +381,10 @@ public class Conversacion {
 					saludar = (Afirmacion) this.temaActual.buscarUnaFrase("saludar");
 					misSalidas.add(agente.decir(saludar, respuesta, temaActual));
 				}
+				
+				Afirmacion queSabe = (Afirmacion) this.temario.buscarTema(Constantes.FRASE_SALUDO).buscarUnaFrase("fueraDeContextoGeneral");
+				misSalidas.add(agente.decir(queSabe, null, temaActual));
+				ponerComoYaTratado(queSabe);
 				
 				ponerComoYaTratado(saludar);
 				

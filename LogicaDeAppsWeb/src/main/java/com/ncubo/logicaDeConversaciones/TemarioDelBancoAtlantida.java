@@ -31,6 +31,7 @@ public class TemarioDelBancoAtlantida extends Temario{
 			frase("saludoGeneral"),
 			frase("saludar"),
 			frase("saludarConNombre"),
+			frase("fueraDeContextoGeneral"),
 			frase("saludoPreguntar")
 		);
 		return resultado;

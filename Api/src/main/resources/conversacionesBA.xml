@@ -1213,10 +1213,10 @@
 	</variablesDeAmbiente>
 	
 	<workspaces user="c2bbaaba-491a-4c2c-81ce-63dbc88b69c9" pass="2xtXzqmmzXAe">
-		<workspace tipo="general" idIBM="3b8f3b61-173d-4410-8f30-ea38d5828f31" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="general" idIBM="4dacbb32-3aca-4b0f-954e-b92085b4c6c3" intencionesParaSeReferenciado="">BAIntents</workspace>
 		<workspace tipo="especifico" idIBM="deeffe01-0b4b-4f6f-8d68-a394237b1667" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="94f2b5c9-149b-404e-ae3c-cfd214ba7a53" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="2caea239-9d8a-4110-b986-90c0ec03aace" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="e6a52850-d6a7-4ea3-a1b7-7cb5ccb65334" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>

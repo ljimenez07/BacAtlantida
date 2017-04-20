@@ -85,39 +85,48 @@ public class MovilController {
 	
 	//@CrossOrigin(origins = "*")
 	@RequestMapping(value="/movil/login", method = RequestMethod.POST)
-	public ResponseEntity<?> login(@RequestBody String mensaje, HttpSession sesion, @RequestParam String name, @RequestParam String password) throws ClassNotFoundException, SQLException, JSONException 
+	public ResponseEntity<?> login(@RequestBody String mensaje, HttpSession sesion, @RequestParam("name") String name, @RequestParam("password") String password) throws ClassNotFoundException, SQLException, JSONException 
 	{
-		String[] responsePreLogin = extraerDatos.preLogin(name);
-		if(responsePreLogin[0].equals("S")){
-				
+		String[] resultadosLogin = extraerDatos.login(name, password);
+		if(resultadosLogin[0].equals("true"))
+		{
+			String[] responsePreLogin = extraerDatos.preLogin(name);
 			Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
-			usuario.setLlaveSession(responsePreLogin[1]);
-			usuario.setUsuarioId(responsePreLogin[2]);
-			usuario.setUsuarioNombre(responsePreLogin[3]);
-			usuario.hizologinExitosaMente();
-				
-			Categorias categorias = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
-			usuario.setCategorias( categorias );
-				
-			boolean[] cuentasvacio = new boolean[2];
-			boolean[] cuentas = extraerDatos.tieneCuentas(responsePreLogin[2],responsePreLogin[1]);
-				
-			if(!cuentas.equals(cuentasvacio))
-			{
-				usuario.setTieneTarjetaCredito(cuentas[0]);
-				usuario.setTieneCuentaAhorros(cuentas[1]);
-			}
-				
-			sesion.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
-			JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.getEstaLogueado())
-					.put("usuarioNombre", usuario.getEstaLogueado() ? usuario.getUsuarioNombre() : "")
-					.put("idUsuario", usuario.getEstaLogueado() ? usuario.getUsuarioId() : "");
 			
-			
-			return new ResponseEntity<>(respuesta.toString(), HttpStatus.OK);
+			if(responsePreLogin[0].equals("S")){
+				usuario.setLlaveSession(responsePreLogin[1]);
+				usuario.setUsuarioId(responsePreLogin[2]);
+				usuario.setUsuarioNombre(responsePreLogin[3]);
+				usuario.setHeaderTokenKey(resultadosLogin[1]);
+				usuario.setHeaderToken(resultadosLogin[2]);
+				usuario.setResponseLogin(resultadosLogin[3]);
+				usuario.hizologinExitosaMente();
+				
+				Categorias categorias = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
+				usuario.setCategorias( categorias );
+				
+				boolean[] cuentasvacio = new boolean[2];
+				boolean[] cuentas = extraerDatos.tieneCuentas(responsePreLogin[2],responsePreLogin[1]);
+				
+				if(!cuentas.equals(cuentasvacio))
+				{
+					usuario.setTieneTarjetaCredito(cuentas[0]);
+					usuario.setTieneCuentaAhorros(cuentas[1]);
+				}
+				
+				sesion.setAttribute(Usuario.LLAVE_EN_SESSION, usuario);
+				JSONObject respuesta = new JSONObject().put("usuarioEstaLogueado", usuario.getEstaLogueado())
+						.put("usuarioNombre", usuario.getEstaLogueado() ? usuario.getUsuarioNombre() : "")
+						.put("idUsuario", usuario.getEstaLogueado() ? usuario.getUsuarioId() : "");
+				
+				
+				return new ResponseEntity<>(respuesta.toString(), HttpStatus.OK);
 			}
 			else
 				return new ResponseEntity<>(responsePreLogin[0], HttpStatus.UNAUTHORIZED);
+		}
+		else
+			return new ResponseEntity<>(resultadosLogin[0], HttpStatus.UNAUTHORIZED);
 	}
 
 	//@CrossOrigin(origins = "*")

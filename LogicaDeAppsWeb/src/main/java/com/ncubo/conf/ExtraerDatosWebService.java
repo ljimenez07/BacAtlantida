@@ -51,12 +51,12 @@ public class ExtraerDatosWebService {
 						         "<transaccionId>100128</transaccionId>"+
 						         "<!--Optional:-->"+
 						         "<aplicacionId>001</aplicacionId>"+
-						         "<paisId>?</paisId>"+
+						         "<paisId>HN</paisId>"+
 						         "<empresaId>?</empresaId>"+
 						         "<!--Optional:-->"+
 						         "<regionId>?</regionId>"+
 						         "<!--Optional:-->"+
-						         "<canalId>101</canalId>"+
+						         "<canalId>104</canalId>"+
 						         "<!--Optional:-->"+
 						         "<version>?</version>"+
 						         "<!--Optional:-->"+
@@ -82,13 +82,13 @@ public class ExtraerDatosWebService {
 						         "<parametroAdicionalColeccion>"+
 						         "   <!--Zero or more repetitions:-->"+
 						         "    <parametroAdicionalItem>"+
-						         "      <!--You may enter the following 3 items in any order-->"+
-						         "      <linea>0</linea>"+
-						         "      <!--Optional:-->"+
-						         "      <tipoRegistro>UAI</tipoRegistro>"+
-						         "      <!--Optional:-->"+
-						         "      <valor>%s</valor>"+
-						         "   </parametroAdicionalItem>"+
+						         " 			<!--You may enter the following 3 items in any order-->"+
+						         " 			<linea>0</linea>"+
+						         " 			<!--Optional:-->"+
+						         "			<tipoRegistro>UAI</tipoRegistro>"+
+						         " 			<!--Optional:-->"+
+						         " 			<valor>%s</valor>"+
+						         " 		</parametroAdicionalItem>"+
 						         "   <parametroAdicionalItem>"+
 						         "     <linea>1</linea>"+
 						         "      <!--Optional:-->"+
@@ -236,12 +236,12 @@ public class ExtraerDatosWebService {
 						         "<transaccionId>100128</transaccionId>"+
 						         "<!--Optional:-->"+
 						         "<aplicacionId>001</aplicacionId>"+
-						         "<paisId>?</paisId>"+
+						         "<paisId>HN</paisId>"+
 						         "<empresaId>?</empresaId>"+
 						         "<!--Optional:-->"+
 						         "<regionId>?</regionId>"+
 						         "<!--Optional:-->"+
-						         "<canalId>101</canalId>"+
+						         "<canalId>104</canalId>"+
 						         "<!--Optional:-->"+
 						         "<version>?</version>"+
 						         "<!--Optional:-->"+
@@ -267,13 +267,13 @@ public class ExtraerDatosWebService {
 						         "<parametroAdicionalColeccion>"+
 						         "   <!--Zero or more repetitions:-->"+
 						         "    <parametroAdicionalItem>"+
-						         "      <!--You may enter the following 3 items in any order-->"+
-						         "      <linea>0</linea>"+
-						         "      <!--Optional:-->"+
-						         "      <tipoRegistro>UAI</tipoRegistro>"+
-						         "      <!--Optional:-->"+
-						         "      <valor>%s</valor>"+
-						         "   </parametroAdicionalItem>"+
+						         " 			<!--You may enter the following 3 items in any order-->"+
+						         " 			<linea>0</linea>"+
+						         " 		�<!--Optional:-->"+
+						         " 		<tipoRegistro>UAI</tipoRegistro>"+
+						         " 		�<!--Optional:-->"+
+						         " 		�<valor>%s</valor>"+
+						         " � </parametroAdicionalItem>"+
 						         "   <parametroAdicionalItem>"+
 						         "     <linea>1</linea>"+
 						         "      <!--Optional:-->"+
@@ -422,12 +422,12 @@ public class ExtraerDatosWebService {
 						         "<transaccionId>100128</transaccionId>"+
 						         "<!--Optional:-->"+
 						         "<aplicacionId>001</aplicacionId>"+
-						         "<paisId>?</paisId>"+
+						         "<paisId>HN</paisId>"+
 						         "<empresaId>?</empresaId>"+
 						         "<!--Optional:-->"+
 						         "<regionId>?</regionId>"+
 						         "<!--Optional:-->"+
-						         "<canalId>101</canalId>"+
+						         "<canalId>104</canalId>"+
 						         "<!--Optional:-->"+
 						         "<version>?</version>"+
 						         "<!--Optional:-->"+
@@ -453,13 +453,13 @@ public class ExtraerDatosWebService {
 						         "<parametroAdicionalColeccion>"+
 						         "   <!--Zero or more repetitions:-->"+
 						         "    <parametroAdicionalItem>"+
-						         "      <!--You may enter the following 3 items in any order-->"+
-						         "      <linea>0</linea>"+
-						         "      <!--Optional:-->"+
-						         "      <tipoRegistro>UAI</tipoRegistro>"+
-						         "      <!--Optional:-->"+
-						         "      <valor>%s</valor>"+
-						         "   </parametroAdicionalItem>"+
+						         "�		<!--You may enter the following 3 items in any order-->"+
+						         " 			�<linea>0</linea>"+
+						         " 	�<!--Optional:-->"+
+						         " 	�<tipoRegistro>UAI</tipoRegistro>"+
+						         " 	�<!--Optional:-->"+
+						         " 	�<valor>%s</valor>"+
+						         " 	� </parametroAdicionalItem>"+
 						         "   <parametroAdicionalItem>"+
 						         "     <linea>1</linea>"+
 						         "      <!--Optional:-->"+
@@ -600,11 +600,13 @@ public class ExtraerDatosWebService {
 						"<activarMultipleEntrada>1</activarMultipleEntrada>	"+
 						"<activarParametroAdicional/>"+
 						"    <transaccionId>100143</transaccionId>	"+
-						"   <aplicacionId>001</aplicacionId>"+
-						"    <paisId>1001</paisId>	"+
-						"     <empresaId>1000</empresaId>"+
-						"    <regionId>1002</regionId>	"+
-						"    <canalId>101</canalId>		"+
+						"<aplicacionId>001</aplicacionId>"+
+				         "<paisId>HN</paisId>"+
+				         "<empresaId>?</empresaId>"+
+				         "<!--Optional:-->"+
+				         "<regionId>?</regionId>"+
+				         "<!--Optional:-->"+
+				         "<canalId>104</canalId>"+
 						"     <llaveSesion>%s</llaveSesion>"+
 						"      <usuarioId>?</usuarioId>"+
 						"    <parametroAdicionalColeccion>	"+
@@ -711,12 +713,12 @@ public class ExtraerDatosWebService {
 						         "<transaccionId>100128</transaccionId>"+
 						         "<!--Optional:-->"+
 						         "<aplicacionId>001</aplicacionId>"+
-						         "<paisId>?</paisId>"+
+						         "<paisId>HN</paisId>"+
 						         "<empresaId>?</empresaId>"+
 						         "<!--Optional:-->"+
 						         "<regionId>?</regionId>"+
 						         "<!--Optional:-->"+
-						         "<canalId>101</canalId>"+
+						         "<canalId>104</canalId>"+
 						         "<!--Optional:-->"+
 						         "<version>?</version>"+
 						         "<!--Optional:-->"+
@@ -742,13 +744,13 @@ public class ExtraerDatosWebService {
 						         "<parametroAdicionalColeccion>"+
 						         "   <!--Zero or more repetitions:-->"+
 						         "    <parametroAdicionalItem>"+
-						         "      <!--You may enter the following 3 items in any order-->"+
-						         "      <linea>0</linea>"+
-						         "      <!--Optional:-->"+
-						         "      <tipoRegistro>UAI</tipoRegistro>"+
-						         "      <!--Optional:-->"+
-						         "      <valor>%s</valor>"+
-						         "   </parametroAdicionalItem>"+
+						         " 	�<!--You may enter the following 3 items in any order-->"+
+						         " 	<linea>0</linea>"+
+						         " 	<!--Optional:-->"+
+						         " 	�<tipoRegistro>UAI</tipoRegistro>"+
+						         " 	<!--Optional:-->"+
+						         " 	�<valor>%s</valor>"+
+						         " 	 </parametroAdicionalItem>"+
 						         "   <parametroAdicionalItem>"+
 						         "     <linea>1</linea>"+
 						         "      <!--Optional:-->"+
@@ -897,13 +899,13 @@ public class ExtraerDatosWebService {
 					"<!--Optional:-->" +
 					"<transaccionId>100054</transaccionId>" +
 					"<!--Optional:-->" +
-					"<aplicacionId>001</aplicacionId>" +
-					"<paisId>?</paisId>" +
-					"<empresaId>?</empresaId>" +
-					"<!--Optional:-->" +
-					"<regionId>?</regionId>" +
-					"<!--Optional:-->" +
-					"<canalId>?</canalId>" +
+					"<aplicacionId>001</aplicacionId>"+
+			         "<paisId>HN</paisId>"+
+			         "<empresaId>?</empresaId>"+
+			         "<!--Optional:-->"+
+			         "<regionId>?</regionId>"+
+			         "<!--Optional:-->"+
+			         "<canalId>104</canalId>"+
 					"<!--Optional:-->" +
 					"<version>?</version>" +
 					"<!--Optional:-->" +
@@ -996,13 +998,13 @@ public class ExtraerDatosWebService {
 						   "       <!--Optional:-->"+
 						   "       <transaccionId>100126</transaccionId>"+
 						   "     <!--Optional:-->"+
-						   "         <aplicacionId>OCB</aplicacionId>"+
-						   "      <paisId>1001</paisId>"+
-						   "       <empresaId>1000</empresaId>"+
-						   "      <!--Optional:-->"+
-						   "       <regionId>1002</regionId>"+
-						   "     <!--Optional:-->"+
-						   "      <canalId>Mobile</canalId>"+
+						   "<aplicacionId>001</aplicacionId>"+
+					         "<paisId>HN</paisId>"+
+					         "<empresaId>?</empresaId>"+
+					         "<!--Optional:-->"+
+					         "<regionId>?</regionId>"+
+					         "<!--Optional:-->"+
+					         "<canalId>104</canalId>"+
 						   "     <!--Optional:-->"+
 						   "       <version>?</version>"+
 						   "     <!--Optional:-->"+
@@ -1156,12 +1158,12 @@ public class ExtraerDatosWebService {
 				         "<transaccionId>100128</transaccionId>"+
 				         "<!--Optional:-->"+
 				         "<aplicacionId>001</aplicacionId>"+
-				         "<paisId>?</paisId>"+
+				         "<paisId>HN</paisId>"+
 				         "<empresaId>?</empresaId>"+
 				         "<!--Optional:-->"+
 				         "<regionId>?</regionId>"+
 				         "<!--Optional:-->"+
-				         "<canalId>101</canalId>"+
+				         "<canalId>104</canalId>"+
 				         "<!--Optional:-->"+
 				         "<version>?</version>"+
 				         "<!--Optional:-->"+
@@ -1187,13 +1189,13 @@ public class ExtraerDatosWebService {
 				         "<parametroAdicionalColeccion>"+
 				         "   <!--Zero or more repetitions:-->"+
 				         "    <parametroAdicionalItem>"+
-				         "      <!--You may enter the following 3 items in any order-->"+
-				         "      <linea>0</linea>"+
-				         "      <!--Optional:-->"+
-				         "      <tipoRegistro>UAI</tipoRegistro>"+
-				         "      <!--Optional:-->"+
-				         "      <valor>%s</valor>"+
-				         "   </parametroAdicionalItem>"+
+				         " 	�<!--You may enter the following 3 items in any order-->"+
+				         "	�<linea>0</linea>"+
+				         " 	<!--Optional:-->"+
+				         "	<tipoRegistro>UAI</tipoRegistro>"+
+				         "	<!--Optional:-->"+
+				         " 	<valor>%s</valor>"+
+				         " 	</parametroAdicionalItem>"+
 				         "   <parametroAdicionalItem>"+
 				         "     <linea>1</linea>"+
 				         "      <!--Optional:-->"+
