@@ -2,7 +2,9 @@ package com.ncubo.chatbot.partesDeLaConversacion;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -27,6 +29,7 @@ import org.w3c.dom.Element;
 public abstract class Contenido 
 {
 	private ArrayList<Frase> frases = new ArrayList<Frase>();
+	private Temas misTemas = new Temas();
 	//private ArrayList<Intencion> intenciones = new ArrayList<Intencion>();
 	private ArrayList<WorkSpace> miWorkSpaces = new ArrayList<WorkSpace>();
 	private String pathFileXML;
@@ -49,8 +52,25 @@ public abstract class Contenido
 		}
 		
 		throw new ChatException(
-			String.format("El el archivo de contenido '%s' no se esta ninguna frase cuyo id sea '%s'", archivoDeConfiguracion(pathFileXML).getAbsoluteFile(), idDeLaFrase)
+			String.format("El el archivo de contenido '%s' no esta ninguna frase cuyo id sea '%s'", archivoDeConfiguracion(pathFileXML).getAbsoluteFile(), idDeLaFrase)
 		);
+	}
+	
+	public Tema tema(String idTema){
+		
+		for(Tema tema: misTemas){
+			if(tema.obtenerIdTema().equalsIgnoreCase(idTema)){
+				return tema;
+			}
+		}
+		
+		throw new ChatException(
+			String.format("El el archivo de contenido '%s' no esta ningun tema cuyo id sea '%s'", archivoDeConfiguracion(pathFileXML).getAbsoluteFile(), idTema)
+		);
+	}
+
+	public ArrayList<Tema> obtenerMisTemas(){
+		return misTemas;
 	}
 	
 	public void generarAudioEstatico(){
@@ -250,12 +270,115 @@ public abstract class Contenido
 					agregarFrase(miFrase);
 				}
 			}
+			
+			// Temas
+			Hashtable<String, DependenciasDeLaFrase> misDependencias = new Hashtable<>();
+			try{
+				System.out.println("\nCargando los temas ...\n");
+				NodeList temas = doc.getElementsByTagName("temas");
+				Node temasNode = temas.item(0);
+				Element temasElement = (Element) temasNode;
+				NodeList tema = temasElement.getElementsByTagName("tema");
+				for (int temp = 0; temp < tema.getLength(); temp++) {
+					
+					Node nNode = tema.item(temp);
+					Element eElement = (Element) nNode;
+					
+					String idDelTema = eElement.getElementsByTagName("idDelTema").item(0).getTextContent();
+					System.out.println("idDelTema : " + idDelTema);
+					
+					String nombreDelTema = eElement.getElementsByTagName("nombreDelTema").item(0).getTextContent();
+					System.out.println("nombreDelTema : " + nombreDelTema);
+					
+					String nombreWorkspace = eElement.getElementsByTagName("nombreWorkspace").item(0).getTextContent();
+					System.out.println("nombreWorkspace : " + nombreWorkspace);
+					
+					String sePuedeRepetir = eElement.getElementsByTagName("sePuedeRepetir").item(0).getTextContent();
+					System.out.println("sePuedeRepetir : " + sePuedeRepetir);
+					
+					String idDeLaIntencionGeneral = eElement.getElementsByTagName("idDeLaIntencionGeneral").item(0).getTextContent();
+					System.out.println("idDeLaIntencionGeneral : " + idDeLaIntencionGeneral);
+					
+					// Frases
+					NodeList frases = eElement.getElementsByTagName("frases");
+					Node frasesNode = frases.item(0);
+					Element frasesElement = (Element) frasesNode;
+					NodeList frase = frasesElement.getElementsByTagName("frase");
+					Frase frasesACargar[] = new Frase[frase.getLength()];
+					for (int index = 0; index < frase.getLength(); index++) {
+						System.out.println(frase.item(index).getTextContent());
+						frasesACargar[index] = this.frase(frase.item(index).getTextContent());
+					}
+					
+					// Dependencias
+					try{
+						NodeList dependencias = eElement.getElementsByTagName("dependencias");
+						Node dependenciasNode = dependencias.item(0);
+						Element dependenciasElement = (Element) dependenciasNode;
+						NodeList dependencia = dependenciasElement.getElementsByTagName("dependencia");
+						DependenciasDeLaFrase lasDependencias = new DependenciasDeLaFrase();
+						for (int index = 0; index < dependencia.getLength(); index++) {
+							System.out.println(dependencia.item(index).getTextContent());
+							lasDependencias.agregarDependencia(dependencia.item(index).getTextContent());
+						}
+						if(! lasDependencias.obtenerMisDependencias().isEmpty())
+							misDependencias.put(idDelTema, lasDependencias);
+					}catch(Exception e){}
+					
+					// Variables de frase
+					List<String> variablesDelTema = new ArrayList<>();
+					try{
+						System.out.println("\nCargando las variables de la frase ...\n");
+						NodeList variables = eElement.getElementsByTagName("variables");
+						Node variablesNode = variables.item(0);
+						Element variablesElement = (Element) variablesNode;
+						NodeList variable = variablesElement.getElementsByTagName("variable");
+						for (int temporal = 0; temporal < variable.getLength(); temporal++) {
+							Node nodo = variable.item(temporal);
+							Element element = (Element) nodo;
+							String nombre = element.getAttribute("nombre");
+							String tipoValor = element.getAttribute("tipo");
+							
+							NodeList nodoValores = eElement.getElementsByTagName("valores");
+							Node valorNode = nodoValores.item(0);
+							Element valorElement = (Element) valorNode;
+							NodeList valor = valorElement.getElementsByTagName("valor");
+
+							for (int i = 0; i < valor.getLength(); i++) {
+								Node nodoValor = valor.item(i);
+								Element elementoValor = (Element) nodoValor;
+								String valorPorDefecto = elementoValor.getTextContent();
+								variablesDelTema.add(valorPorDefecto);
+							}
+						}
+					}catch(Exception e){}
+					
+					Tema temaACargar = new Tema(idDelTema, nombreDelTema, nombreWorkspace, 
+							Boolean.parseBoolean(sePuedeRepetir), idDeLaIntencionGeneral, variablesDelTema, frasesACargar);
+					misTemas.add(temaACargar);
+				}
+			}catch(Exception e){
+				throw new ChatException("Error cargando los temas "+e.getMessage());
+			}
+			
+			if(! misDependencias.isEmpty()){
+				Enumeration keys = misDependencias.keys();
+				while(keys.hasMoreElements()) {
+					String idTema = (String) keys.nextElement();
+					
+					DependenciasDeLaFrase dependencias = misDependencias.get(idTema);
+					for(String idDeLaFrase: dependencias.obtenerMisDependencias()){
+						this.tema(idTema).dependeDe(this.tema(idDeLaFrase));
+					}
+				}        
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		end();
 	}
-	
+
 	private Entidades obtenerEntidades(Element condition){
 		Entidades misEntidades = new Entidades();
 		Hashtable<String, Operador> valores;
