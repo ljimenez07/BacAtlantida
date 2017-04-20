@@ -127,7 +127,6 @@
 	function onLoad()
 	{
 		document.addEventListener("deviceready", onDeviceReady, false);
-		document.addEventListener("pause", onPause, false);
 	}
 
 	function onPause() {
@@ -155,6 +154,7 @@
 	});
 
 	document.addEventListener("backbutton", onBackKeyDown, false);
+	document.addEventListener("pause", onPause, false);
 
 	function onBackKeyDown(e)
 	{
