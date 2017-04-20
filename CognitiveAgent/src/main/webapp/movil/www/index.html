@@ -22,9 +22,9 @@
 	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBRD3N4"
 	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<!-- End Google Tag Manager (noscript) -->
-	
+
 	<div class="loader" style="display: none; top: 300px; left: 100px;"></div>
-	
+
 	<div id="modales">
 		<div id="sesion-expirada" class="modal fade" style="display:none;" role="dialog">
 			<div class="modal-dialog modal-sm" style="background-color: white;">
@@ -38,13 +38,13 @@
 						</div>
 					</div>
 				</div>
-			</div>		
+			</div>
 		</div>
-	
+
 		<div id="nuevasOfertas" class="modal fade" style=""role="dialog">
 			<div class="modal-dialog modal-sm" style="background-color: white;">
 				<div class="modal-body">
-					¡Hay nuevas ofertas para ti! 
+					¡Hay nuevas ofertas para ti!
 				</div>
 				<div class="modal-footer">
 					<div class="row">
@@ -53,9 +53,9 @@
 						</div>
 					</div>
 				</div>
-			</div>		
+			</div>
 		</div>
-	
+
 		<div id="compartirNoSoportado" class="modal fade" style=""role="dialog">
 			<div class="modal-dialog modal-sm" style="background-color: white;">
 				<div class="modal-body">
@@ -68,9 +68,9 @@
 						</div>
 					</div>
 				</div>
-			</div>		
+			</div>
 		</div>
-	
+
 		<div data-accion="ocultar-menu" class="modal modal-menu clickable" style="display: none">
 			<div class="container menu" style="display: none;">
 				<div data-href="conocerte" class="row clickable" id="menu-item-conocerte" style="display: none;">
@@ -100,7 +100,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="app">
 		<div id="ofertas" class="show" ></div>
 		<div id="oferta" class="hide" ></div>
@@ -113,7 +113,7 @@
 	<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
-	
+
 	<script type="text/javascript" src="js/layout.handlebars.js"></script>
 	<script type="text/javascript" src="js/ofertas.handlebars.js"></script>
 	<script type="text/javascript" src="js/listaDeOfertas.handlebars.js"></script>
@@ -121,14 +121,19 @@
 	<script type="text/javascript" src="js/chats.handlebars.js"></script>
 	<script type="text/javascript" src="js/popupconocerte.handlebars.js"></script>
 	<script type="text/javascript" src="js/login.handlebars.js"></script>
-	
+
 	<script  type="text/javascript">
-	
+
 	function onLoad()
 	{
 		document.addEventListener("deviceready", onDeviceReady, false);
+		document.addEventListener("pause", onPause, false);
 	}
-	
+
+	function onPause() {
+		pausarSiEstaReproduciendoAudio();
+	}
+
 	function actualizarDimensiones()
 	{
 		var anchura = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
@@ -138,22 +143,22 @@
 		var anchuraCalculada = mediaAnchura - 20;
 		var alturaCalculada = mediaAltura - 20;
 		$(".loader").css({top: alturaCalculada + "px", left: anchuraCalculada + "px"});
-		
+
 		$("#fondo-del-login").height(altura - 437);
 	}
-	
+
 	actualizarDimensiones();
-	
+
 	$(window).on('resize', function()
 	{
 		actualizarDimensiones();
 	});
-	
+
 	document.addEventListener("backbutton", onBackKeyDown, false);
 
 	function onBackKeyDown(e)
 	{
-	
+
 		if( ordenDelasVistas.length > 0)
 		{
 			e.preventDefault();
@@ -165,7 +170,7 @@
 			navigator.app.exitApp();
 		}
 	}
-	
+
 	var deviceType = "";
 	var ordenDelasVistas = new Array();
 	var audios = new Array();
@@ -180,25 +185,25 @@
 	var contadorDeCarga = 0;
 	var aux1;
 	var aux2;
-	
+
 	var mensajesDeErrorEnAudio = ["", {code: 1, "message": "MEDIA_ERR_ABORTED"}, {code: 2, "message": "MEDIA_ERR_NETWORK"}, {code: 3, "message": "MEDIA_ERR_DECODE"}, {code: 4, "message": "MEDIA_ERR_SRC_NOT_SUPPORTED"}];
-	
+
 	function quitarModalNuevasOfertas()
 	{
 		$("#nuevasOfertas").modal('hide');
 	}
-	
+
 	function quitarModalCompartirNoSoportado()
 	{
 		$("#compartirNoSoportado").modal('hide');
 	}
-	
+
 	function quitarModal()
 	{
 		setCookie('mostrarpopupdeconocerte', false);
 		$("#popupconocerte").modal('hide');
 	}
-	
+
 	function quitarModalSesion()
 	{
 		$("#sesion-expirada").modal('hide');
@@ -207,7 +212,7 @@
 		});
 		recargarVistasSinLoguear();
 	}
-	
+
 	function cambiarVista(href, guardarVistaEnHistorial)
 	{
 		if(vistaActual == "chat" || vistaActual == "conocerte")
@@ -240,39 +245,35 @@
 			}
 		}
 		audios = new Array();
-		if(estaReproduciendo)
-		{
-			audioEnReproduccion.pause();
-			estaReproduciendo = false;
-		}
+		pausarSiEstaReproduciendoAudio();
 		var app = $(".app");
-		
+
 		app.find(".show").hide();
 		app.find("#" + href).show();
-		
+
 		app.find(".show").removeClass("show");
 		app.find("#" + href).removeClass("hide");
 		app.find("#" + href).addClass("show");
-		
+
 		botonesDeAudio = {chat: false, conocerte: false};
-		
+
 		var botonEscucharMensajes = $("#chat-id-" + href + " .boton-escuchar-mensajes");
 		if(botonEscucharMensajes.hasClass("desactivado"))
 		{
 			botonEscucharMensajes.click();
 		}
-		
+
 		if(guardarVistaEnHistorial != undefined && guardarVistaEnHistorial)
 		{
-			ordenDelasVistas.push( vistaActual );	
+			ordenDelasVistas.push( vistaActual );
 		}
-		
+
 		if(href != "login")
 		{
 			vistaActual = href;
 		}
 	}
-	
+
 	function menu(accion)
 	{
 		if(accion == "mostrar-menu")
@@ -286,7 +287,7 @@
 			$(".modal-menu").fadeOut("fast");
 		}
 	}
-	
+
 	function resizeIframe(iframe) {
 		var altura = iframe.contentWindow.document.body.scrollHeight + 'px';
 		iframe.style.height = altura;
@@ -295,7 +296,7 @@
 		var minimo = ancho / 4 * 3;
 		parent.css({"height": altura, "min-height": minimo});
 	}
-	
+
 	var pantallas = new Object();
 	$(function()
 	{
@@ -305,13 +306,13 @@
 		pantallas["chat"] = {title: "Chat", body: '<div id="chat-id-'+chat.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(chat)};
 		var conocerte = {"pathDelServidor":"conocerte"};
 		pantallas["conocerte"] = {title: "Conocerte", body: '<div id="chat-id-'+conocerte.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(conocerte)};
-		pantallas["popupconocerte"] ={};		
+		pantallas["popupconocerte"] ={};
 		pantallas["ofertas"] = {title: "Inicio", body: Handlebars.templates.ofertas(), DebajoDelPanel: ""};
 		pantallas["oferta"] = {title: "Detalle de la oferta", body: "", DebajoDelPanel: ""};
-		
+
 		cargarInformacionDelUsuario();
 	});
-	
+
 	function cargarInformacionDelUsuario()
 	{
 		ajax({
@@ -323,16 +324,16 @@
 				idUsuario = data.idUsuario;
 				estaLogueado = data.estaLogueado;
 				establecerBienvenida(data.usuarioNombre);
-				
-				if( data.mostrarPopConocerte && 
+
+				if( data.mostrarPopConocerte &&
 					( getCookie("mostrarpopupdeconocerte") == "" || getCookie("mostrarpopupdeconocerte") == "true" ))
 				{
 					$("#popupconocerte").modal('show');
 				}
 			}
-		});	
+		});
 	}
-	
+
 	function inicializarPantallas()
 	{
 		$(".app #ofertas").html(Handlebars.templates.layout(pantallas["ofertas"]));
@@ -344,10 +345,10 @@
 		$(".app #chat").html(Handlebars.templates.layout(pantallas["chat"]));
 		$(".app #conocerte").html(Handlebars.templates.layout(pantallas["conocerte"]));
 		$(".app #login").html(Handlebars.templates.layout(pantallas["login"]));
-		
+
 		bindClickeable();
 	}
-	
+
 	function establecerBienvenida(nombreUsuario)
 	{
 		if(estaLogueado)
@@ -370,12 +371,12 @@
 			{
 				eval(before);
 			}
-			
+
 			if(href != undefined )
 			{
 				cambiarVista( href, true );
 			}
-			
+
 			if(accion != undefined)
 			{
 				if(accion.indexOf("menu") >= 0)
@@ -394,14 +395,14 @@
 					});
 				}
 			}
-			
+
 			if(after != undefined )
 			{
 				eval(after);
 			}
-		});	
+		});
 	}
-	
+
 	function recargarVistasSinLoguear()
 	{
 		$("#menu-item-conocerte").hide();
@@ -411,7 +412,7 @@
 		inicializarPantallas();
 		cambiarVista("ofertas", true);
 	}
-	
+
 	function agregarAColaDeReproduccion(pathDelArchivo, callback)
 	{
 		var audio = new Audio(serverDomain + pathDelArchivo);
@@ -441,7 +442,7 @@
 		audios.push(audio);
 		reproducirCola();
 	}
-	
+
 	function reproducirCola()
 	{
 		if(audios.length > 0 && !estaReproduciendo)
@@ -456,7 +457,7 @@
 			});
 		}
 	}
-	
+
 	function reproducir(audio, callback)
 	{
 		audioEnReproduccion = audio;
@@ -470,7 +471,15 @@
 			audioEnReproduccion.onended = callback;
 		}
 	}
-	
+
+	function pausarSiEstaReproduciendoAudio() {
+		if(estaReproduciendo)
+		{
+			audioEnReproduccion.pause();
+			estaReproduciendo = false;
+		}
+	}
+
 	function ajax(param)
 	{
 		agregarCarga();
@@ -482,20 +491,20 @@
 			url : param.url,
 			data : param.data != undefined ? param.data : ""
 		})
-		.done(function(data) 
+		.done(function(data)
 		{
 			if(data.mostrarPopupdeOfertasNuevas)
 			{
 				$("#nuevasOfertas").modal('show');
 			}
-			
+
 			if(data.usuarioEstaLogueado)
 			{
 				estaLogueado = true;
 				$(".contenedor-boton-ingresar").remove();
 				$("#menu-item-conocerte").show();
 				$("#menu-item-salir").show();
-				
+
 				if(param.done != undefined)
 				{
 					param.done(data);
@@ -512,7 +521,7 @@
 				param.done(data);
 			}
 		})
-		.fail(function(XMLHttpRequest, textStatus, errorThrown ) 
+		.fail(function(XMLHttpRequest, textStatus, errorThrown )
 		{
 			if( param.fail != undefined )
 			{
@@ -524,15 +533,15 @@
 			quitarCarga();
 		});
 	}
-	
-	function getCookie(cname) 
+
+	function getCookie(cname)
 	{
 		var name = cname + "=";
 		var ca = document.cookie.split(';');
-		for(var i = 0; i <ca.length; i++) 
+		for(var i = 0; i <ca.length; i++)
 		{
 			var c = ca[i];
-			while (c.charAt(0)==' ') 
+			while (c.charAt(0)==' ')
 			{
 				c = c.substring(1);
 			}
@@ -542,21 +551,21 @@
 		}
 		return "";
 	}
-	
-	function setCookie(cname, cvalue, exdays) 
+
+	function setCookie(cname, cvalue, exdays)
 	{
 		var d = new Date();
 		d.setTime(d.getTime() + (exdays*24*60*60*1000));
 		var expires = "expires="+ d.toUTCString();
 		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 	}
-	
+
 	function agregarCarga()
 	{
 		$(".loader").show();
 		contadorDeCarga++;
 	}
-	
+
 	function quitarCarga()
 	{
 		if(contadorDeCarga > 0)
