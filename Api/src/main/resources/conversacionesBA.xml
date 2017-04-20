@@ -1208,6 +1208,7 @@
 				<frase>saludar</frase>
 				<frase>saludarConNombre</frase>
 				<frase>saludoPreguntar</frase>
+				<frase>fueraDeContextoGeneral</frase>
 			</frases>
 			<dependencias></dependencias>
 		</tema>
