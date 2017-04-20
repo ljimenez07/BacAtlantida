@@ -79,7 +79,7 @@ strong {
 	display:block;
 }
 
-.btn 
+.btn
 {
 	background-color: #E92531;
 	color: white;
@@ -97,7 +97,7 @@ strong {
 	color: white;
 }
 
-input 
+input
 {
 	background-color: #f5f5f5;
 }
@@ -292,6 +292,13 @@ input
 	display: block;
 }
 
+.header-back-icon {
+	width: 24px;
+	height: 28px;
+	background: url(../img/icono-atras.png);
+	display: block;
+	margin-left: -10px;
+}
 
 .chat {
 	list-style: none;
@@ -625,7 +632,7 @@ red
 	background-color: #E92531;
 }
 
-#login .btn 
+#login .btn
 {
 	background-color: #F5F5F5;
 	color: #88898C;
@@ -675,4 +682,3 @@ red
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-

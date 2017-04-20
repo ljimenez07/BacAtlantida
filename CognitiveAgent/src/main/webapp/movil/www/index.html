@@ -307,7 +307,7 @@
 		var conocerte = {"pathDelServidor":"conocerte"};
 		pantallas["conocerte"] = {title: "Conocerte", body: '<div id="chat-id-'+conocerte.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(conocerte)};
 		pantallas["popupconocerte"] ={};
-		pantallas["ofertas"] = {title: "Inicio", body: Handlebars.templates.ofertas(), DebajoDelPanel: ""};
+		pantallas["ofertas"] = {title: "Inicio", body: Handlebars.templates.ofertas(), DebajoDelPanel: "", ocultarBotonAtras: true};
 		pantallas["oferta"] = {title: "Detalle de la oferta", body: "", DebajoDelPanel: ""};
 
 		cargarInformacionDelUsuario();
@@ -393,6 +393,11 @@
 							recargarVistasSinLoguear();
 						}
 					});
+				} else if(accion == "atras") {
+					if( ordenDelasVistas.length > 0) {
+						var page = ordenDelasVistas.pop();
+						cambiarVista(page, false);
+					}
 				}
 			}
 

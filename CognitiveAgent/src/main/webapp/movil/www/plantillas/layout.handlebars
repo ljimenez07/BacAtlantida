@@ -1,15 +1,28 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<div class="row bck-red">
-			<div class="col-xs-2 contenedor-centrado">
-				<div><span data-accion="mostrar-menu" class="header-menu-icon clickable" /></div>	
-			</div>
-			<div class="col-xs-6 col-xs-offset-1 contenedor-centrado">
-				<div><img src="img/logo-header.png" class="logo-header clickable" data-href="ofertas"></div>
-			</div>
-			<div class="col-xs-3 contenedor-boton-ingresar contenedor-centrado">
-				<div data-href="login" class="botonDeIngresar clickable text-center">Iniciar Sesi&oacute;n</div>
-			</div>
+			{{#if ocultarBotonAtras}}
+				<div class="col-xs-2 contenedor-centrado">
+					<div><span data-accion="mostrar-menu" class="header-menu-icon clickable" /></div>
+				</div>
+				<div class="col-xs-6 col-xs-offset-1 contenedor-centrado">
+					<div><img src="img/logo-header.png" class="logo-header clickable" data-href="ofertas"></div>
+				</div>
+				<div class="col-xs-3 contenedor-boton-ingresar contenedor-centrado">
+					<div data-href="login" class="botonDeIngresar clickable text-center">Iniciar Sesi&oacute;n</div>
+				</div>
+			{{else}}
+				<div class="col-xs-3 contenedor-centrado">
+					<div><span data-accion="atras" class="header-back-icon clickable" /></div>
+					<div><span data-accion="mostrar-menu" class="header-menu-icon clickable" /></div>
+				</div>
+				<div class="col-xs-6 contenedor-centrado">
+					<div><img src="img/logo-header.png" class="logo-header clickable" data-href="ofertas"></div>
+				</div>
+				<div class="col-xs-3 contenedor-boton-ingresar contenedor-centrado">
+					<div data-href="login" class="botonDeIngresar clickable text-center">Iniciar Sesi&oacute;n</div>
+				</div>
+			{{/if}}
 		</div>
 		<div class="row title">
 			<div class="col-xs-12" id="titulo-de-pantalla">
