@@ -295,7 +295,7 @@ input
 .header-back-icon {
 	width: 24px;
 	height: 28px;
-	background: url(../img/icono-atras.png);
+	background: url(../img/icono-atras.png) no-repeat;
 	display: block;
 	margin-left: -10px;
 }
