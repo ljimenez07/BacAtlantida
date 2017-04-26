@@ -430,14 +430,14 @@
 			if(audio.estaCargando)
 			{
 				audio.estaCargando = false;
-				quitarCarga();
+				//quitarCarga();
 			}
 			audios = new Array();
 		};
 		audio.onloadedmetadata = function()
 		{
 			audio.estaCargando = false;
-			quitarCarga();
+			//quitarCarga();
 		};
 		audio.onplay = function()
 		{
@@ -535,7 +535,7 @@
 		})
 		.always(function()
 		{
-			quitarCarga();
+			//quitarCarga();
 		});
 	}
 

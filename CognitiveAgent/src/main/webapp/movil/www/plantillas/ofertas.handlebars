@@ -123,7 +123,7 @@ function bindAcciones()
 		{
 			var audio = new Audio();
 			audio.src = serverDomain + $(this).data("audio");
-			audio.onplay = quitarCarga;
+			//audio.onplay = quitarCarga;
 			audio.play();
 		}
 	});
@@ -147,14 +147,14 @@ function compartir(id, pathImagen, titulo)
 	
 	var onSuccess = function(result)
 	{
-		quitarCarga();
+		//quitarCarga();
 		console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
 		console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
 	}
 	
 	var onError = function(msg)
 	{
-		quitarCarga();
+		//quitarCarga();
 		console.log("Sharing failed with message: " + msg);
 	}
 	
@@ -164,7 +164,7 @@ function compartir(id, pathImagen, titulo)
 	}
 	catch(err)
 	{
-		quitarCarga();
+		//quitarCarga();
 		$("#compartirNoSoportado").modal('show');
 	}
 }
