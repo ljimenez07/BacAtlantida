@@ -63,7 +63,7 @@ function bindAcciones()
 	
 				$("#oferta .boton-escuchar-oferta").off("click").on("click", function()
 				{
-					agregarCarga();
+					//agregarCarga();
 					agregarAColaDeReproduccion($(this).data("audio"));
 				});
 	
@@ -114,7 +114,7 @@ function bindAcciones()
 	
 	$("#ofertas .boton-escuchar").off("click").on("click", function()
 	{
-		agregarCarga();
+		//agregarCarga();
 		if(deviceType != "iPad" && deviceType != "iPhone")
 		{
 			agregarAColaDeReproduccion($(this).data("audio"));
@@ -136,7 +136,7 @@ function bindAcciones()
 
 function compartir(id, pathImagen, titulo)
 {
-	agregarCarga();
+	//agregarCarga();
 	var options = {
 		message: titulo, // not supported on some apps (Facebook, Instagram)
 		subject: titulo, // fi. for email
