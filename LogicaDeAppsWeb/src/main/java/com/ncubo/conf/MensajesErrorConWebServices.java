@@ -6,10 +6,15 @@ public class MensajesErrorConWebServices {
 	
 	
 	public static String CODIGO_CREDENCIALES_INCORRECTOS = "19002";
+	public static String CODIGO_CREDENCIALES_INCORRECTOS_ADICIONAL = "90006";
 	public static String MENSAJE_CREDENCIALES_INCORRECTOS = "El nombre de usuario o la contraseña no son correctas.";
 
 	public static String CODIGO_SESION_YA_INICIADA = "3030";
 	public static String MENSAJE_SESION_YA_INICIADA = "Ya has iniciado sesión. Por favor cierra la sesión previa o inténtalo más tarde.";
+	
+	public static String CODIGO_USUARIO_BLOQUEADO = "3008";
+	public static String MENSAJE_USUARIO_BLOQUEADO = "Usuario bloqueado.";
+	
 	
 	public static String ERROR_CONSULTA_SALDO = "En este momento no puedo darte el saldo, inténtalo más tarde";
 	

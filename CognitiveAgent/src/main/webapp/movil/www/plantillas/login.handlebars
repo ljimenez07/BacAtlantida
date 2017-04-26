@@ -33,7 +33,10 @@ $(function(){
 		
 		$("#formLogin").submit(function(e) 
 		{
-			$("#contenedor-de-mensajes-login").html();
+			$("body").append("<div id='overlay' style='position:absolute;top:0;left:0;height:100%;width:100%;z-index:999'></div>");
+			
+			$("#contenedor-de-mensajes-login").html("");
+			
 			ajax({
 				type: "POST",
 				url: serverDomain + "/movil/login",
@@ -43,11 +46,13 @@ $(function(){
 					estaLogueado = true;
 					
 					cargarInformacionDelUsuario();
-					
+					$("#overlay").remove();
 					cambiarVista(vistaActual, true);
+										
 				},
 				fail: function(XMLHttpRequest, textStatus, errorThrown) 
 				{
+					$("#overlay").remove();
 					$("#contenedor-de-mensajes-login").html(XMLHttpRequest.responseText);
 				}
 			});

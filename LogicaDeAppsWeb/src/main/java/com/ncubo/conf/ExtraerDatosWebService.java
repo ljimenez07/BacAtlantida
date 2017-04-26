@@ -269,11 +269,11 @@ public class ExtraerDatosWebService {
 						         "    <parametroAdicionalItem>"+
 						         " 			<!--You may enter the following 3 items in any order-->"+
 						         " 			<linea>0</linea>"+
-						         " 		 <!--Optional:-->"+
+						         " 		ï¿½<!--Optional:-->"+
 						         " 		<tipoRegistro>UAI</tipoRegistro>"+
-						         " 		 <!--Optional:-->"+
-						         " 		 <valor>%s</valor>"+
-						         "   </parametroAdicionalItem>"+
+						         " 		ï¿½<!--Optional:-->"+
+						         " 		ï¿½<valor>%s</valor>"+
+						         " ï¿½ </parametroAdicionalItem>"+
 						         "   <parametroAdicionalItem>"+
 						         "     <linea>1</linea>"+
 						         "      <!--Optional:-->"+
@@ -453,13 +453,13 @@ public class ExtraerDatosWebService {
 						         "<parametroAdicionalColeccion>"+
 						         "   <!--Zero or more repetitions:-->"+
 						         "    <parametroAdicionalItem>"+
-						         " 		<!--You may enter the following 3 items in any order-->"+
-						         " 			 <linea>0</linea>"+
-						         " 	 <!--Optional:-->"+
-						         " 	 <tipoRegistro>UAI</tipoRegistro>"+
-						         " 	 <!--Optional:-->"+
-						         " 	 <valor>%s</valor>"+
-						         " 	  </parametroAdicionalItem>"+
+						         "ï¿½		<!--You may enter the following 3 items in any order-->"+
+						         " 			ï¿½<linea>0</linea>"+
+						         " 	ï¿½<!--Optional:-->"+
+						         " 	ï¿½<tipoRegistro>UAI</tipoRegistro>"+
+						         " 	ï¿½<!--Optional:-->"+
+						         " 	ï¿½<valor>%s</valor>"+
+						         " 	ï¿½ </parametroAdicionalItem>"+
 						         "   <parametroAdicionalItem>"+
 						         "     <linea>1</linea>"+
 						         "      <!--Optional:-->"+
@@ -744,12 +744,12 @@ public class ExtraerDatosWebService {
 						         "<parametroAdicionalColeccion>"+
 						         "   <!--Zero or more repetitions:-->"+
 						         "    <parametroAdicionalItem>"+
-						         " 	 <!--You may enter the following 3 items in any order-->"+
+						         " 	ï¿½<!--You may enter the following 3 items in any order-->"+
 						         " 	<linea>0</linea>"+
 						         " 	<!--Optional:-->"+
-						         " 	 <tipoRegistro>UAI</tipoRegistro>"+
+						         " 	ï¿½<tipoRegistro>UAI</tipoRegistro>"+
 						         " 	<!--Optional:-->"+
-						         " 	 <valor>%s</valor>"+
+						         " 	ï¿½<valor>%s</valor>"+
 						         " 	 </parametroAdicionalItem>"+
 						         "   <parametroAdicionalItem>"+
 						         "     <linea>1</linea>"+
@@ -1189,8 +1189,8 @@ public class ExtraerDatosWebService {
 				         "<parametroAdicionalColeccion>"+
 				         "   <!--Zero or more repetitions:-->"+
 				         "    <parametroAdicionalItem>"+
-				         " 	 <!--You may enter the following 3 items in any order-->"+
-				         "	 <linea>0</linea>"+
+				         " 	ï¿½<!--You may enter the following 3 items in any order-->"+
+				         "	ï¿½<linea>0</linea>"+
 				         " 	<!--Optional:-->"+
 				         "	<tipoRegistro>UAI</tipoRegistro>"+
 				         "	<!--Optional:-->"+
@@ -1338,10 +1338,12 @@ public class ExtraerDatosWebService {
 			}
 			else{
 				JSONObject error =  (JSONObject) json.get("error");
-				if(error.get("message").toString().contains(MensajesErrorConWebServices.CODIGO_CREDENCIALES_INCORRECTOS))
+				if(error.get("message").toString().contains(MensajesErrorConWebServices.CODIGO_CREDENCIALES_INCORRECTOS) || error.get("message").toString().contains(MensajesErrorConWebServices.CODIGO_CREDENCIALES_INCORRECTOS_ADICIONAL))
 					resultados[0] = MensajesErrorConWebServices.MENSAJE_CREDENCIALES_INCORRECTOS;
 				if(error.get("message").toString().contains(MensajesErrorConWebServices.CODIGO_SESION_YA_INICIADA))
 					resultados[0] = MensajesErrorConWebServices.MENSAJE_SESION_YA_INICIADA;
+				if(error.get("message").toString().contains(MensajesErrorConWebServices.CODIGO_USUARIO_BLOQUEADO))
+					resultados[0] = MensajesErrorConWebServices.MENSAJE_USUARIO_BLOQUEADO;
 			}
 	
 		} catch (Exception e) {
