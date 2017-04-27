@@ -56,7 +56,7 @@ $(function(){
 					reproducirMensaje(value);
 				});
 			}
-			if( ! debeReproducirElAudio)
+			if(!debeReproducirElAudio)
 			{
 				colaDeReproduccion = new Array();
 				audios = new Array();
@@ -219,14 +219,22 @@ $(function(){
 						}
 						else
 						{
-							colaDeReproduccion = new Array();
-							audios = new Array();
-							audioEnReproduccion.pause();
-							estaReproduciendo = false;
+							if(estaReproduciendo)
+							{
+								colaDeReproduccion = new Array();
+								audios = new Array();
+								audioEnReproduccion.pause();
+								estaReproduciendo = false;
+							}
+							callback = function()
+							{
+								
+							};
 							
-							callback = function(){};
-							
-							callbackOnPlay = function(){};
+							callbackOnPlay = function()
+							{
+								
+							};
 						}
 						
 						var fecha = new Date();

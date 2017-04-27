@@ -10,6 +10,9 @@
         "cordova-plugin-queries-schemes": {
             "PACKAGE_NAME": "movil.bancatlan.abi2"
         },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "movil.bancatlan.abi2"
+        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "movil.bancatlan.abi2"
         },
@@ -17,9 +20,5 @@
             "PACKAGE_NAME": "movil.bancatlan.abi2"
         }
     },
-    "dependent_plugins": {
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "movil.bancatlan.abi2"
-        }
-    }
+    "dependent_plugins": {}
 }
