@@ -582,6 +582,26 @@
 			$(".loader").hide();
 		}
 	}
+	
+	
+	function session_checking()
+	{
+		minutosEnSesion ++;
+		if(minutosEnSesion==5){
+			ajax({
+				url: serverDomain + "/movil/logout",
+				debeEvaluarSesion: false,
+				done: function(data)
+				{
+					$("#sesion-expirada").modal('show');
+					recargarVistasSinLoguear();
+				}
+			});
+		}
+	}
+		
+	var minutosEnSesion = 0;
+	var validateSession;
 	</script>
 
 </body>

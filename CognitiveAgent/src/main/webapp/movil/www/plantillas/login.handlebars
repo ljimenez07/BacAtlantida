@@ -48,7 +48,7 @@ $(function(){
 					cargarInformacionDelUsuario();
 					$("#overlay").remove();
 					cambiarVista(vistaActual, true);
-										
+					validateSession = setInterval(session_checking, 60000);					
 				},
 				fail: function(XMLHttpRequest, textStatus, errorThrown) 
 				{
