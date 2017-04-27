@@ -19,6 +19,7 @@
 
 <script type="text/javascript">
 var pagina = 1;
+var audioOfertas = new Audio();
 
 function evaluarVerMas()
 {
@@ -64,7 +65,7 @@ function bindAcciones()
 				$("#oferta .boton-escuchar-oferta").off("click").on("click", function()
 				{
 					//agregarCarga();
-					agregarAColaDeReproduccion($(this).data("audio"));
+					reproducirAudioDeLaOferta($(this).data("audio"));
 				});
 	
 				$("#oferta .boton-compartir").off("click").on("click", function()
@@ -117,14 +118,14 @@ function bindAcciones()
 		//agregarCarga();
 		if(deviceType != "iPad" && deviceType != "iPhone")
 		{
-			agregarAColaDeReproduccion($(this).data("audio"));
+			reproducirAudioDeLaOferta($(this).data("audio"));
 		}
 		else
 		{
-			var audio = new Audio();
-			audio.src = serverDomain + $(this).data("audio");
+			reproducirAudioDeLaOferta($(this).data("audio"));
+			//audio.src = serverDomain + $(this).data("audio");
 			//audio.onplay = quitarCarga;
-			audio.play();
+			//audio.play();
 		}
 	});
 	
@@ -132,6 +133,15 @@ function bindAcciones()
 	{
 		setTimeout(compartir($(this).data("id"), $(this).data("path"), $(this).data("titulo")), 0);
 	});
+}
+
+function reproducirAudioDeLaOferta(urlDelAudio){
+	if(!audioOfertas.paused){
+		audioOfertas.pause();
+	}
+	audioOfertas.src = serverDomain + urlDelAudio;
+	//audio.onplay = quitarCarga;
+	audioOfertas.play();
 }
 
 function compartir(id, pathImagen, titulo)
