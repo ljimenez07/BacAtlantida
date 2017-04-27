@@ -39,9 +39,9 @@ templates['oferta'] = template({"1":function(container,depth0,helpers,partials,d
     + alias4(((helper = (helper = helpers.ciudad || (depth0 != null ? depth0.ciudad : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"ciudad","hash":{},"data":data}) : helper)))
     + "</span>\r\n			</div>\r\n		</div>\r\n		<div class=\"row contenedor-de-botones\">\r\n			<div class=\"col-xs-12\">\r\n				<div class=\"tiempo-transcurrido\">Hace "
     + alias4(((helper = (helper = helpers.tiempoTranscurrido || (depth0 != null ? depth0.tiempoTranscurrido : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"tiempoTranscurrido","hash":{},"data":data}) : helper)))
-    + "</div>\r\n			</div>\r\n		</div>\r\n		<div class=\"row\">\r\n			<div class=\"col-xs-12 text-center boton-escuchar-oferta\" data-audio=\"/archivossubidos"
+    + "</div>\r\n			</div>\r\n		</div>\r\n		<div class=\"row\">\r\n			<div class=\"col-xs-12 boton-escuchar-oferta play\" data-audio=\"/archivossubidos"
     + alias4(((helper = (helper = helpers.descripcionAudio || (depth0 != null ? depth0.descripcionAudio : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"descripcionAudio","hash":{},"data":data}) : helper)))
-    + "\">\r\n				<img src=\"./img/icono-94x91.png\">\r\n			</div>\r\n		</div>\r\n		<div class=\"row contenedor-de-botones\">\r\n			<div class=\"col-xs-6\">\r\n				<div class=\"row\">\r\n"
+    + "\">\r\n				\r\n			</div>\r\n		</div>\r\n		<div class=\"row contenedor-de-botones\">\r\n			<div class=\"col-xs-6\">\r\n				<div class=\"row\">\r\n"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.esUnUsuarioConocido : depth0),{"name":"if","hash":{},"fn":container.program(5, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "				</div>\r\n			</div>\r\n			<div class=\"col-xs-6\">\r\n				<div class=\"row\">\r\n					<div class=\"col-xs-9\"></div>\r\n					<div class=\"col-xs-3\"><div class=\"boton-compartir\" data-id=\""
     + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))

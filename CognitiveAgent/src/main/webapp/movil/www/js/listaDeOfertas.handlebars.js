@@ -17,7 +17,7 @@ templates['listaDeOfertas'] = template({"1":function(container,depth0,helpers,pa
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.esUnUsuarioConocido : depth0),{"name":"if","hash":{},"fn":container.program(6, data, 0),"inverse":container.program(8, data, 0),"data":data})) != null ? stack1 : "")
     + "						<div class=\"col-xs-3\"><div data-audio=\"/archivossubidos"
     + alias4(((helper = (helper = helpers.descripcionAudio || (depth0 != null ? depth0.descripcionAudio : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"descripcionAudio","hash":{},"data":data}) : helper)))
-    + "\" class=\"boton-escuchar\"></div></div>\r\n						<div class=\"col-xs-3\"><div class=\"boton-compartir\" data-id=\""
+    + "\" class=\"boton-escuchar play\"></div></div>\r\n						<div class=\"col-xs-3\"><div class=\"boton-compartir\" data-id=\""
     + alias4(((helper = (helper = helpers.idOferta || (depth0 != null ? depth0.idOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"idOferta","hash":{},"data":data}) : helper)))
     + "\" data-titulo=\""
     + alias4(((helper = (helper = helpers.tituloDeOferta || (depth0 != null ? depth0.tituloDeOferta : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"tituloDeOferta","hash":{},"data":data}) : helper)))

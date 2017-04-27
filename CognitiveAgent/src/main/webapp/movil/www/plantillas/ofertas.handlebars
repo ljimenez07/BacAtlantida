@@ -20,6 +20,7 @@
 <script type="text/javascript">
 var pagina = 1;
 var audioOfertas = new Audio();
+var ultimoObjetoOferta;
 
 function evaluarVerMas()
 {
@@ -65,7 +66,7 @@ function bindAcciones()
 				$("#oferta .boton-escuchar-oferta").off("click").on("click", function()
 				{
 					//agregarCarga();
-					reproducirAudioDeLaOferta($(this).data("audio"));
+					reproducirAudioDeLaOferta($(this).data("audio"), $("#oferta .boton-escuchar-oferta"));
 				});
 	
 				$("#oferta .boton-compartir").off("click").on("click", function()
@@ -116,16 +117,11 @@ function bindAcciones()
 	$("#ofertas .boton-escuchar").off("click").on("click", function()
 	{
 		//agregarCarga();
-		if(deviceType != "iPad" && deviceType != "iPhone")
-		{
-			reproducirAudioDeLaOferta($(this).data("audio"));
+		if(deviceType != "iPad" && deviceType != "iPhone"){
+			reproducirAudioDeLaOferta($(this).data("audio"), $(this));
 		}
-		else
-		{
-			reproducirAudioDeLaOferta($(this).data("audio"));
-			//audio.src = serverDomain + $(this).data("audio");
-			//audio.onplay = quitarCarga;
-			//audio.play();
+		else{
+			reproducirAudioDeLaOferta($(this).data("audio"), $(this));
 		}
 	});
 	
@@ -135,13 +131,46 @@ function bindAcciones()
 	});
 }
 
-function reproducirAudioDeLaOferta(urlDelAudio){
-	if(!audioOfertas.paused){
+function reproducirAudioDeLaOferta(urlDelAudio, objetoOferta){
+	
+	if( ! audioOfertas.paused){
 		audioOfertas.pause();
+		if(ultimoObjetoOferta != null){
+			if(urlDelAudio != ultimoObjetoOferta.data("audio")){
+				terminoReproduccionOferta();
+				ultimoObjetoOferta = objetoOferta;
+				objetoOferta.addClass("pause").removeClass("play");
+				audioOfertas.src = serverDomain + urlDelAudio;
+				audioOfertas.addEventListener('ended', terminoReproduccionOferta);
+				audioOfertas.play();
+			}else{
+				terminoReproduccionOferta();
+			}
+		}else{
+			terminoReproduccionOferta();
+		}
+	}else{
+		if(ultimoObjetoOferta != null){
+			if(urlDelAudio != ultimoObjetoOferta.data("audio")){
+				ultimoObjetoOferta = objetoOferta;
+				objetoOferta.addClass("pause").removeClass("play");
+				audioOfertas.src = serverDomain + urlDelAudio;
+				audioOfertas.addEventListener('ended', terminoReproduccionOferta);
+				audioOfertas.play();
+			}
+		}else{
+			ultimoObjetoOferta = objetoOferta;
+			objetoOferta.addClass("pause").removeClass("play");
+			audioOfertas.src = serverDomain + urlDelAudio;
+			audioOfertas.addEventListener('ended', terminoReproduccionOferta);
+			audioOfertas.play();
+		}
 	}
-	audioOfertas.src = serverDomain + urlDelAudio;
-	//audio.onplay = quitarCarga;
-	audioOfertas.play();
+}
+
+function terminoReproduccionOferta(){
+	ultimoObjetoOferta.removeClass("pause").addClass("play");
+	ultimoObjetoOferta = null;
 }
 
 function compartir(id, pathImagen, titulo)
