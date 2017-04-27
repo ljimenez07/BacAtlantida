@@ -710,6 +710,16 @@
 		<vinetas></vinetas>
 	</conversacion>
 	
+	<conversacion id="requisitosClave">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Si ya cuentas con tu banca en línea, puedes recuperar tu contraseña en la página web, utilizando el botón de “Olvidó su contraseña”. Si aún no cuentas con tu banca en línea, puedes obtener una clave para entrar solicitando el servicio de Atlántida Online en la agencia más cercana.</frase>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
 	<conversacion id="requisitosAOL">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
@@ -1341,6 +1351,7 @@
 				<frase>requisitosCuentaAhorrosDolares</frase>
 				<frase>requisitosCuentaAhorrosKidsLempiras</frase>
 				<frase>requisitosCuentaAhorrosKidsDolares</frase>
+				<frase>requisitosClave</frase>
 				<frase>requisitosAOL</frase>
 				<frase>requisitosPrestamoPersonal</frase>
 				<frase>requisitosPrestamoVivienda</frase>
@@ -1781,11 +1792,11 @@
 		<variable nombre="sePreocupaPorLaSalud" tipo="double">0</variable>
 	</variablesDeAmbiente>
 	
-	<workspaces user="c2bbaaba-491a-4c2c-81ce-63dbc88b69c9" pass="2xtXzqmmzXAe">
-		<workspace tipo="general" idIBM="4dacbb32-3aca-4b0f-954e-b92085b4c6c3" intencionesParaSeReferenciado="">BAIntents</workspace>
-		<workspace tipo="especifico" idIBM="deeffe01-0b4b-4f6f-8d68-a394237b1667" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
-		<workspace tipo="especifico" idIBM="94f2b5c9-149b-404e-ae3c-cfd214ba7a53" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="e6a52850-d6a7-4ea3-a1b7-7cb5ccb65334" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
+	<workspaces user="189548d8-2956-41a2-9f88-6c40e9a93c8e" pass="XW6rPcUzIFQl">
+		<workspace tipo="general" idIBM="278be472-dac0-4793-91e2-3220790b5f9f" intencionesParaSeReferenciado="">BAIntents</workspace>
+		<workspace tipo="especifico" idIBM="e0ff922e-68f2-4cc3-bc69-ec624d07c36c" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
+		<workspace tipo="especifico" idIBM="d4b0e759-9557-4f5e-9049-fcc3472e5ea2" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
+		<workspace tipo="especifico" idIBM="41b1e6ba-3c27-468c-8de5-6539b03501c5" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,saber_numeros,saber_horarios,saber_ubicacion,out_of_scope_bank">BAFAQ</workspace>
 	</workspaces>
 	
 </conversacions>
