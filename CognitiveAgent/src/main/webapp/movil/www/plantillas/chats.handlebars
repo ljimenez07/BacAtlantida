@@ -173,17 +173,20 @@ $(function(){
 							});
 							
 							campoDeEntrada.attr("disabled", true);
+							if(estaReproduciendo)
+							{
+								colaDeReproduccion = new Array();
+								audios = new Array();
+								audioEnReproduccion.pause();
+								estaReproduciendo = false;
+							}
 							
 							callback = function(seEstaEjecutandoEnElCambioDeVista)
 							{
 								$(".app #{{pathDelServidor}}").html(Handlebars.templates.layout(pantallas["{{pathDelServidor}}"]));
 								bindClickeable();
-								if(estaReproduciendo)
-								{
-									audioEnReproduccion.pause();
-									estaReproduciendo = false;
-								}
-								reproducirCola();
+								
+								//reproducirCola();
 								if(seEstaEjecutandoEnElCambioDeVista != true)
 								{
 									debeEjecutarCallbackEnElCambioDeVista = false;

@@ -169,7 +169,9 @@ function reproducirAudioDeLaOferta(urlDelAudio, objetoOferta){
 }
 
 function terminoReproduccionOferta(){
-	ultimoObjetoOferta.removeClass("pause").addClass("play");
+	if(ultimoObjetoOferta != null){
+		ultimoObjetoOferta.removeClass("pause").addClass("play");
+	}
 	ultimoObjetoOferta = null;
 }
 
