@@ -100,6 +100,8 @@ public class MovilController {
 				usuario.setHeaderTokenKey(resultadosLogin[1]);
 				usuario.setHeaderToken(resultadosLogin[2]);
 				usuario.setResponseLogin(resultadosLogin[3]);
+				usuario.setCookie(resultadosLogin[4]);
+				
 				usuario.hizologinExitosaMente();
 				
 				Categorias categorias = usuarioDao.obtenerLasCategoriasDeUnUsuario(usuario);
@@ -139,10 +141,13 @@ public class MovilController {
 		{
 			usuario = new Usuario(sesion.getId());
 		}
-		
-		borrarTodasLasConversacionesDeUnCliente(sesion);
-		sesion.setAttribute(Usuario.LLAVE_EN_SESSION, null);
-		return new JSONObject().put("usuarioEstaLogueado", false).toString();
+		if(extraerDatos.logout(usuario.getHeaderTokenKey(), usuario.getHeaderToken(), usuario.getResponseLogin(), usuario.getCookie()))
+		{
+			borrarTodasLasConversacionesDeUnCliente(sesion);
+			sesion.setAttribute(Usuario.LLAVE_EN_SESSION, null);
+			return new JSONObject().put("usuarioEstaLogueado", false).toString();
+		}
+		return new JSONObject().put("usuarioEstaLogueado", true).toString();
 	}
 
 	//@CrossOrigin(origins = "*")

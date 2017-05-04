@@ -1292,7 +1292,7 @@ public class ExtraerDatosWebService {
 	
 	
 	public String[] login(String name, String clave){
-		String[] resultados = new String[4];
+		String[] resultados = new String[5];
 		resultados[0] = MensajesErrorConWebServices.ERROR_COMUNICACION;
 		try {
 			String requestBody = "{"+
@@ -1330,6 +1330,7 @@ public class ExtraerDatosWebService {
 					resultados[1] = headers.getValue("TokenKey");
 					resultados[2] = headers.getValue("x-csrf-token");
 					resultados[3] = json.get("d").toString();
+					resultados[4] = headers.getValues("Set-Cookie").get(0);
 					
 					System.out.println(headers.getValue("TokenKey"));
 					System.out.println(headers.getValue("x-csrf-token"));
@@ -1353,11 +1354,12 @@ public class ExtraerDatosWebService {
 		return resultados;
 	}
 	
-	public boolean logout(String tokenKey, String token, String requestBody){
+	public boolean logout(String tokenKey, String token, String requestBody, String cookie){
 		boolean logueado = false;
 		try {
 				
 			requestBody = requestBody.replace("\\", "");
+			System.out.println(tokenKey);
 			System.out.println(requestBody);
 			String response = 
 					given().
@@ -1365,6 +1367,7 @@ public class ExtraerDatosWebService {
 					header("Accept", "application/json").
 					header("TokenKey", tokenKey).
 					header("x-csrf-token", token).
+					header("Cookie", cookie).
 					body(requestBody).
 					post(logout).
 					andReturn().

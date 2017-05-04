@@ -25,6 +25,7 @@ public class Usuario implements Serializable
 	private String headerTokenKey = "";
 	private String headerToken = "";
 	private String responseLogin = "";
+	private String cookie = "";
 	
 	protected Usuario(){}
 	
@@ -133,6 +134,13 @@ public class Usuario implements Serializable
 	public void setResponseLogin(String responseLogin) {
 		this.responseLogin = responseLogin;
 	}
-	
+
+	public String getCookie() {
+		return cookie;
+	}
+
+	public void setCookie(String cookie) {
+		this.cookie = cookie;
+	}
 }
 
