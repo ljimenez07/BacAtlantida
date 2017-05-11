@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-MPXB6S');</script>
+	<!-- End Google Tag Manager -->
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="msapplication-tap-highlight" content="no">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/custom.css">
+	<title>Agente Cognitivo</title>
+</head>
+<body onload="onLoad()" class="bck-red">
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPXB6S"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+	<div class="app">
+		<div id="offline" class="fade in show">
+			<div class="container" style="height: 100%;">
+				<div class="row" style="height: 30px"></div>
+				<div class="row">
+					<div class="col-xs-12 text-center">
+						<img src="img/logo-BA-rojo.png">
+					</div>
+				</div>
+				<div class="row" style="height: 30px"></div>
+				<div class="row " style="color:white">
+					<div class="col-xs-12">
+						No posee conexi&oacute;n a Internet, por lo que no puede acceder a los servicios de la aplicaci&oacute;n
+					</div>
+				</div>
+				<div class="row" style="height: 30px"></div>
+				<div class="row">
+					<div class="col-xs-12 text-center">
+						<img class="center-block" src="img/cargar-50.png" onclick="regresar()">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	var dimensiones = new Object();
+	dimensiones.x = Math.min($("#contenedor-login").width(), 350);
+	dimensiones.y = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
+	$(".app #offline").height(dimensiones.y);
+
+	function regresar() {
+		window.location = "index.html";
+	}
+
+	document.addEventListener("online", regresar, false);
+
+	</script>
+</body>
+</html>

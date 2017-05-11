@@ -124,6 +124,7 @@
 
 	<script  type="text/javascript">
 	
+	
 	function onLoad()
 	{
 		document.addEventListener("deviceready", onDeviceReady, false);
@@ -155,7 +156,12 @@
 
 	document.addEventListener("backbutton", onBackKeyDown, false);
 	document.addEventListener("pause", onPause, false);
-
+	document.addEventListener("offline", onOffline, false);
+	
+	function onOffline(){
+		window.location = "offline.html";
+	}
+	
 	function onBackKeyDown(e)
 	{
 
@@ -358,6 +364,7 @@
 	{
 		if(estaLogueado)
 		{
+			validateSession = setInterval(session_checking, 60000);
 			$("#ofertas .contenedor-de-mensaje-bienvenida").html("<p><strong>¡Hola " + nombreUsuario + "!</strong></p><br>");
 			$("#ofertas .contenedor-de-ofertas").prepend('<div class="row"><div class="col-xs-12 text-center"><div class="top10">TOP 10</div><div class="beneficios">Sus mejores beneficios y ofertas</div><br></div</div>')
 		}
@@ -365,6 +372,7 @@
 
 	function bindClickeable()
 	{
+		minutosEnSesion = 0;
 		$(".clickable").off("click").on("click", function()
 		{
 			var before = $(this).data("before");
@@ -579,7 +587,7 @@
 
 	function quitarCarga()
 	{
-		if(contadorDeCarga > 0)
+		if(contadorDeCarga > 0)e
 		{
 			contadorDeCarga--;
 		}

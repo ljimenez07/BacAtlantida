@@ -18,6 +18,7 @@ cordova plugin add cordova-plugin-queries-schemes
 cordova plugin add cordova-plugin-x-socialsharing
 cordova plugin add cordova-plugin-whitelist
 cordova plugin add cordova-plugin-splashscreen
+cordova plugin add cordova-plugin-network-information
 
 xcopy "res" "platforms\android\res" /S /Y
 rd /S /Q platforms\android\res\android
