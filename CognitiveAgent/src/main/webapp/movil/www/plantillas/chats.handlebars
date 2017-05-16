@@ -2,7 +2,7 @@
 <div class="container contenedor-campo-de-entrada">
 	<div id="chat-id-container-{{pathDelServidor}}" class="row">
 		<div class="col-xs-10 col-sm-11">
-			<input placeholder="Escribe aquí" type="text" id="campoDeEntrada" class="form-control" >
+			<input placeholder="Escribe aquí" type="text" id="campoDeEntrada" class="form-control">
 		</div>
 		<div class="col-xs-2 col-sm-1 contenedor-centrado">
 			<div>
@@ -84,6 +84,17 @@ $(function(){
 			}
 		}
 		
+		document.getElementById("campoDeEntrada").addEventListener("input", detenerAudios);
+		
+		function detenerAudios(){
+			
+			colaDeReproduccion = new Array();
+			audios = new Array();
+			audioEnReproduccion.pause();
+			estaReproduciendo = false;
+			aunDebeEjecutarCallback = true;
+			
+		}
 		botonDeEnviarMensaje.click(function()
 		{
 			enviarAlServer({ textoAEnviar:campoDeEntrada.val() });
