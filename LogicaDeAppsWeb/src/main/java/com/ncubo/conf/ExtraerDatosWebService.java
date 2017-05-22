@@ -5,8 +5,8 @@ import static com.jayway.restassured.RestAssured.given;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,8 +19,6 @@ import com.jayway.restassured.path.xml.XmlPath;
 import com.jayway.restassured.path.xml.element.Node;
 import com.jayway.restassured.response.Headers;
 import com.jayway.restassured.response.Response;
-
-import scala.util.Random;
 
 @Component
 @ConfigurationProperties("webservicesBancoAtlantida")
@@ -269,11 +267,11 @@ public class ExtraerDatosWebService {
 						         "    <parametroAdicionalItem>"+
 						         " 			<!--You may enter the following 3 items in any order-->"+
 						         " 			<linea>0</linea>"+
-						         " 		�<!--Optional:-->"+
+						         " 		 <!--Optional:-->"+
 						         " 		<tipoRegistro>UAI</tipoRegistro>"+
-						         " 		�<!--Optional:-->"+
-						         " 		�<valor>%s</valor>"+
-						         " � </parametroAdicionalItem>"+
+						         " 		 <!--Optional:-->"+
+						         " 		 <valor>%s</valor>"+
+						         "   </parametroAdicionalItem>"+
 						         "   <parametroAdicionalItem>"+
 						         "     <linea>1</linea>"+
 						         "      <!--Optional:-->"+
@@ -409,9 +407,10 @@ public class ExtraerDatosWebService {
 	}
 	
 	public String[] obtenerMovimientos(String texto, String llaveSesion, String user, String tipoCuenta) throws ParseException{
+		
 		String[] arregloMovimientos = null;
+		
 		try{
-			
 			String requestBodySaldo = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:con=\"http://hn.infatlan.och/ws/ACD004/out/ConsultaSaldo\">"+
 					"<soapenv:Header/>"+
 						"<soapenv:Body>"+
@@ -453,13 +452,13 @@ public class ExtraerDatosWebService {
 						         "<parametroAdicionalColeccion>"+
 						         "   <!--Zero or more repetitions:-->"+
 						         "    <parametroAdicionalItem>"+
-						         "�		<!--You may enter the following 3 items in any order-->"+
-						         " 			�<linea>0</linea>"+
-						         " 	�<!--Optional:-->"+
-						         " 	�<tipoRegistro>UAI</tipoRegistro>"+
-						         " 	�<!--Optional:-->"+
-						         " 	�<valor>%s</valor>"+
-						         " 	� </parametroAdicionalItem>"+
+						         "		<!--You may enter the following 3 items in any order-->"+
+						         " 			<linea>0</linea>"+
+						         " 	<!--Optional:-->"+
+						         " 	<tipoRegistro>UAI</tipoRegistro>"+
+						         " 	<!--Optional:-->"+
+						         " 	<valor>%s</valor>"+
+						         " 	 </parametroAdicionalItem>"+
 						         "   <parametroAdicionalItem>"+
 						         "     <linea>1</linea>"+
 						         "      <!--Optional:-->"+
@@ -545,19 +544,15 @@ public class ExtraerDatosWebService {
 			NodeImpl consultaSaldo = body.get(0).get("MT_ConsultaSaldoResponse");
 			NodeImpl coleccion;
 			List<?> cuentas = null;
-			if(tipoCuenta.equals("2"))
-			{
+			if(tipoCuenta.equals("2")){
 				coleccion = consultaSaldo.getNode("Respuesta").getNode("productoColeccion").get("cuentaColeccion");
 				cuentas = coleccion.getList("cuentaItem");
 			}
 			
-			if(tipoCuenta.equals("4"))
-			{
+			if(tipoCuenta.equals("4")){
 				coleccion = consultaSaldo.getNode("Respuesta").getNode("productoColeccion").get("tarjetaColeccion");
 				cuentas = coleccion.getList("tarjetaItem");
 			}
-			
-			
 			
 			int tam = cuentas.size()*4+1;
 			
@@ -572,27 +567,30 @@ public class ExtraerDatosWebService {
 			{
 				NodeImpl nodoTarjeta = (NodeImpl) cuentas.get(s);
 				String cuenta = "";
-				if(tipoCuenta.equals("2"))
-				{
+				
+				if(tipoCuenta.equals("2")){
 					cuenta = nodoTarjeta.get("numeroCuenta").toString();
 					String ultimosDigitosCuenta = ultimosDigitos(cuenta);
 					String alias = nodoTarjeta.get("alias").toString();
-					if(!alias.equals("Alias no ingresado") && !alias.equals("N/A"))
+					if( ! alias.equals("Alias no ingresado") && !alias.equals("N/A"))
 						arregloMovimientos[i] = "Para la cuenta que termina en "+ultimosDigitosCuenta+"-"+alias+":";
-					else arregloMovimientos[i] = "Para la cuenta que termina en "+ultimosDigitosCuenta+":";
+					else 
+						arregloMovimientos[i] = "Para la cuenta que termina en "+ultimosDigitosCuenta+":";
 				}
-				if(tipoCuenta.equals("4"))
-				{
+				
+				if(tipoCuenta.equals("4")){
 					cuenta = nodoTarjeta.get("numeroTarjeta").toString();
 					String ultimosDigitosTarjeta = ultimosDigitos(cuenta);
 					String alias = nodoTarjeta.get("alias").toString();
-					if(!alias.equals("Alias no ingresado") && !alias.equals("N/A"))
+					if( ! alias.equals("Alias no ingresado") && !alias.equals("N/A"))
 						arregloMovimientos[i] = "Para la tarjeta que termina en "+ultimosDigitosTarjeta+"-"+alias+":";
-					else arregloMovimientos[i] = "Para la tarjeta que termina en "+ultimosDigitosTarjeta+":";
+					else 
+						arregloMovimientos[i] = "Para la tarjeta que termina en "+ultimosDigitosTarjeta+":";
 				}
 				
-				i++;
-					String requestBody = ""+
+				i ++;
+				
+				String requestBody = ""+
 					"<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:con=\"http://hn.infatlan.och/ws/ACD078/out/ConsultaMovimiento\">"+
 					"<soapenv:Header/>"+
 					"<soapenv:Body>"+
@@ -621,18 +619,21 @@ public class ExtraerDatosWebService {
 						"            <tipoCuenta>%s</tipoCuenta>"+
 						"            <numeroCuenta>%s</numeroCuenta>"+
 						"           <periodo>00</periodo>	"+
-						"            <fechaInicio></fechaInicio>	"+
-						"            <fechaFinal></fechaFinal>	"+
-						"            <tipoMonto></tipoMonto>	"+
+						"            <fechaInicio>%s</fechaInicio>	"+
+						"            <fechaFinal>%s</fechaFinal>	"+
+						"            <tipoMonto>*</tipoMonto>	"+
 						"           <monto>0</monto>		"+
-						"           <operacion></operacion>	"+
+						"           <operacion>****</operacion>	"+
 						"    </consultaMovimientoColeccion>	"+
 				      "</con:MT_ConsultaMovimiento>"+
 					"</soapenv:Body>"+
 				"</soapenv:Envelope>";
 				
-				
-				requestBody = String.format(requestBody, llaveSesion, user, tipoCuenta, cuenta);
+				DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+				Date date = new Date();
+		        String fechaActual = sdf.format(date).replace("/", "");
+		        
+				requestBody = String.format(requestBody, llaveSesion, user, tipoCuenta, cuenta, fechaActual, fechaActual);
 				String responseXMLMovimientos = 
 						given().
 						header("Content-Type", "text/xml;charset=UTF-8").
@@ -645,57 +646,88 @@ public class ExtraerDatosWebService {
 				
 				System.out.println(movimientos+" \n\t  "+requestBody+"	\n\t"+responseXMLMovimientos);
 				
-				
 				XmlPath xmlPathMovimientos = new XmlPath(responseXMLMovimientos).setRoot("Envelope");
 				NodeChildrenImpl bodyMovimientos = xmlPathMovimientos.get("Body");
 				NodeImpl movimientoResponse = bodyMovimientos.get(0).get("MT_ConsultaMovimientoResponse");
 				List<?> codigo = movimientoResponse.getNode("Respuesta").getNode("movimientoCuentaTarjetaColeccion").get("movimientoCuentaTarjetaItem");
 				
-				int last = codigo.size()-1;
+				int last = codigo.size() - 1;
 				int max = 4;
-				if(codigo.size() < 3)
-				{
+				if(codigo.size() < 3){
 					max = codigo.size()+1;
 				}
-				for(int j = 1; j < max ; j++)
-				{
+				
+				for(int j = 1; j < max ; j++){
+					
+					NodeImpl movimiento = (NodeImpl) codigo.get(last);
 					DateFormat formatoDeFechaInicial = new SimpleDateFormat("yyyyMMdd");
 					DateFormat formatoDeFechaFinal = new SimpleDateFormat("dd/MM/yyyy");
-					NodeImpl movimiento = (NodeImpl) codigo.get(last);
-					String fecha = formatoDeFechaFinal.format(formatoDeFechaInicial.parse(movimiento.get("fecha").toString()));
-					NodeImpl hora = movimiento.get("hora");
-					NodeImpl codigoTransaccion = movimiento.get("tipoTransaccion");
-					NodeImpl montoTransaccion = movimiento.get("montoTransaccion");
-					NodeImpl moneda = movimiento.get("moneda");
-					NodeImpl descripcion = movimiento.get("descripcion");
-					String nombreMoneda = "";
-					if(moneda.toString().equals("USD"))	{
-						nombreMoneda = "Dólares";
+					
+					if(tipoCuenta.equals("2")){
+						
+						String fecha = formatoDeFechaFinal.format(formatoDeFechaInicial.parse(movimiento.get("fecha").toString()));
+						NodeImpl hora = movimiento.get("hora");
+						NodeImpl codigoTransaccion = movimiento.get("tipoTransaccion");
+						NodeImpl montoTransaccion = movimiento.get("montoTransaccion");
+						NodeImpl moneda = movimiento.get("moneda");
+						NodeImpl descripcion = movimiento.get("descripcion");
+						
+						String nombreMoneda = "";
+						if(moneda.toString().equals("USD"))	{
+							nombreMoneda = "Dólares";
+						}
+						else if(moneda.toString().equals("EUR")){
+							nombreMoneda = "Euros";
+						}
+						else if(moneda.toString().equals("LPS")){
+							nombreMoneda = "Lempiras";
+						}
+						
+						if (codigoTransaccion.getValue().equals("5"))
+							arregloMovimientos[i] = "El día "+fecha+ " a las "+ hora + " se realizó un crédito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
+						else if(codigoTransaccion.getValue().equals("0"))
+							arregloMovimientos[i] = "El día "+fecha+ " a las "+ hora + " se realizó un débito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
+						else
+							arregloMovimientos[i] = "El día "+fecha+ " a las "+ hora + " se realizó un movimiento por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
+					}else{
+						
+						NodeImpl referenciaTarjeta = movimiento.get("referenciaTarjeta");
+						String fecha = movimiento.get("fechaConsumo").toString();
+						NodeImpl descripcion = movimiento.get("descripcionTarjeta");
+						
+						NodeImpl cargoLps = movimiento.get("cargoLps");
+						NodeImpl cargoUsd = movimiento.get("cargoUsd");
+						
+						String nombreMoneda = "";
+						String montoTransaccion = "0.0";
+						if(cargoUsd.toString().equals("000000000000000000"))	{
+							nombreMoneda = "Lempiras";
+							if( ! cargoLps.toString().equals("000000000000000000"))
+								montoTransaccion = cargoLps.toString();
+						}else{
+							nombreMoneda = "Dólares";
+							if( ! cargoUsd.toString().equals("000000000000000000"))
+								montoTransaccion = cargoUsd.toString();
+						}
+						
+						if(referenciaTarjeta.getValue().equals("2"))
+							arregloMovimientos[i] = "El día "+fecha+" se realizó un crédito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
+						else
+							arregloMovimientos[i] = "El día "+fecha+" se realizó un débito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
+						
 					}
-					if(moneda.toString().equals("EUR"))		
-					{
-						nombreMoneda = "Euros";
-					}
-					if(moneda.toString().equals("LPS"))		
-					{
-						nombreMoneda = "Lempiras";
-					}
-					if(codigoTransaccion.getValue().equals("5"))
-						arregloMovimientos[i] = "El día "+fecha+ " a las "+ hora + " se realizó un crédito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
-					if(codigoTransaccion.getValue().equals("0"))
-						arregloMovimientos[i] = "El día "+fecha+ " a las "+ hora + " se realizó un débito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
-					else
-						arregloMovimientos[i] = "El día "+fecha+ " a las "+ hora + " se realizó un movimiento por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
-					last--;
-					i++;
+					
+					last --;
+					i ++;
 				}
 				
-			}
-	}catch (Exception e) {
-		// TODO: handle exception
-		arregloMovimientos = new String [1];
-		arregloMovimientos[0] = MensajesErrorConWebServices.ERROR_CONSULTA_MOVIMIENTOS;
-	}
+		}
+		}catch (Exception e) {
+			// TODO: handle exception
+			arregloMovimientos = new String [1];
+			arregloMovimientos[0] = MensajesErrorConWebServices.ERROR_CONSULTA_MOVIMIENTOS;
+		}
+		
 		return arregloMovimientos;
 	}
 	
@@ -744,12 +776,12 @@ public class ExtraerDatosWebService {
 						         "<parametroAdicionalColeccion>"+
 						         "   <!--Zero or more repetitions:-->"+
 						         "    <parametroAdicionalItem>"+
-						         " 	�<!--You may enter the following 3 items in any order-->"+
+						         " 	<!--You may enter the following 3 items in any order-->"+
 						         " 	<linea>0</linea>"+
 						         " 	<!--Optional:-->"+
-						         " 	�<tipoRegistro>UAI</tipoRegistro>"+
+						         " 	<tipoRegistro>UAI</tipoRegistro>"+
 						         " 	<!--Optional:-->"+
-						         " 	�<valor>%s</valor>"+
+						         " 	 <valor>%s</valor>"+
 						         " 	 </parametroAdicionalItem>"+
 						         "   <parametroAdicionalItem>"+
 						         "     <linea>1</linea>"+
@@ -1189,8 +1221,8 @@ public class ExtraerDatosWebService {
 				         "<parametroAdicionalColeccion>"+
 				         "   <!--Zero or more repetitions:-->"+
 				         "    <parametroAdicionalItem>"+
-				         " 	�<!--You may enter the following 3 items in any order-->"+
-				         "	�<linea>0</linea>"+
+				         " 	 <!--You may enter the following 3 items in any order-->"+
+				         "	 <linea>0</linea>"+
 				         " 	<!--Optional:-->"+
 				         "	<tipoRegistro>UAI</tipoRegistro>"+
 				         "	<!--Optional:-->"+
