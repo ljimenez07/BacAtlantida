@@ -157,6 +157,11 @@
 	document.addEventListener("backbutton", onBackKeyDown, false);
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("offline", onOffline, false);
+	document.addEventListener("click", seEstaUsandoLaApp, false);
+	
+	function seEstaUsandoLaApp(){
+		minutosEnSesion = 0;
+	}
 	
 	function onOffline(){
 		window.location = "offline.html";
@@ -596,11 +601,10 @@
 		}
 	}
 	
-	
 	function session_checking()
 	{
 		minutosEnSesion ++;
-		if(minutosEnSesion==6){
+		if(minutosEnSesion == 6){
 			ajax({
 				url: serverDomain + "/movil/logout",
 				debeEvaluarSesion: false,
