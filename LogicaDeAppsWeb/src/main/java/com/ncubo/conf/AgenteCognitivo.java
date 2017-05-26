@@ -196,6 +196,168 @@ public class AgenteCognitivo
 						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaINTIBUCALAESPERANZA");
 						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
 					}
+					
+					else if(departamento.contains("Cortés") && ciudad.contains("San Pedro Sula")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaCORTÉSSANPEDROSULA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Cortés") && ciudad.contains("La Lima")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaCORTÉSLALIMA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Cortés") && ciudad.contains("Villanueva")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaCORTÉSVILLANUEVA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Cortés") && ciudad.contains("Choloma")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaCORTÉSCHOLOMA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Cortés") && ciudad.contains("San Francisco de Yojoa")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaCORTÉSSANFRANCISCODEYOJOA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Cortés") && ciudad.contains("San Francisco de Yojoa")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaCORTÉSSANFRANCISCODEYOJOA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Santa Bárbara") && ciudad.contains("Las Vegas")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaSANTABÁRBARALASVEGAS");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Cortés") && ciudad.contains("Santa cruz de Yojoa")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaCORTÉSSANTACRUZDEYOJOA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Cortés") && ciudad.contains("Puerto Cortés")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaCORTÉSPUERTOCORTÉS");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Yoro") && ciudad.contains("El Progreso")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaYOROELPROGRESO");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Atlantida") && ciudad.contains("Tela")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaATLANTIDATELA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Yoro") && ciudad.contains("Yoro")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaYOROYORO");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Yoro") && ciudad.contains("Victoria")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaYOROVICTORIA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Santa Bárbara") && ciudad.contains("Santa Bárbara")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaSANTABÁRBARASANTABÁRBARA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Santa Bárbara") && ciudad.contains("Trinidad")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaSANTABÁRBARATRINIDAD");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Copán") && ciudad.contains("Santa Rosa de Copán")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaCOPÁNSANTAROSADECOPÁN");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Copán") && ciudad.contains("La Entrada")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaCOPÁNLAENTRADA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Lempira") && ciudad.contains("Lempira")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaLEMPIRALEMPIRA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Copán") && ciudad.contains("Copan Ruinas")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaCOPÁNCOPANRUINAS");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Lempira") && ciudad.contains("Gracias")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaLEMPIRAGRACIAS");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Ocotepeque") && ciudad.contains("Ocotepeque")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaOCOTEPEQUEOCOTEPEQUE");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					
+					else if(departamento.contains("Atlantida") && ciudad.contains("La Ceiba")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaATLANTIDALACEIBA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Islas de la Bahía") && ciudad.contains("Guanaja")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaISLASDELABAHÍAGUANAJA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Islas de la Bahía") && ciudad.contains("Roatan")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaISLASDELABAHÍAROATAN");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Gracias a Dios") && ciudad.contains("Puerto Lempira")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaGRACIASADIOSPUERTOLEMPIRA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Islas de la Bahía") && ciudad.contains("Utila")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaISLASDELABAHÍAUTILA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Yoro") && ciudad.contains("Olanchito")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaYOROOLANCHITO");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Yoro") && ciudad.contains("Olanchito")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaYOROOLANCHITO");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Colón") && ciudad.contains("Tocoa")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaCOLÓNTOCOA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Colón") && ciudad.contains("Sabá")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaCOLÓNSABÁ");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Colón") && ciudad.contains("Sonaguera")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaCOLÓNSONAGUERA");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					else if(departamento.contains("Colón") && ciudad.contains("Trujillo")){
+						resupuesta.add(respuestaDeWatson);
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaCOLÓNTRUJILLO");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
 					else{
 						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("noHayAgenciasParaMostrar");
 						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
