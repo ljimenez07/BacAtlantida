@@ -714,7 +714,6 @@ public class ExtraerDatosWebService {
 							arregloMovimientos[i] = "El día "+fecha+" se realizó un crédito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
 						else
 							arregloMovimientos[i] = "El día "+fecha+" se realizó un débito por " + montoTransaccion + " " + nombreMoneda+" con el detalle "+descripcion+".";
-						
 					}
 					
 					last --;
