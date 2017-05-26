@@ -5,7 +5,7 @@ templates['layout'] = template({"1":function(container,depth0,helpers,partials,d
 },"3":function(container,depth0,helpers,partials,data) {
     return "				<div class=\"col-xs-3 contenedor-centrado\">\r\n					<div><span data-accion=\"atras\" class=\"header-back-icon clickable\" /></div>\r\n					<div><span data-accion=\"mostrar-menu\" class=\"header-menu-icon clickable\" /></div>\r\n				</div>\r\n				<div class=\"col-xs-6 contenedor-centrado\">\r\n					<div><img src=\"img/logo-header.png\" class=\"logo-header clickable\" data-href=\"ofertas\"></div>\r\n				</div>\r\n				<div class=\"col-xs-3 contenedor-boton-ingresar contenedor-centrado\">\r\n					<div data-href=\"login\" class=\"botonDeIngresar clickable text-center\">Iniciar Sesi&oacute;n</div>\r\n				</div>\r\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function";
+    var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function";
 
   return "<div class=\"panel panel-default\">\r\n	<div class=\"panel-heading\">\r\n		<div class=\"row bck-red\">\r\n"
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.ocultarBotonAtras : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")

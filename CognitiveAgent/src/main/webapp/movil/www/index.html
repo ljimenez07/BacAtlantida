@@ -125,8 +125,23 @@
 	<script  type="text/javascript">
 	
 	
-	function onLoad()
-	{
+	function mostrarMas(objeto){
+		var objetoEnJQuery = $(objeto);
+		var verMas = objetoEnJQuery.parent().parent().find("#verMas");
+		var estado = verMas.data("mostrado");
+		
+		if(estado == "true"){
+			verMas.data("mostrado", "false");
+			verMas.hide();
+			objetoEnJQuery.html("Mostrar más");
+		}else{
+			verMas.data("mostrado", "true");
+			verMas.show();
+			objetoEnJQuery.html("Mostrar menos");
+		}
+	}
+	
+	function onLoad(){
 		document.addEventListener("deviceready", onDeviceReady, false);
 	}
 
