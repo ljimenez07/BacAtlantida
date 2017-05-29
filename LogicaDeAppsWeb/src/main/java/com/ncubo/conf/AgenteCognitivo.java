@@ -22,6 +22,7 @@ import com.ncubo.chatbot.audiosXML.AudiosXML;
 import com.ncubo.chatbot.bitacora.HistoricosDeConversaciones;
 import com.ncubo.chatbot.partesDeLaConversacion.Frase;
 import com.ncubo.chatbot.partesDeLaConversacion.Salida;
+import com.ncubo.chatbot.partesDeLaConversacion.Sonido;
 import com.ncubo.chatbot.watson.TextToSpeechWatson;
 import com.ncubo.dao.UsuarioDao;
 import com.ncubo.data.Categorias;
@@ -323,7 +324,11 @@ public class AgenteCognitivo
 						}else{
 							Salida sinAutobancos = new Salida();
 							Frase fraseDeSinAutobanco = respuestaDeWatson.getTemaActual().buscarUnaFrase("mostrarSinAutobancos");
+							int idDelSonidoAUsar = idDelSonidoAUsar = Integer.valueOf(fraseDeSinAutobanco.texto().get(0));
+							Sonido sonido = fraseDeSinAutobanco.obtenerSonidoAUsar(idDelSonidoAUsar);
 							sinAutobancos.escribir(fraseDeSinAutobanco.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeSinAutobanco);
+							sinAutobancos.escribir(sonido,  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeSinAutobanco);
+
 							resupuesta.add(sinAutobancos);
 						}
 						resupuesta.add(miAgencia);
