@@ -324,7 +324,7 @@ public class AgenteCognitivo
 						}else{
 							Salida sinAutobancos = new Salida();
 							Frase fraseDeSinAutobanco = respuestaDeWatson.getTemaActual().buscarUnaFrase("mostrarSinAutobancos");
-							int idDelSonidoAUsar = idDelSonidoAUsar = Integer.valueOf(fraseDeSinAutobanco.texto().get(0));
+							int idDelSonidoAUsar = Integer.valueOf(fraseDeSinAutobanco.texto().get(0));
 							Sonido sonido = fraseDeSinAutobanco.obtenerSonidoAUsar(idDelSonidoAUsar);
 							sinAutobancos.escribir(fraseDeSinAutobanco.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeSinAutobanco);
 							sinAutobancos.escribir(sonido,  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeSinAutobanco);
