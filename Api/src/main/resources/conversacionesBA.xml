@@ -1232,7 +1232,7 @@
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
 			<curioso>¿En qué Departamento deseas buscar una agencia?</curioso>
-			<impertinente>Disculpa no existen agencias en ese Departamento, ¿me puedes volver a indicar tu consulta?.</impertinente>
+			<impertinente>Disculpa, no existen agencias en ese Departamento, ¿me puedes volver a indicar tu consulta?.</impertinente>
 			<meRindo>Perdón, pero no encontré ese Departamento.</meRindo>
 		</frases>		
 		<vinetas></vinetas>		
@@ -1256,7 +1256,17 @@
 		<mandatoria>true</mandatoria>				
 		<enVozAlta>true</enVozAlta>				
 		<frases>				
-			<frase>Estas son las Agencias y Autobancos disponibles en esta ciudad:</frase>		
+			<frase>Estos son los Autobancos y las Agencias disponibles en esta ciudad:</frase>		
+		</frases>				
+		<vinetas></vinetas>				
+	</conversacion>
+	
+	<conversacion id="mostrarSinAutobancos">				
+		<tipo>afirmativa</tipo>		
+		<mandatoria>true</mandatoria>				
+		<enVozAlta>true</enVozAlta>				
+		<frases>				
+			<frase>Estas son las Agencias disponibles en esta ciudad:</frase>		
 		</frases>				
 		<vinetas></vinetas>				
 	</conversacion>
@@ -3225,6 +3235,7 @@
 				<frase>preguntarPorDepartamento</frase>
 				<frase>preguntarPorCiudad</frase>
 				<frase>mostrarAgencias</frase>
+				<frase>mostrarSinAutobancos</frase>
 				<frase>noHayAgenciasParaMostrar</frase>
 				<frase>preguntarPorOtraConsulta</frase>
 				<frase>quiereHacerOtraConsulta</frase>
@@ -3246,6 +3257,7 @@
 				<frase>quiereHacerOtraConsulta</frase>
 				<frase>noQuiereHacerOtraConsulta</frase>
 				<frase>despedidaCerrarSesion</frase>
+				<frase>noEntendi</frase>
 			</frases>
 			<dependencias></dependencias>
 		</tema>
