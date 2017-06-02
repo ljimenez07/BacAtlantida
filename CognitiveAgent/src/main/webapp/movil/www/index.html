@@ -114,22 +114,29 @@
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
 
-	<script type="text/javascript" src="js/layout.handlebars.js"></script>
-	<script type="text/javascript" src="js/ofertas.handlebars.js"></script>
-	<script type="text/javascript" src="js/listaDeOfertas.handlebars.js"></script>
-	<script type="text/javascript" src="js/oferta.handlebars.js"></script>
-	<script type="text/javascript" src="js/chats.handlebars.js"></script>
-	<script type="text/javascript" src="js/popupconocerte.handlebars.js"></script>
-	<script type="text/javascript" src="js/login.handlebars.js"></script>
-
 	<script  type="text/javascript">
-	
-	
+
+	var plantillas = new Object();
+	var plantillasCargadas = 0;
+	var cargaronLasPlantillas = false;
+	var cargoOnLoad = false;
+
+	var listaDePlantillas = ["layout", "ofertas", "listaDeOfertas", "oferta", "chats", "popupconocerte", "login"];
+	$.each(listaDePlantillas, function(index, nombre) {
+		$.get("plantillas/" + nombre + ".handlebars", function(data) {
+			plantillas[nombre] = Handlebars.compile(data);
+			if(++plantillasCargadas == listaDePlantillas.length) {
+				cargaronLasPlantillas = true;
+				cargarPantallas();
+			}
+		});
+	});
+
 	function mostrarMas(objeto){
 		var objetoEnJQuery = $(objeto);
 		var verMas = objetoEnJQuery.parent().parent().find("#verMas");
 		var estado = verMas.data("mostrado");
-		
+
 		if(estado == "true"){
 			verMas.data("mostrado", "false");
 			verMas.hide();
@@ -140,8 +147,12 @@
 			objetoEnJQuery.html("Mostrar menos");
 		}
 	}
-	
-	function onLoad(){
+
+	function onLoad() {
+		cargoOnLoad = true;
+		cargarPantallas();
+		StatusBar.backgroundColorByHexString("#E92531");
+		StatusBar.styleLightContent();
 		document.addEventListener("deviceready", onDeviceReady, false);
 	}
 
@@ -173,18 +184,17 @@
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("offline", onOffline, false);
 	document.addEventListener("click", seEstaUsandoLaApp, false);
-	
+
 	function seEstaUsandoLaApp(){
 		minutosEnSesion = 0;
 	}
-	
+
 	function onOffline(){
 		window.location = "offline.html";
 	}
-	
+
 	function onBackKeyDown(e)
 	{
-
 		if( ordenDelasVistas.length > 0)
 		{
 			e.preventDefault();
@@ -245,7 +255,7 @@
 		if( ! audioOfertas.paused){
 			audioOfertas.pause();
 		}
-		
+
 		if(vistaActual == "chat" || vistaActual == "conocerte")
 		{
 			if(debeEjecutarCallbackEnElCambioDeVista)
@@ -329,20 +339,23 @@
 	}
 
 	var pantallas = new Object();
-	$(function()
+	function cargarPantallas()
 	{
+		if(!(cargoOnLoad && cargaronLasPlantillas)) {
+			return;
+		}
 		deviceType = (navigator.userAgent.match(/iPad/i))  == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i))  == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)) == "Android" ? "Android" : (navigator.userAgent.match(/BlackBerry/i)) == "BlackBerry" ? "BlackBerry" : "null";
-		pantallas["login"] = {title: "Login", body: Handlebars.templates.login(), DebajoDelPanel: ""};
+		pantallas["login"] = {title: "Login", body: plantillas.login(), DebajoDelPanel: ""};
 		var chat = {"pathDelServidor":"chat"};
-		pantallas["chat"] = {title: "Chat", body: '<div id="chat-id-'+chat.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(chat)};
+		pantallas["chat"] = {title: "Chat", body: '<div id="chat-id-'+chat.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: plantillas.chats(chat)};
 		var conocerte = {"pathDelServidor":"conocerte"};
-		pantallas["conocerte"] = {title: "Conocerte", body: '<div id="chat-id-'+conocerte.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: Handlebars.templates.chats(conocerte)};
+		pantallas["conocerte"] = {title: "Conocerte", body: '<div id="chat-id-'+conocerte.pathDelServidor+'"><ol id="conversation" class="chat" ></ol></div>', DebajoDelPanel: plantillas.chats(conocerte)};
 		pantallas["popupconocerte"] ={};
-		pantallas["ofertas"] = {title: "Inicio", body: Handlebars.templates.ofertas(), DebajoDelPanel: "", ocultarBotonAtras: true};
+		pantallas["ofertas"] = {title: "Inicio", body: plantillas.ofertas(), DebajoDelPanel: "", ocultarBotonAtras: true};
 		pantallas["oferta"] = {title: "Detalle de la oferta", body: "", DebajoDelPanel: ""};
 
 		cargarInformacionDelUsuario();
-	});
+	}
 
 	function cargarInformacionDelUsuario()
 	{
@@ -367,15 +380,15 @@
 
 	function inicializarPantallas()
 	{
-		$(".app #ofertas").html(Handlebars.templates.layout(pantallas["ofertas"]));
+		$(".app #ofertas").html(plantillas.layout(pantallas["ofertas"]));
 		if(vistaActual != "oferta")
 		{
-			$(".app #oferta").html(Handlebars.templates.layout(pantallas["oferta"]));
+			$(".app #oferta").html(plantillas.layout(pantallas["oferta"]));
 		}
-		$("#modales").append(Handlebars.templates.popupconocerte(pantallas["popupconocerte"]));
-		$(".app #chat").html(Handlebars.templates.layout(pantallas["chat"]));
-		$(".app #conocerte").html(Handlebars.templates.layout(pantallas["conocerte"]));
-		$(".app #login").html(Handlebars.templates.layout(pantallas["login"]));
+		$("#modales").append(plantillas.popupconocerte(pantallas["popupconocerte"]));
+		$(".app #chat").html(plantillas.layout(pantallas["chat"]));
+		$(".app #conocerte").html(plantillas.layout(pantallas["conocerte"]));
+		$(".app #login").html(plantillas.layout(pantallas["login"]));
 
 		bindClickeable();
 	}
@@ -615,7 +628,7 @@
 			$(".loader").hide();
 		}
 	}
-	
+
 	function session_checking()
 	{
 		minutosEnSesion ++;
@@ -633,7 +646,7 @@
 			});
 		}
 	}
-		
+
 	var minutosEnSesion = 0;
 	var validateSession;
 	</script>

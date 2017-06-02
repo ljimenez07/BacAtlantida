@@ -62,7 +62,7 @@ function bindAcciones()
 			url: serverDomain + "/ofertas/" + id,
 			done: function(data)
 			{
-				$("#oferta .panel-body").html(Handlebars.templates.oferta(data));
+				$("#oferta .panel-body").html(plantillas.oferta(data));
 	
 				$("#oferta .boton-escuchar-oferta").off("click").on("click", function()
 				{
@@ -234,7 +234,7 @@ function cargarOfertas()
 		done: function(data)
 		{
 			console.log(data.resultados.length);
-			$("#ofertas .contenedor-de-ofertas").append(Handlebars.templates.listaDeOfertas({ofertas: data.resultados}));
+			$("#ofertas .contenedor-de-ofertas").append(plantillas.listaDeOfertas({ofertas: data.resultados}));
 			bindAcciones();
 			bindClickeable();
 			agregarDominioAImagenes();

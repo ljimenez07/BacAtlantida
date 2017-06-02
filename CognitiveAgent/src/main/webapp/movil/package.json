@@ -1,0 +1,25 @@
+{
+    "name": "movil.bancatlan.abi",
+    "version": "1.0.4",
+    "displayName": "ABI Atlántida",
+    "cordova": {
+        "platforms": [
+            "ios"
+        ],
+        "plugins": {
+            "cordova-plugin-queries-schemes": {},
+            "cordova-plugin-splashscreen": {},
+            "cordova-plugin-whitelist": {},
+            "cordova-plugin-x-socialsharing": {},
+            "cordova-plugin-statusbar": {}
+        }
+    },
+    "dependencies": {
+        "cordova-ios": "~4.4.0",
+        "cordova-plugin-queries-schemes": "~0.1.1",
+        "cordova-plugin-splashscreen": "~4.0.3",
+        "cordova-plugin-statusbar": "^2.2.3",
+        "cordova-plugin-whitelist": "~1.3.1",
+        "cordova-plugin-x-socialsharing": "~5.1.3"
+    }
+}

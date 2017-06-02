@@ -18,6 +18,9 @@
         },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "movil.bancatlan.abi"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "movil.bancatlan.abi"
         }
     },
     "dependent_plugins": {}

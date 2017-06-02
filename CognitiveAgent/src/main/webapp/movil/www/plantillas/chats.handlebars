@@ -34,15 +34,12 @@ $(function(){
 		var debeReproducirElAudio = false;
 		var guardarCola = true;
 		var colaDeReproduccion = new Array();
-		
+
 		$("#chat-id-{{pathDelServidor}}").prepend('<div style="height: 57px" />');
-		if(deviceType != "iPad" && deviceType != "iPhone")
-		{
-			$("#chat-id-{{pathDelServidor}}").prepend('<div class="row contenedor-boton-escuchar-mensajes"><div class="col-xs-6"><div class="boton-escuchar-mensajes desactivado" /></div></div>');
-		}
-		
+		$("#chat-id-{{pathDelServidor}}").prepend('<div class="row contenedor-boton-escuchar-mensajes"><div class="col-xs-6"><div class="boton-escuchar-mensajes desactivado" /></div></div>');
+
 		var botonDeAudio = $("#chat-id-{{pathDelServidor}} .boton-escuchar-mensajes");
-		
+
 		$(botonDeAudio).click(function()
 		{
 			$(this).toggleClass("activado").toggleClass("desactivado");
@@ -65,12 +62,12 @@ $(function(){
 				aunDebeEjecutarCallback = true;
 			}
 		});
-		
+
 		if(vistaActual == "{{pathDelServidor}}" && !botonesDeAudio.{{pathDelServidor}})
 		{
 			botonDeAudio.click();
 		}
-		
+
 		function reproducirMensaje(pathDelAudio, callback)
 		{
 			if(debeReproducirElAudio)
@@ -83,29 +80,29 @@ $(function(){
 				colaDeReproduccion.push(pathDelAudio);
 			}
 		}
-		
+
 		document.getElementById("campoDeEntrada").addEventListener("input", detenerAudios);
-		
+
 		function detenerAudios(){
-			
+
 			colaDeReproduccion = new Array();
 			audios = new Array();
 			audioEnReproduccion.pause();
 			estaReproduciendo = false;
 			aunDebeEjecutarCallback = true;
-			
+
 		}
 		botonDeEnviarMensaje.click(function()
 		{
 			enviarAlServer({ textoAEnviar:campoDeEntrada.val() });
 		});
-		
+
 		resizeDiv();
-		
+
 		window.onresize = function(event) {
 			resizeDiv();
 		}
-		
+
 		function resizeDiv(muestraTeclado, callback)
 		{
 			if(callback != undefined)
@@ -113,7 +110,7 @@ $(function(){
 				callback();
 			}
 		}
-		
+
 		$('input').bind('focus', function()
 		{
 			resizeDiv(true, function(){
@@ -124,33 +121,33 @@ $(function(){
 						{
 							$("html, body").animate({scrollTop: tamanioEnPxDelScroll}, "fast");
 						}
-					
+
 					});
 			});
 		});
-		
+
 		$('input').bind('blur', function()
 		{
 			setTimeout(resizeDiv, 100);
 		});
-		
+
 		campoDeEntrada.keypress(function(e)
 		{
-			if(e.which == 13) 
+			if(e.which == 13)
 			{
 				enviarAlServer({ textoAEnviar:campoDeEntrada.val()});
 			}
 		});
-		
+
 		enviarAlServer({sePuedenEnviarVaciosAlServer:true, imprimirElMensajeQueElUsuarioEscribioEnLaConversacion:false, textoAEnviar:"Hola"});
-		
+
 		function enviarAlServer(param)
 		{
 			var sePuedenEnviarVaciosAlServer = ( param.sePuedenEnviarVaciosAlServer == undefined ) ? false : true;
 			var imprimirElMensajeQueElUsuarioEscribioEnLaConversacion = ( param.imprimirElMensajeQueElUsuarioEscribioEnLaConversacion == undefined ) ? true : false;
 			var textoAEnviar = param.textoAEnviar.trim();
-					
-			if(!sePuedenEnviarVaciosAlServer && textoAEnviar == "") return	
+
+			if(!sePuedenEnviarVaciosAlServer && textoAEnviar == "") return
 			if(imprimirElMensajeQueElUsuarioEscribioEnLaConversacion)
 			{
 				var fecha = new Date();
@@ -160,16 +157,16 @@ $(function(){
 				mensaje.find("time").html(hora);
 				campoDeEntrada.val("");
 				conversation.append(mensaje);
-				
+
 				moverScrollParaAbajoEnFuncionDelUltimoMensaje();
 			}
-			
+
 			ajax({
 				type: "POST",
 				contentType :"text/plain; charset=UTF-8",
 				url : serverDomain + "/conversacion/{{pathDelServidor}}/",
 				data : textoAEnviar,
-				done: function( data ) 
+				done: function( data )
 				{
 					var callback, callbackOnPlay;
 					var textos = data.textos;
@@ -183,7 +180,7 @@ $(function(){
 							ajax({
 								url: serverDomain + "/conversacion/borrarUnaConversacion"
 							});
-							
+
 							campoDeEntrada.attr("disabled", true);
 							if(estaReproduciendo)
 							{
@@ -192,12 +189,12 @@ $(function(){
 								audioEnReproduccion.pause();
 								estaReproduciendo = false;
 							}
-							
+
 							callback = function(seEstaEjecutandoEnElCambioDeVista)
 							{
-								$(".app #{{pathDelServidor}}").html(Handlebars.templates.layout(pantallas["{{pathDelServidor}}"]));
+								$(".app #{{pathDelServidor}}").html(plantillas.layout(pantallas["{{pathDelServidor}}"]));
 								bindClickeable();
-								
+
 								//reproducirCola();
 								if(seEstaEjecutandoEnElCambioDeVista != true)
 								{
@@ -205,14 +202,14 @@ $(function(){
 									cambiarVista("ofertas", true);
 								}
 							};
-							
+
 							aux1 = callback;
-							
+
 							callbackOnPlay = function()
 							{
 								aunDebeEjecutarCallback = false;
 							};
-						
+
 							for(var i = 0; i < textos.length; i++)
 							{
 								if(textos[i].audio != "")
@@ -220,7 +217,7 @@ $(function(){
 									indiceDelUltimoMensajeConAudio = i;
 								}
 							}
-							
+
 							if(!debeReproducirElAudio || indiceDelUltimoMensajeConAudio == undefined)
 							{
 								setTimeout(function()
@@ -242,10 +239,10 @@ $(function(){
 								estaReproduciendo = false;
 							}
 							callback = function(){};
-							
+
 							callbackOnPlay = function(){};
 						}
-						
+
 						var fecha = new Date();
 						var hora = dosDigitos(fecha.getHours()) + ":" + dosDigitos(fecha.getMinutes());
 						for(var i = 0; i < textos.length; i++)
@@ -253,32 +250,13 @@ $(function(){
 							var htmlAudio = "";
 							if(textos[i].audio != "")
 							{
-								if(deviceType == "iPad" || deviceType == "iPhone")
+								if(i == indiceDelUltimoMensajeConAudio)
 								{
-									aunDebeEjecutarCallback = true;
-									aux1 = function(){
-										aunDebeEjecutarCallback = true;
-										setTimeout(function()
-										{
-											if(aunDebeEjecutarCallback)
-											{
-												callback();
-											}
-										}, 3000);
-									};
-									aux2 = callbackOnPlay;
-									htmlAudio = '<br /><br /><audio controls preload="auto" onended="aux1()" onplay="aux2()"><source src="' + serverDomain + textos[i].audio + '"></audio>';
+									reproducirMensaje(textos[i].audio, callback);
 								}
 								else
 								{
-									if(i == indiceDelUltimoMensajeConAudio)
-									{
-										reproducirMensaje(textos[i].audio, callback);
-									}
-									else
-									{
-										reproducirMensaje(textos[i].audio);
-									}
+									reproducirMensaje(textos[i].audio);
 								}
 							}
 							var respuesta = mensajeDeAgente.clone();
@@ -290,7 +268,7 @@ $(function(){
 					}
 					moverScrollParaAbajoEnFuncionDelUltimoMensaje();
 				},
-				fail: function(XMLHttpRequest, textStatus, textStatus) 
+				fail: function(XMLHttpRequest, textStatus, textStatus)
 				{
 					console.log(JSON.stringify(XMLHttpRequest));
 					console.log(XMLHttpRequest.responseJSON.exception);
@@ -300,10 +278,10 @@ $(function(){
 					}
 				}
 			});
-			
+
 			ultimoMensajeEnviado = textoAEnviar;
 		}
-		
+
 		function moverScrollParaAbajoEnFuncionDelUltimoMensaje(callback)
 		{
 			window.scrollTo(0,chat.parent().parent()[0].scrollHeight);
@@ -312,12 +290,12 @@ $(function(){
 				callback();
 			}
 		}
-		
+
 		this.reenviarUltimoMensajeSinImprimirlo = function()
 		{
 			enviarAlServer({sePuedenEnviarVaciosAlServer:false, imprimirElMensajeQueElUsuarioEscribioEnLaConversacion:false, textoAEnviar:ultimoMensajeEnviado});
 		}
-		
+
 		function dosDigitos(numero)
 		{
 			return numero > 9 ? numero : "0" + numero
