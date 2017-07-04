@@ -1,5 +1,4 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!DOCTYPE xml>
 <plugin id="cordova-plugin-queries-schemes" version="0.1.1" xmlns="http://apache.org/cordova/ns/plugins/1.0">
     <name>App Queries Strings</name>
     <author>Rob Hilgefort (http://rob.hilgefort.me)</author>
@@ -12,12 +11,34 @@
     <engines>
         <engine name="cordova" version=">=3.0.0"/>
     </engines>
-	<config-file target="*-Info.plist" parent="UIStatusBarHidden">
-	  <true/>
-	</config-file>
     <platform name="ios">
-      <config-file target="*-Info.plist" parent="UIViewControllerBasedStatusBarAppearance">
-        <false/>
+      <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+        <array>
+          <string>fb</string>
+          <string>twitter</string>
+          <string>gplus</string>
+          <string>pintrest</string>
+          <string>instagram</string>
+          <string>youtube</string>
+          <string>vnd.youtube</string>
+          <string>yelp</string>
+          <string>linkedin</string>
+          <string>tumblr</string>
+          <string>whatsapp</string>
+          <string>snapchat</string>
+          <string>comgooglemaps</string>
+          <string>amazon</string>
+          <string>skype</string>
+          <string>googledrive</string>
+          <string>itms-apps</string>
+          <string>tel</string>
+          <string>mailto</string>
+          <string>uber</string>
+          <string>lyft</string>
+          <string>sumupmerchant</string>
+          <string>yammer</string>
+          <string>salesforce</string>
+        </array>
       </config-file>
     </platform>
 </plugin>
