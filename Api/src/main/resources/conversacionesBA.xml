@@ -435,7 +435,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<curioso>Tenemos a tu disposición estos tipos de cuenta de ahorros: @@br/@@@ @@br/@@@ -@@!Ahorro Atlántida. @@br/@@@ -@@!Ahorro Atlántida Kids. @@br/@@@ -@@!Ahorro Atlántida más Fácil. @@br/@@@ -@@!Ahorro Remesas. @@br/@@@ -@@!Ahorro Virtual Remesas.@@br/@@@ @@br/@@@ ¿Sobre cuál de estos productos necesitas información?</curioso>
+			<curioso>Tenemos a tu disposición estos tipos de cuenta de ahorros: @@br/@@@ @@br/@@@ -@@!Ahorro Atlántida. @@br/@@@ -@@!Ahorro Atlántida Kids. @@br/@@@ -@@!Ahorro Atlántida más Fácil Regular/Remesas. @@br/@@@ -@@!Ahorro Remesas. @@br/@@@ -@@!Ahorro Virtual Remesas.@@br/@@@ @@br/@@@ ¿Sobre cuál de estos productos necesitas información?</curioso>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -3090,6 +3090,19 @@
 				<frase>noQuiereHacerOtraConsulta</frase>
 				<frase>noEntendi</frase>
 				<frase>despedidaCerrarSesion</frase>
+				<frase>requisitosCuentaAhorrosLempiras</frase>
+				<frase>requisitosCuentaAhorrosEuros</frase>
+				<frase>requisitosCuentaAhorrosDolares</frase>
+				<frase>requisitosCuentaAhorrosKidsLempiras</frase>
+				<frase>requisitosCuentaAhorrosKidsDolares</frase>
+				<frase>cualMonedaAhorrosRemesas</frase>
+				<frase>requisitosCuentaAhorrosRemesasLempiras</frase>
+				<frase>requisitosCuentaAhorrosRemesasDolares</frase>
+				<frase>requisitosCuentaAhorrosVirtualRemesasDolares</frase>
+				<frase>requisitosCuentaAhorrosMasFacilLempiras</frase>
+				<frase>requisitosChequesPersona</frase>
+				<frase>cualCheques</frase>
+				<frase>cualCuenta</frase>
 			</frases>
 			<dependencias></dependencias>
 		</tema>
@@ -3118,6 +3131,19 @@
 				<frase>noQuiereHacerOtraConsulta</frase>
 				<frase>noEntendi</frase>
 				<frase>despedidaCerrarSesion</frase>
+				<frase>requisitosCuentaAhorrosLempiras</frase>
+				<frase>requisitosCuentaAhorrosEuros</frase>
+				<frase>requisitosCuentaAhorrosDolares</frase>
+				<frase>requisitosCuentaAhorrosKidsLempiras</frase>
+				<frase>requisitosCuentaAhorrosKidsDolares</frase>
+				<frase>cualMonedaAhorrosRemesas</frase>
+				<frase>requisitosCuentaAhorrosRemesasLempiras</frase>
+				<frase>requisitosCuentaAhorrosRemesasDolares</frase>
+				<frase>requisitosCuentaAhorrosVirtualRemesasDolares</frase>
+				<frase>requisitosCuentaAhorrosMasFacilLempiras</frase>
+				<frase>requisitosChequesPersona</frase>
+				<frase>cualCheques</frase>
+				<frase>cualCuenta</frase>
 			</frases>
 			<dependencias></dependencias>
 		</tema>
