@@ -435,7 +435,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<curioso>Tenemos a tu disposición estos tipos de cuenta de ahorros: @@br/@@@ @@br/@@@ 1)@@!Ahorro Atlántida. @@br/@@@ 2)@@!Ahorro Atlántida Kids. @@br/@@@ 3)@@!Ahorro Atlántida "U". @@br/@@@ 4)@@!Ahorro Remesas. @@br/@@@ 5)@@!Ahorro Virtual Remesas.@@br/@@@ @@br/@@@ ¿Sobre cuál de estos productos necesitas información?</curioso>
+			<curioso>Tenemos a tu disposición estos tipos de cuenta de ahorros: @@br/@@@ @@br/@@@ -@@!Ahorro Atlántida. @@br/@@@ -@@!Ahorro Atlántida Kids. @@br/@@@ -@@!Ahorro Atlántida más Fácil. @@br/@@@ -@@!Ahorro Remesas. @@br/@@@ -@@!Ahorro Virtual Remesas.@@br/@@@ @@br/@@@ ¿Sobre cuál de estos productos necesitas información?</curioso>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -475,7 +475,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>El monto inicial de una cuenta de ahorros es de 500 Lempiras.</frase>
+			<frase>El monto inicial de una cuenta de ahorros es de 1000 Lempiras.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -496,6 +496,16 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<frase>El monto inicial de una cuenta de ahorros es de 500 Euros.</frase>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
+	<conversacion id="montoInicialCuentaAhorrosMasFacilLempiras">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>El monto inicial de una cuenta de ahorros más Fácil es de 250 Lempiras.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -525,7 +535,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>El monto inicial de una cuenta de ahorros Remesas es de 100 Lempiras.</frase>
+			<frase>El monto inicial de una cuenta de ahorros Remesas es de 1000 Lempiras.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -555,7 +565,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Te cuento que el saldo mínimo para cuenta de ahorros es de 500 Lempiras, y no olvides que hay un cargo por 30 Lempiras en caso que no se cumpla ese mínimo.</frase>
+			<frase>Te cuento que el saldo mínimo para cuenta de ahorros es de 1000 Lempiras, y no olvides que hay un cargo por 50 Lempiras en caso que no se cumpla ese mínimo.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -576,6 +586,16 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<frase>Te cuento que el saldo mínimo para cuenta de ahorros es de 500 Euros, y no olvides que hay un cargo por 1 Euro en caso que no se cumpla ese mínimo.</frase>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
+	<conversacion id="saldoMinimoCuentaAhorrosMasFacilLempiras">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Te cuento que el saldo mínimo para cuenta de ahorros más Fácil es de 250 Lempiras, y no olvides que hay un cargo por 5 Lempiras en caso que no se cumpla ese mínimo y un cargo por mantener inactiva la cuenta de 50 Lempiras.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -605,7 +625,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Te cuento que el saldo mínimo para cuenta de ahorros Remesas es de 100 Lempiras, y no olvides que hay un cargo por 15 Lempiras en caso que no se cumpla ese mínimo.</frase>
+			<frase>Te cuento que el saldo mínimo para cuenta de ahorros Remesas es de 1000 Lempiras, y no olvides que hay un cargo por 50 Lempiras en caso que no se cumpla ese mínimo.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -635,7 +655,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para abrir una cuenta de ahorro debes: @@br/@@@ @@br/@@@ 1)@@!Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia o pasaporte. @@br/@@@2)@@!Completar la solicitud. @@br/@@@3)@@!Realizar el depósito inicial de 500 Lempiras. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorros es de 500 Lempiras, y no olvides que hay un cargo por 30 Lempiras en caso que no se cumpla ese mínimo.</frase>
+			<frase>Para abrir una cuenta de ahorro debes: @@br/@@@ @@br/@@@ 1)@@!Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia o pasaporte. @@br/@@@2)@@!Completar la solicitud. @@br/@@@3)@@!Realizar el depósito inicial de 1000 Lempiras. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorros es de 1000 Lempiras, y no olvides que hay un cargo por 50 Lempiras en caso que no se cumpla ese mínimo y un cargo por mantener inactiva la cuenta de 50 Lempiras.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -656,6 +676,16 @@
 		<enVozAlta>true</enVozAlta>
 		<frases>
 			<frase>Para abrir una cuenta de ahorro debes: @@br/@@@ @@br/@@@ 1)@@!Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia o pasaporte. @@br/@@@2)@@!Completar la solicitud. @@br/@@@3)@@!Realizar el depósito inicial de 100 Dólares. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorros es de 100 Dólares, y no olvides que hay un cargo por 1 Dólar en caso que no se cumpla ese mínimo.</frase>
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
+	<conversacion id="requisitosCuentaAhorrosMasFacilLempiras">
+		<tipo>afirmativa</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<frase>Para abrir una cuenta de ahorro más Fácil debes: @@br/@@@ @@br/@@@ 1)@@!Presentar original y fotocopia de tarjeta de Identidad o carnet de residencia o pasaporte. @@br/@@@2)@@!Completar la solicitud. @@br/@@@3)@@!Realizar el depósito inicial de 250 Lempiras. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorros más Fácil es de 250 Lempiras, y no olvides que hay un cargo por 5 Lempiras en caso que no se cumpla ese mínimo y un cargo por mantener inactiva la cuenta de 50 Lempiras.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -685,7 +715,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para abrir una cuenta de ahorro Remesas debes:  @@br/@@@ @@br/@@@ 1)@@!Completar la solicitud.  @@br/@@@ 2)@@!Contrato de autorización para crédito automático a cuenta, en caso que desees optar por este servicio.  @@br/@@@ 3)@@!Copia de un recibo de cobro reciente de Remesas Familiares (Máximo 6 meses). @@br/@@@ 4)@@!Monto de apertura de cuenta por 100 Lempiras. @@br/@@@ @@br/@@@ Para Hondureños:  @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de tarjeta de identidad.  @@br/@@@  @@br/@@@ Para Extranjeros: @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de carnet de residencia o pasaporte. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorro Remesas es de 100 Lempiras, en esta cuenta el cargo por saldo menor al mínimo es de 15 Lempiras.</frase>
+			<frase>Para abrir una cuenta de ahorro Remesas debes:  @@br/@@@ @@br/@@@ 1)@@!Completar la solicitud.  @@br/@@@ 2)@@!Contrato de autorización para crédito automático a cuenta, en caso que desees optar por este servicio.  @@br/@@@ 3)@@!Copia de un recibo de cobro reciente de Remesas Familiares (Máximo 6 meses). @@br/@@@ 4)@@!Monto de apertura de cuenta por 1000 Lempiras. @@br/@@@ @@br/@@@ Para Hondureños:  @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de tarjeta de identidad.  @@br/@@@  @@br/@@@ Para Extranjeros: @@br/@@@ @@br/@@@ 1)@@!Original y fotocopia de carnet de residencia o pasaporte. @@br/@@@ @@br/@@@ Recuerda que el saldo mínimo para cuenta de ahorro Remesas es de 1000 Lempiras, en esta cuenta el cargo por saldo menor al mínimo es de 50 Lempiras y un cargo por mantener inactiva la cuenta de 50 Lempiras.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -2809,6 +2839,7 @@
 				<frase>requisitosCuentaAhorrosDolares</frase>
 				<frase>requisitosCuentaAhorrosKidsLempiras</frase>
 				<frase>requisitosCuentaAhorrosKidsDolares</frase>
+				<frase>requisitosCuentaAhorrosMasFacilLempiras</frase>
 				<frase>requisitosClave</frase>
 				<frase>requisitosAOL</frase>
 				<frase>requisitosPrestamoPersonal</frase>
@@ -3010,6 +3041,7 @@
 				<frase>requisitosCuentaAhorrosRemesasLempiras</frase>
 				<frase>requisitosCuentaAhorrosRemesasDolares</frase>
 				<frase>requisitosCuentaAhorrosVirtualRemesasDolares</frase>
+				<frase>requisitosCuentaAhorrosMasFacilLempiras</frase>
 				<frase>requisitosChequesPersona</frase>
 				<frase>cualCheques</frase>
 				<frase>cualCuenta</frase>
@@ -3036,6 +3068,7 @@
 				<frase>montoInicialCuentaAhorrosRemesasLempiras</frase>
 				<frase>montoInicialCuentaAhorrosRemesasDolares</frase>
 				<frase>montoInicialCuentaAhorrosVirtualRemesasDolares</frase>
+				<frase>montoInicialCuentaAhorrosMasFacilLempiras</frase>
 				<frase>cualProducto</frase>
 				<frase>cualProductoAhorro</frase>
 				<frase>cualMonedaAhorros</frase>
@@ -3075,6 +3108,7 @@
 				<frase>saldoMinimoCuentaAhorrosRemesasLempiras</frase>
 				<frase>saldoMinimoCuentaAhorrosRemesasDolares</frase>
 				<frase>saldoMinimoCuentaAhorrosVirtualRemesasDolares</frase>
+				<frase>saldoMinimoCuentaAhorrosMasFacilLempiras</frase>
 				<frase>cualProducto</frase>
 				<frase>cualProductoAhorro</frase>
 				<frase>cualMonedaAhorros</frase>
@@ -3103,6 +3137,7 @@
 				<frase>requisitosCuentaAhorrosDolares</frase>
 				<frase>requisitosCuentaAhorrosKidsLempiras</frase>
 				<frase>requisitosCuentaAhorrosKidsDolares</frase>
+				<frase>requisitosCuentaAhorrosMasFacilLempiras</frase>
 				<frase>requisitosAOL</frase>
 				<frase>requisitosPrestamoPersonal</frase>
 				<frase>requisitosPrestamoVivienda</frase>
