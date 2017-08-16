@@ -3344,7 +3344,7 @@
 		<workspace tipo="general" idIBM="b6a9154b-882a-4c39-8c31-bc2bbe824dee" intencionesParaSeReferenciado="">BAIntents</workspace>
 		<workspace tipo="especifico" idIBM="d0e867ce-535d-4695-90a6-fe90d841045b" intencionesParaSeReferenciado="saldo,tasa_cambio,movimientos,disponible">BATemas</workspace>
 		<workspace tipo="especifico" idIBM="94f2b5c9-149b-404e-ae3c-cfd214ba7a53" intencionesParaSeReferenciado="">ConocerteGeneral</workspace>
-		<workspace tipo="especifico" idIBM="c390ff92-db55-41d3-9b12-b2513daf4019" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,out_of_scope_bank,quiereInfoAgencia">BAFAQ</workspace>
+		<workspace tipo="especifico" idIBM="609c17bc-1ee3-467d-9f23-0b9a449bd6d0" intencionesParaSeReferenciado="saldo_minimo,abrir_cuenta,precio,requisitos,reportar_extravio,ayuda_como,agradecimiento,out_of_scope_bank,quiereInfoAgencia">BAFAQ</workspace>
 	</workspaces>
  
 </conversacions>
