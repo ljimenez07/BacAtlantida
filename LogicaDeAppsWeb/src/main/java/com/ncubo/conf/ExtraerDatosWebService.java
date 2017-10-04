@@ -184,17 +184,17 @@ public class ExtraerDatosWebService {
 			String nuevoTexto = texto;
 			if(moneda.toString().equals("USD"))	{
 				nuevoTexto = nuevoTexto.replaceAll("%nmm", "Dólares");	 
-				saldo = nodoTarjeta.getNode("saldoColeccion").get("saldoActualUsd");
+				saldo = nodoTarjeta.getNode("saldoColeccion").get("saldoAlCorteUsd");
 			}
 			if(moneda.toString().equals("EUR"))		
 			{
 				nuevoTexto = nuevoTexto.replaceAll("%nmm", "Euros");	
-				saldo = nodoTarjeta.getNode("saldoColeccion").get("saldoActualEur");
+				saldo = nodoTarjeta.getNode("saldoColeccion").get("saldoAlCorteEur");
 			}
 			if(moneda.toString().equals("LPS"))		
 			{
 				nuevoTexto = nuevoTexto.replaceAll("%nmm", "Lempiras");	
-				saldo = nodoTarjeta.getNode("saldoColeccion").get("saldoActualLps");
+				saldo = nodoTarjeta.getNode("saldoColeccion").get("saldoAlCorteLps");
 			}
 			nuevoTexto = nuevoTexto.replaceAll("%stc", saldo.toString());	
 			NodeImpl alias = nodoTarjeta.get("alias");
