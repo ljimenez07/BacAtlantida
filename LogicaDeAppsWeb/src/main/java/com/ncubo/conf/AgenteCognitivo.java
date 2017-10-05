@@ -18,6 +18,8 @@ import org.springframework.stereotype.Component;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Entity;
 import com.ibm.watson.developer_cloud.conversation.v1.model.Intent;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
+import com.ncubo.agencias.Agencia;
+import com.ncubo.agencias.Agencias;
 import com.ncubo.chatbot.audiosXML.AudiosXML;
 import com.ncubo.chatbot.bitacora.HistoricosDeConversaciones;
 import com.ncubo.chatbot.partesDeLaConversacion.Frase;
@@ -46,7 +48,10 @@ public class AgenteCognitivo
 	private String pathXML;
 	private String urlPublicaAudios;
 	private String pathXMLAudios;
-
+	
+	@Autowired
+	private Agencias agencias;
+	
 	@Autowired
 	private UsuarioDao usuarioDao;
 	
@@ -92,6 +97,7 @@ public class AgenteCognitivo
 				if(respuestaDeWatson.obtenerLaRespuestaDeIBM().messageResponse().getContext() != null){
 					String departamento = "";
 					String ciudad = "";
+					String nombreDeAgencia = "";
 					
 					for(Map.Entry<String, Object> contexto : respuestaDeWatson.obtenerLaRespuestaDeIBM().messageResponse().getContext().entrySet()) {
 						if(contexto.getKey().equals("departamento")){
@@ -100,10 +106,20 @@ public class AgenteCognitivo
 						}else if(contexto.getKey().equals("ciudad")){
 							System.out.println("Contexto: "+contexto.getKey()+", valor: "+contexto.getValue()); 
 							ciudad = contexto.getValue().toString();
+						}else if(contexto.getKey().equals("nombreDeAgencia")){
+							System.out.println("Contexto: "+contexto.getKey()+", valor: "+contexto.getValue()); 
+							nombreDeAgencia = contexto.getValue().toString();
 						}
 					}
 					Salida miAgencia = new Salida();
 					Frase fraseDeLaAgencia = null;
+					
+					if( ! nombreDeAgencia.isEmpty()){
+						ArrayList<Agencia> misAgencias = agencias.buscarAgenciasPorNombre(nombreDeAgencia);
+					}else{
+						ArrayList<Agencia> misAgencias = agencias.buscarAgenciasPorCuidadYDepartamento(ciudad, departamento);
+					}
+					
 					if(departamento.contains("Francisco Morazán") && ciudad.contains("Tegucigalpa")){
 						hayAutobancos = true;
 						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaFRANCISCOMORAZÁNTEGUCIGALPA");
