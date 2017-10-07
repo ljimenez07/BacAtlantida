@@ -20,6 +20,7 @@ import com.ibm.watson.developer_cloud.conversation.v1.model.Intent;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 import com.ncubo.agencias.Agencia;
 import com.ncubo.agencias.Agencias;
+import com.ncubo.agencias.FraseDeLaAgencia;
 import com.ncubo.chatbot.audiosXML.AudiosXML;
 import com.ncubo.chatbot.bitacora.HistoricosDeConversaciones;
 import com.ncubo.chatbot.partesDeLaConversacion.Frase;
@@ -103,24 +104,45 @@ public class AgenteCognitivo
 						if(contexto.getKey().equals("departamento")){
 							System.out.println("Contexto: "+contexto.getKey()+", valor: "+contexto.getValue()); 
 							departamento = contexto.getValue().toString();
+							if(departamento.equals("nada")){
+								departamento = "";	
+							}
 						}else if(contexto.getKey().equals("ciudad")){
 							System.out.println("Contexto: "+contexto.getKey()+", valor: "+contexto.getValue()); 
 							ciudad = contexto.getValue().toString();
+							if(ciudad.equals("nada")){
+								ciudad = "";
+							}
 						}else if(contexto.getKey().equals("nombreDeAgencia")){
 							System.out.println("Contexto: "+contexto.getKey()+", valor: "+contexto.getValue()); 
 							nombreDeAgencia = contexto.getValue().toString();
+							if(nombreDeAgencia.equals("nada")){
+								nombreDeAgencia = "";
+							}
 						}
 					}
 					Salida miAgencia = new Salida();
 					Frase fraseDeLaAgencia = null;
+					FraseDeLaAgencia respuesta = null;
 					
-					if( ! nombreDeAgencia.isEmpty()){
-						ArrayList<Agencia> misAgencias = agencias.buscarAgenciasPorNombre(nombreDeAgencia);
+					if( ! nombreDeAgencia.isEmpty() ){
+						respuesta = agencias.buscarAgenciasPorNombre(nombreDeAgencia);
 					}else{
-						ArrayList<Agencia> misAgencias = agencias.buscarAgenciasPorCuidadYDepartamento(ciudad, departamento);
+						respuesta = agencias.buscarAgenciasPorCuidadYDepartamento(ciudad, departamento);
 					}
 					
-					if(departamento.contains("Francisco Morazán") && ciudad.contains("Tegucigalpa")){
+					fraseDeLaAgencia = respuesta.getFrase();
+					hayAutobancos = respuesta.isHayAutobancos();
+					hayAgencias = respuesta.isHayAgencias();
+					
+					if(fraseDeLaAgencia != null){
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}else{
+						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("noHayAgenciasParaMostrar");
+						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
+					}
+					
+					/*if(departamento.contains("Francisco Morazán") && ciudad.contains("Tegucigalpa")){
 						hayAutobancos = true;
 						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("agenciaFRANCISCOMORAZÁNTEGUCIGALPA");
 						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
@@ -332,7 +354,7 @@ public class AgenteCognitivo
 						hayAgencias = false;
 						fraseDeLaAgencia = respuestaDeWatson.getTemaActual().buscarUnaFrase("noHayAgenciasParaMostrar");
 						miAgencia.escribir(fraseDeLaAgencia.texto().get(1),  respuestaDeWatson.obtenerLaRespuestaDeIBM(), respuestaDeWatson.getTemaActual(), fraseDeLaAgencia);
-					}
+					}*/
 					
 					if(hayAgencias){
 						if(hayAutobancos){

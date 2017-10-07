@@ -7,19 +7,45 @@ public class Agencia {
 	private final String telefono;
 	private final String departamento;
 	private final String ciudad;
-	private String direccion;
+	private final String direccion;
 	private final HorariosDeAgencia horarios;
 	private final TipoDeAgencia tipoDeAgencia;
 	
 	public Agencia(String nombre, String telefono, String 
-			departamento, String ciudad, String tipo, HorariosDeAgencia horarios){
+			departamento, String ciudad, String tipo, HorariosDeAgencia horarios, String direccion){
 		
 		this.codigo = "";
-		this.direccion = "";
-		this.nombre = nombre;
-		this.telefono = telefono;
-		this.departamento = departamento;
-		this.ciudad = ciudad;
+		
+		if(direccion.equals("null")){
+			this.direccion = "";
+		}else{
+			this.direccion = direccion;
+		}
+		
+		if(nombre.equals("null")){
+			this.nombre = "";
+		}else{
+			this.nombre = nombre;
+		}
+		
+		if(telefono.equals("null")){
+			this.telefono = "";
+		}else{
+			this.telefono = telefono;
+		}
+		
+		if(departamento.equals("null")){
+			this.departamento = "";
+		}else{
+			this.departamento = departamento;
+		}
+		
+		if(ciudad.equals("null")){
+			this.ciudad = "";
+		}else{
+			this.ciudad = ciudad;
+		}
+		
 		this.horarios = horarios;
 		
 		if(tipo.contains("Agencia")){
@@ -30,7 +56,7 @@ public class Agencia {
 		
 	}
 	
-	private enum TipoDeAgencia {
+	public enum TipoDeAgencia {
 		AGENCIA, AUTOBANCO
 	}
 	
@@ -44,10 +70,6 @@ public class Agencia {
 
 	public String getDireccion() {
 		return direccion;
-	}
-
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
 	}
 
 	public String getNombre() {

@@ -70,12 +70,12 @@ public class AgenciasDao {
 			
 			while (rs.next()){
 				
-				HorariosDeAgencia horario = new HorariosDeAgencia(rs.getString(atributo.HORARIO_LV.toString()),
-						rs.getString(atributo.HORARIO_SABADO.toString()), rs.getString(atributo.HORARIO_DOMINGO.toString()));
+				HorariosDeAgencia horario = new HorariosDeAgencia(rs.getString(atributo.HORARIO_LV.toString())+"",
+						rs.getString(atributo.HORARIO_SABADO.toString())+"", rs.getString(atributo.HORARIO_DOMINGO.toString())+"");
 				
-				Agencia agencia = new Agencia(rs.getString(atributo.NOMBRE.toString()), rs.getString(atributo.TELEFONO.toString()), 
-						rs.getString(atributo.DEPARTAMENTO.toString()), rs.getString(atributo.CIUDAD.toString()), 
-						rs.getString(atributo.TIPO.toString()), horario);
+				Agencia agencia = new Agencia(rs.getString(atributo.NOMBRE.toString())+"", rs.getString(atributo.TELEFONO.toString())+"", 
+						rs.getString(atributo.DEPARTAMENTO.toString())+"", rs.getString(atributo.CIUDAD.toString())+"", 
+						rs.getString(atributo.TIPO.toString())+"", horario, rs.getString(atributo.DIRECCION.toString())+"");
 				
 				respuesta.add(agencia);
 			}
@@ -101,7 +101,7 @@ public class AgenciasDao {
 		if(nombre.isEmpty()){
 			return respuesta;
 		}else{
-			query += atributo.NOMBRE+" like '%"+ nombre +"'%;";
+			query += atributo.NOMBRE+" like '%"+ nombre +"%';";
 		}
 		
 		try {
@@ -110,12 +110,12 @@ public class AgenciasDao {
 			
 			while (rs.next()){
 				
-				HorariosDeAgencia horario = new HorariosDeAgencia(rs.getString(atributo.HORARIO_LV.toString()),
-						rs.getString(atributo.HORARIO_SABADO.toString()), rs.getString(atributo.HORARIO_DOMINGO.toString()));
+				HorariosDeAgencia horario = new HorariosDeAgencia(rs.getString(atributo.HORARIO_LV.toString())+"",
+						rs.getString(atributo.HORARIO_SABADO.toString())+"", rs.getString(atributo.HORARIO_DOMINGO.toString())+"");
 				
-				Agencia agencia = new Agencia(rs.getString(atributo.NOMBRE.toString()), rs.getString(atributo.TELEFONO.toString()), 
-						rs.getString(atributo.DEPARTAMENTO.toString()), rs.getString(atributo.CIUDAD.toString()), 
-						rs.getString(atributo.TIPO.toString()), horario);
+				Agencia agencia = new Agencia(rs.getString(atributo.NOMBRE.toString())+"", rs.getString(atributo.TELEFONO.toString())+"", 
+						rs.getString(atributo.DEPARTAMENTO.toString())+"", rs.getString(atributo.CIUDAD.toString())+"", 
+						rs.getString(atributo.TIPO.toString())+"", horario, rs.getString(atributo.DIRECCION.toString())+"");
 				
 				respuesta.add(agencia);
 			}

@@ -2,14 +2,30 @@ package com.ncubo.agencias;
 
 public class HorariosDeAgencia {
 
-	private final String horarioLV;
-	private final String horarioSabados;
-	private final String horarioDomingo;
+	private String horarioLV = "";
+	private String horarioSabados = "";
+	private String horarioDomingo = "";
 	
 	public HorariosDeAgencia(String horarioLV, String horarioSabados, String horarioDomingo){
-		this.horarioLV = horarioLV;
-		this.horarioSabados = horarioSabados;
-		this.horarioDomingo = horarioDomingo;
+		
+		if(horarioLV.equals("null")){
+			this.horarioLV = "";
+		}else{
+			this.horarioLV = horarioLV;
+		}
+		
+		if(horarioSabados.equals("null")){
+			this.horarioSabados = "";
+		}else{
+			this.horarioSabados = horarioSabados;
+		}
+		
+		if(horarioDomingo.equals("null")){
+			this.horarioDomingo = "";
+		}else{
+			this.horarioDomingo = horarioDomingo;
+		}
+	
 	}
 	
 	public String getHorarioLV() {
