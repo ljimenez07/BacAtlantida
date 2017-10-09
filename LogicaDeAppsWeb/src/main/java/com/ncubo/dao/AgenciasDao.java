@@ -46,7 +46,7 @@ public class AgenciasDao {
 		}
 	}
 	
-	public ArrayList<Agencia> buscarAgenciasPorCuidadYDepartamento(String ciudad, String departamento){
+	public ArrayList<Agencia> buscarAgenciasPorCuidadYDepartamento(String ciudad, String departamento, String operadorLogicoABuscar){
 		
 		ArrayList<Agencia> respuesta = new ArrayList<>();
 		
@@ -59,7 +59,7 @@ public class AgenciasDao {
 		}else if (ciudad.isEmpty() && ! departamento.isEmpty()){
 			query += atributo.DEPARTAMENTO+" like '%"+ departamento +"%';";
 		}else{
-			query += atributo.CIUDAD+" like '%"+ ciudad +"%' or " + atributo.DEPARTAMENTO+" like '%"+ departamento +"%';";
+			query += atributo.CIUDAD+" like '%"+ ciudad +"%' "+operadorLogicoABuscar+" " + atributo.DEPARTAMENTO+" like '%"+ departamento +"%';";
 		}
 		
 		try {

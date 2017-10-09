@@ -22,7 +22,11 @@ public class Agencias {
 	
 	public FraseDeLaAgencia buscarAgenciasPorCuidadYDepartamento(String ciudad, String departamento){
 		
-		ArrayList<Agencia> misAgencias = agencias.buscarAgenciasPorCuidadYDepartamento(ciudad, departamento);
+		ArrayList<Agencia> misAgencias = agencias.buscarAgenciasPorCuidadYDepartamento(ciudad, departamento, "and");
+		
+		if(misAgencias.isEmpty()){
+			misAgencias = agencias.buscarAgenciasPorCuidadYDepartamento(ciudad, departamento, "or");
+		}
 		
 		String textoDeLaFraseADecir = "";
 		
