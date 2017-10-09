@@ -59,7 +59,7 @@ public class Agencias {
 			return new FraseDeLaAgencia(frase, hayAgencias, hayAutobancos, misAgencias);
 		}
 		
-		return null;
+		return new FraseDeLaAgencia(null, hayAgencias, hayAutobancos, misAgencias);
 	}
 	
 	public FraseDeLaAgencia buscarAgenciasPorNombre(String nombre){
@@ -106,7 +106,7 @@ public class Agencias {
 		ArrayList<Agencia> respuesta = new ArrayList<Agencia>();
 		
 		for(Agencia laAgencia: misAgencias){
-			if(laAgencia.getTipoDeAgencia().equals(TipoDeAgencia.AGENCIA)){
+			if(laAgencia.getTipoDeAgencia().equals(TipoDeAgencia.AGENCIA) || laAgencia.getTipoDeAgencia().equals(TipoDeAgencia.VENTANILLA)){
 				respuesta.add(laAgencia);
 			}
 		}

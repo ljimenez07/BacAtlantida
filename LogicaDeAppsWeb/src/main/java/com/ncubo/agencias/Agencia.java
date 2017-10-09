@@ -50,14 +50,17 @@ public class Agencia {
 		
 		if(tipo.contains("Agencia")){
 			tipoDeAgencia = TipoDeAgencia.AGENCIA;
-		}else{
+		}else if(tipo.contains("Ventanilla")){
+			tipoDeAgencia = TipoDeAgencia.VENTANILLA;
+		}
+		else{
 			tipoDeAgencia = TipoDeAgencia.AUTOBANCO;
 		}
 		
 	}
 	
 	public enum TipoDeAgencia {
-		AGENCIA, AUTOBANCO
+		AGENCIA, AUTOBANCO,VENTANILLA
 	}
 	
 	public String getCodigo() {
