@@ -75,7 +75,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<curioso>¿Quieres el saldo de tu tarjeta de crédito?</curioso>
+			<curioso>¿Quieres el saldo al corte de tu tarjeta de crédito?</curioso>
 			<impertinente>Necesito saber si te refieres a la cuenta de ahorros o tarjeta de crédito.</impertinente>
 			<meRindo>Lo siento, no entendí. Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80 10 10. @@br/@@@ San Pedro Sula: 25 80 10 10. @@br/@@@ La Ceiba: 24 80 10 10.</meRindo>			
 		</frases>
@@ -98,8 +98,8 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>El saldo de tu tarjeta de crédito que termina en $%ntc es de $%stc $%nmm.</frase>
-			<frase>Tu saldo en $%nmm es de %stc en la tarjeta de crédito que termina en $%ntc.</frase>
+			<frase>El saldo al corte de tu tarjeta de crédito que termina en $%ntc es de $%stc $%nmm.</frase>
+			<frase>Tu saldo al corte en $%nmm es de %stc en la tarjeta de crédito que termina en $%ntc.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -1241,10 +1241,10 @@
 		<mandatoria>true</mandatoria>		
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
-			<curioso>¿En qué Departamento deseas buscar una agencia?</curioso>
-			<impertinente>Disculpa, no existen agencias en ese Departamento, ¿me puedes volver a indicar tu consulta?.</impertinente>
+			<curioso>¿En qué Departamento deseas buscar la agencia, autobanco o ventanilla?</curioso>
+			<impertinente>Disculpa, no existen agencias, autobancos o ventanillas en el Departamento que indicaste, ¿me puedes repetir el Departamento?.</impertinente>
 			<meRindo>Perdón, pero no encontré ese Departamento.</meRindo>
-		</frases>		
+		</frases>
 		<vinetas></vinetas>		
 	</conversacion>
 	
@@ -1254,7 +1254,7 @@
 		<enVozAlta>true</enVozAlta>		
 		<frases>		
 			<curioso>¿En qué ciudad necesitas buscar?</curioso>
-			<impertinente>Disculpa, pero de momento no tengo ninguna agencia en esa ciudad, puedes consultar otra.</impertinente>
+			<impertinente>Disculpa, pero de momento no tengo ninguna agencia, autobanco o ventanilla en esa ciudad, puedes consultar otra.</impertinente>
 			<impertinente>Disculpa, no existen agencias en esta ciudad, puedes consultar nuevamente.</impertinente>
 			<meRindo>Perdón, pero no encontré esa ciudad.</meRindo>
 		</frases>		
