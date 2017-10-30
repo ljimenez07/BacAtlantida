@@ -1,1 +1,1 @@
-var serverDomain = "https://abi.bancatlan.hn/Api"; 
+var serverDomain = "https://intranet.ncubo.com/ApiQA"; 
