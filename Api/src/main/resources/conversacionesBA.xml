@@ -397,9 +397,9 @@
 	<conversacion id="fueraDeContextoBanco">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
+		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>En estos momentos no tengo esa información disponible. @@br/@@@ Si deseas puedes consultar a los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase><![CDATA[ En estos momentos no tengo esa información disponible. <br/> Si deseas puedes consultar a los siguientes números telefónicos: <br/> <br/> Tegucigalpa: 2280-1010. <br/> San Pedro Sula: 2580-1010. <br/> La Ceiba: 2480-1010.]]> </frase>
 		</frases>
 		<vinetas></vinetas>
 		<when>
@@ -927,7 +927,7 @@
 		<mandatoria>true</mandatoria>
 		<enVozAlta>true</enVozAlta>
 		<frases>
-			<frase>Para adquirir una de nuestras tarjetas de crédito debes: @@br/@@@ @@br/@@@ Para asalariados:  @@br/@@@ @@br/@@@ 1)@@!Llenar la solicitud. @@br/@@@ 2)@@!Presentar constancia de trabajo (sueldo, antigüedad y cargo). @@br/@@@ 3)@@!Fotocopia de la tarjeta de identidad. @@br/@@@ 4)@@!Tiempo de laborar: en empresa privada 1 año y empresa pública 2 años. @@br/@@@ 5)@@!Fotocopia del último recibo de un servicio público. @@br/@@@ 6)@@!RTN. @@br/@@@ 7)@@!Ingresos desde 10 000 Lempiras. @@br/@@@@@br/@@@ Para comerciantes Individuales: @@br/@@@ @@br/@@@ 1)@@!Llenar la solicitud. @@br/@@@ 2)@@!Fotocopia de la tarjeta de identidad. @@br/@@@ 3)@@!Estados financieros recientes. @@br/@@@ 4)@@!Fotocopia del permiso de operación del negocio. @@br/@@@ 5)@@!Fotocopia del último recibo de un servicio público. @@br/@@@ 6)@@!RTN.</frase>
+			<frase>Para adquirir una de nuestras tarjetas de crédito debes: @@br/@@@ @@br/@@@ Para asalariados:  @@br/@@@ @@br/@@@ 1)@@!Llenar la solicitud. @@br/@@@ 2)@@!Presentar constancia de trabajo (sueldo, antigüedad y cargo). @@br/@@@ 3)@@!Fotocopia de la tarjeta de identidad. @@br/@@@ 4)@@!Tiempo de laborar: en empresa privada 1 año y empresa pública 2 años. @@br/@@@ 5)@@!Fotocopia del último recibo de un servicio público. @@br/@@@ 6)@@!RTN. @@br/@@@ 7)@@!Ingresos desde 10,000 Lempiras. @@br/@@@@@br/@@@ Para comerciantes Individuales: @@br/@@@ @@br/@@@ 1)@@!Llenar la solicitud. @@br/@@@ 2)@@!Fotocopia de la tarjeta de identidad. @@br/@@@ 3)@@!Estados financieros recientes. @@br/@@@ 4)@@!Fotocopia del permiso de operación del negocio. @@br/@@@ 5)@@!Fotocopia del último recibo de un servicio público. @@br/@@@ 6)@@!RTN.</frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
