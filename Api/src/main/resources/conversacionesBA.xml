@@ -70,6 +70,18 @@
 		<vinetas></vinetas>
 	</conversacion>
 
+	<conversacion id="preguntarSiQuiereSaldoDeAhorroOTarjeta">
+		<tipo>pregunta</tipo>
+		<mandatoria>true</mandatoria>
+		<enVozAlta>true</enVozAlta>
+		<frases>
+			<curioso>¿Qué saldo desea consultar? @@br/@@@ @@br/@@@ - Saldo de cuenta de ahorro @@br/@@@ - Saldo de Tarjeta de Crédito</curioso>
+			<impertinente>Necesito saber si te refieres a la cuenta de ahorros o tarjeta de crédito.</impertinente>
+			<meRindo>Lo siento, no entendí. Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80 10 10. @@br/@@@ San Pedro Sula: 25 80 10 10. @@br/@@@ La Ceiba: 24 80 10 10.</meRindo>			
+		</frases>
+		<vinetas></vinetas>
+	</conversacion>
+	
 	<conversacion id="quiereSaldoTarjetaCredito">
 		<tipo>pregunta</tipo>
 		<mandatoria>true</mandatoria>
@@ -1323,6 +1335,7 @@
 				</variable>
 			</variables>
 			<frases>
+				<frase>preguntarSiQuiereSaldoDeAhorroOTarjeta</frase>
 				<frase>quiereSaldoTarjetaCredito</frase>
 				<frase>quiereSaldoCuentaAhorros</frase>
 				<frase>saldoCredito</frase>
