@@ -130,9 +130,9 @@
 	<conversacion id="noTengoSaldo">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
+		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>Por ahora solo puedo proporcionar el saldo de tu tarjeta de crédito y de tu cuenta de ahorros. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase><![CDATA[Por ahora solo puedo proporcionar el saldo de tu tarjeta de crédito y de tu cuenta de ahorros. <br/> <br/> Para mayor información puedes consultar en los siguientes números telefónicos: <br/> <br/> Tegucigalpa: 2280-1010 <br/> San Pedro Sula: 2580-1010 <br/> La Ceiba: 2480-1010]]></frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -183,9 +183,9 @@
 	<conversacion id="noTengoDisponible">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
+		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>Por ahora solo puedo proporcionar el disponible de tu tarjeta de crédito y de tu cuenta de ahorros. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22  80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase><![CDATA[Por ahora solo puedo proporcionar el disponible de tu tarjeta de crédito y de tu cuenta de ahorros. <br/> <br/> Para mayor información puedes consultar en los siguientes números telefónicos: <br/> <br/> Tegucigalpa: 2280-1010 <br/> San Pedro Sula: 2580-1010 <br/> La Ceiba: 2480-1010]]></frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -298,10 +298,10 @@
 	<conversacion id="noQuiereHacerOtraConsulta">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
+		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>Fue un placer ayudarte, ¡que pases un feliz día! @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
-			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase><![CDATA[Fue un placer ayudarte, ¡que pases un feliz día! <br/> <br/> Para mayor información puedes consultar en los siguientes números telefónicos: <br/> <br/> Tegucigalpa: 2280-1010 <br/> San Pedro Sula: 2580-1010 <br/> La Ceiba: 2480-1010]]></frase>
+			<frase><![CDATA[Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día. <br/> <br/> Para mayor información puedes consultar en los siguientes números telefónicos: <br/> <br/> Tegucigalpa: 2280-1010 <br/> San Pedro Sula: 2580-1010 <br/> La Ceiba: 2480-1010]]></frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -309,12 +309,12 @@
 	<conversacion id="despedida">
 		<tipo>despedida</tipo>
 		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
+		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>Fue un placer ayudarte, ¡que pases un feliz día! @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
-			<frase>Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
-			<frase>Es un placer servirte y recuerde que te atendemos las 24 horas del día. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
-			<frase>Hasta luego, fue un gusto atenderte. @@br/@@@ @@br/@@@ Para mayor información puedes consultar en los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase><![CDATA[Fue un placer ayudarte, ¡que pases un feliz día! <br/> <br/> Para mayor información puedes consultar en los siguientes números telefónicos: <br/> <br/> Tegucigalpa: 2280-1010 <br/> San Pedro Sula: 2580-1010 <br/> La Ceiba: 2480-1010]]></frase>
+			<frase><![CDATA[Fue un gusto servirte, recuerda que te podemos atender las 24 horas del día. <br/> <br/> Para mayor información puedes consultar en los siguientes números telefónicos: <br/> <br/> Tegucigalpa: 2280-1010 <br/> San Pedro Sula: 2580-1010 <br/> La Ceiba: 2480-1010]]></frase>
+			<frase><![CDATA[Es un placer servirte y recuerde que te atendemos las 24 horas del día. <br/> <br/> Para mayor información puedes consultar en los siguientes números telefónicos: <br/> <br/> Tegucigalpa: 2280-1010 <br/> San Pedro Sula: 2580-1010 <br/> La Ceiba: 2480-1010]]></frase>
+			<frase><![CDATA[Hasta luego, fue un gusto atenderte. <br/> <br/> Para mayor información puedes consultar en los siguientes números telefónicos: <br/> <br/> Tegucigalpa: 2280-1010 <br/> San Pedro Sula: 2580-1010 <br/> La Ceiba: 2480-1010]]></frase>
 		</frases>
 		<vinetas></vinetas>
 		<when>
@@ -336,9 +336,9 @@
 	<conversacion id="numerosCallCenter">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
+		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>Nuestros números telefónicos son los siguientes: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase><![CDATA[Nuestros números telefónicos son los siguientes: <br/> <br/> Tegucigalpa: 2280-1010 <br/> San Pedro Sula: 2580-1010 <br/> La Ceiba: 2480-1010]]></frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -346,9 +346,9 @@
 	<conversacion id="numerosAgencias">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
+		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>En estos momentos no tengo los números telefónicos de nuestras agencias. @@br/@@@ Si deseas puedes llamar a los siguientes números telefónicos y consultar esa información: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase><![CDATA[En estos momentos no tengo los números telefónicos de nuestras agencias. <br/> Si deseas puedes llamar a los siguientes números telefónicos y consultar esa información: <br/> <br/> Tegucigalpa: 2280-1010 <br/> San Pedro Sula: 2580-1010 <br/> La Ceiba: 2480-1010]]></frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -356,9 +356,9 @@
 	<conversacion id="horariosAgencias">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
+		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>En estos momentos no tengo los horarios de atención de nuestras agencias. @@br/@@@ Si deseas puedes llamar a los siguientes números telefónicos y consultar esa información: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase><![CDATA[En estos momentos no tengo los horarios de atención de nuestras agencias. <br/> Si deseas puedes llamar a los siguientes números telefónicos y consultar esa información: <br/> <br/> Tegucigalpa: 2280-1010 <br/> San Pedro Sula: 2580-1010 <br/> La Ceiba: 2480-1010]]></frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -366,9 +366,9 @@
 	<conversacion id="ubicacionAgencias">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
+		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>En estos momentos no tengo la ubicación de nuestras agencias. @@br/@@@ Si deseas puedes llamar a los siguientes números telefónicos y consultar esa información: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase><![CDATA[En estos momentos no tengo la ubicación de nuestras agencias. <br/> Si deseas puedes llamar a los siguientes números telefónicos y consultar esa información: <br/> <br/> Tegucigalpa: 2280-1010 <br/> San Pedro Sula: 2580-1010 <br/> La Ceiba: 2480-1010]]></frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -376,9 +376,9 @@
 	<conversacion id="horariosAutoBanco">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
+		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>En estos momentos no tengo los horarios disponibles. @@br/@@@ Si deseas puedes llamar a los siguientes números telefónicos y consultar esa información: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase><![CDATA[En estos momentos no tengo los horarios disponibles. <br/> Si deseas puedes llamar a los siguientes números telefónicos y consultar esa información: <br/> <br/> Tegucigalpa: 2280-1010 <br/> San Pedro Sula: 2580-1010 <br/> La Ceiba: 2480-1010]]></frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -386,9 +386,9 @@
 	<conversacion id="ubicacionAutoBanco">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
+		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>En estos momentos no tengo información sobre ubicaciones disponible. @@br/@@@ Si deseas puedes llamar a los siguientes números telefónicos y consultar esa información: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10.</frase>
+			<frase><![CDATA[En estos momentos no tengo información sobre ubicaciones disponible. <br/> Si deseas puedes llamar a los siguientes números telefónicos y consultar esa información: <br/> <br/> Tegucigalpa: 2280-1010 <br/> San Pedro Sula: 2580-1010 <br/> La Ceiba: 2480-1010]]></frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -907,9 +907,9 @@
 	<conversacion id="reportarExtravio">
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>
-		<enVozAlta>true</enVozAlta>
+		<enVozAlta>false</enVozAlta>
 		<frases>
-			<frase>Lamento lo sucedido, si necesitas reportar el bloqueo, extravío o robo de tus tarjetas de crédito y débito, puedes llamar a los siguientes números telefónicos: @@br/@@@  @@br/@@@ En Honduras: @@br/@@@ 22 80 10 10. @@br/@@@ 25 80 10 10. @@br/@@@ 24 80 10 10. @@br/@@@ @@br/@@@ En el Extranjero:  @@br/@@@ @@br/@@@ VISA: @@br/@@@ USA y Canadá: 1 (800) 847 29 11. @@br/@@@ En otros países: (410) 581 01 20. @@br/@@@ @@br/@@@ MASTERCARD: @@br/@@@ USA y Canadá: 1 (800) 307 73 09. @@br/@@@ En otros países: 1 (636) 722 72 11. @@br/@@@ @@br/@@@ Recuerda que este servicio está disponible las 24 horas, los 7 días de la semana.</frase>
+			<frase><![CDATA[ Lamento lo sucedido, si necesitas reportar el bloqueo, extravío o robo de tus tarjetas de crédito y débito, puedes llamar a los siguientes números telefónicos: <br/> <br/> En Honduras: <br/> 2280-1010 <br/> 2580-1010 <br/> 2480-1010 <br/> <br/> En el Extranjero:  <br/> <br/> VISA: <br/> USA y Canadá: 1 (800) 847 29 11 <br/> En otros países: (410) 581-0120 <br/> <br/> MASTERCARD: <br/> USA y Canadá: 1 (800) 307-7309 <br/> En otros países: 1 (636) 722-7211 <br/> <br/> Recuerda que este servicio está disponible las 24 horas, los 7 días de la semana.]]></frase>
 		</frases>
 		<vinetas></vinetas>
 	</conversacion>
@@ -1180,10 +1180,10 @@
 	<conversacion id="noEntendiCallCenter">		
 		<tipo>afirmativa</tipo>
 		<mandatoria>true</mandatoria>		
-		<enVozAlta>true</enVozAlta>		
+		<enVozAlta>false</enVozAlta>		
 		<frases>
-			<frase>Perdón, no entiendo. @@br/@@@ @@br/@@@ Si gustas puedes llamar a para mayor ayuda: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10. @@br/@@@ @@br/@@@ ¿Hay algo más con lo que te pueda ayudar?</frase>
-			<frase>Creo que no entendí. @@br/@@@ @@br/@@@ Si necesitas más información puedes llamar a los siguientes números telefónicos: @@br/@@@ @@br/@@@ Tegucigalpa: 22 80  10  10. @@br/@@@ San Pedro Sula: 25  80  10  10. @@br/@@@ La Ceiba: 24  80  10  10. @@br/@@@ @@br/@@@ ¿Te gustaría que te ayude en algo más?</frase>	
+			<frase><![CDATA[Perdón, no entiendo. <br/> <br/> Si gustas puedes llamar a para mayor ayuda: <br/> <br/> Tegucigalpa: 2280-1010 <br/> San Pedro Sula: 2580-1010. <br/> La Ceiba: 2480-1010. <br/> <br/> ¿Hay algo más con lo que te pueda ayudar?]]></frase>
+			<frase><![CDATA[Creo que no entendí. <br/> <br/> Si necesitas más información puedes llamar a los siguientes números telefónicos: <br/> <br/> Tegucigalpa: 2280-1010 <br/> San Pedro Sula: 2580-1010 <br/> La Ceiba: 2480-1010 <br/> <br/> ¿Te gustaría que te ayude en algo más?]]></frase>	
 		</frases>		
 		<vinetas></vinetas>		
 	</conversacion>
