@@ -20,6 +20,9 @@ import com.jayway.restassured.path.xml.element.Node;
 import com.jayway.restassured.response.Headers;
 import com.jayway.restassured.response.Response;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 @Component
 @ConfigurationProperties("webservicesBancoAtlantida")
 public class ExtraerDatosWebService {
@@ -196,7 +199,8 @@ public class ExtraerDatosWebService {
 				nuevoTexto = nuevoTexto.replaceAll("%nmm", "Lempiras");	
 				saldo = nodoTarjeta.getNode("saldoColeccion").get("saldoAlCorteLps");
 			}
-			nuevoTexto = nuevoTexto.replaceAll("%stc", saldo.toString());	
+			
+			nuevoTexto = nuevoTexto.replaceAll("%stc", convertirValorDecimal(saldo.toString()));	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroTarjeta = nodoTarjeta.get("numeroTarjeta");
 			String ultimosDigitosTarjeta = ultimosDigitos(numeroTarjeta.toString());
@@ -207,8 +211,8 @@ public class ExtraerDatosWebService {
 			else if(! saldo.equals("0.0") &&  !alias.toString().equals("Alias no ingresado") && !alias.toString().equals("N/A"))
 				nuevoTexto = nuevoTexto.replaceAll("%ntc", ultimosDigitosTarjeta+"-"+alias.toString());
 			else nuevoTexto = nuevoTexto.replaceAll("%ntc", ultimosDigitosTarjeta);	
-
-				
+			
+			
 			saldos[s] = nuevoTexto;
 		}
 	}catch (Exception e) {
@@ -381,7 +385,8 @@ public class ExtraerDatosWebService {
 				nuevoTexto = nuevoTexto.replaceAll("%nmm", "Lempiras");	
 				saldo = nodoTarjeta.getNode("saldoColeccion").get("disponibleLps");
 			}
-			nuevoTexto = nuevoTexto.replaceAll("%cc", saldo.toString());	
+			
+			nuevoTexto = nuevoTexto.replaceAll("%cc", convertirValorDecimal(saldo.toString()));	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroCuenta = nodoTarjeta.get("numeroCuenta");
 			String ultimosDigitosCuenta = ultimosDigitos(numeroCuenta.toString());
@@ -668,7 +673,7 @@ public class ExtraerDatosWebService {
 						String fecha = formatoDeFechaFinal.format(formatoDeFechaInicial.parse(movimiento.get("fecha").toString()));
 						NodeImpl hora = movimiento.get("hora");
 						NodeImpl codigoTransaccion = movimiento.get("tipoTransaccion");
-						NodeImpl montoTransaccion = movimiento.get("montoTransaccion");
+						String montoTransaccion = convertirValorDecimal(movimiento.get("montoTransaccion").toString());
 						NodeImpl moneda = movimiento.get("moneda");
 						NodeImpl descripcion = movimiento.get("descripcion");
 						
@@ -700,14 +705,14 @@ public class ExtraerDatosWebService {
 						
 						String nombreMoneda = "";
 						String montoTransaccion = "0.0";
-						if(cargoUsd.toString().equals("000000000000000000"))	{
+						if(cargoUsd.toString().equals("000000000000000000") || cargoUsd.toString().equals("null"))	{
 							nombreMoneda = "Lempiras";
-							if( ! cargoLps.toString().equals("000000000000000000"))
-								montoTransaccion = cargoLps.toString();
+							if( ! cargoLps.toString().equals("000000000000000000") && ! cargoLps.toString().equals("null"))
+								montoTransaccion = convertirValorDecimal(cargoLps.toString());
 						}else{
 							nombreMoneda = "Dólares";
-							if( ! cargoUsd.toString().equals("000000000000000000"))
-								montoTransaccion = cargoUsd.toString();
+							if( ! cargoUsd.toString().equals("000000000000000000") && ! cargoUsd.toString().equals("null"))
+								montoTransaccion = convertirValorDecimal(cargoUsd.toString());
 						}
 						
 						if(referenciaTarjeta.getValue().equals("2"))
@@ -892,7 +897,8 @@ public class ExtraerDatosWebService {
 				nuevoTexto = nuevoTexto.replaceAll("%nmm", "Lempiras");	
 				saldo = nodoTarjeta.getNode("saldoColeccion").get("disponibleLps");
 			}
-			nuevoTexto = nuevoTexto.replaceAll("%stc", saldo.toString());	
+			
+			nuevoTexto = nuevoTexto.replaceAll("%stc", convertirValorDecimal(saldo.toString()));	
 			NodeImpl alias = nodoTarjeta.get("alias");
 			NodeImpl numeroTarjeta = nodoTarjeta.get("numeroTarjeta");
 			String ultimosDigitosTarjeta = ultimosDigitos(numeroTarjeta.toString());
@@ -1420,8 +1426,35 @@ public class ExtraerDatosWebService {
 		return logueado;
 	}
 
-	
-	public String ultimosDigitos(String numero){
+	private String convertirValorDecimal(String valor) {
+		
+		NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
+		String resultado = valor;
+		
+		try {
+			// returns the double value of this Double object
+		    Double valorEnDouble = new Double(resultado);
+		    double valorDouble = valorEnDouble.doubleValue();
+		    resultado = numberFormat.format(valorDouble).toString();
+		}catch(Exception e) {
+			resultado = valor;
+		}
+		
+		if( ! resultado.contains(".")) {
+			resultado += ".00";
+		}else {
+			try {
+				String decimales = ""+resultado.substring(resultado.length()-2, resultado.length());
+				if(decimales.contains(".")) {
+					resultado += "0";
+				}
+			}catch(Exception e) {}
+		}
+		
+		return resultado;
+	}
+
+	private String ultimosDigitos(String numero){
 		int longitudMascara = numero.length()-4;
 		return numero.substring(longitudMascara, numero.length());
 	}

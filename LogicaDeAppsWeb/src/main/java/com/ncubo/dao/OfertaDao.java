@@ -256,6 +256,7 @@ public class OfertaDao
 			+ "WHERE eliminada = 0 "
 			+ "AND estado = 1 "
 			+ "AND SQRT( POW( belleza.peso - ?, 2 ) + POW( hoteles.peso - ?, 2 ) + POW( restaurante.peso - ?, 2 ) ) <= ?"
+			+ "AND vigenciaDesde <= ? "
 			+ "AND vigenciaHasta >= ? "
 			+ "ORDER BY fechaHoraRegistro "
 			+ "DESC LIMIT ?, 10;"; 
@@ -268,7 +269,8 @@ public class OfertaDao
 		stmt.setDouble(5, usuario.getCategorias().obtenerCategoriaDeRestaurante().getPeso());
 		stmt.setDouble(6, distanciaMaximaEntreLasCategoriasDeUsuarioyOfertas );
 		stmt.setDate(7, new Date(Calendar.getInstance().getTimeInMillis()));
-		stmt.setInt(8, indiceInicial.valorEntero() );
+		stmt.setDate(8, new Date(Calendar.getInstance().getTimeInMillis()));
+		stmt.setInt(9, indiceInicial.valorEntero() );
 		
 		ResultSet rs = stmt.executeQuery();
 		
