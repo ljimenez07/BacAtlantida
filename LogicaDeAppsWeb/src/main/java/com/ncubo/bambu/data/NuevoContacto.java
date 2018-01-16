@@ -2,12 +2,12 @@ package com.ncubo.bambu.data;
 
 public class NuevoContacto
 {
-	private String nombre;
-	private String apellidos;
-	private String correoElectronico;
-	private String telefono;
-	private String celular;
-	private String direccion;
+	public String nombre;
+	public String apellidos;
+	public String correoElectronico;
+	public String telefono;
+	public String celular;
+	public String direccion;
 	
 	public String obtenerNombre()
 	{

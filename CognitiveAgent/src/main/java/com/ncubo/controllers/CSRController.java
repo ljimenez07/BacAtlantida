@@ -262,6 +262,9 @@ public class CSRController
 	public ResponseEntity<?> crearContacto(@RequestBody NuevoContacto usuarioCandidato)
 	{
 		ResponseEntity respuesta = new ResponseEntity(HttpStatus.BAD_REQUEST);
+		System.out.println(usuarioCandidato.obtenerNombre());
+		Gson gson = new Gson();
+		System.out.println(gson.toJson(usuarioCandidato));
 		int idContacto = _contactos.crearContacto(usuarioCandidato, idUsuarioEnSesion);
 		if(idContacto > 0)
 		{
