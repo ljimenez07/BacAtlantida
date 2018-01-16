@@ -1,0 +1,67 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+  	    <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <base target="_parent" />
+		
+        <link rel="stylesheet" href="../bambu/public/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../bambu/public/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../bambu/public/css/bootstrap-select.min.css" />
+		<link rel="stylesheet" href="../bambu/public/css/bandejaDeMensajes.css" />
+		
+        <script src="../bambu/public/js/jquery-3.2.1.min.js"></script>
+		<script src="../bambu/public/js/bootstrap.bundle.min.js"></script>
+        <script src="../bambu/public/js/bootstrap-select.min.js"></script>
+	</head>
+	<body>
+      <div class="container-fluid">
+        <form method="post" action="#" id="formularioDeBandeja">
+          <div id="contenedorNuevoMensaje">
+            <div id="contenedorTitulo" class="row">
+              <div class="col-md-12 px-4">
+                <span class="estiloTituloPagina">Nuevo Mensaje</span>
+              </div>
+            </div>
+            <div id="contenedorCampos" class="row">
+              <div class="col-md-8 px-4">
+                <div class="card panel-default">
+                  <div class="card-body">
+                    <div class="row form-group">
+                      <label for="nombreCliente" class="col-md-3" >
+                        <span><b>Cliente:</b></span>
+                      </label>
+                      <div class="col-md-9" >
+                        <input id="nombreCliente" name="nombreCliente" type="text" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                      <label for="origen" class="col-md-3" >
+                        <span><b>Origen:</b></span>
+                      </label>
+                      <div class="col-md-9">
+                  		<select id="origen" name="origen" class="selectpicker" title="Seleccione..." data-none-selected-text="Nada seleccionado">
+                  			<option class="bs-title-option" value="">Seleccione...</option>
+                            <th:block th:each="origen : ${origenes}">
+                              <option th:value="${origen.idOrigen}" th:text="${origen.descripcionOrigen}"></option>
+                            </th:block>
+                  		</select>
+                      </div>
+                    </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+             <div id="contenedorBotonGuardar" class="row">
+               <div class="col-xs-12 btn-group-ls form-group mx-auto">
+                 <button id="btnGuardar" class="btn btn-default btn-primary" onclick="actualizarMensaje(); return false;">
+                   <span>Guardar</span>
+                 </button>
+                </div>
+             </div>
+           </div>
+        </form>
+      </div>
+	</body>
+
+</html>

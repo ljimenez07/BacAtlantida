@@ -357,7 +357,9 @@
 						<li role="presentation" th:classappend="${paginaActual == 'gestionDeOfertas'} OR ${paginaActual == 'insertarOferta'} ? 'active'"><a th:href="@{/BackOffice/gestionDeOfertas}">GESTIÓN DE OFERTAS</a></li>
 						<li role="presentation" th:classappend="${paginaActual == 'reaccionDeOfertas'} ? 'active'"><a th:href="@{/BackOffice/reaccionDeOfertas}">REACCIÓN DE OFERTAS</a></li>
 						<li role="presentation" th:classappend="${paginaActual == 'consultasRealizadas'} ? 'active'"><a th:href="@{/BackOffice/consultasRealizadas}">CONSULTAS REALIZADAS</a></li>
-					</ul>
+					    <li role="presentation" th:classappend="${paginaActual == 'bandejaDeMensajes'} ? 'active'"><a th:href="@{/BackOffice/bandejaDeMensajes}">BANDEJA DE MENSAJES</a></li>
+                        <li role="presentation" th:classappend="${paginaActual == 'asignarMensaje'} ? 'active'"><a th:href="@{/BackOffice/asignarMensaje}">ASIGNAR MENSAJE</a></li>
+                    </ul>
 				</div>
 			</div>
 		</nav>

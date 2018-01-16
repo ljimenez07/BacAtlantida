@@ -1,0 +1,119 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <base target="_parent" />
+    
+    <link rel="stylesheet" href="../../bambu/public/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../bambu/public/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../bambu/public/css/bootstrap-select.min.css" />
+    <link rel="stylesheet" href="../../bambu/public/css/datatables.min.css" />
+    <link rel="stylesheet" href="../../bambu/public/css/bandejaDeMensajes.css" />
+    
+    <script src="../../bambu/public/js/jquery-3.2.1.min.js" ></script>
+    <script src="../../bambu/public/js/bootstrap.bundle.min.js"></script>
+    <script src="../../bambu/public/js/bootstrap-select.min.js"></script>
+    <script src="../../bambu/public/js/datatables.min.js" ></script>
+    <script src="../../bambu/public/js/plantillasCallCenterHTML.js" ></script>
+    <script src="../../bambu/public/js/popup.js" ></script>
+    <script src="../../bambu/public/js/funcionesUtiles.js" ></script>
+    <script src="../../bambu/public/js/detalleMensaje.js" ></script>
+  </head>
+  <body>
+      <script type="text/javascript">
+      $(document).ready( function () {
+    	    $('#tablaDeTramitesActivos').DataTable({
+    	    	"language": {
+    	            "url": "../../bambu/public/json/Spanish.json"
+    	        }
+    	    });
+    	    $('#tablaDeTramitesFinalizados').DataTable({
+    	    	"language": {
+    	            "url": "../../bambu/public/json/Spanish.json"
+    	        }
+    	    });
+    	} );
+      </script>
+    <div id="divContenedorPopup"></div>
+      <div class="container-fluid">
+        <div id="contenedorTitulo" class="row">
+          <div class="col-md-12 px-4">
+            <span class="estiloTituloPagina">Seguimiento de mensajes</span>
+          </div>
+        </div>
+        <div id="contenedorDelPanel" class="row">
+          <div class="col-md-12 px-4">
+            <div class="card">
+              <div class="card-body">
+                <ul class="nav nav-tabs" id="tabs" role="tablist">
+                  <li class="nav-item">
+                    <a id="tab-mensaje" data-toggle="tab" class="nav-link active"
+                     href="#mensaje" aria-controls="mensaje" aria-selected="true">
+                     <i class="fa fa-envelope" aria-hidden="true"></i>
+                     Mensaje
+                     </a>
+                  </li>
+                  <li class="nav-item">
+                    <a id="tab-contacto" data-toggle="tab" class="nav-link"
+                     href="#contacto" aria-controls="contacto" aria-selected="false">
+                     <i class="fa fa-user" aria-hidden="true"></i>
+                     Contacto
+                     </a>
+                  </li>
+                  <li class="nav-item">
+                    <a id="tab-tramitesActivos" data-toggle="tab" class="nav-link"
+                     href="#tabTramitesActivos" aria-controls="tramitesActivos" aria-selected="false">
+                     <i class="fa fa-pencil" aria-hidden="true"></i>
+                     Tr&aacute;mites activos
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a id="tab-tramitesFinalizados" data-toggle="tab" class="nav-link"
+                     href="#tabTramitesFinalizados" aria-controls="tramitesFinalizados" aria-selected="false">
+                     <i class="fa fa-check" aria-hidden="true"></i>
+                     Tr&aacute;mites finalizados
+                     </a>
+                  </li>
+                  <li class="nav-item">
+                    <a id="tab-chatHistorico" data-toggle="tab" class="nav-link"
+                     href="#chatHistorico" aria-controls="chatHistorico" aria-selected="false">
+                     <i class="fa fa-clock-o" aria-hidden="true"></i>
+                     Chat hist&oacute;rico
+                    </a>
+                  </li>
+                </ul>
+                <div class="tab-content" id="contenidoDeLosTabs">
+                  <div class="tab-pane fade show active" id="mensaje" role="tabpanel" aria-labelledby="tab-mensaje" 
+                    th:include="fragments/bambu/tabDetallesDelMensaje :: contenedorTabDetallesDelMensaje">
+                  </div>
+                  <div class="tab-pane fade" id="contacto" role="tabpanel" aria-labelledby="tab-contacto" 
+                    th:include="fragments/bambu/tabDatosContacto :: contenedorDetalleDeMensaje">
+                  </div>
+                  <div class="tab-pane fade" role="tabpanel" id="tabTramitesActivos" aria-labelledby="tab-tramitesActivos">
+                    <br />
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-12" id="divContenedorTramitesPendientes"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="tabTramitesFinalizados" role="tabpanel" aria-labelledby="tab-tramitesActivos">
+                    <br />
+                    <div class="container-fluid" id="divContenedorTramitesProcesados">
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="chatHistorico" role="tabpanel" aria-labelledby="tab-chat">
+                    <div class="container agregar-padding-bottom">
+                      <!-- <iframe th:src="@{~/CognitiveAgent/BackOffice/iframeChatHistorico/}" 
+                       seamless="seamless" frameBorder="0" style="width:inherit;height:500px;"></iframe> -->
+                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+
+</html>

@@ -1,0 +1,239 @@
+body
+{
+	background-color: white;
+	font-family: "OpenSans", "Open Sans", Helvetica,"Droid Sans",Tahoma,Geneva,sans-serif !important;
+    font-size: 12px;
+}
+
+.estiloTituloPagina
+{
+	display: flex;
+    justify-content: center;
+    color: black;
+    height: 30px;
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+.contenedorBandejaMensajes{
+    border:0;
+    margin: 0;
+    min-height:400px;
+}
+
+.oculta-div {
+    display: none;
+}
+
+.btn-default, .btn-primary, .btn-group .btn-default[disabled], .btn-primary[disabled]:hover {
+    background-color: #E6E6E6;
+    border-color: #ccc;
+    color: black;
+}
+
+.btn-default:hover, .btn-primary:hover {
+    background-color: #22b14c !important;
+    border-color: #ccc !important;
+    color: white !important;
+}
+
+
+.form-control:focus {
+    border-color: #22b14c;
+}
+
+a:link, a:visited {
+    color: #22B14C;
+}
+
+label {
+	font-weigth: 700 !important;
+}
+
+.modal-content {
+	background-color: #D4FFDD;
+}
+
+.modal-title {
+	font-weight: 700;
+}
+
+.modal-footer, .modal-header {
+	justify-content: center;
+}
+
+/* Bandeja de entrada */
+
+.tab-pane .list-group-item:first-child {
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+.mensajeEnFila {
+    display: flex;
+    font-size: 13px;
+    margin-bottom: auto;
+    min-height: 40px;
+}
+
+.mensajeNuevo {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    animation-iteration-count: 3;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    font-weight: bolder;
+}
+
+.tab-pane .list-group .checkbox {
+    display: inline-block;
+    margin: 0px;
+}
+
+.tab-pane .list-group input[type="checkbox"] {
+    margin-top: 2px;
+}
+
+.tab-pane .list-group .fa {
+    margin-right: 5px;
+}
+
+.nav-tabs .fa:not(.no-margin) {
+    margin-right: 10px;
+}
+
+.text-muted {
+    font-size: 10px;
+}
+
+.badge {
+    background-color: #22b14c;
+	font-size: 12px;
+}
+
+.mensajeEnFila:hover {
+    border: 1px solid #22b14c;
+}
+
+.tab-pane .list-group .fa:hover {
+    color: #093;
+}
+
+.btn {
+	font-size: 13px;
+}
+
+/* Nuevo Mensaje */
+
+#contenedorCampos {
+	padding: 15px;
+}
+
+.bootstrap-select>.dropdown-toggle.bs-placeholder, 
+.bootstrap-select>.dropdown-toggle.bs-placeholder:hover, 
+.bootstrap-select>.dropdown-toggle.bs-placeholder:focus, 
+.bootstrap-select>.dropdown-toggle.bs-placeholder:active {
+	color: black;
+}
+
+/* Contactos */
+
+#listaDeFiltros {
+	height: 30px;
+}
+
+.encabezadoDeTablaDeContactos {
+	cursor: pointer;
+    white-space: nowrap;
+    padding: 4px 6px 5px;
+    border: 1px Solid #c0c0c0;
+    background: #D4FFDD;
+    overflow: hidden;
+    font-weight: normal;
+    text-align: center;
+}
+
+#tablaDeContactos th, #tablaDeContactos .lineaDeDatosDelContacto td {
+	padding: 3px 6px 4px;
+}
+
+#tablaDeContactos .lineaDeFiltros td{
+	padding: 2px;
+}
+
+#tablaDeContactos .filtroDeContactos input {
+	width: 100%;
+}
+
+#tablaDeContactos .linkEditar {
+	text-align: center;
+}
+
+#tablaDeContactos .dataDelContacto {
+	text-align: justify;
+}
+
+#tablaDeContactos .contenedorColorEmpresa {
+    width: 100%;
+    text-align: center;
+}
+
+.divColorEmpresa {
+    border-radius: 50px;
+    border-width: 10px;
+    border-style: solid;
+    height: 0px;
+    width: 0px;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    margin: 0px auto;
+}
+
+
+.page-item.active .page-link {
+    color: #FFFFFF;
+    border-color: #22B14C;
+    background-color: #22B14C;
+    text-decoration: none;
+    cursor: text;
+}
+
+.page-link:focus, .page-link:hover {
+    color: inherit;
+}
+
+.pagination a {
+	border: 0px;
+}
+
+.fa-arrow-circle-o-right, .fa-arrow-circle-o-left{
+	line-height: 0;
+	vertical-align: middle;
+}
+
+span.totalDeContactos {
+	vertical-align: text-bottom;
+	line-height: 0;
+}
+
+/* detalle de mensaje */
+
+.bootstrap-select button {
+	height: auto !important;
+}
+
+label.form-control {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.tablaDeTramites th{
+    border: 1px Solid #c0c0c0;
+    background: #D4FFDD !important;
+    text-align: center;
+}

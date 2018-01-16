@@ -1,0 +1,183 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <head>
+    <meta charset="UTF-8"></meta>
+  </head>
+  
+  <div class="container-fluid" id="contenedorDetalleDeMensaje" th:fragment="contenedorDetalleDeMensaje">
+    <br />
+    <script type="text/javascript">
+    /*<![CDATA[*/
+    	function cargarDatosDePersona() {
+            selectorNombre.val(usuarioAtendido.Nombre);
+            selectorApellidos.val(usuarioAtendido.Apellidos);
+            selectorEmail.val(usuarioAtendido.Email);
+            selectorTelefono.val(usuarioAtendido.TelefonoOficina);
+            selectorCelular.val(usuarioAtendido.TelefonoMovil);
+            selectorDireccion.val(usuarioAtendido.Direccion);
+    
+            ajustarFormatoDeFechas();
+            cargarDatosUsuarioEnTabResumenConfirmacion(usuarioAtendido);
+        }
+    
+        function ajustarFormatoDeFechas() {
+            if (usuarioAtendido.FechaCreacion != null) {
+                usuarioAtendido.FechaCreacion = fechaJS(usuarioAtendido.FechaCreacion);
+            }
+            if (usuarioAtendido.FechaModificacion != null) {
+                usuarioAtendido.FechaModificacion = fechaJS(usuarioAtendido.FechaModificacion);
+            }
+        }
+    
+        function crearObjetoUsuario() {
+            usuarioAtendido.Nombre = selectorNombre.val();
+            usuarioAtendido.Apellidos = selectorApellidos.val();
+            usuarioAtendido.Email = selectorEmail.val();
+            usuarioAtendido.TelefonoOficina = selectorTelefono.val();
+            usuarioAtendido.TelefonoMovil = selectorCelular.val();
+            usuarioAtendido.Direccion = selectorDireccion.val();
+        }
+    
+        function crearOActualizarContacto() {
+            crearObjetoUsuario();
+            var existeContacto = usuarioAtendido.IdContacto != null;
+            if (existeContacto) {
+                actualizarContacto();
+            }
+            else {
+                crearContacto();
+            }
+        }
+    
+        function crearContacto() {
+            crearObjetoUsuario();
+        	console.log(usuarioAtendido);
+            $.ajax({
+                type: "POST",
+                url: "../crearContacto",
+                data: JSON.stringify({ usuarioCandidato: usuarioAtendido }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (respuesta) {
+                    usuarioAtendido.IdContacto = respuesta.idContacto;
+                    $("#btnCrearOActualizarContacto span").text("Actualizar");
+                    mensajeDeAdvertencia = 'Contacto creado correctamente';
+                    mostrarPopup(mensajeDeAdvertencia);
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                    mensajeDeAdvertencia = 'Error al crear contacto';
+                    mostrarPopup(mensajeDeAdvertencia);
+                }
+            });
+        }
+    
+        function actualizarContacto() {
+            $.ajax({
+                type: "POST",
+                url: "../actualizarContacto",
+                data: JSON.stringify({ contacto: usuarioAtendido }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (respuesta) {
+                    mensajeDeAdvertencia = 'Contacto actualizado correctamente';
+                    mostrarPopup(mensajeDeAdvertencia);
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                    mensajeDeAdvertencia = 'Error al actualizar contacto';
+                    mostrarPopup(mensajeDeAdvertencia);
+                }
+            });
+        }
+    /*]]>*/
+    </script>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label for="txtNombre">
+              <b>Nombre:</b>
+            </label>
+          </div>
+          <div class="col-md-9">
+            <input type="text" class="form-control iptDatosContacto" id="txtNombre"
+              th:value="${contacto.obtenerNombre()}"
+              name="nombre" data-placement="top" data-content="" 
+              required="required" data-error="Campo requerido" />
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label for="txtCorreoElectronico">
+              <b>Correo electr&oacute;nico:</b>
+            </label>
+          </div>
+          <div class="col-md-9">
+            <input type="text" class="form-control iptDatosContacto" id="txtCorreoElectronico"
+                th:value="${contacto.obtenerEmail()}" name="correoElectronico" data-placement="top" data-content=""
+                required="required" data-error="Campo requerido" />
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label for="txtCelular">
+              <b>Celular:</b>
+            </label>
+          </div>
+          <div class="col-md-9">
+            <input type="text" class="form-control iptDatosContacto" id="txtCelular"
+               th:value="${contacto.obtenerCelular()}" name="celular" data-placement="top" data-content=""
+               required="required" data-error="Campo requerido" />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label for="txtApellidos">
+              <b>Apellidos:</b>
+            </label>
+          </div>
+          <div class="col-md-9">
+            <input type="text" class="form-control iptDatosContacto" id="txtApellidos"
+             th:value="${contacto.obtenerApellidos()}" name="apellidos" data-placement="top" 
+             data-content="" required="required" data-error="Campo requerido" />
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label for="txtTelefono">
+              <b>Tel&eacute;fono:</b>
+            </label>
+          </div>
+          <div class="col-md-9">
+            <input type="text" class="form-control iptDatosContacto" id="txtTelefono"
+             th:value="${contacto.obtenerTelefono()}" name="telefono" data-placement="top" data-content=""
+              required="required" data-error="Campo requerido" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <label for="txtDireccion">
+          <b>Direcci&oacute;n:</b>
+        </label>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-md-12">
+        <textarea class="form-control col-sm-12 iptDatosContacto" id="txaDireccion"
+         rows="4" cols="20" placeholder="" data-placement="top" data-content="" required="required"
+         data-error="Campo requerido" th:value="${contacto.obtenerDireccionEntrega()}"></textarea>
+      </div>
+    </div>
+    <div class="row">
+       <button th:if="${!contactoExiste}" id="btnCrearOActualizar"
+          class="btn btn-default btn-primary mx-auto" onclick="crearContacto();">Crear</button>
+       <button th:if="${contactoExiste}" id="btnCrearOActualizar"
+          class="btn btn-default btn-primary mx-auto" onclick="actualizarContacto();">Actualizar</button>
+    </div>
+  </div>
+
+</html>

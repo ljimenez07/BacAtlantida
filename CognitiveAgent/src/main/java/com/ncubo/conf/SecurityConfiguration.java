@@ -6,19 +6,30 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+//
+//import com.ncubo.cas.JwtAuthFilter;
+//import com.ncubo.cas.JwtAuthenticationProvider;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter 
 {
+//    @Autowired
+//    private JwtAuthFilter jwtAuthFilter;
+//    
+//	@Autowired
+//    private JwtAuthenticationProvider jwtAuthenticationProvider;
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception
 	{
 		http
-		.csrf().disable()
+		.csrf().disable() 
 		.authorizeRequests()
 		.antMatchers("/", "/archivossubidos/**").permitAll()
 		.antMatchers("/", "/BackOffice/**").hasRole("USER")
+		.antMatchers("/", "/activarToken/**").permitAll()
 		.antMatchers("/", "/index.html").permitAll()
 		.antMatchers("/", "/movil/**").permitAll()
 		.antMatchers("/", "/conversacion/**").permitAll()
@@ -26,6 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 		.antMatchers("/", "/ofertas").permitAll()
 		.antMatchers("/", "/reaccion/**").permitAll()
 		.antMatchers("/","/css/**").permitAll()
+		.antMatchers("/","/bambu/**").permitAll()
 		.antMatchers("/","/js/**").permitAll()
 		.antMatchers("/","/img/**").permitAll()
 		.antMatchers("/","/imagenes/**").permitAll()
@@ -33,6 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 		.antMatchers("/","/fonts/**").permitAll()
 		.anyRequest().authenticated()
 		.and()
+		//.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 		.formLogin()
 			.loginPage("/login")
 			.permitAll()
@@ -46,8 +59,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
 	{
-		auth
-			.inMemoryAuthentication()
-				.withUser("user").password("password").roles("USER");
+//		auth.authenticationProvider(jwtAuthenticationProvider);
+//		
+		auth.inMemoryAuthentication()
+				.withUser("user")
+				.password("password")
+				.roles("USER");
 	}
 }
