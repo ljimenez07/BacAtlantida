@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ncubo.bambu.data.Cotizacion;
@@ -17,6 +18,9 @@ import com.ncubo.db.ConexionALaDB;
 public class CotizacionDao
 {
 	private final static String NOMBRE_TABLA = "cotizacion";
+	
+	@Autowired
+	private PersistenciaBambu dao;
 	
 	private enum atributo
 	{
@@ -90,8 +94,7 @@ public class CotizacionDao
 				+ atributo.REGISTRO_BORRADO.toString() + " != true AND "
 				+ atributo.ID_ETAPA_COTIZACION.toString() + " = ?";
 		
-		final ConexionALaDB conALaDb = new ConexionALaDB("localhost:3306", "bambu", "root", "root");
-		final Connection con = conALaDb.openConBD();
+		final Connection con = dao.openConBD();
 		final PreparedStatement ps = con.prepareStatement(query);
 		ps.setInt(1, idClientePersona);
 		ps.setInt(2, etapa.getId());
@@ -152,7 +155,8 @@ public class CotizacionDao
 			cotizaciones.add(cotizacion);
 		}
 
-		conALaDb.closeConBD();
+		dao.closeConBD();
+		
 		return cotizaciones;
 	}
 }

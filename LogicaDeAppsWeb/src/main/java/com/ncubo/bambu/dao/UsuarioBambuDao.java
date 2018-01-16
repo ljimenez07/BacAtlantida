@@ -6,16 +6,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ncubo.bambu.data.UsuarioBambu;
-import com.ncubo.db.ConexionALaDB;
 
 @Component
 public class UsuarioBambuDao
 {
 	private final String NOMBRE_TABLA = "usuario";
 	private final static Logger LOG;
+	
+	@Autowired
+	private PersistenciaBambu dao;
 	
 	static
 	{
@@ -86,11 +89,10 @@ public class UsuarioBambuDao
 	{
 		String query = "SELECT * FROM " + NOMBRE_TABLA
 					+ " WHERE " + atributos.ID_USUARIO.toString()  + " = " + idUsuario; 
-		ConexionALaDB conALaDb = new ConexionALaDB("localhost:3306", "bambu", "root", "root");
 		UsuarioBambu usuario = null;
 		try
 		{
-			Connection con = conALaDb.openConBD();
+			Connection con = dao.openConBD();
 			ResultSet rs = con.createStatement().executeQuery(query);
 			
 			if(rs.next())
@@ -150,7 +152,7 @@ public class UsuarioBambuDao
 		{
 			try
 			{
-				conALaDb.closeConBD();
+				dao.closeConBD();
 			} 
 			catch (SQLException e)
 			{
@@ -166,11 +168,10 @@ public class UsuarioBambuDao
 		String query = "SELECT * FROM " + NOMBRE_TABLA
 				+ " where " + atributos.ID_FUNCION.toString() + " = " + idFuncion; 
 		
-		ConexionALaDB conALaDb = new ConexionALaDB("localhost:3306", "bambu", "root", "root");
 		Connection con;
 		try
 		{
-			con = conALaDb.openConBD();
+			con = dao.openConBD();
 			ResultSet rs = con.createStatement().executeQuery(query);
 
 			while(rs.next())
@@ -231,7 +232,7 @@ public class UsuarioBambuDao
 		{
 			try
 			{
-				conALaDb.closeConBD();
+				dao.closeConBD();
 			} 
 			catch (SQLException e)
 			{

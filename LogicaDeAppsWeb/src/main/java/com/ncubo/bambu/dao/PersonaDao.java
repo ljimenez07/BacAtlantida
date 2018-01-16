@@ -8,16 +8,19 @@ import java.sql.Statement;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ncubo.bambu.data.Tipo;
 import com.ncubo.bambu.data.Persona.Atributo;
-import com.ncubo.db.ConexionALaDB;
 
 public class PersonaDao
 {
 	
 	private final static Logger LOG;
 	private final static String NOMBRE_TABLA = "persona";
+	
+	@Autowired
+	private PersistenciaBambu dao;
 	
 	static
 	{
@@ -52,11 +55,10 @@ public class PersonaDao
 		}
 		query += ")";
 		System.out.println(query);
-		final ConexionALaDB conALaDb = new ConexionALaDB("localhost:3306", "bambu", "root", "root");
 		int idPersona = 0;
 		try
 		{
-			final Connection con = conALaDb.openConBD();
+			final Connection con = dao.openConBD();
 			final PreparedStatement statement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.executeUpdate();
 			final ResultSet rs = statement.getGeneratedKeys();
@@ -73,7 +75,7 @@ public class PersonaDao
 		{
 			try
 			{
-				conALaDb.closeConBD();
+				dao.closeConBD();
 			} catch (SQLException e)
 			{
 				LOG.error("Error", e);

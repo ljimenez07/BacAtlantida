@@ -6,16 +6,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ncubo.bambu.data.TokenDeAcceso;
-import com.ncubo.db.ConexionALaDB;
 
 @Component
 public class TokenDao
 {
 	private final static String NOMBRE_TABLA = "tokenblacklist";
 	private final static Logger LOG;
+	
+	@Autowired
+	private PersistenciaBambu dao;
 	
 	static
 	{
@@ -50,11 +53,10 @@ public class TokenDao
 				+ " FROM " + NOMBRE_TABLA
 				+ " WHERE " + atributo.TOKEN.toString() + " = ?";
 
-		final ConexionALaDB conALaDb = new ConexionALaDB("localhost:3306", "bambu", "root", "root");
 		boolean existe = false;
 		try
 		{
-			final Connection con = conALaDb.openConBD();
+			final Connection con = dao.openConBD();
 			final PreparedStatement ps = con.prepareStatement(query);
 			ps.setString(1, token);
 			final ResultSet rs = ps.executeQuery();
@@ -69,7 +71,7 @@ public class TokenDao
 		{
 			try
 			{
-				conALaDb.closeConBD();
+				dao.closeConBD();
 			} catch (SQLException e)
 			{
 				LOG.error("Error", e);
@@ -87,11 +89,10 @@ public class TokenDao
 				+ atributo.CANTIDAD_MAXIMA_DE_USOS.toString() + ") "
 				+ "VALUES (?, ?, ?, ?)";
 		
-		final ConexionALaDB conALaDb = new ConexionALaDB("localhost:3306", "bambu", "root", "root");
 		boolean guardado = false;
 		try
 		{
-			final Connection con = conALaDb.openConBD();
+			final Connection con = dao.openConBD();
 			final PreparedStatement ps = con.prepareStatement(query);
 			ps.setString(1, token);
 			ps.setString(2, fechaEmision.toString());
@@ -108,7 +109,7 @@ public class TokenDao
 		{
 			try
 			{
-				conALaDb.closeConBD();
+				dao.closeConBD();
 			} catch (SQLException e)
 			{
 				LOG.error("Error", e);
@@ -122,11 +123,10 @@ public class TokenDao
 		final String query = "SELECT * FROM " + NOMBRE_TABLA
 		+ " WHERE " + atributo.TOKEN.toString() + " = ?";
 
-		final ConexionALaDB conALaDb = new ConexionALaDB("localhost:3306", "bambu", "root", "root");
 		TokenDeAcceso tokenDeAcceso = null;
 		try
 		{
-			final Connection con = conALaDb.openConBD();
+			final Connection con = dao.openConBD();
 			final PreparedStatement ps = con.prepareStatement(query);
 			ps.setString(1, token);
 			final ResultSet rs = ps.executeQuery();
@@ -151,7 +151,7 @@ public class TokenDao
 		{
 			try
 			{
-				conALaDb.closeConBD();
+				dao.closeConBD();
 			}
 			catch(Exception e)
 			{
@@ -167,11 +167,10 @@ public class TokenDao
 				+ " SET " + atributo.VECES_UTILIZADO.toString() + " = (" + atributo.VECES_UTILIZADO + " + 1)"
 				+ " WHERE " + atributo.TOKEN.toString() + " = ?";
 		
-		final ConexionALaDB conALaDb = new ConexionALaDB("localhost:3306", "bambu", "root", "root");
 		boolean actualizado = false;
 		try
 		{
-			final Connection con = conALaDb.openConBD();
+			final Connection con = dao.openConBD();
 			final PreparedStatement ps = con.prepareStatement(query);
 			ps.setString(1, token);
 			final int result = ps.executeUpdate();
@@ -185,7 +184,7 @@ public class TokenDao
 		{
 			try
 			{
-				conALaDb.closeConBD();
+				dao.closeConBD();
 			} catch (SQLException e)
 			{
 				LOG.error("Error", e);

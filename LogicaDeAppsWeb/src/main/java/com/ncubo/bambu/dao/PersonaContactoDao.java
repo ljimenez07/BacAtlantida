@@ -8,18 +8,23 @@ import java.sql.Statement;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.ncubo.bambu.data.PersonaContacto;
 import com.ncubo.bambu.data.Tipo;
 import com.ncubo.bambu.data.PersonaContacto.atributo;
-import com.ncubo.db.ConexionALaDB;
 
+@Component
 public class PersonaContactoDao
 {
 
 	private final static Logger LOG;
 	private static final String NOMBRE_TABLA = "personacontacto";
 	private static final String TABLA_PERSONA = "persona";
+	
+	@Autowired
+	private PersistenciaBambu dao;
 	
 	static
 	{
@@ -46,8 +51,7 @@ public class PersonaContactoDao
 		final String query = "SELECT * FROM " + NOMBRE_TABLA
 				+ " WHERE " + PersonaContacto.atributo.ID_PERSONA.toString() + " = ?" ;
 		
-		final ConexionALaDB conALaDb = new ConexionALaDB("localhost:3306", "bambu", "root", "root");
-		final Connection con = conALaDb.openConBD();
+		final Connection con = dao.openConBD();
 		final PreparedStatement ps = con.prepareStatement(query);
 		ps.setInt(1, idPersona);
 		final ResultSet rs = ps.executeQuery();
@@ -62,7 +66,7 @@ public class PersonaContactoDao
 			contacto.establecerCelular(rs.getString(PersonaContacto.atributo.CELULAR.toString()));
 		}
 
-		conALaDb.closeConBD();
+		dao.closeConBD();
 		return contacto;
 	}
 	
@@ -72,8 +76,7 @@ public class PersonaContactoDao
 			+ " FROM " + NOMBRE_TABLA
 			+ " WHERE " + PersonaContacto.atributo.ID_PERSONA.toString() + " = ?";
 
-		final ConexionALaDB conALaDb = new ConexionALaDB("localhost:3306", "bambu", "root", "root");
-		final Connection con = conALaDb.openConBD();
+		final Connection con = dao.openConBD();
 		final PreparedStatement ps = con.prepareStatement(query);
 		ps.setInt(1, idPersona);
 		final ResultSet rs = ps.executeQuery();
@@ -87,7 +90,7 @@ public class PersonaContactoDao
 		{
 			count = 0;
 		}
-		conALaDb.closeConBD();
+		dao.closeConBD();
 		return count >= 1;
 	}
 
@@ -118,11 +121,10 @@ public class PersonaContactoDao
 		}
 		query += ")";
 		System.out.println(query);
-		final ConexionALaDB conALaDb = new ConexionALaDB("localhost:3306", "bambu", "root", "root");
 		int idPersona = 0;
 		try
 		{
-			final Connection con = conALaDb.openConBD();
+			final Connection con = dao.openConBD();
 			final PreparedStatement statement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.executeUpdate();
 			final ResultSet rs = statement.getGeneratedKeys();
@@ -139,7 +141,7 @@ public class PersonaContactoDao
 		{
 			try
 			{
-				conALaDb.closeConBD();
+				dao.closeConBD();
 			} catch (SQLException e)
 			{
 				LOG.error("Error", e);

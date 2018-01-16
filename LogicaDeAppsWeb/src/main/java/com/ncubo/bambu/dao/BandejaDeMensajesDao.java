@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ncubo.bambu.data.Empresa;
@@ -16,7 +17,6 @@ import com.ncubo.bambu.data.PersonaContacto;
 import com.ncubo.bambu.data.Tipo;
 import com.ncubo.bambu.data.BandejaDeMensaje.Atributo;
 import com.ncubo.bambu.util.Fecha;
-import com.ncubo.db.ConexionALaDB;
 
 @Component
 public class BandejaDeMensajesDao
@@ -26,6 +26,12 @@ public class BandejaDeMensajesDao
 	private final static String NOMBRE_TABLA_EMPRESA = "empresa";
 	
 	private final static Logger LOG;
+	
+	@Autowired
+	private PersistenciaBambu dao;
+	
+	@Autowired
+	private PersonaContactoDao personaContactoDao;
 	
 	static
 	{
@@ -49,11 +55,10 @@ public class BandejaDeMensajesDao
 				+ "left outer join " + NOMBRE_TABLA_USUARIO + " u1 on u1.idUsuario = b.idUsuarioEncargado "
 				+ "order by b.fechaModificacion desc";
 
-		ConexionALaDB conALaDb = new ConexionALaDB("localhost:3306", "bambu", "root", "root");
 		Connection con;
 		try
 		{
-			con = conALaDb.openConBD();
+			con = dao.openConBD();
 			ResultSet rs = con.createStatement().executeQuery(query);
 			
 			while (rs.next())
@@ -83,7 +88,7 @@ public class BandejaDeMensajesDao
 				mensajes.add(mensaje);
 			}
 
-			conALaDb.closeConBD();
+			dao.closeConBD();
 		} 
 		catch (Exception e)
 		{
@@ -93,7 +98,7 @@ public class BandejaDeMensajesDao
 		{
 			try
 			{
-				conALaDb.closeConBD();
+				dao.closeConBD();
 			} 
 			catch (SQLException e)
 			{
@@ -121,11 +126,10 @@ public class BandejaDeMensajesDao
 				+ "left outer join " + NOMBRE_TABLA_USUARIO + " u1 on u1.idUsuario = b.idUsuarioEncargado "
 				+ "where b.idBandejaMensaje = " + id;
 
-		ConexionALaDB conALaDb = new ConexionALaDB("localhost:3306", "bambu", "root", "root");
 		BandejaDeMensaje bandeja = null;
 		try
 		{
-			Connection con = conALaDb.openConBD();
+			Connection con = dao.openConBD();
 			ResultSet rs = con.createStatement().executeQuery(query);
 	
 			rs.next();
@@ -153,11 +157,11 @@ public class BandejaDeMensajesDao
 			empresa.establecerColor(rs.getString("color"));
 			
 			int idUsuarioCreador = rs.getInt("idUsuarioCreador");
-			PersonaContactoDao contactoDao = new PersonaContactoDao();
-			boolean existeContacto = contactoDao.existe(idUsuarioCreador);
+
+			boolean existeContacto = personaContactoDao.existe(idUsuarioCreador);
 			if(existeContacto)
 			{
-				PersonaContacto contacto = contactoDao.obtener(idUsuarioCreador);
+				PersonaContacto contacto = personaContactoDao.obtener(idUsuarioCreador);
 				bandeja.establecerContacto(contacto);
 			}
 			
@@ -171,7 +175,7 @@ public class BandejaDeMensajesDao
 		{
 			try
 			{
-				conALaDb.closeConBD();
+				dao.closeConBD();
 			} 
 			catch (SQLException e)
 			{
@@ -208,10 +212,10 @@ public class BandejaDeMensajesDao
 		}
 		
 		System.out.println(query);
-		ConexionALaDB conALaDb = new ConexionALaDB("localhost:3306", "bambu", "root", "root");
+		
 		try
 		{
-			final Connection con = conALaDb.openConBD();
+			final Connection con = dao.openConBD();
 			final Statement statement = con.createStatement();
 			final int result = statement.executeUpdate(query);
 			actualizado = result >= 1;
@@ -224,7 +228,7 @@ public class BandejaDeMensajesDao
 		{
 			try
 			{
-				conALaDb.closeConBD();
+				dao.closeConBD();
 			}
 			catch (SQLException e)
 			{

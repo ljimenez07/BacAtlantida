@@ -12,7 +12,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-
 @Component
 @PropertySource("classpath:application.properties")
 @ConfigurationProperties("mailer")
@@ -50,12 +49,6 @@ public class Mailer
 	public void setContrasenaRemitente(String contrasenaRemitente)
 	{
 		this.contrasenaRemitente = contrasenaRemitente;
-	}
-	
-	public Mailer()
-	{
-		setCorreoRemitente("rmoreno@testingsoft.com");
-		setContrasenaRemitente("iorix193");
 	}
 	
 	public boolean enviarCorreo(String correoDelDestinatario, String contenidoDelCorreo, 

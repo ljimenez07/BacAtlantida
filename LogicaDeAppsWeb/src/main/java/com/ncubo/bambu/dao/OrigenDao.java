@@ -6,16 +6,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ncubo.bambu.data.Origen;
-import com.ncubo.db.ConexionALaDB;
 
 @Component
 public class OrigenDao
 {
 	private final String NOMBRE_TABLA = "origenmensaje";
 	private final static Logger LOG;
+	
+	@Autowired
+	private PersistenciaBambu dao;
 	
 	static
 	{
@@ -27,11 +30,10 @@ public class OrigenDao
 		ArrayList<Origen> origenes = new ArrayList<Origen>();
 		String query = "select * from " + NOMBRE_TABLA;
 
-		ConexionALaDB conALaDb = new ConexionALaDB("localhost:3306", "bambu", "root", "root");
 		Connection con;
 		try
 		{
-			con = conALaDb.openConBD();
+			con = dao.openConBD();
 			ResultSet rs = con.createStatement().executeQuery(query);
 			
 			while(rs.next())
@@ -52,7 +54,7 @@ public class OrigenDao
 		{
 			try
 			{
-				conALaDb.closeConBD();
+				dao.closeConBD();
 			} 
 			catch (SQLException e)
 			{

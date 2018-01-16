@@ -3,6 +3,7 @@ package com.ncubo.bambu.bl;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ncubo.bambu.dao.BandejaDeMensajesDao;
@@ -16,6 +17,12 @@ import com.ncubo.bambu.data.UsuarioBambu;
 public class BandejaDeMensajeBL
 {
 	
+	@Autowired
+	private BandejaDeMensajesDao bandejaDeMensajesDao;
+	
+	@Autowired
+	private UsuarioBambuDao usuarioBambuDao;
+	
 	public BandejaDeMensaje obtenerBandeja(int idBandejaMensaje)
 	{
 		return obtenerBandeja(idBandejaMensaje, 0);
@@ -23,13 +30,13 @@ public class BandejaDeMensajeBL
 	
 	public BandejaDeMensaje obtenerBandeja(int idBandejaMensaje, int idUsuarioEnSesion)
 	{
-		BandejaDeMensaje bandeja = new BandejaDeMensajesDao().obtenerBandeja(idBandejaMensaje);
-		UsuarioBambu usuarioEnSesion = new UsuarioBambuDao().obtenerUsuario(idUsuarioEnSesion);
+		BandejaDeMensaje bandeja = bandejaDeMensajesDao.obtenerBandeja(idBandejaMensaje);
+		UsuarioBambu usuarioEnSesion = usuarioBambuDao.obtenerUsuario(idUsuarioEnSesion);
 		bandeja.establecerUsuarioCreador(usuarioEnSesion);
 		
 		if (bandeja != null && bandeja.obtenerIdUsuarioEncargado() > 0)
 		{
-			UsuarioBambu usuarioEncargado = new UsuarioBambuDao().obtenerUsuario(bandeja.obtenerIdUsuarioEncargado());
+			UsuarioBambu usuarioEncargado = usuarioBambuDao.obtenerUsuario(bandeja.obtenerIdUsuarioEncargado());
 			bandeja.establecerUsuarioCreador(usuarioEncargado);
 		}
 		return bandeja;
@@ -37,7 +44,7 @@ public class BandejaDeMensajeBL
 	
 	public ArrayList<BandejaDeMensaje> obtenerMensajes()
 	{
-		return new BandejaDeMensajesDao().obtenerMensajes();
+		return bandejaDeMensajesDao.obtenerMensajes();
 	}
 	
 	public boolean actualizarEncargado(int idBandeja, int idUsuarioCreador, int idEncargado)
@@ -62,6 +69,7 @@ public class BandejaDeMensajeBL
 		where.put(Atributo.ID_BANDEJA, idBandejaMensaje);
 		where.put(Atributo.ID_CREADOR, idCreador);
 		
-		return new BandejaDeMensajesDao().actualizar(atributos, where);
+		return bandejaDeMensajesDao.actualizar(atributos, where);
 	}
+	
 }

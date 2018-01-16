@@ -34,6 +34,9 @@ public class CASController
 	@Autowired
 	private Mailer _mailer;
 	
+	@Autowired
+	private Cas cas;
+	
 	private final static Logger LOG;
 	
 	static
@@ -52,7 +55,6 @@ public class CASController
 	public ResponseEntity<?> enviarLinkTemporal(Model model, HttpServletRequest request, 
 		@RequestParam("email") String email)
 	{
-		Cas cas = new Cas();
 		String token = cas.generarTokenDeAcceso();
 		
 		StringBuilder urlBuilder = new StringBuilder();
