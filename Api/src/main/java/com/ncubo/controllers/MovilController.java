@@ -92,6 +92,9 @@ public class MovilController {
 		{
 			String[] responsePreLogin = extraerDatos.preLogin(name);
 			Usuario usuario = (Usuario)sesion.getAttribute(Usuario.LLAVE_EN_SESSION);
+			if( usuario == null){
+				usuario = new Usuario(sesion.getId());
+			}
 			
 			if(responsePreLogin[0].equals("S")){
 				usuario.setLlaveSession(responsePreLogin[1]);
