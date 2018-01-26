@@ -1,0 +1,105 @@
+body
+{
+    color: #2b2b2b;
+    font-family: "OpenSans", "Open Sans", Helvetica,"Droid Sans",Tahoma,Geneva,sans-serif !important;
+    font-size: 12px;
+}
+
+.form .navbar-default .navbar-nav > li > a
+{
+    color: #22b14c;
+}
+
+.form .navbar-default {
+    background-color: #22b14c;
+    border-color: #22b14c;
+    min-height: 94px;
+}
+
+.form .navbar-default .navbar-nav > .open > a, .form .navbar-default .navbar-nav > .open > a:focus, .form .navbar-default .navbar-nav > .open > a:hover
+{
+    background-color: #22b14c;
+}
+
+.form .navbar-brand 
+{
+    height: 81px;
+    padding: 5px 5px 5px 12px;
+}
+
+.form .nav .open > a, .form .nav .open > a:focus, .form .nav .open > a:hover
+{
+    background-color: transparent;
+}
+
+.caret 
+{
+    color:White;
+}
+
+.divider-vertical
+{
+    height: 133px;
+    margin: 2px 9px;
+    border-left: 1px solid #006837;
+    border-right: 1px solid #006837;
+}
+
+.popover 
+{
+    font: 10px "OpenSans", "Segoe UI",Helvetica,"Droid Sans",Tahoma,Geneva,sans-serif;
+}
+
+.btn-default, .btn-primary, .btn-group .btn-default[disabled], .btn-primary[disabled]:hover {
+    background-color: #E6E6E6;
+    border-color: #ccc;
+    color: black;
+}
+
+.btn-default:hover, .btn-primary:hover {
+    background-color: #22b14c;
+    border-color: #ccc;
+    color: white;
+}
+
+.btn-default:focus, .btn-primary:focus {
+    background-color: #006837;
+    border-color: #003418;
+    color: white;
+}
+
+.form-control:focus {
+    border-color: #22b14c;
+}
+
+.form-inline .form-group > div.col-xs-8 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.form-inline label {
+    line-height: 34px;
+}
+
+.form-inline .form-control {
+    width: 100%;
+}
+
+.modal-header {
+    border-bottom: 0px solid #e5e5e5;
+}
+
+.modal-footer {
+    border-top: 0px solid #e5e5e5;
+}
+
+.modal-content {
+    background: #d4ffdd none repeat scroll 0 0;
+    border-color: #006837;
+}
+
+@media (min-width: 768px) {
+  .form-inline .form-group {
+    margin-bottom: 15px;
+  }
+}

@@ -1,0 +1,131 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <head>
+    <meta charset="UTF-8"></meta>
+  </head>
+  
+  <div class="container-fluid" id="contenedorTabDetallesDelMensaje" th:fragment="contenedorTabDetallesDelMensaje">
+    <script type="text/javascript">
+    /*<![CDATA[*/
+    	function cargarUsuariosAsesores() {
+          $.ajax({
+              type: "POST",
+              url: "../usuariosAsesores",
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+              async: true,
+              success: function (respuesta) {
+            	  if (respuesta.d) {
+                      var htmlAIncrustar = '';
+                      respuesta.d.forEach(asesor => {
+                    	  const id = asesor.idUsuario;
+                    	  var nombre = asesor.nombre;
+                    	  if(asesor.apellidos) {
+                    		  nombre = asesor.apellidos;
+                    	  }
+                    	  htmlAIncrustar += PlantillaOpcionSelector.replace('$$AtributoId$$', id).replace('$$AtributoNombre$$', nombre);
+                      });
+                      selectorAsignaEncargado.append(htmlAIncrustar);
+                      const idUsuarioEncargado = 1;
+                      const existeUsuarioEncargado = mensajeActual.IdUsuarioEncargado != null;
+                      if (existeUsuarioEncargado) {
+                          idUsuarioEncargado = mensajeActual.IdUsuarioEncargado;
+                      }
+                      selectorAsignaEncargado.selectpicker('val', idUsuarioEncargado);
+                      selectorAsignaEncargado.selectpicker('refresh');
+                  }
+              },
+              error: function (xhr, status, error) {
+                  console.log(xhr.responseText);
+              }
+          });
+        }
+    
+    	$(document).ready(function () {
+    		cargarUsuariosAsesores();
+    	})
+    	
+        function asignarMensaje() {
+            var idUsuarioEncargado = selectorAsignaEncargado.find("option:selected").val();
+            var nombreUsuarioEncargado = selectorAsignaEncargado.find("option:selected").text();
+            actualizarUsuarioEncargado(obtenerIdBandejaDelUrl(), idUsuarioEncargado, nombreUsuarioEncargado);
+        }
+
+        function actualizarUsuarioEncargado(idBandejaMensaje, idUsuarioEncargado, nombreUsuarioEncargado) {
+        	var formData = new FormData();
+        	formData.append("idBandejaMensaje", idBandejaMensaje);
+        	formData.append("idUsuarioEncargado", idUsuarioEncargado);
+            $.ajax({
+                type: "POST",
+                url: "../actualizarUsuarioEncargado",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (respuesta) {
+                    mensajeDeAdvertencia = 'Mensaje asignado al usuario ' + nombreUsuarioEncargado;
+                    mostrarPopup(mensajeDeAdvertencia);
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                    mensajeDeAdvertencia = 'Error al actualizar usuario encargado';
+                    mostrarPopup(mensajeDeAdvertencia);
+                }
+            });
+        }
+    /*]]>*/
+    </script>
+    <br />
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label for="fechaEnvio">
+              <b>Fecha de env&iacute;o:</b>
+            </label>
+          </div>
+          <div class="col-md-9">
+            <label class="form-control col-md-9" id="fechaEnvio"
+              th:text="${#dates.format(mensaje.obtenerFechaCreacion(), 'dd-MM-yyyy')}">
+            </label>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label for="fechaModificacion">
+              <b>Fecha de modificac&iacute;on:</b>
+            </label>
+          </div>
+          <div class="col-md-9">
+            <label class="form-control col-md-9" id="fechaModificacion"
+              th:text="${#dates.format(mensaje.obtenerFechaModificacion(), 'dd-MM-yyyy')}">
+            </label>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label for="asignaEncargado">
+              <b>Asignar a:</b>
+            </label>
+          </div>
+          <div class="col-md-6">
+            <select id="asignaEncargado" name="asignaEncargado" class="selectpicker" title="Seleccione..." data-none-selected-text="Nada seleccionado" data-live-search="true">
+            </select>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-default btn-primary pull-right" onclick="asignarMensaje();">Asignar</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <button class="btn btn-default btn-primary" onclick="solicitarJustificacion(); return false;">
+              Finalizar
+            </button>
+            <button class="btn btn-default btn-primary" onclick="enviarCorreoDetalleConversacion(); return false;">
+              Enviar conversaci&oacute;n
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</html>

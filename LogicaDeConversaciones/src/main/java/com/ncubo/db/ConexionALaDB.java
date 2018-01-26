@@ -14,7 +14,7 @@ public class ConexionALaDB {
 	private String usuarioDeLaBD;
 	private String claveDeLaBD;
 	
-	private ConexionALaDB(String url, String nombre, String usuario, String clave){
+	public ConexionALaDB(String url, String nombre, String usuario, String clave){
 		this.urlDeLaDB = url;
 		this.nombreDeLaBD = nombre;
 		this.usuarioDeLaBD = usuario;
